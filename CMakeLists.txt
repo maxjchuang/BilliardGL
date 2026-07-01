@@ -18,6 +18,7 @@ add_executable(Billiards
     src/Billiards/particle.cpp
     src/Billiards/vec.cpp
     src/Billiards/resource_path.cpp
+    src/Billiards/platform_audio.cpp
 )
 
 target_include_directories(Billiards PRIVATE
@@ -41,4 +42,8 @@ target_link_libraries(Billiards PRIVATE
 
 if(APPLE)
     target_compile_definitions(Billiards PRIVATE GL_SILENCE_DEPRECATION)
+endif()
+
+if(WIN32)
+    target_link_libraries(Billiards PRIVATE winmm)
 endif()
