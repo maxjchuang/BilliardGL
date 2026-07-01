@@ -1,8 +1,11 @@
-#define FREEGLUT_STATIC
 #include "ObjLoader.h"
+
+#include "resource_path.h"
+
+#include <GL/freeglut.h>
+
 #include <fstream>
 #include <iostream>
-#include "GL/freeglut.h"
 
 using namespace std;
 
@@ -114,7 +117,7 @@ void ObjLoader::parseObj(vector<string> parameters) {
 
 void ObjLoader::parseMtl(string filename) {
 	fstream f;
-	f.open(".//obj//" + filename, ios::in);
+	f.open(billiardgl::objectPath(filename), ios::in);
 	if (!f.is_open()) {
 		cout << "Open mtl file error!" << endl;
 	}

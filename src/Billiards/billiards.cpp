@@ -1,23 +1,22 @@
-#define FREEGLUT_STATIC
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "ObjLoader.h"
 #include "particle.h"
-#include "GL/freeglut.h"
-#include <thread>
-#include <GL/gl.h>
-#include <gl/glut.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-#include <time.h>
-#include <windows.h>
-#include <mmsystem.h>
+#include "platform_audio.h"
+#include "platform_time.h"
+#include "resource_path.h"
 
-#pragma comment(lib, GL_Lib("freeglut_static"))
-#pragma comment(lib, GL_Lib("glew"))
-#pragma comment(lib,"winmm.lib")
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <string>
+#include <thread>
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -55,14 +54,14 @@ GLfloat m[16];
 GLuint tableVertexVBO, cueVertexVBO, benchVertexVBO, wardVertexVBO, paint1VertexVBO;
 GLuint textureIDtest[2];
 GLuint textureCue[2], textureWard, texturePaint1, texturePaint2;
-ObjLoader tableObj(".//obj//table.obj");
-ObjLoader cueObj(".//obj//cue.obj");
-ObjLoader benchObj(".//obj//bench.obj");
-ObjLoader wardObj(".//obj//wardrobe.obj");
+ObjLoader tableObj(billiardgl::objectPath("table.obj"));
+ObjLoader cueObj(billiardgl::objectPath("cue.obj"));
+ObjLoader benchObj(billiardgl::objectPath("bench.obj"));
+ObjLoader wardObj(billiardgl::objectPath("wardrobe.obj"));
 
-bool IsMoving = FALSE;
-bool transPerc = FALSE;
-bool Isrecroded = FALSE;
+bool IsMoving = false;
+bool transPerc = false;
+bool Isrecroded = false;
 float record_zoom;
 float record_position[3];
 int PlayerBall[2];// 0代表纯色球 1-7  1代表花色球 9-15
@@ -70,11 +69,11 @@ int IsFirstInBall = 1;
 int CurrPlayer = 0;
 int NextPlayer = 0;
 int IsIllegal = 0;
-bool updated = FALSE;
-bool Hitted = FALSE;
-bool IsGameOver = FALSE;
+bool updated = false;
+bool Hitted = false;
+bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-bool AllFired = FALSE;
+bool AllFired = false;
 
 //定义球及位置矢量结构体
 struct Point
@@ -116,7 +115,6 @@ void collideBalls(int j, int k);
 void collideEdge(int j);
 int isBallIn(int j);
 void drawString();
-void selectFont(int size, int charset, const char* face);
 void myString(float x, float y, void *font, char* c);
 void updatePlayer();
 void initTable();
@@ -222,8 +220,10 @@ void initBall()
 
 void initTable() {
 	glEnable(GL_TEXTURE_2D);
-	textureIDtest[0] = loadTexture((".//tex//" + tableObj.materials[0]->texture).c_str());
-	textureIDtest[1] = loadTexture((".//tex//" + tableObj.materials[1]->texture).c_str());
+	const std::string tableTexture0 = billiardgl::texturePath(tableObj.materials[0]->texture);
+	const std::string tableTexture1 = billiardgl::texturePath(tableObj.materials[1]->texture);
+	textureIDtest[0] = loadTexture(tableTexture0.c_str());
+	textureIDtest[1] = loadTexture(tableTexture1.c_str());
 
 	glewInit();
 	GLfloat *tableVertex;
@@ -340,8 +340,10 @@ void initDecoration() {
 }
 void initCue() {
 	glEnable(GL_TEXTURE_2D);
-	textureCue[0] = loadTexture((".//tex//" + cueObj.materials[0]->texture).c_str());
-	textureCue[1] = loadTexture((".//tex//" + cueObj.materials[1]->texture).c_str());
+	const std::string cueTexture0 = billiardgl::texturePath(cueObj.materials[0]->texture);
+	const std::string cueTexture1 = billiardgl::texturePath(cueObj.materials[1]->texture);
+	textureCue[0] = loadTexture(cueTexture0.c_str());
+	textureCue[1] = loadTexture(cueTexture1.c_str());
 	cout << cueObj.materials[1]->texture << endl;
 	glewInit();
 	GLfloat *cueVertex;
@@ -723,7 +725,7 @@ void myIdle(void)
 	at[0] = zoom*(cos(anglex)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
-	bool flag = FALSE;
+	bool flag = false;
 	for (i = 0; i<ballcnt; i++)
 	{
 		if (Ball[i].isIn == 0)
@@ -745,17 +747,17 @@ void myIdle(void)
 				Ball[i].a.x = (-1)*vz;
 				Ball[i].a.z = vx;
 				Ball[i].ma += -180 * Ball[i].mv*T / (Radius*PI);
-				flag = TRUE;
+				flag = true;
 			}
 			else Ball[i].mv = 0;
 		}
 	}
 	if (!flag)
 	{
-		IsMoving = FALSE;
+		IsMoving = false;
 	}
 	else
-		IsMoving = TRUE;
+		IsMoving = true;
 	if (WaitHit == 1)
 	{
 		if (speed>200) speed -= 200;
@@ -771,7 +773,7 @@ void myIdle(void)
 		for (i = speed * 100; i > 0; i--) {
 			speed -= 0.01;
 		}
-		mciSendString(TEXT("play audio//hit.wav"), NULL, 0, NULL);
+		billiardgl::playHit();
 	}
 	if (leftm)
 	{
@@ -790,7 +792,7 @@ void myIdle(void)
 			at[3] = record_position[0];
 			at[4] = record_position[1];
 			at[5] = record_position[2];
-			Isrecroded = TRUE;
+			Isrecroded = true;
 		}
 		else
 		{
@@ -800,10 +802,10 @@ void myIdle(void)
 			{
 				if (!IsMoving)
 				{
-					Sleep(1000);
+					billiardgl::sleepMilliseconds(1000);
 					zoom = record_zoom;
-					transPerc = FALSE;
-					Isrecroded = FALSE;
+					transPerc = false;
+					Isrecroded = false;
 				}
 			}
 		}
@@ -829,8 +831,7 @@ void collideBalls(int j, int k)
 	dis = sqrt(pow(Ball[k].p.x - Ball[j].p.x, 2) + pow(Ball[k].p.z - Ball[j].p.z, 2));
 	if (dis<2 * Radius - 0.5)
 	{
-		mciSendString(TEXT("play audio//hit.wav"), NULL, 0, NULL);
-		//PlaySound(TEXT("audio//hit.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		billiardgl::playHit();
 		Cos = (Ball[k].p.x - Ball[j].p.x) / dis;
 		Sin = (Ball[k].p.z - Ball[j].p.z) / dis;
 		cCos = Sin*(-1);
@@ -875,12 +876,12 @@ int isBallIn(int j)
 		sqrt(pow(Ball[j].p.x - (-TABLE_IN_WIDTH / 2 + POCKET_RADIUS), 2) + pow(Ball[j].p.z, 2)) < Radius / 4 ||
 		sqrt(pow(Ball[j].p.x - -TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z, 2)) < Radius / 4)
 	{
-		//		Fired[j] = TRUE;
-		mciSendString(TEXT("play audio//ballin.wav"), NULL, 0, NULL);
+		//		Fired[j] = true;
+		billiardgl::playBallIn();
 		if (j == 8)
 		{
-			IsGameOver = TRUE;
-			mciSendString(TEXT("play audio//GameOver.wav"), NULL, 0, NULL);
+			IsGameOver = true;
+			billiardgl::playGameOver();
 		}
 		if (j == 0)
 		{
@@ -903,7 +904,7 @@ int isBallIn(int j)
 				{
 					PlayerBall[CurrPlayer] = 1;
 					PlayerBall[1 - CurrPlayer] = 0;
-					IsFirstInBall = FALSE;
+					IsFirstInBall = false;
 					NextPlayer = CurrPlayer;
 				}
 				else if (PlayerBall[CurrPlayer] == 1) //花色球进了，且当前玩家是花色球玩家
@@ -920,7 +921,7 @@ int isBallIn(int j)
 				{
 					PlayerBall[CurrPlayer] = 0;
 					PlayerBall[1 - CurrPlayer] = 1;
-					IsFirstInBall = FALSE;
+					IsFirstInBall = false;
 					NextPlayer = CurrPlayer;
 				}
 				else if (PlayerBall[CurrPlayer] == 0) //纯色球进了，且当前玩家是纯色球玩家
@@ -1040,7 +1041,7 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	{
 		WaitHit = 1;
 		NextPlayer = 1 - CurrPlayer;
-		Hitted = FALSE;
+		Hitted = false;
 		AimAt = 1;
 	}
 	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP)
@@ -1048,10 +1049,10 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 		Hit = 1;
 		IsIllegal = 0;
 		AimAt = 0;
-		IsMoving = TRUE;
-		transPerc = TRUE;
-		updated = FALSE;
-		Hitted = TRUE;
+		IsMoving = true;
+		transPerc = true;
+		updated = false;
+		Hitted = true;
 	}
 	else Hit = 0;
 }
@@ -1077,37 +1078,37 @@ static void mouseMove(int x, int y)
 // 载入纹理
 void initLoadTexture()
 {
-	Ball[1].texture = loadTexture("tex/B1.bmp");
-	Ball[2].texture = loadTexture("tex/B2.bmp");
-	Ball[3].texture = loadTexture("tex/B3.bmp");
-	Ball[4].texture = loadTexture("tex/B4.bmp");
-	Ball[5].texture = loadTexture("tex/B5.bmp");
-	Ball[6].texture = loadTexture("tex/B6.bmp");
-	Ball[7].texture = loadTexture("tex/B7.bmp");
-	Ball[8].texture = loadTexture("tex/B8.bmp");
-	Ball[9].texture = loadTexture("tex/B9.bmp");
-	Ball[10].texture = loadTexture("tex/B10.bmp");
-	Ball[11].texture = loadTexture("tex/B11.bmp");
-	Ball[12].texture = loadTexture("tex/B12.bmp");
-	Ball[13].texture = loadTexture("tex/B13.bmp");
-	Ball[14].texture = loadTexture("tex/B14.bmp");
-	Ball[15].texture = loadTexture("tex/B15.bmp");
-	Ball[0].texture = loadTexture("tex/B16.bmp");
-	texGround = loadTexture("tex/ground.bmp");//ground
-	texWall = loadTexture("tex/wall.bmp");//wall
-	texWall1 = loadTexture("tex/wall1.bmp");
-	texWall2 = loadTexture("tex/wall2.bmp");
-	tecCeiling = loadTexture("tex/ceiling.bmp");//天花板
-	BZD = loadTexture("tex/black.bmp");
-	texTableCloth = loadTexture("tex/green.bmp");//桌面
-	texTable = loadTexture("tex/wood.bmp");//球桌边缘
-	texCue = loadTexture("tex/wood.bmp");
-	texgt = loadTexture("tex/green.bmp");
-	texhe = loadTexture("tex/black.bmp");
-	textureWard = loadTexture("tex/5.bmp");
-	texturePaint1 = loadTexture("tex/6.bmp");
-	texturePaint2 = loadTexture("tex/7.bmp");
-	texture[2] = loadTexture("tex/flame2.bmp");
+	Ball[1].texture = loadTexture(billiardgl::texturePath("B1.bmp").c_str());
+	Ball[2].texture = loadTexture(billiardgl::texturePath("B2.bmp").c_str());
+	Ball[3].texture = loadTexture(billiardgl::texturePath("B3.bmp").c_str());
+	Ball[4].texture = loadTexture(billiardgl::texturePath("B4.bmp").c_str());
+	Ball[5].texture = loadTexture(billiardgl::texturePath("B5.bmp").c_str());
+	Ball[6].texture = loadTexture(billiardgl::texturePath("B6.bmp").c_str());
+	Ball[7].texture = loadTexture(billiardgl::texturePath("B7.bmp").c_str());
+	Ball[8].texture = loadTexture(billiardgl::texturePath("B8.bmp").c_str());
+	Ball[9].texture = loadTexture(billiardgl::texturePath("B9.bmp").c_str());
+	Ball[10].texture = loadTexture(billiardgl::texturePath("B10.bmp").c_str());
+	Ball[11].texture = loadTexture(billiardgl::texturePath("B11.bmp").c_str());
+	Ball[12].texture = loadTexture(billiardgl::texturePath("B12.bmp").c_str());
+	Ball[13].texture = loadTexture(billiardgl::texturePath("B13.bmp").c_str());
+	Ball[14].texture = loadTexture(billiardgl::texturePath("B14.bmp").c_str());
+	Ball[15].texture = loadTexture(billiardgl::texturePath("B15.bmp").c_str());
+	Ball[0].texture = loadTexture(billiardgl::texturePath("B16.bmp").c_str());
+	texGround = loadTexture(billiardgl::texturePath("ground.bmp").c_str());//ground
+	texWall = loadTexture(billiardgl::texturePath("wall.bmp").c_str());//wall
+	texWall1 = loadTexture(billiardgl::texturePath("wall1.bmp").c_str());
+	texWall2 = loadTexture(billiardgl::texturePath("wall2.bmp").c_str());
+	tecCeiling = loadTexture(billiardgl::texturePath("ceiling.bmp").c_str());//天花板
+	BZD = loadTexture(billiardgl::texturePath("black.bmp").c_str());
+	texTableCloth = loadTexture(billiardgl::texturePath("green.bmp").c_str());//桌面
+	texTable = loadTexture(billiardgl::texturePath("wood.bmp").c_str());//球桌边缘
+	texCue = loadTexture(billiardgl::texturePath("wood.bmp").c_str());
+	texgt = loadTexture(billiardgl::texturePath("green.bmp").c_str());
+	texhe = loadTexture(billiardgl::texturePath("black.bmp").c_str());
+	textureWard = loadTexture(billiardgl::texturePath("5.bmp").c_str());
+	texturePaint1 = loadTexture(billiardgl::texturePath("6.bmp").c_str());
+	texturePaint2 = loadTexture(billiardgl::texturePath("7.bmp").c_str());
+	texture[2] = loadTexture(billiardgl::texturePath("flame2.bmp").c_str());
 }
 int isPowerOfTwo(int n)
 {
@@ -1120,8 +1121,7 @@ GLuint loadTexture(const char* file_name)
 	GLint width, height, total_bytes;
 	GLubyte* pixels = 0;
 	GLuint last_texture_ID, texture_ID = 0;
-	FILE* pFile;
-	fopen_s(&pFile, file_name, "rb");
+	FILE* pFile = std::fopen(file_name, "rb");
 	if (pFile == 0)
 		return 0;
 	fseek(pFile, 0x0012, SEEK_SET);
@@ -1209,26 +1209,16 @@ void initLight(void)
 }
 void b_music()
 {
-	PlaySound(TEXT("audio//background.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-	//mciSendString(TEXT("play audio//background.wav"), NULL, 0, NULL);
+	billiardgl::playBackgroundLoop();
 }
 
 void drawString()
 {
 	char *str1 = "Current Player:  Player ";
-	char str2[2];
-	_itoa_s(CurrPlayer + 1, str2, 10);
+	std::string str2 = std::to_string(CurrPlayer + 1);
 	myString(18, 700, GLUT_BITMAP_TIMES_ROMAN_24, str1);
-	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, str2);
+	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
 }
-void selectFont(int size, int charset, const char* face) {
-	HFONT hFont = CreateFontA(size, 0, 0, 0, FW_MEDIUM, 0, 0, 0,
-		charset, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, face);
-	HFONT holdFont = (HFONT)SelectObject(wglGetCurrentDC(), hFont);
-	DeleteObject(holdFont);
-}
-
 void myString(float x, float y, void *font, char* c)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -1267,6 +1257,6 @@ void updatePlayer()
 		if ((!IsIllegal) && (NextPlayer == CurrPlayer));
 		else
 			CurrPlayer = 1 - CurrPlayer;
-		updated = TRUE;
+		updated = true;
 	}
 }
