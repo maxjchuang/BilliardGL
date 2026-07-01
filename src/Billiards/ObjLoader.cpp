@@ -117,7 +117,7 @@ void ObjLoader::parseObj(vector<string> parameters) {
 
 void ObjLoader::parseMtl(string filename) {
 	fstream f;
-	f.open(".//obj//" + filename, ios::in);
+	f.open(billiardgl::objectPath(filename), ios::in);
 	if (!f.is_open()) {
 		cout << "Open mtl file error!" << endl;
 	}
