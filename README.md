@@ -250,3 +250,46 @@ $$
 * glm
 * glew 1.5.1
 
+## Cross-Platform Build
+
+The portable build uses CMake and keeps the existing FreeGLUT/GLEW/OpenGL rendering path.
+
+### Linux
+
+Install the development dependencies for your distribution. On Debian or Ubuntu:
+
+```bash
+sudo apt-get install cmake g++ libgl1-mesa-dev libglu1-mesa-dev libglew-dev freeglut3-dev
+```
+
+Build:
+
+```bash
+cmake -S . -B build
+cmake --build build
+./build/Billiards
+```
+
+Running the game requires an available graphical display, such as a local desktop session or a configured X server.
+
+### macOS
+
+Install dependencies with Homebrew:
+
+```bash
+brew install cmake glew freeglut
+```
+
+Build:
+
+```bash
+cmake -S . -B build
+cmake --build build
+./build/Billiards
+```
+
+OpenGL and GLUT are deprecated on macOS, so compiler warnings are expected. The first migration phase accepts those warnings as long as the program builds and runs.
+
+### Audio
+
+Linux and macOS use no-op audio in the first migration phase. Sound calls are routed through `platform_audio`, so the game can run without crashing even when sound is silent.
