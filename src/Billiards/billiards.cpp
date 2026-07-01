@@ -59,9 +59,9 @@ ObjLoader cueObj(billiardgl::objectPath("cue.obj"));
 ObjLoader benchObj(billiardgl::objectPath("bench.obj"));
 ObjLoader wardObj(billiardgl::objectPath("wardrobe.obj"));
 
-bool IsMoving = FALSE;
-bool transPerc = FALSE;
-bool Isrecroded = FALSE;
+bool IsMoving = false;
+bool transPerc = false;
+bool Isrecroded = false;
 float record_zoom;
 float record_position[3];
 int PlayerBall[2];// 0代表纯色球 1-7  1代表花色球 9-15
@@ -69,11 +69,11 @@ int IsFirstInBall = 1;
 int CurrPlayer = 0;
 int NextPlayer = 0;
 int IsIllegal = 0;
-bool updated = FALSE;
-bool Hitted = FALSE;
-bool IsGameOver = FALSE;
+bool updated = false;
+bool Hitted = false;
+bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-bool AllFired = FALSE;
+bool AllFired = false;
 
 //定义球及位置矢量结构体
 struct Point
@@ -725,7 +725,7 @@ void myIdle(void)
 	at[0] = zoom*(cos(anglex)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
-	bool flag = FALSE;
+	bool flag = false;
 	for (i = 0; i<ballcnt; i++)
 	{
 		if (Ball[i].isIn == 0)
@@ -747,17 +747,17 @@ void myIdle(void)
 				Ball[i].a.x = (-1)*vz;
 				Ball[i].a.z = vx;
 				Ball[i].ma += -180 * Ball[i].mv*T / (Radius*PI);
-				flag = TRUE;
+				flag = true;
 			}
 			else Ball[i].mv = 0;
 		}
 	}
 	if (!flag)
 	{
-		IsMoving = FALSE;
+		IsMoving = false;
 	}
 	else
-		IsMoving = TRUE;
+		IsMoving = true;
 	if (WaitHit == 1)
 	{
 		if (speed>200) speed -= 200;
@@ -792,7 +792,7 @@ void myIdle(void)
 			at[3] = record_position[0];
 			at[4] = record_position[1];
 			at[5] = record_position[2];
-			Isrecroded = TRUE;
+			Isrecroded = true;
 		}
 		else
 		{
@@ -804,8 +804,8 @@ void myIdle(void)
 				{
 					billiardgl::sleepMilliseconds(1000);
 					zoom = record_zoom;
-					transPerc = FALSE;
-					Isrecroded = FALSE;
+					transPerc = false;
+					Isrecroded = false;
 				}
 			}
 		}
@@ -876,11 +876,11 @@ int isBallIn(int j)
 		sqrt(pow(Ball[j].p.x - (-TABLE_IN_WIDTH / 2 + POCKET_RADIUS), 2) + pow(Ball[j].p.z, 2)) < Radius / 4 ||
 		sqrt(pow(Ball[j].p.x - -TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z, 2)) < Radius / 4)
 	{
-		//		Fired[j] = TRUE;
+		//		Fired[j] = true;
 		billiardgl::playBallIn();
 		if (j == 8)
 		{
-			IsGameOver = TRUE;
+			IsGameOver = true;
 			billiardgl::playGameOver();
 		}
 		if (j == 0)
@@ -904,7 +904,7 @@ int isBallIn(int j)
 				{
 					PlayerBall[CurrPlayer] = 1;
 					PlayerBall[1 - CurrPlayer] = 0;
-					IsFirstInBall = FALSE;
+					IsFirstInBall = false;
 					NextPlayer = CurrPlayer;
 				}
 				else if (PlayerBall[CurrPlayer] == 1) //花色球进了，且当前玩家是花色球玩家
@@ -921,7 +921,7 @@ int isBallIn(int j)
 				{
 					PlayerBall[CurrPlayer] = 0;
 					PlayerBall[1 - CurrPlayer] = 1;
-					IsFirstInBall = FALSE;
+					IsFirstInBall = false;
 					NextPlayer = CurrPlayer;
 				}
 				else if (PlayerBall[CurrPlayer] == 0) //纯色球进了，且当前玩家是纯色球玩家
@@ -1041,7 +1041,7 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	{
 		WaitHit = 1;
 		NextPlayer = 1 - CurrPlayer;
-		Hitted = FALSE;
+		Hitted = false;
 		AimAt = 1;
 	}
 	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP)
@@ -1049,10 +1049,10 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 		Hit = 1;
 		IsIllegal = 0;
 		AimAt = 0;
-		IsMoving = TRUE;
-		transPerc = TRUE;
-		updated = FALSE;
-		Hitted = TRUE;
+		IsMoving = true;
+		transPerc = true;
+		updated = false;
+		Hitted = true;
 	}
 	else Hit = 0;
 }
@@ -1257,6 +1257,6 @@ void updatePlayer()
 		if ((!IsIllegal) && (NextPlayer == CurrPlayer));
 		else
 			CurrPlayer = 1 - CurrPlayer;
-		updated = TRUE;
+		updated = true;
 	}
 }

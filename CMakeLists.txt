@@ -11,6 +11,7 @@ set(BILLIARDGL_ASSET_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/src/Billiards")
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
+find_package(Threads REQUIRED)
 
 add_executable(Billiards
     src/Billiards/billiards.cpp
@@ -37,6 +38,7 @@ target_link_libraries(Billiards PRIVATE
     OpenGL::GL
     OpenGL::GLU
     GLEW::GLEW
+    Threads::Threads
     ${GLUT_LIBRARIES}
 )
 
