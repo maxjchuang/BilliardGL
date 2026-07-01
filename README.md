@@ -272,6 +272,15 @@ cmake --build build
 
 Running the game requires an available graphical display, such as a local desktop session or a configured X server.
 
+For a headless smoke test on Linux, use a virtual X display:
+
+```bash
+sudo apt-get install xvfb
+xvfb-run -a timeout 5 ./build/Billiards
+```
+
+This mocks the display server well enough to verify startup in CI or on a server. It does not replace testing the game on a real desktop, because rendering quality, input, and performance still depend on an actual graphics environment.
+
 ### macOS
 
 Install dependencies with Homebrew:
