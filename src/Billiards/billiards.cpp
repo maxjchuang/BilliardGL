@@ -115,7 +115,6 @@ void collideBalls(int j, int k);
 void collideEdge(int j);
 int isBallIn(int j);
 void drawString();
-void selectFont(int size, int charset, const char* face);
 void myString(float x, float y, void *font, char* c);
 void updatePlayer();
 void initTable();
@@ -774,7 +773,7 @@ void myIdle(void)
 		for (i = speed * 100; i > 0; i--) {
 			speed -= 0.01;
 		}
-		mciSendString(TEXT("play audio//hit.wav"), NULL, 0, NULL);
+		billiardgl::playHit();
 	}
 	if (leftm)
 	{
@@ -803,7 +802,7 @@ void myIdle(void)
 			{
 				if (!IsMoving)
 				{
-					Sleep(1000);
+					billiardgl::sleepMilliseconds(1000);
 					zoom = record_zoom;
 					transPerc = FALSE;
 					Isrecroded = FALSE;
@@ -832,8 +831,7 @@ void collideBalls(int j, int k)
 	dis = sqrt(pow(Ball[k].p.x - Ball[j].p.x, 2) + pow(Ball[k].p.z - Ball[j].p.z, 2));
 	if (dis<2 * Radius - 0.5)
 	{
-		mciSendString(TEXT("play audio//hit.wav"), NULL, 0, NULL);
-		//PlaySound(TEXT("audio//hit.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		billiardgl::playHit();
 		Cos = (Ball[k].p.x - Ball[j].p.x) / dis;
 		Sin = (Ball[k].p.z - Ball[j].p.z) / dis;
 		cCos = Sin*(-1);
@@ -879,11 +877,11 @@ int isBallIn(int j)
 		sqrt(pow(Ball[j].p.x - -TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z, 2)) < Radius / 4)
 	{
 		//		Fired[j] = TRUE;
-		mciSendString(TEXT("play audio//ballin.wav"), NULL, 0, NULL);
+		billiardgl::playBallIn();
 		if (j == 8)
 		{
 			IsGameOver = TRUE;
-			mciSendString(TEXT("play audio//GameOver.wav"), NULL, 0, NULL);
+			billiardgl::playGameOver();
 		}
 		if (j == 0)
 		{
@@ -1123,8 +1121,7 @@ GLuint loadTexture(const char* file_name)
 	GLint width, height, total_bytes;
 	GLubyte* pixels = 0;
 	GLuint last_texture_ID, texture_ID = 0;
-	FILE* pFile;
-	fopen_s(&pFile, file_name, "rb");
+	FILE* pFile = std::fopen(file_name, "rb");
 	if (pFile == 0)
 		return 0;
 	fseek(pFile, 0x0012, SEEK_SET);
@@ -1212,26 +1209,16 @@ void initLight(void)
 }
 void b_music()
 {
-	PlaySound(TEXT("audio//background.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-	//mciSendString(TEXT("play audio//background.wav"), NULL, 0, NULL);
+	billiardgl::playBackgroundLoop();
 }
 
 void drawString()
 {
 	char *str1 = "Current Player:  Player ";
-	char str2[2];
-	_itoa_s(CurrPlayer + 1, str2, 10);
+	std::string str2 = std::to_string(CurrPlayer + 1);
 	myString(18, 700, GLUT_BITMAP_TIMES_ROMAN_24, str1);
-	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, str2);
+	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
 }
-void selectFont(int size, int charset, const char* face) {
-	HFONT hFont = CreateFontA(size, 0, 0, 0, FW_MEDIUM, 0, 0, 0,
-		charset, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, face);
-	HFONT holdFont = (HFONT)SelectObject(wglGetCurrentDC(), hFont);
-	DeleteObject(holdFont);
-}
-
 void myString(float x, float y, void *font, char* c)
 {
 	glMatrixMode(GL_PROJECTION);
