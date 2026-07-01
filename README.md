@@ -276,10 +276,17 @@ For a headless smoke test on Linux, use a virtual X display:
 
 ```bash
 sudo apt-get install xvfb
+set +e
 xvfb-run -a timeout 5 ./build/Billiards
+code=$?
+if [ "$code" -eq 124 ]; then
+  echo "headless smoke test passed: Billiards stayed alive until timeout"
+  exit 0
+fi
+exit "$code"
 ```
 
-This mocks the display server well enough to verify startup in CI or on a server. It does not replace testing the game on a real desktop, because rendering quality, input, and performance still depend on an actual graphics environment.
+This mocks the display server well enough to verify startup in CI or on a server. Exit code 124 is expected here because `timeout` stops the game after it has stayed alive in the GLUT main loop. It does not replace testing the game on a real desktop, because rendering quality, input, and performance still depend on an actual graphics environment.
 
 ### macOS
 
