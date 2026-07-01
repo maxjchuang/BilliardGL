@@ -1,8 +1,8 @@
 #pragma once  
-#define FREEGLUT_STATIC
-#define GLUT_DISABLE_ATEXIT_HACK  
 #include "vec.h"
-#include <gl/glut.h>
+
+#include <GL/freeglut.h>
+
 #include <iostream>
 using namespace std;
 

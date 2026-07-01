@@ -1,8 +1,11 @@
-#define FREEGLUT_STATIC
 #include "ObjLoader.h"
+
+#include "resource_path.h"
+
+#include <GL/freeglut.h>
+
 #include <fstream>
 #include <iostream>
-#include "GL/freeglut.h"
 
 using namespace std;
 

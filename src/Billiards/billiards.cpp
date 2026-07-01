@@ -1,23 +1,22 @@
-#define FREEGLUT_STATIC
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "ObjLoader.h"
 #include "particle.h"
-#include "GL/freeglut.h"
-#include <thread>
-#include <GL/gl.h>
-#include <gl/glut.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-#include <time.h>
-#include <windows.h>
-#include <mmsystem.h>
+#include "platform_audio.h"
+#include "platform_time.h"
+#include "resource_path.h"
 
-#pragma comment(lib, GL_Lib("freeglut_static"))
-#pragma comment(lib, GL_Lib("glew"))
-#pragma comment(lib,"winmm.lib")
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <string>
+#include <thread>
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
