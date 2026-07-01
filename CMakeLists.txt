@@ -17,6 +17,7 @@ add_executable(Billiards
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
     src/Billiards/vec.cpp
+    src/Billiards/resource_path.cpp
 )
 
 target_include_directories(Billiards PRIVATE
