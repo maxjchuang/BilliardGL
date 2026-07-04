@@ -647,13 +647,11 @@ void drawBall(GLfloat mybr, GLuint BALL)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, BALL);
-		glBegin(GL_QUADS);
 		MYBALL = gluNewQuadric();// 创建一个二次曲面物体
 		gluQuadricTexture(MYBALL, GL_TRUE); //启用该二次曲面的纹理
 		glBindTexture(GL_TEXTURE_2D, BALL);// 绑定纹理
 		gluSphere(MYBALL, mybr, 80, 120); // 画球
 		gluDeleteQuadric(MYBALL);
-		glEnd();
 	}
 }
 // 画球杆、力度条、方向线
@@ -1137,6 +1135,14 @@ int isPowerOfTwo(int n)
 		return 0;
 	return (n & (n - 1)) == 0;
 }
+
+int previousPowerOfTwo(int n)
+{
+	int value = 1;
+	while (value * 2 <= n)
+		value *= 2;
+	return value;
+}
 GLuint loadTexture(const char* file_name)
 {
 	GLint width, height, total_bytes;
@@ -1162,8 +1168,12 @@ GLuint loadTexture(const char* file_name)
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);
 		if (!isPowerOfTwo(width) || !isPowerOfTwo(height) || width > max || height > max)
 		{
-			const GLint new_width = 256;
-			const GLint new_height = 256; // 规定缩放后新的大小为边长的正方形
+			GLint new_width = previousPowerOfTwo(width);
+			GLint new_height = previousPowerOfTwo(height);
+			if (new_width > max)
+				new_width = max;
+			if (new_height > max)
+				new_height = max;
 			GLint new_line_bytes, new_total_bytes;
 			GLubyte* new_pixels = 0;
 			new_line_bytes = new_width * 3;
@@ -1172,7 +1182,7 @@ GLuint loadTexture(const char* file_name)
 			new_total_bytes = new_line_bytes * new_height;
 			new_pixels = (GLubyte*)malloc(new_total_bytes);
 			if (new_pixels == 0) { free(pixels); fclose(pFile); return 0; }
-			gluScaleImage(GL_RGB,
+			gluScaleImage(GL_BGR_EXT,
 				width, height, GL_UNSIGNED_BYTE, pixels,
 				new_width, new_height, GL_UNSIGNED_BYTE, new_pixels);
 			free(pixels);
@@ -1185,12 +1195,12 @@ GLuint loadTexture(const char* file_name)
 	if (texture_ID == 0) { free(pixels); fclose(pFile); return 0; }
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, (int*)&last_texture_ID);
 	glBindTexture(GL_TEXTURE_2D, texture_ID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR_EXT,
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_BGR_EXT,
 		GL_UNSIGNED_BYTE, pixels);
 	glBindTexture(GL_TEXTURE_2D, last_texture_ID);
 	free(pixels);
