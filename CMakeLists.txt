@@ -12,6 +12,8 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(Threads REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 add_executable(Billiards
     src/Billiards/billiards.cpp
@@ -39,13 +41,10 @@ target_link_libraries(Billiards PRIVATE
     OpenGL::GLU
     GLEW::GLEW
     Threads::Threads
+    PkgConfig::SDL2_AUDIO
     ${GLUT_LIBRARIES}
 )
 
 if(APPLE)
     target_compile_definitions(Billiards PRIVATE GL_SILENCE_DEPRECATION)
-endif()
-
-if(WIN32)
-    target_link_libraries(Billiards PRIVATE winmm)
 endif()

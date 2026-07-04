@@ -1,8 +1,13 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/freeglut.h>
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 
 #include "ObjLoader.h"
 #include "particle.h"
@@ -133,7 +138,7 @@ particle* init_flame()
 	float size = rand() % 90 * 0.02f;
 	float speed[] = { float(rand() % 10 - 4) / 1600, float(rand() % 10 - 4) / 800, float(rand() % 10 - 4) / 1600 };
 	float acc[] = { 1.0f*(rand() % 3 - 1) / 9000000,4.9 / 4000000 ,1.0f*(rand() % 3 - 1) / 9000000 };
-	float angle[] = { rand() % 360, rand() % 360 ,rand() % 360 };
+	float angle[] = { static_cast<float>(rand() % 360), static_cast<float>(rand() % 360), static_cast<float>(rand() % 360) };
 	particle* p = new particle(vec(size, size, size), vec(speed), vec(acc),
 		vec(angle), rand() % 50 + 10, texture[2]);
 	return p;

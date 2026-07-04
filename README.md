@@ -259,7 +259,7 @@ The portable build uses CMake and keeps the existing FreeGLUT/GLEW/OpenGL render
 Install the development dependencies for your distribution. On Debian or Ubuntu:
 
 ```bash
-sudo apt-get install cmake g++ libgl1-mesa-dev libglu1-mesa-dev libglew-dev freeglut3-dev
+sudo apt-get install cmake g++ pkg-config libgl1-mesa-dev libglu1-mesa-dev libglew-dev freeglut3-dev libsdl2-dev libsdl2-mixer-dev
 ```
 
 Build:
@@ -293,7 +293,7 @@ This mocks the display server well enough to verify startup in CI or on a server
 Install dependencies with Homebrew:
 
 ```bash
-brew install cmake glew freeglut
+brew install cmake glew freeglut sdl2 sdl2_mixer
 ```
 
 Build:
@@ -308,4 +308,6 @@ OpenGL and GLUT are deprecated on macOS, so compiler warnings are expected. The 
 
 ### Audio
 
-Linux and macOS use no-op audio in the first migration phase. Sound calls are routed through `platform_audio`, so the game can run without crashing even when sound is silent.
+Audio is routed through SDL2_mixer on all platforms. Background music loops while the game runs, and hit, pocket, and game-over sounds are played from the bundled WAV files in `src/Billiards/audio`.
+
+The CMake build discovers SDL2 and SDL2_mixer through `pkg-config`, so Windows CMake builds also need `pkg-config` plus SDL2 and SDL2_mixer packages that provide `.pc` metadata.
