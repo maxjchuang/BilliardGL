@@ -58,6 +58,7 @@
   * mouse_right_button: orbit view
   * shift + mouse_left_button drag: orbit view on trackpads
   * mouse_left_button: hit balls
+  * 'h': toggle help
 
 #2 Awesome Points
 

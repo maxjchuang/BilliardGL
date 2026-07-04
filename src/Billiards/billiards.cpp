@@ -51,6 +51,7 @@ GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTab
 int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16, BallInNum = 0, AimAt = 0, WaitHit = 0, Hit = 0;
 int leftm = 0, rightm = 0;
 bool TrackpadOrbit = false;
+bool ShowHelp = false;
 GLfloat rx, ry, rz, speed = 0;
 static GLfloat kx = 0, ky = 0, kz = 0, zoom = 120;
 static GLfloat anglex = -PI / 2, angley = PI / 3, nowanglex = 0, nowangley = 0, nowatx = 0, nowaty = 0;
@@ -124,6 +125,9 @@ void collideBalls(int j, int k);
 void collideEdge(int j);
 int isBallIn(int j);
 void drawString();
+void drawHelpPrompt();
+void drawHelpOverlay();
+void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
 void myString(float x, float y, void *font, const char* c);
 void updatePlayer();
 void initTable();
@@ -480,6 +484,10 @@ void myDisplay(void)
 
 	updatePlayer();
 	drawString();
+	if (ShowHelp)
+		drawHelpOverlay();
+	else
+		drawHelpPrompt();
 	glutSwapBuffers();
 }
 // 设置视点
@@ -1004,6 +1012,15 @@ int isBallIn(int j)
 // 鼠标键盘反馈函数
 static void myKeyboard(unsigned char key, int x, int y)
 {
+	if (key == 'h' || key == 'H')
+	{
+		ShowHelp = !ShowHelp;
+		WaitHit = 0;
+		Hit = 0;
+		return;
+	}
+	if (ShowHelp && key != 27)
+		return;
 	switch (key)
 	{
 	case 27:
@@ -1082,6 +1099,14 @@ static void myKeyboard(unsigned char key, int x, int y)
 }
 static void myMouse(int mbutton, int mstate, int x, int y)
 {
+	if (ShowHelp)
+	{
+		WaitHit = 0;
+		Hit = 0;
+		TrackpadOrbit = false;
+		rightm = 0;
+		return;
+	}
 	if (IsMoving)
 	{
 		return;
@@ -1294,6 +1319,82 @@ void initLight(void)
 void b_music()
 {
 	billiardgl::playBackgroundLoop();
+}
+
+void drawHelpPrompt()
+{
+	myString(18, height - 94, GLUT_BITMAP_HELVETICA_18, "Press H for help");
+}
+
+void drawHelpOverlay()
+{
+	const float panel_width = 520.0f;
+	const float panel_height = 330.0f;
+	const float left = (width - panel_width) * 0.5f;
+	const float bottom = (height - panel_height) * 0.5f;
+	const float top = bottom + panel_height;
+	const float text_left = left + 34.0f;
+	float y = top - 44.0f;
+
+	drawScreenRect(left, bottom, left + panel_width, top, 0.04f, 0.06f, 0.05f, 0.82f);
+	myString(text_left, y, GLUT_BITMAP_TIMES_ROMAN_24, "BilliardGL Help");
+	y -= 42.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Camera");
+	y -= 28.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "W / S                 Zoom in / out");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "A / D                 Pan left / right");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Arrow keys            Orbit view");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Right mouse drag      Orbit view");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Shift + trackpad drag Orbit view");
+	y -= 38.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Play");
+	y -= 28.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse hold       Charge shot");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse release    Hit cue ball");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "H                     Toggle help");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Esc                   Quit");
+}
+
+void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a)
+{
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glColor4f(r, g, b, a);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBegin(GL_QUADS);
+	glVertex2f(left, bottom);
+	glVertex2f(right, bottom);
+	glVertex2f(right, top);
+	glVertex2f(left, top);
+	glEnd();
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
+	glDepthMask(GL_TRUE);
+
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void drawString()
