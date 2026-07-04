@@ -50,6 +50,7 @@ GLint  width = 1024, height = 768;
 GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTable, BZD, texCue, texgt, texhe;
 int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16, BallInNum = 0, AimAt = 0, WaitHit = 0, Hit = 0;
 int leftm = 0, rightm = 0;
+bool TrackpadOrbit = false;
 GLfloat rx, ry, rz, speed = 0;
 static GLfloat kx = 0, ky = 0, kz = 0, zoom = 120;
 static GLfloat anglex = -PI / 2, angley = PI / 3, nowanglex = 0, nowangley = 0, nowatx = 0, nowaty = 0;
@@ -132,6 +133,33 @@ void setMaterial(Material *mat);
 void initLight();
 // Êó±ê¼üÅÌ²Ù×÷
 static void myKeyboard(unsigned char key, int x, int y);
+static void mySpecialKeyboard(int key, int x, int y);
+static void mySpecialKeyboard(int key, int x, int y)
+{
+	const GLfloat orbit_step = 0.08f;
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+		anglex -= orbit_step;
+		break;
+	case GLUT_KEY_RIGHT:
+		anglex += orbit_step;
+		break;
+	case GLUT_KEY_UP:
+		angley -= orbit_step;
+		break;
+	case GLUT_KEY_DOWN:
+		angley += orbit_step;
+		break;
+	default:
+		break;
+	}
+	if (angley <= 0)
+		angley = 0.1f;
+	if (angley > PI / 2)
+		angley = PI / 2;
+}
+
 static void myMouse(int mbutton, int mstate, int x, int y);
 static void mouseMove(int x, int y);
 void b_music();
@@ -171,6 +199,7 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(&myDisplay);
 	glutIdleFunc(&myIdle); //ÉèÖÃ´°¿ÚË¢ÐÂµÄ»Øµ÷º¯Êý
 	glutKeyboardFunc(myKeyboard); //ÉèÖÃ¼üÅÌ»Øµ÷º¯Êý
+	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); //ÉèÖÃÊó±êÆ÷°´¼ü»Øµ÷º¯Êý
 	glutMotionFunc(mouseMove); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
 	glutReshapeFunc(myReshape);
@@ -1064,13 +1093,23 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
 	mx = x; my = y;
-	if (mbutton == GLUT_RIGHT_BUTTON && mstate == GLUT_DOWN)
+	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP && TrackpadOrbit)
+	{
+		TrackpadOrbit = false;
+		rightm = 0;
+		AimAt = 0;
+		Hit = 0;
+		return;
+	}
+	const bool shift_drag = (glutGetModifiers() & GLUT_ACTIVE_SHIFT) != 0;
+	if ((mbutton == GLUT_RIGHT_BUTTON || (mbutton == GLUT_LEFT_BUTTON && shift_drag)) && mstate == GLUT_DOWN)
 	{
 		nowanglex = anglex; nowangley = angley; leftm = 0; rightm = 1;
+		TrackpadOrbit = mbutton == GLUT_LEFT_BUTTON;
 		AimAt = 1;
 	}
-	else { rightm = 0; WaitHit = 0; }
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN)
+	else { rightm = 0; TrackpadOrbit = false; WaitHit = 0; }
+	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN && !shift_drag)
 	{
 		WaitHit = 1;
 		NextPlayer = 1 - CurrPlayer;

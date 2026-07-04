@@ -54,7 +54,9 @@
   * 's': zoon out
   * 'a': camera shift left
   * 'd': camera shift right
+  * arrow keys: orbit view
   * mouse_right_button: orbit view
+  * shift + mouse_left_button drag: orbit view on trackpads
   * mouse_left_button: hit balls
 
 #2 Awesome Points
