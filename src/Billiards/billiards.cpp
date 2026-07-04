@@ -123,7 +123,7 @@ void collideBalls(int j, int k);
 void collideEdge(int j);
 int isBallIn(int j);
 void drawString();
-void myString(float x, float y, void *font, char* c);
+void myString(float x, float y, void *font, const char* c);
 void updatePlayer();
 void initTable();
 void initCue();
@@ -1259,12 +1259,10 @@ void b_music()
 
 void drawString()
 {
-	char *str1 = "Current Player:  Player ";
-	std::string str2 = std::to_string(CurrPlayer + 1);
-	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, str1);
-	myString(140, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
+	std::string player_text = "Current Player:  Player " + std::to_string(CurrPlayer + 1);
+	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, player_text.c_str());
 }
-void myString(float x, float y, void *font, char* c)
+void myString(float x, float y, void *font, const char* c)
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -1281,7 +1279,7 @@ void myString(float x, float y, void *font, char* c)
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glRasterPos2f(x, y);
-	for (c; *c != '\0'; c++) {
+	for (; *c != '\0'; c++) {
 		glutBitmapCharacter(font, *c);
 	}
 
