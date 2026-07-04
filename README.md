@@ -309,3 +309,5 @@ OpenGL and GLUT are deprecated on macOS, so compiler warnings are expected. The 
 ### Audio
 
 Audio is routed through SDL2_mixer on all platforms. Background music loops while the game runs, and hit, pocket, and game-over sounds are played from the bundled WAV files in `src/Billiards/audio`.
+
+The CMake build discovers SDL2 and SDL2_mixer through `pkg-config`, so Windows CMake builds also need `pkg-config` plus SDL2 and SDL2_mixer packages that provide `.pc` metadata.

@@ -19,6 +19,9 @@ public:
 
     ~AudioSystem()
     {
+        if (initialized_) {
+            Mix_HaltChannel(-1);
+        }
         if (background_) {
             Mix_FreeChunk(background_);
         }
