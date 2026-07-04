@@ -107,6 +107,7 @@ void initLoadTexture();
 void initBall();
 void parseLaunchOptions(int argc, char* argv[]);
 void initWindows(void);
+void myReshape(int w, int h);
 void initDecoration();
 void myDisplay(void);
 void set_camera(void);
@@ -171,7 +172,8 @@ int main(int argc, char* argv[])
 	glutIdleFunc(&myIdle); //ÉèÖÃ´°¿ÚË¢ÐÂµÄ»Øµ÷º¯Êý
 	glutKeyboardFunc(myKeyboard); //ÉèÖÃ¼üÅÌ»Øµ÷º¯Êý
 	glutMouseFunc(myMouse); //ÉèÖÃÊó±êÆ÷°´¼ü»Øµ÷º¯Êý
-	glutMotionFunc(mouseMove); //ÉèÖÃÊó±êÆ÷ÒÆ¶¯»Øµ÷º¯Êý
+	glutMotionFunc(mouseMove); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+	glutReshapeFunc(myReshape);
 
 	initLight(); // ¹âÕÕÄ£ÐÍ
 	glutMainLoop();
@@ -196,6 +198,13 @@ void initWindows(void)
 	glutCreateWindow("Billards");
 	if (!WindowedMode)
 		glutFullScreen();
+}
+
+void myReshape(int w, int h)
+{
+	width = w > 0 ? w : WINDOW_WIDTH;
+	height = h > 0 ? h : WINDOW_HEIGHT;
+	glViewport(0, 0, width, height);
 }
 // ³õÊ¼»¯ÇòÎ»ÖÃ
 void initBall()
@@ -450,7 +459,7 @@ void set_camera(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, 16.0 / 9, 10, 10000.0f);
+	gluPerspective(60.0f, static_cast<GLdouble>(width) / static_cast<GLdouble>(height), 10, 10000.0f);
 	glTranslatef(kx, ky, kz);
 	glMatrixMode(GL_TEXTURE);
 	glMatrixMode(GL_MODELVIEW);
@@ -460,15 +469,19 @@ void set_camera(void)
 // »­·¿¼ä
 void renderRoom()
 {
-	// Ê¹ÓÃ " µØ"ÎÆÀí»æÖÆÍÁµØ
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texGround);
+	// Neutral floor keeps the table and balls visually dominant.
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glColor3f(0.18f, 0.20f, 0.19f);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
 	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	//Ìì»¨°å
 	glBindTexture(GL_TEXTURE_2D, tecCeiling);
 	glBegin(GL_QUADS);
@@ -477,35 +490,31 @@ void renderRoom()
 	glTexCoord2f(5.0f, 5.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
 	glTexCoord2f(5.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
 	glEnd();
-	// Ê¹ÓÃ " Ç½"ÎÆÀí»æÖÆÕ¤À¸
-	glBindTexture(GL_TEXTURE_2D, texWall1);
+	// Neutral room walls keep the game view focused on the table.
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glColor3f(0.24f, 0.27f, 0.26f);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
 	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall2);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 }
 // »­×À×Ó
 void renderTable()
@@ -717,19 +726,24 @@ void renderRect()
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	gluOrtho2D(0, 1024, 0, 768);
+	gluOrtho2D(0, width, 0, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	glPushMatrix();
 	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
-	glColor4f(1.0, 1.0, 0.0, 0.1);
-	glBlendFunc(GL_ONE, GL_ZERO);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	glBindTexture(GL_TEXTURE_2D, BZD);
-	glRectf(10, 500, 50, speed + 500);
+	glColor4f(1.0f, 0.82f, 0.12f, 0.72f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	const GLfloat meter_left = 18.0f;
+	const GLfloat meter_bottom = height - 260.0f;
+	const GLfloat meter_top = meter_bottom + speed;
+	glRectf(meter_left, meter_bottom, meter_left + 36.0f, meter_top);
 	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	glDepthMask(GL_TRUE);
 	glPopMatrix();
 	//to3d,Ã²ËÆÃ»ÓÃ
@@ -1210,10 +1224,10 @@ GLuint loadTexture(const char* file_name)
 void initLight(void)
 {
 	//¹âÕÕ´¦Àí
-	GLfloat light_ambient[] = { 0.5, 0.5, 0.5, 1 };
-	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_position0[] = { 0, 390, 0, 1 };
+	GLfloat light_ambient[] = { 0.65f, 0.65f, 0.65f, 1.0f };
+	GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat light_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
+	GLfloat light_position0[] = { 0.0f, 460.0f, 0.0f, 1.0f };
 	//¶¨Òå¹âÎ»ÖÃµÃÆë´Î×ø±ê (x,y,z,w), Èç¹ûw = 1.0, Îª¶¨Î»¹âÔ´£¨Ò²½Ðµã¹âÔ´£© £¬Èç¹û w£½0£¬Îª¶¨Ïò¹âÔ´£¨ÎÞÏÞ¹âÔ´£© £¬¶¨Ïò¹âÔ´ÎªÎÞÇîÔ¶µã£¬Òò¶ø²úÉú¹âÎªÆ½ÐÐ¹â
 	GLfloat light_direction[] = { 0, -1, 0 };
 	glLightfv(L0, GL_AMBIENT, light_ambient); // »·¾³¹â
@@ -1226,10 +1240,10 @@ void initLight(void)
 	glEnable(GL_LIGHTING); // Æô¶¯¹âÕÕ
 	glEnable(L0); // Ê¹µÚÒ»ÕµµÆÓÐÐ§
 				  //²ÄÖÊ´¦Àí
-	GLfloat mat_ambient[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat mat_diffuse[] = { 0.8, 0.8, 0.8, 1 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat mat_shininess[] = { 75.0 }; // ²ÄÖÊ RGBA ¾µÃæÖ¸Êý£¬ÊýÖµÔÚ 0¡«128 ·¶Î§ÄÚ
+	GLfloat mat_ambient[] = { 0.35f, 0.35f, 0.35f, 1.0f };
+	GLfloat mat_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat mat_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
+	GLfloat mat_shininess[] = { 45.0f }; // ²ÄÖÊ RGBA ¾µÃæÖ¸Êý£¬ÊýÖµÔÚ 0¡«128 ·¶Î§ÄÚ
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
@@ -1247,31 +1261,33 @@ void drawString()
 {
 	char *str1 = "Current Player:  Player ";
 	std::string str2 = std::to_string(CurrPlayer + 1);
-	myString(18, 700, GLUT_BITMAP_TIMES_ROMAN_24, str1);
-	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
+	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, str1);
+	myString(140, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
 }
 void myString(float x, float y, void *font, char* c)
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	gluOrtho2D(0, 1024, 0, 768);
+	gluOrtho2D(0, width, 0, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	glPushMatrix();
 	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0);
-	glBlendFunc(GL_ONE, GL_ZERO);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	glBindTexture(GL_TEXTURE_2D, BZD);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glRasterPos2f(x, y);
 	for (c; *c != '\0'; c++) {
 		glutBitmapCharacter(font, *c);
 	}
 
 	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	glDepthMask(GL_TRUE);
 	glPopMatrix();
 
