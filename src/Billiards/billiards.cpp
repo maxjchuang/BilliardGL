@@ -79,6 +79,7 @@ bool Hitted = false;
 bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
+bool WindowedMode = true;
 
 //定义球及位置矢量结构体
 struct Point
@@ -104,6 +105,7 @@ GLuint loadTexture(const char* file_name);
 void initLoadTexture();
 // 场景绘制
 void initBall();
+void parseLaunchOptions(int argc, char* argv[]);
 void initWindows(void);
 void initDecoration();
 void myDisplay(void);
@@ -147,6 +149,7 @@ particle* init_flame()
 
 int main(int argc, char* argv[])
 {
+	parseLaunchOptions(argc, argv);
 	std::thread t(b_music);
 	t.detach();
 	glutInit(&argc, argv);
@@ -176,10 +179,23 @@ int main(int argc, char* argv[])
 }
 
 // 初始化窗口
+void parseLaunchOptions(int argc, char* argv[])
+{
+	for (int i = 1; i < argc; ++i)
+	{
+		if (strcmp(argv[i], "--windowed") == 0)
+			WindowedMode = true;
+		else if (strcmp(argv[i], "--fullscreen") == 0)
+			WindowedMode = false;
+	}
+}
+
 void initWindows(void)
 {
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Billards");
-	glutFullScreen();
+	if (!WindowedMode)
+		glutFullScreen();
 }
 // 初始化球位置
 void initBall()

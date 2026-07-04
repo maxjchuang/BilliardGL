@@ -270,6 +270,8 @@ cmake --build build
 ./build/Billiards
 ```
 
+By default, the game runs in a 1024x768 window. Use `./build/Billiards --fullscreen` to run fullscreen, or `./build/Billiards --windowed` to explicitly request windowed mode.
+
 Running the game requires an available graphical display, such as a local desktop session or a configured X server.
 
 For a headless smoke test on Linux, use a virtual X display:
@@ -303,6 +305,8 @@ cmake -S . -B build
 cmake --build build
 ./build/Billiards
 ```
+
+By default, the game runs in a 1024x768 window. Use `./build/Billiards --fullscreen` to run fullscreen, or `./build/Billiards --windowed` to explicitly request windowed mode.
 
 OpenGL and GLUT are deprecated on macOS, so compiler warnings are expected. The first migration phase accepts those warnings as long as the program builds and runs.
 
