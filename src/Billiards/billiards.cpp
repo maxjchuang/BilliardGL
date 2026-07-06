@@ -10,10 +10,17 @@
 #endif
 
 #include "ObjLoader.h"
+#include "assets.h"
+#include "game_state.h"
+#include "hud.h"
+#include "input.h"
 #include "particle.h"
+#include "physics.h"
 #include "platform_audio.h"
 #include "platform_time.h"
 #include "resource_path.h"
+#include "renderer.h"
+#include "screenshot.h"
 
 #include <cmath>
 #include <cstdio>
@@ -61,10 +68,10 @@ GLfloat m[16];
 GLuint tableVertexVBO, cueVertexVBO, benchVertexVBO, wardVertexVBO, paint1VertexVBO;
 GLuint textureIDtest[2];
 GLuint textureCue[2], textureWard, texturePaint1, texturePaint2;
-ObjLoader tableObj(billiardgl::objectPath("table.obj"));
-ObjLoader cueObj(billiardgl::objectPath("cue.obj"));
-ObjLoader benchObj(billiardgl::objectPath("bench.obj"));
-ObjLoader wardObj(billiardgl::objectPath("wardrobe.obj"));
+ObjLoader tableObj(billiardgl::getObjectPath("table.obj"));
+ObjLoader cueObj(billiardgl::getObjectPath("cue.obj"));
+ObjLoader benchObj(billiardgl::getObjectPath("bench.obj"));
+ObjLoader wardObj(billiardgl::getObjectPath("wardrobe.obj"));
 
 bool IsMoving = false;
 bool transPerc = false;
@@ -82,6 +89,8 @@ bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
 bool WindowedMode = true;
+static std::string ScreenshotPath;
+static billiardgl::GameState Game;
 
 //定义球及位置矢量结构体
 struct Point
@@ -140,28 +149,11 @@ static void myKeyboard(unsigned char key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y)
 {
-	const GLfloat orbit_step = 0.08f;
-	switch (key)
-	{
-	case GLUT_KEY_LEFT:
-		anglex -= orbit_step;
-		break;
-	case GLUT_KEY_RIGHT:
-		anglex += orbit_step;
-		break;
-	case GLUT_KEY_UP:
-		angley -= orbit_step;
-		break;
-	case GLUT_KEY_DOWN:
-		angley += orbit_step;
-		break;
-	default:
-		break;
-	}
-	if (angley <= 0)
-		angley = 0.1f;
-	if (angley > PI / 2)
-		angley = PI / 2;
+	Game.camera.angleX = anglex;
+	Game.camera.angleY = angley;
+	billiardgl::handleSpecialKey(Game, GLUT_KEY_LEFT, GLUT_KEY_RIGHT, GLUT_KEY_UP, GLUT_KEY_DOWN, key);
+	anglex = Game.camera.angleX;
+	angley = Game.camera.angleY;
 }
 
 static void myMouse(int mbutton, int mstate, int x, int y);
@@ -222,6 +214,11 @@ void parseLaunchOptions(int argc, char* argv[])
 			WindowedMode = true;
 		else if (strcmp(argv[i], "--fullscreen") == 0)
 			WindowedMode = false;
+		else if (strcmp(argv[i], "--screenshot") == 0 && i + 1 < argc)
+		{
+			ScreenshotPath = argv[++i];
+			WindowedMode = true;
+		}
 	}
 }
 
@@ -242,6 +239,7 @@ void myReshape(int w, int h)
 // 初始化球位置
 void initBall()
 {
+	billiardgl::initializeBalls(Game);
 	Point s;
 	s.x = 0;
 	s.z = TABLE_IN_LENGTH / 4;
@@ -283,8 +281,8 @@ void initBall()
 
 void initTable() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string tableTexture0 = billiardgl::texturePath(tableObj.materials[0]->texture);
-	const std::string tableTexture1 = billiardgl::texturePath(tableObj.materials[1]->texture);
+	const std::string tableTexture0 = billiardgl::getTexturePath(tableObj.materials[0]->texture);
+	const std::string tableTexture1 = billiardgl::getTexturePath(tableObj.materials[1]->texture);
 	textureIDtest[0] = loadTexture(tableTexture0.c_str());
 	textureIDtest[1] = loadTexture(tableTexture1.c_str());
 
@@ -403,8 +401,8 @@ void initDecoration() {
 }
 void initCue() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string cueTexture0 = billiardgl::texturePath(cueObj.materials[0]->texture);
-	const std::string cueTexture1 = billiardgl::texturePath(cueObj.materials[1]->texture);
+	const std::string cueTexture0 = billiardgl::getTexturePath(cueObj.materials[0]->texture);
+	const std::string cueTexture1 = billiardgl::getTexturePath(cueObj.materials[1]->texture);
 	textureCue[0] = loadTexture(cueTexture0.c_str());
 	textureCue[1] = loadTexture(cueTexture1.c_str());
 	cout << cueObj.materials[1]->texture << endl;
@@ -451,16 +449,27 @@ void setMaterial(Material *mat) {
 // display
 void myDisplay(void)
 {
+	if (!ScreenshotPath.empty())
+	{
+		at[0] = zoom*(cos(anglex)) + at[3];
+		at[1] = zoom*(cos(angley)) + at[4];
+		at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
+	}
 	set_camera();
-	renderRoom();
-
-	//	glEnable(GL_CULL_FACE);
-	renderTable();
-	renderBall();
-	renderDecoration();
-
-	if (AimAt == 1)
-		renderCue();
+	Game.camera.eye[0] = at[0];
+	Game.camera.eye[1] = at[1];
+	Game.camera.eye[2] = at[2];
+	Game.camera.target[0] = at[3];
+	Game.camera.target[1] = at[4];
+	Game.camera.target[2] = at[5];
+	const billiardgl::RenderHooks hooks = {
+		renderRoom,
+		renderTable,
+		renderBall,
+		AimAt == 1 ? renderCue : nullptr,
+		renderDecoration
+	};
+	billiardgl::renderScene(Game, hooks);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
@@ -483,11 +492,17 @@ void myDisplay(void)
 		renderRect();
 
 	updatePlayer();
-	drawString();
-	if (ShowHelp)
-		drawHelpOverlay();
-	else
-		drawHelpPrompt();
+	Game.config.width = width;
+	Game.config.height = height;
+	Game.players.currentPlayer = CurrPlayer;
+	Game.hud.showHelp = ShowHelp;
+	billiardgl::drawHud(Game);
+	if (!ScreenshotPath.empty())
+	{
+		const bool saved = billiardgl::saveFramebufferToPpm(ScreenshotPath, width, height);
+		glutSwapBuffers();
+		std::exit(saved ? 0 : 2);
+	}
 	glutSwapBuffers();
 }
 // 设置视点
@@ -791,6 +806,8 @@ void renderRect()
 // 更新位置、球数量、速度
 void myIdle(void)
 {
+	// Physics has a GameState-backed implementation in physics.cpp.
+	// The old globals remain active until rendering is moved to GameState.
 	GLfloat vx = 0, vz = 0;
 	at[0] = zoom*(cos(anglex)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];
@@ -839,6 +856,8 @@ void myIdle(void)
 		atxy = sqrt(pow(at[3] - at[0], 2) + pow(at[5] - at[2], 2));
 		Ball[0].v.x = speed*(at[3] - at[0]) / atxy;
 		Ball[0].v.z = speed*(at[5] - at[2]) / atxy;
+		billiardgl::setBallVelocity(Game.balls[0], Ball[0].v.x, Ball[0].v.y, Ball[0].v.z);
+		Game.players.shotTaken = Hitted;
 		Hit = 0;
 		for (i = speed * 100; i > 0; i--) {
 			speed -= 0.01;
@@ -1014,9 +1033,11 @@ static void myKeyboard(unsigned char key, int x, int y)
 {
 	if (key == 'h' || key == 'H')
 	{
-		ShowHelp = !ShowHelp;
-		WaitHit = 0;
-		Hit = 0;
+		Game.hud.showHelp = ShowHelp;
+		billiardgl::handleHelpKey(Game);
+		ShowHelp = Game.hud.showHelp;
+		WaitHit = Game.input.waitingForHit ? 1 : 0;
+		Hit = Game.input.hitRequested ? 1 : 0;
 		return;
 	}
 	if (ShowHelp && key != 27)
@@ -1175,37 +1196,37 @@ static void mouseMove(int x, int y)
 // 载入纹理
 void initLoadTexture()
 {
-	Ball[1].texture = loadTexture(billiardgl::texturePath("B1.bmp").c_str());
-	Ball[2].texture = loadTexture(billiardgl::texturePath("B2.bmp").c_str());
-	Ball[3].texture = loadTexture(billiardgl::texturePath("B3.bmp").c_str());
-	Ball[4].texture = loadTexture(billiardgl::texturePath("B4.bmp").c_str());
-	Ball[5].texture = loadTexture(billiardgl::texturePath("B5.bmp").c_str());
-	Ball[6].texture = loadTexture(billiardgl::texturePath("B6.bmp").c_str());
-	Ball[7].texture = loadTexture(billiardgl::texturePath("B7.bmp").c_str());
-	Ball[8].texture = loadTexture(billiardgl::texturePath("B8.bmp").c_str());
-	Ball[9].texture = loadTexture(billiardgl::texturePath("B9.bmp").c_str());
-	Ball[10].texture = loadTexture(billiardgl::texturePath("B10.bmp").c_str());
-	Ball[11].texture = loadTexture(billiardgl::texturePath("B11.bmp").c_str());
-	Ball[12].texture = loadTexture(billiardgl::texturePath("B12.bmp").c_str());
-	Ball[13].texture = loadTexture(billiardgl::texturePath("B13.bmp").c_str());
-	Ball[14].texture = loadTexture(billiardgl::texturePath("B14.bmp").c_str());
-	Ball[15].texture = loadTexture(billiardgl::texturePath("B15.bmp").c_str());
-	Ball[0].texture = loadTexture(billiardgl::texturePath("B16.bmp").c_str());
-	texGround = loadTexture(billiardgl::texturePath("ground.bmp").c_str());//ground
-	texWall = loadTexture(billiardgl::texturePath("wall.bmp").c_str());//wall
-	texWall1 = loadTexture(billiardgl::texturePath("wall1.bmp").c_str());
-	texWall2 = loadTexture(billiardgl::texturePath("wall2.bmp").c_str());
-	tecCeiling = loadTexture(billiardgl::texturePath("ceiling.bmp").c_str());//天花板
-	BZD = loadTexture(billiardgl::texturePath("black.bmp").c_str());
-	texTableCloth = loadTexture(billiardgl::texturePath("green.bmp").c_str());//桌面
-	texTable = loadTexture(billiardgl::texturePath("wood.bmp").c_str());//球桌边缘
-	texCue = loadTexture(billiardgl::texturePath("wood.bmp").c_str());
-	texgt = loadTexture(billiardgl::texturePath("green.bmp").c_str());
-	texhe = loadTexture(billiardgl::texturePath("black.bmp").c_str());
-	textureWard = loadTexture(billiardgl::texturePath("5.bmp").c_str());
-	texturePaint1 = loadTexture(billiardgl::texturePath("6.bmp").c_str());
-	texturePaint2 = loadTexture(billiardgl::texturePath("7.bmp").c_str());
-	texture[2] = loadTexture(billiardgl::texturePath("flame2.bmp").c_str());
+	Ball[1].texture = loadTexture(billiardgl::getTexturePath("B1.bmp").c_str());
+	Ball[2].texture = loadTexture(billiardgl::getTexturePath("B2.bmp").c_str());
+	Ball[3].texture = loadTexture(billiardgl::getTexturePath("B3.bmp").c_str());
+	Ball[4].texture = loadTexture(billiardgl::getTexturePath("B4.bmp").c_str());
+	Ball[5].texture = loadTexture(billiardgl::getTexturePath("B5.bmp").c_str());
+	Ball[6].texture = loadTexture(billiardgl::getTexturePath("B6.bmp").c_str());
+	Ball[7].texture = loadTexture(billiardgl::getTexturePath("B7.bmp").c_str());
+	Ball[8].texture = loadTexture(billiardgl::getTexturePath("B8.bmp").c_str());
+	Ball[9].texture = loadTexture(billiardgl::getTexturePath("B9.bmp").c_str());
+	Ball[10].texture = loadTexture(billiardgl::getTexturePath("B10.bmp").c_str());
+	Ball[11].texture = loadTexture(billiardgl::getTexturePath("B11.bmp").c_str());
+	Ball[12].texture = loadTexture(billiardgl::getTexturePath("B12.bmp").c_str());
+	Ball[13].texture = loadTexture(billiardgl::getTexturePath("B13.bmp").c_str());
+	Ball[14].texture = loadTexture(billiardgl::getTexturePath("B14.bmp").c_str());
+	Ball[15].texture = loadTexture(billiardgl::getTexturePath("B15.bmp").c_str());
+	Ball[0].texture = loadTexture(billiardgl::getTexturePath("B16.bmp").c_str());
+	texGround = loadTexture(billiardgl::getTexturePath("ground.bmp").c_str());//ground
+	texWall = loadTexture(billiardgl::getTexturePath("wall.bmp").c_str());//wall
+	texWall1 = loadTexture(billiardgl::getTexturePath("wall1.bmp").c_str());
+	texWall2 = loadTexture(billiardgl::getTexturePath("wall2.bmp").c_str());
+	tecCeiling = loadTexture(billiardgl::getTexturePath("ceiling.bmp").c_str());//天花板
+	BZD = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
+	texTableCloth = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());//桌面
+	texTable = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());//球桌边缘
+	texCue = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());
+	texgt = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());
+	texhe = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
+	textureWard = loadTexture(billiardgl::getTexturePath("5.bmp").c_str());
+	texturePaint1 = loadTexture(billiardgl::getTexturePath("6.bmp").c_str());
+	texturePaint2 = loadTexture(billiardgl::getTexturePath("7.bmp").c_str());
+	texture[2] = loadTexture(billiardgl::getTexturePath("flame2.bmp").c_str());
 }
 int isPowerOfTwo(int n)
 {
@@ -1442,6 +1463,8 @@ void updatePlayer()
 		if ((!IsIllegal) && (NextPlayer == CurrPlayer));
 		else
 			CurrPlayer = 1 - CurrPlayer;
+		Game.players.currentPlayer = CurrPlayer;
 		updated = true;
+		Game.players.updatedAfterShot = updated;
 	}
 }
