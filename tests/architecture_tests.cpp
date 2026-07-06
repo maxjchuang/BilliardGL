@@ -30,6 +30,9 @@ int main()
     assertNotContains(billiards, "bool Fired[");
     assertNotContains(billiards, "bool AllFired");
     assertNotContains(billiards, "new emitter(");
+    assertNotContains(billiards, "Game.camera.target[0] - Game.camera.eye[0]");
+    assertNotContains(billiards, "Game.camera.target[2] - Game.camera.eye[2]");
+    assertNotContains(billiards, "pow(Game.camera.target[0] - Game.camera.eye[0]");
 
     return 0;
 }
