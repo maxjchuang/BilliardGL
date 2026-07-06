@@ -19,6 +19,13 @@ void handleHelpKey(GameState& state)
     state.input.hitRequested = false;
 }
 
+void handleAimToggleKey(GameState& state)
+{
+    state.aim.mode = state.aim.mode == AimMode::Observe ? AimMode::Aim : AimMode::Observe;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = false;
+}
+
 void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, int keyDown, int key)
 {
     const float orbitStep = 0.08f;
@@ -101,6 +108,11 @@ void handleMouseMove(GameState& state, int x, int y)
     const int dy = y - state.input.mouseY;
     state.input.mouseX = x;
     state.input.mouseY = y;
+
+    if (state.aim.mode == AimMode::Aim) {
+        state.aim.yaw += static_cast<float>(dx) * state.aim.sensitivity;
+        return;
+    }
 
     if (state.input.rightMouseDown || state.input.trackpadOrbit) {
         state.camera.angleX += static_cast<float>(dx) * 0.01f;
