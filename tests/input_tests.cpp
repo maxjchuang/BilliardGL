@@ -121,12 +121,15 @@ void testAimToggleSwitchesModes()
 {
     billiardgl::GameState state;
     assert(state.aim.mode == billiardgl::AimMode::Observe);
+    assert(!state.players.aimingAtCueBall);
 
     billiardgl::handleAimToggleKey(state);
     assert(state.aim.mode == billiardgl::AimMode::Aim);
+    assert(state.players.aimingAtCueBall);
 
     billiardgl::handleAimToggleKey(state);
     assert(state.aim.mode == billiardgl::AimMode::Observe);
+    assert(!state.players.aimingAtCueBall);
 }
 
 void testCameraOrbitDoesNotChangeAimInObserveMode()

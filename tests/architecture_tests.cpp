@@ -19,6 +19,11 @@ void assertNotContains(const std::string& content, const std::string& needle)
     assert(content.find(needle) == std::string::npos);
 }
 
+void assertContains(const std::string& content, const std::string& needle)
+{
+    assert(content.find(needle) != std::string::npos);
+}
+
 }
 
 int main()
@@ -34,6 +39,9 @@ int main()
     assertNotContains(billiards, "Game.camera.target[0] - Game.camera.eye[0]");
     assertNotContains(billiards, "Game.camera.target[2] - Game.camera.eye[2]");
     assertNotContains(billiards, "pow(Game.camera.target[0] - Game.camera.eye[0]");
+    assertContains(billiards, "glutMotionFunc(mouseMove)");
+    assertContains(billiards, "glutPassiveMotionFunc(mouseMove)");
+    assertContains(billiards, "billiardgl::handleMouseMove(Game, x, y)");
     assertNotContains(renderer, "resources.cameraEye[0] - resources.cameraTarget[0]");
     assertNotContains(renderer, "resources.cameraEye[2] - resources.cameraTarget[2]");
     assertNotContains(renderer, "state.camera.angleX * 180.0f");

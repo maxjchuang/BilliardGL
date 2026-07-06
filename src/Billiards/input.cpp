@@ -22,6 +22,7 @@ void handleHelpKey(GameState& state)
 void handleAimToggleKey(GameState& state)
 {
     state.aim.mode = state.aim.mode == AimMode::Observe ? AimMode::Aim : AimMode::Observe;
+    state.players.aimingAtCueBall = state.aim.mode == AimMode::Aim;
     state.input.rightMouseDown = false;
     state.input.trackpadOrbit = false;
 }
