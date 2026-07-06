@@ -301,6 +301,63 @@ void renderParticles(const GameState& state, RenderResources& resources)
 
 }  // namespace
 
+void setupCameraFromGameState(const GameState& state)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(
+        60.0f,
+        static_cast<GLdouble>(state.config.width) / static_cast<GLdouble>(state.config.height),
+        10.0,
+        10000.0);
+    glTranslatef(state.camera.panX, state.camera.panY, state.camera.panZ);
+    glMatrixMode(GL_TEXTURE);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(
+        state.camera.eye[0],
+        state.camera.eye[1],
+        state.camera.eye[2],
+        state.camera.target[0],
+        state.camera.target[1],
+        state.camera.target[2],
+        0.0,
+        1.0,
+        0.0);
+}
+
+void setupLights()
+{
+    GLfloat lightAmbient[] = {0.65f, 0.65f, 0.65f, 1.0f};
+    GLfloat lightDiffuse[] = {0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat lightSpecular[] = {0.55f, 0.55f, 0.55f, 1.0f};
+    GLfloat lightPosition[] = {0.0f, 460.0f, 0.0f, 1.0f};
+    GLfloat lightDirection[] = {0.0f, -1.0f, 0.0f};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 180.0f);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0f);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    GLfloat matAmbient[] = {0.35f, 0.35f, 0.35f, 1.0f};
+    GLfloat matDiffuse[] = {0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat matSpecular[] = {0.55f, 0.55f, 0.55f, 1.0f};
+    GLfloat matShininess[] = {45.0f};
+    glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glEnable(GL_DEPTH_TEST);
+    glShadeModel(GL_SMOOTH);
+}
+
 void renderScene(const GameState& state, RenderResources& resources)
 {
     renderRoom(resources);

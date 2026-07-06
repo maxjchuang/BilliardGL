@@ -83,16 +83,9 @@ void prepareScreenshotScene();
 void initWindows(void);
 void myReshape(int w, int h);
 void myDisplay(void);
-void set_camera(void);
 void myIdle(void);
-void drawString();
-void drawHelpPrompt();
-void drawHelpOverlay();
-void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
-void myString(float x, float y, void *font, const char* c);
 void updatePlayer();
 // ¹âÔ´
-void initLight();
 // Êó±ê¼üÅÌ²Ù×÷
 static void myKeyboard(unsigned char key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y);
@@ -153,7 +146,7 @@ int main(int argc, char* argv[])
 	glutMotionFunc(mouseMove); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
 	glutReshapeFunc(myReshape);
 
-	initLight(); // ¹âÕÕÄ£ÐÍ
+	billiardgl::setupLights();
 	glutMainLoop();
 	return 0;
 }
@@ -275,7 +268,7 @@ void myDisplay(void)
 	{
 		billiardgl::updateCameraFromCueBall(Game);
 	}
-	set_camera();
+	billiardgl::setupCameraFromGameState(Game);
 	Render.cameraEye[0] = Game.camera.eye[0];
 	Render.cameraEye[1] = Game.camera.eye[1];
 	Render.cameraEye[2] = Game.camera.eye[2];
@@ -290,6 +283,7 @@ void myDisplay(void)
 	Render.allFired = AllFired;
 	for (int i = 0; i < ballcnt; ++i)
 		Render.fired[i] = Fired[i];
+	billiardgl::setupCameraFromGameState(Game);
 	billiardgl::renderScene(Game, Render);
 
 	updatePlayer();
@@ -305,18 +299,6 @@ void myDisplay(void)
 	glutSwapBuffers();
 }
 // ÉèÖÃÊÓµã
-void set_camera(void)
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0f, static_cast<GLdouble>(width) / static_cast<GLdouble>(height), 10, 10000.0f);
-	glTranslatef(Game.camera.panX, Game.camera.panY, Game.camera.panZ);
-	glMatrixMode(GL_TEXTURE);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(Game.camera.eye[0], Game.camera.eye[1], Game.camera.eye[2], Game.camera.target[0], Game.camera.target[1], Game.camera.target[2], 0.0, 1.0, 0.0);//0.0,300.0,500.0,0.0,80.0,0.0
-}
 // »­·¿¼ä
 void myIdle(void)
 {
@@ -566,154 +548,11 @@ static void mouseMove(int x, int y)
 		Game.camera.angleY = PI / 2;
 }
 // ÔØÈëÎÆÀí
-void initLight(void)
-{
-	//¹âÕÕ´¦Àí
-	GLfloat light_ambient[] = { 0.65f, 0.65f, 0.65f, 1.0f };
-	GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-	GLfloat light_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
-	GLfloat light_position0[] = { 0.0f, 460.0f, 0.0f, 1.0f };
-	//¶¨Òå¹âÎ»ÖÃµÃÆë´Î×ø±ê (x,y,z,w), Èç¹ûw = 1.0, Îª¶¨Î»¹âÔ´£¨Ò²½Ðµã¹âÔ´£© £¬Èç¹û w£½0£¬Îª¶¨Ïò¹âÔ´£¨ÎÞÏÞ¹âÔ´£© £¬¶¨Ïò¹âÔ´ÎªÎÞÇîÔ¶µã£¬Òò¶ø²úÉú¹âÎªÆ½ÐÐ¹â
-	GLfloat light_direction[] = { 0, -1, 0 };
-	glLightfv(L0, GL_AMBIENT, light_ambient); // »·¾³¹â
-	glLightfv(L0, GL_DIFFUSE, light_diffuse); // ÂþÉä¹â
-	glLightfv(L0, GL_SPECULAR, light_specular); // ¾µÃæ·´Éä
-	glLightfv(L0, GL_POSITION, light_position0); // ¹âÕÕÎ»ÖÃ
-	glLightfv(L0, GL_SPOT_DIRECTION, light_direction);//¾Û¹â·½Ïò
-	glLightf(L0, GL_SPOT_CUTOFF, 180.0f);//¾Û¹â½ØÖÁ½Ç
-	glLightf(L0, GL_SPOT_EXPONENT, 0);//¾Û¹âÖ¸Êý
-	glEnable(GL_LIGHTING); // Æô¶¯¹âÕÕ
-	glEnable(L0); // Ê¹µÚÒ»ÕµµÆÓÐÐ§
-				  //²ÄÖÊ´¦Àí
-	GLfloat mat_ambient[] = { 0.35f, 0.35f, 0.35f, 1.0f };
-	GLfloat mat_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-	GLfloat mat_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
-	GLfloat mat_shininess[] = { 45.0f }; // ²ÄÖÊ RGBA ¾µÃæÖ¸Êý£¬ÊýÖµÔÚ 0¡«128 ·¶Î§ÄÚ
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glEnable(GL_DEPTH_TEST); // ²âÊÔÉî¶È»º´æ
-	glShadeModel(GL_SMOOTH);
-}
 void b_music()
 {
 	billiardgl::playBackgroundLoop();
 }
 
-void drawHelpPrompt()
-{
-	myString(18, height - 94, GLUT_BITMAP_HELVETICA_18, "Press H for help");
-}
-
-void drawHelpOverlay()
-{
-	const float panel_width = 520.0f;
-	const float panel_height = 330.0f;
-	const float left = (width - panel_width) * 0.5f;
-	const float bottom = (height - panel_height) * 0.5f;
-	const float top = bottom + panel_height;
-	const float text_left = left + 34.0f;
-	float y = top - 44.0f;
-
-	drawScreenRect(left, bottom, left + panel_width, top, 0.04f, 0.06f, 0.05f, 0.82f);
-	myString(text_left, y, GLUT_BITMAP_TIMES_ROMAN_24, "BilliardGL Help");
-	y -= 42.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Camera");
-	y -= 28.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "W / S                 Zoom in / out");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "A / D                 Pan left / right");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Arrow keys            Orbit view");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Right mouse drag      Orbit view");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Shift + trackpad drag Orbit view");
-	y -= 38.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Play");
-	y -= 28.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse hold       Charge shot");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse release    Game.input.hitRequested cue ball");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "H                     Toggle help");
-	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Esc                   Quit");
-}
-
-void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a)
-{
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(0, width, 0, height);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	glDepthMask(GL_FALSE);
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glColor4f(r, g, b, a);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBegin(GL_QUADS);
-	glVertex2f(left, bottom);
-	glVertex2f(right, bottom);
-	glVertex2f(right, top);
-	glVertex2f(left, top);
-	glEnd();
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-	glDepthMask(GL_TRUE);
-
-	glPopMatrix();
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-}
-
-void drawString()
-{
-	std::string player_text = "Current Player:  Player " + std::to_string(Game.players.currentPlayer + 1);
-	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, player_text.c_str());
-}
-void myString(float x, float y, void *font, const char* c)
-{
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(0, width, 0, height);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glPushMatrix();
-	glDepthMask(GL_FALSE);
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glRasterPos2f(x, y);
-	for (; *c != '\0'; c++) {
-		glutBitmapCharacter(font, *c);
-	}
-
-	glDisable(GL_BLEND);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-	glDepthMask(GL_TRUE);
-	glPopMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-}
 void updatePlayer()
 {
 	billiardgl::updatePlayerAfterShot(Game);
