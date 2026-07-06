@@ -165,6 +165,7 @@ void initLoadTexture();
 // 场景绘制
 void initBall();
 void parseLaunchOptions(int argc, char* argv[]);
+void prepareScreenshotScene();
 void initWindows(void);
 void myReshape(int w, int h);
 void initDecoration();
@@ -251,6 +252,8 @@ int main(int argc, char* argv[])
 		Render.emitters[i] = e[i];
 	}
 
+	prepareScreenshotScene();
+
 	glutDisplayFunc(&myDisplay);
 	glutIdleFunc(&myIdle); //设置窗口刷新的回调函数
 	glutKeyboardFunc(myKeyboard); //设置键盘回调函数
@@ -278,6 +281,46 @@ void parseLaunchOptions(int argc, char* argv[])
 			ScreenshotPath = argv[++i];
 			WindowedMode = true;
 		}
+		else if (strcmp(argv[i], "--screenshot-scene") == 0 && i + 1 < argc)
+		{
+			const char* scene = argv[++i];
+			if (strcmp(scene, "default") == 0)
+				Game.config.screenshotScene = billiardgl::ScreenshotScene::Default;
+			else if (strcmp(scene, "help") == 0)
+				Game.config.screenshotScene = billiardgl::ScreenshotScene::Help;
+			else if (strcmp(scene, "after-shot") == 0)
+				Game.config.screenshotScene = billiardgl::ScreenshotScene::AfterShot;
+			else
+			{
+				std::fprintf(stderr, "Unknown screenshot scene: %s\n", scene);
+				std::exit(1);
+			}
+		}
+	}
+}
+
+void prepareScreenshotScene()
+{
+	if (ScreenshotPath.empty())
+		return;
+
+	if (Game.config.screenshotScene == billiardgl::ScreenshotScene::Help)
+	{
+		Game.hud.showHelp = true;
+		return;
+	}
+
+	if (Game.config.screenshotScene == billiardgl::ScreenshotScene::AfterShot)
+	{
+		billiardgl::setBallVelocity(Game.balls[0], 30.0f, 0.0f, 0.0f);
+		Game.players.shotTaken = true;
+		Game.ballsMoving = true;
+		for (int step = 0; step < 30; ++step)
+			billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
+		billiardgl::updateCameraFromCueBall(Game);
+		at[3] = Game.camera.target[0];
+		at[4] = Game.camera.target[1];
+		at[5] = Game.camera.target[2];
 	}
 }
 

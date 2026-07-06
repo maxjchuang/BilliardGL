@@ -74,11 +74,18 @@ struct HudState {
     bool showHelp = false;
 };
 
+enum class ScreenshotScene {
+    Default,
+    Help,
+    AfterShot
+};
+
 struct RuntimeConfig {
     bool windowedMode = true;
     int width = 1024;
     int height = 768;
     std::string screenshotPath;
+    ScreenshotScene screenshotScene = ScreenshotScene::Default;
 };
 
 struct GameplayEvents {

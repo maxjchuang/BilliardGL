@@ -49,5 +49,14 @@ int main()
         return fail("visible pixel check should reject all-black image data");
     }
 
+    const std::vector<unsigned char> regionImage = {
+        0, 0, 0,   0, 0, 0,    0, 0, 0,
+        0, 0, 0,   5, 6, 7,    0, 0, 0,
+        0, 0, 0,   0, 0, 0,    9, 10, 11,
+    };
+    if (billiardgl::countVisiblePixelsInRegion(regionImage, 3, 3, 1, 1, 2, 2) != 1) {
+        return fail("region visible pixel count should detect visible pixels in bounds");
+    }
+
     return EXIT_SUCCESS;
 }
