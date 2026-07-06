@@ -63,6 +63,11 @@ bool anyBallMoving(const GameState& state)
     return false;
 }
 
+void clearGameplayEvents(GameState& state)
+{
+    state.events = GameplayEvents{};
+}
+
 void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls)
 {
     for (int i = 0; i < kBallCount; ++i) {

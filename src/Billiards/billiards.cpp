@@ -16,6 +16,7 @@
 #include "input.h"
 #include "particle.h"
 #include "physics.h"
+#include "rules.h"
 #include "platform_audio.h"
 #include "platform_time.h"
 #include "resource_path.h"
@@ -851,70 +852,49 @@ void renderRect()
 // 更新位置、球数量、速度
 void myIdle(void)
 {
-	// Physics has a GameState-backed implementation in physics.cpp.
-	// The old globals remain active until rendering is moved to GameState.
-	GLfloat vx = 0, vz = 0;
-	at[0] = zoom*(cos(anglex)) + at[3];
-	at[1] = zoom*(cos(angley)) + at[4];
-	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
-	bool flag = false;
-	for (i = 0; i<ballcnt; i++)
-	{
-		if (Ball[i].isIn == 0)
-		{
-			for (k = i + 1; k<ballcnt; k++) collideBalls(i, k);// 碰撞检测
-			collideEdge(i);
-			isBallIn(i);
-			Ball[i].mv = pow(Ball[i].v.x, 2) + pow(Ball[i].v.z, 2);
-			if (Ball[i].mv>0.1)
-			{
-				Ball[i].mv = sqrt(Ball[i].mv);
-				vx = Ball[i].v.x / Ball[i].mv;
-				vz = Ball[i].v.z / Ball[i].mv;
-				Ball[i].mv += G*T;
-				Ball[i].v.x = Ball[i].mv*vx;
-				Ball[i].v.z = Ball[i].mv*vz;
-				Ball[i].p.x += Ball[i].v.x*T;
-				Ball[i].p.z += Ball[i].v.z*T;
-				Ball[i].a.x = (-1)*vz;
-				Ball[i].a.z = vx;
-				Ball[i].ma += -180 * Ball[i].mv*T / (Radius*PI);
-				flag = true;
-			}
-			else Ball[i].mv = 0;
-		}
-	}
-	if (!flag)
-	{
-		IsMoving = false;
-	}
-	else
-		IsMoving = true;
+	at[3] = Ball[0].p.x;
+	at[4] = Ball[0].p.y;
+	at[5] = Ball[0].p.z;
+	at[0] = zoom * (cos(anglex)) + at[3];
+	at[1] = zoom * (cos(angley)) + at[4];
+	at[2] = zoom * (sin(anglex) * sin(angley)) + at[5];
+
 	if (WaitHit == 1)
 	{
-		if (speed>200) speed -= 200;
+		if (speed > 200) speed -= 200;
 		else speed += 2;
 	}
+
 	if (Hit == 1)
 	{
-		GLfloat atxy = 0;
-		atxy = sqrt(pow(at[3] - at[0], 2) + pow(at[5] - at[2], 2));
-		Ball[0].v.x = speed*(at[3] - at[0]) / atxy;
-		Ball[0].v.z = speed*(at[5] - at[2]) / atxy;
-		billiardgl::setBallVelocity(Game.balls[0], Ball[0].v.x, Ball[0].v.y, Ball[0].v.z);
-		Game.players.shotTaken = Hitted;
-		Hit = 0;
-		for (i = speed * 100; i > 0; i--) {
-			speed -= 0.01;
+		const GLfloat atxy = sqrt(pow(at[3] - at[0], 2) + pow(at[5] - at[2], 2));
+		if (atxy > 0)
+		{
+			billiardgl::setBallVelocity(Game.balls[0], speed * (at[3] - at[0]) / atxy, 0.0f, speed * (at[5] - at[2]) / atxy);
+			Game.players.shotTaken = true;
+			Game.players.updatedAfterShot = false;
+			Game.ballsMoving = true;
 		}
+		Hit = 0;
+		speed = 0;
 		billiardgl::playHit();
 	}
+
 	if (leftm)
 	{
 		Ball[0].v.x = 0;
 		Ball[0].v.z = 0;
 		speed = 0;
 	}
+
+	billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
+	if (Game.events.ballCollision || Game.events.railCollision)
+		billiardgl::playHit();
+	if (Game.events.ballPocketed || Game.events.cueBallPocketed)
+		billiardgl::playBallIn();
+	if (Game.events.eightBallPocketed)
+		billiardgl::playGameOver();
+
 	if (transPerc)
 	{
 		if (!Isrecroded)
@@ -932,18 +912,16 @@ void myIdle(void)
 		{
 			if (zoom < record_zoom + 100)
 				zoom += 1;
-			else
+			else if (!IsMoving)
 			{
-				if (!IsMoving)
-				{
-					billiardgl::sleepMilliseconds(1000);
-					zoom = record_zoom;
-					transPerc = false;
-					Isrecroded = false;
-				}
+				billiardgl::sleepMilliseconds(1000);
+				zoom = record_zoom;
+				transPerc = false;
+				Isrecroded = false;
 			}
 		}
 	}
+
 	if (IsGameOver)
 	{
 		if (Ball[8].p.x == 100 || Ball[8].p.x == -100)
@@ -956,6 +934,11 @@ void myIdle(void)
 			at[5] = -TABLE_IN_LENGTH / 4;
 		}
 	}
+
+	Game.transitionPerspective = transPerc;
+	if (Game.events.shotEnded || (!transPerc && Hitted))
+		billiardgl::updatePlayerAfterShot(Game);
+
 	myDisplay();
 }
 // 球与球碰撞检测
@@ -1501,15 +1484,6 @@ void myString(float x, float y, void *font, const char* c)
 }
 void updatePlayer()
 {
-	if (updated)
-		return;
-	if ((!transPerc) && Hitted)
-	{
-		if ((!IsIllegal) && (NextPlayer == CurrPlayer));
-		else
-			CurrPlayer = 1 - CurrPlayer;
-		Game.players.currentPlayer = CurrPlayer;
-		updated = true;
-		Game.players.updatedAfterShot = updated;
-	}
+	Game.transitionPerspective = transPerc;
+	billiardgl::updatePlayerAfterShot(Game);
 }

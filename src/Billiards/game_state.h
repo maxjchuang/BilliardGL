@@ -81,6 +81,15 @@ struct RuntimeConfig {
     std::string screenshotPath;
 };
 
+struct GameplayEvents {
+    bool ballCollision = false;
+    bool railCollision = false;
+    bool ballPocketed = false;
+    bool cueBallPocketed = false;
+    bool eightBallPocketed = false;
+    bool shotEnded = false;
+};
+
 struct LegacyBallAdapter {
     Point3 position;
     Point3 velocity;
@@ -98,6 +107,7 @@ struct GameState {
     InputState input;
     HudState hud;
     RuntimeConfig config;
+    GameplayEvents events;
     int pocketedBallCount = 0;
     bool ballsMoving = false;
     bool transitionPerspective = false;
@@ -109,6 +119,7 @@ void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
 void setBallVelocity(BallState& ball, float x, float y, float z);
 bool anyBallMoving(const GameState& state);
+void clearGameplayEvents(GameState& state);
 void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls);
 void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state);
 

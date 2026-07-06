@@ -1,5 +1,7 @@
 #include "physics.h"
 
+#include "rules.h"
+
 #include <cmath>
 
 namespace billiardgl {
@@ -118,16 +120,20 @@ bool updatePocketedBall(GameState& state, int ballIndex)
     if (ballIndex == 0) {
         ball.position = Point3{0.0f, kTableHeight + kBallRadius, -kTableInLength / 4.0f};
         state.players.illegalShot = true;
+        state.events.cueBallPocketed = true;
     } else {
         ball.pocketed = true;
         state.pocketedBallCount += 1;
+        state.events.ballPocketed = true;
         ball.position.z = -100.0f + static_cast<float>(state.pocketedBallCount) * 20.0f;
         ball.position.y = kTableHeight - kBallRadius;
         if (ballIndex != 8) {
             ball.position.y = -100.0f;
+            assignPlayerBallTypeForPocketedObjectBall(state, ballIndex);
         }
         if (ballIndex == 8) {
             state.gameOver = true;
+            state.events.eightBallPocketed = true;
         }
     }
 
@@ -137,6 +143,8 @@ bool updatePocketedBall(GameState& state, int ballIndex)
 
 void updatePhysics(GameState& state, float timeStep)
 {
+    const bool wasMoving = state.ballsMoving;
+    clearGameplayEvents(state);
     bool anyMoving = false;
     for (int i = 0; i < kBallCount; ++i) {
         BallState& ball = state.balls[i];
@@ -145,10 +153,17 @@ void updatePhysics(GameState& state, float timeStep)
         }
         for (int j = i + 1; j < kBallCount; ++j) {
             if (!state.balls[j].pocketed) {
-                collideBalls(ball, state.balls[j]);
+                if (collideBalls(ball, state.balls[j])) {
+                    state.events.ballCollision = true;
+                }
             }
         }
+        const float previousX = ball.velocity.x;
+        const float previousZ = ball.velocity.z;
         collideWithTableEdge(ball);
+        if (previousX != ball.velocity.x || previousZ != ball.velocity.z) {
+            state.events.railCollision = true;
+        }
         updatePocketedBall(state, i);
         applyFrictionAndMove(ball, timeStep, kDefaultFrictionAcceleration);
         if (ball.speed > 0.0f) {
@@ -156,6 +171,7 @@ void updatePhysics(GameState& state, float timeStep)
         }
     }
     state.ballsMoving = anyMoving;
+    state.events.shotEnded = wasMoving && !anyMoving && state.players.shotTaken;
 }
 
 }  // namespace billiardgl

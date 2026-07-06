@@ -66,6 +66,28 @@ int main()
         return fail("ball at pocket center should be detected as pocketed");
     }
 
+    billiardgl::GameState pocketState;
+    billiardgl::initializeBalls(pocketState);
+    pocketState.balls[0].position.x = -billiardgl::kTableInWidth / 2.0f + billiardgl::kPocketRadius;
+    pocketState.balls[0].position.z = -billiardgl::kTableInLength / 2.0f + billiardgl::kPocketRadius;
+    if (!billiardgl::updatePocketedBall(pocketState, 0)) {
+        return fail("cue ball at pocket center should be updated as pocketed");
+    }
+    if (!pocketState.players.illegalShot || !pocketState.events.cueBallPocketed) {
+        return fail("cue ball pocket should mark illegal shot and cue pocket event");
+    }
+
+    billiardgl::GameState eightState;
+    billiardgl::initializeBalls(eightState);
+    eightState.balls[8].position.x = -billiardgl::kTableInWidth / 2.0f + billiardgl::kPocketRadius;
+    eightState.balls[8].position.z = -billiardgl::kTableInLength / 2.0f + billiardgl::kPocketRadius;
+    if (!billiardgl::updatePocketedBall(eightState, 8)) {
+        return fail("eight ball at pocket center should be updated as pocketed");
+    }
+    if (!eightState.gameOver || !eightState.events.eightBallPocketed) {
+        return fail("eight ball pocket should mark game over and eight ball event");
+    }
+
     state.balls[4].speed = 1.0f;
     if (!billiardgl::anyBallMoving(state)) {
         return fail("anyBallMoving should detect active ball speed");
