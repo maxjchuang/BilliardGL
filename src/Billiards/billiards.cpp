@@ -10,6 +10,7 @@
 #endif
 
 #include "ObjLoader.h"
+#include "assets.h"
 #include "game_state.h"
 #include "hud.h"
 #include "input.h"
@@ -65,10 +66,10 @@ GLfloat m[16];
 GLuint tableVertexVBO, cueVertexVBO, benchVertexVBO, wardVertexVBO, paint1VertexVBO;
 GLuint textureIDtest[2];
 GLuint textureCue[2], textureWard, texturePaint1, texturePaint2;
-ObjLoader tableObj(billiardgl::objectPath("table.obj"));
-ObjLoader cueObj(billiardgl::objectPath("cue.obj"));
-ObjLoader benchObj(billiardgl::objectPath("bench.obj"));
-ObjLoader wardObj(billiardgl::objectPath("wardrobe.obj"));
+ObjLoader tableObj(billiardgl::getObjectPath("table.obj"));
+ObjLoader cueObj(billiardgl::getObjectPath("cue.obj"));
+ObjLoader benchObj(billiardgl::getObjectPath("bench.obj"));
+ObjLoader wardObj(billiardgl::getObjectPath("wardrobe.obj"));
 
 bool IsMoving = false;
 bool transPerc = false;
@@ -272,8 +273,8 @@ void initBall()
 
 void initTable() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string tableTexture0 = billiardgl::texturePath(tableObj.materials[0]->texture);
-	const std::string tableTexture1 = billiardgl::texturePath(tableObj.materials[1]->texture);
+	const std::string tableTexture0 = billiardgl::getTexturePath(tableObj.materials[0]->texture);
+	const std::string tableTexture1 = billiardgl::getTexturePath(tableObj.materials[1]->texture);
 	textureIDtest[0] = loadTexture(tableTexture0.c_str());
 	textureIDtest[1] = loadTexture(tableTexture1.c_str());
 
@@ -392,8 +393,8 @@ void initDecoration() {
 }
 void initCue() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string cueTexture0 = billiardgl::texturePath(cueObj.materials[0]->texture);
-	const std::string cueTexture1 = billiardgl::texturePath(cueObj.materials[1]->texture);
+	const std::string cueTexture0 = billiardgl::getTexturePath(cueObj.materials[0]->texture);
+	const std::string cueTexture1 = billiardgl::getTexturePath(cueObj.materials[1]->texture);
 	textureCue[0] = loadTexture(cueTexture0.c_str());
 	textureCue[1] = loadTexture(cueTexture1.c_str());
 	cout << cueObj.materials[1]->texture << endl;
@@ -1168,37 +1169,37 @@ static void mouseMove(int x, int y)
 // ÔØÈëÎÆÀí
 void initLoadTexture()
 {
-	Ball[1].texture = loadTexture(billiardgl::texturePath("B1.bmp").c_str());
-	Ball[2].texture = loadTexture(billiardgl::texturePath("B2.bmp").c_str());
-	Ball[3].texture = loadTexture(billiardgl::texturePath("B3.bmp").c_str());
-	Ball[4].texture = loadTexture(billiardgl::texturePath("B4.bmp").c_str());
-	Ball[5].texture = loadTexture(billiardgl::texturePath("B5.bmp").c_str());
-	Ball[6].texture = loadTexture(billiardgl::texturePath("B6.bmp").c_str());
-	Ball[7].texture = loadTexture(billiardgl::texturePath("B7.bmp").c_str());
-	Ball[8].texture = loadTexture(billiardgl::texturePath("B8.bmp").c_str());
-	Ball[9].texture = loadTexture(billiardgl::texturePath("B9.bmp").c_str());
-	Ball[10].texture = loadTexture(billiardgl::texturePath("B10.bmp").c_str());
-	Ball[11].texture = loadTexture(billiardgl::texturePath("B11.bmp").c_str());
-	Ball[12].texture = loadTexture(billiardgl::texturePath("B12.bmp").c_str());
-	Ball[13].texture = loadTexture(billiardgl::texturePath("B13.bmp").c_str());
-	Ball[14].texture = loadTexture(billiardgl::texturePath("B14.bmp").c_str());
-	Ball[15].texture = loadTexture(billiardgl::texturePath("B15.bmp").c_str());
-	Ball[0].texture = loadTexture(billiardgl::texturePath("B16.bmp").c_str());
-	texGround = loadTexture(billiardgl::texturePath("ground.bmp").c_str());//ground
-	texWall = loadTexture(billiardgl::texturePath("wall.bmp").c_str());//wall
-	texWall1 = loadTexture(billiardgl::texturePath("wall1.bmp").c_str());
-	texWall2 = loadTexture(billiardgl::texturePath("wall2.bmp").c_str());
-	tecCeiling = loadTexture(billiardgl::texturePath("ceiling.bmp").c_str());//Ìì»¨°å
-	BZD = loadTexture(billiardgl::texturePath("black.bmp").c_str());
-	texTableCloth = loadTexture(billiardgl::texturePath("green.bmp").c_str());//×ÀÃæ
-	texTable = loadTexture(billiardgl::texturePath("wood.bmp").c_str());//Çò×À±ßÔµ
-	texCue = loadTexture(billiardgl::texturePath("wood.bmp").c_str());
-	texgt = loadTexture(billiardgl::texturePath("green.bmp").c_str());
-	texhe = loadTexture(billiardgl::texturePath("black.bmp").c_str());
-	textureWard = loadTexture(billiardgl::texturePath("5.bmp").c_str());
-	texturePaint1 = loadTexture(billiardgl::texturePath("6.bmp").c_str());
-	texturePaint2 = loadTexture(billiardgl::texturePath("7.bmp").c_str());
-	texture[2] = loadTexture(billiardgl::texturePath("flame2.bmp").c_str());
+	Ball[1].texture = loadTexture(billiardgl::getTexturePath("B1.bmp").c_str());
+	Ball[2].texture = loadTexture(billiardgl::getTexturePath("B2.bmp").c_str());
+	Ball[3].texture = loadTexture(billiardgl::getTexturePath("B3.bmp").c_str());
+	Ball[4].texture = loadTexture(billiardgl::getTexturePath("B4.bmp").c_str());
+	Ball[5].texture = loadTexture(billiardgl::getTexturePath("B5.bmp").c_str());
+	Ball[6].texture = loadTexture(billiardgl::getTexturePath("B6.bmp").c_str());
+	Ball[7].texture = loadTexture(billiardgl::getTexturePath("B7.bmp").c_str());
+	Ball[8].texture = loadTexture(billiardgl::getTexturePath("B8.bmp").c_str());
+	Ball[9].texture = loadTexture(billiardgl::getTexturePath("B9.bmp").c_str());
+	Ball[10].texture = loadTexture(billiardgl::getTexturePath("B10.bmp").c_str());
+	Ball[11].texture = loadTexture(billiardgl::getTexturePath("B11.bmp").c_str());
+	Ball[12].texture = loadTexture(billiardgl::getTexturePath("B12.bmp").c_str());
+	Ball[13].texture = loadTexture(billiardgl::getTexturePath("B13.bmp").c_str());
+	Ball[14].texture = loadTexture(billiardgl::getTexturePath("B14.bmp").c_str());
+	Ball[15].texture = loadTexture(billiardgl::getTexturePath("B15.bmp").c_str());
+	Ball[0].texture = loadTexture(billiardgl::getTexturePath("B16.bmp").c_str());
+	texGround = loadTexture(billiardgl::getTexturePath("ground.bmp").c_str());//ground
+	texWall = loadTexture(billiardgl::getTexturePath("wall.bmp").c_str());//wall
+	texWall1 = loadTexture(billiardgl::getTexturePath("wall1.bmp").c_str());
+	texWall2 = loadTexture(billiardgl::getTexturePath("wall2.bmp").c_str());
+	tecCeiling = loadTexture(billiardgl::getTexturePath("ceiling.bmp").c_str());//Ìì»¨°å
+	BZD = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
+	texTableCloth = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());//×ÀÃæ
+	texTable = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());//Çò×À±ßÔµ
+	texCue = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());
+	texgt = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());
+	texhe = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
+	textureWard = loadTexture(billiardgl::getTexturePath("5.bmp").c_str());
+	texturePaint1 = loadTexture(billiardgl::getTexturePath("6.bmp").c_str());
+	texturePaint2 = loadTexture(billiardgl::getTexturePath("7.bmp").c_str());
+	texture[2] = loadTexture(billiardgl::getTexturePath("flame2.bmp").c_str());
 }
 int isPowerOfTwo(int n)
 {

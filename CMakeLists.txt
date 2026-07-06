@@ -16,8 +16,10 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 set(BILLIARDGL_CORE_SOURCES
+    src/Billiards/assets.cpp
     src/Billiards/game_state.cpp
     src/Billiards/physics.cpp
+    src/Billiards/resource_path.cpp
     src/Billiards/rules.cpp
     src/Billiards/input.cpp
     src/Billiards/vec.cpp
@@ -28,7 +30,6 @@ add_executable(Billiards
     src/Billiards/hud.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
-    src/Billiards/resource_path.cpp
     src/Billiards/platform_audio.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
