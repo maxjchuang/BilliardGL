@@ -120,7 +120,8 @@ int main(int argc, char* argv[])
 	glutKeyboardFunc(myKeyboard); //ÉèÖÃ¼üÅÌ»Øµ÷º¯Êý
 	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); //ÉèÖÃÊó±êÆ÷°´¼ü»Øµ÷º¯Êý
-	glutMotionFunc(mouseMove); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+	glutMotionFunc(mouseMove); // mouse drag callback
+	glutPassiveMotionFunc(mouseMove); // mouse/trackpad move callback
 	glutReshapeFunc(myReshape);
 
 	billiardgl::setupLights();
@@ -368,6 +369,8 @@ static void myKeyboard(unsigned char key, int x, int y)
 	}
 	if (key == '\t')
 	{
+		Game.input.mouseX = x;
+		Game.input.mouseY = y;
 		billiardgl::handleAimToggleKey(Game);
 		return;
 	}
@@ -507,24 +510,12 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 }
 static void mouseMove(int x, int y)
 {
-	Game.camera.target[0] = Game.balls[0].position.x;
-	Game.camera.target[1] = Game.balls[0].position.y;
-	Game.camera.target[2] = Game.balls[0].position.z;
-	Game.camera.eye[0] = Game.camera.zoom*(cos(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[0];
-	Game.camera.eye[1] = Game.camera.zoom*(cos(Game.camera.angleY)) + Game.camera.target[1];
-	Game.camera.eye[2] = Game.camera.zoom*(sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
-
 	if (Game.ballsMoving)
 		return;
 
-	if (Game.input.leftMouseDown) { Game.camera.panX = Game.camera.previousTargetX + x - Game.input.mouseX; Game.camera.panY = Game.camera.previousTargetY + y - Game.input.mouseY; }
-	if (Game.input.rightMouseDown) { Game.camera.angleX = Game.camera.previousAngleX + (x - Game.input.mouseX)*0.01; Game.camera.angleY = Game.camera.previousAngleY + (y - Game.input.mouseY)*0.01; }
-	if (Game.camera.angleY <= 0)
-		Game.camera.angleY = 0.1;
-	if (Game.camera.angleY > PI / 2)
-		Game.camera.angleY = PI / 2;
+	billiardgl::handleMouseMove(Game, x, y);
 }
-// ÔØÈëÎÆÀí
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void b_music()
 {
 	billiardgl::playBackgroundLoop();
