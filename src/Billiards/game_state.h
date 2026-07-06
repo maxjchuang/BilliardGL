@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <string>
 
 namespace billiardgl {
 
@@ -41,6 +42,10 @@ struct CameraState {
     float zoom = 120.0f;
     float angleX = -kPi / 2.0f;
     float angleY = kPi / 3.0f;
+    float previousAngleX = 0.0f;
+    float previousAngleY = 0.0f;
+    float previousTargetX = 0.0f;
+    float previousTargetY = 0.0f;
 };
 
 struct PlayerState {
@@ -51,6 +56,7 @@ struct PlayerState {
     bool illegalShot = false;
     bool updatedAfterShot = false;
     bool shotTaken = false;
+    bool aimingAtCueBall = false;
 };
 
 struct InputState {
@@ -72,6 +78,17 @@ struct RuntimeConfig {
     bool windowedMode = true;
     int width = 1024;
     int height = 768;
+    std::string screenshotPath;
+};
+
+struct LegacyBallAdapter {
+    Point3 position;
+    Point3 velocity;
+    Point3 rotationAxis;
+    float speed = 0.0f;
+    float rotationAngle = 0.0f;
+    bool pocketed = false;
+    unsigned int texture = 0;
 };
 
 struct GameState {
@@ -92,5 +109,7 @@ void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
 void setBallVelocity(BallState& ball, float x, float y, float z);
 bool anyBallMoving(const GameState& state);
+void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls);
+void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state);
 
 }  // namespace billiardgl

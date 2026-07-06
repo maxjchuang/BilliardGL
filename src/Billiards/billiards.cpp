@@ -23,6 +23,7 @@
 #include "screenshot.h"
 
 #include <cmath>
+#include <array>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -51,17 +52,29 @@
 
 GLuint texture[10];
 emitter *e[16];
+static billiardgl::GameState Game;
 
 //变量申明
-GLint  width = 1024, height = 768;
+int& width = Game.config.width;
+int& height = Game.config.height;
 GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTable, BZD, texCue, texgt, texhe;
-int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16, BallInNum = 0, AimAt = 0, WaitHit = 0, Hit = 0;
+int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16;
+int& BallInNum = Game.pocketedBallCount;
+bool& AimAt = Game.players.aimingAtCueBall;
+bool& WaitHit = Game.input.waitingForHit;
+bool& Hit = Game.input.hitRequested;
 int leftm = 0, rightm = 0;
 bool TrackpadOrbit = false;
-bool ShowHelp = false;
+bool& ShowHelp = Game.hud.showHelp;
 GLfloat rx, ry, rz, speed = 0;
-static GLfloat kx = 0, ky = 0, kz = 0, zoom = 120;
-static GLfloat anglex = -PI / 2, angley = PI / 3, nowanglex = 0, nowangley = 0, nowatx = 0, nowaty = 0;
+static GLfloat kx = 0, ky = 0, kz = 0;
+static GLfloat& zoom = Game.camera.zoom;
+static GLfloat& anglex = Game.camera.angleX;
+static GLfloat& angley = Game.camera.angleY;
+static GLfloat& nowanglex = Game.camera.previousAngleX;
+static GLfloat& nowangley = Game.camera.previousAngleY;
+static GLfloat& nowatx = Game.camera.previousTargetX;
+static GLfloat& nowaty = Game.camera.previousTargetY;
 static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 static GLfloat at[6] = { 0, 200, -TABLE_IN_LENGTH / 4, 0, TABLE_HEIGHT + Radius, -TABLE_IN_LENGTH / 4 };
 GLfloat m[16];
@@ -73,24 +86,23 @@ ObjLoader cueObj(billiardgl::getObjectPath("cue.obj"));
 ObjLoader benchObj(billiardgl::getObjectPath("bench.obj"));
 ObjLoader wardObj(billiardgl::getObjectPath("wardrobe.obj"));
 
-bool IsMoving = false;
-bool transPerc = false;
-bool Isrecroded = false;
+bool& IsMoving = Game.ballsMoving;
+bool& transPerc = Game.transitionPerspective;
+bool& Isrecroded = Game.perspectiveRecorded;
 float record_zoom;
 float record_position[3];
-int PlayerBall[2];// 0代表纯色球 1-7  1代表花色球 9-15
-int IsFirstInBall = 1;
-int CurrPlayer = 0;
-int NextPlayer = 0;
-int IsIllegal = 0;
-bool updated = false;
-bool Hitted = false;
-bool IsGameOver = false;
+int (&PlayerBall)[2] = Game.players.assignedBallType;// 0代表纯色球 1-7  1代表花色球 9-15
+bool& IsFirstInBall = Game.players.firstPocketedObjectBall;
+int& CurrPlayer = Game.players.currentPlayer;
+int& NextPlayer = Game.players.nextPlayer;
+bool& IsIllegal = Game.players.illegalShot;
+bool& updated = Game.players.updatedAfterShot;
+bool& Hitted = Game.players.shotTaken;
+bool& IsGameOver = Game.gameOver;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
-bool WindowedMode = true;
-static std::string ScreenshotPath;
-static billiardgl::GameState Game;
+bool& WindowedMode = Game.config.windowedMode;
+std::string& ScreenshotPath = Game.config.screenshotPath;
 
 //定义球及位置矢量结构体
 struct Point
@@ -99,16 +111,49 @@ struct Point
 	GLfloat y;
 	GLfloat z;
 };
-struct Ball
+struct LegacyBallRef
 {
-	struct Point p;
-	struct Point v;
-	struct Point a;
-	GLfloat mv;
-	GLfloat ma;
-	int isIn;
-	GLuint texture;
-} Ball[16];
+	billiardgl::Point3& p;
+	billiardgl::Point3& v;
+	billiardgl::Point3& a;
+	float& mv;
+	float& ma;
+	bool& isIn;
+	unsigned int& texture;
+};
+
+static LegacyBallRef makeLegacyBallRef(int index)
+{
+	billiardgl::BallState& ball = Game.balls[index];
+	return LegacyBallRef{
+		ball.position,
+		ball.velocity,
+		ball.rotationAxis,
+		ball.speed,
+		ball.rotationAngle,
+		ball.pocketed,
+		ball.texture
+	};
+}
+
+LegacyBallRef Ball[16] = {
+	makeLegacyBallRef(0),
+	makeLegacyBallRef(1),
+	makeLegacyBallRef(2),
+	makeLegacyBallRef(3),
+	makeLegacyBallRef(4),
+	makeLegacyBallRef(5),
+	makeLegacyBallRef(6),
+	makeLegacyBallRef(7),
+	makeLegacyBallRef(8),
+	makeLegacyBallRef(9),
+	makeLegacyBallRef(10),
+	makeLegacyBallRef(11),
+	makeLegacyBallRef(12),
+	makeLegacyBallRef(13),
+	makeLegacyBallRef(14),
+	makeLegacyBallRef(15),
+};
 
 // 载入纹理
 int isPowerOfTwo(int n);

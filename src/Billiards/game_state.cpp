@@ -63,4 +63,24 @@ bool anyBallMoving(const GameState& state)
     return false;
 }
 
+void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls)
+{
+    for (int i = 0; i < kBallCount; ++i) {
+        legacyBalls[i].position = state.balls[i].position;
+        legacyBalls[i].velocity = state.balls[i].velocity;
+        legacyBalls[i].rotationAxis = state.balls[i].rotationAxis;
+        legacyBalls[i].speed = state.balls[i].speed;
+        legacyBalls[i].rotationAngle = state.balls[i].rotationAngle;
+        legacyBalls[i].pocketed = state.balls[i].pocketed;
+        legacyBalls[i].texture = state.balls[i].texture;
+    }
+}
+
+void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state)
+{
+    for (int i = 0; i < kBallCount; ++i) {
+        state.balls[i].texture = legacyBalls[i].texture;
+    }
+}
+
 }  // namespace billiardgl

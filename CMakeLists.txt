@@ -53,6 +53,11 @@ add_executable(BilliardsScreenshotTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsGameStateTests
+    tests/game_state_tests.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -70,6 +75,10 @@ target_include_directories(BilliardsRulesTests PRIVATE
 )
 
 target_include_directories(BilliardsScreenshotTests PRIVATE
+    src/Billiards
+)
+
+target_include_directories(BilliardsGameStateTests PRIVATE
     src/Billiards
 )
 
