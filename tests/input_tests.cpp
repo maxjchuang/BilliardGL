@@ -1,0 +1,114 @@
+#include "game_state.h"
+#include "input.h"
+
+#include <cassert>
+#include <cmath>
+
+namespace {
+
+bool closeEnough(float a, float b)
+{
+    return std::fabs(a - b) < 0.0001f;
+}
+
+void testHelpKeyTogglesAndClearsShotState()
+{
+    billiardgl::GameState state;
+    state.input.waitingForHit = true;
+    state.input.hitRequested = true;
+
+    billiardgl::handleHelpKey(state);
+
+    assert(state.hud.showHelp);
+    assert(!state.input.waitingForHit);
+    assert(!state.input.hitRequested);
+}
+
+void testSpecialKeysOrbitCamera()
+{
+    billiardgl::GameState state;
+    const float startX = state.camera.angleX;
+    const float startY = state.camera.angleY;
+
+    billiardgl::handleSpecialKey(state, 1, 2, 3, 4, 2);
+    billiardgl::handleSpecialKey(state, 1, 2, 3, 4, 4);
+
+    assert(state.camera.angleX > startX);
+    assert(state.camera.angleY > startY);
+}
+
+void testRightDragOrbitsCamera()
+{
+    billiardgl::GameState state;
+    const float startX = state.camera.angleX;
+    const float startY = state.camera.angleY;
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Right, billiardgl::ButtonState::Down, 100, 100);
+    billiardgl::handleMouseMove(state, 120, 130);
+
+    assert(closeEnough(state.camera.angleX, startX + 0.2f));
+    assert(closeEnough(state.camera.angleY, startY + 0.3f));
+    assert(state.input.rightMouseDown);
+}
+
+void testTrackpadOrbitUsesLeftDragWithoutChargingShot()
+{
+    billiardgl::GameState state;
+    const float startX = state.camera.angleX;
+    const float startY = state.camera.angleY;
+
+    billiardgl::beginTrackpadOrbit(state, 10, 10);
+    billiardgl::handleMouseMove(state, 20, 20);
+
+    assert(state.input.trackpadOrbit);
+    assert(!state.input.waitingForHit);
+    assert(!state.input.hitRequested);
+    assert(closeEnough(state.camera.angleX, startX + 0.1f));
+    assert(closeEnough(state.camera.angleY, startY + 0.1f));
+
+    billiardgl::endTrackpadOrbit(state);
+
+    assert(!state.input.trackpadOrbit);
+    assert(!state.input.leftMouseDown);
+}
+
+void testLeftMouseChargesAndReleaseRequestsHit()
+{
+    billiardgl::GameState state;
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 50, 50);
+    assert(state.input.leftMouseDown);
+    assert(state.input.waitingForHit);
+    assert(!state.input.hitRequested);
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Up, 50, 50);
+    assert(!state.input.leftMouseDown);
+    assert(!state.input.waitingForHit);
+    assert(state.input.hitRequested);
+}
+
+void testHelpBlocksMouseShotInput()
+{
+    billiardgl::GameState state;
+    state.hud.showHelp = true;
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 50, 50);
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Up, 50, 50);
+
+    assert(!state.input.leftMouseDown);
+    assert(!state.input.waitingForHit);
+    assert(!state.input.hitRequested);
+}
+
+}  // namespace
+
+int main()
+{
+    testHelpKeyTogglesAndClearsShotState();
+    testSpecialKeysOrbitCamera();
+    testRightDragOrbitsCamera();
+    testTrackpadOrbitUsesLeftDragWithoutChargingShot();
+    testLeftMouseChargesAndReleaseRequestsHit();
+    testHelpBlocksMouseShotInput();
+    return 0;
+}

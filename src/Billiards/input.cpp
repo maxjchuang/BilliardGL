@@ -38,6 +38,16 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
 {
     state.input.mouseX = x;
     state.input.mouseY = y;
+
+    if (state.hud.showHelp) {
+        state.input.leftMouseDown = false;
+        state.input.rightMouseDown = false;
+        state.input.trackpadOrbit = false;
+        state.input.waitingForHit = false;
+        state.input.hitRequested = false;
+        return;
+    }
+
     const bool isDown = buttonState == ButtonState::Down;
     if (button == MouseButton::Left) {
         state.input.leftMouseDown = isDown;
@@ -48,6 +58,25 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
     } else if (button == MouseButton::Right) {
         state.input.rightMouseDown = isDown;
     }
+}
+
+void beginTrackpadOrbit(GameState& state, int x, int y)
+{
+    state.input.mouseX = x;
+    state.input.mouseY = y;
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = true;
+    state.input.waitingForHit = false;
+    state.input.hitRequested = false;
+}
+
+void endTrackpadOrbit(GameState& state)
+{
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = false;
+    state.input.waitingForHit = false;
 }
 
 void handleMouseMove(GameState& state, int x, int y)

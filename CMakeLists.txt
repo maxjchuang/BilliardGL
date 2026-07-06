@@ -67,6 +67,11 @@ add_executable(BilliardsAssetsTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsInputTests
+    tests/input_tests.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -95,6 +100,10 @@ target_include_directories(BilliardsAssetsTests PRIVATE
     src/Billiards
 )
 
+target_include_directories(BilliardsInputTests PRIVATE
+    src/Billiards
+)
+
 target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
 )
@@ -105,6 +114,7 @@ foreach(test_target
     BilliardsScreenshotTests
     BilliardsGameStateTests
     BilliardsAssetsTests
+    BilliardsInputTests
 )
     target_compile_definitions(${test_target} PRIVATE
         BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
@@ -116,6 +126,7 @@ add_test(NAME BilliardsRulesTests COMMAND BilliardsRulesTests)
 add_test(NAME BilliardsScreenshotTests COMMAND BilliardsScreenshotTests)
 add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
 add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
+add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
 
 add_test(
     NAME BilliardsScreenshotDefault
