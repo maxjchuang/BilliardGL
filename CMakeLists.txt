@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.13)
 
 project(BilliardGL LANGUAGES CXX)
 
+enable_testing()
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -95,6 +97,37 @@ target_include_directories(BilliardsAssetsTests PRIVATE
 
 target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+)
+
+foreach(test_target
+    BilliardsPhysicsTests
+    BilliardsRulesTests
+    BilliardsScreenshotTests
+    BilliardsGameStateTests
+    BilliardsAssetsTests
+)
+    target_compile_definitions(${test_target} PRIVATE
+        BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+    )
+endforeach()
+
+add_test(NAME BilliardsPhysicsTests COMMAND BilliardsPhysicsTests)
+add_test(NAME BilliardsRulesTests COMMAND BilliardsRulesTests)
+add_test(NAME BilliardsScreenshotTests COMMAND BilliardsScreenshotTests)
+add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
+add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
+
+add_test(
+    NAME BilliardsScreenshotDefault
+    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-default.ppm --screenshot-scene default
+)
+add_test(
+    NAME BilliardsScreenshotHelp
+    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-help.ppm --screenshot-scene help
+)
+add_test(
+    NAME BilliardsScreenshotAfterShot
+    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-after-shot.ppm --screenshot-scene after-shot
 )
 
 target_link_libraries(Billiards PRIVATE

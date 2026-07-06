@@ -1,3 +1,4 @@
+#include "assets.h"
 #include "image_loader.h"
 
 #include <cstdlib>
@@ -20,7 +21,7 @@ int main()
         return fail("missing image should return a clear error");
     }
 
-    const billiardgl::ImageData ball = billiardgl::loadImageFile("src/Billiards/tex/B16.bmp");
+    const billiardgl::ImageData ball = billiardgl::loadImageFile(billiardgl::getTexturePath("B16.bmp"));
     if (!ball.error.empty()) {
         return fail("existing BMP texture should load through image loader");
     }
