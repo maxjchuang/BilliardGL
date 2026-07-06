@@ -115,49 +115,6 @@ struct Point
 	GLfloat y;
 	GLfloat z;
 };
-struct LegacyBallRef
-{
-	billiardgl::Point3& p;
-	billiardgl::Point3& v;
-	billiardgl::Point3& a;
-	float& mv;
-	float& ma;
-	bool& isIn;
-	unsigned int& texture;
-};
-
-static LegacyBallRef makeLegacyBallRef(int index)
-{
-	billiardgl::BallState& ball = Game.balls[index];
-	return LegacyBallRef{
-		ball.position,
-		ball.velocity,
-		ball.rotationAxis,
-		ball.speed,
-		ball.rotationAngle,
-		ball.pocketed,
-		ball.texture
-	};
-}
-
-LegacyBallRef Ball[16] = {
-	makeLegacyBallRef(0),
-	makeLegacyBallRef(1),
-	makeLegacyBallRef(2),
-	makeLegacyBallRef(3),
-	makeLegacyBallRef(4),
-	makeLegacyBallRef(5),
-	makeLegacyBallRef(6),
-	makeLegacyBallRef(7),
-	makeLegacyBallRef(8),
-	makeLegacyBallRef(9),
-	makeLegacyBallRef(10),
-	makeLegacyBallRef(11),
-	makeLegacyBallRef(12),
-	makeLegacyBallRef(13),
-	makeLegacyBallRef(14),
-	makeLegacyBallRef(15),
-};
 
 // 载入纹理
 int isPowerOfTwo(int n);
@@ -173,9 +130,6 @@ void initDecoration();
 void myDisplay(void);
 void set_camera(void);
 void myIdle(void);
-void collideBalls(int j, int k);
-void collideEdge(int j);
-int isBallIn(int j);
 void drawString();
 void drawHelpPrompt();
 void drawHelpOverlay();
@@ -245,11 +199,11 @@ int main(int argc, char* argv[])
 	Render.cueTextures[0] = textureCue[0];
 	Render.cueTextures[1] = textureCue[1];
 	for (int i = 0; i < ballcnt; ++i)
-		Render.ballTextures[i] = Ball[i].texture;
+		Render.ballTextures[i] = Game.balls[i].texture;
 
 	for (int i = 0; i < ballcnt; i++)
 	{
-		e[i] = new emitter(init_flame, 5000, -Radius + Ball[i].p.x, Radius + Ball[i].p.x, Ball[i].p.y, Ball[i].p.y, Ball[i].p.z, Ball[i].p.z);
+		e[i] = new emitter(init_flame, 5000, -Radius + Game.balls[i].position.x, Radius + Game.balls[i].position.x, Game.balls[i].position.y, Game.balls[i].position.y, Game.balls[i].position.z, Game.balls[i].position.z);
 		Render.emitters[i] = e[i];
 	}
 
@@ -349,36 +303,35 @@ void initBall()
 	s.y = TABLE_HEIGHT + BALL_RADIUS;
 	float y_dis = sqrt(3)*BALL_RADIUS;
 	float x_dis = BALL_RADIUS;
-	//Ball[0] is the white ball
-	Ball[0].p.x = s.x; Ball[0].p.z = -s.z; Ball[0].p.y = s.y;
+	Game.balls[0].position.x = s.x; Game.balls[0].position.z = -s.z; Game.balls[0].position.y = s.y;
 	//first row
-	Ball[1].p.x = s.x; Ball[1].p.z = s.z; Ball[1].p.y = s.y;
+	Game.balls[1].position.x = s.x; Game.balls[1].position.z = s.z; Game.balls[1].position.y = s.y;
 	//second row
-	Ball[2].p.x = s.x - x_dis; Ball[2].p.z = s.z + y_dis; Ball[2].p.y = s.y;
-	Ball[3].p.x = s.x + x_dis; Ball[3].p.z = s.z + y_dis; Ball[3].p.y = s.y;
+	Game.balls[2].position.x = s.x - x_dis; Game.balls[2].position.z = s.z + y_dis; Game.balls[2].position.y = s.y;
+	Game.balls[3].position.x = s.x + x_dis; Game.balls[3].position.z = s.z + y_dis; Game.balls[3].position.y = s.y;
 
-	Ball[4].p.x = s.x - 2 * x_dis; Ball[4].p.z = s.z + 2 * y_dis; Ball[4].p.y = s.y;
-	Ball[8].p.x = s.x; Ball[8].p.z = s.z + 2 * y_dis; Ball[8].p.y = s.y;
-	Ball[6].p.x = s.x + 2 * x_dis; Ball[6].p.z = s.z + 2 * y_dis; Ball[6].p.y = s.y;
+	Game.balls[4].position.x = s.x - 2 * x_dis; Game.balls[4].position.z = s.z + 2 * y_dis; Game.balls[4].position.y = s.y;
+	Game.balls[8].position.x = s.x; Game.balls[8].position.z = s.z + 2 * y_dis; Game.balls[8].position.y = s.y;
+	Game.balls[6].position.x = s.x + 2 * x_dis; Game.balls[6].position.z = s.z + 2 * y_dis; Game.balls[6].position.y = s.y;
 
-	Ball[7].p.x = s.x - 3 * x_dis; Ball[7].p.z = s.z + 3 * y_dis; Ball[7].p.y = s.y;
-	Ball[5].p.x = s.x - x_dis; Ball[5].p.z = s.z + 3 * y_dis; Ball[5].p.y = s.y;
-	Ball[9].p.x = s.x + x_dis; Ball[9].p.z = s.z + 3 * y_dis; Ball[9].p.y = s.y;
-	Ball[10].p.x = s.x + 3 * x_dis; Ball[10].p.z = s.z + 3 * y_dis; Ball[10].p.y = s.y;
+	Game.balls[7].position.x = s.x - 3 * x_dis; Game.balls[7].position.z = s.z + 3 * y_dis; Game.balls[7].position.y = s.y;
+	Game.balls[5].position.x = s.x - x_dis; Game.balls[5].position.z = s.z + 3 * y_dis; Game.balls[5].position.y = s.y;
+	Game.balls[9].position.x = s.x + x_dis; Game.balls[9].position.z = s.z + 3 * y_dis; Game.balls[9].position.y = s.y;
+	Game.balls[10].position.x = s.x + 3 * x_dis; Game.balls[10].position.z = s.z + 3 * y_dis; Game.balls[10].position.y = s.y;
 
-	Ball[11].p.x = s.x - 4 * x_dis; Ball[11].p.z = s.z + 4 * y_dis; Ball[11].p.y = s.y;
-	Ball[12].p.x = s.x - 2 * x_dis; Ball[12].p.z = s.z + 4 * y_dis; Ball[12].p.y = s.y;
-	Ball[13].p.x = s.x; Ball[13].p.z = s.z + 4 * y_dis; Ball[13].p.y = s.y;
-	Ball[14].p.x = s.x + 2 * x_dis; Ball[14].p.z = s.z + 4 * y_dis; Ball[14].p.y = s.y;
-	Ball[15].p.x = s.x + 4 * x_dis; Ball[15].p.z = s.z + 4 * y_dis; Ball[15].p.y = s.y;
+	Game.balls[11].position.x = s.x - 4 * x_dis; Game.balls[11].position.z = s.z + 4 * y_dis; Game.balls[11].position.y = s.y;
+	Game.balls[12].position.x = s.x - 2 * x_dis; Game.balls[12].position.z = s.z + 4 * y_dis; Game.balls[12].position.y = s.y;
+	Game.balls[13].position.x = s.x; Game.balls[13].position.z = s.z + 4 * y_dis; Game.balls[13].position.y = s.y;
+	Game.balls[14].position.x = s.x + 2 * x_dis; Game.balls[14].position.z = s.z + 4 * y_dis; Game.balls[14].position.y = s.y;
+	Game.balls[15].position.x = s.x + 4 * x_dis; Game.balls[15].position.z = s.z + 4 * y_dis; Game.balls[15].position.y = s.y;
 
 	for (i = 0; i < ballcnt; i++)
 	{
-		Ball[i].v.x = 0; Ball[i].v.z = 0; Ball[i].v.y = 0;
-		Ball[i].a.x = 0; Ball[i].a.z = 0; Ball[i].a.y = 0;
-		Ball[i].isIn = 0;
-		Ball[i].mv = 0;
-		Ball[i].ma = 0;
+		Game.balls[i].velocity.x = 0; Game.balls[i].velocity.z = 0; Game.balls[i].velocity.y = 0;
+		Game.balls[i].rotationAxis.x = 0; Game.balls[i].rotationAxis.z = 0; Game.balls[i].rotationAxis.y = 0;
+		Game.balls[i].pocketed = 0;
+		Game.balls[i].speed = 0;
+		Game.balls[i].rotationAngle = 0;
 	}
 }
 
@@ -611,9 +564,9 @@ void set_camera(void)
 // 画房间
 void myIdle(void)
 {
-	at[3] = Ball[0].p.x;
-	at[4] = Ball[0].p.y;
-	at[5] = Ball[0].p.z;
+	at[3] = Game.balls[0].position.x;
+	at[4] = Game.balls[0].position.y;
+	at[5] = Game.balls[0].position.z;
 	at[0] = zoom * (cos(anglex)) + at[3];
 	at[1] = zoom * (cos(angley)) + at[4];
 	at[2] = zoom * (sin(anglex) * sin(angley)) + at[5];
@@ -641,8 +594,8 @@ void myIdle(void)
 
 	if (leftm)
 	{
-		Ball[0].v.x = 0;
-		Ball[0].v.z = 0;
+		Game.balls[0].velocity.x = 0;
+		Game.balls[0].velocity.z = 0;
 		speed = 0;
 	}
 
@@ -659,9 +612,9 @@ void myIdle(void)
 		if (!Isrecroded)
 		{
 			record_zoom = zoom;
-			record_position[0] = Ball[0].p.x;
-			record_position[1] = Ball[0].p.y;
-			record_position[2] = Ball[0].p.z;
+			record_position[0] = Game.balls[0].position.x;
+			record_position[1] = Game.balls[0].position.y;
+			record_position[2] = Game.balls[0].position.z;
 			at[3] = record_position[0];
 			at[4] = record_position[1];
 			at[5] = record_position[2];
@@ -683,7 +636,7 @@ void myIdle(void)
 
 	if (IsGameOver)
 	{
-		if (Ball[8].p.x == 100 || Ball[8].p.x == -100)
+		if (Game.balls[8].position.x == 100 || Game.balls[8].position.x == -100)
 		{
 			at[0] = 0;
 			at[1] = 300;
@@ -701,121 +654,6 @@ void myIdle(void)
 	myDisplay();
 }
 // 球与球碰撞检测
-void collideBalls(int j, int k)
-{
-	GLfloat dis, Cos, Sin, cCos, cSin, v1c, v1cc, v2c, v2cc;
-	dis = sqrt(pow(Ball[k].p.x - Ball[j].p.x, 2) + pow(Ball[k].p.z - Ball[j].p.z, 2));
-	if (dis<2 * Radius - 0.5)
-	{
-		billiardgl::playHit();
-		Cos = (Ball[k].p.x - Ball[j].p.x) / dis;
-		Sin = (Ball[k].p.z - Ball[j].p.z) / dis;
-		cCos = Sin*(-1);
-		cSin = Cos;
-		v1c = Ball[j].v.x*Cos + Ball[j].v.z*Sin;
-		v1cc = Ball[j].v.x*cCos + Ball[j].v.z*cSin;
-		v2c = Ball[k].v.x*Cos + Ball[k].v.z*Sin;
-		v2cc = Ball[k].v.x*cCos + Ball[k].v.z*cSin;
-		Ball[j].v.x = v1cc*cCos + v2c*Cos;
-		Ball[j].v.z = v1cc*cSin + v2c*Sin;
-		Ball[k].v.x = v1c*Cos + v2cc*cCos;
-		Ball[k].v.z = v1c*Sin + v2cc*cSin;
-		Ball[k].p.x = Ball[j].p.x + 2 * Radius*Cos;
-		Ball[k].p.z = Ball[j].p.z + 2 * Radius*Sin;
-	}
-}
-// 球与台边碰撞检测
-void collideEdge(int j)
-{
-	if (fabs(Ball[j].p.x)>TABLE_IN_WIDTH / 2 - Radius)
-	{
-		if (Ball[j].p.x>0) Ball[j].p.x = TABLE_IN_WIDTH / 2 - Radius;
-		if (Ball[j].p.x<0) Ball[j].p.x = -TABLE_IN_WIDTH / 2 + Radius;
-		Ball[j].v.x *= (-1);
-	}
-	if (fabs(Ball[j].p.z)>TABLE_IN_LENGTH / 2 - Radius)
-	{
-		if (Ball[j].p.z>0) Ball[j].p.z = TABLE_IN_LENGTH / 2 - Radius;
-		if (Ball[j].p.z<0) Ball[j].p.z = -TABLE_IN_LENGTH / 2 + Radius;
-		Ball[j].v.z *= (-1);
-	}
-}
-// 进球检测
-int isBallIn(int j)
-{
-	GLfloat y_dis;
-	y_dis = 2 * Radius *sin(PI / 3);
-	if (sqrt(pow(Ball[j].p.x - (-TABLE_IN_WIDTH / 2 + POCKET_RADIUS), 2) + pow(Ball[j].p.z - (-TABLE_IN_LENGTH / 2 + POCKET_RADIUS), 2)) < Radius / 4 ||
-		sqrt(pow(Ball[j].p.x - TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z - (-TABLE_IN_LENGTH / 2 + POCKET_RADIUS), 2)) < Radius / 4 ||
-		sqrt(pow(Ball[j].p.x - (-TABLE_IN_WIDTH / 2 + POCKET_RADIUS), 2) + pow(Ball[j].p.z - TABLE_IN_LENGTH / 2 + POCKET_RADIUS, 2)) < Radius / 4 ||
-		sqrt(pow(Ball[j].p.x - TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z - TABLE_IN_LENGTH / 2 + POCKET_RADIUS, 2)) < Radius / 4 ||
-		sqrt(pow(Ball[j].p.x - (-TABLE_IN_WIDTH / 2 + POCKET_RADIUS), 2) + pow(Ball[j].p.z, 2)) < Radius / 4 ||
-		sqrt(pow(Ball[j].p.x - -TABLE_IN_WIDTH / 2 + POCKET_RADIUS, 2) + pow(Ball[j].p.z, 2)) < Radius / 4)
-	{
-		//		Fired[j] = true;
-		billiardgl::playBallIn();
-		if (j == 8)
-		{
-			IsGameOver = true;
-			billiardgl::playGameOver();
-		}
-		if (j == 0)
-		{
-			Ball[0].p.x = 0;
-			Ball[0].p.z = -TABLE_IN_LENGTH / 4;
-			Ball[0].p.y = TABLE_HEIGHT + Radius;
-			IsIllegal = 1;
-		}
-		//		else if (j == 8) { Ball[8].p.x = 0; Ball[8].p.y = 80; Ball[8].p.z = 70 + 2.0*y_dis; }
-		else
-		{
-			Ball[j].isIn = 1;
-			BallInNum += 1;
-			Ball[j].p.z = -100 + BallInNum * 20;
-			Ball[j].p.y = TABLE_HEIGHT - Radius;
-			if (j > 8)
-			{
-				Ball[j].p.y = -100;
-				if (IsFirstInBall)
-				{
-					PlayerBall[CurrPlayer] = 1;
-					PlayerBall[1 - CurrPlayer] = 0;
-					IsFirstInBall = false;
-					NextPlayer = CurrPlayer;
-				}
-				else if (PlayerBall[CurrPlayer] == 1) //花色球进了，且当前玩家是花色球玩家
-				{
-					NextPlayer = CurrPlayer;
-				}
-				if (PlayerBall[CurrPlayer] == 0) //犯规
-					IsIllegal = 1;
-			}
-			else
-			{
-				Ball[j].p.y = -100;
-				if (IsFirstInBall)
-				{
-					PlayerBall[CurrPlayer] = 0;
-					PlayerBall[1 - CurrPlayer] = 1;
-					IsFirstInBall = false;
-					NextPlayer = CurrPlayer;
-				}
-				else if (PlayerBall[CurrPlayer] == 0) //纯色球进了，且当前玩家是纯色球玩家
-				{
-					NextPlayer = CurrPlayer;
-				}
-				if (PlayerBall[CurrPlayer] == 1) //犯规
-					IsIllegal = 1;
-			}
-		}
-		Ball[j].v.x = 0;
-		Ball[j].v.y = 0;
-		Ball[j].v.z = 0;
-		return 1;
-	}
-	return 0;
-}
-// 鼠标键盘反馈函数
 static void myKeyboard(unsigned char key, int x, int y)
 {
 	if (key == 'h' || key == 'H')
@@ -919,9 +757,9 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	{
 		return;
 	}
-	at[3] = Ball[0].p.x;
-	at[4] = Ball[0].p.y;
-	at[5] = Ball[0].p.z;
+	at[3] = Game.balls[0].position.x;
+	at[4] = Game.balls[0].position.y;
+	at[5] = Game.balls[0].position.z;
 	at[0] = zoom*(cos(anglex) * sin(angley)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
@@ -963,9 +801,9 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 }
 static void mouseMove(int x, int y)
 {
-	at[3] = Ball[0].p.x;
-	at[4] = Ball[0].p.y;
-	at[5] = Ball[0].p.z;
+	at[3] = Game.balls[0].position.x;
+	at[4] = Game.balls[0].position.y;
+	at[5] = Game.balls[0].position.z;
 	at[0] = zoom*(cos(anglex) * sin(angley)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
@@ -983,22 +821,22 @@ static void mouseMove(int x, int y)
 // 载入纹理
 void initLoadTexture()
 {
-	Ball[1].texture = loadTexture(billiardgl::getTexturePath("B1.bmp").c_str());
-	Ball[2].texture = loadTexture(billiardgl::getTexturePath("B2.bmp").c_str());
-	Ball[3].texture = loadTexture(billiardgl::getTexturePath("B3.bmp").c_str());
-	Ball[4].texture = loadTexture(billiardgl::getTexturePath("B4.bmp").c_str());
-	Ball[5].texture = loadTexture(billiardgl::getTexturePath("B5.bmp").c_str());
-	Ball[6].texture = loadTexture(billiardgl::getTexturePath("B6.bmp").c_str());
-	Ball[7].texture = loadTexture(billiardgl::getTexturePath("B7.bmp").c_str());
-	Ball[8].texture = loadTexture(billiardgl::getTexturePath("B8.bmp").c_str());
-	Ball[9].texture = loadTexture(billiardgl::getTexturePath("B9.bmp").c_str());
-	Ball[10].texture = loadTexture(billiardgl::getTexturePath("B10.bmp").c_str());
-	Ball[11].texture = loadTexture(billiardgl::getTexturePath("B11.bmp").c_str());
-	Ball[12].texture = loadTexture(billiardgl::getTexturePath("B12.bmp").c_str());
-	Ball[13].texture = loadTexture(billiardgl::getTexturePath("B13.bmp").c_str());
-	Ball[14].texture = loadTexture(billiardgl::getTexturePath("B14.bmp").c_str());
-	Ball[15].texture = loadTexture(billiardgl::getTexturePath("B15.bmp").c_str());
-	Ball[0].texture = loadTexture(billiardgl::getTexturePath("B16.bmp").c_str());
+	Game.balls[1].texture = loadTexture(billiardgl::getTexturePath("B1.bmp").c_str());
+	Game.balls[2].texture = loadTexture(billiardgl::getTexturePath("B2.bmp").c_str());
+	Game.balls[3].texture = loadTexture(billiardgl::getTexturePath("B3.bmp").c_str());
+	Game.balls[4].texture = loadTexture(billiardgl::getTexturePath("B4.bmp").c_str());
+	Game.balls[5].texture = loadTexture(billiardgl::getTexturePath("B5.bmp").c_str());
+	Game.balls[6].texture = loadTexture(billiardgl::getTexturePath("B6.bmp").c_str());
+	Game.balls[7].texture = loadTexture(billiardgl::getTexturePath("B7.bmp").c_str());
+	Game.balls[8].texture = loadTexture(billiardgl::getTexturePath("B8.bmp").c_str());
+	Game.balls[9].texture = loadTexture(billiardgl::getTexturePath("B9.bmp").c_str());
+	Game.balls[10].texture = loadTexture(billiardgl::getTexturePath("B10.bmp").c_str());
+	Game.balls[11].texture = loadTexture(billiardgl::getTexturePath("B11.bmp").c_str());
+	Game.balls[12].texture = loadTexture(billiardgl::getTexturePath("B12.bmp").c_str());
+	Game.balls[13].texture = loadTexture(billiardgl::getTexturePath("B13.bmp").c_str());
+	Game.balls[14].texture = loadTexture(billiardgl::getTexturePath("B14.bmp").c_str());
+	Game.balls[15].texture = loadTexture(billiardgl::getTexturePath("B15.bmp").c_str());
+	Game.balls[0].texture = loadTexture(billiardgl::getTexturePath("B16.bmp").c_str());
 	texGround = loadTexture(billiardgl::getTexturePath("ground.bmp").c_str());//ground
 	texWall = loadTexture(billiardgl::getTexturePath("wall.bmp").c_str());//wall
 	texWall1 = loadTexture(billiardgl::getTexturePath("wall1.bmp").c_str());
