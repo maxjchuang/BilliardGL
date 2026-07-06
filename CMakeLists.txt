@@ -178,6 +178,10 @@ add_test(
     COMMAND Billiards --screenshot /tmp/billiardgl-ctest-help.ppm --screenshot-scene help
 )
 add_test(
+    NAME BilliardsScreenshotAim
+    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-aim.ppm --screenshot-scene aim
+)
+add_test(
     NAME BilliardsScreenshotAfterShot
     COMMAND Billiards --screenshot /tmp/billiardgl-ctest-after-shot.ppm --screenshot-scene after-shot
 )
