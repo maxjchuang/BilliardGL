@@ -10,7 +10,9 @@
 #endif
 
 #include "ObjLoader.h"
+#include "game_state.h"
 #include "particle.h"
+#include "physics.h"
 #include "platform_audio.h"
 #include "platform_time.h"
 #include "resource_path.h"
@@ -82,6 +84,7 @@ bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
 bool WindowedMode = true;
+static billiardgl::GameState Game;
 
 //定义球及位置矢量结构体
 struct Point
@@ -242,6 +245,7 @@ void myReshape(int w, int h)
 // 初始化球位置
 void initBall()
 {
+	billiardgl::initializeBalls(Game);
 	Point s;
 	s.x = 0;
 	s.z = TABLE_IN_LENGTH / 4;
@@ -791,6 +795,8 @@ void renderRect()
 // 更新位置、球数量、速度
 void myIdle(void)
 {
+	// Physics has a GameState-backed implementation in physics.cpp.
+	// The old globals remain active until rendering is moved to GameState.
 	GLfloat vx = 0, vz = 0;
 	at[0] = zoom*(cos(anglex)) + at[3];
 	at[1] = zoom*(cos(angley)) + at[4];

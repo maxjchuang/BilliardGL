@@ -17,6 +17,7 @@ pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 set(BILLIARDGL_CORE_SOURCES
     src/Billiards/game_state.cpp
+    src/Billiards/physics.cpp
     src/Billiards/vec.cpp
 )
 
