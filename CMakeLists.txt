@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(BILLIARDGL_ASSET_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/src/Billiards")
+set(BILLIARDGL_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -33,6 +34,7 @@ add_executable(Billiards
     src/Billiards/hud.cpp
     src/Billiards/renderer.cpp
     src/Billiards/render_resources.cpp
+    src/Billiards/particle_resources.cpp
     src/Billiards/screenshot.cpp
     src/Billiards/screenshot_gl.cpp
     src/Billiards/ObjLoader.cpp
@@ -79,6 +81,10 @@ add_executable(BilliardsRenderResourcesTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsArchitectureTests
+    tests/architecture_tests.cpp
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -118,6 +124,10 @@ target_include_directories(BilliardsRenderResourcesTests PRIVATE
     ${GLEW_INCLUDE_DIRS}
 )
 
+target_include_directories(BilliardsArchitectureTests PRIVATE
+    src/Billiards
+)
+
 target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
 )
@@ -130,9 +140,11 @@ foreach(test_target
     BilliardsAssetsTests
     BilliardsInputTests
     BilliardsRenderResourcesTests
+    BilliardsArchitectureTests
 )
     target_compile_definitions(${test_target} PRIVATE
         BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+        BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
     )
 endforeach()
 
@@ -143,6 +155,7 @@ add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
 add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
 add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
 add_test(NAME BilliardsRenderResourcesTests COMMAND BilliardsRenderResourcesTests)
+add_test(NAME BilliardsArchitectureTests COMMAND BilliardsArchitectureTests)
 
 add_test(
     NAME BilliardsScreenshotDefault

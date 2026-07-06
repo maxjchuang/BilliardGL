@@ -12,7 +12,7 @@
 #include "game_state.h"
 #include "hud.h"
 #include "input.h"
-#include "particle.h"
+#include "particle_resources.h"
 #include "physics.h"
 #include "rules.h"
 #include "platform_audio.h"
@@ -50,8 +50,6 @@
 #define L0 GL_LIGHT0
 #define L1 GL_LIGHT1
 
-GLuint texture[10];
-emitter *e[16];
 static billiardgl::GameState Game;
 static billiardgl::RenderResources Render;
 
@@ -62,8 +60,6 @@ int i = 0, j = 0, k = 0, ballcnt = 16;
 static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 GLfloat m[16];
 
-bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-bool AllFired = false;
 
 //定义球及位置矢量结构体
 struct Point
@@ -100,18 +96,6 @@ static void myMouse(int mbutton, int mstate, int x, int y);
 static void mouseMove(int x, int y);
 void b_music();
 
-particle* init_flame()
-{
-	float size = rand() % 90 * 0.02f;
-	float particleSpeed[] = { float(rand() % 10 - 4) / 1600, float(rand() % 10 - 4) / 800, float(rand() % 10 - 4) / 1600 };
-	float acc[] = { 1.0f*(rand() % 3 - 1) / 9000000,4.9 / 4000000 ,1.0f*(rand() % 3 - 1) / 9000000 };
-	float angle[] = { static_cast<float>(rand() % 360), static_cast<float>(rand() % 360), static_cast<float>(rand() % 360) };
-	particle* p = new particle(vec(size, size, size), vec(particleSpeed), vec(acc),
-		vec(angle), rand() % 50 + 10, texture[2]);
-	return p;
-}
-
-
 int main(int argc, char* argv[])
 {
 	parseLaunchOptions(argc, argv);
@@ -126,13 +110,7 @@ int main(int argc, char* argv[])
 		std::fprintf(stderr, "Failed to initialize render resources\n");
 		return 1;
 	}
-	texture[2] = Render.flameTexture;
-
-	for (int i = 0; i < ballcnt; i++)
-	{
-		e[i] = new emitter(init_flame, 5000, -Radius + Game.balls[i].position.x, Radius + Game.balls[i].position.x, Game.balls[i].position.y, Game.balls[i].position.y, Game.balls[i].position.z, Game.balls[i].position.z);
-		Render.emitters[i] = e[i];
-	}
+	billiardgl::initializeParticleEmitters(Render, Game);
 
 	prepareScreenshotScene();
 
@@ -278,9 +256,6 @@ void myDisplay(void)
 	Render.showPowerMeter = Game.input.waitingForHit == 1;
 	Render.viewportWidth = width;
 	Render.viewportHeight = height;
-	Render.allFired = AllFired;
-	for (int i = 0; i < ballcnt; ++i)
-		Render.fired[i] = Fired[i];
 	billiardgl::setupCameraFromGameState(Game);
 	billiardgl::renderScene(Game, Render);
 
@@ -417,55 +392,55 @@ static void myKeyboard(unsigned char key, int x, int y)
 		if (Game.camera.zoom>500) Game.camera.zoom = 500;
 		break;
 	case '0':
-		Fired[0] = !Fired[0];
+		billiardgl::toggleFired(Render, 0);
 		break;
 	case '1':
-		Fired[1] = !Fired[1];
+		billiardgl::toggleFired(Render, 1);
 		break;
 	case '2':
-		Fired[2] = !Fired[2];
+		billiardgl::toggleFired(Render, 2);
 		break;
 	case '3':
-		Fired[3] = !Fired[3];
+		billiardgl::toggleFired(Render, 3);
 		break;
 	case '4':
-		Fired[4] = !Fired[4];
+		billiardgl::toggleFired(Render, 4);
 		break;
 	case '5':
-		Fired[5] = !Fired[5];
+		billiardgl::toggleFired(Render, 5);
 		break;
 	case '6':
-		Fired[6] = !Fired[6];
+		billiardgl::toggleFired(Render, 6);
 		break;
 	case '7':
-		Fired[7] = !Fired[7];
+		billiardgl::toggleFired(Render, 7);
 		break;
 	case '8':
-		Fired[8] = !Fired[8];
+		billiardgl::toggleFired(Render, 8);
 		break;
 	case '9':
-		Fired[9] = !Fired[9];
+		billiardgl::toggleFired(Render, 9);
 		break;
 	case 'p':
-		Fired[10] = !Fired[10];
+		billiardgl::toggleFired(Render, 10);
 		break;
 	case 'o':
-		Fired[11] = !Fired[11];
+		billiardgl::toggleFired(Render, 11);
 		break;
 	case 'i':
-		Fired[12] = !Fired[12];
+		billiardgl::toggleFired(Render, 12);
 		break;
 	case 'u':
-		Fired[13] = !Fired[13];
+		billiardgl::toggleFired(Render, 13);
 		break;
 	case 'y':
-		Fired[14] = !Fired[14];
+		billiardgl::toggleFired(Render, 14);
 		break;
 	case 't':
-		Fired[15] = !Fired[15];
+		billiardgl::toggleFired(Render, 15);
 		break;
 	case 'f':
-		AllFired = !AllFired;
+		billiardgl::toggleAllFired(Render);
 
 		//		break;
 	}

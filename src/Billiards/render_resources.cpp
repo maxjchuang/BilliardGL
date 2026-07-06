@@ -117,20 +117,7 @@ bool initializeRenderResources(RenderResources& resources, GameState& state)
 
     applyBallTexturesToState(resources, state);
 
-    return resources.tableObj && resources.cueObj && resources.benchObj && resources.wardObj
-        && textureLoaded(resources.tableTextures[0])
-        && textureLoaded(resources.tableTextures[1])
-        && textureLoaded(resources.cueTextures[0])
-        && textureLoaded(resources.cueTextures[1])
-        && hasAllBallTextures(resources)
-        && textureLoaded(resources.ceilingTexture)
-        && textureLoaded(resources.blackTexture)
-        && textureLoaded(resources.wardTexture)
-        && textureLoaded(resources.flameTexture)
-        && resources.tableVertexVBO != 0
-        && resources.cueVertexVBO != 0
-        && resources.benchVertexVBO != 0
-        && resources.wardVertexVBO != 0;
+    return hasRequiredRenderResources(resources);
 }
 
 void destroyRenderResources(RenderResources& resources)
@@ -164,6 +151,36 @@ bool hasAllBallTextures(const RenderResources& resources)
         }
     }
     return true;
+}
+
+bool hasRequiredRenderResources(const RenderResources& resources)
+{
+    return resources.tableObj && resources.cueObj && resources.benchObj && resources.wardObj
+        && textureLoaded(resources.tableTextures[0])
+        && textureLoaded(resources.tableTextures[1])
+        && textureLoaded(resources.cueTextures[0])
+        && textureLoaded(resources.cueTextures[1])
+        && hasAllBallTextures(resources)
+        && textureLoaded(resources.ceilingTexture)
+        && textureLoaded(resources.blackTexture)
+        && textureLoaded(resources.wardTexture)
+        && textureLoaded(resources.flameTexture)
+        && resources.tableVertexVBO != 0
+        && resources.cueVertexVBO != 0
+        && resources.benchVertexVBO != 0
+        && resources.wardVertexVBO != 0;
+}
+
+void toggleFired(RenderResources& resources, int index)
+{
+    if (index >= 0 && index < kBallCount) {
+        resources.fired[index] = !resources.fired[index];
+    }
+}
+
+void toggleAllFired(RenderResources& resources)
+{
+    resources.allFired = !resources.allFired;
 }
 
 }  // namespace billiardgl
