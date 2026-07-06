@@ -46,4 +46,9 @@ Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw, float s
         cueBallPosition.z - direction.z * backoff};
 }
 
+float cueStickRotationDegreesFromAim(float yaw)
+{
+    return 270.5f - yaw * 180.0f / kPi;
+}
+
 }  // namespace billiardgl
