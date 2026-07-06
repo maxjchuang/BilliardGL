@@ -233,7 +233,7 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(cuePosition.x, cuePosition.y, cuePosition.z);
-    glRotatef(180.5f - 90.0f - state.aim.yaw * 180.0f / kPi, 0.0f, 1.0f, 0.0f);
+    glRotatef(cueStickRotationDegreesFromAim(state.aim.yaw), 0.0f, 1.0f, 0.0f);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[0]);
     glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size());
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[1]);

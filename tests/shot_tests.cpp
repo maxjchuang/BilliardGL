@@ -80,6 +80,20 @@ void testCueStickStaysBehindCueBallOutsideBallRadius()
     assert(distance >= billiardgl::kBallRadius * 3.0f);
 }
 
+void testCueStickModelTailPointsAwayFromShotDirection()
+{
+    const float yaw = billiardgl::kPi / 2.0f;
+    const float rotationRadians = billiardgl::cueStickRotationDegreesFromAim(yaw) * billiardgl::kPi / 180.0f;
+    const billiardgl::Point3 localPositiveZAfterRotation{
+        std::sin(rotationRadians),
+        0.0f,
+        std::cos(rotationRadians)};
+    const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(yaw, 20.0f);
+    const float dot = localPositiveZAfterRotation.x * velocity.x + localPositiveZAfterRotation.z * velocity.z;
+
+    assert(dot < 0.0f);
+}
+
 }  // namespace
 
 int main()
@@ -90,5 +104,6 @@ int main()
     testShotVelocityUsesAimYawAndPower();
     testCueLinePointsInShotVelocityDirection();
     testCueStickStaysBehindCueBallOutsideBallRadius();
+    testCueStickModelTailPointsAwayFromShotDirection();
     return EXIT_SUCCESS;
 }
