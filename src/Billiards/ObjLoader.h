@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <string>
 #include "glm/glm.hpp"
@@ -43,4 +45,3 @@ private:
 	int getMtl(std::string mtlName);
 	std::vector<std::string> splitString(std::string line, std::string delim);
 };
-

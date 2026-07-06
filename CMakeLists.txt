@@ -72,6 +72,13 @@ add_executable(BilliardsInputTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsRenderResourcesTests
+    tests/render_resources_tests.cpp
+    src/Billiards/render_resources.cpp
+    src/Billiards/ObjLoader.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -104,6 +111,13 @@ target_include_directories(BilliardsInputTests PRIVATE
     src/Billiards
 )
 
+target_include_directories(BilliardsRenderResourcesTests PRIVATE
+    src/Billiards
+    src/Billiards/dependencies/include
+    ${OPENGL_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIRS}
+)
+
 target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
 )
@@ -115,6 +129,7 @@ foreach(test_target
     BilliardsGameStateTests
     BilliardsAssetsTests
     BilliardsInputTests
+    BilliardsRenderResourcesTests
 )
     target_compile_definitions(${test_target} PRIVATE
         BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
@@ -127,6 +142,7 @@ add_test(NAME BilliardsScreenshotTests COMMAND BilliardsScreenshotTests)
 add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
 add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
 add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
+add_test(NAME BilliardsRenderResourcesTests COMMAND BilliardsRenderResourcesTests)
 
 add_test(
     NAME BilliardsScreenshotDefault
@@ -148,6 +164,12 @@ target_link_libraries(Billiards PRIVATE
     Threads::Threads
     PkgConfig::SDL2_AUDIO
     ${GLUT_LIBRARIES}
+)
+
+target_link_libraries(BilliardsRenderResourcesTests PRIVATE
+    OpenGL::GL
+    OpenGL::GLU
+    GLEW::GLEW
 )
 
 if(APPLE)

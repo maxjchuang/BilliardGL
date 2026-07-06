@@ -1,10 +1,12 @@
 #pragma once
 
 #include "game_state.h"
+#include "ObjLoader.h"
 
 #include <array>
+#include <memory>
+#include <string>
 
-class ObjLoader;
 class emitter;
 
 namespace billiardgl {
@@ -20,13 +22,14 @@ struct RenderResources {
     unsigned int ceilingTexture = 0;
     unsigned int blackTexture = 0;
     unsigned int wardTexture = 0;
+    unsigned int flameTexture = 0;
     unsigned int tableTextures[2] = {0, 0};
     unsigned int cueTextures[2] = {0, 0};
 
-    ObjLoader* tableObj = nullptr;
-    ObjLoader* cueObj = nullptr;
-    ObjLoader* benchObj = nullptr;
-    ObjLoader* wardObj = nullptr;
+    std::unique_ptr<ObjLoader> tableObj;
+    std::unique_ptr<ObjLoader> cueObj;
+    std::unique_ptr<ObjLoader> benchObj;
+    std::unique_ptr<ObjLoader> wardObj;
 
     std::array<emitter*, kBallCount> emitters = {};
     std::array<bool, kBallCount> fired = {};
@@ -41,6 +44,9 @@ struct RenderResources {
     int viewportHeight = 768;
 };
 
+bool initializeRenderResources(RenderResources& resources, GameState& state);
+void destroyRenderResources(RenderResources& resources);
+unsigned int uploadTexture(const std::string& path);
 void applyBallTexturesToState(const RenderResources& resources, GameState& state);
 
 }  // namespace billiardgl

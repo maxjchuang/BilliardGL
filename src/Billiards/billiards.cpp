@@ -9,12 +9,9 @@
 #include <GL/glu.h>
 #endif
 
-#include "ObjLoader.h"
-#include "assets.h"
 #include "game_state.h"
 #include "hud.h"
 #include "input.h"
-#include "image_loader.h"
 #include "particle.h"
 #include "physics.h"
 #include "rules.h"
@@ -61,17 +58,9 @@ static billiardgl::RenderResources Render;
 //变量申明
 int& width = Game.config.width;
 int& height = Game.config.height;
-GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTable, BZD, texCue, texgt, texhe;
 int i = 0, j = 0, k = 0, ballcnt = 16;
 static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 GLfloat m[16];
-GLuint tableVertexVBO, cueVertexVBO, benchVertexVBO, wardVertexVBO, paint1VertexVBO;
-GLuint textureIDtest[2];
-GLuint textureCue[2], textureWard, texturePaint1, texturePaint2;
-ObjLoader tableObj(billiardgl::getObjectPath("table.obj"));
-ObjLoader cueObj(billiardgl::getObjectPath("cue.obj"));
-ObjLoader benchObj(billiardgl::getObjectPath("bench.obj"));
-ObjLoader wardObj(billiardgl::getObjectPath("wardrobe.obj"));
 
 float record_zoom;
 float record_position[3];
@@ -87,16 +76,12 @@ struct Point
 };
 
 // 载入纹理
-int isPowerOfTwo(int n);
-GLuint loadTexture(const char* file_name);
-void initLoadTexture();
 // 场景绘制
 void initBall();
 void parseLaunchOptions(int argc, char* argv[]);
 void prepareScreenshotScene();
 void initWindows(void);
 void myReshape(int w, int h);
-void initDecoration();
 void myDisplay(void);
 void set_camera(void);
 void myIdle(void);
@@ -106,9 +91,6 @@ void drawHelpOverlay();
 void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
 void myString(float x, float y, void *font, const char* c);
 void updatePlayer();
-void initTable();
-void initCue();
-void setMaterial(Material *mat);
 // 光源
 void initLight();
 // 鼠标键盘操作
@@ -148,28 +130,12 @@ int main(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
 	initBall();//初始化球的位置
-	initLoadTexture();
-	initCue();
-	initTable();
-	initDecoration();
-
-	Render.tableObj = &tableObj;
-	Render.cueObj = &cueObj;
-	Render.benchObj = &benchObj;
-	Render.wardObj = &wardObj;
-	Render.tableVertexVBO = tableVertexVBO;
-	Render.cueVertexVBO = cueVertexVBO;
-	Render.benchVertexVBO = benchVertexVBO;
-	Render.wardVertexVBO = wardVertexVBO;
-	Render.ceilingTexture = tecCeiling;
-	Render.blackTexture = texhe;
-	Render.wardTexture = textureWard;
-	Render.tableTextures[0] = textureIDtest[0];
-	Render.tableTextures[1] = textureIDtest[1];
-	Render.cueTextures[0] = textureCue[0];
-	Render.cueTextures[1] = textureCue[1];
-	for (int i = 0; i < ballcnt; ++i)
-		Render.ballTextures[i] = Game.balls[i].texture;
+	if (!billiardgl::initializeRenderResources(Render, Game))
+	{
+		std::fprintf(stderr, "Failed to initialize render resources\n");
+		return 1;
+	}
+	texture[2] = Render.flameTexture;
 
 	for (int i = 0; i < ballcnt; i++)
 	{
@@ -302,173 +268,6 @@ void initBall()
 	}
 }
 
-void initTable() {
-	glEnable(GL_TEXTURE_2D);
-	const std::string tableTexCoords0 = billiardgl::getTexturePath(tableObj.materials[0]->texture);
-	const std::string tableTexCoords1 = billiardgl::getTexturePath(tableObj.materials[1]->texture);
-	textureIDtest[0] = loadTexture(tableTexCoords0.c_str());
-	textureIDtest[1] = loadTexture(tableTexCoords1.c_str());
-
-	glewInit();
-	GLfloat *tableVertex;
-	GLfloat *tableNormal;
-	tableNormal = new GLfloat[tableObj.vertices.size() * 3];
-	tableVertex = new GLfloat[tableObj.vertices.size() * 3];
-	GLfloat *tableTexCoords = new GLfloat[tableObj.vertices.size() * 3];
-	for (int i = 0; i < tableObj.vertices.size(); i++) {
-		tableVertex[i * 3] = tableObj.vertices[i].position.x;
-		tableVertex[i * 3 + 1] = tableObj.vertices[i].position.y;
-		tableVertex[i * 3 + 2] = tableObj.vertices[i].position.z;
-		tableNormal[i * 3] = tableObj.vertices[i].normal.x;
-		tableNormal[i * 3 + 1] = tableObj.vertices[i].normal.y;
-		tableNormal[i * 3 + 2] = tableObj.vertices[i].normal.z;
-		tableTexCoords[i * 3] = tableObj.vertices[i].texture.x;
-		tableTexCoords[i * 3 + 1] = tableObj.vertices[i].texture.y;
-		tableTexCoords[i * 3 + 2] = tableObj.vertices[i].texture.z;
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	size_t dataSize = sizeof(GLfloat) * tableObj.vertices.size() * 3;
-	glGenBuffersARB(1, &tableVertexVBO);
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, tableVertexVBO);
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, tableVertex);                             // copy vertices starting from 0 offest
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, tableNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, tableTexCoords);
-}
-void initDecoration() {
-	glEnable(GL_TEXTURE_2D);
-	glewInit();
-	GLfloat *benchVertex;
-	GLfloat *benchNormal;
-	benchNormal = new GLfloat[benchObj.vertices.size() * 3];
-	benchVertex = new GLfloat[benchObj.vertices.size() * 3];
-	GLfloat *benchTexCoords = new GLfloat[benchObj.vertices.size() * 3];
-	for (int i = 0; i < benchObj.vertices.size(); i++) {
-		benchVertex[i * 3] = benchObj.vertices[i].position.x / 3;
-		benchVertex[i * 3 + 1] = benchObj.vertices[i].position.y / 3;
-		benchVertex[i * 3 + 2] = benchObj.vertices[i].position.z / 3;
-		benchNormal[i * 3] = benchObj.vertices[i].normal.x;
-		benchNormal[i * 3 + 1] = benchObj.vertices[i].normal.y;
-		benchNormal[i * 3 + 2] = benchObj.vertices[i].normal.z;
-		benchTexCoords[i * 3] = benchObj.vertices[i].texture.x;
-		benchTexCoords[i * 3 + 1] = benchObj.vertices[i].texture.y;
-		benchTexCoords[i * 3 + 2] = benchObj.vertices[i].texture.z;
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	size_t dataSize = sizeof(GLfloat) * benchObj.vertices.size() * 3;
-	glGenBuffersARB(1, &benchVertexVBO);
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, benchVertexVBO);
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, benchVertex);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, benchNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, benchTexCoords);
-
-	glEnable(GL_TEXTURE_2D);
-	glewInit();
-	GLfloat *wardVertex;
-	GLfloat *wardNormal;
-	wardNormal = new GLfloat[wardObj.vertices.size() * 3];
-	wardVertex = new GLfloat[wardObj.vertices.size() * 3];
-	GLfloat *wardTexCoords = new GLfloat[wardObj.vertices.size() * 3];
-	for (int i = 0; i < wardObj.vertices.size(); i++) {
-		wardVertex[i * 3] = wardObj.vertices[i].position.x * 3;
-		wardVertex[i * 3 + 1] = wardObj.vertices[i].position.y * 3;
-		wardVertex[i * 3 + 2] = wardObj.vertices[i].position.z * 3;
-		wardNormal[i * 3] = wardObj.vertices[i].normal.x;
-		wardNormal[i * 3 + 1] = wardObj.vertices[i].normal.y;
-		wardNormal[i * 3 + 2] = wardObj.vertices[i].normal.z;
-		wardTexCoords[i * 3] = wardObj.vertices[i].texture.x;
-		wardTexCoords[i * 3 + 1] = wardObj.vertices[i].texture.y;
-		wardTexCoords[i * 3 + 2] = wardObj.vertices[i].texture.z;
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	dataSize = sizeof(GLfloat) * wardObj.vertices.size() * 3;
-	glGenBuffersARB(1, &wardVertexVBO);
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, wardVertexVBO);
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, wardVertex);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, wardNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, wardTexCoords);
-
-
-	/*glEnable(GL_TEXTURE_2D);
-	glewInit();
-	GLfloat *paint1Vertex;
-	GLfloat *paint1Normal;
-	paint1Normal = new GLfloat[paint1Obj.vertices.size() * 3];
-	paint1Vertex = new GLfloat[paint1Obj.vertices.size() * 3];
-	GLfloat *paint1TexCoords = new GLfloat[paint1Obj.vertices.size() * 3];
-	for (int i = 0; i < paint1Obj.vertices.size(); i++) {
-	paint1Vertex[i * 3] = paint1Obj.vertices[i].position.x / 5;
-	paint1Vertex[i * 3 + 1] = paint1Obj.vertices[i].position.y / 5;
-	paint1Vertex[i * 3 + 2] = paint1Obj.vertices[i].position.z / 5;
-	paint1Normal[i * 3] = paint1Obj.vertices[i].normal.x;
-	paint1Normal[i * 3 + 1] = paint1Obj.vertices[i].normal.y;
-	paint1Normal[i * 3 + 2] = paint1Obj.vertices[i].normal.z;
-	paint1TexCoords[i * 3] = paint1Obj.vertices[i].texture.x;
-	paint1TexCoords[i * 3 + 1] = paint1Obj.vertices[i].texture.y;
-	paint1TexCoords[i * 3 + 2] = paint1Obj.vertices[i].texture.z;
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	dataSize = sizeof(GLfloat) * paint1Obj.vertices.size() * 3;
-	glGenBuffersARB(1, &paint1VertexVBO);
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, paint1VertexVBO);
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, paint1Vertex);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, paint1Normal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, paint1TexCoords);*/
-}
-void initCue() {
-	glEnable(GL_TEXTURE_2D);
-	const std::string cueTexCoords0 = billiardgl::getTexturePath(cueObj.materials[0]->texture);
-	const std::string cueTexCoords1 = billiardgl::getTexturePath(cueObj.materials[1]->texture);
-	textureCue[0] = loadTexture(cueTexCoords0.c_str());
-	textureCue[1] = loadTexture(cueTexCoords1.c_str());
-	cout << cueObj.materials[1]->texture << endl;
-	glewInit();
-	GLfloat *cueVertex;
-	GLfloat *cueNormal;
-	cueNormal = new GLfloat[cueObj.vertices.size() * 3];
-	cueVertex = new GLfloat[cueObj.vertices.size() * 3];
-	GLfloat *cueTexCoords = new GLfloat[cueObj.vertices.size() * 3];
-	for (int i = 0; i < cueObj.vertices.size(); i++) {
-		cueVertex[i * 3] = cueObj.vertices[i].position.x;
-		cueVertex[i * 3 + 1] = cueObj.vertices[i].position.y;
-		cueVertex[i * 3 + 2] = cueObj.vertices[i].position.z;
-		cueNormal[i * 3] = cueObj.vertices[i].normal.x;
-		cueNormal[i * 3 + 1] = cueObj.vertices[i].normal.y;
-		cueNormal[i * 3 + 2] = cueObj.vertices[i].normal.z;
-		cueTexCoords[i * 3] = cueObj.vertices[i].texture.x;
-		cueTexCoords[i * 3 + 1] = cueObj.vertices[i].texture.y;
-		cueTexCoords[i * 3 + 2] = cueObj.vertices[i].texture.z;
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	size_t dataSize = sizeof(GLfloat) * cueObj.vertices.size() * 3;
-	glGenBuffersARB(1, &cueVertexVBO);
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cueVertexVBO);
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, cueVertex);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, cueNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, cueTexCoords);
-}
-
-void setMaterial(Material *mat) {
-	const GLfloat a[4] = { mat->ambient[0], mat->ambient[1],mat->ambient[2],1.0f };
-	const GLfloat d[4] = { mat->diffuse[0],mat->diffuse[1],mat->diffuse[2],1.0f };
-	const GLfloat s[4] = { mat->specular[0],mat->specular[1],mat->specular[2],1.0f };
-	//const GLfloat e[4] = { mat.emission[0],mat.emission[1],mat.emission[2],1.0f };
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, a);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, d);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, s);
-	//glMaterialfv(GL_FRONT, GL_EMISSION, e);
-	glMaterialf(GL_FRONT, GL_SHININESS, mat->nShininess);
-}
 // display
 void myDisplay(void)
 {
@@ -767,80 +566,6 @@ static void mouseMove(int x, int y)
 		Game.camera.angleY = PI / 2;
 }
 // 载入纹理
-void initLoadTexture()
-{
-	Game.balls[1].texture = loadTexture(billiardgl::getTexturePath("B1.bmp").c_str());
-	Game.balls[2].texture = loadTexture(billiardgl::getTexturePath("B2.bmp").c_str());
-	Game.balls[3].texture = loadTexture(billiardgl::getTexturePath("B3.bmp").c_str());
-	Game.balls[4].texture = loadTexture(billiardgl::getTexturePath("B4.bmp").c_str());
-	Game.balls[5].texture = loadTexture(billiardgl::getTexturePath("B5.bmp").c_str());
-	Game.balls[6].texture = loadTexture(billiardgl::getTexturePath("B6.bmp").c_str());
-	Game.balls[7].texture = loadTexture(billiardgl::getTexturePath("B7.bmp").c_str());
-	Game.balls[8].texture = loadTexture(billiardgl::getTexturePath("B8.bmp").c_str());
-	Game.balls[9].texture = loadTexture(billiardgl::getTexturePath("B9.bmp").c_str());
-	Game.balls[10].texture = loadTexture(billiardgl::getTexturePath("B10.bmp").c_str());
-	Game.balls[11].texture = loadTexture(billiardgl::getTexturePath("B11.bmp").c_str());
-	Game.balls[12].texture = loadTexture(billiardgl::getTexturePath("B12.bmp").c_str());
-	Game.balls[13].texture = loadTexture(billiardgl::getTexturePath("B13.bmp").c_str());
-	Game.balls[14].texture = loadTexture(billiardgl::getTexturePath("B14.bmp").c_str());
-	Game.balls[15].texture = loadTexture(billiardgl::getTexturePath("B15.bmp").c_str());
-	Game.balls[0].texture = loadTexture(billiardgl::getTexturePath("B16.bmp").c_str());
-	texGround = loadTexture(billiardgl::getTexturePath("ground.bmp").c_str());//ground
-	texWall = loadTexture(billiardgl::getTexturePath("wall.bmp").c_str());//wall
-	texWall1 = loadTexture(billiardgl::getTexturePath("wall1.bmp").c_str());
-	texWall2 = loadTexture(billiardgl::getTexturePath("wall2.bmp").c_str());
-	tecCeiling = loadTexture(billiardgl::getTexturePath("ceiling.bmp").c_str());//天花板
-	BZD = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
-	texTableCloth = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());//桌面
-	texTable = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());//球桌边缘
-	texCue = loadTexture(billiardgl::getTexturePath("wood.bmp").c_str());
-	texgt = loadTexture(billiardgl::getTexturePath("green.bmp").c_str());
-	texhe = loadTexture(billiardgl::getTexturePath("black.bmp").c_str());
-	textureWard = loadTexture(billiardgl::getTexturePath("5.bmp").c_str());
-	texturePaint1 = loadTexture(billiardgl::getTexturePath("6.bmp").c_str());
-	texturePaint2 = loadTexture(billiardgl::getTexturePath("7.bmp").c_str());
-	texture[2] = loadTexture(billiardgl::getTexturePath("flame2.bmp").c_str());
-}
-int isPowerOfTwo(int n)
-{
-	if (n <= 0)
-		return 0;
-	return (n & (n - 1)) == 0;
-}
-
-int previousPowerOfTwo(int n)
-{
-	int value = 1;
-	while (value * 2 <= n)
-		value *= 2;
-	return value;
-}
-GLuint loadTexture(const char* file_name)
-{
-	const billiardgl::ImageData image = billiardgl::loadImageFile(file_name);
-	if (!image.error.empty())
-	{
-		std::fprintf(stderr, "Failed to load texture %s: %s\n", file_name, image.error.c_str());
-		return 0;
-	}
-
-	GLuint last_texture_ID = 0;
-	GLuint texture_ID = 0;
-	glGenTextures(1, &texture_ID);
-	if (texture_ID == 0)
-		return 0;
-
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, reinterpret_cast<int*>(&last_texture_ID));
-	glBindTexture(GL_TEXTURE_2D, texture_ID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, image.width, image.height, GL_RGBA, GL_UNSIGNED_BYTE, image.pixels.data());
-	glBindTexture(GL_TEXTURE_2D, last_texture_ID);
-	return texture_ID;
-}
 void initLight(void)
 {
 	//光照处理
