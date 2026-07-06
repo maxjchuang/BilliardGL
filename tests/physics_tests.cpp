@@ -66,5 +66,14 @@ int main()
         return fail("ball at pocket center should be detected as pocketed");
     }
 
+    state.balls[4].speed = 1.0f;
+    if (!billiardgl::anyBallMoving(state)) {
+        return fail("anyBallMoving should detect active ball speed");
+    }
+    state.balls[4].speed = 0.0f;
+    if (billiardgl::anyBallMoving(state)) {
+        return fail("anyBallMoving should be false when all speeds are zero");
+    }
+
     return EXIT_SUCCESS;
 }

@@ -837,6 +837,8 @@ void myIdle(void)
 		atxy = sqrt(pow(at[3] - at[0], 2) + pow(at[5] - at[2], 2));
 		Ball[0].v.x = speed*(at[3] - at[0]) / atxy;
 		Ball[0].v.z = speed*(at[5] - at[2]) / atxy;
+		billiardgl::setBallVelocity(Game.balls[0], Ball[0].v.x, Ball[0].v.y, Ball[0].v.z);
+		Game.players.shotTaken = Hitted;
 		Hit = 0;
 		for (i = speed * 100; i > 0; i--) {
 			speed -= 0.01;
@@ -1442,6 +1444,8 @@ void updatePlayer()
 		if ((!IsIllegal) && (NextPlayer == CurrPlayer));
 		else
 			CurrPlayer = 1 - CurrPlayer;
+		Game.players.currentPlayer = CurrPlayer;
 		updated = true;
+		Game.players.updatedAfterShot = updated;
 	}
 }

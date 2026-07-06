@@ -46,4 +46,21 @@ void updateCameraFromCueBall(GameState& state)
     state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
 }
 
+void setBallVelocity(BallState& ball, float x, float y, float z)
+{
+    ball.velocity.x = x;
+    ball.velocity.y = y;
+    ball.velocity.z = z;
+}
+
+bool anyBallMoving(const GameState& state)
+{
+    for (const BallState& ball : state.balls) {
+        if (!ball.pocketed && ball.speed > 0.0f) {
+            return true;
+        }
+    }
+    return false;
+}
+
 }  // namespace billiardgl

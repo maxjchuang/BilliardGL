@@ -90,5 +90,7 @@ struct GameState {
 
 void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
+void setBallVelocity(BallState& ball, float x, float y, float z);
+bool anyBallMoving(const GameState& state);
 
 }  // namespace billiardgl
