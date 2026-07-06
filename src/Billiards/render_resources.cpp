@@ -122,6 +122,7 @@ bool initializeRenderResources(RenderResources& resources, GameState& state)
         && textureLoaded(resources.tableTextures[1])
         && textureLoaded(resources.cueTextures[0])
         && textureLoaded(resources.cueTextures[1])
+        && hasAllBallTextures(resources)
         && textureLoaded(resources.ceilingTexture)
         && textureLoaded(resources.blackTexture)
         && textureLoaded(resources.wardTexture)
@@ -153,6 +154,16 @@ void applyBallTexturesToState(const RenderResources& resources, GameState& state
     for (int i = 0; i < kBallCount; ++i) {
         state.balls[i].texture = resources.ballTextures[i];
     }
+}
+
+bool hasAllBallTextures(const RenderResources& resources)
+{
+    for (int i = 0; i < kBallCount; ++i) {
+        if (resources.ballTextures[i] == 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 }  // namespace billiardgl

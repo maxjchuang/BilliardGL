@@ -48,5 +48,6 @@ bool initializeRenderResources(RenderResources& resources, GameState& state);
 void destroyRenderResources(RenderResources& resources);
 unsigned int uploadTexture(const std::string& path);
 void applyBallTexturesToState(const RenderResources& resources, GameState& state);
+bool hasAllBallTextures(const RenderResources& resources);
 
 }  // namespace billiardgl

@@ -49,6 +49,8 @@ struct CameraState {
     float panX = 0.0f;
     float panY = 0.0f;
     float panZ = 0.0f;
+    float recordedZoom = 0.0f;
+    float recordedTarget[3] = {0.0f, 0.0f, 0.0f};
 };
 
 struct PlayerState {

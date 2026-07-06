@@ -13,10 +13,14 @@ int main()
     }
 
     billiardgl::applyBallTexturesToState(resources, state);
+    assert(billiardgl::hasAllBallTextures(resources));
 
     for (int i = 0; i < billiardgl::kBallCount; ++i) {
         assert(state.balls[i].texture == static_cast<unsigned int>(100 + i));
     }
+
+    resources.ballTextures[3] = 0;
+    assert(!billiardgl::hasAllBallTextures(resources));
 
     return 0;
 }

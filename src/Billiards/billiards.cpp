@@ -62,8 +62,6 @@ int i = 0, j = 0, k = 0, ballcnt = 16;
 static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 GLfloat m[16];
 
-float record_zoom;
-float record_position[3];
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
 
@@ -345,23 +343,23 @@ void myIdle(void)
 	{
 		if (!Game.perspectiveRecorded)
 		{
-			record_zoom = Game.camera.zoom;
-			record_position[0] = Game.balls[0].position.x;
-			record_position[1] = Game.balls[0].position.y;
-			record_position[2] = Game.balls[0].position.z;
-			Game.camera.target[0] = record_position[0];
-			Game.camera.target[1] = record_position[1];
-			Game.camera.target[2] = record_position[2];
+			Game.camera.recordedZoom = Game.camera.zoom;
+			Game.camera.recordedTarget[0] = Game.balls[0].position.x;
+			Game.camera.recordedTarget[1] = Game.balls[0].position.y;
+			Game.camera.recordedTarget[2] = Game.balls[0].position.z;
+			Game.camera.target[0] = Game.camera.recordedTarget[0];
+			Game.camera.target[1] = Game.camera.recordedTarget[1];
+			Game.camera.target[2] = Game.camera.recordedTarget[2];
 			Game.perspectiveRecorded = true;
 		}
 		else
 		{
-			if (Game.camera.zoom < record_zoom + 100)
+			if (Game.camera.zoom < Game.camera.recordedZoom + 100)
 				Game.camera.zoom += 1;
 			else if (!Game.ballsMoving)
 			{
 				billiardgl::sleepMilliseconds(1000);
-				Game.camera.zoom = record_zoom;
+				Game.camera.zoom = Game.camera.recordedZoom;
 				Game.transitionPerspective = false;
 				Game.perspectiveRecorded = false;
 			}
