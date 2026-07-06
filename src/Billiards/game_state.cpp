@@ -46,6 +46,14 @@ void updateCameraFromCueBall(GameState& state)
     state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
 }
 
+void resetBallMotion(BallState& ball)
+{
+    ball.velocity = Point3{};
+    ball.rotationAxis = Point3{};
+    ball.speed = 0.0f;
+    ball.rotationAngle = 0.0f;
+}
+
 void setBallVelocity(BallState& ball, float x, float y, float z)
 {
     ball.velocity.x = x;

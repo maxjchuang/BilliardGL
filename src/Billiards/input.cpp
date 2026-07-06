@@ -79,6 +79,22 @@ void endTrackpadOrbit(GameState& state)
     state.input.waitingForHit = false;
 }
 
+void chargeShotPower(GameState& state, float maxPower, float increment)
+{
+    if (!state.input.waitingForHit) {
+        return;
+    }
+
+    if (state.input.shotPower >= maxPower) {
+        state.input.shotPower = 0.0f;
+    } else {
+        state.input.shotPower += increment;
+        if (state.input.shotPower > maxPower) {
+            state.input.shotPower = maxPower;
+        }
+    }
+}
+
 void handleMouseMove(GameState& state, int x, int y)
 {
     const int dx = x - state.input.mouseX;

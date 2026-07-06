@@ -21,6 +21,7 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
 void handleMouseMove(GameState& state, int x, int y);
 void beginTrackpadOrbit(GameState& state, int x, int y);
 void endTrackpadOrbit(GameState& state);
+void chargeShotPower(GameState& state, float maxPower, float increment);
 void clampCameraAngles(GameState& state);
 
 }  // namespace billiardgl

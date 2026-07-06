@@ -100,6 +100,23 @@ void testHelpBlocksMouseShotInput()
     assert(!state.input.hitRequested);
 }
 
+void testShotPowerChargesThroughInputState()
+{
+    billiardgl::GameState state;
+    state.input.waitingForHit = true;
+    state.input.shotPower = 198.0f;
+
+    billiardgl::chargeShotPower(state, 200.0f, 2.0f);
+    assert(closeEnough(state.input.shotPower, 200.0f));
+
+    billiardgl::chargeShotPower(state, 200.0f, 2.0f);
+    assert(closeEnough(state.input.shotPower, 0.0f));
+
+    state.input.waitingForHit = false;
+    billiardgl::chargeShotPower(state, 200.0f, 2.0f);
+    assert(closeEnough(state.input.shotPower, 0.0f));
+}
+
 }  // namespace
 
 int main()
@@ -110,5 +127,6 @@ int main()
     testTrackpadOrbitUsesLeftDragWithoutChargingShot();
     testLeftMouseChargesAndReleaseRequestsHit();
     testHelpBlocksMouseShotInput();
+    testShotPowerChargesThroughInputState();
     return 0;
 }

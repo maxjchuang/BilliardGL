@@ -62,25 +62,8 @@ static billiardgl::RenderResources Render;
 int& width = Game.config.width;
 int& height = Game.config.height;
 GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTable, BZD, texCue, texgt, texhe;
-int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16;
-int& BallInNum = Game.pocketedBallCount;
-bool& AimAt = Game.players.aimingAtCueBall;
-bool& WaitHit = Game.input.waitingForHit;
-bool& Hit = Game.input.hitRequested;
-int leftm = 0, rightm = 0;
-bool TrackpadOrbit = false;
-bool& ShowHelp = Game.hud.showHelp;
-GLfloat rx, ry, rz, speed = 0;
-static GLfloat kx = 0, ky = 0, kz = 0;
-static GLfloat& zoom = Game.camera.zoom;
-static GLfloat& anglex = Game.camera.angleX;
-static GLfloat& angley = Game.camera.angleY;
-static GLfloat& nowanglex = Game.camera.previousAngleX;
-static GLfloat& nowangley = Game.camera.previousAngleY;
-static GLfloat& nowatx = Game.camera.previousTargetX;
-static GLfloat& nowaty = Game.camera.previousTargetY;
+int i = 0, j = 0, k = 0, ballcnt = 16;
 static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
-static GLfloat at[6] = { 0, 200, -TABLE_IN_LENGTH / 4, 0, TABLE_HEIGHT + Radius, -TABLE_IN_LENGTH / 4 };
 GLfloat m[16];
 GLuint tableVertexVBO, cueVertexVBO, benchVertexVBO, wardVertexVBO, paint1VertexVBO;
 GLuint textureIDtest[2];
@@ -90,23 +73,10 @@ ObjLoader cueObj(billiardgl::getObjectPath("cue.obj"));
 ObjLoader benchObj(billiardgl::getObjectPath("bench.obj"));
 ObjLoader wardObj(billiardgl::getObjectPath("wardrobe.obj"));
 
-bool& IsMoving = Game.ballsMoving;
-bool& transPerc = Game.transitionPerspective;
-bool& Isrecroded = Game.perspectiveRecorded;
 float record_zoom;
 float record_position[3];
-int (&PlayerBall)[2] = Game.players.assignedBallType;// 0代表纯色球 1-7  1代表花色球 9-15
-bool& IsFirstInBall = Game.players.firstPocketedObjectBall;
-int& CurrPlayer = Game.players.currentPlayer;
-int& NextPlayer = Game.players.nextPlayer;
-bool& IsIllegal = Game.players.illegalShot;
-bool& updated = Game.players.updatedAfterShot;
-bool& Hitted = Game.players.shotTaken;
-bool& IsGameOver = Game.gameOver;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
-bool& WindowedMode = Game.config.windowedMode;
-std::string& ScreenshotPath = Game.config.screenshotPath;
 
 //定义球及位置矢量结构体
 struct Point
@@ -146,11 +116,11 @@ static void myKeyboard(unsigned char key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y)
 {
-	Game.camera.angleX = anglex;
-	Game.camera.angleY = angley;
+	Game.camera.angleX = Game.camera.angleX;
+	Game.camera.angleY = Game.camera.angleY;
 	billiardgl::handleSpecialKey(Game, GLUT_KEY_LEFT, GLUT_KEY_RIGHT, GLUT_KEY_UP, GLUT_KEY_DOWN, key);
-	anglex = Game.camera.angleX;
-	angley = Game.camera.angleY;
+	Game.camera.angleX = Game.camera.angleX;
+	Game.camera.angleY = Game.camera.angleY;
 }
 
 static void myMouse(int mbutton, int mstate, int x, int y);
@@ -160,10 +130,10 @@ void b_music();
 particle* init_flame()
 {
 	float size = rand() % 90 * 0.02f;
-	float speed[] = { float(rand() % 10 - 4) / 1600, float(rand() % 10 - 4) / 800, float(rand() % 10 - 4) / 1600 };
+	float particleSpeed[] = { float(rand() % 10 - 4) / 1600, float(rand() % 10 - 4) / 800, float(rand() % 10 - 4) / 1600 };
 	float acc[] = { 1.0f*(rand() % 3 - 1) / 9000000,4.9 / 4000000 ,1.0f*(rand() % 3 - 1) / 9000000 };
 	float angle[] = { static_cast<float>(rand() % 360), static_cast<float>(rand() % 360), static_cast<float>(rand() % 360) };
-	particle* p = new particle(vec(size, size, size), vec(speed), vec(acc),
+	particle* p = new particle(vec(size, size, size), vec(particleSpeed), vec(acc),
 		vec(angle), rand() % 50 + 10, texture[2]);
 	return p;
 }
@@ -228,13 +198,13 @@ void parseLaunchOptions(int argc, char* argv[])
 	for (int i = 1; i < argc; ++i)
 	{
 		if (strcmp(argv[i], "--windowed") == 0)
-			WindowedMode = true;
+			Game.config.windowedMode = true;
 		else if (strcmp(argv[i], "--fullscreen") == 0)
-			WindowedMode = false;
+			Game.config.windowedMode = false;
 		else if (strcmp(argv[i], "--screenshot") == 0 && i + 1 < argc)
 		{
-			ScreenshotPath = argv[++i];
-			WindowedMode = true;
+			Game.config.screenshotPath = argv[++i];
+			Game.config.windowedMode = true;
 		}
 		else if (strcmp(argv[i], "--screenshot-scene") == 0 && i + 1 < argc)
 		{
@@ -256,7 +226,7 @@ void parseLaunchOptions(int argc, char* argv[])
 
 void prepareScreenshotScene()
 {
-	if (ScreenshotPath.empty())
+	if (Game.config.screenshotPath.empty())
 		return;
 
 	if (Game.config.screenshotScene == billiardgl::ScreenshotScene::Help)
@@ -273,9 +243,9 @@ void prepareScreenshotScene()
 		for (int step = 0; step < 30; ++step)
 			billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
 		billiardgl::updateCameraFromCueBall(Game);
-		at[3] = Game.camera.target[0];
-		at[4] = Game.camera.target[1];
-		at[5] = Game.camera.target[2];
+		Game.camera.target[0] = Game.camera.target[0];
+		Game.camera.target[1] = Game.camera.target[1];
+		Game.camera.target[2] = Game.camera.target[2];
 	}
 }
 
@@ -283,7 +253,7 @@ void initWindows(void)
 {
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Billards");
-	if (!WindowedMode)
+	if (!Game.config.windowedMode)
 		glutFullScreen();
 }
 
@@ -327,27 +297,24 @@ void initBall()
 
 	for (i = 0; i < ballcnt; i++)
 	{
-		Game.balls[i].velocity.x = 0; Game.balls[i].velocity.z = 0; Game.balls[i].velocity.y = 0;
-		Game.balls[i].rotationAxis.x = 0; Game.balls[i].rotationAxis.z = 0; Game.balls[i].rotationAxis.y = 0;
-		Game.balls[i].pocketed = 0;
-		Game.balls[i].speed = 0;
-		Game.balls[i].rotationAngle = 0;
+		billiardgl::resetBallMotion(Game.balls[i]);
+		Game.balls[i].pocketed = false;
 	}
 }
 
 void initTable() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string tableTexture0 = billiardgl::getTexturePath(tableObj.materials[0]->texture);
-	const std::string tableTexture1 = billiardgl::getTexturePath(tableObj.materials[1]->texture);
-	textureIDtest[0] = loadTexture(tableTexture0.c_str());
-	textureIDtest[1] = loadTexture(tableTexture1.c_str());
+	const std::string tableTexCoords0 = billiardgl::getTexturePath(tableObj.materials[0]->texture);
+	const std::string tableTexCoords1 = billiardgl::getTexturePath(tableObj.materials[1]->texture);
+	textureIDtest[0] = loadTexture(tableTexCoords0.c_str());
+	textureIDtest[1] = loadTexture(tableTexCoords1.c_str());
 
 	glewInit();
 	GLfloat *tableVertex;
 	GLfloat *tableNormal;
 	tableNormal = new GLfloat[tableObj.vertices.size() * 3];
 	tableVertex = new GLfloat[tableObj.vertices.size() * 3];
-	GLfloat *tableTexture = new GLfloat[tableObj.vertices.size() * 3];
+	GLfloat *tableTexCoords = new GLfloat[tableObj.vertices.size() * 3];
 	for (int i = 0; i < tableObj.vertices.size(); i++) {
 		tableVertex[i * 3] = tableObj.vertices[i].position.x;
 		tableVertex[i * 3 + 1] = tableObj.vertices[i].position.y;
@@ -355,9 +322,9 @@ void initTable() {
 		tableNormal[i * 3] = tableObj.vertices[i].normal.x;
 		tableNormal[i * 3 + 1] = tableObj.vertices[i].normal.y;
 		tableNormal[i * 3 + 2] = tableObj.vertices[i].normal.z;
-		tableTexture[i * 3] = tableObj.vertices[i].texture.x;
-		tableTexture[i * 3 + 1] = tableObj.vertices[i].texture.y;
-		tableTexture[i * 3 + 2] = tableObj.vertices[i].texture.z;
+		tableTexCoords[i * 3] = tableObj.vertices[i].texture.x;
+		tableTexCoords[i * 3 + 1] = tableObj.vertices[i].texture.y;
+		tableTexCoords[i * 3 + 2] = tableObj.vertices[i].texture.z;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -367,7 +334,7 @@ void initTable() {
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, tableVertex);                             // copy vertices starting from 0 offest
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, tableNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, tableTexture);
+	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, tableTexCoords);
 }
 void initDecoration() {
 	glEnable(GL_TEXTURE_2D);
@@ -376,7 +343,7 @@ void initDecoration() {
 	GLfloat *benchNormal;
 	benchNormal = new GLfloat[benchObj.vertices.size() * 3];
 	benchVertex = new GLfloat[benchObj.vertices.size() * 3];
-	GLfloat *benchTexture = new GLfloat[benchObj.vertices.size() * 3];
+	GLfloat *benchTexCoords = new GLfloat[benchObj.vertices.size() * 3];
 	for (int i = 0; i < benchObj.vertices.size(); i++) {
 		benchVertex[i * 3] = benchObj.vertices[i].position.x / 3;
 		benchVertex[i * 3 + 1] = benchObj.vertices[i].position.y / 3;
@@ -384,9 +351,9 @@ void initDecoration() {
 		benchNormal[i * 3] = benchObj.vertices[i].normal.x;
 		benchNormal[i * 3 + 1] = benchObj.vertices[i].normal.y;
 		benchNormal[i * 3 + 2] = benchObj.vertices[i].normal.z;
-		benchTexture[i * 3] = benchObj.vertices[i].texture.x;
-		benchTexture[i * 3 + 1] = benchObj.vertices[i].texture.y;
-		benchTexture[i * 3 + 2] = benchObj.vertices[i].texture.z;
+		benchTexCoords[i * 3] = benchObj.vertices[i].texture.x;
+		benchTexCoords[i * 3 + 1] = benchObj.vertices[i].texture.y;
+		benchTexCoords[i * 3 + 2] = benchObj.vertices[i].texture.z;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -396,7 +363,7 @@ void initDecoration() {
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, benchVertex);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, benchNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, benchTexture);
+	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, benchTexCoords);
 
 	glEnable(GL_TEXTURE_2D);
 	glewInit();
@@ -404,7 +371,7 @@ void initDecoration() {
 	GLfloat *wardNormal;
 	wardNormal = new GLfloat[wardObj.vertices.size() * 3];
 	wardVertex = new GLfloat[wardObj.vertices.size() * 3];
-	GLfloat *wardTexture = new GLfloat[wardObj.vertices.size() * 3];
+	GLfloat *wardTexCoords = new GLfloat[wardObj.vertices.size() * 3];
 	for (int i = 0; i < wardObj.vertices.size(); i++) {
 		wardVertex[i * 3] = wardObj.vertices[i].position.x * 3;
 		wardVertex[i * 3 + 1] = wardObj.vertices[i].position.y * 3;
@@ -412,9 +379,9 @@ void initDecoration() {
 		wardNormal[i * 3] = wardObj.vertices[i].normal.x;
 		wardNormal[i * 3 + 1] = wardObj.vertices[i].normal.y;
 		wardNormal[i * 3 + 2] = wardObj.vertices[i].normal.z;
-		wardTexture[i * 3] = wardObj.vertices[i].texture.x;
-		wardTexture[i * 3 + 1] = wardObj.vertices[i].texture.y;
-		wardTexture[i * 3 + 2] = wardObj.vertices[i].texture.z;
+		wardTexCoords[i * 3] = wardObj.vertices[i].texture.x;
+		wardTexCoords[i * 3 + 1] = wardObj.vertices[i].texture.y;
+		wardTexCoords[i * 3 + 2] = wardObj.vertices[i].texture.z;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -424,7 +391,7 @@ void initDecoration() {
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, wardVertex);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, wardNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, wardTexture);
+	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, wardTexCoords);
 
 
 	/*glEnable(GL_TEXTURE_2D);
@@ -433,7 +400,7 @@ void initDecoration() {
 	GLfloat *paint1Normal;
 	paint1Normal = new GLfloat[paint1Obj.vertices.size() * 3];
 	paint1Vertex = new GLfloat[paint1Obj.vertices.size() * 3];
-	GLfloat *paint1Texture = new GLfloat[paint1Obj.vertices.size() * 3];
+	GLfloat *paint1TexCoords = new GLfloat[paint1Obj.vertices.size() * 3];
 	for (int i = 0; i < paint1Obj.vertices.size(); i++) {
 	paint1Vertex[i * 3] = paint1Obj.vertices[i].position.x / 5;
 	paint1Vertex[i * 3 + 1] = paint1Obj.vertices[i].position.y / 5;
@@ -441,9 +408,9 @@ void initDecoration() {
 	paint1Normal[i * 3] = paint1Obj.vertices[i].normal.x;
 	paint1Normal[i * 3 + 1] = paint1Obj.vertices[i].normal.y;
 	paint1Normal[i * 3 + 2] = paint1Obj.vertices[i].normal.z;
-	paint1Texture[i * 3] = paint1Obj.vertices[i].texture.x;
-	paint1Texture[i * 3 + 1] = paint1Obj.vertices[i].texture.y;
-	paint1Texture[i * 3 + 2] = paint1Obj.vertices[i].texture.z;
+	paint1TexCoords[i * 3] = paint1Obj.vertices[i].texture.x;
+	paint1TexCoords[i * 3 + 1] = paint1Obj.vertices[i].texture.y;
+	paint1TexCoords[i * 3 + 2] = paint1Obj.vertices[i].texture.z;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -453,21 +420,21 @@ void initDecoration() {
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, paint1Vertex);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, paint1Normal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, paint1Texture);*/
+	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, paint1TexCoords);*/
 }
 void initCue() {
 	glEnable(GL_TEXTURE_2D);
-	const std::string cueTexture0 = billiardgl::getTexturePath(cueObj.materials[0]->texture);
-	const std::string cueTexture1 = billiardgl::getTexturePath(cueObj.materials[1]->texture);
-	textureCue[0] = loadTexture(cueTexture0.c_str());
-	textureCue[1] = loadTexture(cueTexture1.c_str());
+	const std::string cueTexCoords0 = billiardgl::getTexturePath(cueObj.materials[0]->texture);
+	const std::string cueTexCoords1 = billiardgl::getTexturePath(cueObj.materials[1]->texture);
+	textureCue[0] = loadTexture(cueTexCoords0.c_str());
+	textureCue[1] = loadTexture(cueTexCoords1.c_str());
 	cout << cueObj.materials[1]->texture << endl;
 	glewInit();
 	GLfloat *cueVertex;
 	GLfloat *cueNormal;
 	cueNormal = new GLfloat[cueObj.vertices.size() * 3];
 	cueVertex = new GLfloat[cueObj.vertices.size() * 3];
-	GLfloat *cueTexture = new GLfloat[cueObj.vertices.size() * 3];
+	GLfloat *cueTexCoords = new GLfloat[cueObj.vertices.size() * 3];
 	for (int i = 0; i < cueObj.vertices.size(); i++) {
 		cueVertex[i * 3] = cueObj.vertices[i].position.x;
 		cueVertex[i * 3 + 1] = cueObj.vertices[i].position.y;
@@ -475,9 +442,9 @@ void initCue() {
 		cueNormal[i * 3] = cueObj.vertices[i].normal.x;
 		cueNormal[i * 3 + 1] = cueObj.vertices[i].normal.y;
 		cueNormal[i * 3 + 2] = cueObj.vertices[i].normal.z;
-		cueTexture[i * 3] = cueObj.vertices[i].texture.x;
-		cueTexture[i * 3 + 1] = cueObj.vertices[i].texture.y;
-		cueTexture[i * 3 + 2] = cueObj.vertices[i].texture.z;
+		cueTexCoords[i * 3] = cueObj.vertices[i].texture.x;
+		cueTexCoords[i * 3 + 1] = cueObj.vertices[i].texture.y;
+		cueTexCoords[i * 3 + 2] = cueObj.vertices[i].texture.z;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -487,7 +454,7 @@ void initCue() {
 	glBufferDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 3, 0, GL_STATIC_DRAW_ARB);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, dataSize, cueVertex);
 	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize, dataSize, cueNormal);
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, cueTexture);
+	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, dataSize * 2, dataSize, cueTexCoords);
 }
 
 void setMaterial(Material *mat) {
@@ -505,28 +472,20 @@ void setMaterial(Material *mat) {
 // display
 void myDisplay(void)
 {
-	if (!ScreenshotPath.empty())
+	if (!Game.config.screenshotPath.empty())
 	{
-		at[0] = zoom*(cos(anglex)) + at[3];
-		at[1] = zoom*(cos(angley)) + at[4];
-		at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
+		billiardgl::updateCameraFromCueBall(Game);
 	}
 	set_camera();
-	Game.camera.eye[0] = at[0];
-	Game.camera.eye[1] = at[1];
-	Game.camera.eye[2] = at[2];
-	Game.camera.target[0] = at[3];
-	Game.camera.target[1] = at[4];
-	Game.camera.target[2] = at[5];
-	Render.cameraEye[0] = at[0];
-	Render.cameraEye[1] = at[1];
-	Render.cameraEye[2] = at[2];
-	Render.cameraTarget[0] = at[3];
-	Render.cameraTarget[1] = at[4];
-	Render.cameraTarget[2] = at[5];
-	Render.shotPower = speed;
-	Render.showCue = AimAt == 1;
-	Render.showPowerMeter = WaitHit == 1;
+	Render.cameraEye[0] = Game.camera.eye[0];
+	Render.cameraEye[1] = Game.camera.eye[1];
+	Render.cameraEye[2] = Game.camera.eye[2];
+	Render.cameraTarget[0] = Game.camera.target[0];
+	Render.cameraTarget[1] = Game.camera.target[1];
+	Render.cameraTarget[2] = Game.camera.target[2];
+	Render.shotPower = Game.input.shotPower;
+	Render.showCue = Game.players.aimingAtCueBall == 1;
+	Render.showPowerMeter = Game.input.waitingForHit == 1;
 	Render.viewportWidth = width;
 	Render.viewportHeight = height;
 	Render.allFired = AllFired;
@@ -537,12 +496,10 @@ void myDisplay(void)
 	updatePlayer();
 	Game.config.width = width;
 	Game.config.height = height;
-	Game.players.currentPlayer = CurrPlayer;
-	Game.hud.showHelp = ShowHelp;
 	billiardgl::drawHud(Game);
-	if (!ScreenshotPath.empty())
+	if (!Game.config.screenshotPath.empty())
 	{
-		const bool saved = billiardgl::saveFramebufferToPpm(ScreenshotPath, width, height);
+		const bool saved = billiardgl::saveFramebufferToPpm(Game.config.screenshotPath, width, height);
 		glutSwapBuffers();
 		std::exit(saved ? 0 : 2);
 	}
@@ -555,48 +512,44 @@ void set_camera(void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(60.0f, static_cast<GLdouble>(width) / static_cast<GLdouble>(height), 10, 10000.0f);
-	glTranslatef(kx, ky, kz);
+	glTranslatef(Game.camera.panX, Game.camera.panY, Game.camera.panZ);
 	glMatrixMode(GL_TEXTURE);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(at[0], at[1], at[2], at[3], at[4], at[5], 0.0, 1.0, 0.0);//0.0,300.0,500.0,0.0,80.0,0.0
+	gluLookAt(Game.camera.eye[0], Game.camera.eye[1], Game.camera.eye[2], Game.camera.target[0], Game.camera.target[1], Game.camera.target[2], 0.0, 1.0, 0.0);//0.0,300.0,500.0,0.0,80.0,0.0
 }
 // 画房间
 void myIdle(void)
 {
-	at[3] = Game.balls[0].position.x;
-	at[4] = Game.balls[0].position.y;
-	at[5] = Game.balls[0].position.z;
-	at[0] = zoom * (cos(anglex)) + at[3];
-	at[1] = zoom * (cos(angley)) + at[4];
-	at[2] = zoom * (sin(anglex) * sin(angley)) + at[5];
+	Game.camera.target[0] = Game.balls[0].position.x;
+	Game.camera.target[1] = Game.balls[0].position.y;
+	Game.camera.target[2] = Game.balls[0].position.z;
+	Game.camera.eye[0] = Game.camera.zoom * (cos(Game.camera.angleX)) + Game.camera.target[0];
+	Game.camera.eye[1] = Game.camera.zoom * (cos(Game.camera.angleY)) + Game.camera.target[1];
+	Game.camera.eye[2] = Game.camera.zoom * (sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
 
-	if (WaitHit == 1)
-	{
-		if (speed > 200) speed -= 200;
-		else speed += 2;
-	}
+	billiardgl::chargeShotPower(Game, 200.0f, 2.0f);
 
-	if (Hit == 1)
+	if (Game.input.hitRequested == 1)
 	{
-		const GLfloat atxy = sqrt(pow(at[3] - at[0], 2) + pow(at[5] - at[2], 2));
+		const GLfloat atxy = sqrt(pow(Game.camera.target[0] - Game.camera.eye[0], 2) + pow(Game.camera.target[2] - Game.camera.eye[2], 2));
 		if (atxy > 0)
 		{
-			billiardgl::setBallVelocity(Game.balls[0], speed * (at[3] - at[0]) / atxy, 0.0f, speed * (at[5] - at[2]) / atxy);
+			billiardgl::setBallVelocity(Game.balls[0], Game.input.shotPower * (Game.camera.target[0] - Game.camera.eye[0]) / atxy, 0.0f, Game.input.shotPower * (Game.camera.target[2] - Game.camera.eye[2]) / atxy);
 			Game.players.shotTaken = true;
 			Game.players.updatedAfterShot = false;
 			Game.ballsMoving = true;
 		}
-		Hit = 0;
-		speed = 0;
+		Game.input.hitRequested = 0;
+		Game.input.shotPower = 0;
 		billiardgl::playHit();
 	}
 
-	if (leftm)
+	if (Game.input.leftMouseDown)
 	{
 		Game.balls[0].velocity.x = 0;
 		Game.balls[0].velocity.z = 0;
-		speed = 0;
+		Game.input.shotPower = 0;
 	}
 
 	billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
@@ -607,48 +560,47 @@ void myIdle(void)
 	if (Game.events.eightBallPocketed)
 		billiardgl::playGameOver();
 
-	if (transPerc)
+	if (Game.transitionPerspective)
 	{
-		if (!Isrecroded)
+		if (!Game.perspectiveRecorded)
 		{
-			record_zoom = zoom;
+			record_zoom = Game.camera.zoom;
 			record_position[0] = Game.balls[0].position.x;
 			record_position[1] = Game.balls[0].position.y;
 			record_position[2] = Game.balls[0].position.z;
-			at[3] = record_position[0];
-			at[4] = record_position[1];
-			at[5] = record_position[2];
-			Isrecroded = true;
+			Game.camera.target[0] = record_position[0];
+			Game.camera.target[1] = record_position[1];
+			Game.camera.target[2] = record_position[2];
+			Game.perspectiveRecorded = true;
 		}
 		else
 		{
-			if (zoom < record_zoom + 100)
-				zoom += 1;
-			else if (!IsMoving)
+			if (Game.camera.zoom < record_zoom + 100)
+				Game.camera.zoom += 1;
+			else if (!Game.ballsMoving)
 			{
 				billiardgl::sleepMilliseconds(1000);
-				zoom = record_zoom;
-				transPerc = false;
-				Isrecroded = false;
+				Game.camera.zoom = record_zoom;
+				Game.transitionPerspective = false;
+				Game.perspectiveRecorded = false;
 			}
 		}
 	}
 
-	if (IsGameOver)
+	if (Game.gameOver)
 	{
 		if (Game.balls[8].position.x == 100 || Game.balls[8].position.x == -100)
 		{
-			at[0] = 0;
-			at[1] = 300;
-			at[2] = -TABLE_IN_LENGTH;
-			at[3] = 0;
-			at[4] = TABLE_HEIGHT;
-			at[5] = -TABLE_IN_LENGTH / 4;
+			Game.camera.eye[0] = 0;
+			Game.camera.eye[1] = 300;
+			Game.camera.eye[2] = -TABLE_IN_LENGTH;
+			Game.camera.target[0] = 0;
+			Game.camera.target[1] = TABLE_HEIGHT;
+			Game.camera.target[2] = -TABLE_IN_LENGTH / 4;
 		}
 	}
 
-	Game.transitionPerspective = transPerc;
-	if (Game.events.shotEnded || (!transPerc && Hitted))
+	if (Game.events.shotEnded || (!Game.transitionPerspective && Game.players.shotTaken))
 		billiardgl::updatePlayerAfterShot(Game);
 
 	myDisplay();
@@ -658,14 +610,10 @@ static void myKeyboard(unsigned char key, int x, int y)
 {
 	if (key == 'h' || key == 'H')
 	{
-		Game.hud.showHelp = ShowHelp;
 		billiardgl::handleHelpKey(Game);
-		ShowHelp = Game.hud.showHelp;
-		WaitHit = Game.input.waitingForHit ? 1 : 0;
-		Hit = Game.input.hitRequested ? 1 : 0;
 		return;
 	}
-	if (ShowHelp && key != 27)
+	if (Game.hud.showHelp && key != 27)
 		return;
 	switch (key)
 	{
@@ -673,21 +621,21 @@ static void myKeyboard(unsigned char key, int x, int y)
 		exit(0);
 	case 'd':
 	case 'D':
-		if (kx>-490) kx -= 10;
+		if (Game.camera.panX>-490) Game.camera.panX -= 10;
 		break;
 	case 'a':
 	case 'A':
-		if (kx<490) kx += 10;
+		if (Game.camera.panX<490) Game.camera.panX += 10;
 		break;
 	case 'w':
 	case 'W':
-		zoom -= 10;
-		if (zoom<10) zoom = 10;
+		Game.camera.zoom -= 10;
+		if (Game.camera.zoom<10) Game.camera.zoom = 10;
 		break;
 	case 's':
 	case 'S':
-		zoom += 10;
-		if (zoom>500) zoom = 500;
+		Game.camera.zoom += 10;
+		if (Game.camera.zoom>500) Game.camera.zoom = 500;
 		break;
 	case '0':
 		Fired[0] = !Fired[0];
@@ -745,78 +693,78 @@ static void myKeyboard(unsigned char key, int x, int y)
 }
 static void myMouse(int mbutton, int mstate, int x, int y)
 {
-	if (ShowHelp)
+	if (Game.hud.showHelp)
 	{
-		WaitHit = 0;
-		Hit = 0;
-		TrackpadOrbit = false;
-		rightm = 0;
+		Game.input.waitingForHit = 0;
+		Game.input.hitRequested = 0;
+		Game.input.trackpadOrbit = false;
+		Game.input.rightMouseDown = 0;
 		return;
 	}
-	if (IsMoving)
+	if (Game.ballsMoving)
 	{
 		return;
 	}
-	at[3] = Game.balls[0].position.x;
-	at[4] = Game.balls[0].position.y;
-	at[5] = Game.balls[0].position.z;
-	at[0] = zoom*(cos(anglex) * sin(angley)) + at[3];
-	at[1] = zoom*(cos(angley)) + at[4];
-	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
-	mx = x; my = y;
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP && TrackpadOrbit)
+	Game.camera.target[0] = Game.balls[0].position.x;
+	Game.camera.target[1] = Game.balls[0].position.y;
+	Game.camera.target[2] = Game.balls[0].position.z;
+	Game.camera.eye[0] = Game.camera.zoom*(cos(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[0];
+	Game.camera.eye[1] = Game.camera.zoom*(cos(Game.camera.angleY)) + Game.camera.target[1];
+	Game.camera.eye[2] = Game.camera.zoom*(sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
+	Game.input.mouseX = x; Game.input.mouseY = y;
+	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP && Game.input.trackpadOrbit)
 	{
-		TrackpadOrbit = false;
-		rightm = 0;
-		AimAt = 0;
-		Hit = 0;
+		Game.input.trackpadOrbit = false;
+		Game.input.rightMouseDown = 0;
+		Game.players.aimingAtCueBall = 0;
+		Game.input.hitRequested = 0;
 		return;
 	}
 	const bool shift_drag = (glutGetModifiers() & GLUT_ACTIVE_SHIFT) != 0;
 	if ((mbutton == GLUT_RIGHT_BUTTON || (mbutton == GLUT_LEFT_BUTTON && shift_drag)) && mstate == GLUT_DOWN)
 	{
-		nowanglex = anglex; nowangley = angley; leftm = 0; rightm = 1;
-		TrackpadOrbit = mbutton == GLUT_LEFT_BUTTON;
-		AimAt = 1;
+		Game.camera.previousAngleX = Game.camera.angleX; Game.camera.previousAngleY = Game.camera.angleY; Game.input.leftMouseDown = 0; Game.input.rightMouseDown = 1;
+		Game.input.trackpadOrbit = mbutton == GLUT_LEFT_BUTTON;
+		Game.players.aimingAtCueBall = 1;
 	}
-	else { rightm = 0; TrackpadOrbit = false; WaitHit = 0; }
+	else { Game.input.rightMouseDown = 0; Game.input.trackpadOrbit = false; Game.input.waitingForHit = 0; }
 	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN && !shift_drag)
 	{
-		WaitHit = 1;
-		NextPlayer = 1 - CurrPlayer;
-		Hitted = false;
-		AimAt = 1;
+		Game.input.waitingForHit = 1;
+		Game.players.nextPlayer = 1 - Game.players.currentPlayer;
+		Game.players.shotTaken = false;
+		Game.players.aimingAtCueBall = 1;
 	}
 	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP)
 	{
-		Hit = 1;
-		IsIllegal = 0;
-		AimAt = 0;
-		IsMoving = true;
-		transPerc = true;
-		updated = false;
-		Hitted = true;
+		Game.input.hitRequested = 1;
+		Game.players.illegalShot = 0;
+		Game.players.aimingAtCueBall = 0;
+		Game.ballsMoving = true;
+		Game.transitionPerspective = true;
+		Game.players.updatedAfterShot = false;
+		Game.players.shotTaken = true;
 	}
-	else Hit = 0;
+	else Game.input.hitRequested = 0;
 }
 static void mouseMove(int x, int y)
 {
-	at[3] = Game.balls[0].position.x;
-	at[4] = Game.balls[0].position.y;
-	at[5] = Game.balls[0].position.z;
-	at[0] = zoom*(cos(anglex) * sin(angley)) + at[3];
-	at[1] = zoom*(cos(angley)) + at[4];
-	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
+	Game.camera.target[0] = Game.balls[0].position.x;
+	Game.camera.target[1] = Game.balls[0].position.y;
+	Game.camera.target[2] = Game.balls[0].position.z;
+	Game.camera.eye[0] = Game.camera.zoom*(cos(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[0];
+	Game.camera.eye[1] = Game.camera.zoom*(cos(Game.camera.angleY)) + Game.camera.target[1];
+	Game.camera.eye[2] = Game.camera.zoom*(sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
 
-	if (IsMoving)
+	if (Game.ballsMoving)
 		return;
 
-	if (leftm) { kx = nowatx + x - mx; ky = nowaty + y - my; }
-	if (rightm) { anglex = nowanglex + (x - mx)*0.01; angley = nowangley + (y - my)*0.01; }
-	if (angley <= 0)
-		angley = 0.1;
-	if (angley > PI / 2)
-		angley = PI / 2;
+	if (Game.input.leftMouseDown) { Game.camera.panX = Game.camera.previousTargetX + x - Game.input.mouseX; Game.camera.panY = Game.camera.previousTargetY + y - Game.input.mouseY; }
+	if (Game.input.rightMouseDown) { Game.camera.angleX = Game.camera.previousAngleX + (x - Game.input.mouseX)*0.01; Game.camera.angleY = Game.camera.previousAngleY + (y - Game.input.mouseY)*0.01; }
+	if (Game.camera.angleY <= 0)
+		Game.camera.angleY = 0.1;
+	if (Game.camera.angleY > PI / 2)
+		Game.camera.angleY = PI / 2;
 }
 // 载入纹理
 void initLoadTexture()
@@ -963,7 +911,7 @@ void drawHelpOverlay()
 	y -= 28.0f;
 	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse hold       Charge shot");
 	y -= 24.0f;
-	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse release    Hit cue ball");
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse release    Game.input.hitRequested cue ball");
 	y -= 24.0f;
 	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "H                     Toggle help");
 	y -= 24.0f;
@@ -1007,7 +955,7 @@ void drawScreenRect(float left, float bottom, float right, float top, GLfloat r,
 
 void drawString()
 {
-	std::string player_text = "Current Player:  Player " + std::to_string(CurrPlayer + 1);
+	std::string player_text = "Current Player:  Player " + std::to_string(Game.players.currentPlayer + 1);
 	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, player_text.c_str());
 }
 void myString(float x, float y, void *font, const char* c)
@@ -1043,6 +991,5 @@ void myString(float x, float y, void *font, const char* c)
 }
 void updatePlayer()
 {
-	Game.transitionPerspective = transPerc;
 	billiardgl::updatePlayerAfterShot(Game);
 }

@@ -46,6 +46,9 @@ struct CameraState {
     float previousAngleY = 0.0f;
     float previousTargetX = 0.0f;
     float previousTargetY = 0.0f;
+    float panX = 0.0f;
+    float panY = 0.0f;
+    float panZ = 0.0f;
 };
 
 struct PlayerState {
@@ -124,6 +127,7 @@ struct GameState {
 
 void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
+void resetBallMotion(BallState& ball);
 void setBallVelocity(BallState& ball, float x, float y, float z);
 bool anyBallMoving(const GameState& state);
 void clearGameplayEvents(GameState& state);
