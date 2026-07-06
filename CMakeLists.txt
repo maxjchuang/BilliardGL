@@ -19,6 +19,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/game_state.cpp
     src/Billiards/physics.cpp
     src/Billiards/rules.cpp
+    src/Billiards/input.cpp
     src/Billiards/vec.cpp
 )
 

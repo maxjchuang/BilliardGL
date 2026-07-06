@@ -11,6 +11,7 @@
 
 #include "ObjLoader.h"
 #include "game_state.h"
+#include "input.h"
 #include "particle.h"
 #include "physics.h"
 #include "platform_audio.h"
@@ -143,28 +144,11 @@ static void myKeyboard(unsigned char key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y)
 {
-	const GLfloat orbit_step = 0.08f;
-	switch (key)
-	{
-	case GLUT_KEY_LEFT:
-		anglex -= orbit_step;
-		break;
-	case GLUT_KEY_RIGHT:
-		anglex += orbit_step;
-		break;
-	case GLUT_KEY_UP:
-		angley -= orbit_step;
-		break;
-	case GLUT_KEY_DOWN:
-		angley += orbit_step;
-		break;
-	default:
-		break;
-	}
-	if (angley <= 0)
-		angley = 0.1f;
-	if (angley > PI / 2)
-		angley = PI / 2;
+	Game.camera.angleX = anglex;
+	Game.camera.angleY = angley;
+	billiardgl::handleSpecialKey(Game, GLUT_KEY_LEFT, GLUT_KEY_RIGHT, GLUT_KEY_UP, GLUT_KEY_DOWN, key);
+	anglex = Game.camera.angleX;
+	angley = Game.camera.angleY;
 }
 
 static void myMouse(int mbutton, int mstate, int x, int y);
@@ -1020,9 +1004,11 @@ static void myKeyboard(unsigned char key, int x, int y)
 {
 	if (key == 'h' || key == 'H')
 	{
-		ShowHelp = !ShowHelp;
-		WaitHit = 0;
-		Hit = 0;
+		Game.hud.showHelp = ShowHelp;
+		billiardgl::handleHelpKey(Game);
+		ShowHelp = Game.hud.showHelp;
+		WaitHit = Game.input.waitingForHit ? 1 : 0;
+		Hit = Game.input.hitRequested ? 1 : 0;
 		return;
 	}
 	if (ShowHelp && key != 27)
