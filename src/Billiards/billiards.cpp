@@ -19,6 +19,7 @@
 #include "platform_audio.h"
 #include "platform_time.h"
 #include "resource_path.h"
+#include "renderer.h"
 
 #include <cmath>
 #include <cstdio>
@@ -442,15 +443,20 @@ void setMaterial(Material *mat) {
 void myDisplay(void)
 {
 	set_camera();
-	renderRoom();
-
-	//	glEnable(GL_CULL_FACE);
-	renderTable();
-	renderBall();
-	renderDecoration();
-
-	if (AimAt == 1)
-		renderCue();
+	Game.camera.eye[0] = at[0];
+	Game.camera.eye[1] = at[1];
+	Game.camera.eye[2] = at[2];
+	Game.camera.target[0] = at[3];
+	Game.camera.target[1] = at[4];
+	Game.camera.target[2] = at[5];
+	const billiardgl::RenderHooks hooks = {
+		renderRoom,
+		renderTable,
+		renderBall,
+		AimAt == 1 ? renderCue : nullptr,
+		renderDecoration
+	};
+	billiardgl::renderScene(Game, hooks);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
