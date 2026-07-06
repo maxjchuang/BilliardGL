@@ -56,7 +56,7 @@ void drawHelpOverlay(const GameState& state)
     }
 
     const float panelWidth = 520.0f;
-    const float panelHeight = 380.0f;
+    const float panelHeight = 430.0f;
     const float left = (static_cast<float>(state.config.width) - panelWidth) * 0.5f;
     const float bottom = (static_cast<float>(state.config.height) - panelHeight) * 0.5f;
     const float top = bottom + panelHeight;
@@ -64,6 +64,7 @@ void drawHelpOverlay(const GameState& state)
     float y = top - 44.0f;
 
     drawScreenRect(left, bottom, left + panelWidth, top, 0.04f, 0.06f, 0.05f, 0.82f);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     drawStringAt(textLeft, y, GLUT_BITMAP_TIMES_ROMAN_24, "BilliardGL Help");
     y -= 42.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Camera");
