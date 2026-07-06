@@ -25,6 +25,7 @@ set(BILLIARDGL_CORE_SOURCES
 
 add_executable(Billiards
     src/Billiards/billiards.cpp
+    src/Billiards/hud.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
     src/Billiards/resource_path.cpp

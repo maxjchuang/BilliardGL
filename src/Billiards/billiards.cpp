@@ -11,6 +11,7 @@
 
 #include "ObjLoader.h"
 #include "game_state.h"
+#include "hud.h"
 #include "input.h"
 #include "particle.h"
 #include "physics.h"
@@ -471,11 +472,11 @@ void myDisplay(void)
 		renderRect();
 
 	updatePlayer();
-	drawString();
-	if (ShowHelp)
-		drawHelpOverlay();
-	else
-		drawHelpPrompt();
+	Game.config.width = width;
+	Game.config.height = height;
+	Game.players.currentPlayer = CurrPlayer;
+	Game.hud.showHelp = ShowHelp;
+	billiardgl::drawHud(Game);
 	glutSwapBuffers();
 }
 // …Ë÷√ ”µ„
