@@ -50,6 +50,8 @@ GLint  width = 1024, height = 768;
 GLuint texGround, texWall, texWall1, texWall2, tecCeiling, texTableCloth, texTable, BZD, texCue, texgt, texhe;
 int mx = 0, my = 0, i = 0, j = 0, k = 0, ballcnt = 16, BallInNum = 0, AimAt = 0, WaitHit = 0, Hit = 0;
 int leftm = 0, rightm = 0;
+bool TrackpadOrbit = false;
+bool ShowHelp = false;
 GLfloat rx, ry, rz, speed = 0;
 static GLfloat kx = 0, ky = 0, kz = 0, zoom = 120;
 static GLfloat anglex = -PI / 2, angley = PI / 3, nowanglex = 0, nowangley = 0, nowatx = 0, nowaty = 0;
@@ -79,6 +81,7 @@ bool Hitted = false;
 bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
+bool WindowedMode = true;
 
 //¶¨ÒåÇò¼°Î»ÖÃÊ¸Á¿½á¹¹Ìå
 struct Point
@@ -104,7 +107,9 @@ GLuint loadTexture(const char* file_name);
 void initLoadTexture();
 // ³¡¾°»æÖÆ
 void initBall();
+void parseLaunchOptions(int argc, char* argv[]);
 void initWindows(void);
+void myReshape(int w, int h);
 void initDecoration();
 void myDisplay(void);
 void set_camera(void);
@@ -120,7 +125,10 @@ void collideBalls(int j, int k);
 void collideEdge(int j);
 int isBallIn(int j);
 void drawString();
-void myString(float x, float y, void *font, char* c);
+void drawHelpPrompt();
+void drawHelpOverlay();
+void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+void myString(float x, float y, void *font, const char* c);
 void updatePlayer();
 void initTable();
 void initCue();
@@ -129,6 +137,33 @@ void setMaterial(Material *mat);
 void initLight();
 // Êó±ê¼üÅÌ²Ù×÷
 static void myKeyboard(unsigned char key, int x, int y);
+static void mySpecialKeyboard(int key, int x, int y);
+static void mySpecialKeyboard(int key, int x, int y)
+{
+	const GLfloat orbit_step = 0.08f;
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+		anglex -= orbit_step;
+		break;
+	case GLUT_KEY_RIGHT:
+		anglex += orbit_step;
+		break;
+	case GLUT_KEY_UP:
+		angley -= orbit_step;
+		break;
+	case GLUT_KEY_DOWN:
+		angley += orbit_step;
+		break;
+	default:
+		break;
+	}
+	if (angley <= 0)
+		angley = 0.1f;
+	if (angley > PI / 2)
+		angley = PI / 2;
+}
+
 static void myMouse(int mbutton, int mstate, int x, int y);
 static void mouseMove(int x, int y);
 void b_music();
@@ -147,6 +182,7 @@ particle* init_flame()
 
 int main(int argc, char* argv[])
 {
+	parseLaunchOptions(argc, argv);
 	std::thread t(b_music);
 	t.detach();
 	glutInit(&argc, argv);
@@ -167,8 +203,10 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(&myDisplay);
 	glutIdleFunc(&myIdle); //ÉèÖÃ´°¿ÚË¢ÐÂµÄ»Øµ÷º¯Êý
 	glutKeyboardFunc(myKeyboard); //ÉèÖÃ¼üÅÌ»Øµ÷º¯Êý
+	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); //ÉèÖÃÊó±êÆ÷°´¼ü»Øµ÷º¯Êý
-	glutMotionFunc(mouseMove); //ÉèÖÃÊó±êÆ÷ÒÆ¶¯»Øµ÷º¯Êý
+	glutMotionFunc(mouseMove); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+	glutReshapeFunc(myReshape);
 
 	initLight(); // ¹âÕÕÄ£ÐÍ
 	glutMainLoop();
@@ -176,10 +214,30 @@ int main(int argc, char* argv[])
 }
 
 // ³õÊ¼»¯´°¿Ú
+void parseLaunchOptions(int argc, char* argv[])
+{
+	for (int i = 1; i < argc; ++i)
+	{
+		if (strcmp(argv[i], "--windowed") == 0)
+			WindowedMode = true;
+		else if (strcmp(argv[i], "--fullscreen") == 0)
+			WindowedMode = false;
+	}
+}
+
 void initWindows(void)
 {
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Billards");
-	glutFullScreen();
+	if (!WindowedMode)
+		glutFullScreen();
+}
+
+void myReshape(int w, int h)
+{
+	width = w > 0 ? w : WINDOW_WIDTH;
+	height = h > 0 ? h : WINDOW_HEIGHT;
+	glViewport(0, 0, width, height);
 }
 // ³õÊ¼»¯ÇòÎ»ÖÃ
 void initBall()
@@ -426,6 +484,10 @@ void myDisplay(void)
 
 	updatePlayer();
 	drawString();
+	if (ShowHelp)
+		drawHelpOverlay();
+	else
+		drawHelpPrompt();
 	glutSwapBuffers();
 }
 // ÉèÖÃÊÓµã
@@ -434,7 +496,7 @@ void set_camera(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, 16.0 / 9, 10, 10000.0f);
+	gluPerspective(60.0f, static_cast<GLdouble>(width) / static_cast<GLdouble>(height), 10, 10000.0f);
 	glTranslatef(kx, ky, kz);
 	glMatrixMode(GL_TEXTURE);
 	glMatrixMode(GL_MODELVIEW);
@@ -444,15 +506,19 @@ void set_camera(void)
 // »­·¿¼ä
 void renderRoom()
 {
-	// Ê¹ÓÃ " µØ"ÎÆÀí»æÖÆÍÁµØ
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texGround);
+	// Neutral floor keeps the table and balls visually dominant.
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glColor3f(0.18f, 0.20f, 0.19f);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
 	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	//Ìì»¨°å
 	glBindTexture(GL_TEXTURE_2D, tecCeiling);
 	glBegin(GL_QUADS);
@@ -461,35 +527,31 @@ void renderRoom()
 	glTexCoord2f(5.0f, 5.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
 	glTexCoord2f(5.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
 	glEnd();
-	// Ê¹ÓÃ " Ç½"ÎÆÀí»æÖÆÕ¤À¸
-	glBindTexture(GL_TEXTURE_2D, texWall1);
+	// Neutral room walls keep the game view focused on the table.
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glColor3f(0.24f, 0.27f, 0.26f);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
+	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
 	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall2);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texWall);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 }
 // »­×À×Ó
 void renderTable()
@@ -631,13 +693,11 @@ void drawBall(GLfloat mybr, GLuint BALL)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, BALL);
-		glBegin(GL_QUADS);
 		MYBALL = gluNewQuadric();// ´´½¨Ò»¸ö¶þ´ÎÇúÃæÎïÌå
 		gluQuadricTexture(MYBALL, GL_TRUE); //ÆôÓÃ¸Ã¶þ´ÎÇúÃæµÄÎÆÀí
 		glBindTexture(GL_TEXTURE_2D, BALL);// °ó¶¨ÎÆÀí
 		gluSphere(MYBALL, mybr, 80, 120); // »­Çò
 		gluDeleteQuadric(MYBALL);
-		glEnd();
 	}
 }
 // »­Çò¸Ë¡¢Á¦¶ÈÌõ¡¢·½ÏòÏß
@@ -703,19 +763,24 @@ void renderRect()
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	gluOrtho2D(0, 1024, 0, 768);
+	gluOrtho2D(0, width, 0, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	glPushMatrix();
 	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
-	glColor4f(1.0, 1.0, 0.0, 0.1);
-	glBlendFunc(GL_ONE, GL_ZERO);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	glBindTexture(GL_TEXTURE_2D, BZD);
-	glRectf(10, 500, 50, speed + 500);
+	glColor4f(1.0f, 0.82f, 0.12f, 0.72f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	const GLfloat meter_left = 18.0f;
+	const GLfloat meter_bottom = height - 260.0f;
+	const GLfloat meter_top = meter_bottom + speed;
+	glRectf(meter_left, meter_bottom, meter_left + 36.0f, meter_top);
 	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	glDepthMask(GL_TRUE);
 	glPopMatrix();
 	//to3d,Ã²ËÆÃ»ÓÃ
@@ -947,6 +1012,15 @@ int isBallIn(int j)
 // Êó±ê¼üÅÌ·´À¡º¯Êý
 static void myKeyboard(unsigned char key, int x, int y)
 {
+	if (key == 'h' || key == 'H')
+	{
+		ShowHelp = !ShowHelp;
+		WaitHit = 0;
+		Hit = 0;
+		return;
+	}
+	if (ShowHelp && key != 27)
+		return;
 	switch (key)
 	{
 	case 27:
@@ -1025,6 +1099,14 @@ static void myKeyboard(unsigned char key, int x, int y)
 }
 static void myMouse(int mbutton, int mstate, int x, int y)
 {
+	if (ShowHelp)
+	{
+		WaitHit = 0;
+		Hit = 0;
+		TrackpadOrbit = false;
+		rightm = 0;
+		return;
+	}
 	if (IsMoving)
 	{
 		return;
@@ -1036,13 +1118,23 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	at[1] = zoom*(cos(angley)) + at[4];
 	at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
 	mx = x; my = y;
-	if (mbutton == GLUT_RIGHT_BUTTON && mstate == GLUT_DOWN)
+	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP && TrackpadOrbit)
+	{
+		TrackpadOrbit = false;
+		rightm = 0;
+		AimAt = 0;
+		Hit = 0;
+		return;
+	}
+	const bool shift_drag = (glutGetModifiers() & GLUT_ACTIVE_SHIFT) != 0;
+	if ((mbutton == GLUT_RIGHT_BUTTON || (mbutton == GLUT_LEFT_BUTTON && shift_drag)) && mstate == GLUT_DOWN)
 	{
 		nowanglex = anglex; nowangley = angley; leftm = 0; rightm = 1;
+		TrackpadOrbit = mbutton == GLUT_LEFT_BUTTON;
 		AimAt = 1;
 	}
-	else { rightm = 0; WaitHit = 0; }
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN)
+	else { rightm = 0; TrackpadOrbit = false; WaitHit = 0; }
+	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN && !shift_drag)
 	{
 		WaitHit = 1;
 		NextPlayer = 1 - CurrPlayer;
@@ -1121,6 +1213,14 @@ int isPowerOfTwo(int n)
 		return 0;
 	return (n & (n - 1)) == 0;
 }
+
+int previousPowerOfTwo(int n)
+{
+	int value = 1;
+	while (value * 2 <= n)
+		value *= 2;
+	return value;
+}
 GLuint loadTexture(const char* file_name)
 {
 	GLint width, height, total_bytes;
@@ -1146,8 +1246,12 @@ GLuint loadTexture(const char* file_name)
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);
 		if (!isPowerOfTwo(width) || !isPowerOfTwo(height) || width > max || height > max)
 		{
-			const GLint new_width = 256;
-			const GLint new_height = 256; // ¹æ¶¨Ëõ·ÅºóÐÂµÄ´óÐ¡Îª±ß³¤µÄÕý·½ÐÎ
+			GLint new_width = previousPowerOfTwo(width);
+			GLint new_height = previousPowerOfTwo(height);
+			if (new_width > max)
+				new_width = max;
+			if (new_height > max)
+				new_height = max;
 			GLint new_line_bytes, new_total_bytes;
 			GLubyte* new_pixels = 0;
 			new_line_bytes = new_width * 3;
@@ -1156,7 +1260,7 @@ GLuint loadTexture(const char* file_name)
 			new_total_bytes = new_line_bytes * new_height;
 			new_pixels = (GLubyte*)malloc(new_total_bytes);
 			if (new_pixels == 0) { free(pixels); fclose(pFile); return 0; }
-			gluScaleImage(GL_RGB,
+			gluScaleImage(GL_BGR_EXT,
 				width, height, GL_UNSIGNED_BYTE, pixels,
 				new_width, new_height, GL_UNSIGNED_BYTE, new_pixels);
 			free(pixels);
@@ -1169,12 +1273,12 @@ GLuint loadTexture(const char* file_name)
 	if (texture_ID == 0) { free(pixels); fclose(pFile); return 0; }
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, (int*)&last_texture_ID);
 	glBindTexture(GL_TEXTURE_2D, texture_ID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR_EXT,
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_BGR_EXT,
 		GL_UNSIGNED_BYTE, pixels);
 	glBindTexture(GL_TEXTURE_2D, last_texture_ID);
 	free(pixels);
@@ -1184,10 +1288,10 @@ GLuint loadTexture(const char* file_name)
 void initLight(void)
 {
 	//¹âÕÕ´¦Àí
-	GLfloat light_ambient[] = { 0.5, 0.5, 0.5, 1 };
-	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_position0[] = { 0, 390, 0, 1 };
+	GLfloat light_ambient[] = { 0.65f, 0.65f, 0.65f, 1.0f };
+	GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat light_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
+	GLfloat light_position0[] = { 0.0f, 460.0f, 0.0f, 1.0f };
 	//¶¨Òå¹âÎ»ÖÃµÃÆë´Î×ø±ê (x,y,z,w), Èç¹ûw = 1.0, Îª¶¨Î»¹âÔ´£¨Ò²½Ðµã¹âÔ´£© £¬Èç¹û w£½0£¬Îª¶¨Ïò¹âÔ´£¨ÎÞÏÞ¹âÔ´£© £¬¶¨Ïò¹âÔ´ÎªÎÞÇîÔ¶µã£¬Òò¶ø²úÉú¹âÎªÆ½ÐÐ¹â
 	GLfloat light_direction[] = { 0, -1, 0 };
 	glLightfv(L0, GL_AMBIENT, light_ambient); // »·¾³¹â
@@ -1200,10 +1304,10 @@ void initLight(void)
 	glEnable(GL_LIGHTING); // Æô¶¯¹âÕÕ
 	glEnable(L0); // Ê¹µÚÒ»ÕµµÆÓÐÐ§
 				  //²ÄÖÊ´¦Àí
-	GLfloat mat_ambient[] = { 0.2, 0.2, 0.2, 1 };
-	GLfloat mat_diffuse[] = { 0.8, 0.8, 0.8, 1 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat mat_shininess[] = { 75.0 }; // ²ÄÖÊ RGBA ¾µÃæÖ¸Êý£¬ÊýÖµÔÚ 0¡«128 ·¶Î§ÄÚ
+	GLfloat mat_ambient[] = { 0.35f, 0.35f, 0.35f, 1.0f };
+	GLfloat mat_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat mat_specular[] = { 0.55f, 0.55f, 0.55f, 1.0f };
+	GLfloat mat_shininess[] = { 45.0f }; // ²ÄÖÊ RGBA ¾µÃæÖ¸Êý£¬ÊýÖµÔÚ 0¡«128 ·¶Î§ÄÚ
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
@@ -1217,35 +1321,111 @@ void b_music()
 	billiardgl::playBackgroundLoop();
 }
 
-void drawString()
+void drawHelpPrompt()
 {
-	char *str1 = "Current Player:  Player ";
-	std::string str2 = std::to_string(CurrPlayer + 1);
-	myString(18, 700, GLUT_BITMAP_TIMES_ROMAN_24, str1);
-	myString(140, 700, GLUT_BITMAP_TIMES_ROMAN_24, const_cast<char*>(str2.c_str()));
+	myString(18, height - 94, GLUT_BITMAP_HELVETICA_18, "Press H for help");
 }
-void myString(float x, float y, void *font, char* c)
+
+void drawHelpOverlay()
+{
+	const float panel_width = 520.0f;
+	const float panel_height = 330.0f;
+	const float left = (width - panel_width) * 0.5f;
+	const float bottom = (height - panel_height) * 0.5f;
+	const float top = bottom + panel_height;
+	const float text_left = left + 34.0f;
+	float y = top - 44.0f;
+
+	drawScreenRect(left, bottom, left + panel_width, top, 0.04f, 0.06f, 0.05f, 0.82f);
+	myString(text_left, y, GLUT_BITMAP_TIMES_ROMAN_24, "BilliardGL Help");
+	y -= 42.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Camera");
+	y -= 28.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "W / S                 Zoom in / out");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "A / D                 Pan left / right");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Arrow keys            Orbit view");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Right mouse drag      Orbit view");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Shift + trackpad drag Orbit view");
+	y -= 38.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Play");
+	y -= 28.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse hold       Charge shot");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Left mouse release    Hit cue ball");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "H                     Toggle help");
+	y -= 24.0f;
+	myString(text_left, y, GLUT_BITMAP_HELVETICA_18, "Esc                   Quit");
+}
+
+void drawScreenRect(float left, float bottom, float right, float top, GLfloat r, GLfloat g, GLfloat b, GLfloat a)
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	gluOrtho2D(0, 1024, 0, 768);
+	gluOrtho2D(0, width, 0, height);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glColor4f(r, g, b, a);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBegin(GL_QUADS);
+	glVertex2f(left, bottom);
+	glVertex2f(right, bottom);
+	glVertex2f(right, top);
+	glVertex2f(left, top);
+	glEnd();
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
+	glDepthMask(GL_TRUE);
+
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void drawString()
+{
+	std::string player_text = "Current Player:  Player " + std::to_string(CurrPlayer + 1);
+	myString(18, height - 68, GLUT_BITMAP_TIMES_ROMAN_24, player_text.c_str());
+}
+void myString(float x, float y, void *font, const char* c)
+{
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	glPushMatrix();
 	glDepthMask(GL_FALSE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0);
-	glBlendFunc(GL_ONE, GL_ZERO);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	glBindTexture(GL_TEXTURE_2D, BZD);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glRasterPos2f(x, y);
-	for (c; *c != '\0'; c++) {
+	for (; *c != '\0'; c++) {
 		glutBitmapCharacter(font, *c);
 	}
 
 	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	glDepthMask(GL_TRUE);
 	glPopMatrix();
 
