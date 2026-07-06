@@ -60,6 +60,20 @@
   * mouse_left_button: hit balls
   * 'h': toggle help
 
+### 自动化视觉验证
+
+可以使用游戏内 framebuffer 截图模式生成一张 PPM 图片，避免 macOS `screencapture` 无法稳定捕获 GLUT/OpenGL 窗口内容的问题：
+
+```bash
+./build/Billiards --screenshot /tmp/billiardgl-visual/default.ppm
+```
+
+该命令会启动游戏、渲染一帧、用 `glReadPixels` 导出当前 OpenGL framebuffer，然后自动退出。需要预览时可以转换成 PNG：
+
+```bash
+sips -s format png /tmp/billiardgl-visual/default.ppm --out /tmp/billiardgl-visual/default.png
+```
+
 #2 Awesome Points
 
 ### 1 物理碰撞模型

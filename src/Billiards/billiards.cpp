@@ -20,6 +20,7 @@
 #include "platform_time.h"
 #include "resource_path.h"
 #include "renderer.h"
+#include "screenshot.h"
 
 #include <cmath>
 #include <cstdio>
@@ -88,6 +89,7 @@ bool IsGameOver = false;
 bool Fired[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 bool AllFired = false;
 bool WindowedMode = true;
+static std::string ScreenshotPath;
 static billiardgl::GameState Game;
 
 //定义球及位置矢量结构体
@@ -212,6 +214,11 @@ void parseLaunchOptions(int argc, char* argv[])
 			WindowedMode = true;
 		else if (strcmp(argv[i], "--fullscreen") == 0)
 			WindowedMode = false;
+		else if (strcmp(argv[i], "--screenshot") == 0 && i + 1 < argc)
+		{
+			ScreenshotPath = argv[++i];
+			WindowedMode = true;
+		}
 	}
 }
 
@@ -442,6 +449,12 @@ void setMaterial(Material *mat) {
 // display
 void myDisplay(void)
 {
+	if (!ScreenshotPath.empty())
+	{
+		at[0] = zoom*(cos(anglex)) + at[3];
+		at[1] = zoom*(cos(angley)) + at[4];
+		at[2] = zoom*(sin(anglex) * sin(angley)) + at[5];
+	}
 	set_camera();
 	Game.camera.eye[0] = at[0];
 	Game.camera.eye[1] = at[1];
@@ -484,6 +497,12 @@ void myDisplay(void)
 	Game.players.currentPlayer = CurrPlayer;
 	Game.hud.showHelp = ShowHelp;
 	billiardgl::drawHud(Game);
+	if (!ScreenshotPath.empty())
+	{
+		const bool saved = billiardgl::saveFramebufferToPpm(ScreenshotPath, width, height);
+		glutSwapBuffers();
+		std::exit(saved ? 0 : 2);
+	}
 	glutSwapBuffers();
 }
 // 设置视点

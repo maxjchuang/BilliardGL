@@ -29,6 +29,8 @@ add_executable(Billiards
     src/Billiards/billiards.cpp
     src/Billiards/hud.cpp
     src/Billiards/renderer.cpp
+    src/Billiards/screenshot.cpp
+    src/Billiards/screenshot_gl.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
     src/Billiards/platform_audio.cpp
@@ -45,6 +47,12 @@ add_executable(BilliardsRulesTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsScreenshotTests
+    tests/screenshot_tests.cpp
+    src/Billiards/screenshot.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -58,6 +66,10 @@ target_include_directories(BilliardsPhysicsTests PRIVATE
 )
 
 target_include_directories(BilliardsRulesTests PRIVATE
+    src/Billiards
+)
+
+target_include_directories(BilliardsScreenshotTests PRIVATE
     src/Billiards
 )
 
