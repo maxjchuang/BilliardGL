@@ -18,6 +18,7 @@ pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 set(BILLIARDGL_CORE_SOURCES
     src/Billiards/assets.cpp
     src/Billiards/game_state.cpp
+    src/Billiards/image_loader.cpp
     src/Billiards/physics.cpp
     src/Billiards/resource_path.cpp
     src/Billiards/rules.cpp
@@ -59,6 +60,11 @@ add_executable(BilliardsGameStateTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsAssetsTests
+    tests/assets_tests.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -80,6 +86,10 @@ target_include_directories(BilliardsScreenshotTests PRIVATE
 )
 
 target_include_directories(BilliardsGameStateTests PRIVATE
+    src/Billiards
+)
+
+target_include_directories(BilliardsAssetsTests PRIVATE
     src/Billiards
 )
 

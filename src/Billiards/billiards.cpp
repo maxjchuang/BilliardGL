@@ -14,6 +14,7 @@
 #include "game_state.h"
 #include "hud.h"
 #include "input.h"
+#include "image_loader.h"
 #include "particle.h"
 #include "physics.h"
 #include "rules.h"
@@ -1030,68 +1031,30 @@ int previousPowerOfTwo(int n)
 }
 GLuint loadTexture(const char* file_name)
 {
-	GLint width, height, total_bytes;
-	GLubyte* pixels = 0;
-	GLuint last_texture_ID, texture_ID = 0;
-	FILE* pFile = std::fopen(file_name, "rb");
-	if (pFile == 0)
+	const billiardgl::ImageData image = billiardgl::loadImageFile(file_name);
+	if (!image.error.empty())
+	{
+		std::fprintf(stderr, "Failed to load texture %s: %s\n", file_name, image.error.c_str());
 		return 0;
-	fseek(pFile, 0x0012, SEEK_SET);
-	fread(&width, 4, 1, pFile);
-	fread(&height, 4, 1, pFile);
-	fseek(pFile, BMP_Header_Length, SEEK_SET);
-	{
-		GLint line_bytes = width * 3;
-		while (line_bytes % 4 != 0) ++line_bytes;
-		total_bytes = line_bytes * height;
 	}
-	pixels = (GLubyte*)malloc(total_bytes);
-	if (pixels == 0) { fclose(pFile); return 0; }
-	if (fread(pixels, total_bytes, 1, pFile) <= 0) { free(pixels); fclose(pFile); return 0; }
-	{
-		GLint max;
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);
-		if (!isPowerOfTwo(width) || !isPowerOfTwo(height) || width > max || height > max)
-		{
-			GLint new_width = previousPowerOfTwo(width);
-			GLint new_height = previousPowerOfTwo(height);
-			if (new_width > max)
-				new_width = max;
-			if (new_height > max)
-				new_height = max;
-			GLint new_line_bytes, new_total_bytes;
-			GLubyte* new_pixels = 0;
-			new_line_bytes = new_width * 3;
-			while (new_line_bytes % 4 != 0)
-				++new_line_bytes;
-			new_total_bytes = new_line_bytes * new_height;
-			new_pixels = (GLubyte*)malloc(new_total_bytes);
-			if (new_pixels == 0) { free(pixels); fclose(pFile); return 0; }
-			gluScaleImage(GL_BGR_EXT,
-				width, height, GL_UNSIGNED_BYTE, pixels,
-				new_width, new_height, GL_UNSIGNED_BYTE, new_pixels);
-			free(pixels);
-			pixels = new_pixels;
-			width = new_width;
-			height = new_height;
-		}
-	}
+
+	GLuint last_texture_ID = 0;
+	GLuint texture_ID = 0;
 	glGenTextures(1, &texture_ID);
-	if (texture_ID == 0) { free(pixels); fclose(pFile); return 0; }
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, (int*)&last_texture_ID);
+	if (texture_ID == 0)
+		return 0;
+
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, reinterpret_cast<int*>(&last_texture_ID));
 	glBindTexture(GL_TEXTURE_2D, texture_ID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_BGR_EXT,
-		GL_UNSIGNED_BYTE, pixels);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, image.width, image.height, GL_RGBA, GL_UNSIGNED_BYTE, image.pixels.data());
 	glBindTexture(GL_TEXTURE_2D, last_texture_ID);
-	free(pixels);
 	return texture_ID;
 }
-// 光源
 void initLight(void)
 {
 	//光照处理
