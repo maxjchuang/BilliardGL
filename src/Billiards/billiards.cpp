@@ -21,6 +21,7 @@
 #include "renderer.h"
 #include "render_resources.h"
 #include "screenshot.h"
+#include "shot.h"
 
 #include <cmath>
 #include <array>
@@ -286,14 +287,12 @@ void myIdle(void)
 
 	if (Game.input.hitRequested == 1)
 	{
-		const GLfloat atxy = sqrt(pow(Game.camera.target[0] - Game.camera.eye[0], 2) + pow(Game.camera.target[2] - Game.camera.eye[2], 2));
-		if (atxy > 0)
-		{
-			billiardgl::setBallVelocity(Game.balls[0], Game.input.shotPower * (Game.camera.target[0] - Game.camera.eye[0]) / atxy, 0.0f, Game.input.shotPower * (Game.camera.target[2] - Game.camera.eye[2]) / atxy);
-			Game.players.shotTaken = true;
-			Game.players.updatedAfterShot = false;
-			Game.ballsMoving = true;
-		}
+		const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(Game.aim.yaw, Game.input.shotPower);
+		billiardgl::setBallVelocity(Game.balls[0], velocity.x, velocity.y, velocity.z);
+		Game.players.shotTaken = true;
+		Game.players.updatedAfterShot = false;
+		Game.ballsMoving = true;
+		Game.aim.mode = billiardgl::AimMode::Observe;
 		Game.input.hitRequested = 0;
 		Game.input.shotPower = 0;
 		billiardgl::playHit();
@@ -365,6 +364,11 @@ static void myKeyboard(unsigned char key, int x, int y)
 	if (key == 'h' || key == 'H')
 	{
 		billiardgl::handleHelpKey(Game);
+		return;
+	}
+	if (key == '\t')
+	{
+		billiardgl::handleAimToggleKey(Game);
 		return;
 	}
 	if (Game.hud.showHelp && key != 27)

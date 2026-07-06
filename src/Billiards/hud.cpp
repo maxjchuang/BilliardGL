@@ -36,12 +36,17 @@ void drawScreenRect(float left, float bottom, float right, float top, float r, f
     glEnd();
 }
 
+const char* aimModeText(const GameState& state)
+{
+    return state.aim.mode == AimMode::Aim ? "Mode: Aim | Tab Observe" : "Mode: Observe | Tab Aim";
+}
+
 }  // namespace
 
 void drawHelpPrompt(const GameState& state)
 {
     const char* prompt = state.hud.showHelp ? "Press H to close help" : "Press H for help";
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 94.0f, GLUT_BITMAP_HELVETICA_18, prompt);
+    drawStringAt(18.0f, static_cast<float>(state.config.height) - 120.0f, GLUT_BITMAP_HELVETICA_18, prompt);
 }
 
 void drawHelpOverlay(const GameState& state)
@@ -51,7 +56,7 @@ void drawHelpOverlay(const GameState& state)
     }
 
     const float panelWidth = 520.0f;
-    const float panelHeight = 330.0f;
+    const float panelHeight = 430.0f;
     const float left = (static_cast<float>(state.config.width) - panelWidth) * 0.5f;
     const float bottom = (static_cast<float>(state.config.height) - panelHeight) * 0.5f;
     const float top = bottom + panelHeight;
@@ -59,6 +64,7 @@ void drawHelpOverlay(const GameState& state)
     float y = top - 44.0f;
 
     drawScreenRect(left, bottom, left + panelWidth, top, 0.04f, 0.06f, 0.05f, 0.82f);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     drawStringAt(textLeft, y, GLUT_BITMAP_TIMES_ROMAN_24, "BilliardGL Help");
     y -= 42.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Camera");
@@ -72,6 +78,10 @@ void drawHelpOverlay(const GameState& state)
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Right mouse drag      Orbit view");
     y -= 24.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Shift + trackpad drag Orbit view");
+    y -= 24.0f;
+    drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Tab                   Toggle aim mode");
+    y -= 24.0f;
+    drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Aim mode horizontal   Adjust shot line");
     y -= 38.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Play");
     y -= 28.0f;
@@ -105,6 +115,7 @@ void drawHud(const GameState& state)
 
     const std::string playerText = "Current Player: Player " + std::to_string(state.players.currentPlayer + 1);
     drawStringAt(18.0f, static_cast<float>(state.config.height) - 68.0f, GLUT_BITMAP_TIMES_ROMAN_24, playerText.c_str());
+    drawStringAt(18.0f, static_cast<float>(state.config.height) - 94.0f, GLUT_BITMAP_HELVETICA_18, aimModeText(state));
     drawHelpPrompt(state);
     drawHelpOverlay(state);
 
