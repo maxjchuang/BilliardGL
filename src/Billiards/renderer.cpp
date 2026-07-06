@@ -203,17 +203,23 @@ void renderCue(const GameState& state, const RenderResources& resources)
     }
 
     const BallState& cueBall = state.balls[0];
-    const Point3 aimDirection = aimDirectionOnTable(state.aim.yaw);
-    const float dx = aimDirection.x;
-    const float dz = aimDirection.z;
+    const Point3 lineStart = cueLineStartFromAim(state.aim.yaw);
+    const Point3 lineEnd = cueLineEndFromAim(state.aim.yaw, 150.0f);
+    const Point3 cuePosition = cueStickPositionFromAim(cueBall.position, state.aim.yaw, resources.shotPower);
 
     glPushMatrix();
     glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
+    glColor3f(1.0f, 0.88f, 0.1f);
     glLineWidth(2.0f);
     glBegin(GL_LINES);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(150.0f * dx, 0.0f, 150.0f * dz);
+    glVertex3f(lineStart.x, lineStart.y, lineStart.z);
+    glVertex3f(lineEnd.x, lineEnd.y, lineEnd.z);
     glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_TEXTURE_2D);
     glPopMatrix();
 
     ObjLoader& cueObj = *resources.cueObj;
@@ -226,10 +232,7 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glTexCoordPointer(3, GL_FLOAT, 0, reinterpret_cast<void*>((sizeof(GLfloat) * cueObj.vertices.size() * 3) * 2));
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
-    glTranslatef(
-        cueBall.position.x - (resources.shotPower + 6.0f) * 0.1f * dx,
-        cueBall.position.y,
-        cueBall.position.z - (resources.shotPower + 6.0f) * 0.1f * dz);
+    glTranslatef(cuePosition.x, cuePosition.y, cuePosition.z);
     glRotatef(180.5f - 90.0f - state.aim.yaw * 180.0f / kPi, 0.0f, 1.0f, 0.0f);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[0]);
     glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size());

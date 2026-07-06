@@ -150,6 +150,8 @@ void parseLaunchOptions(int argc, char* argv[])
 				Game.config.screenshotScene = billiardgl::ScreenshotScene::Default;
 			else if (strcmp(scene, "help") == 0)
 				Game.config.screenshotScene = billiardgl::ScreenshotScene::Help;
+			else if (strcmp(scene, "aim") == 0)
+				Game.config.screenshotScene = billiardgl::ScreenshotScene::Aim;
 			else if (strcmp(scene, "after-shot") == 0)
 				Game.config.screenshotScene = billiardgl::ScreenshotScene::AfterShot;
 			else
@@ -169,6 +171,14 @@ void prepareScreenshotScene()
 	if (Game.config.screenshotScene == billiardgl::ScreenshotScene::Help)
 	{
 		Game.hud.showHelp = true;
+		return;
+	}
+
+	if (Game.config.screenshotScene == billiardgl::ScreenshotScene::Aim)
+	{
+		Game.aim.mode = billiardgl::AimMode::Aim;
+		Game.players.aimingAtCueBall = true;
+		Game.aim.yaw = billiardgl::kPi / 2.0f;
 		return;
 	}
 
