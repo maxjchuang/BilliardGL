@@ -33,4 +33,27 @@ bool hasVisiblePixels(const std::vector<unsigned char>& rgb)
     return false;
 }
 
+int countVisiblePixelsInRegion(const std::vector<unsigned char>& rgb, int width, int height, int x, int y, int regionWidth, int regionHeight)
+{
+    int count = 0;
+    const int xEnd = x + regionWidth;
+    const int yEnd = y + regionHeight;
+    for (int row = y; row < yEnd && row < height; ++row) {
+        if (row < 0) {
+            continue;
+        }
+        for (int col = x; col < xEnd && col < width; ++col) {
+            if (col < 0) {
+                continue;
+            }
+            const int index = (row * width + col) * 3;
+            if (index + 2 < static_cast<int>(rgb.size()) &&
+                (rgb[index] > 8 || rgb[index + 1] > 8 || rgb[index + 2] > 8)) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 }  // namespace billiardgl

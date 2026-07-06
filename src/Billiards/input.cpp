@@ -38,6 +38,16 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
 {
     state.input.mouseX = x;
     state.input.mouseY = y;
+
+    if (state.hud.showHelp) {
+        state.input.leftMouseDown = false;
+        state.input.rightMouseDown = false;
+        state.input.trackpadOrbit = false;
+        state.input.waitingForHit = false;
+        state.input.hitRequested = false;
+        return;
+    }
+
     const bool isDown = buttonState == ButtonState::Down;
     if (button == MouseButton::Left) {
         state.input.leftMouseDown = isDown;
@@ -47,6 +57,41 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
         }
     } else if (button == MouseButton::Right) {
         state.input.rightMouseDown = isDown;
+    }
+}
+
+void beginTrackpadOrbit(GameState& state, int x, int y)
+{
+    state.input.mouseX = x;
+    state.input.mouseY = y;
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = true;
+    state.input.waitingForHit = false;
+    state.input.hitRequested = false;
+}
+
+void endTrackpadOrbit(GameState& state)
+{
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = false;
+    state.input.waitingForHit = false;
+}
+
+void chargeShotPower(GameState& state, float maxPower, float increment)
+{
+    if (!state.input.waitingForHit) {
+        return;
+    }
+
+    if (state.input.shotPower >= maxPower) {
+        state.input.shotPower = 0.0f;
+    } else {
+        state.input.shotPower += increment;
+        if (state.input.shotPower > maxPower) {
+            state.input.shotPower = maxPower;
+        }
     }
 }
 

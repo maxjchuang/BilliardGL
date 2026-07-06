@@ -46,6 +46,14 @@ void updateCameraFromCueBall(GameState& state)
     state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
 }
 
+void resetBallMotion(BallState& ball)
+{
+    ball.velocity = Point3{};
+    ball.rotationAxis = Point3{};
+    ball.speed = 0.0f;
+    ball.rotationAngle = 0.0f;
+}
+
 void setBallVelocity(BallState& ball, float x, float y, float z)
 {
     ball.velocity.x = x;
@@ -61,6 +69,31 @@ bool anyBallMoving(const GameState& state)
         }
     }
     return false;
+}
+
+void clearGameplayEvents(GameState& state)
+{
+    state.events = GameplayEvents{};
+}
+
+void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls)
+{
+    for (int i = 0; i < kBallCount; ++i) {
+        legacyBalls[i].position = state.balls[i].position;
+        legacyBalls[i].velocity = state.balls[i].velocity;
+        legacyBalls[i].rotationAxis = state.balls[i].rotationAxis;
+        legacyBalls[i].speed = state.balls[i].speed;
+        legacyBalls[i].rotationAngle = state.balls[i].rotationAngle;
+        legacyBalls[i].pocketed = state.balls[i].pocketed;
+        legacyBalls[i].texture = state.balls[i].texture;
+    }
+}
+
+void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state)
+{
+    for (int i = 0; i < kBallCount; ++i) {
+        state.balls[i].texture = legacyBalls[i].texture;
+    }
 }
 
 }  // namespace billiardgl

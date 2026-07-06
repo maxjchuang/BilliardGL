@@ -1,17 +1,12 @@
 #pragma once
 
 #include "game_state.h"
+#include "render_resources.h"
 
 namespace billiardgl {
 
-struct RenderHooks {
-    void (*renderRoom)();
-    void (*renderTable)();
-    void (*renderBall)();
-    void (*renderCue)();
-    void (*renderDecoration)();
-};
-
-void renderScene(const GameState& state, const RenderHooks& hooks);
+void setupCameraFromGameState(const GameState& state);
+void setupLights();
+void renderScene(const GameState& state, RenderResources& resources);
 
 }  // namespace billiardgl

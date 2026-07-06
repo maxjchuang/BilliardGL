@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <string>
 
 namespace billiardgl {
 
@@ -41,6 +42,15 @@ struct CameraState {
     float zoom = 120.0f;
     float angleX = -kPi / 2.0f;
     float angleY = kPi / 3.0f;
+    float previousAngleX = 0.0f;
+    float previousAngleY = 0.0f;
+    float previousTargetX = 0.0f;
+    float previousTargetY = 0.0f;
+    float panX = 0.0f;
+    float panY = 0.0f;
+    float panZ = 0.0f;
+    float recordedZoom = 0.0f;
+    float recordedTarget[3] = {0.0f, 0.0f, 0.0f};
 };
 
 struct PlayerState {
@@ -51,6 +61,7 @@ struct PlayerState {
     bool illegalShot = false;
     bool updatedAfterShot = false;
     bool shotTaken = false;
+    bool aimingAtCueBall = false;
 };
 
 struct InputState {
@@ -68,10 +79,37 @@ struct HudState {
     bool showHelp = false;
 };
 
+enum class ScreenshotScene {
+    Default,
+    Help,
+    AfterShot
+};
+
 struct RuntimeConfig {
     bool windowedMode = true;
     int width = 1024;
     int height = 768;
+    std::string screenshotPath;
+    ScreenshotScene screenshotScene = ScreenshotScene::Default;
+};
+
+struct GameplayEvents {
+    bool ballCollision = false;
+    bool railCollision = false;
+    bool ballPocketed = false;
+    bool cueBallPocketed = false;
+    bool eightBallPocketed = false;
+    bool shotEnded = false;
+};
+
+struct LegacyBallAdapter {
+    Point3 position;
+    Point3 velocity;
+    Point3 rotationAxis;
+    float speed = 0.0f;
+    float rotationAngle = 0.0f;
+    bool pocketed = false;
+    unsigned int texture = 0;
 };
 
 struct GameState {
@@ -81,6 +119,7 @@ struct GameState {
     InputState input;
     HudState hud;
     RuntimeConfig config;
+    GameplayEvents events;
     int pocketedBallCount = 0;
     bool ballsMoving = false;
     bool transitionPerspective = false;
@@ -90,7 +129,11 @@ struct GameState {
 
 void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
+void resetBallMotion(BallState& ball);
 void setBallVelocity(BallState& ball, float x, float y, float z);
 bool anyBallMoving(const GameState& state);
+void clearGameplayEvents(GameState& state);
+void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls);
+void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state);
 
 }  // namespace billiardgl
