@@ -53,6 +53,17 @@ struct CameraState {
     float recordedTarget[3] = {0.0f, 0.0f, 0.0f};
 };
 
+enum class AimMode {
+    Observe,
+    Aim
+};
+
+struct AimState {
+    AimMode mode = AimMode::Observe;
+    float yaw = -kPi / 2.0f;
+    float sensitivity = 0.01f;
+};
+
 struct PlayerState {
     int assignedBallType[2] = {-1, -1};
     bool firstPocketedObjectBall = true;
@@ -115,6 +126,7 @@ struct LegacyBallAdapter {
 struct GameState {
     std::array<BallState, kBallCount> balls;
     CameraState camera;
+    AimState aim;
     PlayerState players;
     InputState input;
     HudState hud;
