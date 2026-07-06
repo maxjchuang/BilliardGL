@@ -29,6 +29,7 @@ add_executable(Billiards
     src/Billiards/billiards.cpp
     src/Billiards/hud.cpp
     src/Billiards/renderer.cpp
+    src/Billiards/render_resources.cpp
     src/Billiards/screenshot.cpp
     src/Billiards/screenshot_gl.cpp
     src/Billiards/ObjLoader.cpp

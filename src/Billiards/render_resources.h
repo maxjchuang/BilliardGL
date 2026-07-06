@@ -1,0 +1,46 @@
+#pragma once
+
+#include "game_state.h"
+
+#include <array>
+
+class ObjLoader;
+class emitter;
+
+namespace billiardgl {
+
+struct RenderResources {
+    std::array<unsigned int, kBallCount> ballTextures = {};
+
+    unsigned int tableVertexVBO = 0;
+    unsigned int cueVertexVBO = 0;
+    unsigned int benchVertexVBO = 0;
+    unsigned int wardVertexVBO = 0;
+
+    unsigned int ceilingTexture = 0;
+    unsigned int blackTexture = 0;
+    unsigned int wardTexture = 0;
+    unsigned int tableTextures[2] = {0, 0};
+    unsigned int cueTextures[2] = {0, 0};
+
+    ObjLoader* tableObj = nullptr;
+    ObjLoader* cueObj = nullptr;
+    ObjLoader* benchObj = nullptr;
+    ObjLoader* wardObj = nullptr;
+
+    std::array<emitter*, kBallCount> emitters = {};
+    std::array<bool, kBallCount> fired = {};
+    bool allFired = false;
+
+    float cameraEye[3] = {0.0f, 0.0f, 0.0f};
+    float cameraTarget[3] = {0.0f, 0.0f, 0.0f};
+    float shotPower = 0.0f;
+    bool showCue = false;
+    bool showPowerMeter = false;
+    int viewportWidth = 1024;
+    int viewportHeight = 768;
+};
+
+void applyBallTexturesToState(const RenderResources& resources, GameState& state);
+
+}  // namespace billiardgl

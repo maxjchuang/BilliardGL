@@ -21,6 +21,7 @@
 #include "platform_time.h"
 #include "resource_path.h"
 #include "renderer.h"
+#include "render_resources.h"
 #include "screenshot.h"
 
 #include <cmath>
@@ -54,6 +55,7 @@
 GLuint texture[10];
 emitter *e[16];
 static billiardgl::GameState Game;
+static billiardgl::RenderResources Render;
 
 //变量申明
 int& width = Game.config.width;
@@ -168,13 +170,6 @@ void myReshape(int w, int h);
 void initDecoration();
 void myDisplay(void);
 void set_camera(void);
-void renderRoom(void);
-void renderTable(void);
-void renderBall(void);
-void drawBall(GLfloat mybr, GLuint BALL);
-void renderCue();
-void renderRect();
-void renderDecoration();
 void myIdle(void);
 void collideBalls(int j, int k);
 void collideEdge(int j);
@@ -232,10 +227,28 @@ int main(int argc, char* argv[])
 	initTable();
 	initDecoration();
 
+	Render.tableObj = &tableObj;
+	Render.cueObj = &cueObj;
+	Render.benchObj = &benchObj;
+	Render.wardObj = &wardObj;
+	Render.tableVertexVBO = tableVertexVBO;
+	Render.cueVertexVBO = cueVertexVBO;
+	Render.benchVertexVBO = benchVertexVBO;
+	Render.wardVertexVBO = wardVertexVBO;
+	Render.ceilingTexture = tecCeiling;
+	Render.blackTexture = texhe;
+	Render.wardTexture = textureWard;
+	Render.tableTextures[0] = textureIDtest[0];
+	Render.tableTextures[1] = textureIDtest[1];
+	Render.cueTextures[0] = textureCue[0];
+	Render.cueTextures[1] = textureCue[1];
+	for (int i = 0; i < ballcnt; ++i)
+		Render.ballTextures[i] = Ball[i].texture;
+
 	for (int i = 0; i < ballcnt; i++)
 	{
-		//		if(i==0)
 		e[i] = new emitter(init_flame, 5000, -Radius + Ball[i].p.x, Radius + Ball[i].p.x, Ball[i].p.y, Ball[i].p.y, Ball[i].p.z, Ball[i].p.z);
+		Render.emitters[i] = e[i];
 	}
 
 	glutDisplayFunc(&myDisplay);
@@ -508,34 +521,21 @@ void myDisplay(void)
 	Game.camera.target[0] = at[3];
 	Game.camera.target[1] = at[4];
 	Game.camera.target[2] = at[5];
-	const billiardgl::RenderHooks hooks = {
-		renderRoom,
-		renderTable,
-		renderBall,
-		AimAt == 1 ? renderCue : nullptr,
-		renderDecoration
-	};
-	billiardgl::renderScene(Game, hooks);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
-
-	for (int i = 0; i < 16; i++)
-	{
-		if (Fired[i] || AllFired)
-		{
-			e[i]->emit(-Radius + Ball[i].p.x, Radius + Ball[i].p.x, Ball[i].p.y, Ball[i].p.y, Ball[i].p.z, Ball[i].p.z);
-			e[i]->show();
-		}
-	}
-
-	//e->update();
-
-	glDisable(GL_BLEND);
-
-
-	if (WaitHit == 1)
-		renderRect();
+	Render.cameraEye[0] = at[0];
+	Render.cameraEye[1] = at[1];
+	Render.cameraEye[2] = at[2];
+	Render.cameraTarget[0] = at[3];
+	Render.cameraTarget[1] = at[4];
+	Render.cameraTarget[2] = at[5];
+	Render.shotPower = speed;
+	Render.showCue = AimAt == 1;
+	Render.showPowerMeter = WaitHit == 1;
+	Render.viewportWidth = width;
+	Render.viewportHeight = height;
+	Render.allFired = AllFired;
+	for (int i = 0; i < ballcnt; ++i)
+		Render.fired[i] = Fired[i];
+	billiardgl::renderScene(Game, Render);
 
 	updatePlayer();
 	Game.config.width = width;
@@ -565,291 +565,6 @@ void set_camera(void)
 	gluLookAt(at[0], at[1], at[2], at[3], at[4], at[5], 0.0, 1.0, 0.0);//0.0,300.0,500.0,0.0,80.0,0.0
 }
 // 画房间
-void renderRoom()
-{
-	// Neutral floor keeps the table and balls visually dominant.
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glColor3f(0.18f, 0.20f, 0.19f);
-	glBegin(GL_QUADS);
-	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glEnd();
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-	//天花板
-	glBindTexture(GL_TEXTURE_2D, tecCeiling);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glTexCoord2f(0.0f, 5.0f); glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(5.0f, 5.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glTexCoord2f(5.0f, 0.0f); glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glEnd();
-	// Neutral room walls keep the game view focused on the table.
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glColor3f(0.24f, 0.27f, 0.26f);
-	glBegin(GL_QUADS);
-	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glVertex3f(-ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, ROOM_HEIGHT, -ROOM_LENGTH / 2);
-	glVertex3f(ROOM_WIDTH / 2, 0, -ROOM_LENGTH / 2);
-	glEnd();
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-}
-// 画桌子
-void renderTable()
-{
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, tableVertexVBO);
-
-	// enable vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	// before draw, specify vertex and index arrays with their offsets
-	glNormalPointer(GL_FLOAT, 0, (void*)(sizeof(GLfloat) * tableObj.vertices.size() * 3));
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glTexCoordPointer(3, GL_FLOAT, 0, (void*)((sizeof(GLfloat) * tableObj.vertices.size() * 3) * 2));
-
-	//setMaterial(tableObj.materials[tableObj.mtlIndex[1]]);
-	glBindTexture(GL_TEXTURE_2D, textureIDtest[tableObj.mtlIndex[1]]);
-	glDrawArrays(GL_TRIANGLES, 0, tableObj.mtlIndex[4]);
-
-	//setMaterial(tableObj.materials[tableObj.mtlIndex[5]]);
-	glBindTexture(GL_TEXTURE_2D, textureIDtest[tableObj.mtlIndex[5]]);
-	glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[4], tableObj.mtlIndex[6] / 2);
-
-	//setMaterial(tableObj.materials[tableObj.mtlIndex[1]]);
-	glBindTexture(GL_TEXTURE_2D, textureIDtest[tableObj.mtlIndex[1]]);
-	glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[6] / 2, tableObj.vertices.size());
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	// it is good idea to release VBOs with ID 0 after use.
-	// Once bound with 0, all pointers in gl*Pointer() behave as real
-	// pointer, so, normal vertex array operations are re-activated
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-}
-
-void renderDecoration() {
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, benchVertexVBO);
-
-	// enable vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	// before draw, specify vertex and index arrays with their offsets
-	glNormalPointer(GL_FLOAT, 0, (void*)(sizeof(GLfloat) * benchObj.vertices.size() * 3));
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glTexCoordPointer(3, GL_FLOAT, 0, (void*)((sizeof(GLfloat) * benchObj.vertices.size() * 3) * 2));
-
-	glPushMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glRotatef(90, 0, 1, 0);
-	glTranslatef(0, 0, -ROOM_WIDTH / 2 + 50);
-	glBindTexture(GL_TEXTURE_2D, texhe);
-	//setMaterial(benchObj.materials[benchObj.mtlIndex[0]]);
-	glDrawArrays(GL_TRIANGLES, 0, benchObj.vertices.size());
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-
-
-
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, wardVertexVBO);
-
-	// enable vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	// before draw, specify vertex and index arrays with their offsets
-	glNormalPointer(GL_FLOAT, 0, (void*)(sizeof(GLfloat) * wardObj.vertices.size() * 3));
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glTexCoordPointer(3, GL_FLOAT, 0, (void*)((sizeof(GLfloat) * wardObj.vertices.size() * 3) * 2));
-
-	glPushMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glRotatef(-90, 0, 1, 0);
-	glTranslatef(0, 0, -ROOM_WIDTH / 2 + 30);
-	glBindTexture(GL_TEXTURE_2D, textureWard);
-	//setMaterial(wardObj.materials[wardObj.mtlIndex[0]]);
-	glDrawArrays(GL_TRIANGLES, 0, wardObj.vertices.size());
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-
-}
-// 设置绘球参数
-void renderBall(void)
-{
-	for (i = 0; i<ballcnt; i++) {
-		if (Ball[i].isIn == 0) {
-			for (j = 0; j < 15; j++) m[j] = 0.0;
-			m[0] = m[5] = m[10] = 1.0;
-			m[7] = (-1.0) / 405;
-			glPushMatrix();
-			glTranslatef(Ball[i].p.x, Ball[i].p.y, Ball[i].p.z);
-			glPushMatrix();
-			glTranslatef(0, 400, 0);
-			glMultMatrixf(m);
-			glTranslatef(0, -400, 0);
-			glDepthMask(GL_FALSE);
-			glEnable(GL_BLEND);
-			glColor4f(0.3, 0.3, 0.3, 0.5);
-			glBlendFunc(GL_SRC_ALPHA, GL_DST_COLOR);
-			drawBall(Radius, texhe);
-			glDisable(GL_BLEND);
-			glDepthMask(GL_TRUE);
-			glPopMatrix();
-			glRotatef(Ball[i].ma, Ball[i].a.x, Ball[i].a.y, Ball[i].a.z);
-			//			glEnable(GL_BLEND);
-			//			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			drawBall(Radius, Ball[i].texture);
-			//			glDisable(GL_BLEND);
-			glPopMatrix();
-		}
-		else {
-			glPushMatrix();
-			glTranslatef(Ball[i].p.x, Ball[i].p.y, Ball[i].p.z);
-			drawBall(Radius, Ball[i].texture);
-			glPopMatrix();
-		}
-	}
-}
-// 画球
-void drawBall(GLfloat mybr, GLuint BALL)
-{
-	GLUquadricObj *MYBALL;
-	{
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, BALL);
-		MYBALL = gluNewQuadric();// 创建一个二次曲面物体
-		gluQuadricTexture(MYBALL, GL_TRUE); //启用该二次曲面的纹理
-		glBindTexture(GL_TEXTURE_2D, BALL);// 绑定纹理
-		gluSphere(MYBALL, mybr, 80, 120); // 画球
-		gluDeleteQuadric(MYBALL);
-	}
-}
-// 画球杆、力度条、方向线
-void renderCue()
-{
-	GLfloat lxz;
-	lxz = sqrt(pow(at[0] - at[3], 2) + pow(at[2] - at[5], 2));
-
-	glPushMatrix();
-	glTranslatef(Ball[0].p.x, Ball[0].p.y, Ball[0].p.z);
-	glLineWidth(2);
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(-150 * (at[0] - at[3]) / lxz, 0, -150 * (at[2] - at[5]) / lxz);
-	glEnd();
-	glPopMatrix();
-	//在这个函数里画球杆
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, cueVertexVBO);
-
-	// enable vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	// before draw, specify vertex and index arrays with their offsets
-	glNormalPointer(GL_FLOAT, 0, (void*)(sizeof(GLfloat) * cueObj.vertices.size() * 3));
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glTexCoordPointer(3, GL_FLOAT, 0, (void*)((sizeof(GLfloat) * cueObj.vertices.size() * 3) * 2));
-
-	glPushMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glTranslatef(Ball[0].p.x + (speed + 6) * 0.1 * (at[0] - at[3]) / lxz, Ball[0].p.y, Ball[0].p.z + (speed + 6) * 0.1 * (at[2] - at[5]) / lxz);
-	/*float theta = acosf(cos(anglex) / sin(angley)) * 180 / PI;
-	if (anglex < -PI) theta = 360 - theta;
-	else if (anglex > 0) theta *= -1;
-	cout << theta << endl;*/
-
-	glRotatef(180.5 - 90 - anglex * 180 / PI, 0, 1, 0);
-	//glRotatef(80 - angley * 180 / PI, (at[2] - at[5]) / lxz, 0, -(at[0] - at[3]) / lxz);
-	//setMaterial(cueObj.materials[0]);
-
-	glBindTexture(GL_TEXTURE_2D, textureCue[0]);
-	glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size());
-	glBindTexture(GL_TEXTURE_2D, textureCue[1]);
-	glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[2], cueObj.mtlIndex[4]);
-	glBindTexture(GL_TEXTURE_2D, Ball[0].texture);
-	glDrawArrays(GL_TRIANGLES, 0, cueObj.mtlIndex[2]);
-
-
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-}
-
-void renderRect()
-{
-	//to2d,画力度条
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(0, width, 0, height);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glPushMatrix();
-	glDepthMask(GL_FALSE);
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glEnable(GL_BLEND);
-	glColor4f(1.0f, 0.82f, 0.12f, 0.72f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	const GLfloat meter_left = 18.0f;
-	const GLfloat meter_bottom = height - 260.0f;
-	const GLfloat meter_top = meter_bottom + speed;
-	glRectf(meter_left, meter_bottom, meter_left + 36.0f, meter_top);
-	glDisable(GL_BLEND);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-	glDepthMask(GL_TRUE);
-	glPopMatrix();
-	//to3d,貌似没用
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-}
-// 更新位置、球数量、速度
 void myIdle(void)
 {
 	at[3] = Ball[0].p.x;
