@@ -12,6 +12,7 @@
 #include "ObjLoader.h"
 #include "particle.h"
 #include "renderer.h"
+#include "shot.h"
 
 #include <cmath>
 
@@ -202,19 +203,16 @@ void renderCue(const GameState& state, const RenderResources& resources)
     }
 
     const BallState& cueBall = state.balls[0];
-    const float dx = resources.cameraEye[0] - resources.cameraTarget[0];
-    const float dz = resources.cameraEye[2] - resources.cameraTarget[2];
-    const float lxz = std::sqrt(dx * dx + dz * dz);
-    if (lxz <= 0.0f) {
-        return;
-    }
+    const Point3 aimDirection = aimDirectionOnTable(state.aim.yaw);
+    const float dx = aimDirection.x;
+    const float dz = aimDirection.z;
 
     glPushMatrix();
     glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
     glLineWidth(2.0f);
     glBegin(GL_LINES);
     glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(-150.0f * dx / lxz, 0.0f, -150.0f * dz / lxz);
+    glVertex3f(150.0f * dx, 0.0f, 150.0f * dz);
     glEnd();
     glPopMatrix();
 
@@ -229,10 +227,10 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(
-        cueBall.position.x + (resources.shotPower + 6.0f) * 0.1f * dx / lxz,
+        cueBall.position.x - (resources.shotPower + 6.0f) * 0.1f * dx,
         cueBall.position.y,
-        cueBall.position.z + (resources.shotPower + 6.0f) * 0.1f * dz / lxz);
-    glRotatef(180.5f - 90.0f - state.camera.angleX * 180.0f / kPi, 0.0f, 1.0f, 0.0f);
+        cueBall.position.z - (resources.shotPower + 6.0f) * 0.1f * dz);
+    glRotatef(180.5f - 90.0f - state.aim.yaw * 180.0f / kPi, 0.0f, 1.0f, 0.0f);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[0]);
     glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size());
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[1]);
