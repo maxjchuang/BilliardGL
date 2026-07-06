@@ -224,13 +224,21 @@ add_executable(Billiards
     ${BILLIARDGL_CORE_SOURCES}
 )
 
-add_executable(BilliardsTests
+add_executable(BilliardsPhysicsTests
     tests/physics_tests.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
+add_executable(BilliardsRulesTests
     tests/rules_tests.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 
-target_include_directories(BilliardsTests PRIVATE
+target_include_directories(BilliardsPhysicsTests PRIVATE
+    src/Billiards
+)
+
+target_include_directories(BilliardsRulesTests PRIVATE
     src/Billiards
 )
 ```
@@ -276,14 +284,14 @@ Run:
 cmake --build build
 ```
 
-Expected: `Billiards` and `BilliardsTests` compile successfully.
+Expected: `Billiards`, `BilliardsPhysicsTests`, and `BilliardsRulesTests` compile successfully.
 
 - [ ] **Step 6: Run initial tests**
 
 Run:
 
 ```bash
-./build/BilliardsTests
+./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: process exits with code `0`.
@@ -383,7 +391,7 @@ int main()
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build fails because `physics.h` does not exist.
@@ -594,7 +602,7 @@ set(BILLIARDGL_CORE_SOURCES
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: tests pass.
@@ -634,7 +642,7 @@ This step intentionally does not remove old physics yet because rendering still 
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -723,7 +731,7 @@ int main()
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build fails because `rules.h` does not exist.
@@ -814,7 +822,7 @@ set(BILLIARDGL_CORE_SOURCES
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: tests pass.
@@ -991,7 +999,7 @@ if (key == 'h' || key == 'H')
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -1189,7 +1197,7 @@ Remove old HUD helper function declarations and definitions only after the new H
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -1342,7 +1350,7 @@ ObjLoader tableObj(billiardgl::getObjectPath("table.obj"));
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -1500,7 +1508,7 @@ Keep post-scene HUD and buffer swap in `myDisplay` during this task.
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -1603,7 +1611,7 @@ This task intentionally mirrors state rather than deleting all old globals. The 
 Run:
 
 ```bash
-cmake --build build && ./build/BilliardsTests
+cmake --build build && ./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: build and tests pass.
@@ -1653,7 +1661,7 @@ Expected: build succeeds.
 Run:
 
 ```bash
-./build/BilliardsTests
+./build/BilliardsPhysicsTests && ./build/BilliardsRulesTests
 ```
 
 Expected: exits with code `0`.
