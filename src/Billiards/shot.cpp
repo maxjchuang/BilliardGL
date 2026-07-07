@@ -8,7 +8,6 @@ namespace {
 constexpr float kCueTipGap = 1.0f;
 constexpr float kCuePowerBackoffScale = 0.1f;
 constexpr float kCueBaseBackoff = kBallRadius * 3.0f;
-constexpr float kCueLineHeight = kBallRadius * 1.2f;
 
 }  // namespace
 
@@ -26,14 +25,14 @@ Point3 shotVelocityFromAim(float yaw, float power)
 Point3 cueLineEndFromAim(float yaw, float length)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
-    return Point3{direction.x * length, kCueLineHeight, direction.z * length};
+    return Point3{direction.x * length, 0.0f, direction.z * length};
 }
 
 Point3 cueLineStartFromAim(float yaw)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
     const float start = kBallRadius + kCueTipGap;
-    return Point3{direction.x * start, kCueLineHeight, direction.z * start};
+    return Point3{direction.x * start, 0.0f, direction.z * start};
 }
 
 Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw, float shotPower)
