@@ -1,6 +1,22 @@
 #include "input.h"
 
+#include <cmath>
+
 namespace billiardgl {
+
+namespace {
+
+float cameraForwardYawOnTable(const GameState& state)
+{
+    const float dx = state.camera.target[0] - state.camera.eye[0];
+    const float dz = state.camera.target[2] - state.camera.eye[2];
+    if (std::fabs(dx) < 0.0001f && std::fabs(dz) < 0.0001f) {
+        return state.aim.yaw;
+    }
+    return std::atan2(dz, dx);
+}
+
+}  // namespace
 
 void clampCameraAngles(GameState& state)
 {
@@ -21,7 +37,11 @@ void handleHelpKey(GameState& state)
 
 void handleAimToggleKey(GameState& state)
 {
-    state.aim.mode = state.aim.mode == AimMode::Observe ? AimMode::Aim : AimMode::Observe;
+    const bool enteringAimMode = state.aim.mode == AimMode::Observe;
+    state.aim.mode = enteringAimMode ? AimMode::Aim : AimMode::Observe;
+    if (enteringAimMode) {
+        state.aim.yaw = cameraForwardYawOnTable(state);
+    }
     state.players.aimingAtCueBall = state.aim.mode == AimMode::Aim;
     state.input.leftMouseDown = false;
     state.input.rightMouseDown = false;

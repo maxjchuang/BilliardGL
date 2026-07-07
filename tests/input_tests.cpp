@@ -167,6 +167,27 @@ void testAimToggleSwitchesModes()
     assert(!state.players.aimingAtCueBall);
 }
 
+void testEnteringAimModeUsesCameraForwardDirection()
+{
+    billiardgl::GameState state;
+    state.camera.eye[0] = 10.0f;
+    state.camera.eye[1] = 200.0f;
+    state.camera.eye[2] = -20.0f;
+    state.camera.target[0] = -40.0f;
+    state.camera.target[1] = 92.715f;
+    state.camera.target[2] = -20.0f;
+
+    billiardgl::handleAimToggleKey(state);
+
+    assert(state.aim.mode == billiardgl::AimMode::Aim);
+    assert(closeEnough(state.aim.yaw, billiardgl::kPi));
+
+    state.aim.yaw = 1.23f;
+    billiardgl::handleAimToggleKey(state);
+    assert(state.aim.mode == billiardgl::AimMode::Observe);
+    assert(closeEnough(state.aim.yaw, 1.23f));
+}
+
 void testCameraOrbitDoesNotChangeAimInObserveMode()
 {
     billiardgl::GameState state;
@@ -210,6 +231,7 @@ int main()
     testShotPowerChargesThroughInputState();
     testAimModeMouseWheelAdjustsShotPower();
     testAimToggleSwitchesModes();
+    testEnteringAimModeUsesCameraForwardDirection();
     testCameraOrbitDoesNotChangeAimInObserveMode();
     testAimModePointerMovementChangesAimNotCamera();
     return 0;
