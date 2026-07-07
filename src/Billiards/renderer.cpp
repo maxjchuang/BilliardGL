@@ -270,7 +270,7 @@ void renderPowerMeter(const RenderResources& resources)
     glEnable(GL_BLEND);
     glColor4f(1.0f, 0.82f, 0.12f, 0.72f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    const GLfloat meterLeft = 18.0f;
+    const GLfloat meterLeft = static_cast<GLfloat>(resources.viewportWidth) - 54.0f;
     const GLfloat meterBottom = static_cast<GLfloat>(resources.viewportHeight) - 260.0f;
     const GLfloat meterTop = meterBottom + resources.shotPower;
     glRectf(meterLeft, meterBottom, meterLeft + 36.0f, meterTop);
