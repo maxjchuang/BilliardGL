@@ -84,7 +84,7 @@ struct InputState {
     bool trackpadOrbit = false;
     bool waitingForHit = false;
     bool hitRequested = false;
-    float shotPower = 0.0f;
+    float shotPower = 60.0f;
 };
 
 struct HudState {

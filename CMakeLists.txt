@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.13)
 
 project(BilliardGL LANGUAGES CXX)
 
+if(APPLE)
+    enable_language(OBJCXX)
+endif()
+
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 11)
@@ -30,6 +34,16 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/vec.cpp
 )
 
+if(APPLE)
+    set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_scroll_mac.mm
+    )
+else()
+    set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_scroll.cpp
+    )
+endif()
+
 add_executable(Billiards
     src/Billiards/billiards.cpp
     src/Billiards/hud.cpp
@@ -41,6 +55,7 @@ add_executable(Billiards
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
     src/Billiards/platform_audio.cpp
+    ${BILLIARDGL_PLATFORM_SOURCES}
     ${BILLIARDGL_CORE_SOURCES}
 )
 

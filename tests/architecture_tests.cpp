@@ -30,6 +30,9 @@ int main()
 {
     const std::string billiards = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/billiards.cpp");
     const std::string renderer = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/renderer.cpp");
+    const std::string cmake = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/CMakeLists.txt");
+    const std::string platformScroll = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/platform_scroll.cpp");
+    const std::string macScroll = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/platform_scroll_mac.mm");
 
     assertNotContains(billiards, "GLuint texture[");
     assertNotContains(billiards, "emitter *e[");
@@ -42,6 +45,19 @@ int main()
     assertContains(billiards, "glutMotionFunc(mouseMove)");
     assertContains(billiards, "glutPassiveMotionFunc(mouseMove)");
     assertContains(billiards, "billiardgl::handleMouseMove(Game, x, y)");
+    assertContains(billiards, "billiardgl::handleMouseWheel(Game");
+    assertContains(billiards, "if (mbutton == 3 || mbutton == 4)");
+    assertContains(billiards, "case '+':");
+    assertContains(billiards, "case '-':");
+    assertContains(billiards, "billiardgl::installPlatformScrollHandler");
+    assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");
+    assertContains(cmake, "platform_scroll.cpp");
+    assertContains(cmake, "platform_scroll_mac.mm");
+    assertContains(platformScroll, "glutMouseWheelFunc");
+    assertContains(platformScroll, "handlePlatformMouseWheel");
+    assertContains(macScroll, "addLocalMonitorForEventsMatchingMask");
+    assertContains(macScroll, "NSEventMaskScrollWheel");
+    assertContains(macScroll, "scrollingDeltaY");
     assertNotContains(renderer, "resources.cameraEye[0] - resources.cameraTarget[0]");
     assertNotContains(renderer, "resources.cameraEye[2] - resources.cameraTarget[2]");
     assertNotContains(renderer, "state.camera.angleX * 180.0f");
