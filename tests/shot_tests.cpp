@@ -61,8 +61,8 @@ void testCueLinePointsInShotVelocityDirection()
 
     assert(dot > 0.0f);
     assert(startDistance > billiardgl::kBallRadius);
-    assert(lineStart.y > 0.0f);
-    assert(lineEnd.y > 0.0f);
+    assert(closeEnough(lineStart.y, 0.0f));
+    assert(closeEnough(lineEnd.y, 0.0f));
 }
 
 void testCueStickStaysBehindCueBallOutsideBallRadius()

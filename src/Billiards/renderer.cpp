@@ -211,6 +211,7 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
     glDisable(GL_TEXTURE_2D);
     glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
     glColor3f(1.0f, 0.88f, 0.1f);
     glLineWidth(2.0f);
     glBegin(GL_LINES);
@@ -218,6 +219,7 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glVertex3f(lineEnd.x, lineEnd.y, lineEnd.z);
     glEnd();
     glColor3f(1.0f, 1.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
     glPopMatrix();
