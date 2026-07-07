@@ -62,6 +62,7 @@ struct AimState {
     AimMode mode = AimMode::Observe;
     float yaw = kPi / 2.0f;
     float sensitivity = 0.01f;
+    bool showGuideLine = false;
 };
 
 struct PlayerState {

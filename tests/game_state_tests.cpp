@@ -17,6 +17,9 @@ int fail(const char* message)
 int main()
 {
     billiardgl::GameState state;
+    if (state.aim.showGuideLine) {
+        return fail("aim guide line should be disabled by default");
+    }
     billiardgl::initializeBalls(state);
     state.balls[0].position = billiardgl::Point3{1.0f, 2.0f, 3.0f};
     state.balls[0].velocity = billiardgl::Point3{4.0f, 0.0f, 5.0f};

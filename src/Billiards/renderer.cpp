@@ -203,26 +203,28 @@ void renderCue(const GameState& state, const RenderResources& resources)
     }
 
     const BallState& cueBall = state.balls[0];
-    const Point3 lineStart = cueLineStartFromAim(state.aim.yaw);
-    const Point3 lineEnd = cueLineEndFromAim(state.aim.yaw, 150.0f);
     const Point3 cuePosition = cueStickPositionFromAim(cueBall.position, state.aim.yaw, resources.shotPower);
 
-    glPushMatrix();
-    glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
-    glDisable(GL_TEXTURE_2D);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
-    glColor3f(1.0f, 0.88f, 0.1f);
-    glLineWidth(2.0f);
-    glBegin(GL_LINES);
-    glVertex3f(lineStart.x, lineStart.y, lineStart.z);
-    glVertex3f(lineEnd.x, lineEnd.y, lineEnd.z);
-    glEnd();
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_TEXTURE_2D);
-    glPopMatrix();
+    if (state.aim.showGuideLine) {
+        const Point3 lineStart = cueLineStartFromAim(state.aim.yaw);
+        const Point3 lineEnd = cueLineEndFromAim(state.aim.yaw, 150.0f);
+        glPushMatrix();
+        glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        glDisable(GL_DEPTH_TEST);
+        glColor3f(1.0f, 0.88f, 0.1f);
+        glLineWidth(2.0f);
+        glBegin(GL_LINES);
+        glVertex3f(lineStart.x, lineStart.y, lineStart.z);
+        glVertex3f(lineEnd.x, lineEnd.y, lineEnd.z);
+        glEnd();
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_TEXTURE_2D);
+        glPopMatrix();
+    }
 
     ObjLoader& cueObj = *resources.cueObj;
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, resources.cueVertexVBO);
