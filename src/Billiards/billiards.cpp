@@ -179,6 +179,7 @@ void prepareScreenshotScene()
 		Game.aim.mode = billiardgl::AimMode::Aim;
 		Game.players.aimingAtCueBall = true;
 		Game.aim.yaw = billiardgl::kPi / 2.0f;
+		Game.aim.showGuideLine = true;
 		return;
 	}
 
