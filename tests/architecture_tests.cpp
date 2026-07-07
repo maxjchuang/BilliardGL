@@ -58,6 +58,8 @@ int main()
     assertContains(macScroll, "addLocalMonitorForEventsMatchingMask");
     assertContains(macScroll, "NSEventMaskScrollWheel");
     assertContains(macScroll, "scrollingDeltaY");
+    assertNotContains(renderer, "const GLfloat meterLeft = 18.0f");
+    assertContains(renderer, "static_cast<GLfloat>(resources.viewportWidth) - 54.0f");
     assertNotContains(renderer, "resources.cameraEye[0] - resources.cameraTarget[0]");
     assertNotContains(renderer, "resources.cameraEye[2] - resources.cameraTarget[2]");
     assertNotContains(renderer, "state.camera.angleX * 180.0f");
