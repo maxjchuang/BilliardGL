@@ -23,8 +23,11 @@ void handleAimToggleKey(GameState& state)
 {
     state.aim.mode = state.aim.mode == AimMode::Observe ? AimMode::Aim : AimMode::Observe;
     state.players.aimingAtCueBall = state.aim.mode == AimMode::Aim;
+    state.input.leftMouseDown = false;
     state.input.rightMouseDown = false;
     state.input.trackpadOrbit = false;
+    state.input.waitingForHit = false;
+    state.input.hitRequested = false;
 }
 
 void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, int keyDown, int key)
@@ -59,12 +62,38 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
     const bool isDown = buttonState == ButtonState::Down;
     if (button == MouseButton::Left) {
         state.input.leftMouseDown = isDown;
-        state.input.waitingForHit = isDown;
-        if (!isDown) {
+        state.input.waitingForHit = false;
+        if (state.aim.mode == AimMode::Aim && !isDown) {
             state.input.hitRequested = true;
         }
     } else if (button == MouseButton::Right) {
-        state.input.rightMouseDown = isDown;
+        state.input.rightMouseDown = false;
+    }
+}
+
+void handleMouseWheel(GameState& state, int direction, float zoomStep, float powerStep, float maxPower)
+{
+    if (state.hud.showHelp || direction == 0) {
+        return;
+    }
+
+    if (state.aim.mode == AimMode::Aim) {
+        state.input.shotPower += static_cast<float>(direction) * powerStep;
+        if (state.input.shotPower < 0.0f) {
+            state.input.shotPower = 0.0f;
+        }
+        if (state.input.shotPower > maxPower) {
+            state.input.shotPower = maxPower;
+        }
+        return;
+    }
+
+    state.camera.zoom -= static_cast<float>(direction) * zoomStep;
+    if (state.camera.zoom < 10.0f) {
+        state.camera.zoom = 10.0f;
+    }
+    if (state.camera.zoom > 500.0f) {
+        state.camera.zoom = 500.0f;
     }
 }
 
@@ -115,7 +144,7 @@ void handleMouseMove(GameState& state, int x, int y)
         return;
     }
 
-    if (state.input.rightMouseDown || state.input.trackpadOrbit) {
+    if (state.input.leftMouseDown || state.input.trackpadOrbit) {
         state.camera.angleX += static_cast<float>(dx) * 0.01f;
         state.camera.angleY += static_cast<float>(dy) * 0.01f;
         clampCameraAngles(state);

@@ -13,6 +13,7 @@
 #include "hud.h"
 #include "input.h"
 #include "particle_resources.h"
+#include "platform_scroll.h"
 #include "physics.h"
 #include "rules.h"
 #include "platform_audio.h"
@@ -94,6 +95,7 @@ static void mySpecialKeyboard(int key, int x, int y)
 }
 
 static void myMouse(int mbutton, int mstate, int x, int y);
+static void platformScroll(int direction);
 static void mouseMove(int x, int y);
 void b_music();
 
@@ -105,6 +107,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
+	billiardgl::installPlatformScrollHandler(platformScroll);
 	initBall();//初始化球的位置
 	if (!billiardgl::initializeRenderResources(Render, Game))
 	{
@@ -119,7 +122,7 @@ int main(int argc, char* argv[])
 	glutIdleFunc(&myIdle); //设置窗口刷新的回调函数
 	glutKeyboardFunc(myKeyboard); //设置键盘回调函数
 	glutSpecialFunc(mySpecialKeyboard);
-	glutMouseFunc(myMouse); //设置鼠标器按键回调函数
+	glutMouseFunc(myMouse); // mouse button callback
 	glutMotionFunc(mouseMove); // mouse drag callback
 	glutPassiveMotionFunc(mouseMove); // mouse/trackpad move callback
 	glutReshapeFunc(myReshape);
@@ -266,7 +269,7 @@ void myDisplay(void)
 	Render.cameraTarget[2] = Game.camera.target[2];
 	Render.shotPower = Game.input.shotPower;
 	Render.showCue = Game.players.aimingAtCueBall == 1;
-	Render.showPowerMeter = Game.input.waitingForHit == 1;
+	Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim;
 	Render.viewportWidth = width;
 	Render.viewportHeight = height;
 	billiardgl::setupCameraFromGameState(Game);
@@ -295,18 +298,20 @@ void myIdle(void)
 	Game.camera.eye[1] = Game.camera.zoom * (cos(Game.camera.angleY)) + Game.camera.target[1];
 	Game.camera.eye[2] = Game.camera.zoom * (sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
 
-	billiardgl::chargeShotPower(Game, 200.0f, 2.0f);
 
 	if (Game.input.hitRequested == 1)
 	{
 		const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(Game.aim.yaw, Game.input.shotPower);
 		billiardgl::setBallVelocity(Game.balls[0], velocity.x, velocity.y, velocity.z);
+		Game.players.nextPlayer = 1 - Game.players.currentPlayer;
+		Game.players.illegalShot = false;
 		Game.players.shotTaken = true;
 		Game.players.updatedAfterShot = false;
 		Game.ballsMoving = true;
+		Game.transitionPerspective = true;
 		Game.aim.mode = billiardgl::AimMode::Observe;
+		Game.players.aimingAtCueBall = false;
 		Game.input.hitRequested = 0;
-		Game.input.shotPower = 0;
 		billiardgl::playHit();
 	}
 
@@ -314,7 +319,6 @@ void myIdle(void)
 	{
 		Game.balls[0].velocity.x = 0;
 		Game.balls[0].velocity.z = 0;
-		Game.input.shotPower = 0;
 	}
 
 	billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
@@ -409,6 +413,14 @@ static void myKeyboard(unsigned char key, int x, int y)
 		Game.camera.zoom += 10;
 		if (Game.camera.zoom>500) Game.camera.zoom = 500;
 		break;
+	case '+':
+		if (Game.aim.mode == billiardgl::AimMode::Aim)
+			billiardgl::handleMouseWheel(Game, 1, 10.0f, 20.0f, 200.0f);
+		break;
+	case '-':
+		if (Game.aim.mode == billiardgl::AimMode::Aim)
+			billiardgl::handleMouseWheel(Game, -1, 10.0f, 20.0f, 200.0f);
+		break;
 	case '0':
 		billiardgl::toggleFired(Render, 0);
 		break;
@@ -465,16 +477,13 @@ static void myKeyboard(unsigned char key, int x, int y)
 }
 static void myMouse(int mbutton, int mstate, int x, int y)
 {
-	if (Game.hud.showHelp)
-	{
-		Game.input.waitingForHit = 0;
-		Game.input.hitRequested = 0;
-		Game.input.trackpadOrbit = false;
-		Game.input.rightMouseDown = 0;
-		return;
-	}
 	if (Game.ballsMoving)
 	{
+		return;
+	}
+	if (mbutton == 3 || mbutton == 4)
+	{
+		billiardgl::handleMouseWheel(Game, mbutton == 3 ? 1 : -1, 10.0f, 20.0f, 200.0f);
 		return;
 	}
 	Game.camera.target[0] = Game.balls[0].position.x;
@@ -483,41 +492,21 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 	Game.camera.eye[0] = Game.camera.zoom*(cos(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[0];
 	Game.camera.eye[1] = Game.camera.zoom*(cos(Game.camera.angleY)) + Game.camera.target[1];
 	Game.camera.eye[2] = Game.camera.zoom*(sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
-	Game.input.mouseX = x; Game.input.mouseY = y;
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP && Game.input.trackpadOrbit)
-	{
-		Game.input.trackpadOrbit = false;
-		Game.input.rightMouseDown = 0;
-		Game.players.aimingAtCueBall = 0;
-		Game.input.hitRequested = 0;
+	billiardgl::MouseButton button = billiardgl::MouseButton::Other;
+	if (mbutton == GLUT_LEFT_BUTTON)
+		button = billiardgl::MouseButton::Left;
+	else if (mbutton == GLUT_RIGHT_BUTTON)
+		button = billiardgl::MouseButton::Right;
+
+	const billiardgl::ButtonState buttonState = mstate == GLUT_DOWN ? billiardgl::ButtonState::Down : billiardgl::ButtonState::Up;
+	billiardgl::handleMouseButton(Game, button, buttonState, x, y);
+}
+static void platformScroll(int direction)
+{
+	if (Game.ballsMoving)
 		return;
-	}
-	const bool shift_drag = (glutGetModifiers() & GLUT_ACTIVE_SHIFT) != 0;
-	if ((mbutton == GLUT_RIGHT_BUTTON || (mbutton == GLUT_LEFT_BUTTON && shift_drag)) && mstate == GLUT_DOWN)
-	{
-		Game.camera.previousAngleX = Game.camera.angleX; Game.camera.previousAngleY = Game.camera.angleY; Game.input.leftMouseDown = 0; Game.input.rightMouseDown = 1;
-		Game.input.trackpadOrbit = mbutton == GLUT_LEFT_BUTTON;
-		Game.players.aimingAtCueBall = 1;
-	}
-	else { Game.input.rightMouseDown = 0; Game.input.trackpadOrbit = false; Game.input.waitingForHit = 0; }
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_DOWN && !shift_drag)
-	{
-		Game.input.waitingForHit = 1;
-		Game.players.nextPlayer = 1 - Game.players.currentPlayer;
-		Game.players.shotTaken = false;
-		Game.players.aimingAtCueBall = 1;
-	}
-	if (mbutton == GLUT_LEFT_BUTTON && mstate == GLUT_UP)
-	{
-		Game.input.hitRequested = 1;
-		Game.players.illegalShot = 0;
-		Game.players.aimingAtCueBall = 0;
-		Game.ballsMoving = true;
-		Game.transitionPerspective = true;
-		Game.players.updatedAfterShot = false;
-		Game.players.shotTaken = true;
-	}
-	else Game.input.hitRequested = 0;
+
+	billiardgl::handleMouseWheel(Game, direction, 10.0f, 20.0f, 200.0f);
 }
 static void mouseMove(int x, int y)
 {

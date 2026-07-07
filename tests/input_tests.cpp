@@ -37,7 +37,26 @@ void testSpecialKeysOrbitCamera()
     assert(state.camera.angleY > startY);
 }
 
-void testRightDragOrbitsCamera()
+void testObserveModeLeftDragOrbitsCamera()
+{
+    billiardgl::GameState state;
+    const float startX = state.camera.angleX;
+    const float startY = state.camera.angleY;
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 100, 100);
+    billiardgl::handleMouseMove(state, 120, 130);
+
+    assert(closeEnough(state.camera.angleX, startX + 0.2f));
+    assert(closeEnough(state.camera.angleY, startY + 0.3f));
+    assert(!state.input.waitingForHit);
+    assert(!state.input.hitRequested);
+    assert(state.input.leftMouseDown);
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Up, 120, 130);
+    assert(!state.input.leftMouseDown);
+}
+
+void testObserveModeRightDragDoesNotOrbitCamera()
 {
     billiardgl::GameState state;
     const float startX = state.camera.angleX;
@@ -46,45 +65,43 @@ void testRightDragOrbitsCamera()
     billiardgl::handleMouseButton(state, billiardgl::MouseButton::Right, billiardgl::ButtonState::Down, 100, 100);
     billiardgl::handleMouseMove(state, 120, 130);
 
-    assert(closeEnough(state.camera.angleX, startX + 0.2f));
-    assert(closeEnough(state.camera.angleY, startY + 0.3f));
-    assert(state.input.rightMouseDown);
-}
-
-void testTrackpadOrbitUsesLeftDragWithoutChargingShot()
-{
-    billiardgl::GameState state;
-    const float startX = state.camera.angleX;
-    const float startY = state.camera.angleY;
-
-    billiardgl::beginTrackpadOrbit(state, 10, 10);
-    billiardgl::handleMouseMove(state, 20, 20);
-
-    assert(state.input.trackpadOrbit);
+    assert(closeEnough(state.camera.angleX, startX));
+    assert(closeEnough(state.camera.angleY, startY));
     assert(!state.input.waitingForHit);
     assert(!state.input.hitRequested);
-    assert(closeEnough(state.camera.angleX, startX + 0.1f));
-    assert(closeEnough(state.camera.angleY, startY + 0.1f));
-
-    billiardgl::endTrackpadOrbit(state);
-
-    assert(!state.input.trackpadOrbit);
-    assert(!state.input.leftMouseDown);
 }
 
-void testLeftMouseChargesAndReleaseRequestsHit()
+void testObserveModeMouseWheelZoomsCamera()
 {
     billiardgl::GameState state;
+    const float startZoom = state.camera.zoom;
+
+    billiardgl::handleMouseWheel(state, 1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.camera.zoom, startZoom - 10.0f));
+
+    state.camera.zoom = 12.0f;
+    billiardgl::handleMouseWheel(state, 1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.camera.zoom, 10.0f));
+
+    state.camera.zoom = 496.0f;
+    billiardgl::handleMouseWheel(state, -1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.camera.zoom, 500.0f));
+}
+
+void testAimModeLeftClickRequestsHitWithoutCameraOrbit()
+{
+    billiardgl::GameState state;
+    billiardgl::handleAimToggleKey(state);
+    const float startCameraX = state.camera.angleX;
 
     billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 50, 50);
-    assert(state.input.leftMouseDown);
-    assert(state.input.waitingForHit);
-    assert(!state.input.hitRequested);
+    billiardgl::handleMouseMove(state, 70, 50);
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Up, 70, 50);
 
-    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Up, 50, 50);
     assert(!state.input.leftMouseDown);
     assert(!state.input.waitingForHit);
     assert(state.input.hitRequested);
+    assert(closeEnough(state.camera.angleX, startCameraX));
 }
 
 void testHelpBlocksMouseShotInput()
@@ -117,6 +134,24 @@ void testShotPowerChargesThroughInputState()
     assert(closeEnough(state.input.shotPower, 0.0f));
 }
 
+void testAimModeMouseWheelAdjustsShotPower()
+{
+    billiardgl::GameState state;
+    billiardgl::handleAimToggleKey(state);
+    const float startPower = state.input.shotPower;
+
+    billiardgl::handleMouseWheel(state, 1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.input.shotPower, startPower + 5.0f));
+
+    state.input.shotPower = 198.0f;
+    billiardgl::handleMouseWheel(state, 1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.input.shotPower, 200.0f));
+
+    state.input.shotPower = 2.0f;
+    billiardgl::handleMouseWheel(state, -1, 10.0f, 5.0f, 200.0f);
+    assert(closeEnough(state.input.shotPower, 0.0f));
+}
+
 void testAimToggleSwitchesModes()
 {
     billiardgl::GameState state;
@@ -138,7 +173,7 @@ void testCameraOrbitDoesNotChangeAimInObserveMode()
     const float startAim = state.aim.yaw;
     const float startCameraX = state.camera.angleX;
 
-    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Right, billiardgl::ButtonState::Down, 100, 100);
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 100, 100);
     billiardgl::handleMouseMove(state, 120, 100);
 
     assert(closeEnough(state.aim.yaw, startAim));
@@ -153,7 +188,7 @@ void testAimModePointerMovementChangesAimNotCamera()
     const float startCameraX = state.camera.angleX;
     const float startCameraY = state.camera.angleY;
 
-    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Right, billiardgl::ButtonState::Down, 100, 100);
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 100, 100);
     billiardgl::handleMouseMove(state, 125, 140);
 
     assert(closeEnough(state.aim.yaw, startAim + 0.25f));
@@ -167,11 +202,13 @@ int main()
 {
     testHelpKeyTogglesAndClearsShotState();
     testSpecialKeysOrbitCamera();
-    testRightDragOrbitsCamera();
-    testTrackpadOrbitUsesLeftDragWithoutChargingShot();
-    testLeftMouseChargesAndReleaseRequestsHit();
+    testObserveModeLeftDragOrbitsCamera();
+    testObserveModeRightDragDoesNotOrbitCamera();
+    testObserveModeMouseWheelZoomsCamera();
+    testAimModeLeftClickRequestsHitWithoutCameraOrbit();
     testHelpBlocksMouseShotInput();
     testShotPowerChargesThroughInputState();
+    testAimModeMouseWheelAdjustsShotPower();
     testAimToggleSwitchesModes();
     testCameraOrbitDoesNotChangeAimInObserveMode();
     testAimModePointerMovementChangesAimNotCamera();

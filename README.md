@@ -55,11 +55,12 @@
   * 'a': camera shift left
   * 'd': camera shift right
   * arrow keys: orbit view
-  * mouse_right_button: orbit view
-  * shift + mouse_left_button drag: orbit view on trackpads
+  * mouse_left_button drag in observe mode: orbit view
+  * mouse wheel in observe mode: zoom in / out
   * tab: toggle aim mode
-  * horizontal pointer movement in aim mode: adjust shot line
-  * mouse_left_button: hit balls
+  * horizontal pointer movement in aim mode: adjust shot direction
+  * mouse wheel or +/- in aim mode: adjust shot power
+  * mouse_left_button click in aim mode: hit cue ball
   * 'h': toggle help
 
 ### 自动化视觉验证
