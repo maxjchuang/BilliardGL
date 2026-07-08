@@ -88,6 +88,59 @@ void testObserveModeMouseWheelZoomsCamera()
     assert(closeEnough(state.camera.zoom, 500.0f));
 }
 
+void testCameraAnchorToggleAndReturnToCueBall()
+{
+    billiardgl::GameState state;
+    state.balls[0].position = billiardgl::Point3{12.0f, 92.715f, -34.0f};
+    state.camera.target[0] = 40.0f;
+    state.camera.target[1] = 120.0f;
+    state.camera.target[2] = 50.0f;
+
+    assert(state.camera.anchorMode == billiardgl::CameraAnchorMode::FollowCueBall);
+
+    billiardgl::handleCameraAnchorToggleKey(state);
+    assert(state.camera.anchorMode == billiardgl::CameraAnchorMode::FreeLook);
+    assert(closeEnough(state.camera.target[0], 40.0f));
+    assert(closeEnough(state.camera.target[2], 50.0f));
+
+    billiardgl::handleCameraReturnToCueBallKey(state);
+    assert(state.camera.anchorMode == billiardgl::CameraAnchorMode::FollowCueBall);
+    assert(closeEnough(state.camera.target[0], 12.0f));
+    assert(closeEnough(state.camera.target[1], 92.715f));
+    assert(closeEnough(state.camera.target[2], -34.0f));
+}
+
+void testFreeLookPanMovesCameraTarget()
+{
+    billiardgl::GameState state;
+    state.camera.target[0] = 10.0f;
+    state.camera.target[1] = 92.715f;
+    state.camera.target[2] = -20.0f;
+    state.camera.angleX = 0.0f;
+
+    billiardgl::beginCameraPan(state, 100, 100);
+    billiardgl::handleMouseMove(state, 100, 130);
+
+    assert(state.camera.anchorMode == billiardgl::CameraAnchorMode::FreeLook);
+    assert(closeEnough(state.camera.target[0], 7.0f));
+    assert(closeEnough(state.camera.target[2], -20.0f));
+    assert(!state.input.leftMouseDown);
+    assert(!state.input.waitingForHit);
+
+    billiardgl::endCameraPan(state);
+    assert(!state.input.cameraPan);
+
+    state.camera.target[0] = 10.0f;
+    state.camera.target[2] = -20.0f;
+    billiardgl::beginCameraPan(state, 100, 100);
+    billiardgl::handleMouseMove(state, 130, 100);
+
+    assert(closeEnough(state.camera.target[0], 10.0f));
+    assert(closeEnough(state.camera.target[2], -17.0f));
+
+    billiardgl::endCameraPan(state);
+}
+
 void testAimModeLeftClickRequestsHitWithoutCameraOrbit()
 {
     billiardgl::GameState state;
@@ -226,6 +279,8 @@ int main()
     testObserveModeLeftDragOrbitsCamera();
     testObserveModeRightDragDoesNotOrbitCamera();
     testObserveModeMouseWheelZoomsCamera();
+    testCameraAnchorToggleAndReturnToCueBall();
+    testFreeLookPanMovesCameraTarget();
     testAimModeLeftClickRequestsHitWithoutCameraOrbit();
     testHelpBlocksMouseShotInput();
     testShotPowerChargesThroughInputState();

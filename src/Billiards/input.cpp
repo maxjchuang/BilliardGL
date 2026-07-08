@@ -46,8 +46,24 @@ void handleAimToggleKey(GameState& state)
     state.input.leftMouseDown = false;
     state.input.rightMouseDown = false;
     state.input.trackpadOrbit = false;
+    state.input.cameraPan = false;
     state.input.waitingForHit = false;
     state.input.hitRequested = false;
+}
+
+void handleCameraAnchorToggleKey(GameState& state)
+{
+    state.camera.anchorMode = state.camera.anchorMode == CameraAnchorMode::FollowCueBall
+        ? CameraAnchorMode::FreeLook
+        : CameraAnchorMode::FollowCueBall;
+}
+
+void handleCameraReturnToCueBallKey(GameState& state)
+{
+    state.camera.anchorMode = CameraAnchorMode::FollowCueBall;
+    state.camera.target[0] = state.balls[0].position.x;
+    state.camera.target[1] = state.balls[0].position.y;
+    state.camera.target[2] = state.balls[0].position.z;
 }
 
 void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, int keyDown, int key)
@@ -74,6 +90,7 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
         state.input.leftMouseDown = false;
         state.input.rightMouseDown = false;
         state.input.trackpadOrbit = false;
+        state.input.cameraPan = false;
         state.input.waitingForHit = false;
         state.input.hitRequested = false;
         return;
@@ -117,6 +134,28 @@ void handleMouseWheel(GameState& state, int direction, float zoomStep, float pow
     }
 }
 
+void beginCameraPan(GameState& state, int x, int y)
+{
+    state.input.mouseX = x;
+    state.input.mouseY = y;
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = false;
+    state.input.cameraPan = true;
+    state.input.waitingForHit = false;
+    state.input.hitRequested = false;
+    state.camera.anchorMode = CameraAnchorMode::FreeLook;
+}
+
+void endCameraPan(GameState& state)
+{
+    state.input.cameraPan = false;
+    state.input.leftMouseDown = false;
+    state.input.rightMouseDown = false;
+    state.input.trackpadOrbit = false;
+    state.input.waitingForHit = false;
+}
+
 void beginTrackpadOrbit(GameState& state, int x, int y)
 {
     state.input.mouseX = x;
@@ -124,6 +163,7 @@ void beginTrackpadOrbit(GameState& state, int x, int y)
     state.input.leftMouseDown = false;
     state.input.rightMouseDown = false;
     state.input.trackpadOrbit = true;
+    state.input.cameraPan = false;
     state.input.waitingForHit = false;
     state.input.hitRequested = false;
 }
@@ -133,6 +173,7 @@ void endTrackpadOrbit(GameState& state)
     state.input.leftMouseDown = false;
     state.input.rightMouseDown = false;
     state.input.trackpadOrbit = false;
+    state.input.cameraPan = false;
     state.input.waitingForHit = false;
 }
 
@@ -161,6 +202,17 @@ void handleMouseMove(GameState& state, int x, int y)
 
     if (state.aim.mode == AimMode::Aim) {
         state.aim.yaw += static_cast<float>(dx) * state.aim.sensitivity;
+        return;
+    }
+
+    if (state.input.cameraPan) {
+        const float panScale = 0.1f;
+        const float forwardX = -std::cos(state.camera.angleX);
+        const float forwardZ = -std::sin(state.camera.angleX);
+        const float rightX = forwardZ;
+        const float rightZ = -forwardX;
+        state.camera.target[0] += (forwardX * static_cast<float>(dy) + rightX * static_cast<float>(dx)) * panScale;
+        state.camera.target[2] += (forwardZ * static_cast<float>(dy) + rightZ * static_cast<float>(dx)) * panScale;
         return;
     }
 

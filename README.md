@@ -57,6 +57,9 @@
   * arrow keys: orbit view
   * mouse_left_button drag in observe mode: orbit view
   * mouse wheel in observe mode: zoom in / out
+  * 'c': toggle camera follow/free mode
+  * space: return camera to cue ball
+  * shift + mouse_left_button drag: pan free camera target
   * tab: toggle aim mode
   * horizontal pointer movement in aim mode: adjust shot direction
   * mouse wheel or +/- in aim mode: adjust shot power

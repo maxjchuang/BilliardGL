@@ -41,12 +41,19 @@ const char* aimModeText(const GameState& state)
     return state.aim.mode == AimMode::Aim ? "Mode: Aim | Tab Observe" : "Mode: Observe | Tab Aim";
 }
 
+const char* cameraModeText(const GameState& state)
+{
+    return state.camera.anchorMode == CameraAnchorMode::FollowCueBall
+        ? "Camera: Follow | C Free"
+        : "Camera: Free | Space Cue";
+}
+
 }  // namespace
 
 void drawHelpPrompt(const GameState& state)
 {
     const char* prompt = state.hud.showHelp ? "Press H to close help" : "Press H for help";
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 120.0f, GLUT_BITMAP_HELVETICA_18, prompt);
+    drawStringAt(18.0f, static_cast<float>(state.config.height) - 146.0f, GLUT_BITMAP_HELVETICA_18, prompt);
 }
 
 void drawHelpOverlay(const GameState& state)
@@ -56,7 +63,7 @@ void drawHelpOverlay(const GameState& state)
     }
 
     const float panelWidth = 520.0f;
-    const float panelHeight = 430.0f;
+    const float panelHeight = 480.0f;
     const float left = (static_cast<float>(state.config.width) - panelWidth) * 0.5f;
     const float bottom = (static_cast<float>(state.config.height) - panelHeight) * 0.5f;
     const float top = bottom + panelHeight;
@@ -78,6 +85,12 @@ void drawHelpOverlay(const GameState& state)
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Left mouse drag       Orbit view");
     y -= 24.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Mouse wheel           Zoom in / out");
+    y -= 24.0f;
+    drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "C                     Toggle camera mode");
+    y -= 24.0f;
+    drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Space                 Return to cue ball");
+    y -= 24.0f;
+    drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Shift + left drag     Pan free camera");
     y -= 24.0f;
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Tab                   Toggle aim mode");
     y -= 24.0f;
@@ -116,6 +129,7 @@ void drawHud(const GameState& state)
     const std::string playerText = "Current Player: Player " + std::to_string(state.players.currentPlayer + 1);
     drawStringAt(18.0f, static_cast<float>(state.config.height) - 68.0f, GLUT_BITMAP_TIMES_ROMAN_24, playerText.c_str());
     drawStringAt(18.0f, static_cast<float>(state.config.height) - 94.0f, GLUT_BITMAP_HELVETICA_18, aimModeText(state));
+    drawStringAt(18.0f, static_cast<float>(state.config.height) - 120.0f, GLUT_BITMAP_HELVETICA_18, cameraModeText(state));
     drawHelpPrompt(state);
     drawHelpOverlay(state);
 

@@ -49,6 +49,9 @@ int main()
     assertContains(billiards, "if (mbutton == 3 || mbutton == 4)");
     assertContains(billiards, "case '+':");
     assertContains(billiards, "case '-':");
+    assertContains(billiards, "billiardgl::handleCameraAnchorToggleKey(Game)");
+    assertContains(billiards, "billiardgl::handleCameraReturnToCueBallKey(Game)");
+    assertContains(billiards, "billiardgl::beginCameraPan(Game, x, y)");
     assertContains(billiards, "billiardgl::installPlatformScrollHandler");
     assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");
     assertContains(cmake, "platform_scroll.cpp");

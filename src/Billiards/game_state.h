@@ -36,6 +36,11 @@ struct BallState {
     unsigned int texture = 0;
 };
 
+enum class CameraAnchorMode {
+    FollowCueBall,
+    FreeLook
+};
+
 struct CameraState {
     float target[3] = {0.0f, kTableHeight + kBallRadius, -kTableInLength / 4.0f};
     float eye[3] = {0.0f, 200.0f, -kTableInLength / 4.0f};
@@ -51,6 +56,7 @@ struct CameraState {
     float panZ = 0.0f;
     float recordedZoom = 0.0f;
     float recordedTarget[3] = {0.0f, 0.0f, 0.0f};
+    CameraAnchorMode anchorMode = CameraAnchorMode::FollowCueBall;
 };
 
 enum class AimMode {
@@ -82,6 +88,7 @@ struct InputState {
     bool leftMouseDown = false;
     bool rightMouseDown = false;
     bool trackpadOrbit = false;
+    bool cameraPan = false;
     bool waitingForHit = false;
     bool hitRequested = false;
     float shotPower = 60.0f;

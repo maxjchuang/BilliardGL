@@ -291,9 +291,12 @@ void myDisplay(void)
 // »­·¿¼ä
 void myIdle(void)
 {
-	Game.camera.target[0] = Game.balls[0].position.x;
-	Game.camera.target[1] = Game.balls[0].position.y;
-	Game.camera.target[2] = Game.balls[0].position.z;
+	if (Game.camera.anchorMode == billiardgl::CameraAnchorMode::FollowCueBall)
+	{
+		Game.camera.target[0] = Game.balls[0].position.x;
+		Game.camera.target[1] = Game.balls[0].position.y;
+		Game.camera.target[2] = Game.balls[0].position.z;
+	}
 	Game.camera.eye[0] = Game.camera.zoom * (cos(Game.camera.angleX)) + Game.camera.target[0];
 	Game.camera.eye[1] = Game.camera.zoom * (cos(Game.camera.angleY)) + Game.camera.target[1];
 	Game.camera.eye[2] = Game.camera.zoom * (sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
@@ -403,6 +406,13 @@ static void myKeyboard(unsigned char key, int x, int y)
 	case 'A':
 		if (Game.camera.panX<490) Game.camera.panX += 10;
 		break;
+	case 'c':
+	case 'C':
+		billiardgl::handleCameraAnchorToggleKey(Game);
+		break;
+	case ' ':
+		billiardgl::handleCameraReturnToCueBallKey(Game);
+		break;
 	case 'w':
 	case 'W':
 		Game.camera.zoom -= 10;
@@ -486,12 +496,29 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 		billiardgl::handleMouseWheel(Game, mbutton == 3 ? 1 : -1, 10.0f, 20.0f, 200.0f);
 		return;
 	}
-	Game.camera.target[0] = Game.balls[0].position.x;
-	Game.camera.target[1] = Game.balls[0].position.y;
-	Game.camera.target[2] = Game.balls[0].position.z;
+	if (Game.camera.anchorMode == billiardgl::CameraAnchorMode::FollowCueBall)
+	{
+		Game.camera.target[0] = Game.balls[0].position.x;
+		Game.camera.target[1] = Game.balls[0].position.y;
+		Game.camera.target[2] = Game.balls[0].position.z;
+	}
 	Game.camera.eye[0] = Game.camera.zoom*(cos(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[0];
 	Game.camera.eye[1] = Game.camera.zoom*(cos(Game.camera.angleY)) + Game.camera.target[1];
 	Game.camera.eye[2] = Game.camera.zoom*(sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
+	if (mbutton == GLUT_LEFT_BUTTON && Game.input.cameraPan && mstate == GLUT_UP)
+	{
+		billiardgl::endCameraPan(Game);
+		return;
+	}
+	const bool shiftDrag = (glutGetModifiers() & GLUT_ACTIVE_SHIFT) != 0;
+	if (mbutton == GLUT_LEFT_BUTTON && shiftDrag)
+	{
+		if (mstate == GLUT_DOWN)
+			billiardgl::beginCameraPan(Game, x, y);
+		else
+			billiardgl::endCameraPan(Game);
+		return;
+	}
 	billiardgl::MouseButton button = billiardgl::MouseButton::Other;
 	if (mbutton == GLUT_LEFT_BUTTON)
 		button = billiardgl::MouseButton::Left;
