@@ -311,7 +311,9 @@ void myIdle(void)
 		Game.players.shotTaken = true;
 		Game.players.updatedAfterShot = false;
 		Game.ballsMoving = true;
-		Game.transitionPerspective = true;
+		Game.camera.anchorMode = billiardgl::CameraAnchorMode::FreeLook;
+		Game.transitionPerspective = false;
+		Game.perspectiveRecorded = false;
 		Game.aim.mode = billiardgl::AimMode::Observe;
 		Game.players.aimingAtCueBall = false;
 		Game.input.hitRequested = 0;

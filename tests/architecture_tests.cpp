@@ -52,6 +52,8 @@ int main()
     assertContains(billiards, "billiardgl::handleCameraAnchorToggleKey(Game)");
     assertContains(billiards, "billiardgl::handleCameraReturnToCueBallKey(Game)");
     assertContains(billiards, "billiardgl::beginCameraPan(Game, x, y)");
+    assertContains(billiards, "Game.camera.anchorMode = billiardgl::CameraAnchorMode::FreeLook;");
+    assertContains(billiards, "Game.transitionPerspective = false;");
     assertContains(billiards, "billiardgl::installPlatformScrollHandler");
     assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");
     assertContains(cmake, "platform_scroll.cpp");
