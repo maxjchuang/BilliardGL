@@ -17,10 +17,14 @@ enum class ButtonState {
 
 void handleHelpKey(GameState& state);
 void handleAimToggleKey(GameState& state);
+void handleCameraAnchorToggleKey(GameState& state);
+void handleCameraReturnToCueBallKey(GameState& state);
 void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, int keyDown, int key);
 void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonState, int x, int y);
 void handleMouseWheel(GameState& state, int direction, float zoomStep, float powerStep, float maxPower);
 void handleMouseMove(GameState& state, int x, int y);
+void beginCameraPan(GameState& state, int x, int y);
+void endCameraPan(GameState& state);
 void beginTrackpadOrbit(GameState& state, int x, int y);
 void endTrackpadOrbit(GameState& state);
 void chargeShotPower(GameState& state, float maxPower, float increment);
