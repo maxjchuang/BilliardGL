@@ -9,6 +9,7 @@ constexpr float kChineseBallRadiusCm = kChineseBallDiameterCm / 2.0f;
 constexpr float kChinesePlayfieldLengthCm = 254.0f;
 constexpr float kChinesePlayfieldWidthCm = 127.0f;
 constexpr float kChineseTableHeightCm = 85.0f;
+constexpr float kTableModelPlaySurfaceHeightCm = 86.483976f;
 constexpr float kChineseCornerPocketMouthWidthCm = 13.2f;
 constexpr float kChineseSidePocketMouthWidthCm = 8.6f;
 constexpr float kChinesePocketDropZoneDepthCm = 6.0f;

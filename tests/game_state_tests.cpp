@@ -37,6 +37,9 @@ int main()
     if (!nearlyEqual(state.balls[0].position.y, billiardgl::kTableHeight + billiardgl::kBallRadius)) {
         return fail("cue ball should sit on the corrected table surface");
     }
+    if (!nearlyEqual(state.balls[0].position.y - billiardgl::kBallRadius, 86.483976f)) {
+        return fail("cue ball bottom should align with the visual table surface");
+    }
     const float secondRowDistance = std::sqrt(
         (state.balls[2].position.x - state.balls[3].position.x) *
             (state.balls[2].position.x - state.balls[3].position.x) +
