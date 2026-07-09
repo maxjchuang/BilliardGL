@@ -60,16 +60,28 @@ int main()
         return fail("ball collision should transfer velocity");
     }
 
-    state.balls[3].position.x = -billiardgl::kTableInWidth / 2.0f + billiardgl::kPocketRadius;
-    state.balls[3].position.z = -billiardgl::kTableInLength / 2.0f + billiardgl::kPocketRadius;
+    state.balls[3].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
+    state.balls[3].position.z = -billiardgl::kTableInLength / 2.0f + 2.0f;
     if (!billiardgl::isInPocket(state.balls[3])) {
-        return fail("ball at pocket center should be detected as pocketed");
+        return fail("ball crossing a corner pocket mouth should be detected as pocketed");
+    }
+
+    state.balls[4].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
+    state.balls[4].position.z = 0.0f;
+    if (!billiardgl::isInPocket(state.balls[4])) {
+        return fail("ball crossing a side pocket mouth should be detected as pocketed");
+    }
+
+    state.balls[5].position.x = billiardgl::kTableInWidth / 2.0f + 1.0f;
+    state.balls[5].position.z = 25.0f;
+    if (billiardgl::isInPocket(state.balls[5])) {
+        return fail("ball outside a pocket mouth should not be pocketed");
     }
 
     billiardgl::GameState pocketState;
     billiardgl::initializeBalls(pocketState);
-    pocketState.balls[0].position.x = -billiardgl::kTableInWidth / 2.0f + billiardgl::kPocketRadius;
-    pocketState.balls[0].position.z = -billiardgl::kTableInLength / 2.0f + billiardgl::kPocketRadius;
+    pocketState.balls[0].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
+    pocketState.balls[0].position.z = -billiardgl::kTableInLength / 2.0f + 2.0f;
     if (!billiardgl::updatePocketedBall(pocketState, 0)) {
         return fail("cue ball at pocket center should be updated as pocketed");
     }
@@ -79,13 +91,35 @@ int main()
 
     billiardgl::GameState eightState;
     billiardgl::initializeBalls(eightState);
-    eightState.balls[8].position.x = -billiardgl::kTableInWidth / 2.0f + billiardgl::kPocketRadius;
-    eightState.balls[8].position.z = -billiardgl::kTableInLength / 2.0f + billiardgl::kPocketRadius;
+    eightState.balls[8].position.x = billiardgl::kTableInWidth / 2.0f + 1.0f;
+    eightState.balls[8].position.z = 0.0f;
     if (!billiardgl::updatePocketedBall(eightState, 8)) {
         return fail("eight ball at pocket center should be updated as pocketed");
     }
     if (!eightState.gameOver || !eightState.events.eightBallPocketed) {
         return fail("eight ball pocket should mark game over and eight ball event");
+    }
+
+    billiardgl::BallState sideMouthBall;
+    sideMouthBall.position = billiardgl::Point3{
+        -billiardgl::kTableInWidth / 2.0f - 0.5f,
+        billiardgl::kTableHeight + billiardgl::kBallRadius,
+        0.0f};
+    sideMouthBall.velocity.x = -5.0f;
+    billiardgl::collideWithTableEdge(sideMouthBall);
+    if (!(sideMouthBall.velocity.x < 0.0f)) {
+        return fail("ball inside a pocket mouth should not bounce off the ordinary rail");
+    }
+
+    billiardgl::BallState ordinaryRailBall;
+    ordinaryRailBall.position = billiardgl::Point3{
+        billiardgl::kTableInWidth / 2.0f + 0.5f,
+        billiardgl::kTableHeight + billiardgl::kBallRadius,
+        25.0f};
+    ordinaryRailBall.velocity.x = 5.0f;
+    billiardgl::collideWithTableEdge(ordinaryRailBall);
+    if (!(ordinaryRailBall.velocity.x < 0.0f)) {
+        return fail("ball outside a pocket mouth should bounce off the ordinary rail");
     }
 
     state.balls[4].speed = 1.0f;
