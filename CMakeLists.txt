@@ -31,6 +31,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/rules.cpp
     src/Billiards/input.cpp
     src/Billiards/shot.cpp
+    src/Billiards/table_specs.cpp
     src/Billiards/vec.cpp
 )
 
@@ -95,6 +96,11 @@ add_executable(BilliardsShotTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 
+add_executable(BilliardsTableSpecsTests
+    tests/table_specs_tests.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+
 add_executable(BilliardsRenderResourcesTests
     tests/render_resources_tests.cpp
     src/Billiards/render_resources.cpp
@@ -142,6 +148,10 @@ target_include_directories(BilliardsShotTests PRIVATE
     src/Billiards
 )
 
+target_include_directories(BilliardsTableSpecsTests PRIVATE
+    src/Billiards
+)
+
 target_include_directories(BilliardsRenderResourcesTests PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -165,6 +175,7 @@ foreach(test_target
     BilliardsAssetsTests
     BilliardsInputTests
     BilliardsShotTests
+    BilliardsTableSpecsTests
     BilliardsRenderResourcesTests
     BilliardsArchitectureTests
 )
@@ -181,6 +192,7 @@ add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
 add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
 add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
 add_test(NAME BilliardsShotTests COMMAND BilliardsShotTests)
+add_test(NAME BilliardsTableSpecsTests COMMAND BilliardsTableSpecsTests)
 add_test(NAME BilliardsRenderResourcesTests COMMAND BilliardsRenderResourcesTests)
 add_test(NAME BilliardsArchitectureTests COMMAND BilliardsArchitectureTests)
 
