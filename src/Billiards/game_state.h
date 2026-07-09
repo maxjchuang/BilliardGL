@@ -1,5 +1,7 @@
 #pragma once
 
+#include "table_specs.h"
+
 #include <array>
 #include <string>
 
@@ -8,11 +10,11 @@ namespace billiardgl {
 constexpr int kBallCount = 16;
 constexpr float kWindowWidth = 1024.0f;
 constexpr float kWindowHeight = 768.0f;
-constexpr float kTableInWidth = 124.5f;
-constexpr float kTableInLength = 252.0f;
-constexpr float kTableHeight = 87.0f;
-constexpr float kPocketRadius = 8.5f;
-constexpr float kBallRadius = 5.715f;
+constexpr float kTableInWidth = kChinesePlayfieldWidthCm;
+constexpr float kTableInLength = kChinesePlayfieldLengthCm;
+constexpr float kTableHeight = kChineseTableHeightCm;
+constexpr float kPocketRadius = kChineseCornerPocketMouthWidthCm / 2.0f;
+constexpr float kBallRadius = kChineseBallRadiusCm;
 constexpr float kPi = 3.1415926f;
 constexpr float kDefaultTimeStep = 0.1f;
 constexpr float kDefaultFrictionAcceleration = -4.0f;

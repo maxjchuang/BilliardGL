@@ -42,6 +42,10 @@ int main()
     assertNotContains(billiards, "Game.camera.target[0] - Game.camera.eye[0]");
     assertNotContains(billiards, "Game.camera.target[2] - Game.camera.eye[2]");
     assertNotContains(billiards, "pow(Game.camera.target[0] - Game.camera.eye[0]");
+    assertNotContains(billiards, "#define TABLE_IN_WIDTH 124.5");
+    assertNotContains(billiards, "#define TABLE_IN_LENGTH 252");
+    assertNotContains(billiards, "#define TABLE_HEIGHT 87");
+    assertNotContains(billiards, "#define BALL_RADIUS 5.715");
     assertContains(billiards, "glutMotionFunc(mouseMove)");
     assertContains(billiards, "glutPassiveMotionFunc(mouseMove)");
     assertContains(billiards, "billiardgl::handleMouseMove(Game, x, y)");

@@ -6,26 +6,27 @@ namespace billiardgl {
 
 void initializeBalls(GameState& state)
 {
-    const Point3 start{0.0f, kTableHeight + kBallRadius, 0.0f};
-    const float xDis = 2.0f * kBallRadius;
-    const float yDis = 2.0f * kBallRadius * std::sin(kPi / 3.0f);
+    const Point3 cueBallStart{0.0f, kTableHeight + kBallRadius, -kTableInLength / 4.0f};
+    const Point3 rackApex{0.0f, kTableHeight + kBallRadius, kTableInLength / 4.0f};
+    const float xDis = kBallRadius;
+    const float yDis = std::sqrt(3.0f) * kBallRadius;
 
-    state.balls[0].position = Point3{start.x, start.y, -start.z};
-    state.balls[1].position = Point3{start.x, start.y, start.z};
-    state.balls[2].position = Point3{start.x - xDis, start.y, start.z + yDis};
-    state.balls[3].position = Point3{start.x + xDis, start.y, start.z + yDis};
-    state.balls[4].position = Point3{start.x - 2.0f * xDis, start.y, start.z + 2.0f * yDis};
-    state.balls[8].position = Point3{start.x, start.y, start.z + 2.0f * yDis};
-    state.balls[6].position = Point3{start.x + 2.0f * xDis, start.y, start.z + 2.0f * yDis};
-    state.balls[7].position = Point3{start.x - 3.0f * xDis, start.y, start.z + 3.0f * yDis};
-    state.balls[5].position = Point3{start.x - xDis, start.y, start.z + 3.0f * yDis};
-    state.balls[9].position = Point3{start.x + xDis, start.y, start.z + 3.0f * yDis};
-    state.balls[10].position = Point3{start.x + 3.0f * xDis, start.y, start.z + 3.0f * yDis};
-    state.balls[11].position = Point3{start.x - 4.0f * xDis, start.y, start.z + 4.0f * yDis};
-    state.balls[12].position = Point3{start.x - 2.0f * xDis, start.y, start.z + 4.0f * yDis};
-    state.balls[13].position = Point3{start.x, start.y, start.z + 4.0f * yDis};
-    state.balls[14].position = Point3{start.x + 2.0f * xDis, start.y, start.z + 4.0f * yDis};
-    state.balls[15].position = Point3{start.x + 4.0f * xDis, start.y, start.z + 4.0f * yDis};
+    state.balls[0].position = cueBallStart;
+    state.balls[1].position = Point3{rackApex.x, rackApex.y, rackApex.z};
+    state.balls[2].position = Point3{rackApex.x - xDis, rackApex.y, rackApex.z + yDis};
+    state.balls[3].position = Point3{rackApex.x + xDis, rackApex.y, rackApex.z + yDis};
+    state.balls[4].position = Point3{rackApex.x - 2.0f * xDis, rackApex.y, rackApex.z + 2.0f * yDis};
+    state.balls[8].position = Point3{rackApex.x, rackApex.y, rackApex.z + 2.0f * yDis};
+    state.balls[6].position = Point3{rackApex.x + 2.0f * xDis, rackApex.y, rackApex.z + 2.0f * yDis};
+    state.balls[7].position = Point3{rackApex.x - 3.0f * xDis, rackApex.y, rackApex.z + 3.0f * yDis};
+    state.balls[5].position = Point3{rackApex.x - xDis, rackApex.y, rackApex.z + 3.0f * yDis};
+    state.balls[9].position = Point3{rackApex.x + xDis, rackApex.y, rackApex.z + 3.0f * yDis};
+    state.balls[10].position = Point3{rackApex.x + 3.0f * xDis, rackApex.y, rackApex.z + 3.0f * yDis};
+    state.balls[11].position = Point3{rackApex.x - 4.0f * xDis, rackApex.y, rackApex.z + 4.0f * yDis};
+    state.balls[12].position = Point3{rackApex.x - 2.0f * xDis, rackApex.y, rackApex.z + 4.0f * yDis};
+    state.balls[13].position = Point3{rackApex.x, rackApex.y, rackApex.z + 4.0f * yDis};
+    state.balls[14].position = Point3{rackApex.x + 2.0f * xDis, rackApex.y, rackApex.z + 4.0f * yDis};
+    state.balls[15].position = Point3{rackApex.x + 4.0f * xDis, rackApex.y, rackApex.z + 4.0f * yDis};
 
     for (BallState& ball : state.balls) {
         ball.velocity = Point3{};
