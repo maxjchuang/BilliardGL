@@ -37,15 +37,15 @@
 #define WINDOW_HEIGHT 768
 #define TABLE_OUT_WIDTH 153
 #define TABLE_OUT_LENGTH 281
-#define TABLE_IN_WIDTH 124.5
-#define TABLE_IN_LENGTH 252
-#define TABLE_HEIGHT 87
-#define CUE_LENGTH 145
-#define POCKET_RADIUS 8.5
-#define ROOM_WIDTH 1000
-#define ROOM_LENGTH 1000
-#define ROOM_HEIGHT 400
-#define BALL_RADIUS 5.715
+#define TABLE_IN_WIDTH billiardgl::kTableInWidth
+#define TABLE_IN_LENGTH billiardgl::kTableInLength
+#define TABLE_HEIGHT billiardgl::kTableHeight
+#define CUE_LENGTH 145.0f
+#define POCKET_RADIUS billiardgl::kPocketRadius
+#define ROOM_WIDTH 1000.0f
+#define ROOM_LENGTH 1000.0f
+#define ROOM_HEIGHT 400.0f
+#define BALL_RADIUS billiardgl::kBallRadius
 
 #define BMP_Header_Length 54
 #define PI 3.1415926

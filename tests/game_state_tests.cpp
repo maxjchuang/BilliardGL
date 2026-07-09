@@ -1,6 +1,7 @@
 #include "game_state.h"
 
 #include <array>
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 
@@ -12,6 +13,11 @@ int fail(const char* message)
     return EXIT_FAILURE;
 }
 
+bool nearlyEqual(float a, float b, float epsilon = 0.001f)
+{
+    return std::fabs(a - b) < epsilon;
+}
+
 }  // namespace
 
 int main()
@@ -21,6 +27,32 @@ int main()
         return fail("aim guide line should be disabled by default");
     }
     billiardgl::initializeBalls(state);
+    if (!nearlyEqual(billiardgl::kBallRadius, 2.8575f)) {
+        return fail("ball radius should use real Chinese billiards radius");
+    }
+    if (!nearlyEqual(billiardgl::kTableInLength, 254.0f) ||
+        !nearlyEqual(billiardgl::kTableInWidth, 127.0f)) {
+        return fail("playfield should use real Chinese billiards dimensions");
+    }
+    if (!nearlyEqual(state.balls[0].position.y, billiardgl::kTableHeight + billiardgl::kBallRadius)) {
+        return fail("cue ball should sit on the corrected table surface");
+    }
+    const float secondRowDistance = std::sqrt(
+        (state.balls[2].position.x - state.balls[3].position.x) *
+            (state.balls[2].position.x - state.balls[3].position.x) +
+        (state.balls[2].position.z - state.balls[3].position.z) *
+            (state.balls[2].position.z - state.balls[3].position.z));
+    if (!nearlyEqual(secondRowDistance, 2.0f * billiardgl::kBallRadius)) {
+        return fail("rack balls in the same row should touch");
+    }
+    const float firstToSecondRowDistance = std::sqrt(
+        (state.balls[1].position.x - state.balls[2].position.x) *
+            (state.balls[1].position.x - state.balls[2].position.x) +
+        (state.balls[1].position.z - state.balls[2].position.z) *
+            (state.balls[1].position.z - state.balls[2].position.z));
+    if (!nearlyEqual(firstToSecondRowDistance, 2.0f * billiardgl::kBallRadius)) {
+        return fail("adjacent rack rows should touch without overlap");
+    }
     state.balls[0].position = billiardgl::Point3{1.0f, 2.0f, 3.0f};
     state.balls[0].velocity = billiardgl::Point3{4.0f, 0.0f, 5.0f};
     state.balls[0].rotationAxis = billiardgl::Point3{0.0f, 1.0f, 0.0f};
