@@ -1,10 +1,65 @@
 #include "physics.h"
 
 #include "rules.h"
+#include "table_specs.h"
 
+#include <array>
 #include <cmath>
 
 namespace billiardgl {
+namespace {
+
+std::array<PocketOpening, 6> currentPocketOpenings()
+{
+    return buildPocketOpenings(defaultTableSpec(), defaultPocketSpec());
+}
+
+bool sameSignOrZero(float value, float reference)
+{
+    if (reference < 0.0f) {
+        return value <= 0.0f;
+    }
+    if (reference > 0.0f) {
+        return value >= 0.0f;
+    }
+    return true;
+}
+
+bool isInsideOpeningBand(const BallState& ball, const PocketOpening& opening)
+{
+    const float halfMouth = opening.mouthWidthCm / 2.0f + kBallRadius;
+    if (opening.kind == PocketKind::Side) {
+        return std::fabs(ball.position.z - opening.centerZ) <= halfMouth &&
+            sameSignOrZero(ball.position.x, opening.centerX);
+    }
+
+    return std::fabs(ball.position.x - opening.centerX) <= halfMouth &&
+        std::fabs(ball.position.z - opening.centerZ) <= halfMouth;
+}
+
+bool hasCrossedPocketDropZone(const BallState& ball, const PocketOpening& opening)
+{
+    const float halfWidth = kTableInWidth / 2.0f;
+    const float halfLength = kTableInLength / 2.0f;
+    const float depth = opening.dropZoneDepthCm;
+
+    if (opening.kind == PocketKind::Side) {
+        if (opening.centerX < 0.0f) {
+            return ball.position.x <= -halfWidth + depth;
+        }
+        return ball.position.x >= halfWidth - depth;
+    }
+
+    const bool crossedX = opening.centerX < 0.0f
+        ? ball.position.x <= -halfWidth + depth
+        : ball.position.x >= halfWidth - depth;
+    const bool crossedZ = opening.centerZ < 0.0f
+        ? ball.position.z <= -halfLength + depth
+        : ball.position.z >= halfLength - depth;
+    return crossedX || crossedZ;
+}
+
+}  // namespace
 
 void applyFrictionAndMove(BallState& ball, float timeStep, float frictionAcceleration)
 {
@@ -66,6 +121,10 @@ bool collideBalls(BallState& first, BallState& second)
 
 void collideWithTableEdge(BallState& ball)
 {
+    if (isInPocketMouth(ball)) {
+        return;
+    }
+
     if (std::fabs(ball.position.x) > kTableInWidth / 2.0f - kBallRadius) {
         ball.position.x = ball.position.x > 0.0f
             ? kTableInWidth / 2.0f - kBallRadius
@@ -81,29 +140,22 @@ void collideWithTableEdge(BallState& ball)
     }
 }
 
+bool isInPocketMouth(const BallState& ball)
+{
+    const std::array<PocketOpening, 6> openings = currentPocketOpenings();
+    for (std::size_t i = 0; i < openings.size(); ++i) {
+        if (isInsideOpeningBand(ball, openings[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool isInPocket(const BallState& ball)
 {
-    const float pocketX[6] = {
-        -kTableInWidth / 2.0f + kPocketRadius,
-        kTableInWidth / 2.0f - kPocketRadius,
-        -kTableInWidth / 2.0f + kPocketRadius,
-        kTableInWidth / 2.0f - kPocketRadius,
-        -kTableInWidth / 2.0f + kPocketRadius,
-        kTableInWidth / 2.0f - kPocketRadius,
-    };
-    const float pocketZ[6] = {
-        -kTableInLength / 2.0f + kPocketRadius,
-        -kTableInLength / 2.0f + kPocketRadius,
-        kTableInLength / 2.0f - kPocketRadius,
-        kTableInLength / 2.0f - kPocketRadius,
-        0.0f,
-        0.0f,
-    };
-
-    for (int i = 0; i < 6; ++i) {
-        const float dx = ball.position.x - pocketX[i];
-        const float dz = ball.position.z - pocketZ[i];
-        if (std::sqrt(dx * dx + dz * dz) < kBallRadius / 4.0f) {
+    const std::array<PocketOpening, 6> openings = currentPocketOpenings();
+    for (std::size_t i = 0; i < openings.size(); ++i) {
+        if (isInsideOpeningBand(ball, openings[i]) && hasCrossedPocketDropZone(ball, openings[i])) {
             return true;
         }
     }
