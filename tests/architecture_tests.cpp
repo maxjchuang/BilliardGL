@@ -101,6 +101,9 @@ int main()
     assertProjectTestDoesNotUseAssert("tests/shot_tests.cpp");
     assertProjectTestDoesNotUseAssert("tests/render_resources_tests.cpp");
     assertProjectTestDoesNotUseAssert("tests/architecture_tests.cpp");
+    assertNotContains(cmake, "/tmp/billiardgl-ctest");
+    const std::string screenshotTests = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/tests/screenshot_tests.cpp");
+    assertNotContains(screenshotTests, "/tmp/billiardgl-screenshot-test.ppm");
 
     return 0;
 }

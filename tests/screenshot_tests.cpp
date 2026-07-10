@@ -3,8 +3,14 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <process.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace {
 
@@ -14,11 +20,37 @@ int fail(const char* message)
     return EXIT_FAILURE;
 }
 
+int processId()
+{
+#ifdef _WIN32
+    return _getpid();
+#else
+    return getpid();
+#endif
+}
+
+std::string temporaryScreenshotPath()
+{
+    const char* tmpDir = std::getenv("TMPDIR");
+    if (tmpDir == NULL || tmpDir[0] == '\0') {
+        tmpDir = "/tmp";
+    }
+
+    std::ostringstream path;
+    path << tmpDir;
+    const std::string directory = path.str();
+    if (!directory.empty() && directory[directory.size() - 1] != '/') {
+        path << "/";
+    }
+    path << "billiardgl-screenshot-test-" << processId() << ".ppm";
+    return path.str();
+}
+
 }  // namespace
 
 int main()
 {
-    const std::string path = "/tmp/billiardgl-screenshot-test.ppm";
+    const std::string path = temporaryScreenshotPath();
     const std::vector<unsigned char> rgb = {
         0, 0, 0,
         255, 0, 0,
