@@ -44,6 +44,20 @@ int main()
         return fail("OBJ with out-of-range face indices should be invalid");
     }
 
+    const std::string malformedNumericObj = "/tmp/billiardgl-malformed-numeric.obj";
+    if (!writeTextFile(malformedNumericObj,
+        "v 0 0 0\n"
+        "v 1 0 0\n"
+        "v 0 1 0\n"
+        "vn 0 0 1\n"
+        "f 1abc//1 2//1 3//1\n")) {
+        return fail("test should write malformed numeric OBJ fixture");
+    }
+    ObjLoader malformedNumeric(malformedNumericObj);
+    if (malformedNumeric.isValid()) {
+        return fail("OBJ with partial numeric face indices should be invalid");
+    }
+
     const std::string malformedMtlObj = "/tmp/billiardgl-malformed-mtl.obj";
     const std::string malformedMtl = "/tmp/billiardgl-bad.mtl";
     if (!writeTextFile(malformedMtlObj,

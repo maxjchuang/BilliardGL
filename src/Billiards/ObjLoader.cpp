@@ -35,8 +35,9 @@ string joinPath(const string& directory, const string& fileName)
 bool parseFloatValue(const string& value, float& output)
 {
 	try {
-		output = stof(value);
-		return true;
+		size_t parsed = 0;
+		output = stof(value, &parsed);
+		return parsed == value.size();
 	} catch (...) {
 		return false;
 	}
@@ -45,8 +46,9 @@ bool parseFloatValue(const string& value, float& output)
 bool parseIntValue(const string& value, int& output)
 {
 	try {
-		output = stoi(value);
-		return true;
+		size_t parsed = 0;
+		output = stoi(value, &parsed);
+		return parsed == value.size();
 	} catch (...) {
 		return false;
 	}
@@ -319,10 +321,12 @@ bool ObjLoader::parseMtl(const string& filename) {
 				setError("MTL property before newmtl: " + filename);
 				return false;
 			}
-			if (parameters.size() < 2 || !parseIntValue(parameters[1], pM->nShininess)) {
+			float shininess = 0.0f;
+			if (parameters.size() < 2 || !parseFloatValue(parameters[1], shininess)) {
 				setError("Invalid shininess material property");
 				return false;
 			}
+			pM->nShininess = static_cast<int>(shininess);
 		}
 		else if (parameters[0] == "map_Ka") {
 			if (pM == NULL) {
