@@ -28,20 +28,27 @@ struct Vertex {
 class ObjLoader {
 public:
 	ObjLoader(std::string filename);
-	~ObjLoader(){}
+	~ObjLoader();
+
+	bool isValid() const;
+	const std::string& error() const;
 
 	std::vector<Vertex> vertices; //vertices of face,including position, texture, mormal
 	std::vector<Material*> materials; //materials
 	std::vector<int> mtlIndex;//index of matirials
 
 private:
+	bool valid_;
+	std::string error_;
+	std::string objectDirectory_;
 
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> textures;
 	std::vector<glm::vec3> normals;
 
-	void parseObj(std::vector<std::string> parameters);
-	void parseMtl(std::string filename);
+	void setError(const std::string& message);
+	bool parseObj(const std::vector<std::string>& parameters);
+	bool parseMtl(const std::string& filename);
 	int getMtl(std::string mtlName);
 	std::vector<std::string> splitString(std::string line, std::string delim);
 };

@@ -106,6 +106,12 @@ add_executable(BilliardsVecTests
     src/Billiards/vec.cpp
 )
 
+add_executable(BilliardsObjLoaderTests
+    tests/obj_loader_tests.cpp
+    src/Billiards/ObjLoader.cpp
+    src/Billiards/resource_path.cpp
+)
+
 add_executable(BilliardsRenderResourcesTests
     tests/render_resources_tests.cpp
     src/Billiards/render_resources.cpp
@@ -161,6 +167,12 @@ target_include_directories(BilliardsVecTests PRIVATE
     src/Billiards
 )
 
+target_include_directories(BilliardsObjLoaderTests PRIVATE
+    src/Billiards
+    src/Billiards/dependencies/include
+    ${GLUT_INCLUDE_DIR}
+)
+
 target_include_directories(BilliardsRenderResourcesTests PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
@@ -203,6 +215,7 @@ add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
 add_test(NAME BilliardsShotTests COMMAND BilliardsShotTests)
 add_test(NAME BilliardsTableSpecsTests COMMAND BilliardsTableSpecsTests)
 add_test(NAME BilliardsVecTests COMMAND BilliardsVecTests)
+add_test(NAME BilliardsObjLoaderTests COMMAND BilliardsObjLoaderTests)
 add_test(NAME BilliardsRenderResourcesTests COMMAND BilliardsRenderResourcesTests)
 add_test(NAME BilliardsArchitectureTests COMMAND BilliardsArchitectureTests)
 
@@ -236,6 +249,10 @@ target_link_libraries(BilliardsRenderResourcesTests PRIVATE
     OpenGL::GL
     OpenGL::GLU
     GLEW::GLEW
+)
+
+target_link_libraries(BilliardsObjLoaderTests PRIVATE
+    ${GLUT_LIBRARIES}
 )
 
 if(APPLE)
