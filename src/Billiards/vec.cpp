@@ -40,6 +40,9 @@ float vec::GetLength()
 void vec::Normalize()
 {
 	float len = GetLength();
+	if (len == 0.0f) {
+		return;
+	}
 	x = x / len;
 	y = y / len;
 	z = z / len;
@@ -60,10 +63,13 @@ vec operator /(const vec &a, float b)
 float* vec::toFloat()
 {
 	float* ans = new float[3];
+	ans[0] = x;
+	ans[1] = y;
+	ans[2] = z;
 	return ans;
 }
 
-const vec& vec::CrossProduct(const vec &a)
+vec vec::CrossProduct(const vec &a)
 {
 	vec ans(y*a.z - a.y*z, z*a.x - a.z*x, x*a.y - a.x*y);
 	return ans;
