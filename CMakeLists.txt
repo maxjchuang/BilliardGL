@@ -45,6 +45,43 @@ else()
     )
 endif()
 
+set(BILLIARDGL_COMMON_INCLUDE_DIRS
+    src/Billiards
+)
+
+set(BILLIARDGL_RENDER_INCLUDE_DIRS
+    src/Billiards
+    src/Billiards/dependencies/include
+    ${OPENGL_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIRS}
+)
+
+function(billiardgl_configure_core_test target)
+    target_include_directories(${target} PRIVATE
+        ${BILLIARDGL_COMMON_INCLUDE_DIRS}
+    )
+    target_compile_definitions(${target} PRIVATE
+        BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+        BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
+    )
+    add_test(NAME ${target} COMMAND ${target})
+endfunction()
+
+function(billiardgl_add_core_test target test_source)
+    add_executable(${target}
+        ${test_source}
+        ${BILLIARDGL_CORE_SOURCES}
+    )
+    billiardgl_configure_core_test(${target})
+endfunction()
+
+function(billiardgl_add_test target)
+    target_include_directories(${target} PRIVATE
+        ${BILLIARDGL_COMMON_INCLUDE_DIRS}
+    )
+    add_test(NAME ${target} COMMAND ${target})
+endfunction()
+
 add_executable(Billiards
     src/Billiards/billiards.cpp
     src/Billiards/hud.cpp
@@ -60,57 +97,38 @@ add_executable(Billiards
     ${BILLIARDGL_CORE_SOURCES}
 )
 
-add_executable(BilliardsPhysicsTests
-    tests/physics_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
-
-add_executable(BilliardsRulesTests
-    tests/rules_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
+billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
+billiardgl_add_core_test(BilliardsRulesTests tests/rules_tests.cpp)
 
 add_executable(BilliardsScreenshotTests
     tests/screenshot_tests.cpp
     src/Billiards/screenshot.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
+billiardgl_configure_core_test(BilliardsScreenshotTests)
 
-add_executable(BilliardsGameStateTests
-    tests/game_state_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
-
-add_executable(BilliardsAssetsTests
-    tests/assets_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
-
-add_executable(BilliardsInputTests
-    tests/input_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
-
-add_executable(BilliardsShotTests
-    tests/shot_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
-
-add_executable(BilliardsTableSpecsTests
-    tests/table_specs_tests.cpp
-    ${BILLIARDGL_CORE_SOURCES}
-)
+billiardgl_add_core_test(BilliardsGameStateTests tests/game_state_tests.cpp)
+billiardgl_add_core_test(BilliardsAssetsTests tests/assets_tests.cpp)
+billiardgl_add_core_test(BilliardsInputTests tests/input_tests.cpp)
+billiardgl_add_core_test(BilliardsShotTests tests/shot_tests.cpp)
+billiardgl_add_core_test(BilliardsTableSpecsTests tests/table_specs_tests.cpp)
 
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp
     src/Billiards/vec.cpp
 )
+billiardgl_add_test(BilliardsVecTests)
 
 add_executable(BilliardsObjLoaderTests
     tests/obj_loader_tests.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/resource_path.cpp
 )
+target_include_directories(BilliardsObjLoaderTests PRIVATE
+    src/Billiards/dependencies/include
+    ${GLUT_INCLUDE_DIR}
+)
+billiardgl_add_test(BilliardsObjLoaderTests)
 
 add_executable(BilliardsRenderResourcesTests
     tests/render_resources_tests.cpp
@@ -118,10 +136,23 @@ add_executable(BilliardsRenderResourcesTests
     src/Billiards/ObjLoader.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
+target_include_directories(BilliardsRenderResourcesTests PRIVATE
+    ${BILLIARDGL_RENDER_INCLUDE_DIRS}
+)
+target_compile_definitions(BilliardsRenderResourcesTests PRIVATE
+    BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+    BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
+)
+billiardgl_add_test(BilliardsRenderResourcesTests)
 
 add_executable(BilliardsArchitectureTests
     tests/architecture_tests.cpp
 )
+target_compile_definitions(BilliardsArchitectureTests PRIVATE
+    BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+    BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
+)
+billiardgl_add_test(BilliardsArchitectureTests)
 
 target_include_directories(Billiards PRIVATE
     src/Billiards
@@ -131,93 +162,9 @@ target_include_directories(Billiards PRIVATE
     ${GLUT_INCLUDE_DIR}
 )
 
-target_include_directories(BilliardsPhysicsTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsRulesTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsScreenshotTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsGameStateTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsAssetsTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsInputTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsShotTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsTableSpecsTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsVecTests PRIVATE
-    src/Billiards
-)
-
-target_include_directories(BilliardsObjLoaderTests PRIVATE
-    src/Billiards
-    src/Billiards/dependencies/include
-    ${GLUT_INCLUDE_DIR}
-)
-
-target_include_directories(BilliardsRenderResourcesTests PRIVATE
-    src/Billiards
-    src/Billiards/dependencies/include
-    ${OPENGL_INCLUDE_DIR}
-    ${GLEW_INCLUDE_DIRS}
-)
-
-target_include_directories(BilliardsArchitectureTests PRIVATE
-    src/Billiards
-)
-
 target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
 )
-
-foreach(test_target
-    BilliardsPhysicsTests
-    BilliardsRulesTests
-    BilliardsScreenshotTests
-    BilliardsGameStateTests
-    BilliardsAssetsTests
-    BilliardsInputTests
-    BilliardsShotTests
-    BilliardsTableSpecsTests
-    BilliardsRenderResourcesTests
-    BilliardsArchitectureTests
-)
-    target_compile_definitions(${test_target} PRIVATE
-        BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
-        BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
-    )
-endforeach()
-
-add_test(NAME BilliardsPhysicsTests COMMAND BilliardsPhysicsTests)
-add_test(NAME BilliardsRulesTests COMMAND BilliardsRulesTests)
-add_test(NAME BilliardsScreenshotTests COMMAND BilliardsScreenshotTests)
-add_test(NAME BilliardsGameStateTests COMMAND BilliardsGameStateTests)
-add_test(NAME BilliardsAssetsTests COMMAND BilliardsAssetsTests)
-add_test(NAME BilliardsInputTests COMMAND BilliardsInputTests)
-add_test(NAME BilliardsShotTests COMMAND BilliardsShotTests)
-add_test(NAME BilliardsTableSpecsTests COMMAND BilliardsTableSpecsTests)
-add_test(NAME BilliardsVecTests COMMAND BilliardsVecTests)
-add_test(NAME BilliardsObjLoaderTests COMMAND BilliardsObjLoaderTests)
-add_test(NAME BilliardsRenderResourcesTests COMMAND BilliardsRenderResourcesTests)
-add_test(NAME BilliardsArchitectureTests COMMAND BilliardsArchitectureTests)
 
 add_test(
     NAME BilliardsScreenshotDefault
