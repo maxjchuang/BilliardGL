@@ -14,7 +14,7 @@ struct vec
 	friend vec operator /(const vec &a,float b);
 	float* toFloat();
 	void LoadZero();
-	const vec& CrossProduct(const vec &a);
+	vec CrossProduct(const vec &a);
 	void Normalize();
 	float GetLength();
 }; 
