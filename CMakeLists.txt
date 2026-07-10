@@ -173,22 +173,24 @@ target_compile_definitions(Billiards PRIVATE
     BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
 )
 
-add_test(
-    NAME BilliardsScreenshotDefault
-    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-default.ppm --screenshot-scene default
-)
-add_test(
-    NAME BilliardsScreenshotHelp
-    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-help.ppm --screenshot-scene help
-)
-add_test(
-    NAME BilliardsScreenshotAim
-    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-aim.ppm --screenshot-scene aim
-)
-add_test(
-    NAME BilliardsScreenshotAfterShot
-    COMMAND Billiards --screenshot /tmp/billiardgl-ctest-after-shot.ppm --screenshot-scene after-shot
-)
+set(BILLIARDGL_SCREENSHOT_TEST_ROOT "${CMAKE_CURRENT_BINARY_DIR}/test-output")
+
+function(billiardgl_add_screenshot_test test_name scene_name)
+    set(test_output_dir "${BILLIARDGL_SCREENSHOT_TEST_ROOT}/${test_name}")
+    file(MAKE_DIRECTORY "${test_output_dir}")
+    add_test(
+        NAME ${test_name}
+        COMMAND Billiards --screenshot screenshot.ppm --screenshot-scene ${scene_name}
+    )
+    set_tests_properties(${test_name} PROPERTIES
+        WORKING_DIRECTORY "${test_output_dir}"
+    )
+endfunction()
+
+billiardgl_add_screenshot_test(BilliardsScreenshotDefault default)
+billiardgl_add_screenshot_test(BilliardsScreenshotHelp help)
+billiardgl_add_screenshot_test(BilliardsScreenshotAim aim)
+billiardgl_add_screenshot_test(BilliardsScreenshotAfterShot after-shot)
 
 target_link_libraries(Billiards PRIVATE
     OpenGL::GL
