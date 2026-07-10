@@ -53,6 +53,24 @@ bool textureLoaded(unsigned int texture)
     return texture != 0;
 }
 
+void deleteTextureIfLoaded(unsigned int& texture)
+{
+    if (texture != 0) {
+        const GLuint glTexture = texture;
+        glDeleteTextures(1, &glTexture);
+        texture = 0;
+    }
+}
+
+void deleteBufferIfLoaded(unsigned int& buffer)
+{
+    if (buffer != 0) {
+        const GLuint glBuffer = buffer;
+        glDeleteBuffersARB(1, &glBuffer);
+        buffer = 0;
+    }
+}
+
 }  // namespace
 
 unsigned int uploadTexture(const std::string& path)
@@ -92,6 +110,19 @@ bool initializeRenderResources(RenderResources& resources, GameState& state)
     resources.benchObj.reset(new ObjLoader(getObjectPath("bench.obj")));
     resources.wardObj.reset(new ObjLoader(getObjectPath("wardrobe.obj")));
 
+    if (!resources.tableObj->isValid() || !resources.cueObj->isValid()
+        || !resources.benchObj->isValid() || !resources.wardObj->isValid()) {
+        std::fprintf(stderr, "Failed to load object resources\n");
+        destroyRenderResources(resources);
+        return false;
+    }
+
+    if (resources.tableObj->materials.size() < 2 || resources.cueObj->materials.size() < 2) {
+        std::fprintf(stderr, "Missing required table or cue materials\n");
+        destroyRenderResources(resources);
+        return false;
+    }
+
     resources.tableTextures[0] = uploadTexture(getTexturePath(resources.tableObj->materials[0]->texture));
     resources.tableTextures[1] = uploadTexture(getTexturePath(resources.tableObj->materials[1]->texture));
     resources.cueTextures[0] = uploadTexture(getTexturePath(resources.cueObj->materials[0]->texture));
@@ -117,18 +148,31 @@ bool initializeRenderResources(RenderResources& resources, GameState& state)
 
     applyBallTexturesToState(resources, state);
 
-    return hasRequiredRenderResources(resources);
+    if (!hasRequiredRenderResources(resources)) {
+        destroyRenderResources(resources);
+        return false;
+    }
+    return true;
 }
 
 void destroyRenderResources(RenderResources& resources)
 {
-    GLuint buffers[] = {
-        resources.tableVertexVBO,
-        resources.cueVertexVBO,
-        resources.benchVertexVBO,
-        resources.wardVertexVBO
-    };
-    glDeleteBuffersARB(4, buffers);
+    deleteBufferIfLoaded(resources.tableVertexVBO);
+    deleteBufferIfLoaded(resources.cueVertexVBO);
+    deleteBufferIfLoaded(resources.benchVertexVBO);
+    deleteBufferIfLoaded(resources.wardVertexVBO);
+
+    deleteTextureIfLoaded(resources.ceilingTexture);
+    deleteTextureIfLoaded(resources.blackTexture);
+    deleteTextureIfLoaded(resources.wardTexture);
+    deleteTextureIfLoaded(resources.flameTexture);
+    deleteTextureIfLoaded(resources.tableTextures[0]);
+    deleteTextureIfLoaded(resources.tableTextures[1]);
+    deleteTextureIfLoaded(resources.cueTextures[0]);
+    deleteTextureIfLoaded(resources.cueTextures[1]);
+    for (int i = 0; i < kBallCount; ++i) {
+        deleteTextureIfLoaded(resources.ballTextures[i]);
+    }
 
     resources.tableObj.reset();
     resources.cueObj.reset();
@@ -156,6 +200,10 @@ bool hasAllBallTextures(const RenderResources& resources)
 bool hasRequiredRenderResources(const RenderResources& resources)
 {
     return resources.tableObj && resources.cueObj && resources.benchObj && resources.wardObj
+        && resources.tableObj->isValid()
+        && resources.cueObj->isValid()
+        && resources.benchObj->isValid()
+        && resources.wardObj->isValid()
         && textureLoaded(resources.tableTextures[0])
         && textureLoaded(resources.tableTextures[1])
         && textureLoaded(resources.cueTextures[0])

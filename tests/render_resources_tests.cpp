@@ -44,5 +44,20 @@ int main()
 
     assert(billiardgl::hasRequiredRenderResources(resources));
 
+    billiardgl::RenderResources emptyResources;
+    billiardgl::destroyRenderResources(emptyResources);
+    assert(emptyResources.tableVertexVBO == 0);
+    assert(emptyResources.cueVertexVBO == 0);
+    assert(emptyResources.benchVertexVBO == 0);
+    assert(emptyResources.wardVertexVBO == 0);
+    assert(emptyResources.ceilingTexture == 0);
+    assert(emptyResources.blackTexture == 0);
+    assert(emptyResources.wardTexture == 0);
+    assert(emptyResources.flameTexture == 0);
+
+    billiardgl::RenderResources incompleteResources;
+    incompleteResources.tableObj.reset(new ObjLoader("/tmp/billiardgl-missing-render-resource.obj"));
+    assert(!billiardgl::hasRequiredRenderResources(incompleteResources));
+
     return 0;
 }
