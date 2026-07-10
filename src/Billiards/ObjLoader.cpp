@@ -176,10 +176,6 @@ bool ObjLoader::parseObj(const vector<string>& parameters) {
 			return false;
 		}
 		int index = getMtl(parameters[1]);
-		if (index < 0) {
-			setError("Unknown material: " + parameters[1]);
-			return false;
-		}
 		mtlIndex.push_back(static_cast<int>(vertices.size()));
 		mtlIndex.push_back(index);
 	}
