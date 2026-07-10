@@ -3,6 +3,7 @@
 #include "assets.h"
 
 #include <cassert>
+#include <vector>
 
 int main()
 {
@@ -43,6 +44,16 @@ int main()
     resources.wardObj.reset(new ObjLoader(billiardgl::getObjectPath("wardrobe.obj")));
 
     assert(billiardgl::hasRequiredRenderResources(resources));
+
+    const int tableTextureIndex = resources.tableObj->mtlIndex[1];
+    resources.tableObj->mtlIndex[1] = 2;
+    assert(!billiardgl::hasRequiredRenderResources(resources));
+    resources.tableObj->mtlIndex[1] = tableTextureIndex;
+
+    const std::vector<int> cueMaterialRanges = resources.cueObj->mtlIndex;
+    resources.cueObj->mtlIndex.clear();
+    assert(!billiardgl::hasRequiredRenderResources(resources));
+    resources.cueObj->mtlIndex = cueMaterialRanges;
 
     billiardgl::RenderResources emptyResources;
     billiardgl::destroyRenderResources(emptyResources);

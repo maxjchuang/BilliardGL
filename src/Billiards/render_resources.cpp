@@ -53,6 +53,42 @@ bool textureLoaded(unsigned int texture)
     return texture != 0;
 }
 
+bool vertexOffsetInRange(const ObjLoader& obj, std::size_t mtlIndexSlot)
+{
+    return mtlIndexSlot < obj.mtlIndex.size()
+        && obj.mtlIndex[mtlIndexSlot] >= 0
+        && static_cast<std::size_t>(obj.mtlIndex[mtlIndexSlot]) <= obj.vertices.size();
+}
+
+bool materialIndexInRange(const ObjLoader& obj, std::size_t mtlIndexSlot, int materialCount)
+{
+    return mtlIndexSlot < obj.mtlIndex.size()
+        && obj.mtlIndex[mtlIndexSlot] >= 0
+        && obj.mtlIndex[mtlIndexSlot] < materialCount;
+}
+
+bool hasRenderableObjectShapes(const RenderResources& resources)
+{
+    if (resources.tableObj->vertices.empty() || resources.cueObj->vertices.empty()
+        || resources.benchObj->vertices.empty() || resources.wardObj->vertices.empty()) {
+        return false;
+    }
+
+    if (!materialIndexInRange(*resources.tableObj, 1, 2)
+        || !vertexOffsetInRange(*resources.tableObj, 4)
+        || !materialIndexInRange(*resources.tableObj, 5, 2)
+        || !vertexOffsetInRange(*resources.tableObj, 6)) {
+        return false;
+    }
+
+    if (!vertexOffsetInRange(*resources.cueObj, 2)
+        || !vertexOffsetInRange(*resources.cueObj, 4)) {
+        return false;
+    }
+
+    return true;
+}
+
 void deleteTextureIfLoaded(unsigned int& texture)
 {
     if (texture != 0) {
@@ -204,6 +240,7 @@ bool hasRequiredRenderResources(const RenderResources& resources)
         && resources.cueObj->isValid()
         && resources.benchObj->isValid()
         && resources.wardObj->isValid()
+        && hasRenderableObjectShapes(resources)
         && textureLoaded(resources.tableTextures[0])
         && textureLoaded(resources.tableTextures[1])
         && textureLoaded(resources.cueTextures[0])

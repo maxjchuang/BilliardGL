@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -269,7 +270,7 @@ bool ObjLoader::parseMtl(const string& filename) {
 	}
 
 	string line;
-	Material *pM = NULL;
+	unique_ptr<Material> pM;
 	while (getline(f, line)) {
 		if (line.size() == 0) continue;
 		vector<string> parameters = splitString(line, " ");
@@ -281,10 +282,10 @@ bool ObjLoader::parseMtl(const string& filename) {
 				setError("Missing material name in MTL");
 				return false;
 			}
-			if (pM != NULL) {
-				materials.push_back(pM);
+			if (pM) {
+				materials.push_back(pM.release());
 			}
-			pM = new Material();
+			pM.reset(new Material());
 			pM->mname = parameters[1];
 		}
 		else if (parameters[0] == "Ka" || parameters[0] == "Kd" || parameters[0] == "Ks" || parameters[0] == "Ke") {
@@ -340,7 +341,7 @@ bool ObjLoader::parseMtl(const string& filename) {
 			pM->texture = parameters[1];
 		}
 	}
-	if (pM != NULL) materials.push_back(pM);
+	if (pM) materials.push_back(pM.release());
 	f.close();
 	return valid_;
 }
