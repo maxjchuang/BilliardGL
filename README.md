@@ -50,6 +50,22 @@ GitHub Actions 在 macOS runner 上安装依赖后运行：
 
 当前 CI 不把 macOS SDK 或 OpenGL deprecation warnings 作为失败条件。warning 收敛会作为后续工程化任务单独处理。
 
+### 仓库治理约定
+
+当前推荐的构建和验证入口是 CMake 与 `./scripts/check.sh`。本仓库不再跟踪生成型发布目录和本地构建产物：
+
+- `build/`、`cmake-build-*/`、`out/` 是本地构建输出。
+- `Release/` 是生成型发布目录，不应提交到源码仓库。
+- 本地截图验证产生的 `*.ppm` 文件不应提交。
+- 本地诊断或构建日志 `*.log` 不应提交。
+
+历史课程/展示资料已归档到 `docs/legacy/`：
+
+- `docs/legacy/Report.pdf`
+- `docs/legacy/Representation.pptx`
+
+Visual Studio 工程文件和 `src/Billiards/dependencies/` 暂时保留，用于 legacy Windows 工程兼容。清理或迁移 Windows 依赖管理应作为后续独立任务处理。
+
 # 1 Basic Points
 
 ### 1 3D建模
