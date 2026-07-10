@@ -30,6 +30,7 @@ int main()
 {
     const std::string billiards = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/billiards.cpp");
     const std::string renderer = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/renderer.cpp");
+    const std::string renderResources = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/render_resources.cpp");
     const std::string cmake = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/CMakeLists.txt");
     const std::string platformScroll = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/platform_scroll.cpp");
     const std::string macScroll = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/platform_scroll_mac.mm");
@@ -72,6 +73,9 @@ int main()
     assertNotContains(renderer, "resources.cameraEye[0] - resources.cameraTarget[0]");
     assertNotContains(renderer, "resources.cameraEye[2] - resources.cameraTarget[2]");
     assertNotContains(renderer, "state.camera.angleX * 180.0f");
+    assertNotContains(renderResources, "gluBuild2DMipmaps");
+    assertNotContains(renderResources, "<OpenGL/glu.h>");
+    assertNotContains(renderResources, "<GL/glu.h>");
 
     return 0;
 }
