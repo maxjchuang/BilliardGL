@@ -1,3 +1,17 @@
+# Local worktrees
 .worktrees/
+
+# CMake/build outputs
 build/
+cmake-build-*/
+out/
+
+# Generated release packages
+Release/
+
+# Local visual/test artifacts
+*.ppm
+*.log
+
+# Superpowers implementation plans are local working artifacts
 docs/superpowers/plans/
