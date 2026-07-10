@@ -1,14 +1,28 @@
-#include <cassert>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
+#include <iostream>
 
 namespace {
+
+void expect(bool condition, const char* expression)
+{
+    if (!condition) {
+        std::cerr << "Expectation failed: " << expression << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+}
+
+void expect(bool condition)
+{
+    expect(condition, "condition");
+}
 
 std::string readFile(const std::string& path)
 {
     std::ifstream input(path.c_str());
-    assert(input.good());
+    expect(input.good());
     std::ostringstream buffer;
     buffer << input.rdbuf();
     return buffer.str();
@@ -16,12 +30,19 @@ std::string readFile(const std::string& path)
 
 void assertNotContains(const std::string& content, const std::string& needle)
 {
-    assert(content.find(needle) == std::string::npos);
+    expect(content.find(needle) == std::string::npos);
 }
 
 void assertContains(const std::string& content, const std::string& needle)
 {
-    assert(content.find(needle) != std::string::npos);
+    expect(content.find(needle) != std::string::npos);
+}
+
+void assertProjectTestDoesNotUseAssert(const std::string& relativePath)
+{
+    const std::string content = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/" + relativePath);
+    const std::string forbidden = std::string("assert") + "(";
+    expect(content.find(forbidden) == std::string::npos);
 }
 
 }
@@ -76,6 +97,10 @@ int main()
     assertNotContains(renderResources, "gluBuild2DMipmaps");
     assertNotContains(renderResources, "<OpenGL/glu.h>");
     assertNotContains(renderResources, "<GL/glu.h>");
+    assertProjectTestDoesNotUseAssert("tests/input_tests.cpp");
+    assertProjectTestDoesNotUseAssert("tests/shot_tests.cpp");
+    assertProjectTestDoesNotUseAssert("tests/render_resources_tests.cpp");
+    assertProjectTestDoesNotUseAssert("tests/architecture_tests.cpp");
 
     return 0;
 }
