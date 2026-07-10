@@ -203,7 +203,6 @@ target_link_libraries(Billiards PRIVATE
 
 target_link_libraries(BilliardsRenderResourcesTests PRIVATE
     OpenGL::GL
-    OpenGL::GLU
     GLEW::GLEW
 )
 
