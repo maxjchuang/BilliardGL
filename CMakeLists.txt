@@ -24,6 +24,7 @@ pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 set(BILLIARDGL_CORE_SOURCES
     src/Billiards/assets.cpp
+    src/Billiards/frame_timing.cpp
     src/Billiards/game_state.cpp
     src/Billiards/image_loader.cpp
     src/Billiards/physics.cpp
@@ -118,6 +119,12 @@ add_executable(BilliardsVecTests
     src/Billiards/vec.cpp
 )
 billiardgl_add_test(BilliardsVecTests)
+
+add_executable(BilliardsFrameTimingTests
+    tests/frame_timing_tests.cpp
+    src/Billiards/frame_timing.cpp
+)
+billiardgl_add_test(BilliardsFrameTimingTests)
 
 add_executable(BilliardsObjLoaderTests
     tests/obj_loader_tests.cpp

@@ -10,6 +10,7 @@
 #endif
 
 #include "game_state.h"
+#include "frame_timing.h"
 #include "hud.h"
 #include "input.h"
 #include "particle_resources.h"
@@ -54,6 +55,9 @@
 
 static billiardgl::GameState Game;
 static billiardgl::RenderResources Render;
+static double LastIdleTimeSeconds = 0.0;
+static float PhysicsTimeAccumulatorSeconds = 0.0f;
+static const int kMaxPhysicsStepsPerIdle = 5;
 
 //±‰¡ø…Í√˜
 int& width = Game.config.width;
@@ -115,6 +119,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	billiardgl::initializeParticleEmitters(Render, Game);
+	LastIdleTimeSeconds = billiardgl::monotonicSeconds();
 
 	prepareScreenshotScene();
 
@@ -326,13 +331,24 @@ void myIdle(void)
 		Game.balls[0].velocity.z = 0;
 	}
 
-	billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
-	if (Game.events.ballCollision || Game.events.railCollision)
-		billiardgl::playHit();
-	if (Game.events.ballPocketed || Game.events.cueBallPocketed)
-		billiardgl::playBallIn();
-	if (Game.events.eightBallPocketed)
-		billiardgl::playGameOver();
+	const double currentIdleTimeSeconds = billiardgl::monotonicSeconds();
+	const float elapsedSeconds = static_cast<float>(currentIdleTimeSeconds - LastIdleTimeSeconds);
+	LastIdleTimeSeconds = currentIdleTimeSeconds;
+	const billiardgl::FrameStepResult frameSteps = billiardgl::advanceFixedStepAccumulator(
+		PhysicsTimeAccumulatorSeconds,
+		elapsedSeconds,
+		billiardgl::kDefaultTimeStep,
+		kMaxPhysicsStepsPerIdle);
+	for (int step = 0; step < frameSteps.steps; ++step)
+	{
+		billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
+		if (Game.events.ballCollision || Game.events.railCollision)
+			billiardgl::playHit();
+		if (Game.events.ballPocketed || Game.events.cueBallPocketed)
+			billiardgl::playBallIn();
+		if (Game.events.eightBallPocketed)
+			billiardgl::playGameOver();
+	}
 
 	if (Game.transitionPerspective)
 	{
@@ -377,7 +393,7 @@ void myIdle(void)
 	if (Game.events.shotEnded || (!Game.transitionPerspective && Game.players.shotTaken))
 		billiardgl::updatePlayerAfterShot(Game);
 
-	myDisplay();
+	glutPostRedisplay();
 }
 // «Ú”Î«Ú≈ˆ◊≤ºÏ≤‚
 static void myKeyboard(unsigned char key, int x, int y)
