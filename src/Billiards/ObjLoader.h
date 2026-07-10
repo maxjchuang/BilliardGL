@@ -29,6 +29,8 @@ class ObjLoader {
 public:
 	ObjLoader(std::string filename);
 	~ObjLoader();
+	ObjLoader(const ObjLoader&) = delete;
+	ObjLoader& operator=(const ObjLoader&) = delete;
 
 	bool isValid() const;
 	const std::string& error() const;
