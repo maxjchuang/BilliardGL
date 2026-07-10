@@ -1,8 +1,26 @@
 #include "game_state.h"
 #include "render_resources.h"
 #include "assets.h"
+#include <cstdlib>
+#include <iostream>
 
-#include <cassert>
+namespace {
+
+void expect(bool condition, const char* expression)
+{
+    if (!condition) {
+        std::cerr << "Expectation failed: " << expression << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+}
+
+void expect(bool condition)
+{
+    expect(condition, "condition");
+}
+
+}  // namespace
+
 #include <vector>
 
 int main()
@@ -15,15 +33,15 @@ int main()
     }
 
     billiardgl::applyBallTexturesToState(resources, state);
-    assert(billiardgl::hasAllBallTextures(resources));
+    expect(billiardgl::hasAllBallTextures(resources));
 
     for (int i = 0; i < billiardgl::kBallCount; ++i) {
-        assert(state.balls[i].texture == static_cast<unsigned int>(100 + i));
+        expect(state.balls[i].texture == static_cast<unsigned int>(100 + i));
     }
 
     resources.ballTextures[3] = 0;
-    assert(!billiardgl::hasAllBallTextures(resources));
-    assert(!billiardgl::hasRequiredRenderResources(resources));
+    expect(!billiardgl::hasAllBallTextures(resources));
+    expect(!billiardgl::hasRequiredRenderResources(resources));
 
     resources.ballTextures[3] = 103;
     resources.tableTextures[0] = 1;
@@ -43,32 +61,32 @@ int main()
     resources.benchObj.reset(new ObjLoader(billiardgl::getObjectPath("bench.obj")));
     resources.wardObj.reset(new ObjLoader(billiardgl::getObjectPath("wardrobe.obj")));
 
-    assert(billiardgl::hasRequiredRenderResources(resources));
+    expect(billiardgl::hasRequiredRenderResources(resources));
 
     const int tableTextureIndex = resources.tableObj->mtlIndex[1];
     resources.tableObj->mtlIndex[1] = 2;
-    assert(!billiardgl::hasRequiredRenderResources(resources));
+    expect(!billiardgl::hasRequiredRenderResources(resources));
     resources.tableObj->mtlIndex[1] = tableTextureIndex;
 
     const std::vector<int> cueMaterialRanges = resources.cueObj->mtlIndex;
     resources.cueObj->mtlIndex.clear();
-    assert(!billiardgl::hasRequiredRenderResources(resources));
+    expect(!billiardgl::hasRequiredRenderResources(resources));
     resources.cueObj->mtlIndex = cueMaterialRanges;
 
     billiardgl::RenderResources emptyResources;
     billiardgl::destroyRenderResources(emptyResources);
-    assert(emptyResources.tableVertexVBO == 0);
-    assert(emptyResources.cueVertexVBO == 0);
-    assert(emptyResources.benchVertexVBO == 0);
-    assert(emptyResources.wardVertexVBO == 0);
-    assert(emptyResources.ceilingTexture == 0);
-    assert(emptyResources.blackTexture == 0);
-    assert(emptyResources.wardTexture == 0);
-    assert(emptyResources.flameTexture == 0);
+    expect(emptyResources.tableVertexVBO == 0);
+    expect(emptyResources.cueVertexVBO == 0);
+    expect(emptyResources.benchVertexVBO == 0);
+    expect(emptyResources.wardVertexVBO == 0);
+    expect(emptyResources.ceilingTexture == 0);
+    expect(emptyResources.blackTexture == 0);
+    expect(emptyResources.wardTexture == 0);
+    expect(emptyResources.flameTexture == 0);
 
     billiardgl::RenderResources incompleteResources;
     incompleteResources.tableObj.reset(new ObjLoader("/tmp/billiardgl-missing-render-resource.obj"));
-    assert(!billiardgl::hasRequiredRenderResources(incompleteResources));
+    expect(!billiardgl::hasRequiredRenderResources(incompleteResources));
 
     return 0;
 }

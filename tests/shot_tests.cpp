@@ -1,11 +1,24 @@
 #include "game_state.h"
 #include "shot.h"
 
-#include <cassert>
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 
 namespace {
+
+void expect(bool condition, const char* expression)
+{
+    if (!condition) {
+        std::cerr << "Expectation failed: " << expression << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+}
+
+void expect(bool condition)
+{
+    expect(condition, "condition");
+}
 
 bool closeEnough(float a, float b)
 {
@@ -15,9 +28,9 @@ bool closeEnough(float a, float b)
 void testDefaultAimState()
 {
     billiardgl::GameState state;
-    assert(state.aim.mode == billiardgl::AimMode::Observe);
-    assert(closeEnough(state.aim.yaw, billiardgl::kPi / 2.0f));
-    assert(closeEnough(state.aim.sensitivity, 0.01f));
+    expect(state.aim.mode == billiardgl::AimMode::Observe, "state.aim.mode == billiardgl::AimMode::Observe");
+    expect(closeEnough(state.aim.yaw, billiardgl::kPi / 2.0f));
+    expect(closeEnough(state.aim.sensitivity, 0.01f));
 }
 
 void testDefaultAimPointsFromCueBallTowardRack()
@@ -25,29 +38,29 @@ void testDefaultAimPointsFromCueBallTowardRack()
     billiardgl::GameState state;
     const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(state.aim.yaw, 20.0f);
 
-    assert(closeEnough(velocity.x, 0.0f));
-    assert(velocity.z > 0.0f);
+    expect(closeEnough(velocity.x, 0.0f));
+    expect(velocity.z > 0.0f, "velocity.z > 0.0f");
 }
 
 void testAimDirectionIsHorizontalAndNormalized()
 {
     const billiardgl::Point3 forward = billiardgl::aimDirectionOnTable(-billiardgl::kPi / 2.0f);
-    assert(closeEnough(forward.x, 0.0f));
-    assert(closeEnough(forward.y, 0.0f));
-    assert(closeEnough(forward.z, -1.0f));
+    expect(closeEnough(forward.x, 0.0f));
+    expect(closeEnough(forward.y, 0.0f));
+    expect(closeEnough(forward.z, -1.0f));
 
     const billiardgl::Point3 right = billiardgl::aimDirectionOnTable(0.0f);
-    assert(closeEnough(right.x, 1.0f));
-    assert(closeEnough(right.y, 0.0f));
-    assert(closeEnough(right.z, 0.0f));
+    expect(closeEnough(right.x, 1.0f));
+    expect(closeEnough(right.y, 0.0f));
+    expect(closeEnough(right.z, 0.0f));
 }
 
 void testShotVelocityUsesAimYawAndPower()
 {
     const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(0.0f, 42.0f);
-    assert(closeEnough(velocity.x, 42.0f));
-    assert(closeEnough(velocity.y, 0.0f));
-    assert(closeEnough(velocity.z, 0.0f));
+    expect(closeEnough(velocity.x, 42.0f));
+    expect(closeEnough(velocity.y, 0.0f));
+    expect(closeEnough(velocity.z, 0.0f));
 }
 
 void testCueLinePointsInShotVelocityDirection()
@@ -59,10 +72,10 @@ void testCueLinePointsInShotVelocityDirection()
     const float dot = lineEnd.x * velocity.x + lineEnd.z * velocity.z;
     const float startDistance = std::sqrt(lineStart.x * lineStart.x + lineStart.z * lineStart.z);
 
-    assert(dot > 0.0f);
-    assert(startDistance > billiardgl::kBallRadius);
-    assert(closeEnough(lineStart.y, 0.0f));
-    assert(closeEnough(lineEnd.y, 0.0f));
+    expect(dot > 0.0f, "dot > 0.0f");
+    expect(startDistance > billiardgl::kBallRadius, "startDistance > billiardgl::kBallRadius");
+    expect(closeEnough(lineStart.y, 0.0f));
+    expect(closeEnough(lineEnd.y, 0.0f));
 }
 
 void testCueStickStaysBehindCueBallOutsideBallRadius()
@@ -76,8 +89,8 @@ void testCueStickStaysBehindCueBallOutsideBallRadius()
     const float dot = offsetX * velocity.x + offsetZ * velocity.z;
     const float distance = std::sqrt(offsetX * offsetX + offsetZ * offsetZ);
 
-    assert(dot < 0.0f);
-    assert(distance >= billiardgl::kBallRadius * 3.0f);
+    expect(dot < 0.0f, "dot < 0.0f");
+    expect(distance >= billiardgl::kBallRadius * 3.0f, "distance >= billiardgl::kBallRadius * 3.0f");
 }
 
 void testCueStickModelTailPointsAwayFromShotDirection()
@@ -91,7 +104,7 @@ void testCueStickModelTailPointsAwayFromShotDirection()
     const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(yaw, 20.0f);
     const float dot = localPositiveZAfterRotation.x * velocity.x + localPositiveZAfterRotation.z * velocity.z;
 
-    assert(dot < 0.0f);
+    expect(dot < 0.0f, "dot < 0.0f");
 }
 
 }  // namespace
