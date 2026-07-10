@@ -1,5 +1,55 @@
 # 基于OpenGL的3D台球游戏--BilliardGL
 
+## 工程化工作流
+
+### macOS 依赖
+
+当前 CMake 构建依赖 OpenGL、GLEW、GLUT、SDL2 和 SDL2_mixer。macOS 上可以通过 Homebrew 安装主要依赖：
+
+```bash
+brew install cmake pkg-config glew sdl2 sdl2_mixer
+```
+
+### 推荐验证命令
+
+本地开发和 CI 使用同一个验证入口：
+
+```bash
+./scripts/check.sh
+```
+
+该命令会执行：
+
+1. CMake configure
+2. CMake build
+3. CTest 全量测试
+
+默认构建目录是 `build/check`。需要指定构建目录时：
+
+```bash
+BILLIARDGL_BUILD_DIR=/tmp/billiardgl-build ./scripts/check.sh
+```
+
+### 手动 CMake 调试流程
+
+需要单独排查 configure、build 或 test 问题时，可以手动运行：
+
+```bash
+cmake -S . -B build
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
+
+### CI
+
+GitHub Actions 在 macOS runner 上安装依赖后运行：
+
+```bash
+./scripts/check.sh
+```
+
+当前 CI 不把 macOS SDK 或 OpenGL deprecation warnings 作为失败条件。warning 收敛会作为后续工程化任务单独处理。
+
 # 1 Basic Points
 
 ### 1 3D建模
