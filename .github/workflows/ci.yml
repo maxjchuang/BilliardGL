@@ -8,7 +8,9 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-latest
+    # Keep the legacy Apple GLUT screenshot tests on the last known-good runner.
+    # macos-latest moved to macOS 26, whose GLUT 3.0 adds incompatible checks.
+    runs-on: macos-15
 
     steps:
       - name: Check out repository

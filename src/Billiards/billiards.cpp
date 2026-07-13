@@ -127,7 +127,6 @@ int main(int argc, char* argv[])
 		glutInit(&glutArgc, glutArgv);
 		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 		initWindows();
-		glutDisplayFunc(&myDisplay);
 		billiardgl::GameRuntime runtime;
 		if (!billiardgl::initializeRenderResources(Render, runtime.mutableState())) return 1;
 		billiardgl::initializeParticleEmitters(Render, runtime.mutableState());
@@ -157,7 +156,6 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
-	glutDisplayFunc(&myDisplay);
 	billiardgl::installPlatformScrollHandler(platformScroll);
 	initBall();//初始化球的位置
 	if (!billiardgl::initializeRenderResources(Render, Game))
@@ -170,6 +168,7 @@ int main(int argc, char* argv[])
 
 	prepareScreenshotScene();
 
+	glutDisplayFunc(&myDisplay);
 	glutIdleFunc(&myIdle); //设置窗口刷新的回调函数
 	glutKeyboardFunc(myKeyboard); //设置键盘回调函数
 	glutSpecialFunc(mySpecialKeyboard);
@@ -179,12 +178,6 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(myReshape);
 
 	billiardgl::setupLights();
-	myReshape(width, height);
-	if (!Game.config.screenshotPath.empty())
-	{
-		myDisplay();
-		return 0;
-	}
 	glutMainLoop();
 	return 0;
 }
