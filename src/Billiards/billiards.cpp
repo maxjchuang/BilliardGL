@@ -120,6 +120,37 @@ int main(int argc, char* argv[])
 		billiardgl::StdioTransport transport(std::cin, std::cout);
 		return billiardgl::runAutomation(transport, controller, "headless");
 	}
+	if (options.mode == billiardgl::RunMode::AutomationRendered)
+	{
+		int glutArgc = 1;
+		char* glutArgv[] = {argv[0], nullptr};
+		glutInit(&glutArgc, glutArgv);
+		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
+		initWindows();
+		billiardgl::GameRuntime runtime;
+		if (!billiardgl::initializeRenderResources(Render, runtime.mutableState())) return 1;
+		billiardgl::initializeParticleEmitters(Render, runtime.mutableState());
+		billiardgl::setupLights();
+		billiardgl::AutomationController controller(runtime, billiardgl::AutomationMode::Rendered);
+		billiardgl::StdioTransport transport(std::cin, std::cout);
+		const auto capture = [&runtime](const std::string& path) {
+			Game = runtime.state();
+			glViewport(0, 0, Game.config.width, Game.config.height);
+			billiardgl::setupCameraFromGameState(Game);
+			Render.shotPower = Game.input.shotPower;
+			Render.showCue = Game.players.aimingAtCueBall;
+			Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim;
+			Render.viewportWidth = Game.config.width;
+			Render.viewportHeight = Game.config.height;
+			billiardgl::renderScene(Game, Render);
+			billiardgl::drawHud(Game);
+			glFinish();
+			const bool saved = billiardgl::saveFramebufferToPpm(path, Game.config.width, Game.config.height);
+			glutSwapBuffers();
+			return saved;
+		};
+		return billiardgl::runAutomation(transport, controller, "rendered", capture);
+	}
 	std::thread t(b_music);
 	t.detach();
 	glutInit(&argc, argv);

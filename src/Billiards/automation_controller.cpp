@@ -166,7 +166,8 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         }
         if (command == "screenshot") {
             if (mode_ != AutomationMode::Rendered) return failure(request.id, "unsupported_in_mode", "screenshot requires rendered mode");
-            ControllerResult value = success(request.id); value.screenshotRequested = true; value.screenshotPath = stringParam(params, "path"); return value;
+            json::Value details=json::Value::object(); details["tick"]=json::Value(static_cast<double>(runtime_.tick()));
+            ControllerResult value = success(request.id,details); value.screenshotRequested = true; value.screenshotPath = stringParam(params, "path"); return value;
         }
         return failure(request.id, "unknown_command", "unknown command: " + command);
     } catch (const std::exception& error) {
