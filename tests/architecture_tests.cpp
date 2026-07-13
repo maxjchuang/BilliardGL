@@ -94,6 +94,11 @@ int main()
     assertNotContains(renderer, "resources.cameraEye[0] - resources.cameraTarget[0]");
     assertNotContains(renderer, "resources.cameraEye[2] - resources.cameraTarget[2]");
     assertNotContains(renderer, "state.camera.angleX * 180.0f");
+    assertContains(renderer, "tableObj.mtlIndex[6] - tableObj.mtlIndex[4]");
+    assertContains(renderer, "tableObj.vertices.size() - tableObj.mtlIndex[6]");
+    assertContains(renderer, "cueObj.vertices.size() - cueObj.mtlIndex[4]");
+    assertContains(renderer, "cueObj.mtlIndex[4] - cueObj.mtlIndex[2]");
+    assertNotContains(renderer, "glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size())");
     assertNotContains(renderResources, "gluBuild2DMipmaps");
     assertNotContains(renderResources, "<OpenGL/glu.h>");
     assertNotContains(renderResources, "<GL/glu.h>");

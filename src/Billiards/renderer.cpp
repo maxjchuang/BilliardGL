@@ -103,9 +103,9 @@ void renderTable(const RenderResources& resources)
     glBindTexture(GL_TEXTURE_2D, resources.tableTextures[tableObj.mtlIndex[1]]);
     glDrawArrays(GL_TRIANGLES, 0, tableObj.mtlIndex[4]);
     glBindTexture(GL_TEXTURE_2D, resources.tableTextures[tableObj.mtlIndex[5]]);
-    glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[4], tableObj.mtlIndex[6] / 2);
+    glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[4], tableObj.mtlIndex[6] - tableObj.mtlIndex[4]);
     glBindTexture(GL_TEXTURE_2D, resources.tableTextures[tableObj.mtlIndex[1]]);
-    glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[6] / 2, tableObj.vertices.size());
+    glDrawArrays(GL_TRIANGLES, tableObj.mtlIndex[6], tableObj.vertices.size() - tableObj.mtlIndex[6]);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -239,9 +239,9 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glTranslatef(cuePosition.x, cuePosition.y, cuePosition.z);
     glRotatef(cueStickRotationDegreesFromAim(state.aim.yaw), 0.0f, 1.0f, 0.0f);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[0]);
-    glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size());
+    glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size() - cueObj.mtlIndex[4]);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[1]);
-    glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[2], cueObj.mtlIndex[4]);
+    glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[2], cueObj.mtlIndex[4] - cueObj.mtlIndex[2]);
     glBindTexture(GL_TEXTURE_2D, cueBall.texture);
     glDrawArrays(GL_TRIANGLES, 0, cueObj.mtlIndex[2]);
     glPopMatrix();
