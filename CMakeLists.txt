@@ -109,6 +109,7 @@ add_executable(Billiards
 
 billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
+billiardgl_add_core_test(BilliardsPhysicsInstrumentationTests tests/physics_instrumentation_tests.cpp)
 billiardgl_add_core_test(BilliardsRulesTests tests/rules_tests.cpp)
 
 add_executable(BilliardsScreenshotTests

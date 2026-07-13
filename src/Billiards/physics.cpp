@@ -3,6 +3,7 @@
 #include "rules.h"
 #include "table_specs.h"
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 
@@ -57,6 +58,39 @@ bool hasCrossedPocketDropZone(const BallState& ball, const PocketOpening& openin
         ? ball.position.z <= -halfLength + depth
         : ball.position.z >= halfLength - depth;
     return crossedX || crossedZ;
+}
+
+double impulseFromVelocityChange(const Point3& before, const Point3& after, const Point3& normal)
+{
+    const double deltaCentimetersPerSecond = std::fabs(
+        (after.x - before.x) * normal.x +
+        (after.y - before.y) * normal.y +
+        (after.z - before.z) * normal.z);
+    return kDefaultBallMassKg * deltaCentimetersPerSecond / 100.0;
+}
+
+void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
+    const Point3& beforePosition, const Point3& beforeVelocity,
+    const Point3& afterVelocity, bool xAxis)
+{
+    PhysicsContactRecord contact;
+    contact.kind = PhysicsContactKind::Rail;
+    contact.firstBall = ballIndex;
+    const float coordinate = xAxis ? beforePosition.x : beforePosition.z;
+    if (xAxis) {
+        contact.normal.x = coordinate > 0.0f ? -1.0f : 1.0f;
+    } else {
+        contact.normal.z = coordinate > 0.0f ? -1.0f : 1.0f;
+    }
+    const double limit = xAxis
+        ? kTableInWidth / 2.0 - kBallRadius
+        : kTableInLength / 2.0 - kBallRadius;
+    contact.penetrationCm = std::max(0.0, std::fabs(static_cast<double>(coordinate)) - limit);
+    contact.normalImpulseNs = impulseFromVelocityChange(
+        beforeVelocity, afterVelocity, contact.normal);
+    telemetry.maximumPenetrationCm = std::max(
+        telemetry.maximumPenetrationCm, contact.penetrationCm);
+    telemetry.contacts.push_back(contact);
 }
 
 }  // namespace
@@ -193,8 +227,9 @@ bool updatePocketedBall(GameState& state, int ballIndex)
     return true;
 }
 
-void updatePhysics(GameState& state, float timeStep)
+PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)
 {
+    PhysicsStepTelemetry telemetry;
     const bool wasMoving = state.ballsMoving;
     clearGameplayEvents(state);
     bool anyMoving = false;
@@ -205,18 +240,47 @@ void updatePhysics(GameState& state, float timeStep)
         }
         for (int j = i + 1; j < kBallCount; ++j) {
             if (!state.balls[j].pocketed) {
+                const Point3 beforeVelocity = ball.velocity;
+                const float dx = state.balls[j].position.x - ball.position.x;
+                const float dz = state.balls[j].position.z - ball.position.z;
+                const float distance = std::sqrt(dx * dx + dz * dz);
                 if (collideBalls(ball, state.balls[j])) {
                     state.events.ballCollision = true;
+                    PhysicsContactRecord contact;
+                    contact.kind = PhysicsContactKind::BallBall;
+                    contact.firstBall = i;
+                    contact.secondBall = j;
+                    contact.normal = Point3{dx / distance, 0.0f, dz / distance};
+                    contact.penetrationCm = std::max(
+                        0.0, static_cast<double>(2.0f * kBallRadius - distance));
+                    contact.normalImpulseNs = impulseFromVelocityChange(
+                        beforeVelocity, ball.velocity, contact.normal);
+                    telemetry.maximumPenetrationCm = std::max(
+                        telemetry.maximumPenetrationCm, contact.penetrationCm);
+                    telemetry.contacts.push_back(contact);
                 }
             }
         }
+        const Point3 previousPosition = ball.position;
+        const Point3 previousVelocity = ball.velocity;
         const float previousX = ball.velocity.x;
         const float previousZ = ball.velocity.z;
         collideWithTableEdge(ball);
         if (previousX != ball.velocity.x || previousZ != ball.velocity.z) {
             state.events.railCollision = true;
         }
-        updatePocketedBall(state, i);
+        if (previousX != ball.velocity.x) {
+            appendRailContact(telemetry, i, previousPosition, previousVelocity, ball.velocity, true);
+        }
+        if (previousZ != ball.velocity.z) {
+            appendRailContact(telemetry, i, previousPosition, previousVelocity, ball.velocity, false);
+        }
+        if (updatePocketedBall(state, i)) {
+            PhysicsContactRecord contact;
+            contact.kind = PhysicsContactKind::Pocket;
+            contact.firstBall = i;
+            telemetry.contacts.push_back(contact);
+        }
         applyFrictionAndMove(ball, timeStep, kDefaultFrictionAcceleration);
         if (ball.speed > 0.0f) {
             anyMoving = true;
@@ -224,6 +288,7 @@ void updatePhysics(GameState& state, float timeStep)
     }
     state.ballsMoving = anyMoving;
     state.events.shotEnded = wasMoving && !anyMoving && state.players.shotTaken;
+    return telemetry;
 }
 
 }  // namespace billiardgl

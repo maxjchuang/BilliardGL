@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_state.h"
+#include "physics_telemetry.h"
 
 namespace billiardgl {
 
@@ -10,6 +11,6 @@ void collideWithTableEdge(BallState& ball);
 bool isInPocketMouth(const BallState& ball);
 bool isInPocket(const BallState& ball);
 bool updatePocketedBall(GameState& state, int ballIndex);
-void updatePhysics(GameState& state, float timeStep);
+PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep);
 
 }  // namespace billiardgl
