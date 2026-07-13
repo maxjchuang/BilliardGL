@@ -4,6 +4,7 @@ from tools.physics_validation.analyzer import (
     Failure,
     ScenarioResult,
     analyze_scenario,
+    compare_integration_traces,
     compare_traces,
     match_known_failures,
 )
@@ -70,6 +71,41 @@ class AnalyzerTests(unittest.TestCase):
         failure = compare_traces("case", [frame(1)], [changed])
         self.assertEqual(failure.code, "NON_DETERMINISTIC")
 
+    def test_core_process_disagreement_is_integration_mismatch(self):
+        self.assertIsNone(compare_integration_traces("case", [frame(1)], [frame(1)]))
+        process = frame(1)
+        process["balls"][0]["position_cm"]["x"] = 1.0
+        failure = compare_integration_traces("case", [frame(1)], [process])
+        self.assertEqual(failure.code, "INTEGRATION_MISMATCH")
+        self.assertEqual(failure.metric, "core_process_trace_equal")
+
+    def test_permutation_invariance_compares_two_runs_by_identity_map(self):
+        case = scenario(
+            "permutation_invariance",
+            value={"index_map": {"0": 2, "1": 1, "2": 0}},
+            absolute_tolerance=0.001)
+        baseline = frame(1, speed=10.0)
+        baseline["balls"] = [
+            dict(frame(1, speed=value)["balls"][0], index=index)
+            for index, value in enumerate((0.0, 0.0, -10.0))
+        ]
+        permuted = frame(1, speed=10.0)
+        permuted["balls"] = [
+            dict(frame(1, speed=value)["balls"][0], index=index)
+            for index, value in enumerate((-10.0, 0.0, 0.0))
+        ]
+        result = analyze_scenario(case, [baseline], [permuted])
+        self.assertTrue(result.passed)
+
+        permuted["balls"][0]["velocity_cm_s"]["x"] = -9.0
+        result = analyze_scenario(case, [baseline], [permuted])
+        self.assertEqual(result.failures[0].code, "NON_DETERMINISTIC")
+
+    def test_permutation_invariance_requires_comparison_trace(self):
+        case = scenario("permutation_invariance", value={"index_map": {"0": 1}})
+        result = analyze_scenario(case, [frame(1)])
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+
     def test_known_failure_matching_is_strict(self):
         result = ScenarioResult(
             "case", False, "C", {},
@@ -82,6 +118,15 @@ class AnalyzerTests(unittest.TestCase):
 
         missing = match_known_failures([], manifest)
         self.assertEqual(missing.missing, manifest)
+
+    def test_reference_limitation_is_a_new_failure_not_a_success(self):
+        result = ScenarioResult(
+            "case", False, "A", {},
+            (Failure("REFERENCE_LIMITATION", "reference_data", "missing", True, None),))
+        matched = match_known_failures([result], set())
+        self.assertEqual(
+            matched.new,
+            {("case", "REFERENCE_LIMITATION", "reference_data")})
 
 
 if __name__ == "__main__":

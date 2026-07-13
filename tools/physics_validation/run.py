@@ -1,5 +1,7 @@
 import argparse
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -26,14 +28,69 @@ def _read_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def _known_failure_set(path):
+def _known_failure_set(path, scenario_ids=None):
     manifest = _read_json(path)
     if manifest.get("schema_version") != 1:
         raise ValueError("known-failure manifest must use schema version 1")
-    return {
+    failures = {
         (item["scenario_id"], item["code"], item["metric"])
         for item in manifest.get("failures", [])
     }
+    if scenario_ids is not None:
+        failures = {item for item in failures if item[0] in scenario_ids}
+    return failures
+
+
+def _scenario_paths(path):
+    path = Path(path)
+    if path.is_file():
+        if path.suffix.lower() != ".json":
+            raise ValueError("scenario file must use the .json extension")
+        return [path]
+    if path.is_dir():
+        return sorted(path.glob("*.json"))
+    raise ValueError(f"scenario path does not exist: {path}")
+
+
+def _validated_scenario_id(value):
+    if not isinstance(value, str) or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", value) is None:
+        raise ValueError("scenario id must be a safe nonempty filename component")
+    return value
+
+
+def _build_id(executable):
+    digest = hashlib.sha256()
+    with Path(executable).open("rb") as input_file:
+        for block in iter(lambda: input_file.read(1024 * 1024), b""):
+            digest.update(block)
+    return "sha256:" + digest.hexdigest()
+
+
+def _permutation_expectation(scenario):
+    for expectation in scenario.get("expectations", []):
+        if expectation.get("metric") == "permutation_invariance":
+            return expectation
+    return None
+
+
+def _permuted_scenario(scenario):
+    expectation = _permutation_expectation(scenario)
+    if expectation is None:
+        return None
+    index_map = expectation.get("value", {}).get("index_map")
+    if not isinstance(index_map, dict) or not index_map:
+        raise ValueError("permutation_invariance requires a nonempty index_map")
+    normalized = {int(source): int(target) for source, target in index_map.items()}
+    if len(set(normalized.values())) != len(normalized):
+        raise ValueError("permutation index_map targets must be unique")
+    result = json.loads(json.dumps(scenario))
+    result["id"] = scenario["id"] + "__permuted"
+    for ball in result.get("balls", []):
+        source = ball["index"]
+        if source not in normalized:
+            raise ValueError(f"permutation index_map is missing ball {source}")
+        ball["index"] = normalized[source]
+    return result
 
 
 def _fetch_trace(client):
@@ -101,13 +158,33 @@ def run_validation(executable, scenarios, known_failures, output):
     trace_directory.mkdir(parents=True, exist_ok=True)
 
     results = []
-    trace_paths = {}
-    for scenario_path in sorted(scenarios.glob("*.json")):
+    scenario_metadata = {}
+    scenario_documents = []
+    seen_ids = set()
+    for scenario_path in _scenario_paths(scenarios):
         scenario = _read_json(scenario_path)
+        scenario_id = _validated_scenario_id(scenario.get("id"))
+        if scenario_id in seen_ids:
+            raise ValueError(f"duplicate scenario id: {scenario_id}")
+        seen_ids.add(scenario_id)
+        scenario_documents.append((scenario_path, scenario))
+
+    for scenario_path, scenario in scenario_documents:
+        scenario_id = scenario["id"]
         try:
             first = _execute_once(executable, scenario)
             second = _execute_once(executable, scenario)
-            result = analyze_scenario(scenario, first)
+            comparison = None
+            comparison_trace_path = None
+            permuted_scenario = _permuted_scenario(scenario)
+            if permuted_scenario is not None:
+                comparison = _execute_once(executable, permuted_scenario)
+                repeated_comparison = _execute_once(executable, permuted_scenario)
+                comparison_determinism_failure = compare_traces(
+                    permuted_scenario["id"], comparison, repeated_comparison)
+            else:
+                comparison_determinism_failure = None
+            result = analyze_scenario(scenario, first, comparison)
             determinism_failure = compare_traces(scenario["id"], first, second)
             if determinism_failure is not None:
                 result = ScenarioResult(
@@ -117,23 +194,56 @@ def run_validation(executable, scenarios, known_failures, output):
                     result.metrics,
                     result.failures + (determinism_failure,),
                 )
-            trace_path = trace_directory / f"{scenario['id']}.json"
+            if comparison_determinism_failure is not None:
+                result = ScenarioResult(
+                    result.scenario_id,
+                    False,
+                    result.evidence_grade,
+                    result.metrics,
+                    result.failures + (comparison_determinism_failure,),
+                )
+            trace_path = trace_directory / f"{scenario_id}.json"
             trace_path.write_text(
                 json.dumps(first, ensure_ascii=False, indent=2, sort_keys=True,
                            allow_nan=False) + "\n",
                 encoding="utf-8")
-            trace_paths[scenario["id"]] = str(trace_path)
+            if comparison is not None:
+                comparison_trace_path = trace_directory / f"{scenario_id}__permuted.json"
+                comparison_trace_path.write_text(
+                    json.dumps(comparison, ensure_ascii=False, indent=2, sort_keys=True,
+                               allow_nan=False) + "\n",
+                    encoding="utf-8")
+            scenario_metadata[scenario_id] = {
+                "source_path": str(scenario_path.resolve()),
+                "trace_path": str(trace_path),
+                "comparison_trace_path": (
+                    str(comparison_trace_path) if comparison_trace_path else None),
+                "expectations": scenario.get("expectations", []),
+                "evidence": scenario.get("evidence", {}),
+            }
         except Exception as error:
             result = _integration_failure(scenario, error)
+            scenario_metadata[scenario_id] = {
+                "source_path": str(scenario_path.resolve()),
+                "trace_path": None,
+                "comparison_trace_path": None,
+                "expectations": scenario.get("expectations", []),
+                "evidence": scenario.get("evidence", {}),
+            }
         results.append(result)
 
-    expected = _known_failure_set(known_failures)
+    expected = _known_failure_set(known_failures, seen_ids)
     matching = match_known_failures(results, expected)
     write_reports(
         results,
         matching,
         output,
-        {"executable": str(executable), "trace_paths": trace_paths},
+        {
+            "build_id": _build_id(executable),
+            "executable": str(executable),
+            "scenario_input": str(scenarios),
+            "scenarios": scenario_metadata,
+        },
     )
     return 0 if not matching.new and not matching.missing else 1
 

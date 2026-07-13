@@ -22,6 +22,21 @@ int intParam(const json::Value& params, const char* name)
     return params.at(name).asInt();
 }
 
+std::uint64_t tickParam(const json::Value& params, const char* name, std::uint64_t fallback)
+{
+    if (!params.has(name)) return fallback;
+    if (!params.at(name).isNumber()) {
+        throw std::runtime_error(std::string(name) + " must be a number");
+    }
+    const double value = params.at(name).asNumber();
+    constexpr double kMaximumExactJsonInteger = 9007199254740991.0;
+    if (!std::isfinite(value) || value < 0.0 || value > kMaximumExactJsonInteger ||
+        std::floor(value) != value) {
+        throw std::runtime_error(std::string(name) + " must be a nonnegative exact integer");
+    }
+    return static_cast<std::uint64_t>(value);
+}
+
 std::string stringParam(const json::Value& params, const char* name)
 {
     if (!params.has(name) || !params.at(name).isString()) throw std::runtime_error(std::string(name) + " must be a string");
@@ -98,15 +113,14 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         if (command == "stop_physics_trace") { runtime_.setPhysicsTraceEnabled(false); return success(request.id); }
         if (command == "clear_physics_trace") { runtime_.clearPhysicsTrace(); return success(request.id); }
         if (command == "get_physics_trace") {
-            const int afterTick = params.has("after_tick") ? params.at("after_tick").asInt() : 0;
+            const std::uint64_t afterTick = tickParam(params, "after_tick", 0);
             const int limit = params.has("limit") ? params.at("limit").asInt() : 1000;
-            if (afterTick < 0) return failure(request.id, "invalid_argument", "after_tick must be nonnegative");
             if (limit < 1 || limit > 1000) return failure(request.id, "invalid_argument", "limit must be between 1 and 1000");
 
             json::Value frames = json::Value::array();
             bool hasMore = false;
             for (const PhysicsFrame& frame : runtime_.physicsTrace().frames()) {
-                if (frame.tick <= static_cast<std::uint64_t>(afterTick)) continue;
+                if (frame.tick <= afterTick) continue;
                 if (static_cast<int>(frames.asArray().size()) == limit) {
                     hasMore = true;
                     break;

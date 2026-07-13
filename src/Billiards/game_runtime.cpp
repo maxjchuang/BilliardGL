@@ -168,6 +168,16 @@ void GameRuntime::replaceState(const GameState& state)
     state_.ballsMoving = anyBallMoving(state_);
 }
 
+void GameRuntime::replaceStateForScenario(const GameState& state)
+{
+    replaceState(state);
+    tick_ = 0;
+    nextSequence_ = 1;
+    events_.clear();
+    clearGameplayEvents(state_);
+    physicsTrace_.clear();
+}
+
 void GameRuntime::clearEvents()
 {
     events_.clear();

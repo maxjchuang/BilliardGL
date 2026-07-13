@@ -178,9 +178,7 @@ ActionResult applyPhysicsScenario(GameRuntime& runtime, const PhysicsScenario& s
     GameState state;
     initializeBalls(state);
     state.balls = scenario.balls;
-    runtime.replaceState(state);
-    runtime.clearEvents();
-    runtime.clearPhysicsTrace();
+    runtime.replaceStateForScenario(state);
     return ActionResult{};
 }
 

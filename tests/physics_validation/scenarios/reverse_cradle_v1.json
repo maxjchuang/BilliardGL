@@ -10,6 +10,6 @@
     {"index": 2, "position_cm": [10.0, 89.341476, 20.0], "velocity_cm_s": [-10.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0], "pocketed": false}
   ],
   "expectations": [
-    {"metric": "permutation_invariance", "operator": "eq", "value": {"ball_index": 0, "velocity_cm_s": [-10.0, 0.0, 0.0]}, "absolute_tolerance": 0.001}
+    {"metric": "permutation_invariance", "operator": "eq", "value": {"index_map": {"0": 2, "1": 1, "2": 0}}, "absolute_tolerance": 0.001}
   ]
 }

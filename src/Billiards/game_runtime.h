@@ -34,6 +34,7 @@ public:
     std::vector<RuntimeEvent> eventsSince(std::uint64_t sequence) const;
     ActionResult setBall(int index, const BallState& ball);
     void replaceState(const GameState& state);
+    void replaceStateForScenario(const GameState& state);
     void clearEvents();
     void setPhysicsTraceEnabled(bool enabled) { physicsTraceEnabled_ = enabled; }
     bool physicsTraceEnabled() const { return physicsTraceEnabled_; }

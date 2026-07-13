@@ -26,7 +26,9 @@ with tempfile.TemporaryDirectory() as directory:
         "failed_new": 0,
         "reference_limited": 0,
     }
-    assert len(list((output / "traces").glob("*.json"))) == 4
+    traces = list((output / "traces").glob("*.json"))
+    assert len(traces) == 5
+    assert (output / "traces/reverse_cradle_v1__permuted.json").is_file()
     markdown = (output / "report.md").read_text(encoding="utf-8")
     assert markdown.count("FAILED (KNOWN)") == 3
     assert "free_roll_v1 | PASSED" in markdown

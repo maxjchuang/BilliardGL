@@ -20,9 +20,21 @@ python3 -m tools.physics_validation.run \
   --output build/check/physics-validation-report
 ```
 
+重放单个场景时，`--scenarios` 也可以直接指向一个 JSON 文件；known-failure 清单会自动限定到该场景：
+
+```bash
+python3 -m tools.physics_validation.run \
+  --executable build/check/Billiards \
+  --scenarios tests/physics_validation/scenarios/high_speed_tunneling_v1.json \
+  --known-failures tests/physics_validation/known_failures.json \
+  --output build/check/physics-validation-report/high-speed-tunneling
+```
+
+该命令的原始数据写入 `build/check/physics-validation-report/high-speed-tunneling/traces/high_speed_tunneling_v1.json`。
+
 输出包括：
 
-- `report.json`：机器可读场景结果、指标、失败分类和 known-failure 对账。
+- `report.json`：机器可读场景结果、构建 SHA-256、场景来源、expectation/容差、原始 trace 路径、指标、失败分类和 known-failure 对账。
 - `report.md`：按场景名排序的人工摘要。
 - `traces/<scenario-id>.json`：第一次确定性运行的完整逐 tick 原始数据。
 
@@ -59,6 +71,10 @@ runtime 最多保留 10000 帧。协议通过 `get_physics_trace {after_tick,lim
 - 使用 `eq`、`lte` 或 `gte` 的验收指标。
 
 未列出的球被原子地设置为静止和落袋。解析失败不会部分修改游戏状态。底层 C++ 测试和进程 E2E 使用相同 JSON 文件。
+
+场景 `id` 必须是安全且唯一的文件名组成部分。涉及球间距的 fixture 使用 WPA Pool 的 `5.715 cm` 球直径和 `2.8575 cm` 半径；修改 `table_specs` 中的 WPA 几何后，必须同步重新生成或更新这些 literal fixture，并在 review 中核对差异。
+
+`permutation_invariance` 会从 `value.index_map` 生成第二套索引置换场景。两套布局各运行两次，先验证各自确定性，再按物理身份映射比较最终速度；报告同时保存原始和置换 trace。
 
 证据等级含义：
 

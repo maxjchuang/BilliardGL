@@ -1,4 +1,6 @@
 #include "automation_controller.h"
+#include "automation_protocol.h"
+#include "physics_scenario.h"
 
 #include <cstdlib>
 #include <fstream>
@@ -95,6 +97,10 @@ int main()
     largeLimit["limit"] = billiardgl::json::Value(1001);
     expect(!send(controller, 16, "get_physics_trace", largeLimit).response.at("ok").asBool(),
         "oversized trace limit should fail");
+    billiardgl::json::Value largeAfterTick = billiardgl::json::Value::object();
+    largeAfterTick["after_tick"] = billiardgl::json::Value(3000000000.0);
+    expect(send(controller, 161, "get_physics_trace", largeAfterTick).response.at("ok").asBool(),
+        "64-bit after_tick should be accepted");
 
     expect(send(controller, 17, "stop_physics_trace").response.at("ok").asBool(),
         "trace stop should succeed");
@@ -108,5 +114,28 @@ int main()
         "controller should load canonical scenario v1");
     expect(!runtime.state().balls[0].pocketed && runtime.state().balls[1].pocketed,
         "canonical scenario should atomically activate only listed balls");
+
+    billiardgl::GameRuntime directRuntime;
+    const billiardgl::PhysicsScenarioResult parsed =
+        billiardgl::parsePhysicsScenario(fixture("free_roll_v1.json"));
+    expect(parsed.ok && billiardgl::applyPhysicsScenario(directRuntime, parsed.scenario).ok,
+        "direct runtime should load the same canonical scenario");
+    directRuntime.setPhysicsTraceEnabled(true);
+    runtime.setPhysicsTraceEnabled(true);
+    directRuntime.step(2);
+    billiardgl::json::Value twoTicks = billiardgl::json::Value::object();
+    twoTicks["ticks"] = billiardgl::json::Value(2);
+    expect(send(controller, 20, "step", twoTicks).response.at("ok").asBool(),
+        "controller path should step the canonical scenario");
+    expect(directRuntime.physicsTrace().frames().size() == runtime.physicsTrace().frames().size(),
+        "direct and controller paths should emit the same frame count");
+    for (std::size_t index = 0; index < directRuntime.physicsTrace().frames().size(); ++index) {
+        const std::string direct = billiardgl::json::stringify(
+            billiardgl::serializePhysicsFrame(directRuntime.physicsTrace().frames()[index]));
+        const std::string controlled = billiardgl::json::stringify(
+            billiardgl::serializePhysicsFrame(runtime.physicsTrace().frames()[index]));
+        expect(direct == controlled,
+            "direct and controller paths should serialize identical authoritative frames");
+    }
     return 0;
 }

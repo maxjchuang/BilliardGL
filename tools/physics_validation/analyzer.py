@@ -94,7 +94,7 @@ def _failure_code(metric):
     return NUMERICAL_FAILURE
 
 
-def _evaluate(expectation, frames):
+def _evaluate(expectation, frames, comparison_frames=None):
     metric = expectation["metric"]
     expected = expectation.get("value")
     operator = expectation.get("operator", "eq")
@@ -134,12 +134,26 @@ def _evaluate(expectation, frames):
         passed = all(abs(a - b) <= tolerance for a, b in zip(actual, target))
         return passed, actual, MODEL_MISMATCH, "final velocity differs from reference"
     elif metric == "permutation_invariance":
-        if not isinstance(expected, dict) or "ball_index" not in expected or "velocity_cm_s" not in expected:
-            return False, None, REFERENCE_LIMITATION, "permutation target is missing"
-        actual = _vector(_ball(frames[-1], expected["ball_index"])["velocity_cm_s"])
-        target = _vector(expected["velocity_cm_s"])
-        passed = all(abs(a - b) <= tolerance for a, b in zip(actual, target))
-        return passed, actual, NON_DETERMINISTIC, "result depends on ball iteration order"
+        if comparison_frames is None or not comparison_frames:
+            return False, None, INTEGRATION_MISMATCH, "permutation comparison trace is missing"
+        if not isinstance(expected, dict) or not isinstance(expected.get("index_map"), dict):
+            return False, None, REFERENCE_LIMITATION, "permutation index map is missing"
+        differences = []
+        for source_text, target_index in sorted(expected["index_map"].items()):
+            source_index = int(source_text)
+            source_velocity = _vector(_ball(frames[-1], source_index)["velocity_cm_s"])
+            target_velocity = _vector(_ball(comparison_frames[-1], target_index)["velocity_cm_s"])
+            differences.append({
+                "source_index": source_index,
+                "target_index": target_index,
+                "source_velocity_cm_s": source_velocity,
+                "target_velocity_cm_s": target_velocity,
+            })
+        passed = all(
+            all(abs(a - b) <= tolerance for a, b in zip(
+                item["source_velocity_cm_s"], item["target_velocity_cm_s"]))
+            for item in differences)
+        return passed, differences, NON_DETERMINISTIC, "result depends on ball iteration order"
     else:
         return False, None, REFERENCE_LIMITATION, f"metric {metric} is not implemented"
 
@@ -147,7 +161,7 @@ def _evaluate(expectation, frames):
     return passed, actual, _failure_code(metric), f"{metric} is outside its acceptance rule"
 
 
-def analyze_scenario(scenario, frames):
+def analyze_scenario(scenario, frames, comparison_frames=None):
     scenario_id = scenario["id"]
     grade = scenario.get("evidence", {}).get("grade", "C")
     metrics = {}
@@ -155,7 +169,8 @@ def analyze_scenario(scenario, frames):
     for expectation in scenario.get("expectations", []):
         metric = expectation["metric"]
         try:
-            passed, actual, code, message = _evaluate(expectation, frames)
+            passed, actual, code, message = _evaluate(
+                expectation, frames, comparison_frames)
         except (KeyError, TypeError, ValueError) as error:
             passed, actual, code, message = False, None, INTEGRATION_MISMATCH, str(error)
         metrics[metric] = actual
@@ -177,11 +192,24 @@ def compare_traces(scenario_id, first, second):
         canonical_first, canonical_second)
 
 
+def compare_integration_traces(scenario_id, core, process):
+    canonical_core = json.dumps(core, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    canonical_process = json.dumps(
+        process, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    if canonical_core == canonical_process:
+        return None
+    return Failure(
+        INTEGRATION_MISMATCH,
+        "core_process_trace_equal",
+        f"{scenario_id} produced different direct-core and process traces",
+        canonical_core,
+        canonical_process)
+
+
 def match_known_failures(results, expected):
     actual = {
         (result.scenario_id, failure.code, failure.metric)
         for result in results
         for failure in result.failures
-        if failure.code != REFERENCE_LIMITATION
     }
     return KnownFailureMatch(actual & expected, actual - expected, expected - actual)

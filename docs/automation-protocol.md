@@ -67,8 +67,9 @@ runtime 最多保留 10000 帧，超出时淘汰最旧帧并增加 `dropped_fram
 
 测试专用场景：
 
-- `set_ball {index,position?,velocity?,rotation_axis?,rotation_angle?,pocketed?}`。
-- `load_scenario {balls}`：`balls` 必须有 16 项，每项包含 position 和 velocity；完整校验后原子替换。
+- `set_ball {index,position?,velocity?,angular_velocity?,rotation_axis?,rotation_angle?,pocketed?}`。
+- `load_scenario {scenario}`：加载 canonical physics scenario v1；能力列表通过 `physics_scenario_v1` 声明支持。成功加载会原子替换状态、把仿真 tick 和事件序号重置到零并清空旧 trace。
+- `load_scenario {balls}`：兼容旧格式；`balls` 必须有 16 项，每项包含 position 和 velocity，完整校验后原子替换。
 - `set_player_state {current_player?,next_player?,illegal_shot?}`。
 
 rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 PPM，再返回相同 tick；headless 返回 `unsupported_in_mode`。

@@ -38,8 +38,11 @@ def write_reports(results, matching, output_directory, metadata):
             "new": sorted(list(item) for item in matching.new),
             "missing": sorted(list(item) for item in matching.missing),
         },
-        "scenarios": [dict(asdict(result), status=statuses[result.scenario_id])
-                      for result in ordered],
+        "scenarios": [dict(
+            asdict(result),
+            status=statuses[result.scenario_id],
+            **metadata.get("scenarios", {}).get(result.scenario_id, {}),
+        ) for result in ordered],
     }
 
     json_path = output_directory / "report.json"
