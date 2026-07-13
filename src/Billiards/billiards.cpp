@@ -179,6 +179,12 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(myReshape);
 
 	billiardgl::setupLights();
+	myReshape(width, height);
+	if (!Game.config.screenshotPath.empty())
+	{
+		myDisplay();
+		return 0;
+	}
 	glutMainLoop();
 	return 0;
 }

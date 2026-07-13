@@ -58,6 +58,16 @@ void assertDisplayCallbackPrecedesEveryRenderInitialization(const std::string& c
     }
 }
 
+void assertScreenshotRendersBeforeMainLoop(const std::string& content)
+{
+    const std::string directScreenshot = "if (!Game.config.screenshotPath.empty())\n\t{\n\t\tmyDisplay();";
+    const std::size_t screenshot = content.find(directScreenshot);
+    const std::size_t mainLoop = content.find("glutMainLoop();");
+    expect(screenshot != std::string::npos, "screenshot mode should render directly");
+    expect(mainLoop != std::string::npos && screenshot < mainLoop,
+        "screenshot mode should render before entering the GLUT main loop");
+}
+
 }
 
 int main()
@@ -96,6 +106,7 @@ int main()
     assertContains(billiards, "billiardgl::installPlatformScrollHandler");
     assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");
     assertDisplayCallbackPrecedesEveryRenderInitialization(billiards);
+    assertScreenshotRendersBeforeMainLoop(billiards);
     assertContains(cmake, "platform_scroll.cpp");
     assertContains(cmake, "platform_scroll_mac.mm");
     assertContains(platformScroll, "glutMouseWheelFunc");
