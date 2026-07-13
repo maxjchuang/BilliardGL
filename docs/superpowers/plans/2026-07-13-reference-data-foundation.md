@@ -565,11 +565,11 @@ Model it on `tests/e2e/test_physics_validation.py`. Accept the built Billiards e
 
 - [ ] **Step 2: Register and run the integration test**
 
-Add a CTest entry named `physics_reference_validation` with the same runtime environment and timeout pattern as `physics_validation`. Pass `${CMAKE_CURRENT_BINARY_DIR}/physics-reference-validation` as the stable output directory. Build and run:
+Add a CTest entry named `BilliardsReferenceValidationE2E` with the same runtime environment and timeout pattern as `BilliardsPhysicsValidationE2E`. Pass `${CMAKE_CURRENT_BINARY_DIR}/physics-reference-validation` as the stable output directory. Build and run:
 
 ```bash
 cmake --build build --parallel
-ctest --test-dir build --output-on-failure -R '^physics_reference_validation$'
+ctest --test-dir build --output-on-failure -R '^BilliardsReferenceValidationE2E$'
 ```
 
 Expected: the new CTest passes because Task 7 already completed the runner contract. If it fails, preserve the exact failure and fix only process/path/metadata integration in the next step.
@@ -592,7 +592,7 @@ Extend `.github/workflows/ci.yml` to upload `build/physics-reference-validation/
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
 python3 -m unittest discover -s tests/physics_validation -p 'test_*.py' -v
-ctest --test-dir build --output-on-failure -R 'physics_validation|physics_reference_validation'
+ctest --test-dir build --output-on-failure -R 'Billiards(Physics|Reference)ValidationE2E'
 python3 -m tools.physics_validation.reference_package tests/physics_validation/fixtures/reference_package_v1
 git diff --check
 ```
