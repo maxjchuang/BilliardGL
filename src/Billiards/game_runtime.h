@@ -31,6 +31,9 @@ public:
     std::uint64_t tick() const { return tick_; }
     const std::vector<RuntimeEvent>& events() const { return events_; }
     std::vector<RuntimeEvent> eventsSince(std::uint64_t sequence) const;
+    ActionResult setBall(int index, const BallState& ball);
+    void replaceState(const GameState& state);
+    void clearEvents();
 
 private:
     void applyShot();

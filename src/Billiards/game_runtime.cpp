@@ -134,6 +134,7 @@ void GameRuntime::recordEvents()
     for (const NamedFlag& flag : flags) {
         if (flag.value) events_.push_back(RuntimeEvent{nextSequence_++, tick_, flag.name});
     }
+    if (events_.size() > 10000) events_.erase(events_.begin(), events_.begin() + (events_.size() - 10000));
 }
 
 std::vector<RuntimeEvent> GameRuntime::eventsSince(std::uint64_t sequence) const
@@ -143,6 +144,26 @@ std::vector<RuntimeEvent> GameRuntime::eventsSince(std::uint64_t sequence) const
         if (event.sequence > sequence) result.push_back(event);
     }
     return result;
+}
+
+ActionResult GameRuntime::setBall(int index, const BallState& ball)
+{
+    if (index < 0 || index >= kBallCount) return ActionResult{false, "invalid_argument"};
+    state_.balls[index] = ball;
+    state_.ballsMoving = anyBallMoving(state_);
+    return ActionResult{};
+}
+
+void GameRuntime::replaceState(const GameState& state)
+{
+    state_ = state;
+    state_.ballsMoving = anyBallMoving(state_);
+}
+
+void GameRuntime::clearEvents()
+{
+    events_.clear();
+    clearGameplayEvents(state_);
 }
 
 }  // namespace billiardgl
