@@ -213,6 +213,9 @@ billiardgl_add_test(BilliardsLaunchOptionsTests)
 add_test(NAME BilliardsHeadlessAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_headless_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsHeadlessAutomationE2E PROPERTIES TIMEOUT 30)
+add_test(NAME BilliardsRenderedAutomationE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_rendered_automation.py $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsRenderedAutomationE2E PROPERTIES TIMEOUT 30 LABELS "rendered;e2e")
 
 target_include_directories(Billiards PRIVATE
     src/Billiards

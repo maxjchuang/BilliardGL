@@ -7,4 +7,4 @@ BUILD_DIR="${BILLIARDGL_BUILD_DIR:-${REPO_ROOT}/build/check}"
 
 cmake -S "${REPO_ROOT}" -B "${BUILD_DIR}"
 cmake --build "${BUILD_DIR}" --parallel
-ctest --test-dir "${BUILD_DIR}" --output-on-failure
+ctest --test-dir "${BUILD_DIR}" --output-on-failure --label-exclude rendered
