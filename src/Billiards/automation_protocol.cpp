@@ -126,6 +126,7 @@ json::Value serializeAutomationState(const GameRuntime& runtime)
         const BallState& ball = state.balls[index];
         json::Value value = json::Value::object();
         value["index"] = json::Value(index);
+        value["angular_velocity"] = pointValue(ball.angularVelocity);
         value["pocketed"] = json::Value(ball.pocketed);
         value["position"] = pointValue(ball.position);
         value["rotation_angle"] = json::Value(ball.rotationAngle);

@@ -31,6 +31,7 @@ struct Point3 {
 struct BallState {
     Point3 position;
     Point3 velocity;
+    Point3 angularVelocity;
     Point3 rotationAxis;
     float speed = 0.0f;
     float rotationAngle = 0.0f;

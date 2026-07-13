@@ -30,6 +30,7 @@ void initializeBalls(GameState& state)
 
     for (BallState& ball : state.balls) {
         ball.velocity = Point3{};
+        ball.angularVelocity = Point3{};
         ball.rotationAxis = Point3{};
         ball.speed = 0.0f;
         ball.rotationAngle = 0.0f;
@@ -50,6 +51,7 @@ void updateCameraFromCueBall(GameState& state)
 void resetBallMotion(BallState& ball)
 {
     ball.velocity = Point3{};
+    ball.angularVelocity = Point3{};
     ball.rotationAxis = Point3{};
     ball.speed = 0.0f;
     ball.rotationAngle = 0.0f;

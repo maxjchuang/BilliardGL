@@ -22,6 +22,10 @@ int main()
     const billiardgl::json::Value state = billiardgl::serializeAutomationState(runtime);
     expect(state.at("tick").asInt() == 0, "state should include tick");
     expect(state.at("balls").asArray().size() == 16, "state should include every ball");
+    const billiardgl::json::Value& firstBall = state.at("balls").asArray()[0];
+    expect(firstBall.has("angular_velocity"), "state should include authoritative angular velocity");
+    expect(firstBall.at("angular_velocity").has("x") && firstBall.at("angular_velocity").has("y") &&
+        firstBall.at("angular_velocity").has("z"), "angular velocity should include every axis");
     expect(state.at("aim").has("yaw"), "state should include aim");
     expect(state.at("camera").has("target"), "state should include camera");
     expect(state.at("players").has("current_player"), "state should include players");
