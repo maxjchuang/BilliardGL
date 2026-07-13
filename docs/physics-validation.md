@@ -76,6 +76,12 @@ runtime 最多保留 10000 帧。协议通过 `get_physics_trace {after_tick,lim
 
 `permutation_invariance` 会从 `value.index_map` 生成第二套索引置换场景。两套布局各运行两次，先验证各自确定性，再按物理身份映射比较最终速度；报告同时保存原始和置换 trace。
 
+## Cue-impact schema v2
+
+schema v2 保留 v1 的球、仿真与 expectation 字段，并增加必填 `cue_impact` 输入契约。解析器验证 cue ball 唯一且活跃、cue 速度/质量有限且在范围内、方向为单位向量、仰角合法、tip offset 位于球面内，并以生产球半径 `2.8575 cm` 验证两套 offset 表示一致。解析失败不改变 runtime。
+
+v2 当前只解决实验输入的无损表达与 state/trace 追踪，不添加 cue-contact 公式。没有独立机械证据时，物理 cue 速度不能拟合成 shot power；竖直 tip offset 也不能静默降级为中心击球。此类点必须报告 `REFERENCE_LIMITATION`。当将来输入可执行而引擎给出有限但错误的速度或自旋时，才报告 `MODEL_MISMATCH`。
+
 证据等级含义：
 
 - A：包含可复现实验条件、测量精度和逐点数据，可直接验收轨迹或速度。

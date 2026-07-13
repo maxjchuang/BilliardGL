@@ -105,6 +105,8 @@ _EXPERIMENTAL_METRICS = {
     "stick_slip_classification",
     "cushion_rebound_speed_cm_s",
     "cushion_rebound_angle_degrees",
+    "cue_impact_linear_speed_cm_s",
+    "cue_impact_angular_speed_rad_s",
 }
 
 
@@ -312,6 +314,53 @@ def _event_observation(metric, reference, frames):
     return actual, None, None
 
 
+def _cue_impact_observation(metric, reference, frames):
+    required = {
+        "sample_phase", "source_phase", "ball_index", "minimum_window_ticks",
+        "input_support", "stability_tolerance",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    if selection["sample_phase"] != "first_stable_frames_after_cue_impact" \
+            or not isinstance(selection["source_phase"], str) \
+            or not selection["source_phase"]:
+        return None, REFERENCE_LIMITATION, "cue-impact source/sample phase is invalid"
+    if selection["input_support"] is not True:
+        return None, REFERENCE_LIMITATION, "requested physical cue input is unsupported"
+    tolerance = selection["stability_tolerance"]
+    if not _finite_number(tolerance) or tolerance < 0.0:
+        return None, REFERENCE_LIMITATION, "cue-impact stability tolerance is invalid"
+    if not frames or not all(isinstance(frame.get("cue_impact"), dict) for frame in frames):
+        return None, INTEGRATION_MISMATCH, "requested cue-impact input trace is absent"
+    minimum = selection["minimum_window_ticks"]
+    if not _contiguous(frames):
+        return None, INTEGRATION_MISMATCH, "trace ticks are not contiguous"
+    try:
+        values = []
+        for frame in frames:
+            ball = _ball(frame, selection["ball_index"])
+            if metric == "cue_impact_linear_speed_cm_s":
+                value = ball["speed_cm_s"]
+            else:
+                axis = selection.get("angular_axis")
+                sign = selection.get("angular_sign")
+                if axis not in {"x", "y", "z"} or sign not in {-1, 1}:
+                    return None, REFERENCE_LIMITATION, "angular axis/sign is missing or invalid"
+                value = sign * _vector(ball["angular_velocity_rad_s"])[
+                    {"x": 0, "y": 1, "z": 2}[axis]]
+            if not _finite_number(value):
+                return value, NUMERICAL_FAILURE, "cue-impact output is not finite"
+            values.append(value)
+    except (KeyError, TypeError, ValueError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    for index in range(len(values) - minimum + 1):
+        window = values[index:index + minimum]
+        if max(window) - min(window) <= tolerance:
+            return sum(window) / len(window), None, None
+    return None, INTEGRATION_MISMATCH, "stable cue-impact output window is absent"
+
+
 def _linear_value_at(samples, target_time):
     if len(samples) < 2 or not all(
             _finite_number(value) for sample in samples for value in sample):
@@ -415,6 +464,9 @@ def _reference_observation(observed_metric, reference, scenario, frames):
             and isinstance(reference.get("selection"), dict) \
             and "incident_window_ticks" in reference["selection"]:
         return _paired_cushion_observation(reference, scenario, frames)
+    if observed_metric in {
+            "cue_impact_linear_speed_cm_s", "cue_impact_angular_speed_rad_s"}:
+        return _cue_impact_observation(observed_metric, reference, frames)
     if observed_metric in _EXPERIMENTAL_METRICS:
         return _event_observation(observed_metric, reference, frames)
     if observed_metric != "stopping_distance_cm":
@@ -467,6 +519,19 @@ def _evaluate(expectation, frames, comparison_frames=None, scenario=None):
         actual = not any(
             contact.get("kind") == "ball_ball"
             for frame in frames for contact in frame.get("contacts", []))
+    elif metric == "cue_impact_input_round_trip":
+        requested = (scenario or {}).get("cue_impact")
+        if not isinstance(requested, dict):
+            return False, None, REFERENCE_LIMITATION, "scenario cue-impact input is missing"
+        expected_trace = dict(requested)
+        direction = requested.get("direction")
+        if not isinstance(direction, list) or len(direction) != 3:
+            return False, None, REFERENCE_LIMITATION, "scenario cue direction is invalid"
+        expected_trace["direction"] = {
+            "x": direction[0], "y": direction[1], "z": direction[2]}
+        actual = all(frame.get("cue_impact") == expected_trace for frame in frames)
+        passed = actual == expected
+        return passed, actual, INTEGRATION_MISMATCH, "cue-impact input changed across state/trace"
     elif metric == "final_speed_cm_s":
         if not isinstance(expected, dict) or "ball_index" not in expected or "value" not in expected:
             return False, None, REFERENCE_LIMITATION, "reference speed and ball index are missing"

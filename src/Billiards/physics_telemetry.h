@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_state.h"
+#include "cue_impact.h"
 
 #include <array>
 #include <cstddef>
@@ -57,6 +58,8 @@ struct PhysicsFrame {
     Point3 linearMomentum;
     double translationalKineticEnergyJ = 0.0;
     double maximumPenetrationCm = 0.0;
+    bool hasCueImpactInput = false;
+    CueImpactInput cueImpactInput;
 };
 
 Point3 translationalMomentumKgMps(

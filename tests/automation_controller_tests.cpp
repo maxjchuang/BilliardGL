@@ -2,6 +2,7 @@
 #include "automation_protocol.h"
 #include "physics_scenario.h"
 
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -38,6 +39,10 @@ int main()
     expect(send(controller, 1, "ping").response.at("ok").asBool(), "ping should succeed");
     expect(send(controller, 2, "get_capabilities").response.at("result").at("commands").asArray().size() > 10,
         "capabilities should enumerate commands");
+    const std::vector<std::string> capabilities = controller.capabilities();
+    expect(std::find(capabilities.begin(), capabilities.end(),
+        "physics_scenario_v2_cue_input") != capabilities.end(),
+        "capabilities should advertise cue-input schema v2");
 
     send(controller, 3, "toggle_aim");
     expect(runtime.state().aim.mode == billiardgl::AimMode::Aim, "toggle aim should use game input logic");
@@ -137,5 +142,42 @@ int main()
         expect(direct == controlled,
             "direct and controller paths should serialize identical authoritative frames");
     }
+
+    billiardgl::json::Value cueV2 = fixture("cue_impact_v2_contract.json");
+    billiardgl::json::Value cueParams = billiardgl::json::Value::object();
+    cueParams["scenario"] = cueV2;
+    expect(send(controller, 21, "load_scenario", cueParams).response.at("ok").asBool(),
+        "controller should load canonical cue-impact scenario v2");
+    const billiardgl::json::Value cueState =
+        send(controller, 22, "get_state").response.at("result");
+    expect(cueState.has("cue_impact") &&
+        cueState.at("cue_impact").at("cue_speed_cm_s").asInt() == 100,
+        "state should round-trip requested cue input");
+    expect(!cueState.at("cue_impact_support").at("shot_executed").asBool(),
+        "unsupported physical cue input must not fire a surrogate shot");
+    bool hasSpeedMappingLimitation = false;
+    bool hasVerticalOffsetLimitation = false;
+    for (const billiardgl::json::Value& item :
+            cueState.at("cue_impact_support").at("unsupported_codes").asArray()) {
+        hasSpeedMappingLimitation |= item.asString() == "cue_speed_to_power_mapping_missing";
+        hasVerticalOffsetLimitation |= item.asString() == "vertical_tip_offset_not_modeled";
+    }
+    expect(hasSpeedMappingLimitation && hasVerticalOffsetLimitation,
+        "state should enumerate unsupported production cue fields");
+    runtime.setPhysicsTraceEnabled(true);
+    expect(send(controller, 23, "step", twoTicks).response.at("ok").asBool(),
+        "cue-impact scenario should remain traceable without synthesizing a shot");
+    const billiardgl::json::Value cueFrame = billiardgl::serializePhysicsFrame(
+        runtime.physicsTrace().frames().front());
+    expect(cueFrame.has("cue_impact"), "trace should round-trip requested cue input");
+
+    billiardgl::json::Value malformed = cueV2;
+    malformed["cue_impact"]["cue_speed_cm_s"] = billiardgl::json::Value(-1.0);
+    cueParams["scenario"] = malformed;
+    expect(!send(controller, 24, "load_scenario", cueParams).response.at("ok").asBool(),
+        "malformed cue-impact scenario should fail");
+    expect(send(controller, 25, "get_state").response.at("result").at("cue_impact")
+        .at("cue_speed_cm_s").asInt() == 100,
+        "malformed scenario rejection must not mutate runtime state");
     return 0;
 }

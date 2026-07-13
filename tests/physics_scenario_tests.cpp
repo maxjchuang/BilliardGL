@@ -2,6 +2,7 @@
 #include "physics_scenario.h"
 
 #include <cstdlib>
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -33,6 +34,23 @@ billiardgl::json::Value validDocument()
     return parsed.value;
 }
 
+billiardgl::json::Value validV2Document()
+{
+    billiardgl::json::Value value = validDocument();
+    value["schema_version"] = billiardgl::json::Value(2);
+    billiardgl::json::Value cue = billiardgl::json::Value::object();
+    cue["cue_ball_index"] = billiardgl::json::Value(0);
+    cue["cue_speed_cm_s"] = billiardgl::json::Value(100.0);
+    cue["cue_mass_kg"] = billiardgl::json::Value(0.5);
+    cue["direction"] = billiardgl::json::parse("[1.0,0.0,0.0]").value;
+    cue["elevation_degrees"] = billiardgl::json::Value(0.0);
+    cue["tip_offset_cm"] = billiardgl::json::parse("[0.0,0.99995]").value;
+    cue["tip_offset_radius"] = billiardgl::json::parse("[0.0,0.35]").value;
+    cue["chalk_state"] = billiardgl::json::Value("SOURCE_DECLARED");
+    value["cue_impact"] = cue;
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -56,8 +74,25 @@ int main()
     expect(runtime.physicsTrace().frames().size() == 10,
         "direct runtime path should execute canonical fixture");
 
+    const billiardgl::PhysicsScenarioResult v2 =
+        billiardgl::parsePhysicsScenario(validV2Document());
+    expect(v2.ok && v2.scenario.hasCueImpact, "valid cue-impact scenario v2 should parse");
+    expect(v2.scenario.cueImpact.cueBallIndex == 0 &&
+        std::fabs(v2.scenario.cueImpact.cueSpeedCmS - 100.0) < 0.0001,
+        "cue-impact input should survive parsing exactly");
+    billiardgl::GameRuntime v2Runtime;
+    expect(billiardgl::applyPhysicsScenario(v2Runtime, v2.scenario).ok &&
+        v2Runtime.hasCueImpactInput(), "runtime should retain requested cue input");
+
+    billiardgl::json::Value inconsistent = validV2Document();
+    inconsistent["cue_impact"]["tip_offset_radius"].asArray()[1] = billiardgl::json::Value(0.2);
+    expect(!billiardgl::parsePhysicsScenario(inconsistent).ok,
+        "physical and dimensionless offsets must agree");
+    billiardgl::json::Value nonUnit = validV2Document();
+    nonUnit["cue_impact"]["direction"].asArray()[0] = billiardgl::json::Value(2.0);
+    expect(!billiardgl::parsePhysicsScenario(nonUnit).ok, "cue direction must be unit length");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(2);
+    unknownVersion["schema_version"] = billiardgl::json::Value(3);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

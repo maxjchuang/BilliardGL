@@ -68,7 +68,7 @@ runtime 最多保留 10000 帧，超出时淘汰最旧帧并增加 `dropped_fram
 测试专用场景：
 
 - `set_ball {index,position?,velocity?,angular_velocity?,rotation_axis?,rotation_angle?,pocketed?}`。
-- `load_scenario {scenario}`：加载 canonical physics scenario v1；能力列表通过 `physics_scenario_v1` 声明支持。成功加载会原子替换状态、把仿真 tick 和事件序号重置到零并清空旧 trace。
+- `load_scenario {scenario}`：加载 canonical physics scenario v1 或 v2；能力列表分别通过 `physics_scenario_v1` 与 `physics_scenario_v2_cue_input` 声明支持。成功加载会原子替换状态、把仿真 tick 和事件序号重置到零并清空旧 trace。
 - `load_scenario {balls}`：兼容旧格式；`balls` 必须有 16 项，每项包含 position 和 velocity，完整校验后原子替换。
 - `set_player_state {current_player?,next_player?,illegal_shot?}`。
 
@@ -77,6 +77,8 @@ rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 P
 ## 状态和事件
 
 `get_state` 返回 tick、16 个球的位置/速度/速度标量/旋转/落袋状态、balls_moving、aim、input、players、camera、hud、game_over 和事件历史。浮点断言应由客户端提供容差。
+
+schema v2 额外要求 `cue_impact`，包含 cue ball、物理 cue 速度/质量、单位方向、仰角、以 cm 和球半径比例表示且相互一致的二维 tip offset，以及 chalk 状态。runtime 和每个后续 trace frame 会原样返回这组请求输入；state 中的 `cue_impact_support` 逐项列出 `exactly_consumable_fields`、`unsupported_codes` 和 `shot_executed`。该 capability 只表示“可解析和追踪”，不表示引擎已经支持竖直偏杆、cue 质量或从 cue 速度到游戏力度的物理映射；当前加载 v2 不会自动击球。
 
 事件包含 `event`、单调递增 `sequence` 和产生它的 `tick`。`get_events {after_sequence}` 只返回更大的序号。历史最多保留 10000 条。
 

@@ -246,6 +246,27 @@ python3 -m tools.physics_validation.reference_run \
   --case fig7_experimental_19
 ```
 
+## Cross 2023 cue-impact admission package
+
+`cross_2023_cue_impact` identifies Rod Cross, “Impact of a cue with a billiard ball,” DOI `10.1177/17543371231184011`, first online 29 June 2023 and published in volume 239(4), pages 647–651 in December 2025.
+
+As audited on 13 July 2026, SAGE requires purchase/institutional access, and OpenAlex, OpenAIRE, and Semantic Scholar all report closed access with no repository full text. Therefore the package deliberately contains zero normalized numerical points. It commits the complete access audit, exact empty numeric dataset, scenario-v2 template, and three strict limitations. Values from the abstract, snippets, or Cross 2008 are prohibited substitutes. This is an admission-gated package, not a claim that the Cross experimental dataset has been completed.
+
+Offline verification:
+
+```bash
+python3 -m tools.physics_validation.reference_package \
+  tests/physics_validation/reference_data/cross_2023_cue_impact
+python3 -m tools.physics_validation.extract_cross_2023 \
+  --package tests/physics_validation/reference_data/cross_2023_cue_impact --check
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/cross_2023_cue_impact \
+  --output build/physics-reference/cross-2023
+```
+
+The blockers can only be removed after a lawful full text is hashed and reviewed, every experimental marker/table is separated from model output and committed with uncertainties/splits, and an independent cue-speed/tip-offset mapping exists. The source PDF itself must not be redistributed without permission.
+
 ## `scenario_template.json` and adapters
 
 The template contains canonical production-runtime inputs plus explicit per-case mappings. An adapter:

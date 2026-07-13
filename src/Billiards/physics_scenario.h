@@ -9,7 +9,7 @@
 
 namespace billiardgl {
 
-constexpr int kPhysicsScenarioVersion = 1;
+constexpr int kPhysicsScenarioVersion = 2;
 
 struct PhysicsExpectation {
     std::string metric;
@@ -30,6 +30,8 @@ struct PhysicsScenario {
     float timeStepSeconds = kDefaultTimeStep;
     std::array<BallState, kBallCount> balls;
     std::vector<PhysicsExpectation> expectations;
+    bool hasCueImpact = false;
+    CueImpactInput cueImpact;
 };
 
 struct PhysicsScenarioResult {

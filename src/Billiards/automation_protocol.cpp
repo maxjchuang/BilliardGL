@@ -22,6 +22,53 @@ json::Value floatArray(const float values[3])
     return result;
 }
 
+json::Value pairValue(const std::array<double, 2>& pair)
+{
+    json::Value value = json::Value::array();
+    value.asArray().push_back(json::Value(pair[0]));
+    value.asArray().push_back(json::Value(pair[1]));
+    return value;
+}
+
+json::Value directionValue(const std::array<double, 3>& direction)
+{
+    json::Value value = json::Value::object();
+    value["x"] = json::Value(direction[0]);
+    value["y"] = json::Value(direction[1]);
+    value["z"] = json::Value(direction[2]);
+    return value;
+}
+
+json::Value cueImpactValue(const CueImpactInput& input)
+{
+    json::Value value = json::Value::object();
+    value["chalk_state"] = json::Value(input.chalkState);
+    value["cue_ball_index"] = json::Value(input.cueBallIndex);
+    value["cue_mass_kg"] = json::Value(input.cueMassKg);
+    value["cue_speed_cm_s"] = json::Value(input.cueSpeedCmS);
+    value["direction"] = directionValue(input.direction);
+    value["elevation_degrees"] = json::Value(input.elevationDegrees);
+    value["tip_offset_cm"] = pairValue(input.tipOffsetCm);
+    value["tip_offset_radius"] = pairValue(input.tipOffsetRadius);
+    return value;
+}
+
+json::Value cueImpactSupportValue(const CueImpactInput& input)
+{
+    const CueImpactSupport support = evaluateCueImpactSupport(input);
+    json::Value supported = json::Value::array();
+    for (const std::string& field : support.exactlyConsumableFields)
+        supported.asArray().push_back(json::Value(field));
+    json::Value unsupported = json::Value::array();
+    for (const std::string& code : support.unsupportedCodes)
+        unsupported.asArray().push_back(json::Value(code));
+    json::Value value = json::Value::object();
+    value["exactly_consumable_fields"] = supported;
+    value["shot_executed"] = json::Value(support.shotExecuted);
+    value["unsupported_codes"] = unsupported;
+    return value;
+}
+
 const char* aimModeName(AimMode mode) { return mode == AimMode::Aim ? "aim" : "observe"; }
 const char* anchorName(CameraAnchorMode mode) { return mode == CameraAnchorMode::FollowCueBall ? "follow_cue_ball" : "free_look"; }
 const char* contactKindName(PhysicsContactKind kind)
@@ -173,6 +220,7 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     value["time_seconds"] = json::Value(frame.timeSeconds);
     value["translational_kinetic_energy_j"] =
         json::Value(frame.translationalKineticEnergyJ);
+    if (frame.hasCueImpactInput) value["cue_impact"] = cueImpactValue(frame.cueImpactInput);
     return value;
 }
 
@@ -241,6 +289,10 @@ json::Value serializeAutomationState(const GameRuntime& runtime)
     result["input"] = input;
     result["players"] = players;
     result["tick"] = json::Value(static_cast<double>(runtime.tick()));
+    if (runtime.hasCueImpactInput()) {
+        result["cue_impact"] = cueImpactValue(runtime.cueImpactInput());
+        result["cue_impact_support"] = cueImpactSupportValue(runtime.cueImpactInput());
+    }
     return result;
 }
 

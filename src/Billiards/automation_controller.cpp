@@ -71,7 +71,7 @@ std::vector<std::string> AutomationController::capabilities() const
     std::vector<std::string> values = {
         "clear_events", "get_capabilities", "get_events", "get_state", "key_down", "key_up",
         "clear_physics_trace", "get_physics_trace", "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
-        "physics_scenario_v1", "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
+        "physics_scenario_v1", "physics_scenario_v2_cue_input", "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
         "set_player_state", "set_shot_power", "shoot", "special_key", "start_physics_trace", "step", "stop_physics_trace", "toggle_aim",
         "toggle_help", "zoom_camera"
     };

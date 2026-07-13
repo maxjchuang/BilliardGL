@@ -9,6 +9,27 @@
 
 namespace billiardgl {
 
+CueImpactSupport evaluateCueImpactSupport(const CueImpactInput& input)
+{
+    CueImpactSupport support;
+    if (input.cueBallIndex == 0) support.exactlyConsumableFields.push_back("cue_ball_index");
+    else support.unsupportedCodes.push_back("cue_ball_index_not_supported");
+    if (std::fabs(input.direction[1]) <= 0.000001 &&
+        std::fabs(input.elevationDegrees) <= 0.000001) {
+        support.exactlyConsumableFields.push_back("horizontal_direction");
+    } else {
+        support.unsupportedCodes.push_back("cue_elevation_not_modeled");
+    }
+    support.unsupportedCodes.push_back("cue_speed_to_power_mapping_missing");
+    support.unsupportedCodes.push_back("cue_mass_not_modeled");
+    if (std::fabs(input.tipOffsetCm[0]) > 0.000001)
+        support.unsupportedCodes.push_back("horizontal_tip_offset_not_modeled");
+    if (std::fabs(input.tipOffsetCm[1]) > 0.000001)
+        support.unsupportedCodes.push_back("vertical_tip_offset_not_modeled");
+    support.unsupportedCodes.push_back("chalk_state_not_modeled");
+    return support;
+}
+
 GameRuntime::GameRuntime()
 {
     reset();
@@ -23,6 +44,8 @@ void GameRuntime::reset()
     events_.clear();
     physicsTraceEnabled_ = false;
     physicsTrace_.clear();
+    hasCueImpactInput_ = false;
+    cueImpactInput_ = CueImpactInput{};
     updateCameraFromCueBall(state_);
 }
 
@@ -116,9 +139,12 @@ ActionResult GameRuntime::step(int count)
         const PhysicsStepTelemetry telemetry = updatePhysics(state_, kDefaultTimeStep);
         ++tick_;
         if (physicsTraceEnabled_) {
-            physicsTrace_.append(capturePhysicsFrame(
+            PhysicsFrame frame = capturePhysicsFrame(
                 tick_, static_cast<double>(tick_) * kDefaultTimeStep,
-                kDefaultTimeStep, before, state_, telemetry));
+                kDefaultTimeStep, before, state_, telemetry);
+            frame.hasCueImpactInput = hasCueImpactInput_;
+            frame.cueImpactInput = cueImpactInput_;
+            physicsTrace_.append(frame);
         }
         recordEvents();
         if (state_.events.shotEnded || (!state_.transitionPerspective && state_.players.shotTaken))
@@ -168,7 +194,7 @@ void GameRuntime::replaceState(const GameState& state)
     state_.ballsMoving = anyBallMoving(state_);
 }
 
-void GameRuntime::replaceStateForScenario(const GameState& state)
+void GameRuntime::replaceStateForScenario(const GameState& state, const CueImpactInput* cueImpact)
 {
     replaceState(state);
     tick_ = 0;
@@ -176,6 +202,8 @@ void GameRuntime::replaceStateForScenario(const GameState& state)
     events_.clear();
     clearGameplayEvents(state_);
     physicsTrace_.clear();
+    hasCueImpactInput_ = cueImpact != nullptr;
+    cueImpactInput_ = cueImpact ? *cueImpact : CueImpactInput{};
 }
 
 void GameRuntime::clearEvents()

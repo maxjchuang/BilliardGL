@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "id": "cue_impact_v2_contract",
+  "description": "Cue-impact input storage and trace contract without synthesized contact physics.",
+  "evidence": {
+    "grade": "C",
+    "source": "Cross 2023 contract fixture; no experimental values admitted",
+    "equipment": "WPA_POOL"
+  },
+  "simulation": {
+    "ticks": 2,
+    "time_step_seconds": 0.1
+  },
+  "balls": [
+    {
+      "index": 0,
+      "position_cm": [0.0, 92.715, 50.0],
+      "velocity_cm_s": [0.0, 0.0, 0.0],
+      "angular_velocity_rad_s": [0.0, 0.0, 0.0]
+    }
+  ],
+  "cue_impact": {
+    "cue_ball_index": 0,
+    "cue_speed_cm_s": 100.0,
+    "cue_mass_kg": 0.5,
+    "direction": [1.0, 0.0, 0.0],
+    "elevation_degrees": 0.0,
+    "tip_offset_cm": [0.0, 0.99995],
+    "tip_offset_radius": [0.0, 0.35],
+    "chalk_state": "SOURCE_DECLARED"
+  },
+  "expectations": [
+    {
+      "metric": "cue_impact_input_round_trip",
+      "operator": "eq",
+      "value": true
+    }
+  ]
+}
