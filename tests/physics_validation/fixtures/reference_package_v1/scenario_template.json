@@ -1,0 +1,56 @@
+{
+  "base_scenario": {
+    "balls": [
+      {
+        "angular_velocity_rad_s": [
+          0.0,
+          0.0,
+          -7.0
+        ],
+        "index": 0,
+        "pocketed": false,
+        "position_cm": [
+          0.0,
+          89.341476,
+          20.0
+        ],
+        "velocity_cm_s": [
+          20.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "description": "Synthetic free-roll reference infrastructure fixture",
+    "evidence": {
+      "equipment": "SYNTHETIC",
+      "grade": "C",
+      "source": "synthetic_fixture"
+    },
+    "expectations": [],
+    "schema_version": 1,
+    "simulation": {
+      "ticks": 10,
+      "time_step_seconds": 0.1
+    }
+  },
+  "cases": {
+    "free_roll_calibration": {
+      "initial_velocity_cm_s": [
+        20.0,
+        0.0,
+        0.0
+      ],
+      "ticks": 10
+    },
+    "free_roll_holdout": {
+      "initial_velocity_cm_s": [
+        30.0,
+        0.0,
+        0.0
+      ],
+      "ticks": 10
+    }
+  },
+  "schema_version": 1
+}

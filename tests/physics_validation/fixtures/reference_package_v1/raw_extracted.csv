@@ -1,0 +1,3 @@
+dataset_id,series_id,group_id,case_id,point_id,quantity,value,unit,source_locator
+synthetic_reference,synthetic_free_roll,series_calibration,free_roll_calibration,stop_distance_cal_01,stopping_distance,18.0,cm,synthetic:calibration:row-1
+synthetic_reference,synthetic_free_roll,series_holdout,free_roll_holdout,stop_distance_holdout_01,stopping_distance,27.0,cm,synthetic:holdout:row-1

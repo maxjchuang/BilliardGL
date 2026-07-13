@@ -1,0 +1,30 @@
+{
+  "date": "2026-07-13",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:0a381966e21a2b1639ab6f3f243949feea77c44fe6db2ad51cc10a6e0f773c05"
+    }
+  ],
+  "method": "synthetic fixture generation",
+  "operator": "BilliardGL maintainers",
+  "review": {
+    "date": "2026-07-13",
+    "method": "independent schema and value review",
+    "reviewed_by": "BilliardGL test suite"
+  },
+  "rounding_policy": "No numerical rounding is applied.",
+  "schema_version": 1,
+  "tool": {
+    "name": "manual synthetic fixture",
+    "version": "1"
+  },
+  "transformations": [
+    {
+      "formula": "normalized_value = raw_value",
+      "id": "identity_cm",
+      "input_unit": "cm",
+      "output_unit": "cm"
+    }
+  ]
+}

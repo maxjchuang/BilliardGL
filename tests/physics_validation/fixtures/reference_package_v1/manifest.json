@@ -1,0 +1,72 @@
+{
+  "acquisition": {
+    "date": "2026-07-13",
+    "license_status": "project_test_fixture",
+    "method": "generated",
+    "redistribution": "permitted"
+  },
+  "adapter_id": "synthetic_free_roll_v1",
+  "apparatus": {
+    "equipment": "synthetic",
+    "pool_applicability": "NOT_APPLICABLE"
+  },
+  "dataset_id": "synthetic_reference",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "grade": "C",
+    "rationale": "Synthetic values validate infrastructure only."
+  },
+  "extraction_review": {
+    "date": "2026-07-13",
+    "method": "independent schema review",
+    "operator": "BilliardGL maintainers",
+    "reviewed_by": "BilliardGL test suite"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:0a381966e21a2b1639ab6f3f243949feea77c44fe6db2ad51cc10a6e0f773c05"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:a22693457ab61cfc24e0a9ce81bb6094d86d1a4a00ee4049c757e4c55378fd4d"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:5d9aff12f8b7608b9be8e2cc84e656c12a5a7fb4f885cfec3f1de75be463f98d"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:59e091d73cd12d2e2738248fcc8901a5b1035ff9530d24bddb7ccac2ab00a6ed"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:594bd0354f430607992774d72add1d45df1b2c5e88a80a590133b93dcacdb9ff"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [],
+    "doi": null,
+    "kind": "synthetic",
+    "locator": "synthetic fixture",
+    "public_url": null,
+    "title": "BilliardGL synthetic reference package",
+    "year": 2026
+  }
+}
