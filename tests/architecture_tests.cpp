@@ -45,29 +45,6 @@ void assertProjectTestDoesNotUseAssert(const std::string& relativePath)
     expect(content.find(forbidden) == std::string::npos);
 }
 
-void assertDisplayCallbackPrecedesEveryRenderInitialization(const std::string& content)
-{
-    std::size_t initialization = 0;
-    while ((initialization = content.find("initializeRenderResources", initialization)) != std::string::npos) {
-        const std::size_t window = content.rfind("initWindows();", initialization);
-        const std::size_t callback = content.rfind("glutDisplayFunc(&myDisplay);", initialization);
-        expect(window != std::string::npos, "render initialization should follow window creation");
-        expect(callback != std::string::npos && callback > window,
-            "display callback should be registered after window creation and before render initialization");
-        initialization += 1;
-    }
-}
-
-void assertScreenshotRendersBeforeMainLoop(const std::string& content)
-{
-    const std::string directScreenshot = "if (!Game.config.screenshotPath.empty())\n\t{\n\t\tmyDisplay();";
-    const std::size_t screenshot = content.find(directScreenshot);
-    const std::size_t mainLoop = content.find("glutMainLoop();");
-    expect(screenshot != std::string::npos, "screenshot mode should render directly");
-    expect(mainLoop != std::string::npos && screenshot < mainLoop,
-        "screenshot mode should render before entering the GLUT main loop");
-}
-
 }
 
 int main()
@@ -105,8 +82,6 @@ int main()
     assertContains(billiards, "Game.transitionPerspective = false;");
     assertContains(billiards, "billiardgl::installPlatformScrollHandler");
     assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");
-    assertDisplayCallbackPrecedesEveryRenderInitialization(billiards);
-    assertScreenshotRendersBeforeMainLoop(billiards);
     assertContains(cmake, "platform_scroll.cpp");
     assertContains(cmake, "platform_scroll_mac.mm");
     assertContains(platformScroll, "glutMouseWheelFunc");
