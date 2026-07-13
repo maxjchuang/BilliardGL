@@ -440,7 +440,7 @@ Define `write_reference_reports(cases, results, accounting, output_directory, me
 
 - calibration and holdout have separate summaries and rows;
 - each point records prediction, experimental value, signed error, acceptance interval, uncertainty components, status, dataset version, exact source locator, scenario ID, trace path, build hash, and replay command;
-- statuses are exactly `PASSED`, `MODEL_MISMATCH_KNOWN`, `MODEL_MISMATCH_NEW`, `REFERENCE_LIMITATION_KNOWN`, `REFERENCE_LIMITATION_NEW`, `INTEGRATION_MISMATCH`, or `NUMERICAL_FAILURE`;
+- statuses are exactly `PASSED`, `MODEL_MISMATCH_KNOWN`, `MODEL_MISMATCH_NEW`, `REFERENCE_LIMITATION_KNOWN`, `REFERENCE_LIMITATION_NEW`, `INTEGRATION_MISMATCH`, `NUMERICAL_FAILURE`, or `NON_DETERMINISTIC`;
 - known mismatch/limitation rows are never labeled passed or skipped;
 - per-series summary includes count, RMSE, maximum absolute error, and pass rate;
 - output ordering and bytes are deterministic;
