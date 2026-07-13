@@ -20,9 +20,10 @@ brew install cmake pkg-config glew sdl2 sdl2_mixer
 
 该命令会执行：
 
-1. CMake configure
-2. CMake build
-3. CTest 全量测试
+1. UTF-8 编码单元测试与全仓跟踪文本扫描
+2. CMake configure
+3. CMake build
+4. CTest 自动化测试
 
 默认构建目录是 `build/check`。需要指定构建目录时：
 
@@ -65,6 +66,10 @@ GitHub Actions 在 macOS runner 上安装依赖后运行：
 - `docs/legacy/Representation.pptx`
 
 Visual Studio 工程文件和 `src/Billiards/dependencies/` 暂时保留，用于 legacy Windows 工程兼容。清理或迁移 Windows 依赖管理应作为后续独立任务处理。
+
+### 源文件编码
+
+仓库中的所有代码、配置、文档、脚本和文本资源必须使用 UTF-8 编码，不得使用 GBK 或其他遗留编码。`.editorconfig` 为编辑器声明 UTF-8 和 LF 默认值，`.gitattributes` 为 Git 声明文本文件的 UTF-8 工作区编码；`./scripts/check.sh` 会扫描全部 Git 跟踪文本，并拒绝无效 UTF-8、Unicode 替换字符和已知乱码序列。
 
 # 1 Basic Points
 

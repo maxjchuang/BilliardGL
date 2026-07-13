@@ -8,21 +8,21 @@ using namespace std;
 
 
 class particle {
-	bool has_tex;//ÎÆÀí»òÑÕÉ« 
+	bool has_tex;//çº¹ç†æˆ–é¢œè‰²
 
-	vec place;//Î»ÖÃ
-	vec size;//´óĞ¡
-	vec speed;// ËÙ¶È
-	vec acc;//¼ÓËÙ¶È 
-	vec angle;//½Ç¶È
-	vec color;//ÑÕÉ«
+	vec place;//ä½ç½®
+	vec size;//å¤§å°
+	vec speed;// é€Ÿåº¦
+	vec acc;//åŠ é€Ÿåº¦
+	vec angle;//è§’åº¦
+	vec color;//é¢œè‰²
 
-	unsigned int texture;//ÎÆÀí  
-	float life;//ÉúÃü 
+	unsigned int texture;//çº¹ç†
+	float life;//ç”Ÿå‘½
 	friend class emitter;
 
-	void draw(GLuint texture);//»æÖÆÁ£×Ó£¨ÎÆÀí£©  
-	void draw();//»æÖÆÁ£×Ó£¨ÑÕÉ«£©
+	void draw(GLuint texture);//ç»˜åˆ¶ç²’å­ï¼ˆçº¹ç†ï¼‰
+	void draw();//ç»˜åˆ¶ç²’å­ï¼ˆé¢œè‰²ï¼‰
 	void show();
 	void update();
 
@@ -38,14 +38,14 @@ public:
 };
 
 class emitter {
-	float x1, y1, x2, y2, z1, z2; //·¢ÉäÆ÷Î»ÖÃ  
-	int speed;//·¢ÉäËÙÂÊ  
+	float x1, y1, x2, y2, z1, z2; //å‘å°„å™¨ä½ç½®
+	int speed;//å‘å°„é€Ÿç‡
 	bool isforever;
 	int num;
-	particle **p;//·¢ÉäÁ£×Ó  
+	particle **p;//å‘å°„ç²’å­
 	bool *dead;
 	particle* (*f)();
-	//³õÊ¼»¯Á£×ÓµÄº¯ÊıÖ¸Õë  
+	//åˆå§‹åŒ–ç²’å­çš„å‡½æ•°æŒ‡é’ˆ
 	bool(*isDead)(particle*);
 
 public:

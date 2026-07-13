@@ -571,7 +571,7 @@ static void mouseMove(int x, int y)
 
 	billiardgl::handleMouseMove(Game, x, y);
 }
-// 锟斤拷锟斤拷锟斤拷锟斤拷
+// Background music
 void b_music()
 {
 	billiardgl::playBackgroundLoop();
