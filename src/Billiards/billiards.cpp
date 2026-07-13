@@ -10,6 +10,11 @@
 #endif
 
 #include "game_state.h"
+#include "game_runtime.h"
+#include "launch_options.h"
+#include "automation_controller.h"
+#include "automation_runner.h"
+#include "stdio_transport.h"
 #include "frame_timing.h"
 #include "hud.h"
 #include "input.h"
@@ -33,6 +38,7 @@
 #include <ctime>
 #include <string>
 #include <thread>
+#include <iostream>
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -59,7 +65,7 @@ static double LastIdleTimeSeconds = 0.0;
 static float PhysicsTimeAccumulatorSeconds = 0.0f;
 static const int kMaxPhysicsStepsPerIdle = 5;
 
-//±äÁ¿ÉêÃ÷
+//å˜é‡ç”³æ˜
 int& width = Game.config.width;
 int& height = Game.config.height;
 int i = 0, j = 0, k = 0, ballcnt = 16;
@@ -67,7 +73,7 @@ static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 GLfloat m[16];
 
 
-//¶¨ÒåÇò¼°Î»ÖÃÊ¸Á¿½á¹¹Ìå
+//å®šä¹‰çƒåŠä½ç½®çŸ¢é‡ç»“æ„ä½“
 struct Point
 {
 	GLfloat x;
@@ -75,18 +81,17 @@ struct Point
 	GLfloat z;
 };
 
-// ÔØÈëÎÆÀí
-// ³¡¾°»æÖÆ
+// è½½å…¥çº¹ç†
+// åœºæ™¯ç»˜åˆ¶
 void initBall();
-void parseLaunchOptions(int argc, char* argv[]);
 void prepareScreenshotScene();
 void initWindows(void);
 void myReshape(int w, int h);
 void myDisplay(void);
 void myIdle(void);
 void updatePlayer();
-// ¹âÔ´
-// Êó±ê¼üÅÌ²Ù×÷
+// å…‰æº
+// é¼ æ ‡é”®ç›˜æ“ä½œ
 static void myKeyboard(unsigned char key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y);
 static void mySpecialKeyboard(int key, int x, int y)
@@ -105,14 +110,23 @@ void b_music();
 
 int main(int argc, char* argv[])
 {
-	parseLaunchOptions(argc, argv);
+	const billiardgl::LaunchOptions options = billiardgl::parseLaunchOptions(argc, argv);
+	if (!options.ok) { std::fprintf(stderr, "%s\n", options.error.c_str()); return 2; }
+	Game.config = options.runtime;
+	if (options.mode == billiardgl::RunMode::AutomationHeadless)
+	{
+		billiardgl::GameRuntime runtime;
+		billiardgl::AutomationController controller(runtime, billiardgl::AutomationMode::Headless);
+		billiardgl::StdioTransport transport(std::cin, std::cout);
+		return billiardgl::runAutomation(transport, controller, "headless");
+	}
 	std::thread t(b_music);
 	t.detach();
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
 	billiardgl::installPlatformScrollHandler(platformScroll);
-	initBall();//³õÊ¼»¯ÇòµÄÎ»ÖÃ
+	initBall();//åˆå§‹åŒ–çƒçš„ä½ç½®
 	if (!billiardgl::initializeRenderResources(Render, Game))
 	{
 		std::fprintf(stderr, "Failed to initialize render resources\n");
@@ -124,8 +138,8 @@ int main(int argc, char* argv[])
 	prepareScreenshotScene();
 
 	glutDisplayFunc(&myDisplay);
-	glutIdleFunc(&myIdle); //ÉèÖÃ´°¿ÚË¢ĞÂµÄ»Øµ÷º¯Êı
-	glutKeyboardFunc(myKeyboard); //ÉèÖÃ¼üÅÌ»Øµ÷º¯Êı
+	glutIdleFunc(&myIdle); //è®¾ç½®çª—å£åˆ·æ–°çš„å›è°ƒå‡½æ•°
+	glutKeyboardFunc(myKeyboard); //è®¾ç½®é”®ç›˜å›è°ƒå‡½æ•°
 	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); // mouse button callback
 	glutMotionFunc(mouseMove); // mouse drag callback
@@ -135,40 +149,6 @@ int main(int argc, char* argv[])
 	billiardgl::setupLights();
 	glutMainLoop();
 	return 0;
-}
-
-// ³õÊ¼»¯´°¿Ú
-void parseLaunchOptions(int argc, char* argv[])
-{
-	for (int i = 1; i < argc; ++i)
-	{
-		if (strcmp(argv[i], "--windowed") == 0)
-			Game.config.windowedMode = true;
-		else if (strcmp(argv[i], "--fullscreen") == 0)
-			Game.config.windowedMode = false;
-		else if (strcmp(argv[i], "--screenshot") == 0 && i + 1 < argc)
-		{
-			Game.config.screenshotPath = argv[++i];
-			Game.config.windowedMode = true;
-		}
-		else if (strcmp(argv[i], "--screenshot-scene") == 0 && i + 1 < argc)
-		{
-			const char* scene = argv[++i];
-			if (strcmp(scene, "default") == 0)
-				Game.config.screenshotScene = billiardgl::ScreenshotScene::Default;
-			else if (strcmp(scene, "help") == 0)
-				Game.config.screenshotScene = billiardgl::ScreenshotScene::Help;
-			else if (strcmp(scene, "aim") == 0)
-				Game.config.screenshotScene = billiardgl::ScreenshotScene::Aim;
-			else if (strcmp(scene, "after-shot") == 0)
-				Game.config.screenshotScene = billiardgl::ScreenshotScene::AfterShot;
-			else
-			{
-				std::fprintf(stderr, "Unknown screenshot scene: %s\n", scene);
-				std::exit(1);
-			}
-		}
-	}
 }
 
 void prepareScreenshotScene()
@@ -219,7 +199,7 @@ void myReshape(int w, int h)
 	height = h > 0 ? h : WINDOW_HEIGHT;
 	glViewport(0, 0, width, height);
 }
-// ³õÊ¼»¯ÇòÎ»ÖÃ
+// åˆå§‹åŒ–çƒä½ç½®
 void initBall()
 {
 	billiardgl::initializeBalls(Game);
@@ -292,8 +272,8 @@ void myDisplay(void)
 	}
 	glutSwapBuffers();
 }
-// ÉèÖÃÊÓµã
-// »­·¿¼ä
+// è®¾ç½®è§†ç‚¹
+// ç”»æˆ¿é—´
 void myIdle(void)
 {
 	if (Game.camera.anchorMode == billiardgl::CameraAnchorMode::FollowCueBall)
@@ -395,7 +375,7 @@ void myIdle(void)
 
 	glutPostRedisplay();
 }
-// ÇòÓëÇòÅö×²¼ì²â
+// çƒä¸çƒç¢°æ’æ£€æµ‹
 static void myKeyboard(unsigned char key, int x, int y)
 {
 	if (key == 'h' || key == 'H')
@@ -560,7 +540,7 @@ static void mouseMove(int x, int y)
 
 	billiardgl::handleMouseMove(Game, x, y);
 }
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 void b_music()
 {
 	billiardgl::playBackgroundLoop();
