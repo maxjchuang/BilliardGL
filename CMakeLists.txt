@@ -170,6 +170,14 @@ add_executable(BilliardsAutomationJsonTests
 target_include_directories(BilliardsAutomationJsonTests PRIVATE src/Billiards)
 billiardgl_add_test(BilliardsAutomationJsonTests)
 
+add_executable(BilliardsAutomationProtocolTests
+    tests/automation_protocol_tests.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsAutomationProtocolTests)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
