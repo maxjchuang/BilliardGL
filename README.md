@@ -134,6 +134,18 @@ Visual Studio 工程文件和 `src/Billiards/dependencies/` 暂时保留，用�
 
 ### 自动化视觉验证
 
+### 全自动 E2E 控制
+
+游戏支持通过 JSON Lines 完全由程序控制的无头和真实渲染模式：
+
+```bash
+./build/check/Billiards --automation --transport stdio --headless
+./build/check/Billiards --automation --transport stdio --rendered
+```
+
+接口覆盖键鼠、瞄准、力度、击球、摄像机、场景注入、固定步进、事件等待、状态查询和 rendered 截图。完整协议与 Python 示例见 [自动化协议](docs/automation-protocol.md)。
+
+
 可以使用游戏内 framebuffer 截图模式生成一张 PPM 图片，避免 macOS `screencapture` 无法稳定捕获 GLUT/OpenGL 窗口内容的问题：
 
 ```bash

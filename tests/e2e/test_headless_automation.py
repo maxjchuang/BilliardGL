@@ -13,12 +13,26 @@ def ball(index, x, z, vx, vz):
 with AutomationClient(sys.argv[1]) as client:
     assert client.ready["event"] == "ready"
     assert client.ready["mode"] == "headless"
-    assert client.request("ping")["result"]["pong"]
+    assert client.ping()["pong"]
     assert client.request("set_ball", ball(0, -5, 0, 20, 0))["ok"]
     assert client.request("set_ball", ball(1, 5, 0, 0, 0))["ok"]
-    result = client.request("run_until", {"condition": "ball_collision", "max_steps": 20})
-    assert result["ok"]
-    state = client.request("get_state")["result"]
+    result = client.run_until("ball_collision", 20)
+    assert result["steps"] <= 20
+    state = client.state()
     assert state["balls"][1]["velocity"]["x"] > 0
     assert client.raw("{broken")["error"]["code"] == "parse_error"
     assert client.request("ping")["ok"]
+    client.reset()
+    client.key_down("h")
+    assert client.state()["hud"]["show_help"]
+    client.key_up("h")
+    client.toggle_help()
+    client.toggle_aim()
+    client.set_aim_yaw(0.5)
+    client.set_shot_power(40)
+    client.mouse_wheel(1)
+    client.special_key("left")
+    client.orbit_camera(0.1, 0.1)
+    client.pan_camera(1, 1)
+    client.zoom_camera(5)
+    client.resize(800, 600)
