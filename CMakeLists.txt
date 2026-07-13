@@ -163,6 +163,13 @@ target_compile_definitions(BilliardsArchitectureTests PRIVATE
 )
 billiardgl_add_test(BilliardsArchitectureTests)
 
+add_executable(BilliardsAutomationJsonTests
+    tests/automation_json_tests.cpp
+    src/Billiards/automation_json.cpp
+)
+target_include_directories(BilliardsAutomationJsonTests PRIVATE src/Billiards)
+billiardgl_add_test(BilliardsAutomationJsonTests)
+
 target_include_directories(Billiards PRIVATE
     src/Billiards
     src/Billiards/dependencies/include
