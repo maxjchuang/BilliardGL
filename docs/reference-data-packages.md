@@ -186,6 +186,34 @@ python3 -m tools.physics_validation.reference_run \
   --case table1_shot_04
 ```
 
+## Doménech 2023 ball-collision package
+
+`domenech_2023_ball_collision` records the experimental marker series in Antonio Doménech-Carbó, “Independent friction-restitution description of billiard ball collisions,” DOI `10.1016/j.mechrescom.2023.104149`. The version-of-record page declares CC BY-NC-ND 4.0 at `https://creativecommons.org/licenses/by-nc-nd/4.0/`. The repository commits extracted factual coordinates and reconstruction metadata, but not the publisher PDF or figure images. Their exact digests are recorded in the manifest.
+
+The package commits all 214 admitted experimental markers and both coordinate readings for every point: 52 billiard `delta2`, 47 billiard `alpha1`, 19 brass `alpha1`, 33 steel immediate `alpha1`, 10 steel post-transition `beta1`, 30 rubber `delta2`, and 23 rubber post-transition `lambda2`. Open markers use white-interior centroid and bounding-box-center passes. Solid markers require agreement between a disk-minus-ring template peak and eroded-black-core centroid. IFR theory curves and fitted restitution/friction coefficients are explicitly excluded from experimental expected values.
+
+The source reports 0.80 ± 0.05 m/s launch speed, a PVC laboratory bench, a camera 75 cm above contact, and a track ending 50 cm before contact. Billiard, brass, steel, and rubber data retain separate IDs and split groups. Low-angle groups are calibration; middle/high groups are holdout. All non-billiard data are `TREND_ONLY`.
+
+The article says data are available on request. No request has been sent because that external communication requires explicit user authorization; this remains a declared limitation. A publisher automation challenge also prevented a complete version-of-record PDF audit, so that audit remains separately declared.
+
+No Doménech runtime scenario is currently emitted. Production fixes ball diameter at 5.715 cm and cannot install the source diameters (6.1, 2.5, and 4.6 cm), masses, contact materials, or PVC support surface per scenario. The full numerical dataset remains available for later schema/physics work, while strict runtime accounting requires one visible geometry/material limitation for each of the seven series. This is deliberately not treated as a model pass, a skipped test, or a relabeled Pool experiment.
+
+Reconstruct, verify, and account for the package offline:
+
+```bash
+python3 -m tools.physics_validation.extract_domenech_2023 \
+  --package tests/physics_validation/reference_data/domenech_2023_ball_collision \
+  --check
+python3 -m tools.physics_validation.reference_package \
+  tests/physics_validation/reference_data/domenech_2023_ball_collision
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/domenech_2023_ball_collision \
+  --output build/physics-reference/domenech-2023
+```
+
+The last command executes no fabricated substitute scenarios; it produces the strict nine-entry limitation audit. A single-case replay command will become valid only after the scenario schema can express the source apparatus.
+
 ## `scenario_template.json` and adapters
 
 The template contains canonical production-runtime inputs plus explicit per-case mappings. An adapter:

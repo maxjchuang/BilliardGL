@@ -1,0 +1,30 @@
+{
+  "calibration_groups": [
+    "billiard_alpha1_low",
+    "billiard_delta2_low",
+    "brass_alpha1_low",
+    "rubber_delta2_low",
+    "rubber_lambda2_low",
+    "steel_alpha1_low",
+    "steel_beta1_low"
+  ],
+  "dataset_id": "domenech_2023_ball_collision",
+  "dataset_version": "1.0.0",
+  "holdout_groups": [
+    "billiard_alpha1_high",
+    "billiard_alpha1_middle",
+    "billiard_delta2_high",
+    "billiard_delta2_middle",
+    "brass_alpha1_high",
+    "brass_alpha1_middle",
+    "rubber_delta2_high",
+    "rubber_delta2_middle",
+    "rubber_lambda2_high",
+    "rubber_lambda2_middle",
+    "steel_alpha1_high",
+    "steel_alpha1_middle",
+    "steel_beta1_high",
+    "steel_beta1_middle"
+  ],
+  "schema_version": 1
+}

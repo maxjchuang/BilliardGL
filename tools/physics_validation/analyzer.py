@@ -98,7 +98,11 @@ _EXPERIMENTAL_METRICS = {
     "rolling_deceleration_cm_s2",
     "sliding_deceleration_cm_s2",
     "post_collision_linear_velocity_cm_s",
+    "post_collision_angular_velocity_rad_s",
     "separation_angle_degrees",
+    "cue_scattering_angle_degrees",
+    "object_scattering_angle_degrees",
+    "stick_slip_classification",
     "cushion_rebound_speed_cm_s",
     "cushion_rebound_angle_degrees",
 }
@@ -212,7 +216,7 @@ def _event_observation(metric, reference, frames):
     if not _contiguous(frames):
         return None, INTEGRATION_MISMATCH, "trace ticks are not contiguous"
 
-    if selection["sample_phase"] == "first_sample_after_event":
+    if selection["sample_phase"] in {"first_sample_after_event", "immediate_post_impact"}:
         selected_index = 0 if candidates else None
     elif selection["sample_phase"] == "first_pure_roll_after_event":
         rolling_required = {
@@ -254,6 +258,9 @@ def _event_observation(metric, reference, frames):
                 "post_collision_linear_velocity_cm_s",
                 "cushion_rebound_speed_cm_s"}:
             actual = ball["speed_cm_s"]
+        elif metric == "post_collision_angular_velocity_rad_s":
+            angular = _vector(ball["angular_velocity_rad_s"])
+            actual = math.sqrt(sum(component * component for component in angular))
         elif metric == "separation_angle_degrees":
             other = _ball(candidates[selected_index], selection["other_ball_index"])
             first_velocity = _vector(ball["velocity_cm_s"])
@@ -265,6 +272,30 @@ def _event_observation(metric, reference, frames):
                 return None, INTEGRATION_MISMATCH, "separation angle velocity is zero"
             cosine = max(-1.0, min(1.0, sum(a * b for a, b in zip(first, second)) / denominator))
             actual = math.degrees(math.acos(cosine))
+        elif metric in {"cue_scattering_angle_degrees", "object_scattering_angle_degrees"}:
+            axis = selection.get("angle_reference_axis")
+            orientation = selection.get("positive_orientation")
+            if not isinstance(axis, (list, tuple)) or len(axis) != 2 \
+                    or orientation not in {"clockwise", "counterclockwise"}:
+                return None, REFERENCE_LIMITATION, "scattering-angle axis/orientation is missing"
+            velocity = _vector(ball["velocity_cm_s"])
+            axis_length = math.hypot(axis[0], axis[1])
+            velocity_length = math.hypot(velocity[0], velocity[2])
+            if axis_length == 0.0 or velocity_length == 0.0:
+                return None, INTEGRATION_MISMATCH, "scattering-angle vector is zero"
+            dot = axis[0] * velocity[0] + axis[1] * velocity[2]
+            cross = axis[0] * velocity[2] - axis[1] * velocity[0]
+            actual = math.degrees(math.atan2(cross, dot))
+            if orientation == "clockwise":
+                actual = -actual
+        elif metric == "stick_slip_classification":
+            epsilon = selection.get("stick_slip_epsilon_cm_s")
+            if not _finite_number(epsilon) or epsilon < 0.0:
+                return None, REFERENCE_LIMITATION, "stick/slip epsilon is missing or invalid"
+            relative = _vector(contact["relative_contact_velocity_cm_s"])
+            if not all(_finite_number(component) for component in relative):
+                return None, NUMERICAL_FAILURE, "relative contact velocity is not finite"
+            actual = "stick" if math.sqrt(sum(component * component for component in relative)) <= epsilon else "slip"
         elif metric == "cushion_rebound_angle_degrees":
             velocity = _vector(ball["velocity_cm_s"])
             normal = _vector(contact["normal"])
@@ -276,7 +307,7 @@ def _event_observation(metric, reference, frames):
             return None, INTEGRATION_MISMATCH, f"experimental metric {metric} is unavailable"
     except (KeyError, TypeError, ValueError, IndexError) as error:
         return None, INTEGRATION_MISMATCH, str(error)
-    if not _finite_number(actual):
+    if metric != "stick_slip_classification" and not _finite_number(actual):
         return actual, NUMERICAL_FAILURE, "experimental observation is not finite"
     return actual, None, None
 
@@ -373,6 +404,14 @@ def _evaluate(expectation, frames, comparison_frames=None, scenario=None):
             return False, actual, failure_code, message
         passed = expected["lower"] <= actual <= expected["upper"]
         return passed, actual, MODEL_MISMATCH, "observed value is outside reference interval"
+    elif metric == "stick_slip_classification":
+        if not isinstance(expected, dict) or expected.get("expected") not in {"stick", "slip"}:
+            return False, None, REFERENCE_LIMITATION, "stick/slip expected class is missing"
+        actual, failure_code, message = _reference_observation(
+            metric, expected, scenario or {}, frames)
+        if failure_code is not None:
+            return False, actual, failure_code, message
+        return actual == expected["expected"], actual, MODEL_MISMATCH, "stick/slip class differs"
     elif metric == "permutation_invariance":
         if comparison_frames is None or not comparison_frames:
             return False, None, INTEGRATION_MISMATCH, "permutation comparison trace is missing"

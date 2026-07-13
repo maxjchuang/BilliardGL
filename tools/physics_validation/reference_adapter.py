@@ -177,6 +177,7 @@ def _adapt_synthetic(package, split, points):
 
 
 def default_reference_registry():
+    from .adapters.domenech_2023 import adapt_domenech_2023
     from .adapters.mathavan_2009 import (
         adapt_mathavan_2009,
         mathavan_2009_limitations,
@@ -184,6 +185,7 @@ def default_reference_registry():
 
     registry = ReferenceAdapterRegistry()
     registry.register("synthetic_free_roll_v1", _adapt_synthetic)
+    registry.register("domenech_2023_v1", adapt_domenech_2023)
     registry.register(
         "mathavan_2009_v1",
         lambda package, split, points: ReferenceAdaptation(
