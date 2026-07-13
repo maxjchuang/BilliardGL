@@ -25,3 +25,11 @@ jobs:
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
         run: ./scripts/check.sh
+
+      - name: Upload physics validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-validation-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-validation-report
+          if-no-files-found: error
