@@ -1,0 +1,188 @@
+#include "automation_protocol.h"
+
+#include <algorithm>
+#include <exception>
+
+namespace billiardgl {
+namespace {
+
+json::Value pointValue(const Point3& point)
+{
+    json::Value value = json::Value::object();
+    value["x"] = json::Value(point.x);
+    value["y"] = json::Value(point.y);
+    value["z"] = json::Value(point.z);
+    return value;
+}
+
+json::Value floatArray(const float values[3])
+{
+    json::Value result = json::Value::array();
+    for (int i = 0; i < 3; ++i) result.asArray().push_back(json::Value(values[i]));
+    return result;
+}
+
+const char* aimModeName(AimMode mode) { return mode == AimMode::Aim ? "aim" : "observe"; }
+const char* anchorName(CameraAnchorMode mode) { return mode == CameraAnchorMode::FollowCueBall ? "follow_cue_ball" : "free_look"; }
+
+json::Value errorBody(const std::string& code, const std::string& message)
+{
+    json::Value error = json::Value::object();
+    error["code"] = json::Value(code);
+    error["message"] = json::Value(message);
+    return error;
+}
+
+}  // namespace
+
+AutomationRequestResult parseAutomationRequest(const json::Value& value)
+{
+    AutomationRequestResult result;
+    if (!value.isObject()) {
+        result.errorCode = "invalid_request";
+        result.errorMessage = "request must be an object";
+        return result;
+    }
+    try {
+        if (!value.has("id") || !value.has("version") || !value.has("command") || !value.has("params"))
+            throw std::runtime_error("request requires id, version, command, and params");
+        result.request.id = value.at("id").asInt();
+        result.request.version = value.at("version").asInt();
+        result.request.command = value.at("command").asString();
+        result.request.params = value.at("params");
+        if (!result.request.params.isObject()) throw std::runtime_error("params must be an object");
+        if (result.request.version != kAutomationProtocolVersion) {
+            result.errorCode = "unsupported_version";
+            result.errorMessage = "only protocol version 1 is supported";
+            return result;
+        }
+        if (result.request.command.empty()) throw std::runtime_error("command must not be empty");
+        result.ok = true;
+    } catch (const std::exception& error) {
+        result.errorCode = "invalid_request";
+        result.errorMessage = error.what();
+    }
+    return result;
+}
+
+json::Value automationSuccessResponse(int id, const json::Value& result)
+{
+    json::Value response = json::Value::object();
+    response["id"] = json::Value(id);
+    response["ok"] = json::Value(true);
+    response["result"] = result;
+    return response;
+}
+
+json::Value automationErrorResponse(int id, const std::string& code, const std::string& message)
+{
+    json::Value response = json::Value::object();
+    response["error"] = errorBody(code, message);
+    response["id"] = json::Value(id);
+    response["ok"] = json::Value(false);
+    return response;
+}
+
+json::Value automationProtocolError(const std::string& code, const std::string& message)
+{
+    json::Value response = json::Value::object();
+    response["error"] = errorBody(code, message);
+    response["ok"] = json::Value(false);
+    return response;
+}
+
+json::Value automationReadyEvent(const std::string& mode, const std::string& transport,
+    const std::vector<std::string>& capabilities)
+{
+    std::vector<std::string> sorted = capabilities;
+    std::sort(sorted.begin(), sorted.end());
+    json::Value list = json::Value::array();
+    for (const std::string& capability : sorted) list.asArray().push_back(json::Value(capability));
+    json::Value ready = json::Value::object();
+    ready["capabilities"] = list;
+    ready["event"] = json::Value("ready");
+    ready["mode"] = json::Value(mode);
+    ready["protocol_version"] = json::Value(kAutomationProtocolVersion);
+    ready["sequence"] = json::Value(0);
+    ready["tick"] = json::Value(0);
+    ready["transport"] = json::Value(transport);
+    return ready;
+}
+
+json::Value serializeRuntimeEvent(const RuntimeEvent& event)
+{
+    json::Value value = json::Value::object();
+    value["event"] = json::Value(event.name);
+    value["sequence"] = json::Value(static_cast<double>(event.sequence));
+    value["tick"] = json::Value(static_cast<double>(event.tick));
+    return value;
+}
+
+json::Value serializeAutomationState(const GameRuntime& runtime)
+{
+    const GameState& state = runtime.state();
+    json::Value balls = json::Value::array();
+    for (int index = 0; index < kBallCount; ++index) {
+        const BallState& ball = state.balls[index];
+        json::Value value = json::Value::object();
+        value["index"] = json::Value(index);
+        value["pocketed"] = json::Value(ball.pocketed);
+        value["position"] = pointValue(ball.position);
+        value["rotation_angle"] = json::Value(ball.rotationAngle);
+        value["rotation_axis"] = pointValue(ball.rotationAxis);
+        value["speed"] = json::Value(ball.speed);
+        value["velocity"] = pointValue(ball.velocity);
+        balls.asArray().push_back(value);
+    }
+
+    json::Value aim = json::Value::object();
+    aim["mode"] = json::Value(aimModeName(state.aim.mode));
+    aim["show_guide_line"] = json::Value(state.aim.showGuideLine);
+    aim["yaw"] = json::Value(state.aim.yaw);
+
+    json::Value input = json::Value::object();
+    input["camera_pan"] = json::Value(state.input.cameraPan);
+    input["left_mouse_down"] = json::Value(state.input.leftMouseDown);
+    input["mouse_x"] = json::Value(state.input.mouseX);
+    input["mouse_y"] = json::Value(state.input.mouseY);
+    input["shot_power"] = json::Value(state.input.shotPower);
+
+    json::Value players = json::Value::object();
+    json::Value assigned = json::Value::array();
+    assigned.asArray().push_back(json::Value(state.players.assignedBallType[0]));
+    assigned.asArray().push_back(json::Value(state.players.assignedBallType[1]));
+    players["assigned_ball_type"] = assigned;
+    players["current_player"] = json::Value(state.players.currentPlayer);
+    players["illegal_shot"] = json::Value(state.players.illegalShot);
+    players["next_player"] = json::Value(state.players.nextPlayer);
+    players["shot_taken"] = json::Value(state.players.shotTaken);
+
+    json::Value camera = json::Value::object();
+    camera["anchor_mode"] = json::Value(anchorName(state.camera.anchorMode));
+    camera["angle_x"] = json::Value(state.camera.angleX);
+    camera["angle_y"] = json::Value(state.camera.angleY);
+    camera["eye"] = floatArray(state.camera.eye);
+    camera["target"] = floatArray(state.camera.target);
+    camera["zoom"] = json::Value(state.camera.zoom);
+
+    json::Value hud = json::Value::object();
+    hud["show_help"] = json::Value(state.hud.showHelp);
+
+    json::Value events = json::Value::array();
+    for (const RuntimeEvent& event : runtime.events()) events.asArray().push_back(serializeRuntimeEvent(event));
+
+    json::Value result = json::Value::object();
+    result["aim"] = aim;
+    result["balls"] = balls;
+    result["balls_moving"] = json::Value(state.ballsMoving);
+    result["camera"] = camera;
+    result["events"] = events;
+    result["game_over"] = json::Value(state.gameOver);
+    result["hud"] = hud;
+    result["input"] = input;
+    result["players"] = players;
+    result["tick"] = json::Value(static_cast<double>(runtime.tick()));
+    return result;
+}
+
+}  // namespace billiardgl
