@@ -34,6 +34,20 @@ json::Value commandList(const std::vector<std::string>& commands)
     return result;
 }
 
+Point3 pointParam(const json::Value& params, const char* name)
+{
+    if (!params.has(name) || !params.at(name).isObject()) throw std::runtime_error(std::string(name) + " must be an object");
+    const json::Value& value = params.at(name);
+    return Point3{static_cast<float>(numberParam(value, "x")), static_cast<float>(numberParam(value, "y")), static_cast<float>(numberParam(value, "z"))};
+}
+
+bool eventConditionMet(const GameRuntime& runtime, const std::string& condition, std::uint64_t after)
+{
+    if (condition == "balls_stopped") return !runtime.state().ballsMoving;
+    for (const RuntimeEvent& event : runtime.eventsSince(after)) if (event.name == condition) return true;
+    return false;
+}
+
 }  // namespace
 
 std::vector<std::string> AutomationController::capabilities() const
@@ -72,8 +86,46 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         if (command == "ping") { json::Value value = json::Value::object(); value["pong"] = json::Value(true); return success(request.id, value); }
         if (command == "get_capabilities") { json::Value value = json::Value::object(); value["commands"] = commandList(capabilities()); value["protocol_version"] = json::Value(1); return success(request.id, value); }
         if (command == "get_state") return success(request.id, serializeAutomationState(runtime_));
+        if (command == "get_events") {
+            const std::uint64_t after = params.has("after_sequence") ? static_cast<std::uint64_t>(params.at("after_sequence").asNumber()) : 0;
+            json::Value list = json::Value::array(); for (const RuntimeEvent& event : runtime_.eventsSince(after)) list.asArray().push_back(serializeRuntimeEvent(event));
+            json::Value value = json::Value::object(); value["events"] = list; return success(request.id, value);
+        }
         if (command == "reset_game") { runtime_.reset(); return success(request.id); }
+        if (command == "clear_events") { runtime_.clearEvents(); return success(request.id); }
         if (command == "quit") { ControllerResult value = success(request.id); value.quitRequested = true; return value; }
+
+        if (command == "set_ball") {
+            const int index = intParam(params, "index");
+            if (index < 0 || index >= kBallCount) return failure(request.id, "invalid_argument", "ball index must be between 0 and 15");
+            BallState ball = runtime_.state().balls[index];
+            if (params.has("position")) ball.position = pointParam(params, "position");
+            if (params.has("velocity")) ball.velocity = pointParam(params, "velocity");
+            if (params.has("rotation_axis")) ball.rotationAxis = pointParam(params, "rotation_axis");
+            if (params.has("rotation_angle")) ball.rotationAngle = static_cast<float>(numberParam(params, "rotation_angle"));
+            if (params.has("pocketed")) { if (!params.at("pocketed").isBool()) throw std::runtime_error("pocketed must be boolean"); ball.pocketed = params.at("pocketed").asBool(); }
+            ball.speed = std::sqrt(ball.velocity.x*ball.velocity.x + ball.velocity.y*ball.velocity.y + ball.velocity.z*ball.velocity.z);
+            runtime_.setBall(index, ball); return success(request.id);
+        }
+        if (command == "set_player_state") {
+            GameState state = runtime_.state();
+            if (params.has("current_player")) state.players.currentPlayer = params.at("current_player").asInt();
+            if (params.has("next_player")) state.players.nextPlayer = params.at("next_player").asInt();
+            if ((state.players.currentPlayer < 0 || state.players.currentPlayer > 1) || (state.players.nextPlayer < 0 || state.players.nextPlayer > 1)) throw std::runtime_error("player index must be 0 or 1");
+            if (params.has("illegal_shot")) state.players.illegalShot = params.at("illegal_shot").asBool();
+            runtime_.replaceState(state); return success(request.id);
+        }
+        if (command == "load_scenario") {
+            if (!params.has("balls") || !params.at("balls").isArray() || params.at("balls").asArray().size() != kBallCount) throw std::runtime_error("balls must contain exactly 16 entries");
+            GameState state = runtime_.state();
+            for (int index=0; index<kBallCount; ++index) {
+                const json::Value& item=params.at("balls").asArray()[index]; if (!item.isObject()) throw std::runtime_error("each ball must be an object");
+                BallState ball=state.balls[index]; ball.position=pointParam(item,"position"); ball.velocity=pointParam(item,"velocity");
+                ball.pocketed=item.has("pocketed") ? item.at("pocketed").asBool() : false;
+                ball.speed=std::sqrt(ball.velocity.x*ball.velocity.x+ball.velocity.y*ball.velocity.y+ball.velocity.z*ball.velocity.z); state.balls[index]=ball;
+            }
+            runtime_.replaceState(state); return success(request.id);
+        }
 
         GameAction action;
         bool hasAction = true;
@@ -102,6 +154,15 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
             const int ticks = intParam(params, "ticks");
             if (ticks < 0 || ticks > 100000) return failure(request.id, "invalid_argument", "ticks must be between 0 and 100000");
             runtime_.step(ticks); json::Value value = json::Value::object(); value["tick"] = json::Value(static_cast<double>(runtime_.tick())); return success(request.id, value);
+        }
+        if (command == "run_until") {
+            const std::string condition=stringParam(params,"condition"); const int maxSteps=params.has("max_steps") ? params.at("max_steps").asInt() : 10000;
+            if (maxSteps < 0 || maxSteps > 1000000) return failure(request.id,"invalid_argument","max_steps must be between 0 and 1000000");
+            const std::uint64_t sequence = runtime_.events().empty() ? 0 : runtime_.events().back().sequence;
+            int steps=0; while (steps<maxSteps && !eventConditionMet(runtime_,condition,sequence)) { runtime_.step(1); ++steps; }
+            json::Value value=json::Value::object(); value["tick"]=json::Value(static_cast<double>(runtime_.tick())); value["steps"]=json::Value(steps); value["balls_moving"]=json::Value(runtime_.state().ballsMoving);
+            if (!eventConditionMet(runtime_,condition,sequence)) { ControllerResult result=failure(request.id,"condition_not_met","condition was not met before max_steps"); result.response["result"]=value; return result; }
+            return success(request.id,value);
         }
         if (command == "screenshot") {
             if (mode_ != AutomationMode::Rendered) return failure(request.id, "unsupported_in_mode", "screenshot requires rendered mode");
