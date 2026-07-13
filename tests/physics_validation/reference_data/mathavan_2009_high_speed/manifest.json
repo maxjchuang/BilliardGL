@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "dataset_id": "mathavan_2009_high_speed",
+  "dataset_version": "1.0.0",
+  "adapter_id": "mathavan_2009_v1",
+  "source": {
+    "authors": ["S. Mathavan", "M. R. Jackson", "R. M. Parkin"],
+    "title": "Application of high-speed imaging to determine the dynamics of billiards",
+    "journal": "American Journal of Physics",
+    "year": 2009,
+    "doi": "10.1119/1.3157159",
+    "journal_pages": "788-794",
+    "figure_locators": ["Fig. 6", "Fig. 9", "Table I"]
+  },
+  "acquisition": {
+    "url": "https://doi.org/10.1119/1.3157159",
+    "retrieval_copy_url": "https://drdavepoolinfo.com/physics_articles/ajp_09_hsv_article.pdf",
+    "retrieved_on": "2026-07-13",
+    "source_sha256": "sha256:bc3dd86cbb214080f57503301776e1b90a34c61862cee81717f67958729c2659",
+    "license_status": "publisher-copyright-no-repository-redistribution-audit",
+    "redistributable": false
+  },
+  "evidence": {
+    "grade": "B",
+    "method": "high-speed-camera experiment",
+    "fig9_reported_shots": 31,
+    "fig9_unambiguously_digitized_markers": 8,
+    "fig9_unresolved_overlapped_markers": 23,
+    "limitation": "The paper reports 31 shots, but overlapping Fig. 9 markers do not expose 31 independent coordinates."
+  },
+  "apparatus": {
+    "table": "Riley Renaissance 10 ft x 5 ft snooker table",
+    "ball_diameter_mm": 52.4,
+    "camera": "PixeLINK PL-B776F",
+    "camera_max_fps": 1000,
+    "camera_spatial_resolution_mm": 1.0,
+    "pool_applicability": "TREND_ONLY"
+  },
+  "extraction_review": {
+    "operator": "Codex manual visual marker pass",
+    "reviewed_by": "independent color-centroid extraction pass",
+    "date": "2026-07-13",
+    "method": "native-resolution rendered-page review plus independent pixel-color centroid comparison"
+  },
+  "files": [
+    {"id": "raw_extracted", "path": "raw_extracted.csv", "sha256": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595"},
+    {"id": "digitization", "path": "digitization.csv", "sha256": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38"},
+    {"id": "normalized", "path": "normalized.csv", "sha256": "sha256:163393b20f2ac8f72d8a81f3cb53163d76e879017b786b4e652fab8d6b3c93b6"},
+    {"id": "split", "path": "split.json", "sha256": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"},
+    {"id": "extraction", "path": "extraction.json", "sha256": "sha256:65e92c953e29741083af9e809e5cd186589c7c3f7d9d4d5a18064bde68023aab"},
+    {"id": "scenario_template", "path": "scenario_template.json", "sha256": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f"},
+    {"id": "expected_model_mismatches", "path": "expected_model_mismatches.json", "sha256": "sha256:54dc843b8a6516888d0f5cf627cc00b5e6607823fce6c6d3e30543d43c66aa8e"},
+    {"id": "expected_reference_limitations", "path": "expected_reference_limitations.json", "sha256": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c"}
+  ]
+}

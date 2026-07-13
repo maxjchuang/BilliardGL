@@ -109,11 +109,41 @@ def _point_failure(result, metric):
     )[0]
 
 
+def _reference_point_failure(result, point):
+    if result is None:
+        return None
+    point_failures = [
+        failure for failure in result.failures
+        if failure.point_id == point.point_id
+    ]
+    if point_failures:
+        return sorted(
+            point_failures,
+            key=lambda failure: (_FAILURE_PRIORITY.get(failure.code, 99), failure.metric),
+        )[0]
+    untagged = [
+        failure for failure in result.failures
+        if failure.point_id is None and (
+            failure.metric == point.metric
+            or failure.code in {
+                NUMERICAL_FAILURE, INTEGRATION_MISMATCH, NON_DETERMINISTIC,
+            }
+        )
+    ]
+    if not untagged:
+        return None
+    return sorted(
+        untagged,
+        key=lambda failure: (_FAILURE_PRIORITY.get(failure.code, 99), failure.metric),
+    )[0]
+
+
 def _point_row(case, point, result, accounting, metadata):
     scenario_id = _scenario_id(case)
     scenario_metadata = metadata.get("scenarios", {}).get(scenario_id, {})
     provenance = json.loads(case.provenance_json)
-    prediction = None if result is None else result.metrics.get(point.metric)
+    prediction = None if result is None else result.metrics.get(
+        point.point_id, result.metrics.get(point.metric))
     prediction_nonfinite = None
     if isinstance(prediction, float) and not math.isfinite(prediction):
         if math.isnan(prediction):
@@ -123,7 +153,7 @@ def _point_row(case, point, result, accounting, metadata):
         else:
             prediction_nonfinite = "-Infinity"
         prediction = None
-    failure = _point_failure(result, point.metric)
+    failure = _reference_point_failure(result, point)
     if result is None or (prediction is None and failure is None):
         status = "INTEGRATION_MISMATCH"
     elif failure is None:

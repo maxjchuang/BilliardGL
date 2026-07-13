@@ -45,6 +45,13 @@ def point(**overrides):
 
 
 class ReferencePointTests(unittest.TestCase):
+    def test_accepts_acceleration_unit_for_experimental_deceleration(self):
+        path = self._write_rows([self._valid_row(unit="cm/s^2")])
+
+        points = read_reference_points(path, "synthetic_reference")
+
+        self.assertEqual(points[0].unit, "cm/s^2")
+
     def _write_rows(self, rows, header=None):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)

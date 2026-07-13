@@ -31,7 +31,7 @@ _REQUIRED_FILES = {
     "expected_model_mismatches",
     "expected_reference_limitations",
 }
-_EXTRACTION_KEYS = {
+_EXTRACTION_V1_KEYS = {
     "schema_version",
     "method",
     "tool",
@@ -41,6 +41,12 @@ _EXTRACTION_KEYS = {
     "inputs",
     "transformations",
     "rounding_policy",
+}
+_EXTRACTION_V2_KEYS = _EXTRACTION_V1_KEYS | {
+    "uncertainty_interpretation",
+    "source_sha256",
+    "output_sha256",
+    "script",
 }
 
 
@@ -151,10 +157,17 @@ def _resolve_files(root, manifest, verify_hashes):
 
 def _validate_extraction(path, manifest):
     extraction = _read_json(path, "INVALID_EXTRACTION_METADATA")
-    if not isinstance(extraction, dict) or set(extraction) != _EXTRACTION_KEYS:
+    if not isinstance(extraction, dict):
+        _error("INVALID_EXTRACTION_METADATA", "extraction metadata must be an object")
+    schema_version = extraction.get("schema_version")
+    expected_keys = {
+        1: _EXTRACTION_V1_KEYS,
+        2: _EXTRACTION_V2_KEYS,
+    }.get(schema_version)
+    if expected_keys is None:
+        _error("INVALID_EXTRACTION_METADATA", "extraction schema_version must be 1 or 2")
+    if set(extraction) != expected_keys:
         _error("INVALID_EXTRACTION_METADATA", "extraction metadata keys are incomplete")
-    if extraction.get("schema_version") != 1:
-        _error("INVALID_EXTRACTION_METADATA", "extraction schema_version must be 1")
     for field in ("method", "date", "operator", "rounding_policy"):
         if not isinstance(extraction.get(field), str) or not extraction[field].strip():
             _error("INVALID_EXTRACTION_METADATA", f"extraction {field} is required")
@@ -192,6 +205,32 @@ def _validate_extraction(path, manifest):
             _error("INVALID_EXTRACTION_METADATA", "transformation keys are invalid")
         if not all(isinstance(value, str) and value.strip() for value in item.values()):
             _error("INVALID_EXTRACTION_METADATA", "transformation values must be nonempty")
+    if schema_version == 2:
+        interpretation = extraction.get("uncertainty_interpretation")
+        if not isinstance(interpretation, str) or not interpretation.strip():
+            _error(
+                "INVALID_EXTRACTION_METADATA",
+                "uncertainty interpretation is required",
+            )
+        for field in ("source_sha256", "output_sha256"):
+            digest = extraction.get(field)
+            if not isinstance(digest, str) or _HASH.fullmatch(digest) is None:
+                _error("INVALID_EXTRACTION_METADATA", f"{field} is invalid")
+        if extraction["output_sha256"] != manifest_hashes.get("normalized"):
+            _error(
+                "INVALID_EXTRACTION_METADATA",
+                "extraction output hash disagrees with normalized manifest hash",
+            )
+        script = extraction.get("script")
+        if not isinstance(script, dict) or set(script) != {"module", "version"} \
+                or not all(
+                    isinstance(value, str) and value.strip()
+                    for value in script.values()
+                ):
+            _error(
+                "INVALID_EXTRACTION_METADATA",
+                "extraction script module and version are required",
+            )
 
 
 def load_reference_package(path):

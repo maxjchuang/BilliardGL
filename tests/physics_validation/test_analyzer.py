@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from tools.physics_validation.analyzer import (
@@ -82,6 +83,28 @@ class AnalyzerTests(unittest.TestCase):
                 result = analyze_scenario(interval_scenario(), [frame(1, x=position)])
                 self.assertEqual(result.failures[0].code, "MODEL_MISMATCH")
                 self.assertEqual(result.failures[0].metric, "stopping_distance_cm")
+
+    def test_reference_points_sharing_a_metric_keep_distinct_predictions(self):
+        case = interval_scenario(lower=4.5, upper=5.5)
+        second = json.loads(json.dumps(case["expectations"][0]))
+        second["value"].update({
+            "point_id": "distance_02",
+            "ball_index": 1,
+            "expected": 8.0,
+            "lower": 7.5,
+            "upper": 8.5,
+        })
+        case["balls"].append({"index": 1, "position_cm": [0.0, 0.0, 0.0]})
+        case["expectations"].append(second)
+        observed = frame(1, x=5.0)
+        other = dict(observed["balls"][0], index=1)
+        other["position_cm"] = {"x": 8.0, "y": 0.0, "z": 0.0}
+        observed["balls"].append(other)
+
+        result = analyze_scenario(case, [observed])
+
+        self.assertEqual(result.metrics["distance_01"], 5.0)
+        self.assertEqual(result.metrics["distance_02"], 8.0)
 
     def test_malformed_reference_interval_is_limitation(self):
         malformed = interval_scenario(lower=6.0, upper=5.0)

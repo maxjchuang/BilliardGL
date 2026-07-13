@@ -26,6 +26,15 @@ jobs:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
         run: ./scripts/check.sh
 
+      - name: Verify Mathavan 2009 offline reference
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/mathavan_2009_high_speed
+          python3 -m tools.physics_validation.extract_mathavan_2009 --package tests/physics_validation/reference_data/mathavan_2009_high_speed --check
+          python3 -m unittest tests.physics_validation.test_mathavan_2009_extraction tests.physics_validation.test_mathavan_2009_metrics tests.physics_validation.test_mathavan_2009_adapter -v
+          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2009_high_speed --output "${BILLIARDGL_BUILD_DIR}/physics-reference-mathavan-2009" --case table1_shot_04
+
       - name: Upload physics validation report
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,4 +49,12 @@ jobs:
         with:
           name: reference-validation-report
           path: ${{ runner.temp }}/billiardgl-build/physics-reference-validation
+          if-no-files-found: error
+
+      - name: Upload Mathavan 2009 reference report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathavan-2009-reference-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-mathavan-2009
           if-no-files-found: error

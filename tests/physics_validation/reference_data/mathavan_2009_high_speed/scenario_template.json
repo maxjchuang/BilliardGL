@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "base_scenario": {
+    "schema_version": 1,
+    "description": "Mathavan 2009 high-speed-camera experimental reference",
+    "evidence": {
+      "grade": "B",
+      "source": "doi:10.1119/1.3157159",
+      "equipment": "WPA_POOL",
+      "source_equipment": "Riley Renaissance snooker table with 52.4 mm balls",
+      "pool_applicability": "TREND_ONLY"
+    },
+    "simulation": {
+      "ticks": 40,
+      "time_step_seconds": 0.1
+    },
+    "balls": [],
+    "expectations": []
+  },
+  "cases": {
+    "rolling_deceleration": {"kind": "free_motion", "initial_speed_cm_s": 100.0, "motion_phase": "rolling", "ticks": 5},
+    "sliding_deceleration": {"kind": "free_motion", "initial_speed_cm_s": 100.0, "motion_phase": "sliding", "ticks": 5},
+    "fig9_visible_01": {"kind": "normal_cushion", "incident_speed_cm_s": 27.2697, "ticks": 8},
+    "fig9_visible_02": {"kind": "normal_cushion", "incident_speed_cm_s": 151.4616, "ticks": 4},
+    "fig9_visible_03": {"kind": "normal_cushion", "incident_speed_cm_s": 176.1311, "ticks": 4},
+    "fig9_visible_04": {"kind": "normal_cushion", "incident_speed_cm_s": 198.8906, "ticks": 4},
+    "fig9_visible_05": {"kind": "normal_cushion", "incident_speed_cm_s": 227.9716, "ticks": 4},
+    "fig9_visible_06": {"kind": "normal_cushion", "incident_speed_cm_s": 253.0455, "ticks": 4},
+    "fig9_visible_07": {"kind": "normal_cushion", "incident_speed_cm_s": 270.2641, "ticks": 4},
+    "fig9_visible_08": {"kind": "normal_cushion", "incident_speed_cm_s": 340.3653, "ticks": 4},
+    "table1_shot_01": {"kind": "oblique_ball_collision", "incoming_speed_cm_s": 153.9, "cut_angle_degrees": 33.83, "ticks": 40},
+    "table1_shot_02": {"kind": "oblique_ball_collision", "incoming_speed_cm_s": 103.2, "cut_angle_degrees": 26.36, "ticks": 40},
+    "table1_shot_03": {"kind": "oblique_ball_collision", "incoming_speed_cm_s": 136.4, "cut_angle_degrees": 40.52, "ticks": 40},
+    "table1_shot_04": {"kind": "oblique_ball_collision", "incoming_speed_cm_s": 173.1, "cut_angle_degrees": 46.5, "ticks": 40},
+    "table1_shot_05": {"kind": "oblique_ball_collision", "incoming_speed_cm_s": 94.2, "cut_angle_degrees": 18.05, "ticks": 40}
+  }
+}

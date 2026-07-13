@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "failures": [
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "rolling_deceleration", "code": "MODEL_MISMATCH", "metric": "rolling_deceleration_cm_s2", "rationale": "The runtime applies one constant 4 cm/s^2 translational deceleration instead of the measured rolling range."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "sliding_deceleration", "code": "MODEL_MISMATCH", "metric": "sliding_deceleration_cm_s2", "rationale": "The runtime does not distinguish sliding from rolling friction and remains at 4 cm/s^2."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_05", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_06", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_07", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_08", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_01", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The simplified collision solver omits the measured post-impact slip and spin transfer phase."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_02", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The simplified collision solver omits the measured post-impact slip and spin transfer phase."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_03", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The simplified collision solver omits the measured post-impact slip and spin transfer phase."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_04", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The simplified collision solver omits the measured post-impact slip and spin transfer phase."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_05", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The simplified collision solver omits the measured post-impact slip and spin transfer phase."}
+  ]
+}

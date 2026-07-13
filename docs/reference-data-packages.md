@@ -2,7 +2,7 @@
 
 Reference packages turn published or otherwise public experimental measurements into versioned, offline inputs for BilliardGL physics validation. They preserve the numerical evidence needed for later validation and tuning without making CI depend on websites, paper PDFs, or local files.
 
-The current `synthetic_reference_v1` package tests infrastructure only. It is not a real-world physics benchmark. Plans 2–5 add the audited Mathavan 2009, Doménech 2023, Mathavan 2010, and Cross 2023 packages.
+The `synthetic_reference_v1` package tests infrastructure only. It is not a real-world physics benchmark. The `mathavan_2009_high_speed` package is the first real experimental benchmark; later packages cover Doménech 2023, Mathavan 2010, and Cross 2023.
 
 ## Repository policy
 
@@ -83,7 +83,7 @@ dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,me
 | `partition` | `CALIBRATION` or `HOLDOUT`; must agree with `split.json`. |
 | `metric` | Trace-derived comparison metric. |
 | `expected` | Experimental central value in the declared normalized unit. |
-| `unit` | Version-1 unit: `cm`, `cm/s`, `s`, `degree`, `rad/s`, or `dimensionless`. |
+| `unit` | Version-1 unit: `cm`, `cm/s`, `cm/s^2`, `s`, `degree`, `rad/s`, or `dimensionless`. |
 | `measurement_uncertainty` | Absolute standard uncertainty from the experiment. |
 | `digitization_uncertainty` | Absolute standard uncertainty introduced by graph digitization. |
 | `conversion_uncertainty` | Absolute standard uncertainty introduced by apparatus/unit conversion. |
@@ -146,6 +146,45 @@ Schema version 1 records:
 - rounding policy.
 
 When `raw_extracted.csv` changes, update its hash inside `extraction.json` before refreshing manifest hashes. A changed normalized output must remain reproducible from committed raw values and transformations.
+
+Schema version `2` additionally locks the non-redistributed source SHA-256, normalized output SHA-256, extractor module/version, and uncertainty interpretation. This allows a bounded reported range to remain distinguishable from a Gaussian standard deviation.
+
+## Mathavan 2009 high-speed package
+
+`mathavan_2009_high_speed` records the experiment in S. Mathavan, M. R. Jackson, and R. M. Parkin, “Application of high-speed imaging to determine the dynamics of billiards,” DOI `10.1119/1.3157159`.
+
+The committed numerical evidence contains 20 acceptance points: two Fig. 6 deceleration summaries, eight independently distinguishable Fig. 9 cushion markers, and both measured post-slip speeds from each of the five Table I collision shots. The raw inventory also preserves all 31 reported Fig. 9 shot IDs. Twenty-three overlapping markers cannot be assigned independent coordinates and therefore remain a structured reference limitation instead of being reconstructed from the fitted theoretical curve. Fig. 12 is excluded from numerical acceptance because initial spin was not measured.
+
+The apparatus was a Riley Renaissance snooker table with 52.4 mm balls, so every point is `TREND_ONLY` for the current Chinese/WPA Pool runtime. The package separately records the missing material/geometry conversion and unmeasured initial spin. Calibration contains the rolling summary and the two preregistered Table I groups; sliding, all visible Fig. 9 markers, and the remaining Table I shots are holdout. No command-line split override exists.
+
+Reconstruct and verify the committed normalized bytes offline:
+
+```bash
+python3 -m tools.physics_validation.extract_mathavan_2009 \
+  --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
+  --check
+python3 -m tools.physics_validation.reference_package \
+  tests/physics_validation/reference_data/mathavan_2009_high_speed
+```
+
+Run the complete production regression:
+
+```bash
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
+  --output build/physics-reference/mathavan-2009
+```
+
+Replay one holdout Table I shot without altering its committed partition:
+
+```bash
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
+  --output build/physics-reference/mathavan-2009-table1-shot-04 \
+  --case table1_shot_04
+```
 
 ## `scenario_template.json` and adapters
 

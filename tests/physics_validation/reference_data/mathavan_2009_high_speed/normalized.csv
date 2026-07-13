@@ -1,0 +1,21 @@
+dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,measurement_uncertainty,digitization_uncertainty,conversion_uncertainty,coverage_factor,engineering_absolute_tolerance,engineering_relative_tolerance,source_locator,pool_applicability
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_01,fig9_visible_01,HOLDOUT,cushion_rebound_speed_cm_s,21.7341,cm/s,21.213203,0.22945,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_02,fig9_visible_02,HOLDOUT,cushion_rebound_speed_cm_s,145.2767,cm/s,21.213203,0.03385,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_03,fig9_visible_03,HOLDOUT,cushion_rebound_speed_cm_s,163.8257,cm/s,21.213203,0.16175,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_04,fig9_visible_04,HOLDOUT,cushion_rebound_speed_cm_s,182.1712,cm/s,21.213203,0.0862,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_05,fig9_visible_05,HOLDOUT,cushion_rebound_speed_cm_s,203.2522,cm/s,21.213203,0.08795,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_06,fig9_visible_06,HOLDOUT,cushion_rebound_speed_cm_s,228.2272,cm/s,21.213203,0.08945,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_07,fig9_visible_07,HOLDOUT,cushion_rebound_speed_cm_s,226.1216,cm/s,21.213203,0.10955,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,normal_cushion,fig9_visible,fig9_visible_08,fig9_visible_08,HOLDOUT,cushion_rebound_speed_cm_s,273.7347,cm/s,21.213203,0.25285,0,1,0,0,Fig. 9 marker,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_03,table1_shot_03_cue_speed,HOLDOUT,post_collision_linear_velocity_cm_s,92.5,cm/s,6.363961,0,0,1,0,0,Table I row 3,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_03,table1_shot_03_object_speed,HOLDOUT,post_collision_linear_velocity_cm_s,70,cm/s,6.363961,0,0,1,0,0,Table I row 3,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_04,table1_shot_04_cue_speed,HOLDOUT,post_collision_linear_velocity_cm_s,127.5,cm/s,6.363961,0,0,1,0,0,Table I row 4,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_04,table1_shot_04_object_speed,HOLDOUT,post_collision_linear_velocity_cm_s,78.7,cm/s,6.363961,0,0,1,0,0,Table I row 4,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_05,table1_shot_05_cue_speed,HOLDOUT,post_collision_linear_velocity_cm_s,36.5,cm/s,6.363961,0,0,1,0,0,Table I row 5,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_extreme,table1_shot_05,table1_shot_05_object_speed,HOLDOUT,post_collision_linear_velocity_cm_s,58.1,cm/s,6.363961,0,0,1,0,0,Table I row 5,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_mid,table1_shot_01,table1_shot_01_cue_speed,CALIBRATION,post_collision_linear_velocity_cm_s,81.6,cm/s,6.363961,0,0,1,0,0,Table I row 1,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_mid,table1_shot_01,table1_shot_01_object_speed,CALIBRATION,post_collision_linear_velocity_cm_s,83.6,cm/s,6.363961,0,0,1,0,0,Table I row 1,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_mid,table1_shot_02,table1_shot_02_cue_speed,CALIBRATION,post_collision_linear_velocity_cm_s,52,cm/s,6.363961,0,0,1,0,0,Table I row 2,TREND_ONLY
+mathavan_2009_high_speed,oblique_ball_collision,table1_mid,table1_shot_02,table1_shot_02_object_speed,CALIBRATION,post_collision_linear_velocity_cm_s,62.9,cm/s,6.363961,0,0,1,0,0,Table I row 2,TREND_ONLY
+mathavan_2009_high_speed,surface_friction,rolling_summary,rolling_deceleration,rolling_deceleration_range,CALIBRATION,rolling_deceleration_cm_s2,12.5,cm/s^2,0.1,0,0,1,0,0,Fig. 6 and p. 790,TREND_ONLY
+mathavan_2009_high_speed,surface_friction,sliding_summary,sliding_deceleration,sliding_deceleration_range,HOLDOUT,sliding_deceleration_cm_s2,207.5,cm/s^2,32.5,0,0,1,0,0,Fig. 6 and p. 790,TREND_ONLY

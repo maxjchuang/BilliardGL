@@ -57,6 +57,22 @@ def _integration_result(scenario, error):
     )
 
 
+def _limitation_result(dataset_id, limitation):
+    return ScenarioResult(
+        f"{dataset_id}__{limitation.case_id}",
+        False,
+        "B",
+        {},
+        (Failure(
+            "REFERENCE_LIMITATION",
+            limitation.metric,
+            limitation.missing_evidence,
+            limitation.resolution_condition,
+            None,
+        ),),
+    )
+
+
 def _append_failure(result, failure):
     return ScenarioResult(
         result.scenario_id,
@@ -132,8 +148,9 @@ def run_reference_validation(executable, package, output, execute_once=None, cas
     points = read_reference_points(reference_package.files["normalized"], dataset_id)
     split = load_reference_split(
         reference_package.files["split"], points, dataset_id, dataset_version)
-    cases = default_reference_registry().adapt(reference_package, split, points)
-    cases, selected_case_ids = _select_cases(cases, case_ids)
+    adaptation = default_reference_registry().adapt_with_limitations(
+        reference_package, split, points)
+    cases, selected_case_ids = _select_cases(adaptation.cases, case_ids)
 
     trace_directory = output / "traces"
     provenance_directory = output / "provenance"
@@ -184,6 +201,12 @@ def run_reference_validation(executable, package, output, execute_once=None, cas
                 executable, package_path, output, case.case_id),
             "trace_path": str(trace_path) if trace_path else None,
         }
+
+    if selected_case_ids is None:
+        results.extend(
+            _limitation_result(dataset_id, limitation)
+            for limitation in adaptation.limitations
+        )
 
     model_manifest = _selected_manifest(
         reference_package.files["expected_model_mismatches"], selected_case_ids)

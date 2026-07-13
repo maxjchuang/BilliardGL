@@ -1,0 +1,47 @@
+{
+  "schema_version": 2,
+  "method": "direct table transcription plus two-pass Fig. 9 digitization",
+  "tool": {
+    "name": "BilliardGL Mathavan 2009 extractor",
+    "version": "1.0.0"
+  },
+  "date": "2026-07-13",
+  "operator": "Codex manual visual marker pass",
+  "review": {
+    "reviewed_by": "independent color-centroid extraction pass",
+    "date": "2026-07-13",
+    "method": "pixel-coordinate and converted-value comparison"
+  },
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595"
+    },
+    {
+      "file_id": "digitization",
+      "sha256": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38"
+    }
+  ],
+  "transformations": [
+    {
+      "id": "speed_m_s_to_cm_s",
+      "formula": "value_cm_s = value_m_s * 100",
+      "input_unit": "m/s",
+      "output_unit": "cm/s"
+    },
+    {
+      "id": "acceleration_m_s2_to_cm_s2",
+      "formula": "value_cm_s2 = value_m_s2 * 100",
+      "input_unit": "m/s^2",
+      "output_unit": "cm/s^2"
+    }
+  ],
+  "rounding_policy": "Preserve source decimals; digitized means serialize to six source-axis decimals before unit conversion.",
+  "uncertainty_interpretation": "reported_bounded_range",
+  "source_sha256": "sha256:bc3dd86cbb214080f57503301776e1b90a34c61862cee81717f67958729c2659",
+  "output_sha256": "sha256:163393b20f2ac8f72d8a81f3cb53163d76e879017b786b4e652fab8d6b3c93b6",
+  "script": {
+    "module": "tools.physics_validation.extract_mathavan_2009",
+    "version": "1.0.0"
+  }
+}

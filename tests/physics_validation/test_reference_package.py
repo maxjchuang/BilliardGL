@@ -43,6 +43,27 @@ class ReferencePackageTests(unittest.TestCase):
         item = next(item for item in manifest["files"] if item["id"] == file_id)
         item["sha256"] = _digest(package / item["path"])
 
+    def _upgrade_extraction_v2(self, package, manifest):
+        extraction_path = package / "extraction.json"
+        extraction = json.loads(extraction_path.read_text(encoding="utf-8"))
+        extraction.update({
+            "schema_version": 2,
+            "uncertainty_interpretation": "reported_bounded_range",
+            "source_sha256": "sha256:" + "1" * 64,
+            "output_sha256": next(
+                item["sha256"] for item in manifest["files"]
+                if item["id"] == "normalized"),
+            "script": {
+                "module": "tools.physics_validation.extract_fixture",
+                "version": "1.0.0",
+            },
+        })
+        extraction_path.write_text(
+            json.dumps(extraction, ensure_ascii=False, indent=2, sort_keys=True,
+                       allow_nan=False) + "\n",
+            encoding="utf-8")
+        self._set_file_hash(package, manifest, "extraction")
+
     def _assert_error_code(self, package, code):
         with self.assertRaises(ReferencePackageError) as raised:
             load_reference_package(package)
@@ -165,6 +186,34 @@ class ReferencePackageTests(unittest.TestCase):
                 self._set_file_hash(package, manifest, "extraction")
                 self._write_manifest(package, manifest)
                 self._assert_error_code(package, "INVALID_EXTRACTION_METADATA")
+
+    def test_accepts_extraction_schema_v2_with_immutable_source_and_output_hashes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            package = self._copy_fixture(directory)
+            manifest = self._manifest(package)
+            self._upgrade_extraction_v2(package, manifest)
+            self._write_manifest(package, manifest)
+
+            loaded = load_reference_package(package)
+
+            self.assertEqual(loaded.manifest["dataset_id"], "synthetic_reference")
+
+    def test_rejects_extraction_schema_v2_output_hash_disagreement(self):
+        with tempfile.TemporaryDirectory() as directory:
+            package = self._copy_fixture(directory)
+            manifest = self._manifest(package)
+            self._upgrade_extraction_v2(package, manifest)
+            extraction_path = package / "extraction.json"
+            extraction = json.loads(extraction_path.read_text(encoding="utf-8"))
+            extraction["output_sha256"] = "sha256:" + "2" * 64
+            extraction_path.write_text(
+                json.dumps(extraction, ensure_ascii=False, indent=2, sort_keys=True,
+                           allow_nan=False) + "\n",
+                encoding="utf-8")
+            self._set_file_hash(package, manifest, "extraction")
+            self._write_manifest(package, manifest)
+
+            self._assert_error_code(package, "INVALID_EXTRACTION_METADATA")
 
     def test_hash_updater_rewrites_only_manifest(self):
         with tempfile.TemporaryDirectory() as directory:

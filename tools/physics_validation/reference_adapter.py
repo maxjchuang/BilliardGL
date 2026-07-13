@@ -19,6 +19,21 @@ class ReferenceCase:
     provenance_json: str
 
 
+@dataclass(frozen=True)
+class ReferenceLimitation:
+    dataset_id: str
+    case_id: str
+    metric: str
+    missing_evidence: str
+    resolution_condition: str
+
+
+@dataclass(frozen=True)
+class ReferenceAdaptation:
+    cases: tuple
+    limitations: tuple = ()
+
+
 def _fail(code, message):
     raise ReferencePackageError(code, message)
 
@@ -46,7 +61,7 @@ class ReferenceAdapterRegistry:
             _fail("DUPLICATE_ADAPTER", f"adapter {adapter_id} is already registered")
         self._factories[adapter_id] = factory
 
-    def adapt(self, package, split, points):
+    def adapt_with_limitations(self, package, split, points):
         dataset_id = package.manifest["dataset_id"]
         points = tuple(points)
         for point in points:
@@ -59,10 +74,23 @@ class ReferenceAdapterRegistry:
         factory = self._factories.get(adapter_id)
         if factory is None:
             _fail("UNKNOWN_ADAPTER", f"adapter {adapter_id} is not registered")
-        cases = tuple(factory(package, split, points))
+        produced = factory(package, split, points)
+        if isinstance(produced, ReferenceAdaptation):
+            adaptation = produced
+        else:
+            adaptation = ReferenceAdaptation(tuple(produced))
+        cases = tuple(adaptation.cases)
         if not all(isinstance(case, ReferenceCase) for case in cases):
             _fail("INVALID_ADAPTER", f"adapter {adapter_id} returned an invalid case")
-        return cases
+        limitations = tuple(adaptation.limitations)
+        if not all(isinstance(item, ReferenceLimitation) for item in limitations):
+            _fail("INVALID_ADAPTER", f"adapter {adapter_id} returned an invalid limitation")
+        if any(item.dataset_id != dataset_id for item in limitations):
+            _fail("DATASET_MISMATCH", f"adapter {adapter_id} returned another dataset limitation")
+        return ReferenceAdaptation(cases, limitations)
+
+    def adapt(self, package, split, points):
+        return self.adapt_with_limitations(package, split, points).cases
 
 
 def _read_template(package):
@@ -149,6 +177,18 @@ def _adapt_synthetic(package, split, points):
 
 
 def default_reference_registry():
+    from .adapters.mathavan_2009 import (
+        adapt_mathavan_2009,
+        mathavan_2009_limitations,
+    )
+
     registry = ReferenceAdapterRegistry()
     registry.register("synthetic_free_roll_v1", _adapt_synthetic)
+    registry.register(
+        "mathavan_2009_v1",
+        lambda package, split, points: ReferenceAdaptation(
+            adapt_mathavan_2009(package, split, points),
+            mathavan_2009_limitations(package),
+        ),
+    )
     return registry

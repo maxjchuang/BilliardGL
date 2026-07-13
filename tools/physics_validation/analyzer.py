@@ -17,6 +17,7 @@ class Failure:
     message: str
     expected: object
     actual: object
+    point_id: object = None
 
 
 @dataclass(frozen=True)
@@ -93,7 +94,198 @@ def _scenario_ball(scenario, index):
     raise KeyError(f"ball {index} is absent from scenario")
 
 
+_EXPERIMENTAL_METRICS = {
+    "rolling_deceleration_cm_s2",
+    "sliding_deceleration_cm_s2",
+    "post_collision_linear_velocity_cm_s",
+    "separation_angle_degrees",
+    "cushion_rebound_speed_cm_s",
+    "cushion_rebound_angle_degrees",
+}
+
+
+def _selection(reference, required):
+    selection = reference.get("selection")
+    if not isinstance(selection, dict) or not required <= set(selection):
+        missing = sorted(required - set(selection or {}))
+        return None, REFERENCE_LIMITATION, (
+            f"experimental selection metadata is incomplete: {missing}")
+    ball_index = selection.get("ball_index")
+    minimum = selection.get("minimum_window_ticks")
+    if not isinstance(ball_index, int) or isinstance(ball_index, bool) \
+            or not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 1:
+        return None, REFERENCE_LIMITATION, "experimental selection values are invalid"
+    return selection, None, None
+
+
+def _contiguous(frames):
+    for before, after in zip(frames, frames[1:]):
+        if after.get("tick") != before.get("tick") + 1:
+            return False
+    return True
+
+
+def _finite_number(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) \
+        and math.isfinite(value)
+
+
+def _deceleration_observation(reference, frames):
+    required = {
+        "sample_phase", "ball_index", "first_tick", "last_tick",
+        "minimum_window_ticks",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    if selection["sample_phase"] != "declared_tick_window" \
+            or not isinstance(selection["first_tick"], int) \
+            or not isinstance(selection["last_tick"], int):
+        return None, REFERENCE_LIMITATION, "deceleration tick window is invalid"
+    window = [
+        frame for frame in frames
+        if selection["first_tick"] <= frame.get("tick", -1) <= selection["last_tick"]
+    ]
+    expected_ticks = selection["last_tick"] - selection["first_tick"] + 1
+    if expected_ticks < selection["minimum_window_ticks"] or len(window) != expected_ticks \
+            or not _contiguous(window):
+        return None, INTEGRATION_MISMATCH, "deceleration trace window is incomplete"
+    try:
+        samples = [
+            (frame["time_seconds"], _ball(frame, selection["ball_index"])["speed_cm_s"])
+            for frame in window
+        ]
+    except (KeyError, TypeError, ValueError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    if not all(_finite_number(value) for sample in samples for value in sample):
+        return None, NUMERICAL_FAILURE, "deceleration samples are not finite"
+    mean_time = sum(time for time, _ in samples) / len(samples)
+    denominator = sum((time - mean_time) ** 2 for time, _ in samples)
+    if denominator <= 0.0:
+        return None, INTEGRATION_MISMATCH, "deceleration sample times do not advance"
+    mean_speed = sum(speed for _, speed in samples) / len(samples)
+    slope = sum(
+        (time - mean_time) * (speed - mean_speed)
+        for time, speed in samples
+    ) / denominator
+    actual = max(0.0, -slope)
+    return actual, None, None
+
+
+def _contact_index(frames, event_kind, ball_index):
+    contact_kind = {"rail_collision": "rail", "ball_ball": "ball_ball"}.get(event_kind)
+    if contact_kind is None:
+        return None
+    for index, frame in enumerate(frames):
+        for contact in frame.get("contacts", []):
+            if contact.get("kind") != contact_kind:
+                continue
+            involved = ball_index in (contact.get("first_ball"), contact.get("second_ball"))
+            if involved:
+                return index, contact
+    return None
+
+
+def _is_pure_roll(ball, radius, tolerance):
+    velocity = _vector(ball["velocity_cm_s"])
+    angular = _vector(ball["angular_velocity_rad_s"])
+    slip_x = velocity[0] + radius * angular[2]
+    slip_z = velocity[2] - radius * angular[0]
+    return math.hypot(slip_x, slip_z) <= tolerance
+
+
+def _event_observation(metric, reference, frames):
+    required = {
+        "event_kind", "sample_phase", "ball_index", "minimum_window_ticks",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    event = _contact_index(frames, selection["event_kind"], selection["ball_index"])
+    if event is None:
+        return None, INTEGRATION_MISMATCH, "declared contact event is absent"
+    event_index, contact = event
+    # A telemetry frame is captured after its physics step, so the frame carrying
+    # the contact already contains the first post-event state.
+    candidates = frames[event_index:]
+    minimum = selection["minimum_window_ticks"]
+    if not _contiguous(frames):
+        return None, INTEGRATION_MISMATCH, "trace ticks are not contiguous"
+
+    if selection["sample_phase"] == "first_sample_after_event":
+        selected_index = 0 if candidates else None
+    elif selection["sample_phase"] == "first_pure_roll_after_event":
+        rolling_required = {
+            "ball_radius_cm", "pure_roll_tolerance_cm_s",
+        }
+        if not rolling_required <= set(selection):
+            return None, REFERENCE_LIMITATION, "pure-roll selection metadata is incomplete"
+        radius = selection["ball_radius_cm"]
+        tolerance = selection["pure_roll_tolerance_cm_s"]
+        if not _finite_number(radius) or radius <= 0.0 \
+                or not _finite_number(tolerance) or tolerance < 0.0:
+            return None, REFERENCE_LIMITATION, "pure-roll selection values are invalid"
+        indices = [selection["ball_index"]]
+        if metric == "separation_angle_degrees":
+            other = selection.get("other_ball_index")
+            if not isinstance(other, int) or isinstance(other, bool):
+                return None, REFERENCE_LIMITATION, "other ball index is missing"
+            indices.append(other)
+        selected_index = None
+        try:
+            for index in range(0, len(candidates) - minimum + 1):
+                window = candidates[index:index + minimum]
+                if all(
+                    _is_pure_roll(_ball(frame, ball_index), radius, tolerance)
+                    for frame in window for ball_index in indices
+                ):
+                    selected_index = index
+                    break
+        except (KeyError, TypeError, ValueError, IndexError) as error:
+            return None, INTEGRATION_MISMATCH, str(error)
+    else:
+        return None, REFERENCE_LIMITATION, "sample phase is unsupported"
+    if selected_index is None or len(candidates) - selected_index < minimum:
+        return None, INTEGRATION_MISMATCH, "declared post-event sample window is absent"
+
+    try:
+        ball = _ball(candidates[selected_index], selection["ball_index"])
+        if metric in {
+                "post_collision_linear_velocity_cm_s",
+                "cushion_rebound_speed_cm_s"}:
+            actual = ball["speed_cm_s"]
+        elif metric == "separation_angle_degrees":
+            other = _ball(candidates[selected_index], selection["other_ball_index"])
+            first_velocity = _vector(ball["velocity_cm_s"])
+            second_velocity = _vector(other["velocity_cm_s"])
+            first = (first_velocity[0], first_velocity[2])
+            second = (second_velocity[0], second_velocity[2])
+            denominator = math.hypot(*first) * math.hypot(*second)
+            if denominator == 0.0:
+                return None, INTEGRATION_MISMATCH, "separation angle velocity is zero"
+            cosine = max(-1.0, min(1.0, sum(a * b for a, b in zip(first, second)) / denominator))
+            actual = math.degrees(math.acos(cosine))
+        elif metric == "cushion_rebound_angle_degrees":
+            velocity = _vector(ball["velocity_cm_s"])
+            normal = _vector(contact["normal"])
+            normal_component = velocity[0] * normal[0] + velocity[2] * normal[2]
+            tangent_component = -velocity[0] * normal[2] + velocity[2] * normal[0]
+            # Positive means the rebound travels inward; zero is parallel to the cushion.
+            actual = math.degrees(math.atan2(normal_component, abs(tangent_component)))
+        else:
+            return None, INTEGRATION_MISMATCH, f"experimental metric {metric} is unavailable"
+    except (KeyError, TypeError, ValueError, IndexError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    if not _finite_number(actual):
+        return actual, NUMERICAL_FAILURE, "experimental observation is not finite"
+    return actual, None, None
+
+
 def _reference_observation(observed_metric, reference, scenario, frames):
+    if observed_metric in {"rolling_deceleration_cm_s2", "sliding_deceleration_cm_s2"}:
+        return _deceleration_observation(reference, frames)
+    if observed_metric in _EXPERIMENTAL_METRICS:
+        return _event_observation(observed_metric, reference, frames)
     if observed_metric != "stopping_distance_cm":
         return None, INTEGRATION_MISMATCH, f"observed metric {observed_metric} is unavailable"
     ball_index = reference.get("ball_index")
@@ -227,9 +419,15 @@ def analyze_scenario(scenario, frames, comparison_frames=None):
         except (KeyError, TypeError, ValueError) as error:
             passed, actual, code, message = False, None, INTEGRATION_MISMATCH, str(error)
         metrics[result_metric] = actual
+        point_id = None
+        if metric == "value_within_interval" and isinstance(expectation.get("value"), dict):
+            point_id = expectation["value"].get("point_id")
+            if isinstance(point_id, str) and point_id:
+                metrics[point_id] = actual
         if not passed:
             failures.append(Failure(
-                code, result_metric, message, expectation.get("value"), actual))
+                code, result_metric, message, expectation.get("value"), actual,
+                point_id))
     return ScenarioResult(
         scenario_id, not failures, grade, metrics, tuple(failures))
 
