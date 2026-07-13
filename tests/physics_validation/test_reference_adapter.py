@@ -76,16 +76,18 @@ class ReferenceAdapterTests(unittest.TestCase):
         case = default_reference_registry().adapt(
             self.package, self.split, self.points)[0]
         expectation = json.loads(case.scenario_json)["expectations"][0]
+        point = case.points[0]
+        lower, upper = point.acceptance_interval
 
         self.assertEqual(expectation["metric"], "value_within_interval")
         self.assertEqual(expectation["value"], {
             "ball_index": 0,
-            "expected": 18.0,
-            "lower": 17.75,
+            "expected": point.expected,
+            "lower": lower,
             "observed_metric": "stopping_distance_cm",
             "point_id": "stop_distance_cal_01",
             "unit": "cm",
-            "upper": 18.25,
+            "upper": upper,
         })
 
     def test_provenance_contains_source_points_and_all_package_hashes(self):

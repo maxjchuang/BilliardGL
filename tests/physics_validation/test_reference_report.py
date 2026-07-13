@@ -84,8 +84,10 @@ class ReferenceReportTests(unittest.TestCase):
         paths = self._write(
             self.cases,
             [
-                result_for(self.cases[0], 18.0),
-                result_for(self.cases[1], 28.0, "MODEL_MISMATCH"),
+                result_for(self.cases[0], self.cases[0].points[0].expected),
+                result_for(
+                    self.cases[1], self.cases[1].points[0].expected + 1.0,
+                    "MODEL_MISMATCH"),
             ],
             accounting(known_model_mismatches=frozenset({known_key})),
         )
@@ -108,10 +110,12 @@ class ReferenceReportTests(unittest.TestCase):
             "series_id": "synthetic_free_roll",
         })
         row = holdout["points"][0]
-        self.assertEqual(row["prediction"], 28.0)
-        self.assertEqual(row["experimental_value"], 27.0)
+        self.assertEqual(row["prediction"], self.cases[1].points[0].expected + 1.0)
+        self.assertEqual(row["experimental_value"], self.cases[1].points[0].expected)
         self.assertEqual(row["signed_error"], 1.0)
-        self.assertEqual(row["acceptance_interval"], [26.75, 27.25])
+        self.assertEqual(
+            row["acceptance_interval"],
+            list(self.cases[1].points[0].acceptance_interval))
         self.assertEqual(row["status"], "MODEL_MISMATCH_KNOWN")
         self.assertEqual(row["dataset_version"], "1.0.0")
         self.assertEqual(row["source_locator"], "synthetic:holdout:row-1")
@@ -121,7 +125,8 @@ class ReferenceReportTests(unittest.TestCase):
         self.assertEqual(row["measurement_uncertainty"], 0.1)
         self.assertEqual(row["combined_standard_uncertainty"], 0.1)
         self.assertEqual(len(csv_rows), 2)
-        self.assertEqual(csv_rows[1]["prediction"], "28.0")
+        self.assertEqual(
+            csv_rows[1]["prediction"], str(self.cases[1].points[0].expected + 1.0))
         self.assertIn("## CALIBRATION", markdown_path.read_text(encoding="utf-8"))
         self.assertIn("## HOLDOUT", markdown_path.read_text(encoding="utf-8"))
 
@@ -156,7 +161,7 @@ class ReferenceReportTests(unittest.TestCase):
         observed = set()
         for code, reconciliation, expected_status in examples:
             with self.subTest(code=code):
-                prediction = 18.0 if code is None else None
+                prediction = case.points[0].expected if code is None else None
                 json_path, _, _ = self._write(
                     [case], [result_for(case, prediction, code)], reconciliation)
                 payload = json.loads(json_path.read_text(encoding="utf-8"))

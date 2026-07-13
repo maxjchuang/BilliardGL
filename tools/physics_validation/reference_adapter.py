@@ -116,6 +116,7 @@ def _adapt_synthetic(package, split, points):
             lower, upper = point.acceptance_interval
             scenario["expectations"].append({
                 "metric": "value_within_interval",
+                "operator": "eq",
                 "value": {
                     "ball_index": 0,
                     "expected": point.expected,

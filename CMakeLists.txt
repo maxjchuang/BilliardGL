@@ -230,6 +230,10 @@ set_tests_properties(BilliardsHeadlessAutomationE2E PROPERTIES TIMEOUT 30)
 add_test(NAME BilliardsPhysicsValidationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_physics_validation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsPhysicsValidationE2E PROPERTIES TIMEOUT 60 LABELS "physics-validation;e2e")
+add_test(NAME BilliardsReferenceValidationE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_reference_validation.py
+        $<TARGET_FILE:Billiards> ${CMAKE_CURRENT_BINARY_DIR}/physics-reference-validation)
+set_tests_properties(BilliardsReferenceValidationE2E PROPERTIES TIMEOUT 60 LABELS "physics-validation;reference-validation;e2e")
 add_test(NAME BilliardsRenderedAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_rendered_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsRenderedAutomationE2E PROPERTIES TIMEOUT 30 LABELS "rendered;e2e")

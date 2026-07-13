@@ -33,3 +33,11 @@ jobs:
           name: physics-validation-report
           path: ${{ runner.temp }}/billiardgl-build/physics-validation-report
           if-no-files-found: error
+
+      - name: Upload reference validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reference-validation-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-validation
+          if-no-files-found: error

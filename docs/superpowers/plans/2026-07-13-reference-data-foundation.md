@@ -604,9 +604,9 @@ Expected: configure/build succeeds, all Python tests pass, both CTests pass, pac
 Run:
 
 ```bash
-git diff --name-only HEAD~7
+git diff --name-only e5f1c32
 rg -n 'Mathavan|Dom.nech|Cross' tests/physics_validation/fixtures/reference_package_v1
-git diff HEAD~7 -- src include
+git diff e5f1c32 -- src include
 ```
 
 Expected: the fixture contains no paper-derived names or values; the `src`/`include` diff is empty; all changes belong to reference infrastructure, tests, docs, CMake, or CI.
