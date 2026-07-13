@@ -60,6 +60,8 @@ class AutomationClient:
     def run_until(self, condition, max_steps=10000): return self.command("run_until", {"condition": condition, "max_steps": max_steps})
     def set_ball(self, **params): return self.command("set_ball", params)
     def load_scenario(self, balls): return self.command("load_scenario", {"balls": balls})
+    def load_physics_scenario(self, scenario):
+        return self.command("load_scenario", {"scenario": scenario})
     def set_player_state(self, **params): return self.command("set_player_state", params)
     def clear_events(self): return self.command("clear_events")
     def start_physics_trace(self): return self.command("start_physics_trace")

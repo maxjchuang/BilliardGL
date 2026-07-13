@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "failures": [
+    {
+      "scenario_id": "receding_overlap_v1",
+      "code": "NUMERICAL_FAILURE",
+      "metric": "unexpected_ball_ball_impulse",
+      "source": "src/Billiards/physics.cpp:collideBalls",
+      "remove_when": "separating contacts receive no collision impulse"
+    },
+    {
+      "scenario_id": "high_speed_tunneling_v1",
+      "code": "NUMERICAL_FAILURE",
+      "metric": "missed_collision",
+      "source": "src/Billiards/physics.cpp:updatePhysics",
+      "remove_when": "continuous collision detection or bounded substeps detect the impact"
+    },
+    {
+      "scenario_id": "reverse_cradle_v1",
+      "code": "NON_DETERMINISTIC",
+      "metric": "permutation_invariance",
+      "source": "src/Billiards/physics.cpp:updatePhysics",
+      "remove_when": "multi-contact solving is independent of ball iteration order"
+    }
+  ]
+}

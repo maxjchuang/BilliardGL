@@ -1,0 +1,187 @@
+import json
+import math
+from dataclasses import dataclass
+
+
+NUMERICAL_FAILURE = "NUMERICAL_FAILURE"
+MODEL_MISMATCH = "MODEL_MISMATCH"
+NON_DETERMINISTIC = "NON_DETERMINISTIC"
+INTEGRATION_MISMATCH = "INTEGRATION_MISMATCH"
+REFERENCE_LIMITATION = "REFERENCE_LIMITATION"
+
+
+@dataclass(frozen=True)
+class Failure:
+    code: str
+    metric: str
+    message: str
+    expected: object
+    actual: object
+
+
+@dataclass(frozen=True)
+class ScenarioResult:
+    scenario_id: str
+    passed: bool
+    evidence_grade: str
+    metrics: dict
+    failures: tuple
+
+
+@dataclass(frozen=True)
+class KnownFailureMatch:
+    known: set
+    new: set
+    missing: set
+
+
+def _finite(value):
+    if isinstance(value, bool) or value is None or isinstance(value, str):
+        return True
+    if isinstance(value, (int, float)):
+        return math.isfinite(value)
+    if isinstance(value, dict):
+        return all(_finite(item) for item in value.values())
+    if isinstance(value, (list, tuple)):
+        return all(_finite(item) for item in value)
+    return False
+
+
+def _tolerance(expectation, expected):
+    absolute = float(expectation.get("absolute_tolerance", 0.0))
+    relative = float(expectation.get("relative_tolerance", 0.0))
+    if isinstance(expected, (int, float)) and not isinstance(expected, bool):
+        return max(absolute, abs(expected) * relative)
+    return absolute
+
+
+def _compare(actual, expected, operator, tolerance):
+    if isinstance(actual, (int, float)) and isinstance(expected, (int, float)) \
+            and not isinstance(actual, bool) and not isinstance(expected, bool):
+        if operator == "eq":
+            return abs(actual - expected) <= tolerance
+        if operator == "lte":
+            return actual <= expected + tolerance
+        if operator == "gte":
+            return actual >= expected - tolerance
+    if operator == "eq":
+        return actual == expected
+    if operator == "lte":
+        return actual <= expected
+    if operator == "gte":
+        return actual >= expected
+    return False
+
+
+def _ball(frame, index):
+    for ball in frame.get("balls", []):
+        if ball.get("index") == index:
+            return ball
+    raise KeyError(f"ball {index} is absent from trace")
+
+
+def _vector(value):
+    if isinstance(value, dict):
+        return [value["x"], value["y"], value["z"]]
+    return list(value)
+
+
+def _failure_code(metric):
+    if metric == "permutation_invariance":
+        return NON_DETERMINISTIC
+    if metric in {"final_speed_cm_s", "final_velocity_cm_s"}:
+        return MODEL_MISMATCH
+    return NUMERICAL_FAILURE
+
+
+def _evaluate(expectation, frames):
+    metric = expectation["metric"]
+    expected = expectation.get("value")
+    operator = expectation.get("operator", "eq")
+    tolerance = _tolerance(expectation, expected)
+
+    if not frames:
+        return False, None, INTEGRATION_MISMATCH, "trace contains no frames"
+    if metric == "finite_state":
+        actual = _finite(frames)
+    elif metric == "nonincreasing_translational_energy":
+        energies = [frame["translational_kinetic_energy_j"] for frame in frames]
+        actual = all(after <= before + tolerance
+                     for before, after in zip(energies, energies[1:]))
+    elif metric == "maximum_penetration_cm":
+        actual = max(frame["maximum_penetration_cm"] for frame in frames)
+    elif metric == "contact_count":
+        actual = sum(len(frame.get("contacts", [])) for frame in frames)
+    elif metric == "unexpected_ball_ball_impulse":
+        actual = any(
+            contact.get("kind") == "ball_ball" and contact.get("normal_impulse_ns", 0.0) > tolerance
+            for frame in frames for contact in frame.get("contacts", []))
+    elif metric == "missed_collision":
+        actual = not any(
+            contact.get("kind") == "ball_ball"
+            for frame in frames for contact in frame.get("contacts", []))
+    elif metric == "final_speed_cm_s":
+        if not isinstance(expected, dict) or "ball_index" not in expected or "value" not in expected:
+            return False, None, REFERENCE_LIMITATION, "reference speed and ball index are missing"
+        actual = _ball(frames[-1], expected["ball_index"])["speed_cm_s"]
+        expected = expected["value"]
+        tolerance = _tolerance(expectation, expected)
+    elif metric == "final_velocity_cm_s":
+        if not isinstance(expected, dict) or "ball_index" not in expected or "velocity_cm_s" not in expected:
+            return False, None, REFERENCE_LIMITATION, "reference velocity and ball index are missing"
+        actual = _vector(_ball(frames[-1], expected["ball_index"])["velocity_cm_s"])
+        target = _vector(expected["velocity_cm_s"])
+        passed = all(abs(a - b) <= tolerance for a, b in zip(actual, target))
+        return passed, actual, MODEL_MISMATCH, "final velocity differs from reference"
+    elif metric == "permutation_invariance":
+        if not isinstance(expected, dict) or "ball_index" not in expected or "velocity_cm_s" not in expected:
+            return False, None, REFERENCE_LIMITATION, "permutation target is missing"
+        actual = _vector(_ball(frames[-1], expected["ball_index"])["velocity_cm_s"])
+        target = _vector(expected["velocity_cm_s"])
+        passed = all(abs(a - b) <= tolerance for a, b in zip(actual, target))
+        return passed, actual, NON_DETERMINISTIC, "result depends on ball iteration order"
+    else:
+        return False, None, REFERENCE_LIMITATION, f"metric {metric} is not implemented"
+
+    passed = _compare(actual, expected, operator, tolerance)
+    return passed, actual, _failure_code(metric), f"{metric} is outside its acceptance rule"
+
+
+def analyze_scenario(scenario, frames):
+    scenario_id = scenario["id"]
+    grade = scenario.get("evidence", {}).get("grade", "C")
+    metrics = {}
+    failures = []
+    for expectation in scenario.get("expectations", []):
+        metric = expectation["metric"]
+        try:
+            passed, actual, code, message = _evaluate(expectation, frames)
+        except (KeyError, TypeError, ValueError) as error:
+            passed, actual, code, message = False, None, INTEGRATION_MISMATCH, str(error)
+        metrics[metric] = actual
+        if not passed:
+            failures.append(Failure(
+                code, metric, message, expectation.get("value"), actual))
+    return ScenarioResult(
+        scenario_id, not failures, grade, metrics, tuple(failures))
+
+
+def compare_traces(scenario_id, first, second):
+    canonical_first = json.dumps(first, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    canonical_second = json.dumps(second, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    if canonical_first == canonical_second:
+        return None
+    return Failure(
+        NON_DETERMINISTIC, "trace_equal",
+        f"{scenario_id} produced different traces for identical fresh runs",
+        canonical_first, canonical_second)
+
+
+def match_known_failures(results, expected):
+    actual = {
+        (result.scenario_id, failure.code, failure.metric)
+        for result in results
+        for failure in result.failures
+        if failure.code != REFERENCE_LIMITATION
+    }
+    return KnownFailureMatch(actual & expected, actual - expected, expected - actual)

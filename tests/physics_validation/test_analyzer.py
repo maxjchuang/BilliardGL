@@ -1,0 +1,88 @@
+import unittest
+
+from tools.physics_validation.analyzer import (
+    Failure,
+    ScenarioResult,
+    analyze_scenario,
+    compare_traces,
+    match_known_failures,
+)
+
+
+def scenario(metric, value=True, operator="eq", absolute_tolerance=0.0, grade="C"):
+    return {
+        "id": "case",
+        "evidence": {"grade": grade, "source": "analytic", "equipment": "WPA_POOL"},
+        "expectations": [{
+            "metric": metric,
+            "operator": operator,
+            "value": value,
+            "absolute_tolerance": absolute_tolerance,
+        }],
+    }
+
+
+def frame(tick, energy=1.0, x=0.0, speed=1.0):
+    return {
+        "tick": tick,
+        "translational_kinetic_energy_j": energy,
+        "maximum_penetration_cm": 0.0,
+        "balls": [{
+            "index": 0,
+            "position_cm": {"x": x, "y": 0.0, "z": 0.0},
+            "velocity_cm_s": {"x": speed, "y": 0.0, "z": 0.0},
+            "acceleration_cm_s2": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "angular_velocity_rad_s": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "speed_cm_s": speed,
+            "pocketed": False,
+        }],
+        "contacts": [],
+    }
+
+
+class AnalyzerTests(unittest.TestCase):
+    def test_energy_increase_is_numerical_failure(self):
+        result = analyze_scenario(
+            scenario("nonincreasing_translational_energy"),
+            [frame(1, energy=1.0), frame(2, energy=1.01)])
+        self.assertFalse(result.passed)
+        self.assertEqual(result.failures[0].code, "NUMERICAL_FAILURE")
+
+    def test_nonfinite_state_is_numerical_failure(self):
+        result = analyze_scenario(scenario("finite_state"), [frame(1, x=float("nan"))])
+        self.assertEqual(result.failures[0].metric, "finite_state")
+
+    def test_experimental_tolerance_is_model_mismatch(self):
+        result = analyze_scenario(
+            scenario("final_speed_cm_s", value={"ball_index": 0, "value": 90.0},
+                     absolute_tolerance=2.0, grade="A"),
+            [frame(1, speed=95.0)])
+        self.assertEqual(result.failures[0].code, "MODEL_MISMATCH")
+
+    def test_missing_reference_data_is_explicit_limitation(self):
+        result = analyze_scenario(scenario("final_speed_cm_s", grade="A"), [frame(1)])
+        self.assertEqual(result.failures[0].code, "REFERENCE_LIMITATION")
+
+    def test_trace_comparison_detects_nondeterminism(self):
+        self.assertIsNone(compare_traces("case", [frame(1)], [frame(1)]))
+        changed = frame(1)
+        changed["balls"][0]["position_cm"]["x"] = 1.0
+        failure = compare_traces("case", [frame(1)], [changed])
+        self.assertEqual(failure.code, "NON_DETERMINISTIC")
+
+    def test_known_failure_matching_is_strict(self):
+        result = ScenarioResult(
+            "case", False, "C", {},
+            (Failure("NUMERICAL_FAILURE", "missed_collision", "missed", False, True),))
+        manifest = {("case", "NUMERICAL_FAILURE", "missed_collision")}
+        matched = match_known_failures([result], manifest)
+        self.assertEqual(matched.known, manifest)
+        self.assertEqual(matched.new, set())
+        self.assertEqual(matched.missing, set())
+
+        missing = match_known_failures([], manifest)
+        self.assertEqual(missing.missing, manifest)
+
+
+if __name__ == "__main__":
+    unittest.main()
