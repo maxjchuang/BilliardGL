@@ -211,6 +211,32 @@ class ReferenceReportTests(unittest.TestCase):
         self.assertEqual(row["source_locator"], "'=cmd|' /C calc'!A0")
         self.assertEqual(row["prediction"], "-1.0")
 
+    def test_source_domain_metadata_and_group_error_summary_are_visible(self):
+        original = self.cases[0]
+        provenance = json.loads(original.provenance_json)
+        provenance.update({
+            "fit_subset": True,
+            "incident_speed_cm_s": 80.0,
+            "rigid_cushion_domain": False,
+        })
+        case = replace(original, provenance_json=json.dumps(provenance, sort_keys=True))
+        json_path, csv_path, markdown_path = self._write(
+            [case], [result_for(case, case.points[0].expected + 2.0)], accounting())
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+        row = payload["partitions"]["CALIBRATION"]["points"][0]
+        group = payload["partitions"]["CALIBRATION"]["groups"][0]
+
+        self.assertEqual(row["incident_speed_cm_s"], 80.0)
+        self.assertTrue(row["fit_subset"])
+        self.assertFalse(row["rigid_cushion_domain"])
+        self.assertEqual(group["rmse"], 2.0)
+        self.assertEqual(row["group_rmse"], 2.0)
+        with csv_path.open("r", encoding="utf-8", newline="") as source:
+            csv_row = next(csv.DictReader(source))
+        self.assertEqual(csv_row["rigid_cushion_domain"], "False")
+        self.assertEqual(csv_row["group_rmse"], "2.0")
+        self.assertIn("Group error summary", markdown_path.read_text(encoding="utf-8"))
+
     def test_missing_result_is_an_integration_mismatch_not_a_skip(self):
         json_path, _, _ = self._write([self.cases[0]], [], accounting())
         payload = json.loads(json_path.read_text(encoding="utf-8"))

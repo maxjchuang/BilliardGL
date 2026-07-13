@@ -19,6 +19,9 @@ _CSV_FIELDS = (
     "dataset_version",
     "series_id",
     "group_id",
+    "incident_speed_cm_s",
+    "fit_subset",
+    "rigid_cushion_domain",
     "case_id",
     "scenario_id",
     "point_id",
@@ -38,6 +41,8 @@ _CSV_FIELDS = (
     "coverage_factor",
     "engineering_absolute_tolerance",
     "engineering_relative_tolerance",
+    "group_rmse",
+    "group_maximum_absolute_error",
     "source_locator",
     "pool_applicability",
     "status",
@@ -175,7 +180,11 @@ def _point_row(case, point, result, accounting, metadata):
         "engineering_absolute_tolerance": point.engineering_absolute_tolerance,
         "engineering_relative_tolerance": point.engineering_relative_tolerance,
         "experimental_value": point.expected,
+        "fit_subset": provenance.get("fit_subset"),
         "group_id": point.group_id,
+        "group_maximum_absolute_error": None,
+        "group_rmse": None,
+        "incident_speed_cm_s": provenance.get("incident_speed_cm_s"),
         "measurement_uncertainty": point.measurement_uncertainty,
         "metric": point.metric,
         "package_hashes": provenance.get("package_hashes", {}),
@@ -185,6 +194,7 @@ def _point_row(case, point, result, accounting, metadata):
         "prediction": prediction,
         "prediction_nonfinite": prediction_nonfinite,
         "replay_command": scenario_metadata.get("replay_command"),
+        "rigid_cushion_domain": provenance.get("rigid_cushion_domain"),
         "scenario_id": scenario_id,
         "series_id": point.series_id,
         "signed_error": signed_error,
@@ -221,11 +231,36 @@ def _series(rows):
     return summaries
 
 
+def _groups(rows):
+    grouped = {}
+    for row in rows:
+        grouped.setdefault(row["group_id"], []).append(row)
+    summaries = []
+    for group_id in sorted(grouped):
+        group_rows = grouped[group_id]
+        errors = [row["signed_error"] for row in group_rows if row["signed_error"] is not None]
+        summaries.append({
+            "count": len(group_rows),
+            "group_id": group_id,
+            "maximum_absolute_error": max((abs(error) for error in errors), default=None),
+            "pass_rate": sum(row["status"] == "PASSED" for row in group_rows) / len(group_rows),
+            "rmse": math.sqrt(sum(error * error for error in errors) / len(errors)) if errors else None,
+        })
+    return summaries
+
+
 def _partition(rows):
     statuses = {}
     for row in rows:
         statuses[row["status"]] = statuses.get(row["status"], 0) + 1
+    groups = _groups(rows)
+    by_group = {item["group_id"]: item for item in groups}
+    for row in rows:
+        summary = by_group[row["group_id"]]
+        row["group_rmse"] = summary["rmse"]
+        row["group_maximum_absolute_error"] = summary["maximum_absolute_error"]
     return {
+        "groups": groups,
         "points": rows,
         "series": _series(rows),
         "summary": {
@@ -284,18 +319,34 @@ def _markdown_table(partition, rows):
     lines = [
         f"## {partition}",
         "",
-        "| Point | Case | Metric | Prediction | Experiment | Interval | Status |",
-        "|---|---|---|---:|---:|---|---|",
+        "| Point | Case | Incident | Domain | Metric | Prediction | Experiment | Interval | Status |",
+        "|---|---|---:|---|---|---:|---:|---|---|",
     ]
     for row in rows:
         prediction = "-" if row["prediction"] is None else str(row["prediction"])
         lower, upper = row["acceptance_interval"]
         lines.append(
-            f"| {row['point_id']} | {row['case_id']} | {row['metric']} | "
+            f"| {row['point_id']} | {row['case_id']} | "
+            f"{row.get('incident_speed_cm_s', '-') if row.get('incident_speed_cm_s') is not None else '-'} | "
+            f"{row.get('rigid_cushion_domain', '-') if row.get('rigid_cushion_domain') is not None else '-'} | "
+            f"{row['metric']} | "
             f"{prediction} | {row['experimental_value']} | [{lower}, {upper}] | "
             f"{row['status']} |")
     if not rows:
-        lines.append("| - | - | - | - | - | - | - |")
+        lines.append("| - | - | - | - | - | - | - | - | - |")
+    lines.extend([
+        "",
+        "### Group error summary",
+        "",
+        "| Group | Points | RMSE | Maximum absolute error | Pass rate |",
+        "|---|---:|---:|---:|---:|",
+    ])
+    for summary in _groups(rows):
+        lines.append(
+            f"| {summary['group_id']} | {summary['count']} | {summary['rmse']} | "
+            f"{summary['maximum_absolute_error']} | {summary['pass_rate']} |")
+    if not rows:
+        lines.append("| - | 0 | - | - | - |")
     lines.append("")
     return lines
 

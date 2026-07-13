@@ -214,6 +214,38 @@ python3 -m tools.physics_validation.reference_run \
 
 The last command executes no fabricated substitute scenarios; it produces the strict nine-entry limitation audit. A single-case replay command will become valid only after the scenario schema can express the source apparatus.
 
+## Mathavan 2010 cushion package
+
+`mathavan_2010_cushion` records the perpendicular rolling-ball cushion experiment in S. Mathavan, M. R. Jackson, and R. M. Parkin, “A theoretical analysis of billiard ball dynamics under cushion impacts,” DOI `10.1243/09544062JMES1964`. The Loughborough record identifies a submitted-for-publication author version. The audited publisher-layout copy and its extracted figure are not redistributed; their SHA-256 and acquisition/version status are locked in the manifest.
+
+Only the 19 experimental diamonds in Fig. 7(a) are admitted. Fig. 7(b) repeats experimental points beside numerical squares, so those repeated diamonds are provenance-only and the numerical squares are excluded. Figs. 8–10 are entirely numerical algorithm output and cannot become experimental expected values. Each admitted marker has a grayscale-component centroid pass and a component-bounding-box-center pass at the embedded figure's native 1100×530 resolution.
+
+The raw data marks incident speeds below 150 cm/s as the paper's parameter-fit subset and speeds above 250 cm/s as outside the authors' reliable rigid-cushion domain. `incident_low` is calibration; middle, high, and every extreme marker are holdout. All results remain `TREND_ONLY` because the Riley Renaissance snooker cushion, cloth, and 52.5 mm balls are not production Chinese Pool equipment.
+
+Each executable case approaches the rail in perpendicular pure roll with zero sidespin. Three pre-impact and three post-impact telemetry samples are fit locally to evaluate incident and rebound speed at the first rail event. The current production rail response preserves normal speed magnitude, so all 19 finite results are locked as model mismatches rather than being hidden by wider experimental intervals. Reports include incident speed, fit/domain flags, per-band RMSE/maximum error, partition, provenance, and replay command. Four source/equipment limitations remain strictly accounted.
+
+Reconstruct and run the full offline audit:
+
+```bash
+python3 -m tools.physics_validation.extract_mathavan_2010 \
+  --package tests/physics_validation/reference_data/mathavan_2010_cushion \
+  --check
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2010_cushion \
+  --output build/physics-reference/mathavan-2010
+```
+
+Replay the highest-speed extreme holdout:
+
+```bash
+python3 -m tools.physics_validation.reference_run \
+  --executable build/check/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2010_cushion \
+  --output build/physics-reference/mathavan-2010-replay \
+  --case fig7_experimental_19
+```
+
 ## `scenario_template.json` and adapters
 
 The template contains canonical production-runtime inputs plus explicit per-case mappings. An adapter:

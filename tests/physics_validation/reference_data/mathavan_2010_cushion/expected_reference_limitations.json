@@ -1,0 +1,9 @@
+{
+  "failures": [
+    {"dataset_id": "mathavan_2010_cushion", "case_id": "oblique_experimental_rebound_angle_unavailable", "code": "REFERENCE_LIMITATION", "metric": "cushion_rebound_angle_degrees", "missing_evidence": "The source reports no experimental oblique-incidence rebound-angle series.", "resolution_condition": "Acquire synchronized experimental incident/rebound angles for oblique cushion impacts."},
+    {"dataset_id": "mathavan_2010_cushion", "case_id": "experimental_spin_change_unavailable", "code": "REFERENCE_LIMITATION", "metric": "post_collision_angular_velocity_rad_s", "missing_evidence": "The source experiment did not measure spin change through cushion impact.", "resolution_condition": "Acquire synchronized pre/post-impact angular-velocity measurements."},
+    {"dataset_id": "mathavan_2010_cushion", "case_id": "snooker_cushion_to_pool_material_conversion_missing", "code": "REFERENCE_LIMITATION", "metric": "equipment_conversion", "missing_evidence": "Riley Renaissance snooker cushion, cloth, and 52.5 mm balls are not the production Chinese Pool apparatus.", "resolution_condition": "Publish a validated cushion/cloth/ball material conversion to production equipment."},
+    {"dataset_id": "mathavan_2010_cushion", "case_id": "rigid_cushion_domain_warning", "code": "REFERENCE_LIMITATION", "metric": "rigid_cushion_domain", "missing_evidence": "The authors identify incident speeds above 2.5 m/s as outside the reliable rigid-cushion model domain.", "resolution_condition": "Measure cushion deformation and contact response above 2.5 m/s."}
+  ],
+  "schema_version": 1
+}

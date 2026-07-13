@@ -1,0 +1,12 @@
+{
+  "base_scenario": {
+    "balls": [],
+    "description": "Mathavan 2010 perpendicular rolling snooker cushion experiment",
+    "evidence": {"equipment": "WPA_POOL", "grade": "B", "pool_applicability": "TREND_ONLY", "source": "doi:10.1243/09544062JMES1964", "source_equipment": "Riley Renaissance snooker table with 52.5 mm balls"},
+    "expectations": [],
+    "schema_version": 1,
+    "simulation": {"ticks": 10, "time_step_seconds": 0.1}
+  },
+  "cases": {},
+  "schema_version": 1
+}

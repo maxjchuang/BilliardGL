@@ -1,0 +1,22 @@
+{
+  "date": "2026-07-13",
+  "inputs": [
+    {"file_id": "raw_extracted", "sha256": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d"},
+    {"file_id": "digitization", "sha256": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12"}
+  ],
+  "method": "Native embedded-image grayscale component extraction of Fig. 7(a) experimental diamonds only",
+  "operator": "Codex experimental-marker admission pass",
+  "output_sha256": "sha256:018a45a77daa5a8463f4ab892f7bf714c97c7c50cdcdb9efcf76903cfd4668bd",
+  "review": {"date": "2026-07-13", "method": "component centroid versus component bounding-box center", "reviewed_by": "method-disjoint second coordinate pass"},
+  "rounding_policy": "Raw pixels and m/s values retain six decimals; normalized cm/s removes trailing zeroes only.",
+  "schema_version": 2,
+  "script": {"module": "tools.physics_validation.extract_mathavan_2010", "version": "1.0.0"},
+  "source_sha256": "sha256:8c4ad418408b1e1728577632a99ba4789320a91b4b13d95ddd0a231c5fb2f093",
+  "tool": {"name": "Pillow/NumPy source audit plus Python standard-library normalizer", "version": "2026-07-13"},
+  "transformations": [
+    {"formula": "incident_m_s=(pixel_x-66)*4/(523-66)", "id": "fig7_incident_axis", "input_unit": "pixel", "output_unit": "m/s"},
+    {"formula": "rebound_m_s=(440-pixel_y)*3/(440-5)", "id": "fig7_rebound_axis", "input_unit": "pixel", "output_unit": "m/s"},
+    {"formula": "speed_cm_s=speed_m_s*100", "id": "speed_unit", "input_unit": "m/s", "output_unit": "cm/s"}
+  ],
+  "uncertainty_interpretation": "independent_bounded_components"
+}

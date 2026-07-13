@@ -182,6 +182,10 @@ def default_reference_registry():
         adapt_mathavan_2009,
         mathavan_2009_limitations,
     )
+    from .adapters.mathavan_2010 import (
+        adapt_mathavan_2010,
+        mathavan_2010_limitations,
+    )
 
     registry = ReferenceAdapterRegistry()
     registry.register("synthetic_free_roll_v1", _adapt_synthetic)
@@ -191,6 +195,13 @@ def default_reference_registry():
         lambda package, split, points: ReferenceAdaptation(
             adapt_mathavan_2009(package, split, points),
             mathavan_2009_limitations(package),
+        ),
+    )
+    registry.register(
+        "mathavan_2010_v1",
+        lambda package, split, points: ReferenceAdaptation(
+            adapt_mathavan_2010(package, split, points),
+            mathavan_2010_limitations(package),
         ),
     )
     return registry

@@ -312,9 +312,109 @@ def _event_observation(metric, reference, frames):
     return actual, None, None
 
 
+def _linear_value_at(samples, target_time):
+    if len(samples) < 2 or not all(
+            _finite_number(value) for sample in samples for value in sample):
+        return None
+    mean_time = sum(time for time, _ in samples) / len(samples)
+    mean_value = sum(value for _, value in samples) / len(samples)
+    denominator = sum((time - mean_time) ** 2 for time, _ in samples)
+    if denominator <= 0.0:
+        return None
+    slope = sum(
+        (time - mean_time) * (value - mean_value)
+        for time, value in samples
+    ) / denominator
+    return mean_value + slope * (target_time - mean_time)
+
+
+def _paired_cushion_observation(reference, scenario, frames):
+    required = {
+        "event_kind", "sample_phase", "ball_index", "minimum_window_ticks",
+        "incident_window_ticks", "rebound_window_ticks", "incident_speed_cm_s",
+        "incident_speed_tolerance_cm_s", "ball_radius_cm",
+        "sidespin_tolerance_rad_s", "pure_roll_tolerance_cm_s",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    if selection["sample_phase"] != "immediate_post_impact":
+        return None, REFERENCE_LIMITATION, "paired cushion source phase is unsupported"
+    incident_count = selection["incident_window_ticks"]
+    rebound_count = selection["rebound_window_ticks"]
+    if not isinstance(incident_count, int) or isinstance(incident_count, bool) \
+            or not isinstance(rebound_count, int) or isinstance(rebound_count, bool) \
+            or incident_count < selection["minimum_window_ticks"] \
+            or rebound_count < selection["minimum_window_ticks"]:
+        return None, REFERENCE_LIMITATION, "paired cushion window sizes are invalid"
+    event = _contact_index(frames, selection["event_kind"], selection["ball_index"])
+    if event is None:
+        return None, INTEGRATION_MISMATCH, "declared rail event is absent"
+    event_index, contact = event
+    if event_index < incident_count or len(frames) - event_index < rebound_count \
+            or not _contiguous(frames):
+        return None, INTEGRATION_MISMATCH, "paired cushion fit window is incomplete"
+    window = frames[event_index - incident_count:event_index + rebound_count]
+    rail_contacts = [
+        item for frame in window for item in frame.get("contacts", [])
+        if item.get("kind") == "rail"
+        and selection["ball_index"] in (item.get("first_ball"), item.get("second_ball"))
+    ]
+    if len(rail_contacts) != 1:
+        return None, INTEGRATION_MISMATCH, "paired cushion fit window contains an ambiguous rail event"
+    try:
+        scenario_ball = _scenario_ball(scenario, selection["ball_index"])
+        velocity = _vector(scenario_ball["velocity_cm_s"])
+        angular = _vector(scenario_ball["angular_velocity_rad_s"])
+        normal = _vector(contact["normal"])
+        radius = selection["ball_radius_cm"]
+        sidespin_tolerance = selection["sidespin_tolerance_rad_s"]
+        roll_tolerance = selection["pure_roll_tolerance_cm_s"]
+        if not all(_finite_number(value) for value in velocity + angular + normal) \
+                or not _finite_number(radius) or radius <= 0.0 \
+                or not _finite_number(sidespin_tolerance) or sidespin_tolerance < 0.0 \
+                or not _finite_number(roll_tolerance) or roll_tolerance < 0.0:
+            return None, REFERENCE_LIMITATION, "cushion initial-condition metadata is invalid"
+        tangent_speed = abs(-velocity[0] * normal[2] + velocity[2] * normal[0])
+        slip_speed = math.hypot(
+            velocity[0] + radius * angular[2],
+            velocity[2] - radius * angular[0],
+        )
+        if tangent_speed > roll_tolerance or abs(angular[1]) > sidespin_tolerance \
+                or slip_speed > roll_tolerance:
+            return None, INTEGRATION_MISMATCH, "scenario is not perpendicular pure roll with zero sidespin"
+        event_time = frames[event_index]["time_seconds"]
+        incident_samples = [
+            (frame["time_seconds"], _ball(frame, selection["ball_index"])["speed_cm_s"])
+            for frame in frames[event_index - incident_count:event_index]
+        ]
+        rebound_samples = [
+            (frame["time_seconds"], _ball(frame, selection["ball_index"])["speed_cm_s"])
+            for frame in frames[event_index:event_index + rebound_count]
+        ]
+    except (KeyError, TypeError, ValueError, IndexError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    incident = _linear_value_at(incident_samples, event_time)
+    rebound = _linear_value_at(rebound_samples, event_time)
+    if incident is None or rebound is None or not _finite_number(incident) or not _finite_number(rebound):
+        return None, NUMERICAL_FAILURE, "paired cushion speed fit is non-finite or degenerate"
+    expected_incident = selection["incident_speed_cm_s"]
+    incident_tolerance = selection["incident_speed_tolerance_cm_s"]
+    if not _finite_number(expected_incident) or not _finite_number(incident_tolerance) \
+            or incident_tolerance < 0.0:
+        return None, REFERENCE_LIMITATION, "declared incident speed is invalid"
+    if abs(incident - expected_incident) > incident_tolerance:
+        return None, INTEGRATION_MISMATCH, "fitted incident speed disagrees with the declared source case"
+    return rebound, None, None
+
+
 def _reference_observation(observed_metric, reference, scenario, frames):
     if observed_metric in {"rolling_deceleration_cm_s2", "sliding_deceleration_cm_s2"}:
         return _deceleration_observation(reference, frames)
+    if observed_metric == "cushion_rebound_speed_cm_s" \
+            and isinstance(reference.get("selection"), dict) \
+            and "incident_window_ticks" in reference["selection"]:
+        return _paired_cushion_observation(reference, scenario, frames)
     if observed_metric in _EXPERIMENTAL_METRICS:
         return _event_observation(observed_metric, reference, frames)
     if observed_metric != "stopping_distance_cm":
