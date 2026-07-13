@@ -41,7 +41,71 @@ def frame(tick, energy=1.0, x=0.0, speed=1.0):
     }
 
 
+def interval_scenario(lower=4.5, upper=5.5, observed_metric="stopping_distance_cm"):
+    return {
+        "id": "reference_case",
+        "balls": [{"index": 0, "position_cm": [0.0, 0.0, 0.0]}],
+        "evidence": {"grade": "A", "source": "experiment", "equipment": "WPA_POOL"},
+        "expectations": [{
+            "metric": "value_within_interval",
+            "value": {
+                "point_id": "distance_01",
+                "observed_metric": observed_metric,
+                "ball_index": 0,
+                "expected": 5.0,
+                "lower": lower,
+                "upper": upper,
+                "unit": "cm",
+            },
+        }],
+    }
+
+
 class AnalyzerTests(unittest.TestCase):
+    def test_reference_value_inside_interval_comes_from_trace(self):
+        result_y = frame(1, x=3.0)
+        result_y["balls"][0]["position_cm"]["y"] = 4.0
+        result = analyze_scenario(interval_scenario(), [result_y])
+
+        self.assertTrue(result.passed)
+        self.assertEqual(result.metrics["stopping_distance_cm"], 5.0)
+
+    def test_reference_interval_includes_both_boundaries(self):
+        for position in (4.5, 5.5):
+            with self.subTest(position=position):
+                result = analyze_scenario(interval_scenario(), [frame(1, x=position)])
+                self.assertTrue(result.passed)
+
+    def test_reference_value_outside_interval_is_model_mismatch(self):
+        for position in (4.49, 5.51):
+            with self.subTest(position=position):
+                result = analyze_scenario(interval_scenario(), [frame(1, x=position)])
+                self.assertEqual(result.failures[0].code, "MODEL_MISMATCH")
+                self.assertEqual(result.failures[0].metric, "stopping_distance_cm")
+
+    def test_malformed_reference_interval_is_limitation(self):
+        malformed = interval_scenario(lower=6.0, upper=5.0)
+        missing = interval_scenario()
+        del missing["expectations"][0]["value"]["lower"]
+
+        for case in (malformed, missing):
+            with self.subTest(case=case):
+                result = analyze_scenario(case, [frame(1, x=5.0)])
+                self.assertEqual(result.failures[0].code, "REFERENCE_LIMITATION")
+
+    def test_unknown_trace_metric_is_integration_mismatch(self):
+        result = analyze_scenario(
+            interval_scenario(observed_metric="unimplemented_metric"),
+            [frame(1, x=5.0)])
+
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+
+    def test_nonfinite_reference_observation_is_numerical_failure(self):
+        for position in (float("nan"), float("inf")):
+            with self.subTest(position=position):
+                result = analyze_scenario(interval_scenario(), [frame(1, x=position)])
+                self.assertEqual(result.failures[0].code, "NUMERICAL_FAILURE")
+
     def test_energy_increase_is_numerical_failure(self):
         result = analyze_scenario(
             scenario("nonincreasing_translational_energy"),

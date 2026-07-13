@@ -26,6 +26,7 @@ _CSV_FIELDS = (
     "metric",
     "unit",
     "prediction",
+    "prediction_nonfinite",
     "experimental_value",
     "signed_error",
     "acceptance_lower",
@@ -113,6 +114,15 @@ def _point_row(case, point, result, accounting, metadata):
     scenario_metadata = metadata.get("scenarios", {}).get(scenario_id, {})
     provenance = json.loads(case.provenance_json)
     prediction = None if result is None else result.metrics.get(point.metric)
+    prediction_nonfinite = None
+    if isinstance(prediction, float) and not math.isfinite(prediction):
+        if math.isnan(prediction):
+            prediction_nonfinite = "NaN"
+        elif prediction > 0.0:
+            prediction_nonfinite = "+Infinity"
+        else:
+            prediction_nonfinite = "-Infinity"
+        prediction = None
     failure = _point_failure(result, point.metric)
     if result is None or (prediction is None and failure is None):
         status = "INTEGRATION_MISMATCH"
@@ -143,6 +153,7 @@ def _point_row(case, point, result, accounting, metadata):
         "point_id": point.point_id,
         "pool_applicability": point.pool_applicability,
         "prediction": prediction,
+        "prediction_nonfinite": prediction_nonfinite,
         "replay_command": scenario_metadata.get("replay_command"),
         "scenario_id": scenario_id,
         "series_id": point.series_id,

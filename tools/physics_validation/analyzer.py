@@ -86,6 +86,30 @@ def _vector(value):
     return list(value)
 
 
+def _scenario_ball(scenario, index):
+    for ball in scenario.get("balls", []):
+        if ball.get("index") == index:
+            return ball
+    raise KeyError(f"ball {index} is absent from scenario")
+
+
+def _reference_observation(observed_metric, reference, scenario, frames):
+    if observed_metric != "stopping_distance_cm":
+        return None, INTEGRATION_MISMATCH, f"observed metric {observed_metric} is unavailable"
+    ball_index = reference.get("ball_index")
+    if not isinstance(ball_index, int) or isinstance(ball_index, bool):
+        return None, REFERENCE_LIMITATION, "reference ball_index is missing"
+    try:
+        start = _vector(_scenario_ball(scenario, ball_index)["position_cm"])
+        end = _vector(_ball(frames[-1], ball_index)["position_cm"])
+        actual = math.hypot(end[0] - start[0], end[1] - start[1])
+    except (IndexError, KeyError, TypeError, ValueError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    if not math.isfinite(actual):
+        return actual, NUMERICAL_FAILURE, "observed reference metric is not finite"
+    return actual, None, None
+
+
 def _failure_code(metric):
     if metric == "permutation_invariance":
         return NON_DETERMINISTIC
@@ -94,7 +118,7 @@ def _failure_code(metric):
     return NUMERICAL_FAILURE
 
 
-def _evaluate(expectation, frames, comparison_frames=None):
+def _evaluate(expectation, frames, comparison_frames=None, scenario=None):
     metric = expectation["metric"]
     expected = expectation.get("value")
     operator = expectation.get("operator", "eq")
@@ -133,6 +157,30 @@ def _evaluate(expectation, frames, comparison_frames=None):
         target = _vector(expected["velocity_cm_s"])
         passed = all(abs(a - b) <= tolerance for a, b in zip(actual, target))
         return passed, actual, MODEL_MISMATCH, "final velocity differs from reference"
+    elif metric == "value_within_interval":
+        if not isinstance(expected, dict):
+            return False, None, REFERENCE_LIMITATION, "reference interval is missing"
+        required = {
+            "point_id", "observed_metric", "ball_index", "expected",
+            "lower", "upper", "unit",
+        }
+        if not required <= set(expected):
+            return False, None, REFERENCE_LIMITATION, "reference interval fields are missing"
+        numbers = (expected["expected"], expected["lower"], expected["upper"])
+        if any(isinstance(value, bool) or not isinstance(value, (int, float))
+               or not math.isfinite(value) for value in numbers):
+            return False, None, REFERENCE_LIMITATION, "reference interval must be finite"
+        if expected["lower"] > expected["upper"]:
+            return False, None, REFERENCE_LIMITATION, "reference interval is inverted"
+        observed_metric = expected["observed_metric"]
+        if not isinstance(observed_metric, str) or not observed_metric:
+            return False, None, REFERENCE_LIMITATION, "observed metric is missing"
+        actual, failure_code, message = _reference_observation(
+            observed_metric, expected, scenario or {}, frames)
+        if failure_code is not None:
+            return False, actual, failure_code, message
+        passed = expected["lower"] <= actual <= expected["upper"]
+        return passed, actual, MODEL_MISMATCH, "observed value is outside reference interval"
     elif metric == "permutation_invariance":
         if comparison_frames is None or not comparison_frames:
             return False, None, INTEGRATION_MISMATCH, "permutation comparison trace is missing"
@@ -168,15 +216,20 @@ def analyze_scenario(scenario, frames, comparison_frames=None):
     failures = []
     for expectation in scenario.get("expectations", []):
         metric = expectation["metric"]
+        result_metric = metric
+        if metric == "value_within_interval" and isinstance(expectation.get("value"), dict):
+            observed_metric = expectation["value"].get("observed_metric")
+            if isinstance(observed_metric, str) and observed_metric:
+                result_metric = observed_metric
         try:
             passed, actual, code, message = _evaluate(
-                expectation, frames, comparison_frames)
+                expectation, frames, comparison_frames, scenario)
         except (KeyError, TypeError, ValueError) as error:
             passed, actual, code, message = False, None, INTEGRATION_MISMATCH, str(error)
-        metrics[metric] = actual
+        metrics[result_metric] = actual
         if not passed:
             failures.append(Failure(
-                code, metric, message, expectation.get("value"), actual))
+                code, result_metric, message, expectation.get("value"), actual))
     return ScenarioResult(
         scenario_id, not failures, grade, metrics, tuple(failures))
 
