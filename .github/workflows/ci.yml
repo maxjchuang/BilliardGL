@@ -25,3 +25,10 @@ jobs:
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
         run: ./scripts/check.sh
+
+      - name: Dump macOS crash reports
+        if: failure()
+        run: |
+          sleep 2
+          reports="$HOME/Library/Logs/DiagnosticReports"
+          find "$reports" -type f \( -name 'Billiards*.ips' -o -name 'Billiards*.crash' \) -print -exec cat {} \;
