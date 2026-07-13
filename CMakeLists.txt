@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(BilliardGL LANGUAGES CXX)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 if(APPLE)
     enable_language(OBJCXX)
@@ -95,6 +96,12 @@ add_executable(Billiards
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
     src/Billiards/platform_audio.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    src/Billiards/automation_controller.cpp
+    src/Billiards/automation_runner.cpp
+    src/Billiards/stdio_transport.cpp
+    src/Billiards/launch_options.cpp
     ${BILLIARDGL_PLATFORM_SOURCES}
     ${BILLIARDGL_CORE_SOURCES}
 )
@@ -195,6 +202,17 @@ add_executable(BilliardsAutomationPhysicsScenarioTests
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsAutomationPhysicsScenarioTests)
+
+add_executable(BilliardsLaunchOptionsTests
+    tests/launch_options_tests.cpp
+    src/Billiards/launch_options.cpp
+)
+target_include_directories(BilliardsLaunchOptionsTests PRIVATE src/Billiards)
+billiardgl_add_test(BilliardsLaunchOptionsTests)
+
+add_test(NAME BilliardsHeadlessAutomationE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_headless_automation.py $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsHeadlessAutomationE2E PROPERTIES TIMEOUT 30)
 
 target_include_directories(Billiards PRIVATE
     src/Billiards

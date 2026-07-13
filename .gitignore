@@ -1,5 +1,7 @@
 # Local worktrees
 .worktrees/
+__pycache__/
+*.pyc
 
 # CMake/build outputs
 build/
