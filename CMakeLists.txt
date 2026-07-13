@@ -26,6 +26,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/assets.cpp
     src/Billiards/frame_timing.cpp
     src/Billiards/game_state.cpp
+    src/Billiards/game_runtime.cpp
     src/Billiards/image_loader.cpp
     src/Billiards/physics.cpp
     src/Billiards/resource_path.cpp
@@ -113,6 +114,7 @@ billiardgl_add_core_test(BilliardsAssetsTests tests/assets_tests.cpp)
 billiardgl_add_core_test(BilliardsInputTests tests/input_tests.cpp)
 billiardgl_add_core_test(BilliardsShotTests tests/shot_tests.cpp)
 billiardgl_add_core_test(BilliardsTableSpecsTests tests/table_specs_tests.cpp)
+billiardgl_add_core_test(BilliardsGameRuntimeTests tests/game_runtime_tests.cpp)
 
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp
