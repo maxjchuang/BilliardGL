@@ -100,6 +100,7 @@ add_executable(Billiards
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     src/Billiards/automation_runner.cpp
     src/Billiards/stdio_transport.cpp
     src/Billiards/launch_options.cpp
@@ -111,6 +112,14 @@ billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsInstrumentationTests tests/physics_instrumentation_tests.cpp)
 billiardgl_add_core_test(BilliardsRulesTests tests/rules_tests.cpp)
+
+add_executable(BilliardsPhysicsScenarioTests
+    tests/physics_scenario_tests.cpp
+    src/Billiards/physics_scenario.cpp
+    src/Billiards/automation_json.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsPhysicsScenarioTests)
 
 add_executable(BilliardsScreenshotTests
     tests/screenshot_tests.cpp
@@ -193,6 +202,7 @@ add_executable(BilliardsAutomationControllerTests
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsAutomationControllerTests)
@@ -202,6 +212,7 @@ add_executable(BilliardsAutomationPhysicsScenarioTests
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsAutomationPhysicsScenarioTests)

@@ -1,7 +1,9 @@
 #include "automation_controller.h"
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
+#include <sstream>
 
 namespace {
 void expect(bool value, const char* message) { if (!value) { std::cerr << message << '\n'; std::exit(1); } }
@@ -12,6 +14,18 @@ billiardgl::ControllerResult send(billiardgl::AutomationController& controller, 
     billiardgl::AutomationRequest request;
     request.id = id; request.version = 1; request.command = command; request.params = params;
     return controller.handle(request);
+}
+
+billiardgl::json::Value fixture(const char* name)
+{
+    const std::string path = std::string(BILLIARDGL_SOURCE_ROOT) +
+        "/tests/physics_validation/scenarios/" + name;
+    std::ifstream input(path.c_str());
+    std::ostringstream contents;
+    contents << input.rdbuf();
+    const billiardgl::json::ParseResult parsed = billiardgl::json::parse(contents.str());
+    expect(parsed.ok, "canonical fixture should parse as JSON");
+    return parsed.value;
 }
 }
 
@@ -87,5 +101,12 @@ int main()
     expect(send(controller, 18, "clear_physics_trace").response.at("ok").asBool(),
         "trace clear should succeed");
     expect(runtime.physicsTrace().frames().empty(), "controller clear should remove trace frames");
+
+    billiardgl::json::Value canonical = billiardgl::json::Value::object();
+    canonical["scenario"] = fixture("free_roll_v1.json");
+    expect(send(controller, 19, "load_scenario", canonical).response.at("ok").asBool(),
+        "controller should load canonical scenario v1");
+    expect(!runtime.state().balls[0].pocketed && runtime.state().balls[1].pocketed,
+        "canonical scenario should atomically activate only listed balls");
     return 0;
 }

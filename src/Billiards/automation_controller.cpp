@@ -1,4 +1,5 @@
 #include "automation_controller.h"
+#include "physics_scenario.h"
 
 #include <algorithm>
 #include <cmath>
@@ -55,7 +56,7 @@ std::vector<std::string> AutomationController::capabilities() const
     std::vector<std::string> values = {
         "clear_events", "get_capabilities", "get_events", "get_state", "key_down", "key_up",
         "clear_physics_trace", "get_physics_trace", "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
-        "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
+        "physics_scenario_v1", "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
         "set_player_state", "set_shot_power", "shoot", "special_key", "start_physics_trace", "step", "stop_physics_trace", "toggle_aim",
         "toggle_help", "zoom_camera"
     };
@@ -127,6 +128,7 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
             BallState ball = runtime_.state().balls[index];
             if (params.has("position")) ball.position = pointParam(params, "position");
             if (params.has("velocity")) ball.velocity = pointParam(params, "velocity");
+            if (params.has("angular_velocity")) ball.angularVelocity = pointParam(params, "angular_velocity");
             if (params.has("rotation_axis")) ball.rotationAxis = pointParam(params, "rotation_axis");
             if (params.has("rotation_angle")) ball.rotationAngle = static_cast<float>(numberParam(params, "rotation_angle"));
             if (params.has("pocketed")) { if (!params.at("pocketed").isBool()) throw std::runtime_error("pocketed must be boolean"); ball.pocketed = params.at("pocketed").asBool(); }
@@ -142,6 +144,13 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
             runtime_.replaceState(state); return success(request.id);
         }
         if (command == "load_scenario") {
+            if (params.has("scenario")) {
+                const PhysicsScenarioResult parsed = parsePhysicsScenario(params.at("scenario"));
+                if (!parsed.ok) return failure(request.id, parsed.errorCode, parsed.errorMessage);
+                const ActionResult applied = applyPhysicsScenario(runtime_, parsed.scenario);
+                if (!applied.ok) return failure(request.id, applied.errorCode, "scenario was rejected");
+                return success(request.id);
+            }
             if (!params.has("balls") || !params.at("balls").isArray() || params.at("balls").asArray().size() != kBallCount) throw std::runtime_error("balls must contain exactly 16 entries");
             GameState state = runtime_.state();
             for (int index=0; index<kBallCount; ++index) {

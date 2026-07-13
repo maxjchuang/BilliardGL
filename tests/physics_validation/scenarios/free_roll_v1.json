@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "free_roll_v1",
+  "description": "Single ball rolling along +x under the current cloth model",
+  "evidence": {"grade": "C", "source": "analytic", "equipment": "WPA_POOL"},
+  "simulation": {"ticks": 10, "time_step_seconds": 0.1},
+  "balls": [
+    {"index": 0, "position_cm": [0.0, 89.341476, 20.0], "velocity_cm_s": [20.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, -7.0], "pocketed": false}
+  ],
+  "expectations": [
+    {"metric": "finite_state", "operator": "eq", "value": true},
+    {"metric": "nonincreasing_translational_energy", "operator": "eq", "value": true}
+  ]
+}

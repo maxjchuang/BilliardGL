@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "reverse_cradle_v1",
+  "description": "A reverse-index Newton cradle must transfer velocity within one tick",
+  "evidence": {"grade": "C", "source": "analytic", "equipment": "WPA_POOL"},
+  "simulation": {"ticks": 1, "time_step_seconds": 0.1},
+  "balls": [
+    {"index": 0, "position_cm": [0.0, 89.341476, 20.0], "velocity_cm_s": [0.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0], "pocketed": false},
+    {"index": 1, "position_cm": [5.0, 89.341476, 20.0], "velocity_cm_s": [0.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0], "pocketed": false},
+    {"index": 2, "position_cm": [10.0, 89.341476, 20.0], "velocity_cm_s": [-10.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0], "pocketed": false}
+  ],
+  "expectations": [
+    {"metric": "permutation_invariance", "operator": "eq", "value": {"ball_index": 0, "velocity_cm_s": [-10.0, 0.0, 0.0]}, "absolute_tolerance": 0.001}
+  ]
+}
