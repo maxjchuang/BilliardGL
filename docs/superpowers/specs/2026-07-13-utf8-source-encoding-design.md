@@ -5,7 +5,7 @@
 PR #11 exposed existing mojibake in `src/Billiards/billiards.cpp`. A repository-wide audit of the merged `master` branch found six tracked text files affected by mixed GBK and UTF-8 handling:
 
 - `src/Billiards/particle.h` is encoded as GBK rather than UTF-8.
-- `src/Billiards/billiards.cpp` contains the mojibake token `锟斤拷` in a comment.
+- `src/Billiards/billiards.cpp` contains the mojibake sequence represented by code points `U+951F U+65A4 U+62F7` in a comment.
 - `src/Billiards/obj/bench.mtl`, `bench.obj`, `wardrobe.mtl`, and `wardrobe.obj` contain Unicode replacement characters in generated header comments.
 
 The project currently has no repository-level editor configuration, Git encoding declaration, or automated encoding check. That allows invalid UTF-8 and already-decoded mojibake to be committed without CI noticing.
@@ -54,7 +54,7 @@ Add a Python scanner under `scripts/` and invoke it at the beginning of `scripts
 1. Enumerate files with `git ls-files`, so generated and ignored build output is excluded.
 2. Read each tracked file as bytes and skip files containing NUL bytes as binary.
 3. Decode every remaining file strictly as UTF-8.
-4. Reject decoded text containing U+FFFD or the known mojibake sequence `锟斤拷`.
+4. Reject decoded text containing U+FFFD or the known mojibake sequence represented by `U+951F U+65A4 U+62F7`.
 5. Report the affected path plus the invalid byte offset or suspicious token, then return a non-zero exit status.
 
 Scanning all tracked text includes vendored source headers. This is intentional: the repository promises that every code file is UTF-8 regardless of ownership, and the current vendored text already satisfies the policy.
@@ -73,6 +73,6 @@ Implementation follows a red-green sequence:
 2. Apply the encoding conversions and comment repairs.
 3. Run the scanner again; it must pass across the complete tracked tree.
 4. Run `scripts/check.sh`, including configuration, compilation, unit/integration tests, headless automation E2E, and rendered screenshot tests.
-5. Inspect the final diff and independently audit all tracked text for strict UTF-8, U+FFFD, and `锟斤拷` before publishing the PR.
+5. Inspect the final diff and independently audit all tracked text for strict UTF-8, U+FFFD, and the `U+951F U+65A4 U+62F7` sequence before publishing the PR.
 
 The final changes must be limited to encoding policy/enforcement, documentation, and the six repaired files. Runtime output and game behavior must remain unchanged.
