@@ -108,6 +108,15 @@ static void platformScroll(int direction);
 static void mouseMove(int x, int y);
 void b_music();
 
+static void screenshotDiagnostic(const char* stage)
+{
+	if (!Game.config.screenshotPath.empty())
+	{
+		std::fprintf(stderr, "[screenshot] %s\n", stage);
+		std::fflush(stderr);
+	}
+}
+
 int main(int argc, char* argv[])
 {
 	const billiardgl::LaunchOptions options = billiardgl::parseLaunchOptions(argc, argv);
@@ -153,6 +162,7 @@ int main(int argc, char* argv[])
 	}
 	std::thread t(b_music);
 	t.detach();
+	screenshotDiagnostic("audio thread detached");
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
@@ -272,6 +282,7 @@ void initBall()
 // display
 void myDisplay(void)
 {
+	screenshotDiagnostic("display callback entered");
 	if (!Game.config.screenshotPath.empty())
 	{
 		billiardgl::updateCameraFromCueBall(Game);
@@ -290,15 +301,19 @@ void myDisplay(void)
 	Render.viewportHeight = height;
 	billiardgl::setupCameraFromGameState(Game);
 	billiardgl::renderScene(Game, Render);
+	screenshotDiagnostic("scene rendered");
 
 	updatePlayer();
 	Game.config.width = width;
 	Game.config.height = height;
 	billiardgl::drawHud(Game);
+	screenshotDiagnostic("hud rendered");
 	if (!Game.config.screenshotPath.empty())
 	{
 		const bool saved = billiardgl::saveFramebufferToPpm(Game.config.screenshotPath, width, height);
+		screenshotDiagnostic(saved ? "framebuffer saved" : "framebuffer save failed");
 		glutSwapBuffers();
+		screenshotDiagnostic("buffers swapped; exiting");
 		std::exit(saved ? 0 : 2);
 	}
 	glutSwapBuffers();
@@ -574,7 +589,9 @@ static void mouseMove(int x, int y)
 // 锟斤拷锟斤拷锟斤拷锟斤拷
 void b_music()
 {
+	screenshotDiagnostic("audio thread entered");
 	billiardgl::playBackgroundLoop();
+	screenshotDiagnostic("audio thread returned");
 }
 
 void updatePlayer()
