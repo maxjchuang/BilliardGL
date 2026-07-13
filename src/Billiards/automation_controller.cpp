@@ -54,9 +54,9 @@ std::vector<std::string> AutomationController::capabilities() const
 {
     std::vector<std::string> values = {
         "clear_events", "get_capabilities", "get_events", "get_state", "key_down", "key_up",
-        "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
+        "clear_physics_trace", "get_physics_trace", "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
         "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
-        "set_player_state", "set_shot_power", "shoot", "special_key", "step", "toggle_aim",
+        "set_player_state", "set_shot_power", "shoot", "special_key", "start_physics_trace", "step", "stop_physics_trace", "toggle_aim",
         "toggle_help", "zoom_camera"
     };
     if (mode_ == AutomationMode::Rendered) values.push_back("screenshot");
@@ -93,6 +93,32 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         }
         if (command == "reset_game") { runtime_.reset(); return success(request.id); }
         if (command == "clear_events") { runtime_.clearEvents(); return success(request.id); }
+        if (command == "start_physics_trace") { runtime_.setPhysicsTraceEnabled(true); return success(request.id); }
+        if (command == "stop_physics_trace") { runtime_.setPhysicsTraceEnabled(false); return success(request.id); }
+        if (command == "clear_physics_trace") { runtime_.clearPhysicsTrace(); return success(request.id); }
+        if (command == "get_physics_trace") {
+            const int afterTick = params.has("after_tick") ? params.at("after_tick").asInt() : 0;
+            const int limit = params.has("limit") ? params.at("limit").asInt() : 1000;
+            if (afterTick < 0) return failure(request.id, "invalid_argument", "after_tick must be nonnegative");
+            if (limit < 1 || limit > 1000) return failure(request.id, "invalid_argument", "limit must be between 1 and 1000");
+
+            json::Value frames = json::Value::array();
+            bool hasMore = false;
+            for (const PhysicsFrame& frame : runtime_.physicsTrace().frames()) {
+                if (frame.tick <= static_cast<std::uint64_t>(afterTick)) continue;
+                if (static_cast<int>(frames.asArray().size()) == limit) {
+                    hasMore = true;
+                    break;
+                }
+                frames.asArray().push_back(serializePhysicsFrame(frame));
+            }
+            json::Value value = json::Value::object();
+            value["dropped_frames"] = json::Value(
+                static_cast<double>(runtime_.physicsTrace().droppedFrames()));
+            value["frames"] = frames;
+            value["has_more"] = json::Value(hasMore);
+            return success(request.id, value);
+        }
         if (command == "quit") { ControllerResult value = success(request.id); value.quitRequested = true; return value; }
 
         if (command == "set_ball") {

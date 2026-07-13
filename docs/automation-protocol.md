@@ -32,6 +32,15 @@ stdin/stdout 使用 JSON Lines，每行一个 UTF-8 JSON 对象，单行上限 1
 
 生命周期与查询：`ping`、`get_capabilities`、`get_state`、`get_events`、`reset_game`、`clear_events`、`quit`。
 
+物理 trace：
+
+- `start_physics_trace`：从后续物理 tick 开始记录；每个 tick 恰好对应一帧。
+- `stop_physics_trace`：停止追加但保留已经记录的帧。
+- `clear_physics_trace`：清空记录和丢帧计数，不改变游戏 tick 或状态。
+- `get_physics_trace {after_tick?,limit?}`：返回 tick 大于 `after_tick` 的帧；`limit` 为 1–1000，默认 1000。结果包含 `frames`、`dropped_frames` 和 `has_more`。
+
+runtime 最多保留 10000 帧，超出时淘汰最旧帧并增加 `dropped_frames`。每帧包含球的位置、线速度、线加速度、三维角速度、控制输入、接触事件、线动量、平动动能和最大穿透深度。位置单位为 cm，线速度为 cm/s，线加速度为 cm/s²，角速度为 rad/s，冲量为 N·s，能量为 J。当前物理模型尚未计算真实旋转动力学，因此 `angular_velocity` 默认保持为零；该字段不能由视觉旋转角反推。
+
 原始输入：
 
 - `key_down/key_up {key}`：单个字符；支持游戏现有的帮助、瞄准、摄像机和力度按键。

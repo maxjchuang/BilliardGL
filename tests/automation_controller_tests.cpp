@@ -38,5 +38,54 @@ int main()
     expect(send(controller, 9, "quit").quitRequested, "quit should request clean shutdown");
     send(controller, 10, "reset_game");
     expect(runtime.tick() == 0 && !runtime.state().ballsMoving, "reset should restore game");
+
+    expect(send(controller, 11, "start_physics_trace").response.at("ok").asBool(),
+        "trace start should succeed");
+    billiardgl::json::Value ticks = billiardgl::json::Value::object();
+    ticks["ticks"] = billiardgl::json::Value(2);
+    expect(send(controller, 12, "step", ticks).response.at("ok").asBool(),
+        "traced step should succeed");
+
+    billiardgl::json::Value firstPageParams = billiardgl::json::Value::object();
+    firstPageParams["after_tick"] = billiardgl::json::Value(0);
+    firstPageParams["limit"] = billiardgl::json::Value(1);
+    const billiardgl::json::Value firstPage =
+        send(controller, 13, "get_physics_trace", firstPageParams).response.at("result");
+    expect(firstPage.at("frames").asArray().size() == 1, "trace limit should paginate");
+    expect(firstPage.at("has_more").asBool(), "first page should report more frames");
+    expect(firstPage.at("dropped_frames").asInt() == 0, "new trace should not drop frames");
+
+    const billiardgl::json::Value& frame = firstPage.at("frames").asArray()[0];
+    expect(frame.has("balls") && frame.has("contacts") && frame.has("control"),
+        "trace frame should include state, contacts, and controls");
+    expect(frame.has("linear_momentum_kg_mps") &&
+        frame.has("translational_kinetic_energy_j") &&
+        frame.has("maximum_penetration_cm"), "trace frame should include physical totals");
+    expect(frame.at("balls").asArray()[0].has("acceleration_cm_s2") &&
+        frame.at("balls").asArray()[0].has("angular_velocity_rad_s"),
+        "ball trace should include acceleration and angular velocity");
+
+    billiardgl::json::Value secondPageParams = billiardgl::json::Value::object();
+    secondPageParams["after_tick"] = billiardgl::json::Value(1);
+    secondPageParams["limit"] = billiardgl::json::Value(1);
+    const billiardgl::json::Value secondPage =
+        send(controller, 14, "get_physics_trace", secondPageParams).response.at("result");
+    expect(secondPage.at("frames").asArray().size() == 1 && !secondPage.at("has_more").asBool(),
+        "last trace page should terminate pagination");
+
+    billiardgl::json::Value zeroLimit = billiardgl::json::Value::object();
+    zeroLimit["limit"] = billiardgl::json::Value(0);
+    expect(!send(controller, 15, "get_physics_trace", zeroLimit).response.at("ok").asBool(),
+        "zero trace limit should fail");
+    billiardgl::json::Value largeLimit = billiardgl::json::Value::object();
+    largeLimit["limit"] = billiardgl::json::Value(1001);
+    expect(!send(controller, 16, "get_physics_trace", largeLimit).response.at("ok").asBool(),
+        "oversized trace limit should fail");
+
+    expect(send(controller, 17, "stop_physics_trace").response.at("ok").asBool(),
+        "trace stop should succeed");
+    expect(send(controller, 18, "clear_physics_trace").response.at("ok").asBool(),
+        "trace clear should succeed");
+    expect(runtime.physicsTrace().frames().empty(), "controller clear should remove trace frames");
     return 0;
 }

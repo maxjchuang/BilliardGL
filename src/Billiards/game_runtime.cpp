@@ -21,6 +21,8 @@ void GameRuntime::reset()
     tick_ = 0;
     nextSequence_ = 1;
     events_.clear();
+    physicsTraceEnabled_ = false;
+    physicsTrace_.clear();
     updateCameraFromCueBall(state_);
 }
 
@@ -110,8 +112,14 @@ ActionResult GameRuntime::step(int count)
 {
     if (count < 0) return ActionResult{false, "invalid_argument"};
     for (int i = 0; i < count; ++i) {
-        updatePhysics(state_, kDefaultTimeStep);
+        const GameState before = state_;
+        const PhysicsStepTelemetry telemetry = updatePhysics(state_, kDefaultTimeStep);
         ++tick_;
+        if (physicsTraceEnabled_) {
+            physicsTrace_.append(capturePhysicsFrame(
+                tick_, static_cast<double>(tick_) * kDefaultTimeStep,
+                kDefaultTimeStep, before, state_, telemetry));
+        }
         recordEvents();
         if (state_.events.shotEnded || (!state_.transitionPerspective && state_.players.shotTaken))
             updatePlayerAfterShot(state_);

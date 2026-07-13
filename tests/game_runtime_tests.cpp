@@ -55,5 +55,22 @@ int main()
     expect(first.tick() == 5, "step should advance the exact tick count");
     expect(closeEnough(first.state().balls[0].position.x, second.state().balls[0].position.x),
         "same command sequence should produce the same position");
+
+    billiardgl::GameRuntime traced;
+    traced.setPhysicsTraceEnabled(true);
+    expect(traced.step(3).ok, "traced stepping should succeed");
+    expect(traced.physicsTrace().frames().size() == 3, "one trace frame per physics tick");
+    expect(traced.physicsTrace().frames()[0].tick == 1, "first completed tick is one");
+    expect(traced.physicsTrace().frames()[2].tick == 3, "third completed tick is three");
+    traced.setPhysicsTraceEnabled(false);
+    expect(traced.step(1).ok, "untraced stepping should succeed");
+    expect(traced.physicsTrace().frames().size() == 3, "disabled trace does not append");
+    traced.clearPhysicsTrace();
+    expect(traced.physicsTrace().frames().empty(), "clear removes retained frames");
+    traced.setPhysicsTraceEnabled(true);
+    traced.step(1);
+    traced.reset();
+    expect(!traced.physicsTraceEnabled() && traced.physicsTrace().frames().empty(),
+        "reset clears and disables tracing");
     return 0;
 }

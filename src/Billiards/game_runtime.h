@@ -2,6 +2,7 @@
 
 #include "game_action.h"
 #include "game_state.h"
+#include "physics_telemetry.h"
 
 #include <cstdint>
 #include <string>
@@ -34,6 +35,10 @@ public:
     ActionResult setBall(int index, const BallState& ball);
     void replaceState(const GameState& state);
     void clearEvents();
+    void setPhysicsTraceEnabled(bool enabled) { physicsTraceEnabled_ = enabled; }
+    bool physicsTraceEnabled() const { return physicsTraceEnabled_; }
+    void clearPhysicsTrace() { physicsTrace_.clear(); }
+    const PhysicsTrace& physicsTrace() const { return physicsTrace_; }
 
 private:
     void applyShot();
@@ -43,6 +48,8 @@ private:
     std::uint64_t tick_ = 0;
     std::uint64_t nextSequence_ = 1;
     std::vector<RuntimeEvent> events_;
+    bool physicsTraceEnabled_ = false;
+    PhysicsTrace physicsTrace_{10000};
 };
 
 }  // namespace billiardgl

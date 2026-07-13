@@ -62,6 +62,11 @@ class AutomationClient:
     def load_scenario(self, balls): return self.command("load_scenario", {"balls": balls})
     def set_player_state(self, **params): return self.command("set_player_state", params)
     def clear_events(self): return self.command("clear_events")
+    def start_physics_trace(self): return self.command("start_physics_trace")
+    def stop_physics_trace(self): return self.command("stop_physics_trace")
+    def clear_physics_trace(self): return self.command("clear_physics_trace")
+    def physics_trace(self, after_tick=0, limit=1000):
+        return self.command("get_physics_trace", {"after_tick": after_tick, "limit": limit})
     def toggle_aim(self): return self.command("toggle_aim")
     def set_aim_yaw(self, yaw): return self.command("set_aim_yaw", {"yaw": yaw})
     def set_shot_power(self, power): return self.command("set_shot_power", {"power": power})
