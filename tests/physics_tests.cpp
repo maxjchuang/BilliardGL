@@ -1,3 +1,4 @@
+#include "ball_ball_contact.h"
 #include "game_state.h"
 #include "physics.h"
 #include "surface_motion.h"
@@ -75,6 +76,89 @@ int main()
         return fail("ball collision should transfer velocity");
     }
 
+    billiardgl::PhysicsProfile contactProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    contactProfile.ball.normalRestitution = 0.5f;
+    contactProfile.ball.frictionCoefficient = 0.2f;
+    billiardgl::GameState contactState;
+    billiardgl::initializeBalls(contactState);
+    for (int index = 2; index < billiardgl::kBallCount; ++index) {
+        contactState.balls[index].pocketed = true;
+    }
+    contactState.balls[0].position = billiardgl::Point3{0.0f, 92.715f, 20.0f};
+    contactState.balls[1].position = billiardgl::Point3{5.7f, 92.715f, 20.0f};
+    billiardgl::setBallVelocity(contactState.balls[0], 100.0f, 0.0f, 30.0f);
+    billiardgl::BallState directFirst = contactState.balls[0];
+    billiardgl::BallState directSecond = contactState.balls[1];
+    const billiardgl::BallBallContactResult direct =
+        billiardgl::resolveBallBallContact(directFirst, directSecond,
+            contactProfile.ball, contactProfile.ball);
+    const billiardgl::PhysicsStepTelemetry contactTelemetry =
+        billiardgl::updatePhysics(contactState, 0.0f, contactProfile);
+    if (!direct.velocityImpulseApplied ||
+        !nearlyEqual(contactState.balls[0].velocity.x, directFirst.velocity.x) ||
+        !nearlyEqual(contactState.balls[0].velocity.z, directFirst.velocity.z) ||
+        !nearlyEqual(contactState.balls[1].velocity.x, directSecond.velocity.x) ||
+        !nearlyEqual(contactState.balls[1].velocity.z, directSecond.velocity.z)) {
+        return fail("production collision must match the standalone contact model");
+    }
+    if (contactTelemetry.contacts.size() != 1 ||
+        !nearlyEqual(static_cast<float>(contactTelemetry.contacts[0].normalImpulseNs),
+            static_cast<float>(direct.normalImpulseNs))) {
+        return fail("production collision telemetry must use the authoritative impulse");
+    }
+    if (!nearlyEqual(contactState.balls[0].velocity.x, 25.0f) ||
+        !nearlyEqual(contactState.balls[1].velocity.x, 75.0f)) {
+        return fail("profile restitution must change production normal motion");
+    }
+    billiardgl::GameState frictionlessState;
+    billiardgl::initializeBalls(frictionlessState);
+    for (int index = 2; index < billiardgl::kBallCount; ++index) {
+        frictionlessState.balls[index].pocketed = true;
+    }
+    frictionlessState.balls[0].position = billiardgl::Point3{0.0f, 92.715f, 20.0f};
+    frictionlessState.balls[1].position = billiardgl::Point3{5.7f, 92.715f, 20.0f};
+    billiardgl::setBallVelocity(frictionlessState.balls[0], 100.0f, 0.0f, 30.0f);
+    billiardgl::PhysicsProfile frictionlessProfile = contactProfile;
+    frictionlessProfile.ball.frictionCoefficient = 0.0f;
+    billiardgl::updatePhysics(frictionlessState, 0.0f, frictionlessProfile);
+    if (nearlyEqual(contactState.balls[0].velocity.z,
+            frictionlessState.balls[0].velocity.z) ||
+        nearlyEqual(contactState.balls[1].velocity.z,
+            frictionlessState.balls[1].velocity.z)) {
+        return fail("profile friction must change production tangential motion");
+    }
+
+    billiardgl::GameState recedingState = contactState;
+    recedingState.balls[0].position.x = 0.0f;
+    recedingState.balls[1].position.x = 5.0f;
+    billiardgl::setBallVelocity(recedingState.balls[0], -20.0f, 0.0f, 0.0f);
+    billiardgl::setBallVelocity(recedingState.balls[1], 20.0f, 0.0f, 0.0f);
+    billiardgl::updatePhysics(recedingState, 0.0f, contactProfile);
+    if (!nearlyEqual(recedingState.balls[0].velocity.x, -20.0f) ||
+        !nearlyEqual(recedingState.balls[1].velocity.x, 20.0f)) {
+        return fail("receding overlap must not receive a velocity impulse");
+    }
+
+    const float separatedFirstVelocity = contactState.balls[0].velocity.x;
+    const float separatedSecondVelocity = contactState.balls[1].velocity.x;
+    billiardgl::updatePhysics(contactState, 0.0f, contactProfile);
+    if (!nearlyEqual(contactState.balls[0].velocity.x, separatedFirstVelocity) ||
+        !nearlyEqual(contactState.balls[1].velocity.x, separatedSecondVelocity)) {
+        return fail("persistent contact must not receive a duplicate impulse");
+    }
+
+    billiardgl::BallState radiusFirst = contactState.balls[0];
+    billiardgl::BallState radiusSecond = contactState.balls[1];
+    radiusFirst.position.x = 0.0f;
+    radiusSecond.position.x = 4.1f;
+    billiardgl::setBallVelocity(radiusFirst, 10.0f, 0.0f, 0.0f);
+    billiardgl::setBallVelocity(radiusSecond, 0.0f, 0.0f, 0.0f);
+    contactProfile.ball.radiusCm = 2.1f;
+    if (!billiardgl::collideBalls(radiusFirst, radiusSecond, contactProfile)) {
+        return fail("profile-aware collision must use the configured radius");
+    }
+
     state.balls[3].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
     state.balls[3].position.z = -billiardgl::kTableInLength / 2.0f + 2.0f;
     if (!billiardgl::isInPocket(state.balls[3])) {
@@ -137,6 +221,9 @@ int main()
         return fail("ball outside a pocket mouth should bounce off the ordinary rail");
     }
 
+    for (billiardgl::BallState& ball : state.balls) {
+        ball.speed = 0.0f;
+    }
     state.balls[4].speed = 1.0f;
     if (!billiardgl::anyBallMoving(state)) {
         return fail("anyBallMoving should detect active ball speed");

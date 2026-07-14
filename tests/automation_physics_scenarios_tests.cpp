@@ -1,4 +1,5 @@
 #include "automation_controller.h"
+#include "ball_ball_contact.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -20,6 +21,7 @@ billiardgl::json::Value setBall(int index, double x, double z, double vx, double
 int main()
 {
     billiardgl::GameRuntime runtime;
+    runtime.setPhysicsTraceEnabled(true);
     billiardgl::AutomationController controller(runtime, billiardgl::AutomationMode::Headless);
     expect(send(controller,1,"set_ball",setBall(0,-5,0,20,0)).response.at("ok").asBool(), "set cue ball");
     expect(send(controller,2,"set_ball",setBall(1,5,0,0,0)).response.at("ok").asBool(), "set object ball");
@@ -27,6 +29,10 @@ int main()
     expect(send(controller,3,"run_until",wait).response.at("ok").asBool(), "collision wait should succeed");
     expect(runtime.eventsSince(0).size() >= 1, "collision should be recorded");
     expect(runtime.state().balls[1].velocity.x > 0.0f, "collision should transfer velocity");
+    expect(!runtime.physicsTrace().frames().empty() &&
+        runtime.physicsTrace().frames().back().contacts.size() == 1 &&
+        runtime.physicsTrace().frames().back().contacts[0].normalImpulseNs > 0.0,
+        "headless automation should expose the production rigid impulse");
 
     const std::uint64_t before=runtime.tick(); billiardgl::json::Value step=billiardgl::json::Value::object(); step["ticks"]=billiardgl::json::Value(3);
     send(controller,4,"step",step); expect(runtime.tick()==before+3, "step should be exact");

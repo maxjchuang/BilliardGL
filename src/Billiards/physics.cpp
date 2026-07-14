@@ -1,5 +1,6 @@
 #include "physics.h"
 
+#include "ball_ball_contact.h"
 #include "rules.h"
 #include "table_specs.h"
 
@@ -97,29 +98,15 @@ void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
 
 bool collideBalls(BallState& first, BallState& second)
 {
-    const float dx = second.position.x - first.position.x;
-    const float dz = second.position.z - first.position.z;
-    const float distance = std::sqrt(dx * dx + dz * dz);
-    if (distance <= 0.0f || distance >= 2.0f * kBallRadius - 0.5f) {
-        return false;
-    }
+    return collideBalls(first, second, defaultChinesePoolPhysicsProfile());
+}
 
-    const float cosValue = dx / distance;
-    const float sinValue = dz / distance;
-    const float cCos = -sinValue;
-    const float cSin = cosValue;
-    const float v1c = first.velocity.x * cosValue + first.velocity.z * sinValue;
-    const float v1cc = first.velocity.x * cCos + first.velocity.z * cSin;
-    const float v2c = second.velocity.x * cosValue + second.velocity.z * sinValue;
-    const float v2cc = second.velocity.x * cCos + second.velocity.z * cSin;
-
-    first.velocity.x = v1cc * cCos + v2c * cosValue;
-    first.velocity.z = v1cc * cSin + v2c * sinValue;
-    second.velocity.x = v1c * cosValue + v2cc * cCos;
-    second.velocity.z = v1c * sinValue + v2cc * cSin;
-    second.position.x = first.position.x + 2.0f * kBallRadius * cosValue;
-    second.position.z = first.position.z + 2.0f * kBallRadius * sinValue;
-    return true;
+bool collideBalls(BallState& first, BallState& second,
+    const PhysicsProfile& profile)
+{
+    const BallBallContactResult result = resolveBallBallContact(
+        first, second, profile.ball, profile.ball);
+    return result.velocityImpulseApplied || result.positionCorrected;
 }
 
 void collideWithTableEdge(BallState& ball)
@@ -210,21 +197,20 @@ PhysicsStepTelemetry updatePhysics(
         }
         for (int j = i + 1; j < kBallCount; ++j) {
             if (!state.balls[j].pocketed) {
-                const Point3 beforeVelocity = ball.velocity;
-                const float dx = state.balls[j].position.x - ball.position.x;
-                const float dz = state.balls[j].position.z - ball.position.z;
-                const float distance = std::sqrt(dx * dx + dz * dz);
-                if (collideBalls(ball, state.balls[j])) {
+                const BallBallContactResult result = resolveBallBallContact(
+                    ball, state.balls[j], profile.ball, profile.ball);
+                if (result.velocityImpulseApplied || result.positionCorrected) {
                     state.events.ballCollision = true;
                     PhysicsContactRecord contact;
                     contact.kind = PhysicsContactKind::BallBall;
                     contact.firstBall = i;
                     contact.secondBall = j;
-                    contact.normal = Point3{dx / distance, 0.0f, dz / distance};
-                    contact.penetrationCm = std::max(
-                        0.0, static_cast<double>(2.0f * kBallRadius - distance));
-                    contact.normalImpulseNs = impulseFromVelocityChange(
-                        beforeVelocity, ball.velocity, contact.normal);
+                    contact.normal = Point3{
+                        static_cast<float>(result.contactNormal[0]),
+                        static_cast<float>(result.contactNormal[1]),
+                        static_cast<float>(result.contactNormal[2])};
+                    contact.penetrationCm = result.penetrationM * 100.0;
+                    contact.normalImpulseNs = result.normalImpulseNs;
                     telemetry.maximumPenetrationCm = std::max(
                         telemetry.maximumPenetrationCm, contact.penetrationCm);
                     telemetry.contacts.push_back(contact);

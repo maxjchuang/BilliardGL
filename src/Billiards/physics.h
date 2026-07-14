@@ -7,6 +7,8 @@
 namespace billiardgl {
 
 bool collideBalls(BallState& first, BallState& second);
+bool collideBalls(BallState& first, BallState& second,
+    const PhysicsProfile& profile);
 void collideWithTableEdge(BallState& ball);
 bool isInPocketMouth(const BallState& ball);
 bool isInPocket(const BallState& ball);

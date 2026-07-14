@@ -46,7 +46,10 @@ int main()
 
     billiardgl::BallState expectedFirst = collisionState.balls[0];
     billiardgl::BallState expectedSecond = collisionState.balls[1];
-    expect(billiardgl::collideBalls(expectedFirst, expectedSecond), "legacy collision precondition");
+    const billiardgl::PhysicsProfile defaultProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    expect(billiardgl::collideBalls(expectedFirst, expectedSecond, defaultProfile),
+        "profile collision precondition");
 
     const billiardgl::PhysicsStepTelemetry collision =
         billiardgl::updatePhysics(collisionState, 0.0f);
@@ -59,7 +62,21 @@ int main()
     expect(collision.contacts[0].normalImpulseNs >= 0.0, "nonnegative impulse magnitude");
     expect(close(collisionState.balls[0].velocity.x, expectedFirst.velocity.x) &&
         close(collisionState.balls[1].velocity.x, expectedSecond.velocity.x),
-        "instrumentation preserves legacy ball collision velocities");
+        "instrumentation preserves authoritative ball collision velocities");
+
+    billiardgl::GameState lightCollision = collisionState;
+    lightCollision.balls[0].position.x = 0.0f;
+    lightCollision.balls[1].position.x = 5.0f;
+    billiardgl::setBallVelocity(lightCollision.balls[0], 10.0f, 0.0f, 0.0f);
+    billiardgl::setBallVelocity(lightCollision.balls[1], 0.0f, 0.0f, 0.0f);
+    billiardgl::PhysicsProfile lightProfile = defaultProfile;
+    lightProfile.ball.massKg *= 0.5f;
+    const billiardgl::PhysicsStepTelemetry lightTelemetry =
+        billiardgl::updatePhysics(lightCollision, 0.0f, lightProfile);
+    expect(lightTelemetry.contacts.size() == 1 &&
+        close(static_cast<float>(lightTelemetry.contacts[0].normalImpulseNs),
+            static_cast<float>(collision.contacts[0].normalImpulseNs * 0.5)),
+        "profile mass scales collision impulse without falsifying equal-mass velocity physics");
 
     billiardgl::GameState railState;
     billiardgl::initializeBalls(railState);
