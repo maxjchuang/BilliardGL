@@ -30,6 +30,18 @@ billiardgl::BallState pureRollingBall(float speed, float radius)
     return ball;
 }
 
+double totalEnergy(
+    const billiardgl::BallState& ball,
+    const billiardgl::BallProperties& properties)
+{
+    const double speedMetersSquared =
+        (ball.velocity.x * ball.velocity.x +
+         ball.velocity.y * ball.velocity.y +
+         ball.velocity.z * ball.velocity.z) / 10000.0;
+    return 0.5 * properties.massKg * speedMetersSquared +
+        billiardgl::rotationalKineticEnergyJ(ball, properties);
+}
+
 }  // namespace
 
 int main()
@@ -111,5 +123,103 @@ int main()
         close(oneStep.velocity.x, splitSteps.velocity.x, 0.00001f) &&
         close(oneStep.angularVelocity.z, splitSteps.angularVelocity.z, 0.00001f),
         "rolling integration is invariant to an exact split of the time step");
+
+    billiardgl::SurfaceProperties slidingSurface = rollingSurface;
+    slidingSurface.slidingFrictionCoefficient = 0.20f;
+    ball = billiardgl::BallState{};
+    ball.velocity.x = 100.0f;
+    ball.speed = 100.0f;
+    ball.motionState = billiardgl::BallMotionState::Sliding;
+    const double initialSlidingEnergy = totalEnergy(ball, profile.ball);
+    const billiardgl::SurfaceMotionStep slidingStep =
+        billiardgl::advanceSurfaceMotion(
+            ball, 0.1f, profile.ball, slidingSurface);
+    const float slidingAcceleration =
+        -0.20f * billiardgl::kStandardGravityCmS2;
+    const float angularAcceleration =
+        2.5f * slidingAcceleration / profile.ball.radiusCm;
+    expect(close(slidingStep.frictionAccelerationCmS2.x,
+        slidingAcceleration, 0.001f),
+        "sliding friction uses mu times standard gravity");
+    expect(close(slidingStep.angularAccelerationRadS2.z,
+        angularAcceleration, 0.001f),
+        "sliding friction couples to sphere angular acceleration");
+    expect(slidingStep.after == billiardgl::BallMotionState::Sliding,
+        "a segment before analytic transition remains sliding");
+    expect(totalEnergy(ball, profile.ball) < initialSlidingEnergy,
+        "sliding friction decreases total kinetic energy");
+
+    const float transition = 100.0f /
+        (3.5f * 0.20f * billiardgl::kStandardGravityCmS2);
+    billiardgl::BallState atTransition;
+    atTransition.velocity.x = 100.0f;
+    atTransition.speed = 100.0f;
+    atTransition.motionState = billiardgl::BallMotionState::Sliding;
+    const billiardgl::SurfaceMotionStep transitionStep =
+        billiardgl::advanceSurfaceMotion(
+            atTransition, transition, profile.ball, slidingSurface);
+    expect(transitionStep.after == billiardgl::BallMotionState::Rolling,
+        "analytic contact-slip exhaustion transitions to rolling");
+    expect(close(transitionStep.transitionTimeSeconds, transition, 0.00001f),
+        "transition timestamp is recorded inside the tick");
+    expect(close(billiardgl::surfaceContactSlipVelocity(
+        atTransition, profile.ball.radiusCm).x, 0.0f, 0.0001f),
+        "contact slip is exactly zero at rolling transition");
+
+    billiardgl::BallState crossing;
+    crossing.velocity.x = 100.0f;
+    crossing.speed = 100.0f;
+    crossing.motionState = billiardgl::BallMotionState::Sliding;
+    billiardgl::advanceSurfaceMotion(
+        crossing, transition + 0.1f, profile.ball, slidingSurface);
+    billiardgl::BallState splitCrossing;
+    splitCrossing.velocity.x = 100.0f;
+    splitCrossing.speed = 100.0f;
+    splitCrossing.motionState = billiardgl::BallMotionState::Sliding;
+    billiardgl::advanceSurfaceMotion(
+        splitCrossing, transition, profile.ball, slidingSurface);
+    billiardgl::advanceSurfaceMotion(
+        splitCrossing, 0.1f, profile.ball, slidingSurface);
+    expect(close(crossing.position.x, splitCrossing.position.x, 0.0001f) &&
+        close(crossing.velocity.x, splitCrossing.velocity.x, 0.0001f) &&
+        close(crossing.angularVelocity.z,
+            splitCrossing.angularVelocity.z, 0.0001f),
+        "a sliding-to-rolling event is invariant to splitting at the event");
+
+    billiardgl::BallState mirrored;
+    mirrored.velocity.x = -100.0f;
+    mirrored.speed = 100.0f;
+    mirrored.motionState = billiardgl::BallMotionState::Sliding;
+    billiardgl::advanceSurfaceMotion(
+        mirrored, 0.1f, profile.ball, slidingSurface);
+    expect(close(mirrored.position.x, -ball.position.x, 0.0001f) &&
+        close(mirrored.velocity.x, -ball.velocity.x, 0.0001f) &&
+        close(mirrored.angularVelocity.z, -ball.angularVelocity.z, 0.0001f),
+        "sliding dynamics have negative-velocity mirror symmetry");
+
+    billiardgl::BallState zShot;
+    zShot.velocity.z = 100.0f;
+    zShot.speed = 100.0f;
+    zShot.motionState = billiardgl::BallMotionState::Sliding;
+    const billiardgl::SurfaceMotionStep zStep =
+        billiardgl::advanceSurfaceMotion(
+            zShot, 0.1f, profile.ball, slidingSurface);
+    expect(close(zStep.frictionAccelerationCmS2.z,
+        slidingAcceleration, 0.001f) &&
+        zStep.angularAccelerationRadS2.x > 0.0f,
+        "z-axis sliding uses the same coupled dynamics");
+
+    billiardgl::BallState topspin;
+    topspin.velocity.x = 20.0f;
+    topspin.speed = 20.0f;
+    topspin.angularVelocity.z = -40.0f / profile.ball.radiusCm;
+    topspin.motionState = billiardgl::BallMotionState::Sliding;
+    const double topspinEnergy = totalEnergy(topspin, profile.ball);
+    billiardgl::advanceSurfaceMotion(
+        topspin, 0.01f, profile.ball, slidingSurface);
+    expect(topspin.velocity.x > 20.0f,
+        "topspin can accelerate the center toward pure rolling");
+    expect(totalEnergy(topspin, profile.ball) < topspinEnergy,
+        "topspin transfer still dissipates total kinetic energy");
     return 0;
 }

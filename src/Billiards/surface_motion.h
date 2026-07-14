@@ -5,6 +5,8 @@
 
 namespace billiardgl {
 
+constexpr float kStandardGravityCmS2 = 980.665f;
+
 enum class BallMotionState : int {
     Stationary,
     Sliding,

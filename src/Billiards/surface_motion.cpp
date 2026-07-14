@@ -1,7 +1,5 @@
 #include "surface_motion.h"
 
-#include "physics.h"
-
 #include <algorithm>
 #include <cmath>
 
@@ -11,6 +9,49 @@ namespace {
 float horizontalLength(const Point3& value)
 {
     return std::sqrt(value.x * value.x + value.z * value.z);
+}
+
+float advanceRollingSegment(
+    BallState& ball, float deltaSeconds, const BallProperties& ballProperties,
+    const SurfaceProperties& surface)
+{
+    const float speed = horizontalLength(ball.velocity);
+    if (deltaSeconds <= 0.0f || speed <= 0.0f) {
+        ball.speed = 0.0f;
+        ball.velocity.x = 0.0f;
+        ball.velocity.z = 0.0f;
+        ball.angularVelocity.x = 0.0f;
+        ball.angularVelocity.z = 0.0f;
+        ball.motionState = BallMotionState::Stationary;
+        return 0.0f;
+    }
+    const Point3 direction{
+        ball.velocity.x / speed, 0.0f, ball.velocity.z / speed};
+    const float resistance = surface.rollingResistanceAccelerationCmS2;
+    const float segment = resistance > 0.0f
+        ? std::min(deltaSeconds, speed / resistance)
+        : deltaSeconds;
+    const float distance = resistance > 0.0f
+        ? speed * segment - 0.5f * resistance * segment * segment
+        : speed * segment;
+    ball.position.x += direction.x * distance;
+    ball.position.z += direction.z * distance;
+    const float finalSpeed = resistance > 0.0f
+        ? std::max(0.0f, speed - resistance * segment)
+        : speed;
+    ball.velocity.x = direction.x * finalSpeed;
+    ball.velocity.z = direction.z * finalSpeed;
+    ball.speed = finalSpeed;
+    ball.angularVelocity.x = ball.velocity.z / ballProperties.radiusCm;
+    ball.angularVelocity.z = -ball.velocity.x / ballProperties.radiusCm;
+    ball.rotationAxis.x = -direction.z;
+    ball.rotationAxis.z = direction.x;
+    ball.rotationAngle +=
+        -180.0f * distance / (ballProperties.radiusCm * kPi);
+    ball.motionState = segment < deltaSeconds
+        ? BallMotionState::Stationary
+        : BallMotionState::Rolling;
+    return segment;
 }
 
 }  // namespace
@@ -79,54 +120,75 @@ SurfaceMotionStep advanceSurfaceMotion(
     step.before = classifySurfaceMotion(ball, ballProperties, surface);
     step.initialSlipSpeedCmS = horizontalLength(
         surfaceContactSlipVelocity(ball, ballProperties.radiusCm));
-    const Point3 initialVelocity = ball.velocity;
-    const Point3 initialAngularVelocity = ball.angularVelocity;
     if (step.before == BallMotionState::Rolling && deltaSeconds > 0.0f) {
         const float speed = horizontalLength(ball.velocity);
         const Point3 direction = speed > 0.0f
             ? Point3{ball.velocity.x / speed, 0.0f, ball.velocity.z / speed}
             : Point3{};
         const float resistance = surface.rollingResistanceAccelerationCmS2;
-        const float segment = resistance > 0.0f
-            ? std::min(deltaSeconds, speed / resistance)
-            : deltaSeconds;
-        const float distance = resistance > 0.0f
-            ? speed * segment - 0.5f * resistance * segment * segment
-            : speed * segment;
-        ball.position.x += direction.x * distance;
-        ball.position.z += direction.z * distance;
-        const float finalSpeed = resistance > 0.0f
-            ? std::max(0.0f, speed - resistance * segment)
-            : speed;
-        ball.velocity.x = direction.x * finalSpeed;
-        ball.velocity.z = direction.z * finalSpeed;
-        ball.speed = finalSpeed;
-        ball.angularVelocity.x = ball.velocity.z / ballProperties.radiusCm;
-        ball.angularVelocity.z = -ball.velocity.x / ballProperties.radiusCm;
-        ball.rotationAxis.x = -direction.z;
-        ball.rotationAxis.z = direction.x;
-        ball.rotationAngle +=
-            -180.0f * distance / (ballProperties.radiusCm * kPi);
+        const float segment = advanceRollingSegment(
+            ball, deltaSeconds, ballProperties, surface);
+        step.frictionAccelerationCmS2 = Point3{
+            -direction.x * resistance, 0.0f, -direction.z * resistance};
+        step.angularAccelerationRadS2 = Point3{
+            step.frictionAccelerationCmS2.z / ballProperties.radiusCm,
+            0.0f,
+            -step.frictionAccelerationCmS2.x / ballProperties.radiusCm};
         if (segment < deltaSeconds) {
-            ball.motionState = BallMotionState::Stationary;
             step.transitionTimeSeconds = segment;
+        }
+    } else if (step.before == BallMotionState::Sliding && deltaSeconds > 0.0f) {
+        const float coefficient = surface.slidingFrictionCoefficient;
+        if (coefficient <= 0.0f || step.initialSlipSpeedCmS <= 0.0f) {
+            ball.position.x += ball.velocity.x * deltaSeconds;
+            ball.position.z += ball.velocity.z * deltaSeconds;
+            ball.motionState = BallMotionState::Sliding;
         } else {
-            ball.motionState = BallMotionState::Rolling;
+            const Point3 slip = surfaceContactSlipVelocity(
+                ball, ballProperties.radiusCm);
+            const float magnitude = coefficient * kStandardGravityCmS2;
+            const Point3 acceleration{
+                -magnitude * slip.x / step.initialSlipSpeedCmS,
+                0.0f,
+                -magnitude * slip.z / step.initialSlipSpeedCmS};
+            const Point3 angularAcceleration{
+                -2.5f * acceleration.z / ballProperties.radiusCm,
+                0.0f,
+                2.5f * acceleration.x / ballProperties.radiusCm};
+            const float transition = step.initialSlipSpeedCmS /
+                (3.5f * magnitude);
+            const float segment = std::min(deltaSeconds, transition);
+            ball.position.x +=
+                ball.velocity.x * segment +
+                0.5f * acceleration.x * segment * segment;
+            ball.position.z +=
+                ball.velocity.z * segment +
+                0.5f * acceleration.z * segment * segment;
+            ball.velocity.x += acceleration.x * segment;
+            ball.velocity.z += acceleration.z * segment;
+            ball.angularVelocity.x += angularAcceleration.x * segment;
+            ball.angularVelocity.z += angularAcceleration.z * segment;
+            ball.speed = horizontalLength(ball.velocity);
+            step.frictionAccelerationCmS2 = acceleration;
+            step.angularAccelerationRadS2 = angularAcceleration;
+            if (transition <= deltaSeconds) {
+                ball.angularVelocity.x =
+                    ball.velocity.z / ballProperties.radiusCm;
+                ball.angularVelocity.z =
+                    -ball.velocity.x / ballProperties.radiusCm;
+                ball.motionState = BallMotionState::Rolling;
+                step.transitionTimeSeconds = transition;
+                const float remaining = deltaSeconds - transition;
+                if (remaining > 0.0f) {
+                    advanceRollingSegment(
+                        ball, remaining, ballProperties, surface);
+                }
+            } else {
+                ball.motionState = BallMotionState::Sliding;
+            }
         }
     } else {
-        applyFrictionAndMove(
-            ball, deltaSeconds, -surface.legacyFrictionAccelerationCmS2);
-        ball.motionState = classifySurfaceMotion(ball, ballProperties, surface);
-    }
-    if (deltaSeconds > 0.0f) {
-        step.frictionAccelerationCmS2 = Point3{
-            (ball.velocity.x - initialVelocity.x) / deltaSeconds,
-            (ball.velocity.y - initialVelocity.y) / deltaSeconds,
-            (ball.velocity.z - initialVelocity.z) / deltaSeconds};
-        step.angularAccelerationRadS2 = Point3{
-            (ball.angularVelocity.x - initialAngularVelocity.x) / deltaSeconds,
-            (ball.angularVelocity.y - initialAngularVelocity.y) / deltaSeconds,
-            (ball.angularVelocity.z - initialAngularVelocity.z) / deltaSeconds};
+        ball.motionState = BallMotionState::Stationary;
     }
     step.after = ball.motionState;
     step.finalSlipSpeedCmS = horizontalLength(
