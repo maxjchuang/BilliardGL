@@ -1,0 +1,4912 @@
+[
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": -12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": -88.14768981933594
+        },
+        "contact_slip_speed_cm_s": 9.5367431640625e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": -7.978811264038086,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.1505552082284673,
+        "speed_cm_s": 231.3876953125,
+        "velocity_cm_s": {
+          "x": 231.3876953125,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": 0.32533109188079834,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.1505552082284673,
+    "surface_transitions": [],
+    "tick": 1,
+    "time_seconds": 0.10000000149011612,
+    "total_kinetic_energy_j": 0.5269432638833957,
+    "translational_kinetic_energy_j": 0.3763880556549284
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": -12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": -87.67150115966797
+        },
+        "contact_slip_speed_cm_s": 4.76837158203125e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": 15.097457885742188,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.14893295199901968,
+        "speed_cm_s": 230.1376953125,
+        "velocity_cm_s": {
+          "x": 230.1376953125,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": 0.32357361912727356,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.14893295199901968,
+    "surface_transitions": [],
+    "tick": 2,
+    "time_seconds": 0.20000000298023224,
+    "total_kinetic_energy_j": 0.5212653534034954,
+    "translational_kinetic_energy_j": 0.3723324014044757
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": -12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": -87.1953125
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": 38.048728942871094,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.14731948517870602,
+        "speed_cm_s": 228.8876953125,
+        "velocity_cm_s": {
+          "x": 228.8876953125,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": 0.321816086769104,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.14731948517870602,
+    "surface_transitions": [],
+    "tick": 3,
+    "time_seconds": 0.30000000447034836,
+    "total_kinetic_energy_j": 0.5156182010820807,
+    "translational_kinetic_energy_j": 0.36829871590337465
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": -4394.2353515625,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 80.20410919189453
+        },
+        "contact_slip_speed_cm_s": 4.100799560546875e-05,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": 60.875,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.12464279069075139,
+        "speed_cm_s": 210.53582763671875,
+        "velocity_cm_s": {
+          "x": -210.53582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [
+      {
+        "contact_arm_cm": {
+          "x": 2.625,
+          "y": 1.0499999523162842,
+          "z": 0
+        },
+        "contact_height_cm": 3.674999937415123,
+        "contact_tangent": {
+          "x": 0,
+          "y": 0,
+          "z": 1
+        },
+        "contact_velocity_after_cm_s": {
+          "x": -294.7501220703125,
+          "y": 210.53578186035156,
+          "z": 0
+        },
+        "contact_velocity_before_cm_s": {
+          "x": 318.6927795410156,
+          "y": -227.6376953125,
+          "z": 0
+        },
+        "first_ball": 0,
+        "first_contact_arm_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "first_position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "friction_coefficient": 0.14000000059604645,
+        "impulse_on_ball_ns": {
+          "x": -0.6160719394683838,
+          "y": 0,
+          "z": 0
+        },
+        "impulse_on_second_ns": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "incident_speed_cm_s": 318.69276991754293,
+        "kind": "rail",
+        "kinetic_energy_after_j": 0.4362498861762658,
+        "kinetic_energy_before_j": 0.5100018087777195,
+        "maximum_rigid_incident_speed_cm_s": 250,
+        "normal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        },
+        "normal_impulse_ns": 0.6160719458391369,
+        "normal_relative_speed_after_cm_s": 294.7501372686437,
+        "normal_relative_speed_before_cm_s": -318.69276991754293,
+        "nose_height_ratio": 1.399999976158142,
+        "penetration_cm": 0,
+        "position_corrected": false,
+        "position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "position_slop_cm": 9.999999999999999e-06,
+        "regime": "frictionless",
+        "relative_contact_velocity_after_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relative_contact_velocity_before_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "restitution": 0.9248723387718201,
+        "rigid_domain_exceeded": true,
+        "second_ball": -1,
+        "second_contact_arm_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "second_position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "tangential_impulse_ns": 0,
+        "time_of_impact_seconds": 0.10000000149011612,
+        "velocity_impulse_applied": true
+      }
+    ],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.29601338505744934,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.12464279069075139,
+    "surface_transitions": [],
+    "tick": 4,
+    "time_seconds": 0.4000000059604645,
+    "total_kinetic_energy_j": 0.43624988456891334,
+    "translational_kinetic_energy_j": 0.31160709387816193
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 79.72793579101562
+        },
+        "contact_slip_speed_cm_s": 3.814697265625e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": 39.88391876220703,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.12316717283823321,
+        "speed_cm_s": 209.28582763671875,
+        "velocity_cm_s": {
+          "x": -209.28582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.2942558526992798,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.12316717283823321,
+    "surface_transitions": [],
+    "tick": 5,
+    "time_seconds": 0.5000000074505806,
+    "total_kinetic_energy_j": 0.43108508402953116,
+    "translational_kinetic_energy_j": 0.30791791119129797
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 79.25174713134766
+        },
+        "contact_slip_speed_cm_s": 8.58306884765625e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": 19.01783561706543,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.12170028762794394,
+        "speed_cm_s": 208.03582763671875,
+        "velocity_cm_s": {
+          "x": -208.03582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.2924983501434326,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.12170028762794394,
+    "surface_transitions": [],
+    "tick": 6,
+    "time_seconds": 0.6000000089406967,
+    "total_kinetic_energy_j": 0.4259509848817298,
+    "translational_kinetic_energy_j": 0.30425069725378584
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 78.77555084228516
+        },
+        "contact_slip_speed_cm_s": 6.67572021484375e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": -1.7232475280761719,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.12024217290448697,
+        "speed_cm_s": 206.78582763671875,
+        "velocity_cm_s": {
+          "x": -206.78582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.29074087738990784,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.12024217290448697,
+    "surface_transitions": [],
+    "tick": 7,
+    "time_seconds": 0.7000000104308128,
+    "total_kinetic_energy_j": 0.42084762497011263,
+    "translational_kinetic_energy_j": 0.30060545206562567
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 78.29936218261719
+        },
+        "contact_slip_speed_cm_s": 1.9073486328125e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": -22.339330673217773,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.11879286651246564,
+        "speed_cm_s": 205.53582763671875,
+        "velocity_cm_s": {
+          "x": -205.53582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.28898337483406067,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.11879286651246564,
+    "surface_transitions": [],
+    "tick": 8,
+    "time_seconds": 0.800000011920929,
+    "total_kinetic_energy_j": 0.41577504213928274,
+    "translational_kinetic_energy_j": 0.2969821756268171
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 12.5,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 77.82317352294922
+        },
+        "contact_slip_speed_cm_s": 2.86102294921875e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": -42.830413818359375,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.11735234952957829,
+        "speed_cm_s": 204.28582763671875,
+        "velocity_cm_s": {
+          "x": -204.28582763671875,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": -0.2872258424758911,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.11735234952957829,
+    "surface_transitions": [],
+    "tick": 9,
+    "time_seconds": 0.9000000134110451,
+    "total_kinetic_energy_j": 0.41073321746693875,
+    "translational_kinetic_energy_j": 0.29338086793736046
+  },
+  {
+    "balls": [
+      {
+        "acceleration_cm_s2": {
+          "x": 3920.572998046875,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": -71.53199768066406
+        },
+        "contact_slip_speed_cm_s": 9.5367431640625e-06,
+        "index": 0,
+        "motion_state": "rolling",
+        "pocketed": false,
+        "position_cm": {
+          "x": -58.727970123291016,
+          "y": 89.10897827148438,
+          "z": 20
+        },
+        "rotational_kinetic_energy_j": 0.09914586905349576,
+        "speed_cm_s": 187.771484375,
+        "velocity_cm_s": {
+          "x": 187.771484375,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 1,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 63.5
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 2,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 3,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 68.44933319091797
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 4,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 5,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 6,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 7,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 8,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 73.39866638183594
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 9,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 2.8575000762939453,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 10,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 8.572500228881836,
+          "y": 89.34147644042969,
+          "z": 78.34800720214844
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 11,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 12,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": -5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 13,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 0,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 14,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 5.715000152587891,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "acceleration_cm_s2": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "angular_velocity_rad_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "contact_slip_speed_cm_s": 0,
+        "index": 15,
+        "motion_state": "stationary",
+        "pocketed": true,
+        "position_cm": {
+          "x": 11.430000305175781,
+          "y": 89.34147644042969,
+          "z": 83.2973403930664
+        },
+        "rotational_kinetic_energy_j": 0,
+        "speed_cm_s": 0,
+        "velocity_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "contacts": [
+      {
+        "contact_arm_cm": {
+          "x": -2.625,
+          "y": 1.0499999523162842,
+          "z": 0
+        },
+        "contact_height_cm": 3.674999937415123,
+        "contact_tangent": {
+          "x": 0,
+          "y": 0,
+          "z": -1
+        },
+        "contact_velocity_after_cm_s": {
+          "x": 263.080078125,
+          "y": 187.9143524169922,
+          "z": 0
+        },
+        "contact_velocity_before_cm_s": {
+          "x": -284.4501647949219,
+          "y": -203.17869567871094,
+          "z": 0
+        },
+        "first_ball": 0,
+        "first_contact_arm_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "first_position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "friction_coefficient": 0.14000000059604645,
+        "impulse_on_ball_ns": {
+          "x": 0.5498768091201782,
+          "y": 0,
+          "z": 0
+        },
+        "impulse_on_second_ns": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "incident_speed_cm_s": 284.4501664357498,
+        "kind": "rail",
+        "kinetic_energy_after_j": 0.34753876077282125,
+        "kinetic_energy_before_j": 0.4062933172209544,
+        "maximum_rigid_incident_speed_cm_s": 250,
+        "normal": {
+          "x": 1,
+          "y": 0,
+          "z": 0
+        },
+        "normal_impulse_ns": 0.5498768220429976,
+        "normal_relative_speed_after_cm_s": 263.08008699621325,
+        "normal_relative_speed_before_cm_s": -284.4501664357498,
+        "nose_height_ratio": 1.399999976158142,
+        "penetration_cm": 0,
+        "position_corrected": false,
+        "position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "position_slop_cm": 9.999999999999999e-06,
+        "regime": "frictionless",
+        "relative_contact_velocity_after_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "relative_contact_velocity_before_cm_s": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "restitution": 0.9248723387718201,
+        "rigid_domain_exceeded": true,
+        "second_ball": -1,
+        "second_contact_arm_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "second_position_correction_cm": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "tangential_impulse_ns": 0,
+        "time_of_impact_seconds": 0.08857008814811707,
+        "velocity_impulse_applied": true
+      }
+    ],
+    "control": {
+      "aim_yaw_rad": 1.570796251296997,
+      "shot_power": 60,
+      "shot_taken": false
+    },
+    "delta_seconds": 0.10000000149011612,
+    "linear_momentum_kg_mps": {
+      "x": 0.26400670409202576,
+      "y": 0,
+      "z": 0
+    },
+    "maximum_penetration_cm": 0,
+    "physics_profile_id": "mathavan_2010_cushion_calibration_v1",
+    "rotational_kinetic_energy_j": 0.09914586905349576,
+    "surface_transitions": [],
+    "tick": 10,
+    "time_seconds": 1.0000000149011612,
+    "total_kinetic_energy_j": 0.34701051806117533,
+    "translational_kinetic_energy_j": 0.2478646490076796
+  }
+]

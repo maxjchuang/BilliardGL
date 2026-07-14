@@ -418,6 +418,37 @@ candidate HOLDOUT partition is executed. The production ID is
 `chinese_pool_cushion_collision_v1`; the valid rigid-model domain ends at
 250 cm/s. This freeze makes no real-world Chinese Pool accuracy claim.
 
+The first candidate HOLDOUT events are immutable and must not be rerun:
+
+- `physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/`
+  contains all 13 HOLDOUT points, traces, provenance, full-precision CSV/JSON/
+  Markdown, and receipt. Results: 1 passed, 9 known model mismatches, and 3
+  integration mismatches; report SHA-256
+  `a2352c1b05b7fee2ca1b07af8514d3c9e66ca1e7c18ce7ee313c1579ef86e054`,
+  receipt SHA-256
+  `f2b9155f7b5d23d136fa3de3554018faf9f9c550b6b1e71c3e22301a8d812025`.
+  The three integration failures (`fig7_experimental_17`–`19`) are caused by
+  the high-speed approach placement starting beyond the opposite straight rail,
+  which records an initial zero-incident correction contact before the intended
+  impact and invalidates the paired window. The failed receipt remains evidence;
+  any corrected adapter requires a new candidate version and a new preregistered
+  split, never replacement or replay of this event.
+- `physics_models/candidates/cushion_collision_v1/validation/mathavan_2009/`
+  contains all 15 HOLDOUT points and complete execution artifacts. Results: 8
+  passed, 3 known model mismatches, and 4 new finite model mismatches, with no
+  integration or numerical failure; report SHA-256
+  `4c5ae2848580c6157d381c4444226e2e6c5d4d8817ffeb6bc74de495f138b971`,
+  receipt SHA-256
+  `50cbb3da5d4117bd9121e9f773589e91d251e52a00af8afe3b658b3c94a3f696`.
+
+The validated evidence remains `TREND_ONLY`: it uses snooker equipment, has no
+validated Chinese Pool material conversion, lacks oblique cushion-angle and
+spin-change measurements, retains unresolved Mathavan 2009 markers and
+unmeasured initial spin, and treats incident contact speed above 250 cm/s as
+outside the rigid model domain. A replay command in a report is provenance for
+the underlying package runner, not authorization to rerun these candidate-v1
+HOLDOUT receipts.
+
 ## Cross 2023 cue-impact admission package
 
 `cross_2023_cue_impact` identifies Rod Cross, “Impact of a cue with a billiard ball,” DOI `10.1177/17543371231184011`, first online 29 June 2023 and published in volume 239(4), pages 647–651 in December 2025.
