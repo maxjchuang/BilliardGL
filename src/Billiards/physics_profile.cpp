@@ -64,6 +64,16 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
     if (!std::isfinite(profile.ball.massKg) || profile.ball.massKg <= 0.0f) {
         return invalid("ball mass_kg must be finite and positive");
     }
+    if (!std::isfinite(profile.ball.inertiaFactor) || profile.ball.inertiaFactor <= 0.0f) {
+        return invalid("ball inertia factor must be finite and positive");
+    }
+    if (!std::isfinite(profile.ball.normalRestitution) ||
+        profile.ball.normalRestitution < 0.0f || profile.ball.normalRestitution > 1.0f) {
+        return invalid("ball normal restitution must be between zero and one");
+    }
+    if (!finiteNonnegative(profile.ball.frictionCoefficient)) {
+        return invalid("ball friction coefficient must be finite and nonnegative");
+    }
     if (!finiteNonnegative(profile.surface.legacyFrictionAccelerationCmS2)) {
         return invalid("legacy friction acceleration_cm_s2 must be finite and nonnegative");
     }
@@ -131,6 +141,9 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "formula_version=" << profile.formulaVersion << '\n'
         << "ball.radius_cm=" << profile.ball.radiusCm << '\n'
         << "ball.mass_kg=" << profile.ball.massKg << '\n'
+        << "ball.inertia_factor=" << profile.ball.inertiaFactor << '\n'
+        << "ball.normal_restitution=" << profile.ball.normalRestitution << '\n'
+        << "ball.friction_coefficient=" << profile.ball.frictionCoefficient << '\n'
         << "ball.material=" << profile.ball.material << '\n'
         << "surface.legacy_friction_acceleration_cm_s2="
         << profile.surface.legacyFrictionAccelerationCmS2 << '\n'

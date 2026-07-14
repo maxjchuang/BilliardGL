@@ -35,6 +35,12 @@ int main()
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
     expect(profile.ball.massKg == 0.17f, "legacy telemetry mass");
+    expect(close(profile.ball.inertiaFactor, 0.4f),
+        "solid sphere inertia compatibility default");
+    expect(close(profile.ball.normalRestitution, 1.0f),
+        "lossless ball restitution compatibility default");
+    expect(close(profile.ball.frictionCoefficient, 0.0f),
+        "frictionless ball contact compatibility default");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
@@ -64,6 +70,21 @@ int main()
     invalid.id = "../unsafe";
     expect(!billiardgl::validatePhysicsProfile(invalid).ok,
         "unsafe ID rejected");
+
+    invalid = profile;
+    invalid.ball.inertiaFactor = 0.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "nonpositive inertia factor rejected");
+
+    invalid = profile;
+    invalid.ball.normalRestitution = 1.01f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "ball restitution above one rejected");
+
+    invalid = profile;
+    invalid.ball.frictionCoefficient = -0.1f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "negative ball contact friction rejected");
 
     invalid = profile;
     invalid.surface.slidingFrictionCoefficient = -0.1f;

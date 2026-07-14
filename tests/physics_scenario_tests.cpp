@@ -100,6 +100,17 @@ billiardgl::json::Value validV4Document()
     return value;
 }
 
+billiardgl::json::Value validV5Document()
+{
+    billiardgl::json::Value value = validV4Document();
+    value["schema_version"] = billiardgl::json::Value(5);
+    billiardgl::json::Value& ball = value["physics_profile"]["ball"];
+    ball["inertia_factor"] = billiardgl::json::Value(0.4);
+    ball["normal_restitution"] = billiardgl::json::Value(0.91);
+    ball["friction_coefficient"] = billiardgl::json::Value(0.08);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -154,6 +165,17 @@ int main()
         "v4 cue properties should survive parsing exactly");
     expect(std::fabs(v3.scenario.physicsProfile.cue.chalkedFrictionCoefficient - 0.6f) < 0.0001f,
         "v3 profile should receive extended cue compatibility defaults");
+    expect(std::fabs(v3.scenario.physicsProfile.ball.inertiaFactor - 0.4f) < 0.0001f &&
+        std::fabs(v3.scenario.physicsProfile.ball.normalRestitution - 1.0f) < 0.0001f &&
+        std::fabs(v3.scenario.physicsProfile.ball.frictionCoefficient) < 0.0001f,
+        "v3 profile should receive ball-contact compatibility defaults");
+    const billiardgl::PhysicsScenarioResult v5 =
+        billiardgl::parsePhysicsScenario(validV5Document());
+    expect(v5.ok, "valid ball-contact profile scenario v5 should parse");
+    expect(std::fabs(v5.scenario.physicsProfile.ball.inertiaFactor - 0.4f) < 0.0001f &&
+        std::fabs(v5.scenario.physicsProfile.ball.normalRestitution - 0.91f) < 0.0001f &&
+        std::fabs(v5.scenario.physicsProfile.ball.frictionCoefficient - 0.08f) < 0.0001f,
+        "v5 ball contact properties should survive parsing exactly");
     billiardgl::json::Value v4ImpactDocument = validV4Document();
     billiardgl::json::Value centeredCue = validV2Document().at("cue_impact");
     centeredCue["tip_offset_cm"] = billiardgl::json::parse("[0.0,0.0]").value;
@@ -187,6 +209,25 @@ int main()
         billiardgl::json::Value(1);
     expect(!billiardgl::parsePhysicsScenario(extraProfileField).ok,
         "v3 profile should reject unknown fields");
+    billiardgl::json::Value invalidInertia = validV5Document();
+    invalidInertia["physics_profile"]["ball"]["inertia_factor"] =
+        billiardgl::json::Value(0.0);
+    expect(!billiardgl::parsePhysicsScenario(invalidInertia).ok,
+        "v5 profile should reject nonpositive inertia");
+    billiardgl::json::Value invalidRestitution = validV5Document();
+    invalidRestitution["physics_profile"]["ball"]["normal_restitution"] =
+        billiardgl::json::Value(1.1);
+    expect(!billiardgl::parsePhysicsScenario(invalidRestitution).ok,
+        "v5 profile should reject restitution above one");
+    billiardgl::json::Value invalidContactFriction = validV5Document();
+    invalidContactFriction["physics_profile"]["ball"]["friction_coefficient"] =
+        billiardgl::json::Value(-0.1);
+    expect(!billiardgl::parsePhysicsScenario(invalidContactFriction).ok,
+        "v5 profile should reject negative contact friction");
+    billiardgl::json::Value missingV5Field = validV5Document();
+    missingV5Field["physics_profile"]["ball"].asObject().erase("inertia_factor");
+    expect(!billiardgl::parsePhysicsScenario(missingV5Field).ok,
+        "v5 profile should require every ball contact field");
     billiardgl::json::Value mismatchedProfileStep = validV3Document();
     mismatchedProfileStep["physics_profile"]["solver"]["time_step_seconds"] =
         billiardgl::json::Value(0.05);
@@ -206,7 +247,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(5);
+    unknownVersion["schema_version"] = billiardgl::json::Value(6);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

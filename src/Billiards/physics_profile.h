@@ -9,6 +9,9 @@ namespace billiardgl {
 struct BallProperties {
     float radiusCm = kChineseBallRadiusCm;
     float massKg = 0.17f;
+    float inertiaFactor = 0.4f;
+    float normalRestitution = 1.0f;
+    float frictionCoefficient = 0.0f;
     std::string material = "phenolic_resin";
 };
 

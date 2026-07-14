@@ -88,6 +88,55 @@ class ModelCandidateTests(unittest.TestCase):
             **extended,
         })
 
+    def test_profile_manifest_v3_requires_ball_contact_numeric_provenance(self):
+        document = json.loads(self.profile.read_text(encoding="utf-8"))
+        document["schema_version"] = 3
+        extended = {
+            "inertia_factor": 0.4,
+            "normal_restitution": 0.91,
+            "friction_coefficient": 0.08,
+        }
+        for key, value in extended.items():
+            document["runtime_profile"]["ball"][key] = value
+            document["parameter_sources"][f"ball.{key}"] = {
+                "evidence": "ball collision profile v3 test fixture",
+                "kind": "analytic_contract",
+                "unit": "1",
+            }
+        document["runtime_profile"]["cue"].update({
+            "normal_restitution": 0.0,
+            "chalked_friction_coefficient": 0.6,
+            "unchalked_friction_coefficient": 0.1,
+            "maximum_reliable_offset_radius": 0.8,
+            "cue_speed_per_power_unit_cm_s": 1.34,
+        })
+        for key in set(document["runtime_profile"]["cue"]) - {"effective_mass_kg"}:
+            document["parameter_sources"][f"cue.{key}"] = {
+                "evidence": "cue profile v2 compatibility fixture",
+                "kind": "compatibility_default",
+                "unit": "1",
+            }
+        self.profile.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        manifest = load_profile_manifest(self.profile)
+        self.assertEqual(manifest.runtime_profile["ball"], {
+            "mass_kg": 0.17,
+            "material": "phenolic_resin",
+            "radius_cm": 2.8575,
+            **extended,
+        })
+
+        del document["parameter_sources"]["ball.normal_restitution"]
+        self.profile.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ValueError, "ball.normal_restitution"):
+            load_profile_manifest(self.profile)
+
     def test_production_cue_profile_is_analytic_only_and_fully_sourced(self):
         document = json.loads(PRODUCTION_CUE_PROFILE.read_text(encoding="utf-8"))
         manifest = load_profile_manifest(PRODUCTION_CUE_PROFILE)
