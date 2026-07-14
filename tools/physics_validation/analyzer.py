@@ -288,6 +288,87 @@ def _contact_index(frames, event_kind, ball_index):
     return None
 
 
+def _validate_ball_contact(frames, contact):
+    required = {
+        "first_ball", "second_ball", "normal",
+        "relative_contact_velocity_before_cm_s",
+        "relative_contact_velocity_after_cm_s",
+        "normal_relative_speed_before_cm_s",
+        "normal_relative_speed_after_cm_s", "normal_impulse_ns",
+        "tangential_impulse_ns", "friction_coefficient", "regime",
+        "velocity_impulse_applied", "kinetic_energy_before_j",
+        "kinetic_energy_after_j",
+    }
+    if not required <= set(contact):
+        return INTEGRATION_MISMATCH, "ball contact diagnostics are incomplete"
+    if not _finite(contact):
+        return NUMERICAL_FAILURE, "ball contact diagnostics are not finite"
+    try:
+        normal = _vector(contact["normal"])
+        before = _vector(contact["relative_contact_velocity_before_cm_s"])
+        after = _vector(contact["relative_contact_velocity_after_cm_s"])
+    except (KeyError, TypeError, ValueError) as error:
+        return INTEGRATION_MISMATCH, str(error)
+    if len(normal) != 3 or len(before) != 3 or len(after) != 3:
+        return INTEGRATION_MISMATCH, "ball contact vectors must have three components"
+    normal_length = math.sqrt(sum(component * component for component in normal))
+    if abs(normal_length - 1.0) > 1e-5:
+        return INTEGRATION_MISMATCH, "ball contact normal is not unit length"
+    normal_before = sum(value * axis for value, axis in zip(before, normal))
+    normal_after = sum(value * axis for value, axis in zip(after, normal))
+    reported_before = contact["normal_relative_speed_before_cm_s"]
+    reported_after = contact["normal_relative_speed_after_cm_s"]
+    if abs(normal_before - reported_before) > 1e-4 \
+            or abs(normal_after - reported_after) > 1e-4:
+        return INTEGRATION_MISMATCH, \
+            "reported normal relative speed disagrees with contact velocity"
+
+    normal_impulse = contact["normal_impulse_ns"]
+    tangent_impulse = contact["tangential_impulse_ns"]
+    friction = contact["friction_coefficient"]
+    if normal_impulse < 0.0 or tangent_impulse < 0.0 or friction < 0.0:
+        return INTEGRATION_MISMATCH, "ball contact impulse or friction is negative"
+    if tangent_impulse > friction * normal_impulse + 1e-10:
+        return INTEGRATION_MISMATCH, "ball contact violates the friction cone"
+
+    applied = contact["velocity_impulse_applied"]
+    if not isinstance(applied, bool):
+        return INTEGRATION_MISMATCH, "velocity_impulse_applied must be boolean"
+    if applied and (normal_before >= -1e-6 or normal_after < -1e-5):
+        return INTEGRATION_MISMATCH, \
+            "ball contact does not transition from approach to separation"
+    if not applied and (normal_impulse > 1e-12 or tangent_impulse > 1e-12):
+        return INTEGRATION_MISMATCH, \
+            "ball contact reports impulse without applying it"
+
+    energy_before = contact["kinetic_energy_before_j"]
+    energy_after = contact["kinetic_energy_after_j"]
+    if energy_before < 0.0 or energy_after < 0.0 \
+            or energy_after > energy_before + max(1e-9, abs(energy_before) * 1e-7):
+        return NUMERICAL_FAILURE, "ball contact creates kinetic energy"
+
+    regime = contact["regime"]
+    if regime not in {"no_contact", "separating", "frictionless", "stick", "slip"}:
+        return INTEGRATION_MISMATCH, "ball contact regime is invalid"
+    tangent_after = math.sqrt(sum(
+        (value - normal_after * axis) ** 2
+        for value, axis in zip(after, normal)))
+    if regime == "stick" and tangent_after > 1e-3:
+        return INTEGRATION_MISMATCH, "stick regime retains tangential contact motion"
+    if regime == "frictionless" and tangent_impulse > 1e-12:
+        return INTEGRATION_MISMATCH, "frictionless regime has tangential impulse"
+
+    pair = frozenset((contact["first_ball"], contact["second_ball"]))
+    applied_count = sum(
+        1 for frame in frames for item in frame.get("contacts", [])
+        if item.get("kind") == "ball_ball"
+        and frozenset((item.get("first_ball"), item.get("second_ball"))) == pair
+        and item.get("velocity_impulse_applied") is True)
+    if applied_count > 1:
+        return INTEGRATION_MISMATCH, "duplicate ball velocity impulse is present"
+    return None, None
+
+
 class _NonfiniteSurfaceState(Exception):
     pass
 
@@ -342,6 +423,10 @@ def _event_observation(metric, reference, frames):
     if event is None:
         return None, INTEGRATION_MISMATCH, "declared contact event is absent"
     event_index, contact = event
+    if contact.get("kind") == "ball_ball":
+        code, message = _validate_ball_contact(frames, contact)
+        if code:
+            return None, code, message
     # A telemetry frame is captured after its physics step, so the frame carrying
     # the contact already contains the first post-event state.
     candidates = frames[event_index:]
@@ -429,10 +514,23 @@ def _event_observation(metric, reference, frames):
             epsilon = selection.get("stick_slip_epsilon_cm_s")
             if not _finite_number(epsilon) or epsilon < 0.0:
                 return None, REFERENCE_LIMITATION, "stick/slip epsilon is missing or invalid"
-            relative = _vector(contact["relative_contact_velocity_cm_s"])
+            relative = _vector(contact["relative_contact_velocity_after_cm_s"])
             if not all(_finite_number(component) for component in relative):
                 return None, NUMERICAL_FAILURE, "relative contact velocity is not finite"
-            actual = "stick" if math.sqrt(sum(component * component for component in relative)) <= epsilon else "slip"
+            actual = contact["regime"]
+            if actual not in {"stick", "slip"}:
+                return None, INTEGRATION_MISMATCH, \
+                    "stick/slip metric has incompatible contact regime"
+            normal = _vector(contact["normal"])
+            normal_component = sum(
+                component * axis for component, axis in zip(relative, normal))
+            tangent_speed = math.sqrt(sum(
+                (component - normal_component * axis) ** 2
+                for component, axis in zip(relative, normal)))
+            derived = "stick" if tangent_speed <= epsilon else "slip"
+            if derived != actual:
+                return None, INTEGRATION_MISMATCH, \
+                    "contact regime disagrees with post-impact tangential speed"
         elif metric == "cushion_rebound_angle_degrees":
             velocity = _vector(ball["velocity_cm_s"])
             normal = _vector(contact["normal"])

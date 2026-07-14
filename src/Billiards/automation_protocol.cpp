@@ -218,7 +218,33 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["first_ball"] = json::Value(contact.firstBall);
     value["kind"] = json::Value(contactKindName(contact.kind));
     value["normal"] = pointValue(contact.normal);
+    value["contact_tangent"] = pointValue(contact.contactTangent);
+    value["first_contact_arm_cm"] = pointValue(contact.firstContactArmCm);
+    value["second_contact_arm_cm"] = pointValue(contact.secondContactArmCm);
+    value["relative_contact_velocity_before_cm_s"] =
+        pointValue(contact.relativeContactVelocityBeforeCmS);
+    value["relative_contact_velocity_after_cm_s"] =
+        pointValue(contact.relativeContactVelocityAfterCmS);
+    value["normal_relative_speed_before_cm_s"] =
+        json::Value(contact.normalRelativeSpeedBeforeCmS);
+    value["normal_relative_speed_after_cm_s"] =
+        json::Value(contact.normalRelativeSpeedAfterCmS);
     value["normal_impulse_ns"] = json::Value(contact.normalImpulseNs);
+    value["tangential_impulse_ns"] = json::Value(contact.tangentialImpulseNs);
+    value["impulse_on_second_ns"] = pointValue(contact.impulseOnSecondNs);
+    value["friction_coefficient"] = json::Value(contact.frictionCoefficient);
+    value["regime"] = json::Value(ballBallContactRegimeName(contact.regime));
+    value["velocity_impulse_applied"] =
+        json::Value(contact.velocityImpulseApplied);
+    value["kinetic_energy_before_j"] =
+        json::Value(contact.kineticEnergyBeforeJ);
+    value["kinetic_energy_after_j"] =
+        json::Value(contact.kineticEnergyAfterJ);
+    value["first_position_correction_cm"] =
+        pointValue(contact.firstPositionCorrectionCm);
+    value["second_position_correction_cm"] =
+        pointValue(contact.secondPositionCorrectionCm);
+    value["position_slop_cm"] = json::Value(contact.positionSlopCm);
     value["penetration_cm"] = json::Value(contact.penetrationCm);
     value["second_ball"] = json::Value(contact.secondBall);
     return value;

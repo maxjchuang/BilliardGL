@@ -51,6 +51,21 @@ int main()
     transition.after = billiardgl::BallMotionState::Rolling;
     transition.transitionTimeSeconds = 0.05f;
     step.surfaceMotion.push_back(transition);
+    billiardgl::PhysicsContactRecord contact;
+    contact.kind = billiardgl::PhysicsContactKind::BallBall;
+    contact.regime = billiardgl::BallBallContactRegime::Slip;
+    contact.velocityImpulseApplied = true;
+    contact.relativeContactVelocityBeforeCmS = billiardgl::Point3{-100.0f, 0.0f, 20.0f};
+    contact.relativeContactVelocityAfterCmS = billiardgl::Point3{90.0f, 0.0f, 5.0f};
+    contact.normalRelativeSpeedBeforeCmS = -100.0;
+    contact.normalRelativeSpeedAfterCmS = 90.0;
+    contact.tangentialImpulseNs = 0.01;
+    contact.frictionCoefficient = 0.2;
+    contact.kineticEnergyBeforeJ = 1.0;
+    contact.kineticEnergyAfterJ = 0.9;
+    contact.firstPositionCorrectionCm = billiardgl::Point3{-0.01f, 0.0f, 0.0f};
+    contact.secondPositionCorrectionCm = billiardgl::Point3{0.01f, 0.0f, 0.0f};
+    step.contacts.push_back(contact);
     const billiardgl::PhysicsFrame frame =
         billiardgl::capturePhysicsFrame(7, 0.7, 0.1f, before, after, step);
 
@@ -74,6 +89,12 @@ int main()
     expect(frame.surfaceTransitions.size() == 1 &&
         frame.surfaceTransitions[0].transitionTimeSeconds == 0.05f,
         "surface transition records survive frame capture");
+    expect(frame.contacts.size() == 1 &&
+        frame.contacts[0].regime == billiardgl::BallBallContactRegime::Slip &&
+        frame.contacts[0].velocityImpulseApplied &&
+        close(frame.contacts[0].relativeContactVelocityBeforeCmS.x, -100.0) &&
+        close(frame.contacts[0].kineticEnergyAfterJ, 0.9),
+        "ball contact diagnostics survive frame capture without reconstruction");
 
     billiardgl::PhysicsTrace trace(2);
     trace.append(frame);

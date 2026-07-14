@@ -49,6 +49,41 @@ int main()
         physicsFrame.has("surface_transitions"),
         "trace should serialize frame surface energy and transitions");
 
+    billiardgl::PhysicsContactRecord ballContact;
+    ballContact.kind = billiardgl::PhysicsContactKind::BallBall;
+    ballContact.regime = billiardgl::BallBallContactRegime::Slip;
+    ballContact.velocityImpulseApplied = true;
+    ballContact.relativeContactVelocityBeforeCmS =
+        billiardgl::Point3{-100.0f, 0.0f, 20.0f};
+    ballContact.relativeContactVelocityAfterCmS =
+        billiardgl::Point3{90.0f, 0.0f, 5.0f};
+    ballContact.normalRelativeSpeedBeforeCmS = -100.0;
+    ballContact.normalRelativeSpeedAfterCmS = 90.0;
+    ballContact.normalImpulseNs = 0.1;
+    ballContact.tangentialImpulseNs = 0.02;
+    ballContact.frictionCoefficient = 0.2;
+    ballContact.kineticEnergyBeforeJ = 1.0;
+    ballContact.kineticEnergyAfterJ = 0.9;
+    ballContact.firstPositionCorrectionCm =
+        billiardgl::Point3{-0.01f, 0.0f, 0.0f};
+    ballContact.secondPositionCorrectionCm =
+        billiardgl::Point3{0.01f, 0.0f, 0.0f};
+    const billiardgl::json::Value serializedContact =
+        billiardgl::serializePhysicsContact(ballContact);
+    expect(serializedContact.at("regime").asString() == "slip" &&
+        serializedContact.at("velocity_impulse_applied").asBool() &&
+        serializedContact.has("relative_contact_velocity_before_cm_s") &&
+        serializedContact.has("relative_contact_velocity_after_cm_s") &&
+        serializedContact.has("normal_relative_speed_before_cm_s") &&
+        serializedContact.has("normal_relative_speed_after_cm_s") &&
+        serializedContact.has("tangential_impulse_ns") &&
+        serializedContact.has("friction_coefficient") &&
+        serializedContact.has("kinetic_energy_before_j") &&
+        serializedContact.has("kinetic_energy_after_j") &&
+        serializedContact.has("first_position_correction_cm") &&
+        serializedContact.has("second_position_correction_cm"),
+        "ball contact serialization should use explicit units and lowercase regime");
+
     billiardgl::GameRuntime cueRuntime;
     cueRuntime.setPhysicsTraceEnabled(true);
     const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(

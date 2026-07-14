@@ -60,6 +60,14 @@ int main()
         "stable ball ids");
     expect(collision.contacts[0].penetrationCm > 0.0, "penetration recorded before correction");
     expect(collision.contacts[0].normalImpulseNs >= 0.0, "nonnegative impulse magnitude");
+    expect(collision.contacts[0].velocityImpulseApplied &&
+        collision.contacts[0].regime ==
+            billiardgl::BallBallContactRegime::Frictionless &&
+        collision.contacts[0].normalRelativeSpeedBeforeCmS < 0.0 &&
+        collision.contacts[0].normalRelativeSpeedAfterCmS >= 0.0 &&
+        collision.contacts[0].kineticEnergyAfterJ <=
+            collision.contacts[0].kineticEnergyBeforeJ,
+        "production contact emits authoritative approach, regime, and energy diagnostics");
     expect(close(collisionState.balls[0].velocity.x, expectedFirst.velocity.x) &&
         close(collisionState.balls[1].velocity.x, expectedSecond.velocity.x),
         "instrumentation preserves authoritative ball collision velocities");

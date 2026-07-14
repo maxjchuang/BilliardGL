@@ -211,6 +211,49 @@ PhysicsStepTelemetry updatePhysics(
                         static_cast<float>(result.contactNormal[2])};
                     contact.penetrationCm = result.penetrationM * 100.0;
                     contact.normalImpulseNs = result.normalImpulseNs;
+                    contact.regime = result.regime;
+                    contact.velocityImpulseApplied = result.velocityImpulseApplied;
+                    contact.contactTangent = Point3{
+                        static_cast<float>(result.contactTangent[0]),
+                        static_cast<float>(result.contactTangent[1]),
+                        static_cast<float>(result.contactTangent[2])};
+                    contact.firstContactArmCm = Point3{
+                        static_cast<float>(result.firstContactArmM[0] * 100.0),
+                        static_cast<float>(result.firstContactArmM[1] * 100.0),
+                        static_cast<float>(result.firstContactArmM[2] * 100.0)};
+                    contact.secondContactArmCm = Point3{
+                        static_cast<float>(result.secondContactArmM[0] * 100.0),
+                        static_cast<float>(result.secondContactArmM[1] * 100.0),
+                        static_cast<float>(result.secondContactArmM[2] * 100.0)};
+                    contact.relativeContactVelocityBeforeCmS = Point3{
+                        static_cast<float>(result.relativeContactVelocityBeforeMS[0] * 100.0),
+                        static_cast<float>(result.relativeContactVelocityBeforeMS[1] * 100.0),
+                        static_cast<float>(result.relativeContactVelocityBeforeMS[2] * 100.0)};
+                    contact.relativeContactVelocityAfterCmS = Point3{
+                        static_cast<float>(result.relativeContactVelocityAfterMS[0] * 100.0),
+                        static_cast<float>(result.relativeContactVelocityAfterMS[1] * 100.0),
+                        static_cast<float>(result.relativeContactVelocityAfterMS[2] * 100.0)};
+                    contact.impulseOnSecondNs = Point3{
+                        static_cast<float>(result.impulseOnSecondNs[0]),
+                        static_cast<float>(result.impulseOnSecondNs[1]),
+                        static_cast<float>(result.impulseOnSecondNs[2])};
+                    contact.firstPositionCorrectionCm = Point3{
+                        static_cast<float>(result.firstPositionCorrectionM[0] * 100.0),
+                        static_cast<float>(result.firstPositionCorrectionM[1] * 100.0),
+                        static_cast<float>(result.firstPositionCorrectionM[2] * 100.0)};
+                    contact.secondPositionCorrectionCm = Point3{
+                        static_cast<float>(result.secondPositionCorrectionM[0] * 100.0),
+                        static_cast<float>(result.secondPositionCorrectionM[1] * 100.0),
+                        static_cast<float>(result.secondPositionCorrectionM[2] * 100.0)};
+                    contact.normalRelativeSpeedBeforeCmS =
+                        result.normalRelativeSpeedBeforeMS * 100.0;
+                    contact.normalRelativeSpeedAfterCmS =
+                        result.normalRelativeSpeedAfterMS * 100.0;
+                    contact.tangentialImpulseNs = result.tangentialImpulseNs;
+                    contact.frictionCoefficient = result.frictionCoefficient;
+                    contact.kineticEnergyBeforeJ = result.kineticEnergyBeforeJ;
+                    contact.kineticEnergyAfterJ = result.kineticEnergyAfterJ;
+                    contact.positionSlopCm = result.positionSlopM * 100.0;
                     telemetry.maximumPenetrationCm = std::max(
                         telemetry.maximumPenetrationCm, contact.penetrationCm);
                     telemetry.contacts.push_back(contact);

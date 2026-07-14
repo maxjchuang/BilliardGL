@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ball_ball_contact.h"
 #include "game_state.h"
 #include "cue_impact.h"
 #include "cue_contact.h"
@@ -29,6 +30,23 @@ struct PhysicsContactRecord {
     Point3 normal;
     double normalImpulseNs = 0.0;
     double penetrationCm = 0.0;
+    BallBallContactRegime regime = BallBallContactRegime::NoContact;
+    bool velocityImpulseApplied = false;
+    Point3 contactTangent;
+    Point3 firstContactArmCm;
+    Point3 secondContactArmCm;
+    Point3 relativeContactVelocityBeforeCmS;
+    Point3 relativeContactVelocityAfterCmS;
+    Point3 impulseOnSecondNs;
+    Point3 firstPositionCorrectionCm;
+    Point3 secondPositionCorrectionCm;
+    double normalRelativeSpeedBeforeCmS = 0.0;
+    double normalRelativeSpeedAfterCmS = 0.0;
+    double tangentialImpulseNs = 0.0;
+    double frictionCoefficient = 0.0;
+    double kineticEnergyBeforeJ = 0.0;
+    double kineticEnergyAfterJ = 0.0;
+    double positionSlopCm = 0.0;
 };
 
 struct PhysicsBallSample {

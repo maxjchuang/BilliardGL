@@ -13,15 +13,35 @@ def _ball(index, velocity, angular=(0.0, 0.0, 0.0)):
     }
 
 
-def _frame(tick, first, second, *, contact=False, relative=(0.0, 0.0, 0.0)):
+def _contact(relative=(0.0, 0.0, 0.0), **overrides):
+    contact = {
+        "first_ball": 0,
+        "friction_coefficient": 0.2,
+        "impulse_on_second_ns": [0.1, 0.0, 0.0],
+        "kinetic_energy_after_j": 0.9,
+        "kinetic_energy_before_j": 1.0,
+        "kind": "ball_ball",
+        "normal": [1.0, 0.0, 0.0],
+        "normal_impulse_ns": 0.1,
+        "normal_relative_speed_after_cm_s": relative[0],
+        "normal_relative_speed_before_cm_s": -100.0,
+        "regime": "stick",
+        "relative_contact_velocity_after_cm_s": list(relative),
+        "relative_contact_velocity_before_cm_s": [-100.0, 0.0, 20.0],
+        "second_ball": 1,
+        "tangential_impulse_ns": 0.01,
+        "velocity_impulse_applied": True,
+    }
+    contact.update(overrides)
+    return contact
+
+
+def _frame(tick, first, second, *, contact=False, relative=(0.0, 0.0, 0.0),
+           contact_overrides=None):
     return {
         "balls": [first, second],
-        "contacts": ([{
-            "first_ball": 0,
-            "kind": "ball_ball",
-            "relative_contact_velocity_cm_s": list(relative),
-            "second_ball": 1,
-        }] if contact else []),
+        "contacts": ([_contact(relative, **(contact_overrides or {}))]
+                     if contact else []),
         "maximum_penetration_cm": 0.0,
         "tick": tick,
         "translational_kinetic_energy_j": 1.0,
@@ -117,6 +137,93 @@ class DomenechMetricTests(unittest.TestCase):
         result = analyze_scenario(_scenario("stick_slip_classification", "stick", selection), frames)
 
         self.assertTrue(result.passed)
+
+    def test_ball_contact_friction_cone_violation_is_integration_mismatch(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [_frame(
+            1, _ball(0, (1.0, 0.0, 0.0)), _ball(1, (1.0, 0.0, 0.0)),
+            contact=True, contact_overrides={"tangential_impulse_ns": 0.03})]
+
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+
+    def test_ball_contact_energy_creation_is_numerical_failure(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [_frame(
+            1, _ball(0, (1.0, 0.0, 0.0)), _ball(1, (1.0, 0.0, 0.0)),
+            contact=True, contact_overrides={"kinetic_energy_after_j": 1.1})]
+
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+
+        self.assertEqual(result.failures[0].code, "NUMERICAL_FAILURE")
+
+    def test_nonfinite_ball_contact_is_numerical_failure(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [_frame(
+            1, _ball(0, (1.0, 0.0, 0.0)), _ball(1, (1.0, 0.0, 0.0)),
+            contact=True, contact_overrides={"normal_impulse_ns": float("nan")})]
+
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+
+        self.assertEqual(result.failures[0].code, "NUMERICAL_FAILURE")
+
+    def test_nonseparating_ball_contact_is_integration_mismatch(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [_frame(
+            1, _ball(0, (1.0, 0.0, 0.0)), _ball(1, (1.0, 0.0, 0.0)),
+            contact=True,
+            contact_overrides={
+                "normal_relative_speed_after_cm_s": -1.0,
+                "relative_contact_velocity_after_cm_s": [-1.0, 0.0, 0.0],
+            })]
+
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+
+    def test_duplicate_ball_velocity_impulse_is_integration_mismatch(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [
+            _frame(1, _ball(0, (1.0, 0.0, 0.0)),
+                   _ball(1, (1.0, 0.0, 0.0)), contact=True),
+            _frame(2, _ball(0, (1.0, 0.0, 0.0)),
+                   _ball(1, (1.0, 0.0, 0.0)), contact=True),
+        ]
+
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
 
 
 if __name__ == "__main__":
