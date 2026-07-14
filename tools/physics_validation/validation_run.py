@@ -1,8 +1,13 @@
 import argparse
+import hashlib
 import json
+import os
+import shutil
+import tempfile
 from pathlib import Path
 
 from .data_lifecycle import load_data_lifecycle
+from .holdout_access import validate_confirmation_access
 from .model_candidate import load_candidate_freeze, sha256_file
 from .partition_run import case_ids_for_partition, load_reference_inputs
 from .reference_run import _run_loaded_reference_validation
@@ -21,6 +26,142 @@ def _canonical(document):
         sort_keys=True,
         allow_nan=False,
     ) + "\n"
+
+
+class ConfirmationAccessError(RuntimeError):
+    pass
+
+
+def _safe_output_path(root, value):
+    value = Path(value)
+    if value.is_absolute() or not value.parts or ".." in value.parts:
+        raise ConfirmationAccessError(f"unsafe confirmation output path: {value}")
+    target = root / value
+    try:
+        target.resolve().relative_to(root.resolve())
+    except ValueError as error:
+        raise ConfirmationAccessError(
+            f"unsafe confirmation output path: {value}") from error
+    return target
+
+
+def write_directory_atomically(output_path, files):
+    output_path = Path(output_path).resolve()
+    if output_path.exists():
+        raise ConfirmationAccessError("output path already exists")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(
+        prefix=output_path.name + ".tmp-", dir=output_path.parent))
+    try:
+        for relative, content in sorted(files.items()):
+            target = _safe_output_path(temporary, relative)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            data = content.encode("utf-8") if isinstance(content, str) else content
+            if not isinstance(data, bytes):
+                raise ConfirmationAccessError(
+                    f"confirmation output is not bytes: {relative}")
+            with target.open("xb") as stream:
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+        temporary.rename(output_path)
+    except BaseException:
+        if temporary.exists():
+            shutil.rmtree(temporary)
+        raise
+
+
+def write_json_exclusive(path, document):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("x", encoding="utf-8", newline="") as stream:
+            stream.write(_canonical(document))
+            stream.flush()
+            os.fsync(stream.fileno())
+    except FileExistsError as error:
+        raise ConfirmationAccessError(
+            f"exclusive confirmation file already exists: {path}") from error
+
+
+def append_consumption_record_exclusive(ledger_path, receipt):
+    ledger_path = Path(ledger_path).resolve()
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    lock = ledger_path.with_name(ledger_path.name + ".lock")
+    try:
+        lock_descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise ConfirmationAccessError("confirmation ledger is locked") from error
+    os.close(lock_descriptor)
+    temporary = ledger_path.with_name(ledger_path.name + ".tmp")
+    try:
+        if ledger_path.exists():
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            if ledger.get("schema_version") != 1 or \
+                    not isinstance(ledger.get("records"), list):
+                raise ConfirmationAccessError("confirmation ledger is invalid")
+        else:
+            ledger = {"schema_version": 1, "records": []}
+        identity = (receipt["dataset_id"], receipt["dataset_version"])
+        if any((record.get("dataset_id"), record.get("dataset_version")) == identity
+               and record.get("partition") == "CONFIRMATION"
+               for record in ledger["records"]):
+            raise ConfirmationAccessError(
+                "confirmation partition is already consumed")
+        ledger["records"].append(receipt)
+        with temporary.open("x", encoding="utf-8", newline="") as stream:
+            stream.write(_canonical(ledger))
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, ledger_path)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+        lock.unlink(missing_ok=True)
+
+
+def consume_confirmation(freeze_path, package_path, output_path, ledger_path,
+                         runner, repository_root=None):
+    root = Path(repository_root or Path.cwd()).resolve()
+    output_path = Path(output_path).resolve()
+    if output_path.exists():
+        raise ConfirmationAccessError("output path already exists")
+    failures = validate_confirmation_access(
+        root, freeze_path, package_path, ledger_path)
+    if failures:
+        raise ConfirmationAccessError("; ".join(failures))
+    result = runner()
+    if not isinstance(result, dict) or set(result) != {"result", "files"}:
+        raise ConfirmationAccessError("confirmation runner result is invalid")
+    if result["result"] not in {"PASSED_OR_ACCOUNTED", "FAILED"} or \
+            not isinstance(result["files"], dict):
+        raise ConfirmationAccessError("confirmation runner result is invalid")
+    if "validation_receipt.json" in result["files"]:
+        raise ConfirmationAccessError(
+            "confirmation runner cannot provide its own receipt")
+    write_directory_atomically(output_path, result["files"])
+    manifest_path = Path(package_path).resolve() / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    receipt = {
+        "schema_version": 2,
+        "candidate_id": "phase3_integrated_v2",
+        "freeze_sha256": hashlib.sha256(
+            Path(freeze_path).read_bytes()).hexdigest(),
+        "dataset_id": manifest["dataset_id"],
+        "dataset_version": manifest["dataset_version"],
+        "partition": "CONFIRMATION",
+        "package_manifest_sha256": hashlib.sha256(
+            manifest_path.read_bytes()).hexdigest(),
+        "result": result["result"],
+        "files": {
+            relative: hashlib.sha256(
+                (output_path / relative).read_bytes()).hexdigest()
+            for relative in sorted(result["files"])
+        },
+    }
+    write_json_exclusive(output_path / "validation_receipt.json", receipt)
+    append_consumption_record_exclusive(ledger_path, receipt)
+    return receipt
 
 
 def run_candidate_validation(

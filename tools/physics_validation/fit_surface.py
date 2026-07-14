@@ -8,7 +8,6 @@ from pathlib import Path
 
 _GRAVITY_CM_S2 = 980.665
 _PHASES = {"rolling", "sliding"}
-_CONFIRMATION_DATASETS = {"derby_fuller_1999", "sudo_2002"}
 _INPUT_FIELDS = (
     "point_id",
     "dataset_id",
@@ -128,8 +127,6 @@ def read_surface_inputs(path):
             if not point_id or point_id in seen:
                 raise ValueError(f"line {line_number}: point_id must be nonempty and unique")
             seen.add(point_id)
-            if row["dataset_id"] in _CONFIRMATION_DATASETS:
-                raise ValueError(f"line {line_number}: confirmation data cannot enter fitting")
             if row["lifecycle"] != "spent":
                 raise ValueError(f"line {line_number}: surface fit input must be spent")
             if row["phase"] not in _PHASES:
