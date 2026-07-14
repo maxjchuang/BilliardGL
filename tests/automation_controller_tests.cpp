@@ -143,6 +143,44 @@ int main()
             "direct and controller paths should serialize identical authoritative frames");
     }
 
+    billiardgl::GameRuntime userRuntime;
+    billiardgl::GameRuntime authoritativeClone;
+    billiardgl::AutomationController userController(
+        userRuntime, billiardgl::AutomationMode::Headless);
+    billiardgl::json::Value userYaw = billiardgl::json::Value::object();
+    userYaw["yaw"] = billiardgl::json::Value(1.1);
+    billiardgl::json::Value userPower = billiardgl::json::Value::object();
+    userPower["power"] = billiardgl::json::Value(72.0);
+    expect(send(userController, 201, "set_aim_yaw", userYaw).response.at("ok").asBool() &&
+        send(userController, 202, "set_shot_power", userPower).response.at("ok").asBool() &&
+        send(userController, 203, "shoot").response.at("ok").asBool(),
+        "user-operation path should construct a shot through public controls");
+    authoritativeClone.mutableState().aim.yaw = 1.1f;
+    authoritativeClone.mutableState().input.shotPower = 72.0f;
+    expect(userRuntime.hasCueImpactInput() &&
+        authoritativeClone.applyCueImpact(userRuntime.cueImpactInput()).ok,
+        "direct path should accept the identical public cue-impact input");
+    userRuntime.setPhysicsTraceEnabled(true);
+    authoritativeClone.setPhysicsTraceEnabled(true);
+    billiardgl::json::Value fiveTicks = billiardgl::json::Value::object();
+    fiveTicks["ticks"] = billiardgl::json::Value(5);
+    expect(send(userController, 204, "step", fiveTicks).response.at("ok").asBool(),
+        "user-operation path should step after the shot");
+    authoritativeClone.step(5);
+    expect(userRuntime.physicsTrace().frames().size() ==
+        authoritativeClone.physicsTrace().frames().size(),
+        "user and cloned authoritative paths should emit the same frame count");
+    for (std::size_t index = 0;
+         index < authoritativeClone.physicsTrace().frames().size(); ++index) {
+        const std::string user = billiardgl::json::stringify(
+            billiardgl::serializePhysicsFrame(userRuntime.physicsTrace().frames()[index]));
+        const std::string direct = billiardgl::json::stringify(
+            billiardgl::serializePhysicsFrame(
+                authoritativeClone.physicsTrace().frames()[index]));
+        expect(user == direct,
+            "matching first authoritative state must produce identical subsequent traces");
+    }
+
     billiardgl::json::Value cueV2 = fixture("cue_impact_v2_contract.json");
     billiardgl::json::Value cueParams = billiardgl::json::Value::object();
     cueParams["scenario"] = cueV2;
