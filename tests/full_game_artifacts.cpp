@@ -41,28 +41,36 @@ void writeFullGameArtifacts(
         billiardgl::json::Value(result.cueContactApplied);
     summary["cue_contact_miscue"] =
         billiardgl::json::Value(result.cueContactMiscue);
+    summary["completed_shots"] = billiardgl::json::Value(result.completedShots);
+    summary["declared_shots"] = billiardgl::json::Value(result.declaredShots);
     summary["deterministic_hash"] = billiardgl::json::Value(digest);
     summary["dropped_trace_frames"] = billiardgl::json::Value(
         static_cast<double>(result.droppedTraceFrames));
     summary["duplicate_contacts"] = billiardgl::json::Value(result.duplicateContacts);
     summary["failure"] = billiardgl::json::Value(result.failure);
+    summary["foul_events"] = billiardgl::json::Value(result.foulEvents);
     summary["frame_count"] = billiardgl::json::Value(
         static_cast<double>(result.frames.size()));
     summary["maximum_penetration_cm"] =
         billiardgl::json::Value(result.maximumPenetrationCm);
     summary["maximum_residual_cm_s"] =
         billiardgl::json::Value(result.maximumResidualCmS);
+    summary["game_over"] = billiardgl::json::Value(result.gameOver);
+    summary["illegal_action_attempts"] =
+        billiardgl::json::Value(result.illegalActionAttempts);
     summary["object_ball_captures"] =
         billiardgl::json::Value(result.objectBallCaptures);
     summary["passed"] = billiardgl::json::Value(result.passed);
     summary["peak_rss_bytes"] = billiardgl::json::Value(
         static_cast<double>(result.peakRssBytes));
     summary["rail_collisions"] = billiardgl::json::Value(result.railCollisions);
+    summary["score_events"] = billiardgl::json::Value(result.scoreEvents);
     summary["schema_version"] = billiardgl::json::Value(2);
     summary["seed"] = billiardgl::json::Value(static_cast<double>(result.seed));
     summary["step_failures"] = billiardgl::json::Value(result.stepFailures);
     summary["surface_transitions"] =
         billiardgl::json::Value(result.surfaceTransitions);
+    summary["turn_transfers"] = billiardgl::json::Value(result.turnTransfers);
     summary["wall_seconds"] = billiardgl::json::Value(result.wallSeconds);
 
     atomicWrite(directory / "trace.json", canonical + "\n");

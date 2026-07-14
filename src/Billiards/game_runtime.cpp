@@ -256,6 +256,20 @@ void GameRuntime::recordEvents()
     for (const NamedFlag& flag : flags) {
         if (flag.value) events_.push_back(RuntimeEvent{nextSequence_++, tick_, flag.name});
     }
+    if (state_.events.ballPocketed) {
+        events_.push_back(RuntimeEvent{nextSequence_++, tick_, "score_updated"});
+    }
+    const bool foul = state_.events.cueBallPocketed ||
+        (state_.events.shotEnded && state_.players.illegalShot);
+    if (foul) {
+        events_.push_back(RuntimeEvent{nextSequence_++, tick_, "foul"});
+    }
+    if (state_.events.shotEnded &&
+        (state_.players.illegalShot ||
+            state_.players.nextPlayer != state_.players.currentPlayer)) {
+        events_.push_back(RuntimeEvent{
+            nextSequence_++, tick_, "turn_transferred"});
+    }
     if (events_.size() > 10000) events_.erase(events_.begin(), events_.begin() + (events_.size() - 10000));
 }
 

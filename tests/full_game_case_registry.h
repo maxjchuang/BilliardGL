@@ -37,6 +37,13 @@ struct FullGameCaseResult {
     int cueBallCaptures = 0;
     bool cueContactApplied = false;
     bool cueContactMiscue = false;
+    int scoreEvents = 0;
+    int foulEvents = 0;
+    int turnTransfers = 0;
+    int illegalActionAttempts = 0;
+    int completedShots = 0;
+    int declaredShots = 0;
+    bool gameOver = false;
 };
 
 typedef FullGameCaseResult (*FullGameCaseRun)(

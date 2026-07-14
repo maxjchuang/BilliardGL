@@ -110,6 +110,18 @@ int main()
     expect(stopStep.after == billiardgl::BallMotionState::Stationary,
         "the completed rolling stop is stationary");
 
+    billiardgl::BallState residual = pureRollingBall(
+        profile.surface.slipSpeedEpsilonCmS * 0.25f,
+        profile.ball.radiusCm);
+    billiardgl::advanceSurfaceMotion(
+        residual, 0.1f, profile.ball, rollingSurface);
+    expect(residual.motionState == billiardgl::BallMotionState::Stationary &&
+        residual.speed == 0.0f && residual.velocity.x == 0.0f &&
+        residual.velocity.z == 0.0f &&
+        residual.angularVelocity.x == 0.0f &&
+        residual.angularVelocity.z == 0.0f,
+        "sub-threshold stationary state is normalized to exact horizontal rest");
+
     billiardgl::BallState oneStep =
         pureRollingBall(20.0f, profile.ball.radiusCm);
     billiardgl::BallState splitSteps = oneStep;

@@ -184,8 +184,16 @@ SurfaceMotionStep advanceSurfaceMotion(
             }
         }
     } else {
-        ball.speed = horizontalLength(ball.velocity);
         ball.motionState = step.before;
+        if (step.before == BallMotionState::Stationary) {
+            ball.speed = 0.0f;
+            ball.velocity.x = 0.0f;
+            ball.velocity.z = 0.0f;
+            ball.angularVelocity.x = 0.0f;
+            ball.angularVelocity.z = 0.0f;
+        } else {
+            ball.speed = horizontalLength(ball.velocity);
+        }
     }
     step.after = ball.motionState;
     step.finalSlipSpeedCmS = horizontalLength(
