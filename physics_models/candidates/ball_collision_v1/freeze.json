@@ -1,0 +1,537 @@
+{
+  "calibration_reports": [
+    {
+      "dataset_id": "domenech_2023_ball_collision",
+      "dataset_version": "1.0.0",
+      "manifest_path": "tests/physics_validation/reference_data/domenech_2023_ball_collision/manifest.json",
+      "manifest_sha256": "dc19fbdf3efdff2af317f26fb0337282b63d46e21e9f3a865c838d598bb39598",
+      "metric_targets": [
+        {
+          "lower": 73.69053229625176,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_001",
+          "upper": 73.93036770374825
+        },
+        {
+          "lower": 72.26660827635719,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_002",
+          "upper": 72.50745572364282
+        },
+        {
+          "lower": 75.03744815515256,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_003",
+          "upper": 75.29193784484744
+        },
+        {
+          "lower": 72.3500466894165,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_004",
+          "upper": 72.56996531058351
+        },
+        {
+          "lower": 73.66153056866307,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_005",
+          "upper": 73.86513343133694
+        },
+        {
+          "lower": 71.25558327599835,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_006",
+          "upper": 71.47697472400166
+        },
+        {
+          "lower": 67.39764604531503,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_007",
+          "upper": 67.61655795468498
+        },
+        {
+          "lower": 70.33583993613925,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_008",
+          "upper": 70.57486006386074
+        },
+        {
+          "lower": 68.69939033147598,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_009",
+          "upper": 68.90033366852403
+        },
+        {
+          "lower": 63.742258688149136,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_010",
+          "upper": 63.94267531185086
+        },
+        {
+          "lower": 66.22519849628111,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_011",
+          "upper": 66.4268715037189
+        },
+        {
+          "lower": 62.67577816343079,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_012",
+          "upper": 63.102135836569204
+        },
+        {
+          "lower": 61.186125244837356,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_013",
+          "upper": 61.41680875516265
+        },
+        {
+          "lower": 62.67596127511972,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_014",
+          "upper": 63.10510872488028
+        },
+        {
+          "lower": 61.258945,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_015",
+          "upper": 61.458945
+        },
+        {
+          "lower": 60.129451228904834,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "billiard_alpha1_016",
+          "upper": 60.40694077109517
+        },
+        {
+          "lower": 0.8905519726390009,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_001",
+          "upper": 1.0907000273609992
+        },
+        {
+          "lower": 0.8428999747199828,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_002",
+          "upper": 1.0475280252800172
+        },
+        {
+          "lower": 1.5964385907597638,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_003",
+          "upper": 1.797893409240236
+        },
+        {
+          "lower": 1.2405442148030803,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_004",
+          "upper": 1.4430317851969197
+        },
+        {
+          "lower": 0.8909396400915927,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_005",
+          "upper": 1.0910603599084072
+        },
+        {
+          "lower": 1.917204009214816,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_006",
+          "upper": 2.1172079907851837
+        },
+        {
+          "lower": 1.8250846133438547,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_007",
+          "upper": 2.049975386656145
+        },
+        {
+          "lower": 2.2640117502415062,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_008",
+          "upper": 2.4640582497584935
+        },
+        {
+          "lower": 1.5813259795289225,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_009",
+          "upper": 1.7814620204710776
+        },
+        {
+          "lower": 2.6227705955064797,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_010",
+          "upper": 2.82564940449352
+        },
+        {
+          "lower": 2.2606809137998214,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_011",
+          "upper": 2.460695086200179
+        },
+        {
+          "lower": 2.2241198205508206,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_012",
+          "upper": 2.42874617944918
+        },
+        {
+          "lower": 2.986611006418817,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_013",
+          "upper": 3.191788993581183
+        },
+        {
+          "lower": 2.247392542817586,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_014",
+          "upper": 2.449225457182414
+        },
+        {
+          "lower": 2.6076966713075773,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_015",
+          "upper": 2.807699328692423
+        },
+        {
+          "lower": 1.5809926518278938,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_016",
+          "upper": 1.7811533481721062
+        },
+        {
+          "lower": 3.408955121707935,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_017",
+          "upper": 3.6114068782920654
+        },
+        {
+          "lower": 2.6061780101194945,
+          "metric": "separation_angle_degrees",
+          "point_id": "billiard_delta2_018",
+          "upper": 2.806187989880505
+        },
+        {
+          "lower": 18.93749429061894,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_001",
+          "upper": 19.17833170938106
+        },
+        {
+          "lower": 37.60820358758999,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_002",
+          "upper": 37.82872241241001
+        },
+        {
+          "lower": 22.777197007277856,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_003",
+          "upper": 22.986564992722144
+        },
+        {
+          "lower": 38.94356029273025,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_004",
+          "upper": 39.15620970726976
+        },
+        {
+          "lower": 43.890417789972375,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_005",
+          "upper": 44.096968210027626
+        },
+        {
+          "lower": 52.59135407870057,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "brass_alpha1_006",
+          "upper": 52.80772792129944
+        },
+        {
+          "lower": 1.851189367925033,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_001",
+          "upper": 2.072654632074967
+        },
+        {
+          "lower": 4.319929390156587,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_002",
+          "upper": 4.520214609843413
+        },
+        {
+          "lower": 3.678324698215241,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_003",
+          "upper": 3.878329301784759
+        },
+        {
+          "lower": 3.042250236409158,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_004",
+          "upper": 3.2432817635908417
+        },
+        {
+          "lower": 4.92989082916594,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_005",
+          "upper": 5.13054917083406
+        },
+        {
+          "lower": 3.6785620209735423,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_006",
+          "upper": 3.878563979026458
+        },
+        {
+          "lower": 4.926314248694023,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_007",
+          "upper": 5.1264997513059765
+        },
+        {
+          "lower": 4.2854651019269285,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_008",
+          "upper": 4.496868898073072
+        },
+        {
+          "lower": 4.925973899453477,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_009",
+          "upper": 5.126130100546523
+        },
+        {
+          "lower": 6.8105545661163855,
+          "metric": "separation_angle_degrees",
+          "point_id": "rubber_delta2_010",
+          "upper": 7.010565433883615
+        },
+        {
+          "lower": 9.336938195643471,
+          "metric": "object_scattering_angle_degrees",
+          "point_id": "rubber_lambda2_001",
+          "upper": 9.641035804356529
+        },
+        {
+          "lower": 7.355710343244212,
+          "metric": "object_scattering_angle_degrees",
+          "point_id": "rubber_lambda2_002",
+          "upper": 7.622263656755788
+        },
+        {
+          "lower": 7.291682625742826,
+          "metric": "object_scattering_angle_degrees",
+          "point_id": "rubber_lambda2_003",
+          "upper": 7.4924573742571745
+        },
+        {
+          "lower": 10.536369897002649,
+          "metric": "object_scattering_angle_degrees",
+          "point_id": "rubber_lambda2_004",
+          "upper": 10.74116410299735
+        },
+        {
+          "lower": 11.630408532665975,
+          "metric": "object_scattering_angle_degrees",
+          "point_id": "rubber_lambda2_005",
+          "upper": 11.832147467334025
+        },
+        {
+          "lower": 69.96968898750512,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_001",
+          "upper": 70.16969101249487
+        },
+        {
+          "lower": 76.17371834674267,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_002",
+          "upper": 76.38303965325733
+        },
+        {
+          "lower": 74.89776701993779,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_003",
+          "upper": 75.09964498006221
+        },
+        {
+          "lower": 72.22733340726195,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_004",
+          "upper": 72.58108259273804
+        },
+        {
+          "lower": 74.8974380287844,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_005",
+          "upper": 75.0992139712156
+        },
+        {
+          "lower": 72.44514608550001,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_006",
+          "upper": 72.6453799145
+        },
+        {
+          "lower": 71.19885316910765,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_007",
+          "upper": 71.40028683089236
+        },
+        {
+          "lower": 63.805645991633156,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_008",
+          "upper": 64.00754400836685
+        },
+        {
+          "lower": 66.99832200030175,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_009",
+          "upper": 67.24603999969824
+        },
+        {
+          "lower": 65.19269886055315,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_010",
+          "upper": 65.43491313944685
+        },
+        {
+          "lower": 61.38707677487123,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_011",
+          "upper": 61.59908122512877
+        },
+        {
+          "lower": 59.85480719407369,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_012",
+          "upper": 60.22475280592631
+        },
+        {
+          "lower": 61.352962061342,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_alpha1_013",
+          "upper": 61.55319593865801
+        },
+        {
+          "lower": 12.010867972520101,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_001",
+          "upper": 12.2205940274799
+        },
+        {
+          "lower": 21.894584201741136,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_002",
+          "upper": 22.095395798258867
+        },
+        {
+          "lower": 28.040680396211652,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_003",
+          "upper": 28.24088360378835
+        },
+        {
+          "lower": 30.60173106304311,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_004",
+          "upper": 30.829130936956886
+        },
+        {
+          "lower": 35.4398582650479,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_005",
+          "upper": 35.676373734952094
+        },
+        {
+          "lower": 31.681461357554884,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_006",
+          "upper": 31.904710642445114
+        },
+        {
+          "lower": 40.25308673582319,
+          "metric": "cue_scattering_angle_degrees",
+          "point_id": "steel_beta1_007",
+          "upper": 40.611643264176806
+        }
+      ],
+      "package_hashes": {
+        "digitization": "90c5bc0267c8b41d130510492a6f897d0418bc92b2762414f53b13e9c2afa458",
+        "expected_model_mismatches": "c76e426de65f7105dfa9f166c1e53fb72bca0139e3d4bb37d2f7d9d6513a285d",
+        "expected_reference_limitations": "f94ccb717e1244c117b9878633aedb911f011b80a516735235a0b359db353867",
+        "extraction": "30a0a477a51b02d917273ae086742f4c3f97e12204543220c2711e8eb2b68ab8",
+        "normalized": "d04396a53ab1010429fc67405e63bd92759fec7abc0ad1a86e9b395736f1a5ec",
+        "raw_extracted": "fd26a8d030d12feee2f0829d1b005af7af523966d568c09d977b106b79a9d74d",
+        "scenario_template": "d26935b5efaff34030564d113380adfca7b1b9f8aa56f65580ca70b33503a6a7",
+        "split": "4ba90e5d4f009790a3f649bfacda6a6193d3785c25a5c9febde5ae4120912505"
+      },
+      "path": "physics_models/candidates/ball_collision_v1/calibration/domenech_2023/reference_report.json",
+      "report_sha256": "d2c50f6a46f9244daafed046f8c17ccff9b81d7adddf7e4feae4ac6a4de7fa60"
+    },
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "dataset_version": "1.0.0",
+      "manifest_path": "tests/physics_validation/reference_data/mathavan_2009_high_speed/manifest.json",
+      "manifest_sha256": "282bc358be71539754d40dfc55417913fca592f7bb978dfb2cda78ed0fb9e82d",
+      "metric_targets": [
+        {
+          "lower": 12.4,
+          "metric": "rolling_deceleration_cm_s2",
+          "point_id": "rolling_deceleration_range",
+          "upper": 12.6
+        },
+        {
+          "lower": 75.23603899999999,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "point_id": "table1_shot_01_cue_speed",
+          "upper": 87.963961
+        },
+        {
+          "lower": 77.23603899999999,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "point_id": "table1_shot_01_object_speed",
+          "upper": 89.963961
+        },
+        {
+          "lower": 45.636039,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "point_id": "table1_shot_02_cue_speed",
+          "upper": 58.363961
+        },
+        {
+          "lower": 56.536039,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "point_id": "table1_shot_02_object_speed",
+          "upper": 69.263961
+        }
+      ],
+      "package_hashes": {
+        "digitization": "e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+        "expected_model_mismatches": "c96bee6d9907b684bc8ef5c658dc9af6b86f95a918fe3e1925e5cf932528bef4",
+        "expected_reference_limitations": "e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+        "extraction": "80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+        "normalized": "c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+        "raw_extracted": "e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+        "scenario_template": "1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+        "split": "8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+      },
+      "path": "physics_models/candidates/ball_collision_v1/calibration/mathavan_2009/reference_report.json",
+      "report_sha256": "5887855a8aecbccb215edb9a8a1577efe3923598b341774b20c03fd0fff76b84"
+    }
+  ],
+  "candidate_id": "chinese_pool_ball_collision_v1",
+  "created_at": "2026-07-14T00:00:00Z",
+  "executable_sha256": "e1254b65072dbce3664a9cee037d3aa9f41f6b4d94be33fcb5fbe18ad98c9c5d",
+  "formula_version": "ball_collision_v1",
+  "profile_sha256": "99f0ec7da812cb7e71e730acac6fda7f2b630b38ce401ff340dadc300d4e220c",
+  "schema_version": 2,
+  "source_revision": "a57894bfa4e6d924d9abf84e88bc7c1d9c859b71",
+  "supplemental_artifacts": [
+    {
+      "path": "physics_models/calibration/ball_collision_material_fit_v1.json",
+      "sha256": "e0514f5a129190c6a0b21cc9675b237716f68095870655a0fc72dfb0c0d85545"
+    }
+  ]
+}

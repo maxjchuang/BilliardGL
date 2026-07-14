@@ -19,6 +19,8 @@ DATASET_MANIFEST = (
     Path(__file__).parent / "fixtures/reference_package_v1/manifest.json")
 PRODUCTION_CUE_PROFILE = Path(__file__).parents[2] / (
     "physics_models/profiles/chinese_pool_cue_contact_v1.json")
+PRODUCTION_BALL_COLLISION_PROFILE = Path(__file__).parents[2] / (
+    "physics_models/profiles/chinese_pool_ball_collision_v1.json")
 
 
 class ModelCandidateTests(unittest.TestCase):
@@ -176,6 +178,37 @@ class ModelCandidateTests(unittest.TestCase):
                 "cue.maximum_reliable_offset_radius"):
             self.assertEqual(manifest.parameter_sources[key]["kind"],
                              "preregistered_physical_hypothesis")
+
+    def test_production_ball_collision_profile_is_calibration_only_and_fully_sourced(self):
+        document = json.loads(
+            PRODUCTION_BALL_COLLISION_PROFILE.read_text(encoding="utf-8"))
+        manifest = load_profile_manifest(PRODUCTION_BALL_COLLISION_PROFILE)
+        self.assertEqual(document["schema_version"], 3)
+        self.assertEqual(manifest.runtime_profile["id"],
+                         "chinese_pool_ball_collision_v1")
+        self.assertEqual(manifest.runtime_profile["formula_version"],
+                         "ball_collision_v1")
+        self.assertEqual(manifest.runtime_profile["ball"], {
+            "friction_coefficient": 0.25,
+            "inertia_factor": 0.4,
+            "mass_kg": 0.17,
+            "material": "phenolic_resin",
+            "normal_restitution": 0.36,
+            "radius_cm": 2.8575,
+        })
+        self.assertTrue(manifest.applicability["analytic_gates_passed"])
+        self.assertTrue(manifest.applicability[
+            "experimental_validation_pending"])
+        self.assertFalse(manifest.applicability[
+            "real_world_validation_claimed"])
+        for key in (
+                "ball.normal_restitution", "ball.friction_coefficient"):
+            source = manifest.parameter_sources[key]
+            self.assertEqual(source["kind"], "calibration_transfer")
+            self.assertEqual(source["dataset_id"],
+                             "domenech_2023_ball_collision")
+            self.assertEqual(source["partition"], "CALIBRATION")
+            self.assertIn("PVC", source["limitation"])
 
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()

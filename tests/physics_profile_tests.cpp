@@ -28,19 +28,19 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_cue_contact_v1",
+    expect(profile.id == "chinese_pool_ball_collision_v1",
         "candidate ID");
-    expect(profile.formulaVersion == "cue_contact_v1",
+    expect(profile.formulaVersion == "ball_collision_v1",
         "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
     expect(profile.ball.massKg == 0.17f, "legacy telemetry mass");
     expect(close(profile.ball.inertiaFactor, 0.4f),
         "solid sphere inertia compatibility default");
-    expect(close(profile.ball.normalRestitution, 1.0f),
-        "lossless ball restitution compatibility default");
-    expect(close(profile.ball.frictionCoefficient, 0.0f),
-        "frictionless ball contact compatibility default");
+    expect(close(profile.ball.normalRestitution, 0.36f),
+        "Domenech billiard calibration restitution");
+    expect(close(profile.ball.frictionCoefficient, 0.25f),
+        "Domenech billiard calibration friction");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
