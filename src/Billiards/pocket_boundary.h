@@ -5,6 +5,7 @@
 #include "table_specs.h"
 
 #include <array>
+#include <vector>
 
 namespace billiardgl {
 
@@ -79,6 +80,9 @@ PocketBoundaryQuery classifyPocketPoint(
     const PocketBoundaryFrame& frame, const Point3& position,
     double ballRadiusCm);
 PocketBoundaryEvent sweepPocketBoundary(
+    const PocketBoundaryFrame& frame, const Point3& start,
+    const Point3& end, double ballRadiusCm);
+std::vector<PocketBoundaryEvent> sweepPocketBoundaryEvents(
     const PocketBoundaryFrame& frame, const Point3& start,
     const Point3& end, double ballRadiusCm);
 PocketTransitionResult advancePocketInteraction(

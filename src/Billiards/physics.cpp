@@ -84,7 +84,28 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
         event.timeSeconds = 0.0f;
         event.penetrationM = std::max(
             0.0, (std::fabs(static_cast<double>(start)) - limit) / 100.0);
-        if (event.penetrationM <= 1e-9 && component * side <= 0.0f) {
+        Point3 inwardNormal;
+        if (xAxis) inwardNormal.x = -side;
+        else inwardNormal.z = -side;
+        const float radiusM = profile.ball.radiusCm / 100.0f;
+        const Point3 armM{
+            -inwardNormal.x * radiusM,
+            radiusM * (profile.cushion.noseHeightRatio - 1.0f),
+            -inwardNormal.z * radiusM};
+        const Point3 rotationalVelocityCmS{
+            (ball.angularVelocity.y * armM.z -
+                ball.angularVelocity.z * armM.y) * 100.0f,
+            (ball.angularVelocity.z * armM.x -
+                ball.angularVelocity.x * armM.z) * 100.0f,
+            (ball.angularVelocity.x * armM.y -
+                ball.angularVelocity.y * armM.x) * 100.0f};
+        const double contactNormalSpeed =
+            (ball.velocity.x + rotationalVelocityCmS.x) * inwardNormal.x +
+            (ball.velocity.y + rotationalVelocityCmS.y) * inwardNormal.y +
+            (ball.velocity.z + rotationalVelocityCmS.z) * inwardNormal.z;
+        if (event.penetrationM * 100.0 <=
+                profile.solver.penetrationSlopCm + 1e-9 &&
+            contactNormalSpeed >= -profile.solver.residualToleranceCmS) {
             return StraightRailEvent{};
         }
     } else {
@@ -154,6 +175,56 @@ PocketStepEvent earliestPocketEvent(const BallState& ball, float timeStep,
     best.timeSeconds = best.hit
         ? static_cast<float>(bestFraction * timeStep) : timeStep;
     return best;
+}
+
+int straightRailFeatureId(const StraightRailEvent& event)
+{
+    const bool positive = event.boundaryCm > 0.0f;
+    return (event.xAxis ? 0 : 2) + (positive ? 1 : 0);
+}
+
+int pocketFeatureId(int pocketId, PocketBoundaryEventKind kind)
+{
+    return 100 + pocketId * 8 + static_cast<int>(kind);
+}
+
+std::vector<ContinuousContactCandidate> generateBoundaryCandidates(
+    const GameState& state, float timeStep, const PhysicsProfile& profile)
+{
+    std::vector<ContinuousContactCandidate> result;
+    const std::array<PocketBoundaryFrame, 6> frames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    for (int ballIndex = 0; ballIndex < kBallCount; ++ballIndex) {
+        const BallState& ball = state.balls[ballIndex];
+        if (ball.pocketed) continue;
+        for (bool xAxis : {true, false}) {
+            const StraightRailEvent rail = railCandidate(
+                ball, timeStep, profile, xAxis);
+            if (!rail.hit) continue;
+            ContinuousContactCandidate candidate = boundaryContactCandidate(
+                ballIndex, straightRailFeatureId(rail), rail.timeSeconds,
+                rail.inwardNormal, PocketBoundaryEventKind::StraightRail);
+            candidate.penetrationCm = rail.penetrationM * 100.0;
+            result.push_back(candidate);
+        }
+        if (timeStep <= 0.0f) continue;
+        const BallState end = advancedCopy(ball, timeStep, profile);
+        for (const PocketBoundaryFrame& frame : frames) {
+            const std::vector<PocketBoundaryEvent> events =
+                sweepPocketBoundaryEvents(frame, ball.position, end.position,
+                    profile.ball.radiusCm);
+            for (const PocketBoundaryEvent& event : events) {
+                if (event.kind == PocketBoundaryEventKind::None ||
+                    event.kind == PocketBoundaryEventKind::Ambiguous) continue;
+                result.push_back(boundaryContactCandidate(ballIndex,
+                    pocketFeatureId(frame.pocketId, event.kind),
+                    event.fraction * timeStep, event.inwardNormal,
+                    event.kind, frame.pocketId));
+            }
+        }
+    }
+    std::sort(result.begin(), result.end(), continuousContactLess);
+    return result;
 }
 
 const PocketBoundaryFrame* activePocketFrame(
@@ -595,24 +666,6 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
 
 namespace {
 
-double earliestBoundaryTime(const GameState& state, float timeStep,
-    const PhysicsProfile& profile)
-{
-    double earliest = timeStep + 1.0;
-    for (int index = 0; index < kBallCount; ++index) {
-        if (state.balls[index].pocketed) continue;
-        const StraightRailEvent rail = earliestRailEvent(
-            state.balls[index], timeStep, profile);
-        if (rail.hit) earliest = std::min(
-            earliest, static_cast<double>(rail.timeSeconds));
-        const PocketStepEvent pocket = earliestPocketEvent(
-            state.balls[index], timeStep, profile);
-        if (pocket.hit) earliest = std::min(
-            earliest, static_cast<double>(pocket.timeSeconds));
-    }
-    return earliest;
-}
-
 void prependTelemetry(PhysicsStepTelemetry& tail,
     const PhysicsStepTelemetry& prefix)
 {
@@ -626,6 +679,52 @@ void prependTelemetry(PhysicsStepTelemetry& tail,
         tail.maximumPenetrationCm, prefix.maximumPenetrationCm);
 }
 
+void mergeGameplayEvents(GameplayEvents& target, const GameplayEvents& source)
+{
+    target.ballCollision = target.ballCollision || source.ballCollision;
+    target.railCollision = target.railCollision || source.railCollision;
+    target.ballPocketed = target.ballPocketed || source.ballPocketed;
+    target.cueBallPocketed = target.cueBallPocketed || source.cueBallPocketed;
+    target.eightBallPocketed = target.eightBallPocketed ||
+        source.eightBallPocketed;
+    target.shotEnded = target.shotEnded || source.shotEnded;
+}
+
+CushionContactRegime cushionRegime(BallBallContactRegime regime)
+{
+    switch (regime) {
+    case BallBallContactRegime::Separating:
+        return CushionContactRegime::Separating;
+    case BallBallContactRegime::Frictionless:
+        return CushionContactRegime::Frictionless;
+    case BallBallContactRegime::Stick:
+        return CushionContactRegime::Stick;
+    case BallBallContactRegime::Slip:
+        return CushionContactRegime::Slip;
+    case BallBallContactRegime::NoContact:
+        return CushionContactRegime::NoContact;
+    }
+    return CushionContactRegime::NoContact;
+}
+
+int batchCandidateCount(const ContinuousEventBatch& batch)
+{
+    int count = static_cast<int>(batch.topologyTransitions.size());
+    for (const ContactIsland& island : batch.physicalIslands) {
+        count += static_cast<int>(island.contacts.size());
+    }
+    return count;
+}
+
+const PocketBoundaryFrame* pocketFrameById(
+    const std::array<PocketBoundaryFrame, 6>& frames, int pocketId)
+{
+    for (const PocketBoundaryFrame& frame : frames) {
+        if (frame.pocketId == pocketId) return &frame;
+    }
+    return nullptr;
+}
+
 PhysicsStepTelemetry updatePhysicsEventDriven(
     GameState& state, float timeStep, const PhysicsProfile& profile,
     int remainingEvents, PhysicsBoundaryMode boundaryMode)
@@ -633,61 +732,22 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     if (timeStep <= 0.0f || remainingEvents <= 0) {
         return updatePhysicsDiscrete(state, timeStep, profile, boundaryMode);
     }
-    const std::vector<ContinuousContactCandidate> candidates =
+    std::vector<ContinuousContactCandidate> candidates =
         generateBallBallCandidates(state, timeStep, profile.ball.radiusCm,
             profile.solver.toiToleranceSeconds, false,
             profile.solver.residualToleranceCmS);
-    const double boundaryTime = boundaryMode == PhysicsBoundaryMode::ProductionTable ?
-        earliestBoundaryTime(state, timeStep, profile) : timeStep + 1.0;
-    const bool hasBoundary = boundaryTime <= timeStep;
+    if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+        std::vector<ContinuousContactCandidate> boundary =
+            generateBoundaryCandidates(state, timeStep, profile);
+        candidates.insert(candidates.end(), boundary.begin(), boundary.end());
+    }
     if (candidates.empty()) {
-        if (!hasBoundary) {
-            return updatePhysicsDiscrete(
-                state, timeStep, profile, boundaryMode, false);
-        }
-        const GameplayEvents beforeEvents = state.events;
-        PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
-            state, static_cast<float>(boundaryTime), profile, boundaryMode, false);
-        const GameplayEvents boundaryEvents = state.events;
-        PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
-            std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
-            profile, remainingEvents - 1, boundaryMode);
-        prependTelemetry(tail, prefix);
-        state.events.ballCollision = state.events.ballCollision ||
-            boundaryEvents.ballCollision || beforeEvents.ballCollision;
-        state.events.railCollision = state.events.railCollision ||
-            boundaryEvents.railCollision || beforeEvents.railCollision;
-        state.events.ballPocketed = state.events.ballPocketed ||
-            boundaryEvents.ballPocketed || beforeEvents.ballPocketed;
-        state.events.cueBallPocketed = state.events.cueBallPocketed ||
-            boundaryEvents.cueBallPocketed || beforeEvents.cueBallPocketed;
-        state.events.eightBallPocketed = state.events.eightBallPocketed ||
-            boundaryEvents.eightBallPocketed || beforeEvents.eightBallPocketed;
-        return tail;
+        return updatePhysicsDiscrete(
+            state, timeStep, profile, boundaryMode, false);
     }
-    const double toi = candidates.front().timeOfImpactSeconds;
-    if (hasBoundary &&
-        toi > boundaryTime + profile.solver.toiToleranceSeconds) {
-        const GameplayEvents beforeEvents = state.events;
-        PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
-            state, static_cast<float>(boundaryTime), profile, boundaryMode, false);
-        const GameplayEvents boundaryEvents = state.events;
-        PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
-            std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
-            profile, remainingEvents - 1, boundaryMode);
-        prependTelemetry(tail, prefix);
-        state.events.ballCollision = state.events.ballCollision ||
-            boundaryEvents.ballCollision || beforeEvents.ballCollision;
-        state.events.railCollision = state.events.railCollision ||
-            boundaryEvents.railCollision || beforeEvents.railCollision;
-        state.events.ballPocketed = state.events.ballPocketed ||
-            boundaryEvents.ballPocketed || beforeEvents.ballPocketed;
-        state.events.cueBallPocketed = state.events.cueBallPocketed ||
-            boundaryEvents.cueBallPocketed || beforeEvents.cueBallPocketed;
-        state.events.eightBallPocketed = state.events.eightBallPocketed ||
-            boundaryEvents.eightBallPocketed || beforeEvents.eightBallPocketed;
-        return tail;
-    }
+    const ContinuousEventBatch batch = buildEarliestEventBatch(candidates,
+        profile.solver.toiToleranceSeconds, profile.solver.maximumIslandSize);
+    const double toi = batch.earliestTimeSeconds;
 
     PhysicsStepTelemetry prefix;
     for (int index = 0; index < kBallCount; ++index) {
@@ -697,41 +757,19 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         motion.ballIndex = index;
         prefix.surfaceMotion.push_back(motion);
     }
-    std::vector<ContinuousContactCandidate> contactCandidates =
-        generateBallBallCandidates(state, 0.0, profile.ball.radiusCm,
-            profile.solver.toiToleranceSeconds, true,
-            profile.solver.residualToleranceCmS);
-    for (const ContinuousContactCandidate& original : candidates) {
-        if (original.timeOfImpactSeconds >
-            toi + profile.solver.toiToleranceSeconds) break;
-        const bool duplicate = std::any_of(contactCandidates.begin(),
-            contactCandidates.end(), [&original](const ContinuousContactCandidate& value) {
-                return value.kind == original.kind &&
-                    value.firstBall == original.firstBall &&
-                    value.secondBall == original.secondBall &&
-                    value.featureId == original.featureId;
-            });
-        if (!duplicate) {
-            ContinuousContactCandidate active = original;
-            active.timeOfImpactSeconds = 0.0;
-            contactCandidates.push_back(active);
-        }
-    }
-    std::sort(contactCandidates.begin(), contactCandidates.end(),
-        continuousContactLess);
-    const ContactIslandBuildResult built = buildEarliestContactIslands(
-        contactCandidates, profile.solver.toiToleranceSeconds,
-        profile.solver.maximumIslandSize);
-    bool impulseApplied = false;
+    bool ballImpulseApplied = false;
+    bool railImpulseApplied = false;
     bool hardFailure = false;
-    for (const ContactIsland& island : built.islands) {
+    const std::array<PocketBoundaryFrame, 6> pocketFrames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    for (const ContactIsland& island : batch.physicalIslands) {
         const ContactSolverResult solved = solveContactIsland(state, island, profile);
         SolverEventRecord solverEvent;
         solverEvent.eventId = profile.solver.maximumEventsPerTick - remainingEvents;
         solverEvent.islandId = island.islandId;
-        solverEvent.candidateCount = static_cast<int>(contactCandidates.size());
+        solverEvent.candidateCount = batchCandidateCount(batch);
         solverEvent.contactCount = static_cast<int>(island.contacts.size());
-        solverEvent.duplicateCandidatesRemoved = built.duplicateCandidatesRemoved;
+        solverEvent.duplicateCandidatesRemoved = batch.duplicateCandidatesRemoved;
         solverEvent.velocityIterations = solved.velocityIterations;
         solverEvent.positionIterations = solved.positionIterations;
         solverEvent.maximumResidualCmS = solved.maximumResidualCmS;
@@ -751,7 +789,10 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
             PhysicsContactRecord contact;
             contact.solverEventId = solverEvent.eventId;
             contact.solverIslandId = island.islandId;
-            contact.kind = PhysicsContactKind::BallBall;
+            const bool ballBall = candidate.kind ==
+                ContinuousContactKind::BallBall;
+            contact.kind = ballBall ? PhysicsContactKind::BallBall :
+                PhysicsContactKind::Rail;
             contact.firstBall = candidate.firstBall;
             contact.secondBall = candidate.secondBall;
             contact.normal = solved.contacts[index].normal;
@@ -777,7 +818,7 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
                 solved.contacts[index].secondContactArmM.x * 100.0f,
                 solved.contacts[index].secondContactArmM.y * 100.0f,
                 solved.contacts[index].secondContactArmM.z * 100.0f};
-            contact.impulseOnSecondNs = Point3{
+            const Point3 impulse = Point3{
                 static_cast<float>(contact.normal.x * contact.normalImpulseNs +
                     contact.contactTangent.x *
                     solved.contacts[index].accumulatedTangentialImpulseNs),
@@ -787,6 +828,8 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
                 static_cast<float>(contact.normal.z * contact.normalImpulseNs +
                     contact.contactTangent.z *
                     solved.contacts[index].accumulatedTangentialImpulseNs)};
+            if (ballBall) contact.impulseOnSecondNs = impulse;
+            else contact.impulseOnBallNs = impulse;
             contact.restitution = solved.contacts[index].restitution;
             contact.frictionCoefficient =
                 solved.contacts[index].frictionCoefficient;
@@ -801,8 +844,95 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
                 contact.normal.y * contact.relativeContactVelocityAfterCmS.y +
                 contact.normal.z * contact.relativeContactVelocityAfterCmS.z;
             contact.positionSlopCm = profile.solver.penetrationSlopCm;
+            if (!ballBall) {
+                contact.cushionRegime = cushionRegime(contact.regime);
+                contact.cushionContactArmCm = contact.firstContactArmCm;
+                contact.cushionContactHeightCm =
+                    contact.cushionContactArmCm.y + std::hypot(
+                        contact.cushionContactArmCm.x,
+                        contact.cushionContactArmCm.z);
+                contact.cushionContactVelocityBeforeCmS =
+                    contact.relativeContactVelocityBeforeCmS;
+                contact.cushionContactVelocityAfterCmS =
+                    contact.relativeContactVelocityAfterCmS;
+                contact.positionCorrected = contact.solverProjectionCm > 0.0;
+                contact.positionCorrectionCm = Point3{
+                    static_cast<float>(contact.normal.x *
+                        contact.solverProjectionCm),
+                    static_cast<float>(contact.normal.y *
+                        contact.solverProjectionCm),
+                    static_cast<float>(contact.normal.z *
+                        contact.solverProjectionCm)};
+                contact.noseHeightRatio = profile.cushion.noseHeightRatio;
+                contact.incidentSpeedCmS = std::max(
+                    0.0, -contact.normalRelativeSpeedBeforeCmS);
+                contact.maximumRigidIncidentSpeedCmS =
+                    profile.cushion.maximumRigidIncidentSpeedCmS;
+                contact.rigidDomainExceeded = contact.incidentSpeedCmS >
+                    contact.maximumRigidIncidentSpeedCmS;
+                contact.pocketId = candidate.pocketId;
+                contact.pocketBoundaryEvent = candidate.pocketEvent;
+            }
             prefix.contacts.push_back(contact);
-            impulseApplied = impulseApplied || contact.velocityImpulseApplied;
+            ballImpulseApplied = ballImpulseApplied ||
+                (ballBall && contact.velocityImpulseApplied);
+            railImpulseApplied = railImpulseApplied ||
+                (!ballBall && contact.velocityImpulseApplied);
+
+            if (candidate.kind == ContinuousContactKind::Jaw) {
+                const PocketBoundaryFrame* frame = pocketFrameById(
+                    pocketFrames, candidate.pocketId);
+                if (frame != nullptr) {
+                    BallState& ball = state.balls[candidate.firstBall];
+                    const PocketBoundaryQuery query = classifyPocketPoint(
+                        *frame, ball.position, profile.ball.radiusCm);
+                    const PocketTransitionResult transition =
+                        advancePocketInteraction(ball.pocketInteraction,
+                            frame->pocketId, candidate.pocketEvent,
+                            query.region, 0);
+                    PocketBoundaryEvent event;
+                    event.kind = candidate.pocketEvent;
+                    event.pocketId = frame->pocketId;
+                    event.position = ball.position;
+                    event.inwardNormal = candidate.normal;
+                    event.local = query.local;
+                    event.passable = query.passable;
+                    appendPocketContact(prefix, candidate.firstBall, *frame,
+                        event, query, transition, 0, toi);
+                }
+            }
+        }
+    }
+    for (const ContinuousContactCandidate& candidate :
+            batch.topologyTransitions) {
+        const PocketBoundaryFrame* frame = pocketFrameById(
+            pocketFrames, candidate.pocketId);
+        if (frame == nullptr) continue;
+        BallState& ball = state.balls[candidate.firstBall];
+        const PocketBoundaryQuery query = classifyPocketPoint(
+            *frame, ball.position, profile.ball.radiusCm);
+        const unsigned long long sequence =
+            candidate.kind == ContinuousContactKind::Capture
+                ? state.nextPocketCaptureSequence : 0;
+        const PocketTransitionResult transition = advancePocketInteraction(
+            ball.pocketInteraction, frame->pocketId, candidate.pocketEvent,
+            query.region, sequence);
+        PocketBoundaryEvent event;
+        event.kind = candidate.pocketEvent;
+        event.pocketId = frame->pocketId;
+        event.position = ball.position;
+        event.inwardNormal = candidate.normal;
+        event.local = query.local;
+        event.passable = query.passable;
+        if (candidate.kind != ContinuousContactKind::Capture ||
+            transition.captureEmitted) {
+            appendPocketContact(prefix, candidate.firstBall, *frame, event,
+                query, transition,
+                transition.captureEmitted ? sequence : 0, toi);
+        }
+        if (transition.captureEmitted) {
+            ++state.nextPocketCaptureSequence;
+            updatePocketedBall(state, candidate.firstBall);
         }
     }
     if (hardFailure) {
@@ -811,19 +941,20 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     }
     const float remaining = std::max(0.0f, timeStep - static_cast<float>(toi));
     if (remaining <= 0.0f) {
-        if (impulseApplied) {
-            state.events.ballCollision = true;
-            state.ballsMoving = anyBallMoving(state);
-        }
+        if (ballImpulseApplied) state.events.ballCollision = true;
+        if (railImpulseApplied) state.events.railCollision = true;
+        state.ballsMoving = anyBallMoving(state);
         return prefix;
     }
+    const GameplayEvents prefixEvents = state.events;
     PhysicsStepTelemetry tail = updatePhysicsEventDriven(
         state, remaining, profile, remainingEvents - 1, boundaryMode);
     prependTelemetry(tail, prefix);
-    if (impulseApplied) {
-        state.events.ballCollision = true;
+    mergeGameplayEvents(state.events, prefixEvents);
+    if (ballImpulseApplied) state.events.ballCollision = true;
+    if (railImpulseApplied) state.events.railCollision = true;
+    if (ballImpulseApplied || railImpulseApplied)
         state.ballsMoving = anyBallMoving(state);
-    }
     return tail;
 }
 

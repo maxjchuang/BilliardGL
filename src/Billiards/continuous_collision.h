@@ -22,6 +22,7 @@ struct ContinuousContactCandidate {
     int firstBall = -1;
     int secondBall = -1;
     int featureId = -1;
+    int pocketId = -1;
     double timeOfImpactSeconds = 0.0;
     double penetrationCm = 0.0;
     Point3 normal;
@@ -45,7 +46,7 @@ std::vector<ContinuousContactCandidate> generateBallBallCandidates(
     double approachSpeedEpsilonCmS = 0.001);
 ContinuousContactCandidate boundaryContactCandidate(
     int ballIndex, int featureId, double timeOfImpactSeconds,
-    const Point3& normal, PocketBoundaryEventKind event);
+    const Point3& normal, PocketBoundaryEventKind event, int pocketId = -1);
 bool continuousContactLess(
     const ContinuousContactCandidate& first,
     const ContinuousContactCandidate& second);

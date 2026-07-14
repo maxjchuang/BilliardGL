@@ -181,7 +181,10 @@ SolverConstraint makeConstraint(const GameState& state,
         constraint.restitution = profile.ball.normalRestitution;
         constraint.friction = profile.ball.frictionCoefficient;
     } else {
-        constraint.firstArmM = scaled(constraint.normal, -radiusM);
+        constraint.firstArmM = added(
+            scaled(constraint.normal, -radiusM),
+            Point3{0.0f,
+                radiusM * (profile.cushion.noseHeightRatio - 1.0f), 0.0f});
         constraint.restitution = profile.cushion.normalRestitution;
         constraint.friction = profile.cushion.frictionCoefficient;
     }

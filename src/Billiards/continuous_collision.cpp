@@ -130,7 +130,7 @@ std::vector<ContinuousContactCandidate> generateBallBallCandidates(
 
 ContinuousContactCandidate boundaryContactCandidate(
     int ballIndex, int featureId, double timeOfImpactSeconds,
-    const Point3& normal, PocketBoundaryEventKind event)
+    const Point3& normal, PocketBoundaryEventKind event, int pocketId)
 {
     ContinuousContactCandidate result;
     if (ballIndex < 0 || featureId < 0 || !std::isfinite(timeOfImpactSeconds) ||
@@ -138,6 +138,7 @@ ContinuousContactCandidate boundaryContactCandidate(
     result.valid = true;
     result.firstBall = ballIndex;
     result.featureId = featureId;
+    result.pocketId = pocketId;
     result.timeOfImpactSeconds = timeOfImpactSeconds;
     result.normal = normal;
     result.pocketEvent = event;

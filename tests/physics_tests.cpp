@@ -413,6 +413,30 @@ int main()
         return fail("continuous crossing should receive exactly one velocity impulse");
     }
 
+    billiardgl::GameState ballRail;
+    for (billiardgl::BallState& ball : ballRail.balls) ball.pocketed = true;
+    ballRail.balls[0].pocketed = ballRail.balls[1].pocketed = false;
+    const float rightLimit = billiardgl::kTableInWidth * 0.5f -
+        eventProfile.ball.radiusCm;
+    ballRail.balls[0].position = billiardgl::Point3{
+        rightLimit, billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    ballRail.balls[1].position = billiardgl::Point3{
+        rightLimit - 2.0f * eventProfile.ball.radiusCm,
+        billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    ballRail.balls[0].velocity.x = 100.0f;
+    ballRail.balls[1].velocity.x = 200.0f;
+    ballRail.balls[0].speed = 100.0f;
+    ballRail.balls[1].speed = 200.0f;
+    const billiardgl::PhysicsStepTelemetry ballRailTelemetry =
+        billiardgl::updatePhysics(ballRail, 0.01f, eventProfile);
+    if (ballRailTelemetry.solverEvents.size() != 1 ||
+        ballRailTelemetry.solverEvents[0].contactCount != 2 ||
+        ballRailTelemetry.contacts.size() < 2 ||
+        ballRailTelemetry.contacts[0].solverIslandId !=
+            ballRailTelemetry.contacts[1].solverIslandId) {
+        return fail("same-TOI ball and straight-rail contacts must solve in one island");
+    }
+
     billiardgl::PhysicsProfile tickEndProfile = eventProfile;
     tickEndProfile.ball.radiusCm = 2.3f;
     tickEndProfile.ball.massKg = 0.0464f;

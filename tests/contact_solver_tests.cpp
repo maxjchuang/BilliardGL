@@ -99,6 +99,34 @@ int main()
         frictionSolved.contacts[0].secondContactArmM.x < 0.0f,
         "solver diagnostics should expose contact arms and effective mass");
 
+    PhysicsProfile cushion = elastic;
+    cushion.cushion.normalRestitution = 0.7f;
+    cushion.cushion.frictionCoefficient = 0.2f;
+    cushion.cushion.noseHeightRatio = 1.4f;
+    GameState railState = stateFor(1);
+    railState.balls[0].velocity = Point3{100.0f, 0.0f, 30.0f};
+    ContactIsland railIsland;
+    railIsland.ballIndices = {0};
+    railIsland.contacts = {boundaryContactCandidate(0, 1, 0.0,
+        Point3{-1.0f, 0.0f, 0.0f},
+        PocketBoundaryEventKind::StraightRail)};
+    const ContactSolverResult railSolved = solveContactIsland(
+        railState, railIsland, cushion);
+    expect(railSolved.status == ContactSolverStatus::Converged &&
+        railSolved.contacts.size() == 1 &&
+        railSolved.contacts[0].accumulatedNormalImpulseNs > 0.0,
+        "a rail constraint should use the same converged island solver");
+    expect(std::fabs(railSolved.contacts[0].firstContactArmM.y -
+            cushion.ball.radiusCm / 100.0f * 0.4f) < 1e-6f &&
+        std::fabs(railState.balls[0].angularVelocity.y) > 0.0f,
+        "rail constraints should apply friction at the configured cushion nose height");
+    expect(std::fabs(railSolved.contacts[0].accumulatedTangentialImpulseNs) <=
+            cushion.cushion.frictionCoefficient *
+                railSolved.contacts[0].accumulatedNormalImpulseNs + 1e-12 &&
+        railSolved.totalKineticEnergyAfterJ <=
+            railSolved.totalKineticEnergyBeforeJ + 1e-10,
+        "rail island impulses must obey the Coulomb cone and remain passive");
+
     GameState projection = stateFor(2);
     ContactIsland overlap;
     overlap.ballIndices = {0, 1};

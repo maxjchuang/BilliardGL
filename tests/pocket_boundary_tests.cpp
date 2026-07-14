@@ -100,6 +100,23 @@ int main()
     expect(close(std::hypot(jaw.inwardNormal.x, jaw.inwardNormal.z), 1.0),
         "jaw event must expose a unit local normal");
 
+    billiardgl::PocketBoundaryFrame dual = side;
+    dual.mouthWidthCm = 4.0f;
+    const std::vector<billiardgl::PocketBoundaryEvent> dualEvents =
+        billiardgl::sweepPocketBoundaryEvents(
+            dual, localPoint(dual, -10.0, 0.0),
+            localPoint(dual, 1.0, 0.0), radius);
+    std::vector<billiardgl::PocketBoundaryEvent> dualJaws;
+    for (const billiardgl::PocketBoundaryEvent& event : dualEvents) {
+        if (event.kind == billiardgl::PocketBoundaryEventKind::LeftJaw ||
+            event.kind == billiardgl::PocketBoundaryEventKind::RightJaw) {
+            dualJaws.push_back(event);
+        }
+    }
+    expect(dualJaws.size() == 2 &&
+        close(dualJaws[0].fraction, dualJaws[1].fraction, 1e-10),
+        "symmetric equal-TOI jaw sweeps must retain both physical constraints");
+
     const auto mirrored = billiardgl::sweepPocketBoundary(
         frames[5], localPoint(frames[5], -2.0, 0.0),
         localPoint(frames[5], 5.0, 0.0), radius);

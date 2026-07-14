@@ -230,6 +230,66 @@ PocketBoundaryEvent sweepPocketBoundary(
     return best;
 }
 
+std::vector<PocketBoundaryEvent> sweepPocketBoundaryEvents(
+    const PocketBoundaryFrame& frame, const Point3& start,
+    const Point3& end, double ballRadiusCm)
+{
+    std::vector<PocketBoundaryEvent> result;
+    const Point3 delta = point(end.x - start.x, end.z - start.z);
+    if (!std::isfinite(ballRadiusCm) || ballRadiusCm <= 0.0 ||
+        !std::isfinite(delta.x) || !std::isfinite(delta.z)) return result;
+
+    const double effectiveJawRadius = frame.jawRadiusCm + ballRadiusCm;
+    for (int side = -1; side <= 1; side += 2) {
+        double fraction = 1.0;
+        const Point3 center = jawCenter(frame, side);
+        if (!circleFirstHit(start, delta, center, effectiveJawRadius, fraction)) {
+            continue;
+        }
+        const Point3 position = add(start, delta, fraction);
+        const PocketLocalPoint local = pocketLocalPoint(frame, position);
+        if (local.depthCm < -effectiveJawRadius - 1e-8 ||
+            local.depthCm > frame.throatDepthCm + effectiveJawRadius) {
+            continue;
+        }
+        const Point3 towardBall = point(
+            position.x - center.x, position.z - center.z);
+        const double normalLength = length2(towardBall);
+        PocketBoundaryEvent event;
+        event.kind = side < 0 ? PocketBoundaryEventKind::LeftJaw :
+            PocketBoundaryEventKind::RightJaw;
+        event.pocketId = frame.pocketId;
+        event.fraction = fraction;
+        event.position = position;
+        event.inwardNormal = point(
+            static_cast<float>(towardBall.x / normalLength),
+            static_cast<float>(towardBall.z / normalLength));
+        event.local = local;
+        event.passable = false;
+        result.push_back(event);
+    }
+    for (PocketBoundaryEventKind kind : {
+            PocketBoundaryEventKind::Throat,
+            PocketBoundaryEventKind::Capture}) {
+        PocketBoundaryEvent event;
+        event.pocketId = frame.pocketId;
+        const double depth = kind == PocketBoundaryEventKind::Throat
+            ? frame.throatDepthCm : frame.captureDepthCm;
+        considerPlane(frame, start, delta, depth, ballRadiusCm, kind, event);
+        if (event.kind == kind) result.push_back(event);
+    }
+    std::sort(result.begin(), result.end(),
+        [](const PocketBoundaryEvent& first,
+                const PocketBoundaryEvent& second) {
+            if (first.fraction != second.fraction) {
+                return first.fraction < second.fraction;
+            }
+            return static_cast<int>(first.kind) <
+                static_cast<int>(second.kind);
+        });
+    return result;
+}
+
 const char* pocketBoundaryEventKindName(PocketBoundaryEventKind kind)
 {
     switch (kind) {
