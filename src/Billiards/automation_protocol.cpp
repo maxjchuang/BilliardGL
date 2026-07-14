@@ -215,6 +215,10 @@ json::Value serializeRuntimeEvent(const RuntimeEvent& event)
 json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
 {
     json::Value value = json::Value::object();
+    value["solver_event_id"] = json::Value(contact.solverEventId);
+    value["solver_island_id"] = json::Value(contact.solverIslandId);
+    value["solver_residual_cm_s"] = json::Value(contact.solverResidualCmS);
+    value["solver_projection_cm"] = json::Value(contact.solverProjectionCm);
     value["first_ball"] = json::Value(contact.firstBall);
     value["kind"] = json::Value(contactKindName(contact.kind));
     value["normal"] = pointValue(contact.normal);
@@ -315,6 +319,31 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
         contacts.asArray().push_back(serializePhysicsContact(contact));
     }
 
+    json::Value solverEvents = json::Value::array();
+    for (const SolverEventRecord& event : frame.solverEvents) {
+        json::Value item = json::Value::object();
+        item["event_id"] = json::Value(event.eventId);
+        item["island_id"] = json::Value(event.islandId);
+        item["candidate_count"] = json::Value(event.candidateCount);
+        item["contact_count"] = json::Value(event.contactCount);
+        item["duplicate_candidates_removed"] =
+            json::Value(event.duplicateCandidatesRemoved);
+        item["velocity_iterations"] = json::Value(event.velocityIterations);
+        item["position_iterations"] = json::Value(event.positionIterations);
+        item["maximum_residual_cm_s"] =
+            json::Value(event.maximumResidualCmS);
+        item["maximum_penetration_cm"] =
+            json::Value(event.maximumPenetrationCm);
+        item["kinetic_energy_before_j"] =
+            json::Value(event.kineticEnergyBeforeJ);
+        item["kinetic_energy_after_j"] =
+            json::Value(event.kineticEnergyAfterJ);
+        item["island_limit_exceeded"] =
+            json::Value(event.islandLimitExceeded);
+        item["failure_code"] = json::Value(event.failureCode);
+        solverEvents.asArray().push_back(item);
+    }
+
     json::Value control = json::Value::object();
     control["aim_yaw_rad"] = json::Value(frame.control.aimYaw);
     control["shot_power"] = json::Value(frame.control.shotPower);
@@ -349,6 +378,7 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     value["physics_profile_id"] = json::Value(frame.physicsProfileId);
     value["rotational_kinetic_energy_j"] =
         json::Value(frame.rotationalKineticEnergyJ);
+    value["solver_events"] = solverEvents;
     value["surface_transitions"] = surfaceTransitions;
     value["tick"] = json::Value(static_cast<double>(frame.tick));
     value["time_seconds"] = json::Value(frame.timeSeconds);

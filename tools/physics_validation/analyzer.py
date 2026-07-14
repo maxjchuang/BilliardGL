@@ -10,6 +10,37 @@ INTEGRATION_MISMATCH = "INTEGRATION_MISMATCH"
 REFERENCE_LIMITATION = "REFERENCE_LIMITATION"
 
 
+def analyze_solver_stress(rows):
+    """Return invariant failures for the committed multi-contact stress matrix."""
+    failures = []
+    seen = set()
+    for row in rows:
+        case_id = row.get("case_id")
+        if case_id in seen:
+            failures.append(f"duplicate case_id: {case_id}")
+        seen.add(case_id)
+        numeric = ("maximum_residual_cm_s", "maximum_penetration_cm",
+                   "energy_before_j", "energy_after_j", "symmetry_error_cm_s")
+        try:
+            numeric_values = [float(row.get(field)) for field in numeric]
+        except (TypeError, ValueError):
+            failures.append(f"nonfinite solver state: {case_id}")
+            continue
+        if any(not math.isfinite(value) for value in numeric_values):
+            failures.append(f"nonfinite solver state: {case_id}")
+            continue
+        if float(row["energy_after_j"]) > float(row["energy_before_j"]) + 1e-12:
+            failures.append(f"impact energy growth: {case_id}")
+        if float(row["maximum_penetration_cm"]) > 0.001:
+            failures.append(f"penetration limit: {case_id}")
+        if int(row["duplicate_impulses"]) != 0:
+            failures.append(f"duplicate impulse: {case_id}")
+        if row["topology"] == "symmetric" and \
+                float(row["symmetry_error_cm_s"]) > 1e-6:
+            failures.append(f"symmetry mismatch: {case_id}")
+    return failures
+
+
 def analyze_pocket_scan(rows):
     """Return structural/physical invariant failures for a pocket scan matrix."""
     failures = []

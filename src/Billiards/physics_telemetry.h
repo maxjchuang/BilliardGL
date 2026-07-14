@@ -26,6 +26,10 @@ enum class PhysicsContactKind {
 };
 
 struct PhysicsContactRecord {
+    int solverEventId = -1;
+    int solverIslandId = -1;
+    double solverResidualCmS = 0.0;
+    double solverProjectionCm = 0.0;
     PhysicsContactKind kind = PhysicsContactKind::BallBall;
     int firstBall = -1;
     int secondBall = -1;
@@ -77,6 +81,22 @@ struct PhysicsContactRecord {
     unsigned long long pocketCaptureSequence = 0;
 };
 
+struct SolverEventRecord {
+    int eventId = -1;
+    int islandId = -1;
+    int candidateCount = 0;
+    int contactCount = 0;
+    int duplicateCandidatesRemoved = 0;
+    int velocityIterations = 0;
+    int positionIterations = 0;
+    double maximumResidualCmS = 0.0;
+    double maximumPenetrationCm = 0.0;
+    double kineticEnergyBeforeJ = 0.0;
+    double kineticEnergyAfterJ = 0.0;
+    bool islandLimitExceeded = false;
+    const char* failureCode = "converged";
+};
+
 struct PhysicsBallSample {
     Point3 position;
     Point3 velocity;
@@ -97,6 +117,7 @@ struct PhysicsControlSample {
 
 struct PhysicsStepTelemetry {
     std::vector<PhysicsContactRecord> contacts;
+    std::vector<SolverEventRecord> solverEvents;
     std::vector<SurfaceMotionStep> surfaceMotion;
     double maximumPenetrationCm = 0.0;
 };
@@ -108,6 +129,7 @@ struct PhysicsFrame {
     std::array<PhysicsBallSample, kBallCount> balls;
     PhysicsControlSample control;
     std::vector<PhysicsContactRecord> contacts;
+    std::vector<SolverEventRecord> solverEvents;
     Point3 linearMomentum;
     double translationalKineticEnergyJ = 0.0;
     double rotationalKineticEnergyJ = 0.0;

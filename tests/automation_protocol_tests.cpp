@@ -46,13 +46,18 @@ int main()
         "trace should serialize per-ball surface quantities");
     expect(physicsFrame.has("rotational_kinetic_energy_j") &&
         physicsFrame.has("total_kinetic_energy_j") &&
-        physicsFrame.has("surface_transitions"),
+        physicsFrame.has("surface_transitions") &&
+        physicsFrame.has("solver_events"),
         "trace should serialize frame surface energy and transitions");
 
     billiardgl::PhysicsContactRecord ballContact;
     ballContact.kind = billiardgl::PhysicsContactKind::BallBall;
     ballContact.regime = billiardgl::BallBallContactRegime::Slip;
     ballContact.velocityImpulseApplied = true;
+    ballContact.solverEventId = 2;
+    ballContact.solverIslandId = 1;
+    ballContact.solverResidualCmS = 0.0001;
+    ballContact.solverProjectionCm = 0.0002;
     ballContact.relativeContactVelocityBeforeCmS =
         billiardgl::Point3{-100.0f, 0.0f, 20.0f};
     ballContact.relativeContactVelocityAfterCmS =
@@ -83,6 +88,11 @@ int main()
         serializedContact.has("first_position_correction_cm") &&
         serializedContact.has("second_position_correction_cm"),
         "ball contact serialization should use explicit units and lowercase regime");
+    expect(serializedContact.at("solver_event_id").asInt() == 2 &&
+        serializedContact.at("solver_island_id").asInt() == 1 &&
+        serializedContact.has("solver_residual_cm_s") &&
+        serializedContact.has("solver_projection_cm"),
+        "solver contact serialization should retain canonical event identity");
 
     billiardgl::PhysicsContactRecord railContact;
     railContact.kind = billiardgl::PhysicsContactKind::Rail;

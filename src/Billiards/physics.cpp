@@ -603,6 +603,8 @@ void prependTelemetry(PhysicsStepTelemetry& tail,
 {
     tail.contacts.insert(tail.contacts.begin(),
         prefix.contacts.begin(), prefix.contacts.end());
+    tail.solverEvents.insert(tail.solverEvents.begin(),
+        prefix.solverEvents.begin(), prefix.solverEvents.end());
     tail.surfaceMotion.insert(tail.surfaceMotion.begin(),
         prefix.surfaceMotion.begin(), prefix.surfaceMotion.end());
     tail.maximumPenetrationCm = std::max(
@@ -640,6 +642,21 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     bool impulseApplied = false;
     for (const ContactIsland& island : built.islands) {
         const ContactSolverResult solved = solveContactIsland(state, island, profile);
+        SolverEventRecord solverEvent;
+        solverEvent.eventId = profile.solver.maximumEventsPerTick - remainingEvents;
+        solverEvent.islandId = island.islandId;
+        solverEvent.candidateCount = static_cast<int>(candidates.size());
+        solverEvent.contactCount = static_cast<int>(island.contacts.size());
+        solverEvent.duplicateCandidatesRemoved = built.duplicateCandidatesRemoved;
+        solverEvent.velocityIterations = solved.velocityIterations;
+        solverEvent.positionIterations = solved.positionIterations;
+        solverEvent.maximumResidualCmS = solved.maximumResidualCmS;
+        solverEvent.maximumPenetrationCm = solved.maximumPenetrationCm;
+        solverEvent.kineticEnergyBeforeJ = solved.kineticEnergyBeforeJ;
+        solverEvent.kineticEnergyAfterJ = solved.kineticEnergyAfterJ;
+        solverEvent.islandLimitExceeded = island.limitExceeded;
+        solverEvent.failureCode = contactSolverStatusName(solved.status);
+        prefix.solverEvents.push_back(solverEvent);
         prefix.maximumPenetrationCm = std::max(
             prefix.maximumPenetrationCm, solved.maximumPenetrationCm);
         const std::size_t solvedCount = std::min(
@@ -647,6 +664,8 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         for (std::size_t index = 0; index < solvedCount; ++index) {
             const ContinuousContactCandidate& candidate = island.contacts[index];
             PhysicsContactRecord contact;
+            contact.solverEventId = solverEvent.eventId;
+            contact.solverIslandId = island.islandId;
             contact.kind = PhysicsContactKind::BallBall;
             contact.firstBall = candidate.firstBall;
             contact.secondBall = candidate.secondBall;
@@ -654,6 +673,8 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
             contact.penetrationCm = candidate.penetrationCm;
             contact.timeOfImpactSeconds = toi;
             contact.normalImpulseNs = solved.contacts[index].accumulatedNormalImpulseNs;
+            contact.solverResidualCmS = solved.contacts[index].residualCmS;
+            contact.solverProjectionCm = solved.contacts[index].projectionCm;
             contact.velocityImpulseApplied = contact.normalImpulseNs > 0.0;
             contact.kineticEnergyBeforeJ = solved.kineticEnergyBeforeJ;
             contact.kineticEnergyAfterJ = solved.kineticEnergyAfterJ;

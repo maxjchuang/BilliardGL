@@ -66,6 +66,13 @@ int main()
     contact.firstPositionCorrectionCm = billiardgl::Point3{-0.01f, 0.0f, 0.0f};
     contact.secondPositionCorrectionCm = billiardgl::Point3{0.01f, 0.0f, 0.0f};
     step.contacts.push_back(contact);
+    billiardgl::SolverEventRecord solverEvent;
+    solverEvent.eventId = 3;
+    solverEvent.islandId = 1;
+    solverEvent.contactCount = 2;
+    solverEvent.velocityIterations = 4;
+    solverEvent.maximumResidualCmS = 0.0001;
+    step.solverEvents.push_back(solverEvent);
     const billiardgl::PhysicsFrame frame =
         billiardgl::capturePhysicsFrame(7, 0.7, 0.1f, before, after, step);
 
@@ -95,6 +102,10 @@ int main()
         close(frame.contacts[0].relativeContactVelocityBeforeCmS.x, -100.0) &&
         close(frame.contacts[0].kineticEnergyAfterJ, 0.9),
         "ball contact diagnostics survive frame capture without reconstruction");
+    expect(frame.solverEvents.size() == 1 &&
+        frame.solverEvents[0].eventId == 3 &&
+        frame.solverEvents[0].contactCount == 2,
+        "solver event diagnostics survive frame capture without reconstruction");
 
     billiardgl::PhysicsContactRecord railContact;
     railContact.kind = billiardgl::PhysicsContactKind::Rail;

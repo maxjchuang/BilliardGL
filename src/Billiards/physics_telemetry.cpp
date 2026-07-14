@@ -58,6 +58,7 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     frame.timeSeconds = timeSeconds;
     frame.deltaSeconds = deltaSeconds;
     frame.contacts = telemetry.contacts;
+    frame.solverEvents = telemetry.solverEvents;
     for (const SurfaceMotionStep& surface : telemetry.surfaceMotion) {
         if (surface.before != surface.after ||
             surface.transitionTimeSeconds >= 0.0f) {
