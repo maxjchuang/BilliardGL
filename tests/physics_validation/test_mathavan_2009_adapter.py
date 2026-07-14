@@ -35,26 +35,58 @@ class Mathavan2009AdapterTests(unittest.TestCase):
             self.package, self.split, tuple(reversed(self.points)))
 
         self.assertEqual(first, second)
-        self.assertEqual(len(first), 10)
-        self.assertEqual(sum(len(case.points) for case in first), 10)
+        self.assertEqual(len(first), 15)
+        self.assertEqual(sum(len(case.points) for case in first), 20)
         self.assertEqual(
             [case.case_id for case in first],
             sorted(case.case_id for case in first),
         )
 
-    def test_table_points_are_preserved_as_post_collision_phase_limitations(self):
+    def test_table_points_execute_at_the_first_pure_roll_window(self):
         adaptation = default_reference_registry().adapt_with_limitations(
             self.package, self.split, self.points)
-        limitation = next(
-            item for item in adaptation.limitations
-            if item.case_id == "table1_post_collision_roll_transition_unmodeled")
         table_points = {
             point.point_id for point in self.points
             if point.series_id == "oblique_ball_collision"
         }
-        self.assertEqual(set(limitation.point_ids), table_points)
         self.assertEqual(len(table_points), 10)
-        self.assertIn("pure-rolling", limitation.missing_evidence)
+        table_cases = [
+            case for case in adaptation.cases
+            if case.case_id.startswith("table1_shot_")
+        ]
+        self.assertEqual(len(table_cases), 5)
+        self.assertEqual(
+            {point.point_id for case in table_cases for point in case.points},
+            table_points,
+        )
+        for case in table_cases:
+            scenario = json.loads(case.scenario_json)
+            self.assertEqual(scenario["schema_version"], 3)
+            self.assertEqual(
+                scenario["physics_profile"]["id"],
+                "chinese_pool_surface_motion_v1",
+            )
+            self.assertEqual(
+                scenario["physics_profile"]["surface"]
+                ["sliding_friction_coefficient"],
+                0.20,
+            )
+            self.assertEqual(
+                scenario["physics_profile"]["surface"]
+                ["rolling_resistance_acceleration_cm_s2"],
+                12.5,
+            )
+            self.assertTrue(all(
+                item["value"]["selection"]["sample_phase"] ==
+                "first_pure_roll_after_event"
+                for item in scenario["expectations"]
+            ))
+        claimed = {
+            point_id
+            for limitation in adaptation.limitations
+            for point_id in limitation.point_ids
+        }
+        self.assertTrue(table_points.isdisjoint(claimed))
 
     def test_cushion_and_deceleration_cases_encode_explicit_selection(self):
         cases = default_reference_registry().adapt(
@@ -87,14 +119,13 @@ class Mathavan2009AdapterTests(unittest.TestCase):
         adaptation = default_reference_registry().adapt_with_limitations(
             self.package, self.split, self.points)
 
-        self.assertEqual(len(adaptation.cases), 10)
+        self.assertEqual(len(adaptation.cases), 15)
         self.assertEqual(
             {limitation.case_id for limitation in adaptation.limitations},
             {
                 "fig9_unresolved_markers",
                 "snooker_to_pool_material_conversion_missing",
                 "unmeasured_initial_spin",
-                "table1_post_collision_roll_transition_unmodeled",
             },
         )
         self.assertTrue(all(limitation.resolution_condition for limitation in adaptation.limitations))
