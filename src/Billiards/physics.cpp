@@ -1,6 +1,7 @@
 #include "physics.h"
 
 #include "ball_ball_contact.h"
+#include "cushion_contact.h"
 #include "rules.h"
 #include "table_specs.h"
 
@@ -61,34 +62,110 @@ bool hasCrossedPocketDropZone(const BallState& ball, const PocketOpening& openin
     return crossedX || crossedZ;
 }
 
-double impulseFromVelocityChange(const Point3& before, const Point3& after, const Point3& normal)
+struct StraightRailEvent {
+    bool hit = false;
+    bool xAxis = true;
+    float timeSeconds = 0.0f;
+    float boundaryCm = 0.0f;
+    Point3 inwardNormal;
+    double penetrationM = 0.0;
+};
+
+float coordinate(const BallState& ball, bool xAxis)
 {
-    const double deltaCentimetersPerSecond = std::fabs(
-        (after.x - before.x) * normal.x +
-        (after.y - before.y) * normal.y +
-        (after.z - before.z) * normal.z);
-    return kDefaultBallMassKg * deltaCentimetersPerSecond / 100.0;
+    return xAxis ? ball.position.x : ball.position.z;
+}
+
+float velocity(const BallState& ball, bool xAxis)
+{
+    return xAxis ? ball.velocity.x : ball.velocity.z;
+}
+
+void setCoordinate(BallState& ball, bool xAxis, float value)
+{
+    if (xAxis) ball.position.x = value;
+    else ball.position.z = value;
+}
+
+BallState advancedCopy(const BallState& source, float timeSeconds,
+    const PhysicsProfile& profile)
+{
+    BallState copy = source;
+    advanceSurfaceMotion(copy, timeSeconds, profile.ball, profile.surface);
+    return copy;
+}
+
+StraightRailEvent railCandidate(const BallState& ball, float timeStep,
+    const PhysicsProfile& profile, bool xAxis)
+{
+    StraightRailEvent event;
+    event.xAxis = xAxis;
+    const float limit = (xAxis ? kTableInWidth : kTableInLength) / 2.0f -
+        profile.ball.radiusCm;
+    const float start = coordinate(ball, xAxis);
+    const float component = velocity(ball, xAxis);
+    float side = 0.0f;
+    if (std::fabs(start) >= limit - 0.000001f) {
+        side = start >= 0.0f ? 1.0f : -1.0f;
+        event.timeSeconds = 0.0f;
+        event.penetrationM = std::max(
+            0.0, (std::fabs(static_cast<double>(start)) - limit) / 100.0);
+    } else {
+        if (timeStep <= 0.0f || component == 0.0f) return event;
+        side = component > 0.0f ? 1.0f : -1.0f;
+        const float target = side * limit;
+        const BallState end = advancedCopy(ball, timeStep, profile);
+        const float endCoordinate = coordinate(end, xAxis);
+        if ((side > 0.0f && endCoordinate < target) ||
+            (side < 0.0f && endCoordinate > target)) {
+            return event;
+        }
+        float lower = 0.0f;
+        float upper = timeStep;
+        for (int iteration = 0; iteration < 40; ++iteration) {
+            const float middle = (lower + upper) * 0.5f;
+            const float middleCoordinate = coordinate(
+                advancedCopy(ball, middle, profile), xAxis);
+            const bool crossed = side > 0.0f ?
+                middleCoordinate >= target : middleCoordinate <= target;
+            if (crossed) upper = middle;
+            else lower = middle;
+        }
+        event.timeSeconds = upper;
+    }
+    event.boundaryCm = side * limit;
+    if (xAxis) event.inwardNormal.x = -side;
+    else event.inwardNormal.z = -side;
+
+    BallState contact = advancedCopy(ball, event.timeSeconds, profile);
+    setCoordinate(contact, xAxis, event.boundaryCm);
+    if (isInPocketMouth(contact)) return StraightRailEvent{};
+    event.hit = true;
+    return event;
+}
+
+StraightRailEvent earliestRailEvent(const BallState& ball, float timeStep,
+    const PhysicsProfile& profile)
+{
+    const StraightRailEvent x = railCandidate(ball, timeStep, profile, true);
+    const StraightRailEvent z = railCandidate(ball, timeStep, profile, false);
+    if (!x.hit) return z;
+    if (!z.hit) return x;
+    return x.timeSeconds <= z.timeSeconds + 0.0000001f ? x : z;
 }
 
 void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
-    const Point3& beforePosition, const Point3& beforeVelocity,
-    const Point3& afterVelocity, bool xAxis)
+    const CushionContactResult& result)
 {
     PhysicsContactRecord contact;
     contact.kind = PhysicsContactKind::Rail;
     contact.firstBall = ballIndex;
-    const float coordinate = xAxis ? beforePosition.x : beforePosition.z;
-    if (xAxis) {
-        contact.normal.x = coordinate > 0.0f ? -1.0f : 1.0f;
-    } else {
-        contact.normal.z = coordinate > 0.0f ? -1.0f : 1.0f;
-    }
-    const double limit = xAxis
-        ? kTableInWidth / 2.0 - kBallRadius
-        : kTableInLength / 2.0 - kBallRadius;
-    contact.penetrationCm = std::max(0.0, std::fabs(static_cast<double>(coordinate)) - limit);
-    contact.normalImpulseNs = impulseFromVelocityChange(
-        beforeVelocity, afterVelocity, contact.normal);
+    contact.normal = Point3{
+        static_cast<float>(result.contactNormal[0]),
+        static_cast<float>(result.contactNormal[1]),
+        static_cast<float>(result.contactNormal[2])};
+    contact.penetrationCm = result.penetrationM * 100.0;
+    contact.normalImpulseNs = result.normalImpulseNs;
     telemetry.maximumPenetrationCm = std::max(
         telemetry.maximumPenetrationCm, contact.penetrationCm);
     telemetry.contacts.push_back(contact);
@@ -111,23 +188,21 @@ bool collideBalls(BallState& first, BallState& second,
 
 void collideWithTableEdge(BallState& ball)
 {
+    collideWithTableEdge(ball, defaultChinesePoolPhysicsProfile());
+}
+
+CushionContactResult collideWithTableEdge(
+    BallState& ball, const PhysicsProfile& profile)
+{
     if (isInPocketMouth(ball)) {
-        return;
+        return CushionContactResult{};
     }
-
-    if (std::fabs(ball.position.x) > kTableInWidth / 2.0f - kBallRadius) {
-        ball.position.x = ball.position.x > 0.0f
-            ? kTableInWidth / 2.0f - kBallRadius
-            : -kTableInWidth / 2.0f + kBallRadius;
-        ball.velocity.x *= -1.0f;
-    }
-
-    if (std::fabs(ball.position.z) > kTableInLength / 2.0f - kBallRadius) {
-        ball.position.z = ball.position.z > 0.0f
-            ? kTableInLength / 2.0f - kBallRadius
-            : -kTableInLength / 2.0f + kBallRadius;
-        ball.velocity.z *= -1.0f;
-    }
+    const StraightRailEvent event = earliestRailEvent(ball, 0.0f, profile);
+    if (!event.hit) return CushionContactResult{};
+    setCoordinate(ball, event.xAxis, event.boundaryCm);
+    return resolveCushionContact(
+        ball, event.inwardNormal, event.penetrationM,
+        profile.ball, profile.cushion);
 }
 
 bool isInPocketMouth(const BallState& ball)
@@ -260,19 +335,35 @@ PhysicsStepTelemetry updatePhysics(
                 }
             }
         }
-        const Point3 previousPosition = ball.position;
-        const Point3 previousVelocity = ball.velocity;
-        const float previousX = ball.velocity.x;
-        const float previousZ = ball.velocity.z;
-        collideWithTableEdge(ball);
-        if (previousX != ball.velocity.x || previousZ != ball.velocity.z) {
-            state.events.railCollision = true;
-        }
-        if (previousX != ball.velocity.x) {
-            appendRailContact(telemetry, i, previousPosition, previousVelocity, ball.velocity, true);
-        }
-        if (previousZ != ball.velocity.z) {
-            appendRailContact(telemetry, i, previousPosition, previousVelocity, ball.velocity, false);
+        const StraightRailEvent railEvent = earliestRailEvent(
+            ball, std::max(0.0f, timeStep), profile);
+        SurfaceMotionStep surface;
+        if (railEvent.hit) {
+            const SurfaceMotionStep beforeContact = advanceSurfaceMotion(
+                ball, railEvent.timeSeconds, profile.ball, profile.surface);
+            setCoordinate(ball, railEvent.xAxis, railEvent.boundaryCm);
+            const CushionContactResult rail = resolveCushionContact(
+                ball, railEvent.inwardNormal, railEvent.penetrationM,
+                profile.ball, profile.cushion);
+            if (rail.velocityImpulseApplied || rail.positionCorrected) {
+                appendRailContact(telemetry, i, rail);
+            }
+            if (rail.velocityImpulseApplied) state.events.railCollision = true;
+            const float remaining = std::max(
+                0.0f, timeStep - railEvent.timeSeconds);
+            const SurfaceMotionStep afterContact = advanceSurfaceMotion(
+                ball, remaining, profile.ball, profile.surface);
+            surface = beforeContact;
+            surface.after = afterContact.after;
+            surface.finalSlipSpeedCmS = afterContact.finalSlipSpeedCmS;
+            if (surface.transitionTimeSeconds < 0.0f &&
+                afterContact.transitionTimeSeconds >= 0.0f) {
+                surface.transitionTimeSeconds = railEvent.timeSeconds +
+                    afterContact.transitionTimeSeconds;
+            }
+        } else {
+            surface = advanceSurfaceMotion(
+                ball, timeStep, profile.ball, profile.surface);
         }
         if (updatePocketedBall(state, i)) {
             PhysicsContactRecord contact;
@@ -280,8 +371,6 @@ PhysicsStepTelemetry updatePhysics(
             contact.firstBall = i;
             telemetry.contacts.push_back(contact);
         }
-        SurfaceMotionStep surface = advanceSurfaceMotion(
-            ball, timeStep, profile.ball, profile.surface);
         surface.ballIndex = i;
         telemetry.surfaceMotion.push_back(surface);
         if (ball.speed > 0.0f) {

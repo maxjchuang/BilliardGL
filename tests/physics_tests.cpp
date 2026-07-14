@@ -1,4 +1,5 @@
 #include "ball_ball_contact.h"
+#include "cushion_contact.h"
 #include "game_state.h"
 #include "physics.h"
 #include "surface_motion.h"
@@ -65,6 +66,93 @@ int main()
     billiardgl::collideWithTableEdge(state.balls[0]);
     if (!(state.balls[0].velocity.x < 0.0f)) {
         return fail("wall collision should reverse x velocity");
+    }
+
+    billiardgl::PhysicsProfile cushionProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    cushionProfile.cushion.normalRestitution = 0.5f;
+    cushionProfile.cushion.frictionCoefficient = 0.2f;
+    cushionProfile.cushion.noseHeightRatio = 1.4f;
+    billiardgl::GameState cushionState;
+    billiardgl::initializeBalls(cushionState);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        cushionState.balls[index].pocketed = true;
+    }
+    const float xLimit = billiardgl::kTableInWidth / 2.0f -
+        cushionProfile.ball.radiusCm;
+    cushionState.balls[0].position = billiardgl::Point3{
+        xLimit, billiardgl::kTableHeight + cushionProfile.ball.radiusCm, 25.0f};
+    billiardgl::setBallVelocity(cushionState.balls[0], 100.0f, 0.0f, 30.0f);
+    billiardgl::BallState directCushion = cushionState.balls[0];
+    const billiardgl::CushionContactResult directRail =
+        billiardgl::resolveCushionContact(
+            directCushion, billiardgl::Point3{-1.0f, 0.0f, 0.0f}, 0.0,
+            cushionProfile.ball, cushionProfile.cushion);
+    const billiardgl::PhysicsStepTelemetry cushionTelemetry =
+        billiardgl::updatePhysics(cushionState, 0.0f, cushionProfile);
+    if (!directRail.velocityImpulseApplied ||
+        !nearlyEqual(cushionState.balls[0].velocity.x, directCushion.velocity.x) ||
+        !nearlyEqual(cushionState.balls[0].velocity.z, directCushion.velocity.z) ||
+        !nearlyEqual(cushionState.balls[0].angularVelocity.y,
+            directCushion.angularVelocity.y) ||
+        !nearlyEqual(cushionState.balls[0].angularVelocity.z,
+            directCushion.angularVelocity.z)) {
+        return fail("production rail collision must match the standalone cushion model");
+    }
+    if (cushionTelemetry.contacts.size() != 1 ||
+        cushionTelemetry.contacts[0].kind != billiardgl::PhysicsContactKind::Rail ||
+        !nearlyEqual(static_cast<float>(cushionTelemetry.contacts[0].normalImpulseNs),
+            static_cast<float>(directRail.normalImpulseNs))) {
+        return fail("production rail telemetry must use the authoritative cushion impulse");
+    }
+
+    billiardgl::GameState sweptState;
+    billiardgl::initializeBalls(sweptState);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        sweptState.balls[index].pocketed = true;
+    }
+    sweptState.balls[0].position = billiardgl::Point3{
+        xLimit - 10.0f, billiardgl::kTableHeight + cushionProfile.ball.radiusCm,
+        25.0f};
+    billiardgl::setBallVelocity(sweptState.balls[0], 500.0f, 0.0f, 0.0f);
+    const billiardgl::PhysicsStepTelemetry sweptTelemetry =
+        billiardgl::updatePhysics(sweptState, 0.1f, cushionProfile);
+    if (!(sweptState.balls[0].velocity.x < 0.0f) ||
+        sweptState.balls[0].position.x > xLimit + 0.001f ||
+        sweptTelemetry.contacts.size() != 1) {
+        return fail("swept rail contact must stop high-speed tunneling within one tick");
+    }
+    const billiardgl::PhysicsStepTelemetry adjacentRailTelemetry =
+        billiardgl::updatePhysics(sweptState, 0.001f, cushionProfile);
+    if (!adjacentRailTelemetry.contacts.empty()) {
+        return fail("a swept rail rebound must not repeat on the adjacent tick");
+    }
+
+    billiardgl::GameState recedingRail = sweptState;
+    recedingRail.balls[0].position.x = xLimit + 0.1f;
+    billiardgl::setBallVelocity(recedingRail.balls[0], -20.0f, 0.0f, 0.0f);
+    const billiardgl::PhysicsStepTelemetry recedingRailTelemetry =
+        billiardgl::updatePhysics(recedingRail, 0.0f, cushionProfile);
+    if (!nearlyEqual(recedingRail.balls[0].velocity.x, -20.0f) ||
+        (!recedingRailTelemetry.contacts.empty() &&
+         recedingRailTelemetry.contacts[0].normalImpulseNs > 0.0)) {
+        return fail("receding rail overlap must not receive a duplicate velocity impulse");
+    }
+
+    billiardgl::GameState leftMirror;
+    billiardgl::initializeBalls(leftMirror);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        leftMirror.balls[index].pocketed = true;
+    }
+    leftMirror.balls[0].position = billiardgl::Point3{
+        -xLimit, billiardgl::kTableHeight + cushionProfile.ball.radiusCm, 25.0f};
+    billiardgl::setBallVelocity(leftMirror.balls[0], -100.0f, 0.0f, 30.0f);
+    billiardgl::updatePhysics(leftMirror, 0.0f, cushionProfile);
+    if (!nearlyEqual(cushionState.balls[0].velocity.x,
+            -leftMirror.balls[0].velocity.x) ||
+        !nearlyEqual(cushionState.balls[0].velocity.z,
+            leftMirror.balls[0].velocity.z)) {
+        return fail("opposite production rails must preserve mirror equivalence");
     }
 
     state.balls[1].position = billiardgl::Point3{0.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 0.0f};

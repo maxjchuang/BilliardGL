@@ -16,6 +16,14 @@ billiardgl::json::Value setBall(int index, double x, double z, double vx, double
     billiardgl::json::Value vel=billiardgl::json::Value::object(); vel["x"]=billiardgl::json::Value(vx); vel["y"]=billiardgl::json::Value(0); vel["z"]=billiardgl::json::Value(vz);
     p["position"]=pos; p["velocity"]=vel; return p;
 }
+
+billiardgl::json::Value pocketBall(int index)
+{
+    billiardgl::json::Value p=billiardgl::json::Value::object();
+    p["index"]=billiardgl::json::Value(index);
+    p["pocketed"]=billiardgl::json::Value(true);
+    return p;
+}
 }
 
 int main()
@@ -33,6 +41,28 @@ int main()
         runtime.physicsTrace().frames().back().contacts.size() == 1 &&
         runtime.physicsTrace().frames().back().contacts[0].normalImpulseNs > 0.0,
         "headless automation should expose the production rigid impulse");
+
+    billiardgl::GameRuntime railRuntime;
+    railRuntime.setPhysicsTraceEnabled(true);
+    billiardgl::AutomationController railController(
+        railRuntime, billiardgl::AutomationMode::Headless);
+    for (int index=1; index<billiardgl::kBallCount; ++index) {
+        expect(send(railController,10+index,"set_ball",pocketBall(index)).response.at("ok").asBool(),
+            "isolate cue ball for rail scenario");
+    }
+    expect(send(railController,30,"set_ball",setBall(0,50,25,500,0)).response.at("ok").asBool(),
+        "set swept rail ball");
+    billiardgl::json::Value railWait=billiardgl::json::Value::object();
+    railWait["condition"]=billiardgl::json::Value("rail_collision");
+    railWait["max_steps"]=billiardgl::json::Value(30);
+    expect(send(railController,31,"run_until",railWait).response.at("ok").asBool(),
+        "headless automation should reach a swept rail collision");
+    expect(railRuntime.state().balls[0].velocity.x < 0.0f &&
+        !railRuntime.physicsTrace().frames().empty() &&
+        railRuntime.physicsTrace().frames().back().contacts.size() == 1 &&
+        railRuntime.physicsTrace().frames().back().contacts[0].kind ==
+            billiardgl::PhysicsContactKind::Rail,
+        "headless automation must use and expose the production cushion model");
 
     const std::uint64_t before=runtime.tick(); billiardgl::json::Value step=billiardgl::json::Value::object(); step["ticks"]=billiardgl::json::Value(3);
     send(controller,4,"step",step); expect(runtime.tick()==before+3, "step should be exact");
