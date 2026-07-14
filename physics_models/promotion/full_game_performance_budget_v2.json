@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "maximum_matrix_wall_seconds": 30.0,
+  "cases": {
+    "cue_center_hit": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "cue_near_miscue": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "sliding_to_rolling": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "oblique_ball_collision": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "rail_rebound": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "side_pocket_capture": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "seeded_break": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "continuous_scoring": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "cue_ball_scratch": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "randomized_legal_sequence": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "cadence_equivalence": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912},
+    "host_load_equivalence": {"maximum_wall_seconds": 5.0, "maximum_peak_rss_bytes": 536870912}
+  }
+}

@@ -69,16 +69,36 @@ def validate_full_game_matrix(path, root):
     document = json.loads(path.read_text(encoding="utf-8"))
     failures = []
     cases = document.get("cases", [])
+    schema_version = document.get("schema_version")
     required = set(document.get("required_coverage", []))
     covered = {value for case in cases for value in case.get("coverage", [])}
-    if document.get("schema_version") != 1 or not cases:
-        failures.append("full-game matrix must use schema version 1")
-    if covered != required:
+    if schema_version not in {1, 2} or not cases:
+        failures.append("full-game matrix must use schema version 1 or 2")
+    if schema_version == 1 and covered != required:
         failures.append(f"coverage mismatch: missing={sorted(required-covered)} extra={sorted(covered-required)}")
     ids = [case.get("id") for case in cases]
     if len(ids) != len(set(ids)):
         failures.append("case IDs must be unique")
     for case in cases:
+        if schema_version == 2:
+            replay = case.get("replay", "")
+            expected_replay = (
+                f"full-game-stress --case {case.get('id')} "
+                f"--seed {case.get('seed')}")
+            if replay != expected_replay:
+                failures.append(f"case replay is not canonical: {case.get('id')}")
+            coverage = case.get("coverage")
+            if not isinstance(coverage, list) or not coverage or \
+                    len(coverage) != len(set(coverage)) or \
+                    not all(isinstance(value, str) and value for value in coverage):
+                failures.append(f"case coverage is invalid: {case.get('id')}")
+            if not isinstance(case.get("expected"), dict) or not case["expected"]:
+                failures.append(f"case expectation is missing: {case.get('id')}")
+            seed = case.get("seed")
+            if not isinstance(seed, int) or isinstance(seed, bool) or \
+                    not 0 <= seed <= 0xffffffff:
+                failures.append(f"case seed is not uint32: {case.get('id')}")
+            continue
         label = case.get("evidence_label")
         if label not in {"reality_golden", "analytic_golden", "behavior_snapshot"}:
             failures.append(f"invalid evidence label: {case.get('id')}")
@@ -89,6 +109,10 @@ def validate_full_game_matrix(path, root):
                 failures.append(f"golden replay artifact is missing: {case.get('id')}")
         if not isinstance(case.get("seed"), int):
             failures.append(f"case seed is not fixed: {case.get('id')}")
+    if schema_version == 2:
+        artifact_root = document.get("artifact_root")
+        if not isinstance(artifact_root, str) or not artifact_root:
+            failures.append("v2 artifact root is missing")
     return failures
 
 

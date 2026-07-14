@@ -161,6 +161,7 @@ add_executable(BilliardsFullGameStress
     tests/full_game_case_registry.cpp
     tests/full_game_component_cases.cpp
     tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
     tests/full_game_cli.cpp
     tests/full_game_artifacts.cpp
     tests/full_game_invariants.cpp
@@ -193,6 +194,7 @@ add_executable(BilliardsFullGameCliTests
     tests/full_game_case_registry.cpp
     tests/full_game_component_cases.cpp
     tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
     tests/full_game_cli.cpp
     tests/full_game_invariants.cpp
     src/Billiards/automation_json.cpp
@@ -212,6 +214,7 @@ add_executable(BilliardsFullGameComponentCasesTests
     tests/full_game_case_registry.cpp
     tests/full_game_component_cases.cpp
     tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
     tests/full_game_invariants.cpp
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
@@ -224,12 +227,26 @@ add_executable(BilliardsFullGameGameplayCasesTests
     tests/full_game_case_registry.cpp
     tests/full_game_component_cases.cpp
     tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
     tests/full_game_invariants.cpp
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsFullGameGameplayCasesTests)
+
+add_executable(BilliardsFullGameEquivalenceTests
+    tests/full_game_equivalence_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameEquivalenceTests)
 
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp

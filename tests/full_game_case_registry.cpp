@@ -1,6 +1,7 @@
 #include "full_game_case_registry.h"
 #include "full_game_component_cases.h"
 #include "full_game_gameplay_cases.h"
+#include "full_game_equivalence_cases.h"
 #include "full_game_invariants.h"
 
 #include <algorithm>
@@ -121,6 +122,8 @@ const std::vector<FullGameCase>& fullGameCases()
         {"continuous_scoring", runContinuousScoring},
         {"cue_ball_scratch", runCueBallScratch},
         {"randomized_legal_sequence", runRandomizedLegalSequence},
+        {"cadence_equivalence", runCadenceEquivalence},
+        {"host_load_equivalence", runHostLoadEquivalence},
     };
     return cases;
 }

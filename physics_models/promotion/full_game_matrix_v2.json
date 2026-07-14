@@ -1,5 +1,6 @@
 {
   "schema_version": 2,
+  "artifact_root": "physics_models/promotion/full_game_acceptance_v2",
   "cases": [
     {
       "id": "cue_center_hit",
@@ -70,6 +71,20 @@
       "replay": "full-game-stress --case randomized_legal_sequence --seed 305419896",
       "coverage": ["fixed_seed", "legal_action_generation", "multiple_shots", "user_action"],
       "expected": {"illegal_action_attempts": 0, "completed_shots": 3}
+    },
+    {
+      "id": "cadence_equivalence",
+      "seed": 401,
+      "replay": "full-game-stress --case cadence_equivalence --seed 401",
+      "coverage": ["fixed_tick", "step_batching", "common_tick_comparison"],
+      "expected": {"state_mismatches": 0, "event_mismatches": 0}
+    },
+    {
+      "id": "host_load_equivalence",
+      "seed": 503,
+      "replay": "full-game-stress --case host_load_equivalence --seed 503",
+      "coverage": ["fixed_tick", "host_load", "common_tick_comparison"],
+      "expected": {"state_mismatches": 0, "event_mismatches": 0}
     }
   ]
 }

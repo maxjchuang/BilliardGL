@@ -68,9 +68,13 @@ void writeFullGameArtifacts(
     summary["schema_version"] = billiardgl::json::Value(2);
     summary["seed"] = billiardgl::json::Value(static_cast<double>(result.seed));
     summary["step_failures"] = billiardgl::json::Value(result.stepFailures);
+    summary["state_mismatches"] =
+        billiardgl::json::Value(result.stateMismatches);
     summary["surface_transitions"] =
         billiardgl::json::Value(result.surfaceTransitions);
     summary["turn_transfers"] = billiardgl::json::Value(result.turnTransfers);
+    summary["event_mismatches"] =
+        billiardgl::json::Value(result.eventMismatches);
     summary["wall_seconds"] = billiardgl::json::Value(result.wallSeconds);
 
     atomicWrite(directory / "trace.json", canonical + "\n");

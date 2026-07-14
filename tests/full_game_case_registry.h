@@ -44,6 +44,8 @@ struct FullGameCaseResult {
     int completedShots = 0;
     int declaredShots = 0;
     bool gameOver = false;
+    int stateMismatches = 0;
+    int eventMismatches = 0;
 };
 
 typedef FullGameCaseResult (*FullGameCaseRun)(
