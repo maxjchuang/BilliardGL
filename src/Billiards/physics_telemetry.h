@@ -4,6 +4,7 @@
 #include "game_state.h"
 #include "cue_impact.h"
 #include "cue_contact.h"
+#include "cushion_contact.h"
 #include "physics_profile.h"
 #include "surface_motion.h"
 
@@ -47,6 +48,20 @@ struct PhysicsContactRecord {
     double kineticEnergyBeforeJ = 0.0;
     double kineticEnergyAfterJ = 0.0;
     double positionSlopCm = 0.0;
+    CushionContactRegime cushionRegime = CushionContactRegime::NoContact;
+    Point3 cushionContactArmCm;
+    double cushionContactHeightCm = 0.0;
+    Point3 cushionContactVelocityBeforeCmS;
+    Point3 cushionContactVelocityAfterCmS;
+    Point3 impulseOnBallNs;
+    Point3 positionCorrectionCm;
+    double restitution = 0.0;
+    double noseHeightRatio = 0.0;
+    double incidentSpeedCmS = 0.0;
+    double maximumRigidIncidentSpeedCmS = 0.0;
+    bool rigidDomainExceeded = false;
+    bool positionCorrected = false;
+    double timeOfImpactSeconds = 0.0;
 };
 
 struct PhysicsBallSample {

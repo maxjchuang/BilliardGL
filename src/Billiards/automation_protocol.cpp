@@ -233,7 +233,9 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["tangential_impulse_ns"] = json::Value(contact.tangentialImpulseNs);
     value["impulse_on_second_ns"] = pointValue(contact.impulseOnSecondNs);
     value["friction_coefficient"] = json::Value(contact.frictionCoefficient);
-    value["regime"] = json::Value(ballBallContactRegimeName(contact.regime));
+    value["regime"] = json::Value(contact.kind == PhysicsContactKind::Rail
+        ? cushionContactRegimeName(contact.cushionRegime)
+        : ballBallContactRegimeName(contact.regime));
     value["velocity_impulse_applied"] =
         json::Value(contact.velocityImpulseApplied);
     value["kinetic_energy_before_j"] =
@@ -245,6 +247,22 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["second_position_correction_cm"] =
         pointValue(contact.secondPositionCorrectionCm);
     value["position_slop_cm"] = json::Value(contact.positionSlopCm);
+    value["contact_arm_cm"] = pointValue(contact.cushionContactArmCm);
+    value["contact_height_cm"] = json::Value(contact.cushionContactHeightCm);
+    value["contact_velocity_before_cm_s"] =
+        pointValue(contact.cushionContactVelocityBeforeCmS);
+    value["contact_velocity_after_cm_s"] =
+        pointValue(contact.cushionContactVelocityAfterCmS);
+    value["impulse_on_ball_ns"] = pointValue(contact.impulseOnBallNs);
+    value["position_correction_cm"] = pointValue(contact.positionCorrectionCm);
+    value["restitution"] = json::Value(contact.restitution);
+    value["nose_height_ratio"] = json::Value(contact.noseHeightRatio);
+    value["incident_speed_cm_s"] = json::Value(contact.incidentSpeedCmS);
+    value["maximum_rigid_incident_speed_cm_s"] =
+        json::Value(contact.maximumRigidIncidentSpeedCmS);
+    value["rigid_domain_exceeded"] = json::Value(contact.rigidDomainExceeded);
+    value["position_corrected"] = json::Value(contact.positionCorrected);
+    value["time_of_impact_seconds"] = json::Value(contact.timeOfImpactSeconds);
     value["penetration_cm"] = json::Value(contact.penetrationCm);
     value["second_ball"] = json::Value(contact.secondBall);
     return value;

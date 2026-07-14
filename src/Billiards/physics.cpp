@@ -155,7 +155,7 @@ StraightRailEvent earliestRailEvent(const BallState& ball, float timeStep,
 }
 
 void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
-    const CushionContactResult& result)
+    const CushionContactResult& result, double timeOfImpactSeconds)
 {
     PhysicsContactRecord contact;
     contact.kind = PhysicsContactKind::Rail;
@@ -166,6 +166,53 @@ void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
         static_cast<float>(result.contactNormal[2])};
     contact.penetrationCm = result.penetrationM * 100.0;
     contact.normalImpulseNs = result.normalImpulseNs;
+    contact.tangentialImpulseNs = result.tangentialImpulseNs;
+    contact.frictionCoefficient = result.frictionCoefficient;
+    contact.velocityImpulseApplied = result.velocityImpulseApplied;
+    contact.kineticEnergyBeforeJ = result.kineticEnergyBeforeJ;
+    contact.kineticEnergyAfterJ = result.kineticEnergyAfterJ;
+    contact.positionSlopCm = result.positionSlopM * 100.0;
+    contact.cushionRegime = result.regime;
+    contact.cushionContactArmCm = Point3{
+        static_cast<float>(result.contactArmM[0] * 100.0),
+        static_cast<float>(result.contactArmM[1] * 100.0),
+        static_cast<float>(result.contactArmM[2] * 100.0)};
+    contact.cushionContactHeightCm = 100.0 * (
+        result.contactArmM[1] + std::sqrt(
+            result.contactArmM[0] * result.contactArmM[0] +
+            result.contactArmM[2] * result.contactArmM[2]));
+    contact.contactTangent = Point3{
+        static_cast<float>(result.contactTangent[0]),
+        static_cast<float>(result.contactTangent[1]),
+        static_cast<float>(result.contactTangent[2])};
+    contact.cushionContactVelocityBeforeCmS = Point3{
+        static_cast<float>(result.contactVelocityBeforeMS[0] * 100.0),
+        static_cast<float>(result.contactVelocityBeforeMS[1] * 100.0),
+        static_cast<float>(result.contactVelocityBeforeMS[2] * 100.0)};
+    contact.cushionContactVelocityAfterCmS = Point3{
+        static_cast<float>(result.contactVelocityAfterMS[0] * 100.0),
+        static_cast<float>(result.contactVelocityAfterMS[1] * 100.0),
+        static_cast<float>(result.contactVelocityAfterMS[2] * 100.0)};
+    contact.impulseOnBallNs = Point3{
+        static_cast<float>(result.impulseOnBallNs[0]),
+        static_cast<float>(result.impulseOnBallNs[1]),
+        static_cast<float>(result.impulseOnBallNs[2])};
+    contact.positionCorrectionCm = Point3{
+        static_cast<float>(result.positionCorrectionM[0] * 100.0),
+        static_cast<float>(result.positionCorrectionM[1] * 100.0),
+        static_cast<float>(result.positionCorrectionM[2] * 100.0)};
+    contact.normalRelativeSpeedBeforeCmS =
+        result.normalRelativeSpeedBeforeMS * 100.0;
+    contact.normalRelativeSpeedAfterCmS =
+        result.normalRelativeSpeedAfterMS * 100.0;
+    contact.restitution = result.restitution;
+    contact.noseHeightRatio = result.noseHeightRatio;
+    contact.incidentSpeedCmS = result.incidentSpeedMS * 100.0;
+    contact.maximumRigidIncidentSpeedCmS =
+        result.maximumRigidIncidentSpeedMS * 100.0;
+    contact.rigidDomainExceeded = result.rigidDomainExceeded;
+    contact.positionCorrected = result.positionCorrected;
+    contact.timeOfImpactSeconds = timeOfImpactSeconds;
     telemetry.maximumPenetrationCm = std::max(
         telemetry.maximumPenetrationCm, contact.penetrationCm);
     telemetry.contacts.push_back(contact);
@@ -346,7 +393,7 @@ PhysicsStepTelemetry updatePhysics(
                 ball, railEvent.inwardNormal, railEvent.penetrationM,
                 profile.ball, profile.cushion);
             if (rail.velocityImpulseApplied || rail.positionCorrected) {
-                appendRailContact(telemetry, i, rail);
+                appendRailContact(telemetry, i, rail, railEvent.timeSeconds);
             }
             if (rail.velocityImpulseApplied) state.events.railCollision = true;
             const float remaining = std::max(

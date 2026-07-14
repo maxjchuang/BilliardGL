@@ -140,10 +140,33 @@ class Mathavan2009MetricTests(unittest.TestCase):
 
     def test_cushion_rebound_speed_and_signed_tangent_angle_use_rail_event(self):
         rail = {
+            "contact_arm_cm": [2.625, 1.05, 0.0],
+            "contact_height_cm": 3.675,
+            "contact_tangent": [0.0, 0.0, 1.0],
+            "contact_velocity_before_cm_s": [100.0, 0.0, 4.0],
+            "contact_velocity_after_cm_s": [-3.0, 0.0, 4.0],
             "kind": "rail",
             "first_ball": 0,
+            "friction_coefficient": 0.14,
+            "impulse_on_ball_ns": [-0.2, 0.0, 0.0],
+            "incident_speed_cm_s": 100.0,
+            "kinetic_energy_after_j": 0.01,
+            "kinetic_energy_before_j": 1.0,
+            "maximum_rigid_incident_speed_cm_s": 250.0,
             "second_ball": -1,
             "normal": [-1.0, 0.0, 0.0],
+            "normal_impulse_ns": 0.2,
+            "normal_relative_speed_after_cm_s": 3.0,
+            "normal_relative_speed_before_cm_s": -100.0,
+            "nose_height_ratio": 1.4,
+            "position_corrected": False,
+            "position_correction_cm": [0.0, 0.0, 0.0],
+            "regime": "frictionless",
+            "restitution": 0.03,
+            "rigid_domain_exceeded": False,
+            "tangential_impulse_ns": 0.0,
+            "time_of_impact_seconds": 0.0,
+            "velocity_impulse_applied": True,
         }
         frames = [
             _frame(1, 0.0, [_ball(0, 5.0, [-3.0, 0.0, 4.0])], [rail]),

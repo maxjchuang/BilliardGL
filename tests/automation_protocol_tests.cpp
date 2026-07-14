@@ -84,6 +84,40 @@ int main()
         serializedContact.has("second_position_correction_cm"),
         "ball contact serialization should use explicit units and lowercase regime");
 
+    billiardgl::PhysicsContactRecord railContact;
+    railContact.kind = billiardgl::PhysicsContactKind::Rail;
+    railContact.cushionRegime = billiardgl::CushionContactRegime::Stick;
+    railContact.cushionContactArmCm = billiardgl::Point3{2.0f, 1.0f, 0.0f};
+    railContact.cushionContactHeightCm = 3.625;
+    railContact.cushionContactVelocityBeforeCmS = billiardgl::Point3{-100.0f, 0.0f, 10.0f};
+    railContact.cushionContactVelocityAfterCmS = billiardgl::Point3{80.0f, 0.0f, 0.0f};
+    railContact.impulseOnBallNs = billiardgl::Point3{-0.3f, 0.0f, -0.02f};
+    railContact.positionCorrectionCm = billiardgl::Point3{-0.01f, 0.0f, 0.0f};
+    railContact.restitution = 0.8;
+    railContact.noseHeightRatio = 1.4;
+    railContact.incidentSpeedCmS = 100.0;
+    railContact.maximumRigidIncidentSpeedCmS = 250.0;
+    railContact.rigidDomainExceeded = false;
+    railContact.positionCorrected = true;
+    railContact.timeOfImpactSeconds = 0.004;
+    const billiardgl::json::Value serializedRail =
+        billiardgl::serializePhysicsContact(railContact);
+    expect(serializedRail.at("regime").asString() == "stick" &&
+        serializedRail.has("contact_arm_cm") &&
+        serializedRail.has("contact_height_cm") &&
+        serializedRail.has("contact_velocity_before_cm_s") &&
+        serializedRail.has("contact_velocity_after_cm_s") &&
+        serializedRail.has("impulse_on_ball_ns") &&
+        serializedRail.has("position_correction_cm") &&
+        serializedRail.has("restitution") &&
+        serializedRail.has("nose_height_ratio") &&
+        serializedRail.has("incident_speed_cm_s") &&
+        serializedRail.has("maximum_rigid_incident_speed_cm_s") &&
+        serializedRail.has("rigid_domain_exceeded") &&
+        serializedRail.has("position_corrected") &&
+        serializedRail.has("time_of_impact_seconds"),
+        "rail contact serialization should expose complete diagnostics with units");
+
     billiardgl::GameRuntime cueRuntime;
     cueRuntime.setPhysicsTraceEnabled(true);
     const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(

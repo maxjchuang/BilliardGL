@@ -369,6 +369,83 @@ def _validate_ball_contact(frames, contact):
     return None, None
 
 
+def _validate_cushion_contact(contact):
+    required = {
+        "first_ball", "second_ball", "normal", "contact_tangent",
+        "contact_arm_cm", "contact_height_cm",
+        "contact_velocity_before_cm_s", "contact_velocity_after_cm_s",
+        "normal_relative_speed_before_cm_s", "normal_relative_speed_after_cm_s",
+        "normal_impulse_ns", "tangential_impulse_ns", "impulse_on_ball_ns",
+        "friction_coefficient", "restitution", "nose_height_ratio", "regime",
+        "velocity_impulse_applied", "kinetic_energy_before_j",
+        "kinetic_energy_after_j", "position_correction_cm", "position_corrected",
+        "incident_speed_cm_s", "maximum_rigid_incident_speed_cm_s",
+        "rigid_domain_exceeded", "time_of_impact_seconds",
+    }
+    if not required <= set(contact):
+        return INTEGRATION_MISMATCH, "cushion contact diagnostics are incomplete"
+    if not _finite(contact):
+        return NUMERICAL_FAILURE, "cushion contact diagnostics are not finite"
+    try:
+        normal = _vector(contact["normal"])
+        tangent = _vector(contact["contact_tangent"])
+        arm = _vector(contact["contact_arm_cm"])
+        before = _vector(contact["contact_velocity_before_cm_s"])
+        after = _vector(contact["contact_velocity_after_cm_s"])
+        impulse = _vector(contact["impulse_on_ball_ns"])
+        correction = _vector(contact["position_correction_cm"])
+    except (KeyError, TypeError, ValueError) as error:
+        return INTEGRATION_MISMATCH, str(error)
+    if any(len(value) != 3 for value in
+           (normal, tangent, arm, before, after, impulse, correction)):
+        return INTEGRATION_MISMATCH, "cushion contact vectors must have three components"
+    if abs(math.sqrt(sum(value * value for value in normal)) - 1.0) > 1e-5 \
+            or abs(sum(a * b for a, b in zip(normal, tangent))) > 1e-5:
+        return INTEGRATION_MISMATCH, "cushion contact basis is invalid"
+    normal_before = sum(value * axis for value, axis in zip(before, normal))
+    normal_after = sum(value * axis for value, axis in zip(after, normal))
+    if abs(normal_before - contact["normal_relative_speed_before_cm_s"]) > 1e-4 \
+            or abs(normal_after - contact["normal_relative_speed_after_cm_s"]) > 1e-4:
+        return INTEGRATION_MISMATCH, \
+            "reported cushion normal speed disagrees with contact velocity"
+    applied = contact["velocity_impulse_applied"]
+    corrected = contact["position_corrected"]
+    exceeded = contact["rigid_domain_exceeded"]
+    if not isinstance(applied, bool) or not isinstance(corrected, bool) \
+            or not isinstance(exceeded, bool):
+        return INTEGRATION_MISMATCH, "cushion diagnostic flags must be boolean"
+    normal_impulse = contact["normal_impulse_ns"]
+    tangent_impulse = contact["tangential_impulse_ns"]
+    friction = contact["friction_coefficient"]
+    if min(normal_impulse, tangent_impulse, friction) < 0.0:
+        return INTEGRATION_MISMATCH, "cushion impulse or friction is negative"
+    if tangent_impulse > friction * normal_impulse + 1e-10:
+        return INTEGRATION_MISMATCH, "cushion contact violates the friction cone"
+    if applied and (normal_before >= -1e-6 or normal_after < -1e-5):
+        return INTEGRATION_MISMATCH, \
+            "cushion contact does not transition from approach to separation"
+    if not applied and (normal_impulse > 1e-12 or tangent_impulse > 1e-12):
+        return INTEGRATION_MISMATCH, "cushion reports an unapplied impulse"
+    incident = contact["incident_speed_cm_s"]
+    maximum = contact["maximum_rigid_incident_speed_cm_s"]
+    if incident < 0.0 or maximum <= 0.0 \
+            or abs(incident - max(0.0, -normal_before)) > 1e-4:
+        return INTEGRATION_MISMATCH, "cushion incident-speed diagnostics disagree"
+    if exceeded != (incident > maximum + 1e-10):
+        return INTEGRATION_MISMATCH, "cushion rigid-domain label is inconsistent"
+    if contact["time_of_impact_seconds"] < 0.0:
+        return INTEGRATION_MISMATCH, "cushion time of impact is negative"
+    energy_before = contact["kinetic_energy_before_j"]
+    energy_after = contact["kinetic_energy_after_j"]
+    if energy_before < 0.0 or energy_after < 0.0 \
+            or energy_after > energy_before + max(1e-9, abs(energy_before) * 1e-7):
+        return NUMERICAL_FAILURE, "cushion contact creates kinetic energy"
+    if contact["regime"] not in {
+            "no_contact", "separating", "frictionless", "stick", "slip"}:
+        return INTEGRATION_MISMATCH, "cushion contact regime is invalid"
+    return None, None
+
+
 class _NonfiniteSurfaceState(Exception):
     pass
 
@@ -423,7 +500,11 @@ def _event_observation(metric, reference, frames):
     if event is None:
         return None, INTEGRATION_MISMATCH, "declared contact event is absent"
     event_index, contact = event
-    if contact.get("kind") == "ball_ball":
+    if contact.get("kind") == "rail":
+        code, message = _validate_cushion_contact(contact)
+        if code:
+            return None, code, message
+    elif contact.get("kind") == "ball_ball":
         code, message = _validate_ball_contact(frames, contact)
         if code:
             return None, code, message
@@ -697,6 +778,9 @@ def _paired_cushion_observation(reference, scenario, frames):
     if event is None:
         return None, INTEGRATION_MISMATCH, "declared rail event is absent"
     event_index, contact = event
+    code, message = _validate_cushion_contact(contact)
+    if code:
+        return None, code, message
     if event_index < incident_count or len(frames) - event_index < rebound_count \
             or not _contiguous(frames):
         return None, INTEGRATION_MISMATCH, "paired cushion fit window is incomplete"

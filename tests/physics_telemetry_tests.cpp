@@ -96,6 +96,33 @@ int main()
         close(frame.contacts[0].kineticEnergyAfterJ, 0.9),
         "ball contact diagnostics survive frame capture without reconstruction");
 
+    billiardgl::PhysicsContactRecord railContact;
+    railContact.kind = billiardgl::PhysicsContactKind::Rail;
+    railContact.cushionRegime = billiardgl::CushionContactRegime::Slip;
+    railContact.cushionContactArmCm = billiardgl::Point3{2.625f, 1.05f, 0.0f};
+    railContact.cushionContactHeightCm = 3.675;
+    railContact.contactTangent = billiardgl::Point3{0.0f, 0.0f, -1.0f};
+    railContact.cushionContactVelocityBeforeCmS = billiardgl::Point3{-100.0f, 0.0f, 20.0f};
+    railContact.cushionContactVelocityAfterCmS = billiardgl::Point3{80.0f, 0.0f, 5.0f};
+    railContact.impulseOnBallNs = billiardgl::Point3{-0.3f, 0.0f, -0.02f};
+    railContact.positionCorrectionCm = billiardgl::Point3{-0.01f, 0.0f, 0.0f};
+    railContact.restitution = 0.8;
+    railContact.noseHeightRatio = 1.4;
+    railContact.incidentSpeedCmS = 100.0;
+    railContact.maximumRigidIncidentSpeedCmS = 250.0;
+    railContact.rigidDomainExceeded = false;
+    railContact.positionCorrected = true;
+    railContact.timeOfImpactSeconds = 0.004;
+    step.contacts.clear();
+    step.contacts.push_back(railContact);
+    const billiardgl::PhysicsFrame railFrame =
+        billiardgl::capturePhysicsFrame(8, 0.8, 0.1f, before, after, step);
+    expect(railFrame.contacts.size() == 1 &&
+        railFrame.contacts[0].cushionRegime == billiardgl::CushionContactRegime::Slip &&
+        close(railFrame.contacts[0].cushionContactHeightCm, 3.675) &&
+        close(railFrame.contacts[0].timeOfImpactSeconds, 0.004),
+        "cushion diagnostics survive frame capture without reconstruction");
+
     billiardgl::PhysicsTrace trace(2);
     trace.append(frame);
     trace.append(frame);
