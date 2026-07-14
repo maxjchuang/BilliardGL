@@ -160,6 +160,12 @@ add_executable(BilliardsFullGameStress
 )
 billiardgl_configure_core_test(BilliardsFullGameStress)
 
+add_executable(BilliardsFullGamePerformance
+    tests/full_game_performance.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGamePerformance)
+
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp
     src/Billiards/vec.cpp

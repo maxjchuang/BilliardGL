@@ -1,0 +1,10 @@
+{
+  "artifact_bytes_per_tick_max": 100000,
+  "mean_step_ms_max": 1.0,
+  "p95_step_ms_max": 2.0,
+  "p99_step_ms_max": 5.0,
+  "peak_rss_bytes_max": 536870912,
+  "schema_version": 1,
+  "ticks": 1000,
+  "workload": "headless user-reachable center break at 120 cm/s; physics trace enabled"
+}
