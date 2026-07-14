@@ -35,6 +35,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/physics.cpp
     src/Billiards/physics_profile.cpp
     src/Billiards/physics_telemetry.cpp
+    src/Billiards/pocket_boundary.cpp
     src/Billiards/resource_path.cpp
     src/Billiards/rules.cpp
     src/Billiards/input.cpp
@@ -116,6 +117,7 @@ add_executable(Billiards
 billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
 billiardgl_add_core_test(BilliardsBallBallContactTests tests/ball_ball_contact_tests.cpp)
 billiardgl_add_core_test(BilliardsCushionContactTests tests/cushion_contact_tests.cpp)
+billiardgl_add_core_test(BilliardsPocketBoundaryTests tests/pocket_boundary_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsProfileTests tests/physics_profile_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
 billiardgl_add_core_test(BilliardsSurfaceMotionTests tests/surface_motion_tests.cpp)
