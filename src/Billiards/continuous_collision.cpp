@@ -44,7 +44,8 @@ ContinuousContactCandidate sweptBallBallCandidate(
     const BallState& first, int firstIndex,
     const BallState& second, int secondIndex,
     double maximumTimeSeconds, double combinedRadiusCm,
-    double toleranceSeconds)
+    double toleranceSeconds, bool includeRestingContacts,
+    double approachSpeedEpsilonCmS)
 {
     ContinuousContactCandidate result;
     result.kind = ContinuousContactKind::BallBall;
@@ -68,8 +69,8 @@ ContinuousContactCandidate sweptBallBallCandidate(
     if (c <= 0.0) {
         result.penetrationCm = std::max(0.0, combinedRadiusCm - distance);
         const Point3 initialNormal = normalized(relativePosition);
-        if (result.penetrationCm <= 0.0011 &&
-            dot(relativeVelocity, initialNormal) >= -1e-9) {
+        if (!includeRestingContacts && result.penetrationCm <= 0.0011 &&
+            dot(relativeVelocity, initialNormal) >= -approachSpeedEpsilonCmS) {
             return result;
         }
     } else {
@@ -102,6 +103,15 @@ std::vector<ContinuousContactCandidate> generateBallBallCandidates(
     const GameState& state, double maximumTimeSeconds,
     double ballRadiusCm, double toleranceSeconds)
 {
+    return generateBallBallCandidates(state, maximumTimeSeconds,
+        ballRadiusCm, toleranceSeconds, false, 0.001);
+}
+
+std::vector<ContinuousContactCandidate> generateBallBallCandidates(
+    const GameState& state, double maximumTimeSeconds,
+    double ballRadiusCm, double toleranceSeconds,
+    bool includeRestingContacts, double approachSpeedEpsilonCmS)
+{
     std::vector<ContinuousContactCandidate> result;
     for (int first = 0; first < kBallCount; ++first) {
         if (state.balls[first].pocketed) continue;
@@ -109,7 +119,8 @@ std::vector<ContinuousContactCandidate> generateBallBallCandidates(
             if (state.balls[second].pocketed) continue;
             const ContinuousContactCandidate candidate = sweptBallBallCandidate(
                 state.balls[first], first, state.balls[second], second,
-                maximumTimeSeconds, 2.0 * ballRadiusCm, toleranceSeconds);
+                maximumTimeSeconds, 2.0 * ballRadiusCm, toleranceSeconds,
+                includeRestingContacts, approachSpeedEpsilonCmS);
             if (candidate.valid) result.push_back(candidate);
         }
     }

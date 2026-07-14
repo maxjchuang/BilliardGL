@@ -61,7 +61,7 @@ struct SolverSettings {
     int maximumEventsPerTick = 64;
     float toiToleranceSeconds = 0.0000001f;
     int maximumIslandSize = 16;
-    int velocityIterations = 12;
+    int velocityIterations = 64;
     int positionIterations = 4;
     float penetrationSlopCm = 0.001f;
     float maximumPenetrationCm = 0.5f;

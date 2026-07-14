@@ -84,6 +84,9 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
         event.timeSeconds = 0.0f;
         event.penetrationM = std::max(
             0.0, (std::fabs(static_cast<double>(start)) - limit) / 100.0);
+        if (event.penetrationM <= 1e-9 && component * side <= 0.0f) {
+            return StraightRailEvent{};
+        }
     } else {
         if (timeStep <= 0.0f || component == 0.0f) return event;
         side = component > 0.0f ? 1.0f : -1.0f;
@@ -620,12 +623,54 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     }
     const std::vector<ContinuousContactCandidate> candidates =
         generateBallBallCandidates(state, timeStep, profile.ball.radiusCm,
-            profile.solver.toiToleranceSeconds);
-    if (candidates.empty()) return updatePhysicsDiscrete(state, timeStep, profile);
-    const double toi = candidates.front().timeOfImpactSeconds;
+            profile.solver.toiToleranceSeconds, false,
+            profile.solver.residualToleranceCmS);
     const double boundaryTime = earliestBoundaryTime(state, timeStep, profile);
-    if (toi > boundaryTime + profile.solver.toiToleranceSeconds) {
-        return updatePhysicsDiscrete(state, timeStep, profile);
+    const bool hasBoundary = boundaryTime <= timeStep;
+    if (candidates.empty()) {
+        if (!hasBoundary) return updatePhysicsDiscrete(state, timeStep, profile);
+        const GameplayEvents beforeEvents = state.events;
+        PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
+            state, static_cast<float>(boundaryTime), profile);
+        const GameplayEvents boundaryEvents = state.events;
+        PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
+            std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
+            profile, remainingEvents - 1);
+        prependTelemetry(tail, prefix);
+        state.events.ballCollision = state.events.ballCollision ||
+            boundaryEvents.ballCollision || beforeEvents.ballCollision;
+        state.events.railCollision = state.events.railCollision ||
+            boundaryEvents.railCollision || beforeEvents.railCollision;
+        state.events.ballPocketed = state.events.ballPocketed ||
+            boundaryEvents.ballPocketed || beforeEvents.ballPocketed;
+        state.events.cueBallPocketed = state.events.cueBallPocketed ||
+            boundaryEvents.cueBallPocketed || beforeEvents.cueBallPocketed;
+        state.events.eightBallPocketed = state.events.eightBallPocketed ||
+            boundaryEvents.eightBallPocketed || beforeEvents.eightBallPocketed;
+        return tail;
+    }
+    const double toi = candidates.front().timeOfImpactSeconds;
+    if (hasBoundary &&
+        toi > boundaryTime + profile.solver.toiToleranceSeconds) {
+        const GameplayEvents beforeEvents = state.events;
+        PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
+            state, static_cast<float>(boundaryTime), profile);
+        const GameplayEvents boundaryEvents = state.events;
+        PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
+            std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
+            profile, remainingEvents - 1);
+        prependTelemetry(tail, prefix);
+        state.events.ballCollision = state.events.ballCollision ||
+            boundaryEvents.ballCollision || beforeEvents.ballCollision;
+        state.events.railCollision = state.events.railCollision ||
+            boundaryEvents.railCollision || beforeEvents.railCollision;
+        state.events.ballPocketed = state.events.ballPocketed ||
+            boundaryEvents.ballPocketed || beforeEvents.ballPocketed;
+        state.events.cueBallPocketed = state.events.cueBallPocketed ||
+            boundaryEvents.cueBallPocketed || beforeEvents.cueBallPocketed;
+        state.events.eightBallPocketed = state.events.eightBallPocketed ||
+            boundaryEvents.eightBallPocketed || beforeEvents.eightBallPocketed;
+        return tail;
     }
 
     PhysicsStepTelemetry prefix;
@@ -636,8 +681,30 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         motion.ballIndex = index;
         prefix.surfaceMotion.push_back(motion);
     }
+    std::vector<ContinuousContactCandidate> contactCandidates =
+        generateBallBallCandidates(state, 0.0, profile.ball.radiusCm,
+            profile.solver.toiToleranceSeconds, true,
+            profile.solver.residualToleranceCmS);
+    for (const ContinuousContactCandidate& original : candidates) {
+        if (original.timeOfImpactSeconds >
+            toi + profile.solver.toiToleranceSeconds) break;
+        const bool duplicate = std::any_of(contactCandidates.begin(),
+            contactCandidates.end(), [&original](const ContinuousContactCandidate& value) {
+                return value.kind == original.kind &&
+                    value.firstBall == original.firstBall &&
+                    value.secondBall == original.secondBall &&
+                    value.featureId == original.featureId;
+            });
+        if (!duplicate) {
+            ContinuousContactCandidate active = original;
+            active.timeOfImpactSeconds = 0.0;
+            contactCandidates.push_back(active);
+        }
+    }
+    std::sort(contactCandidates.begin(), contactCandidates.end(),
+        continuousContactLess);
     const ContactIslandBuildResult built = buildEarliestContactIslands(
-        candidates, profile.solver.toiToleranceSeconds,
+        contactCandidates, profile.solver.toiToleranceSeconds,
         profile.solver.maximumIslandSize);
     bool impulseApplied = false;
     bool hardFailure = false;
@@ -646,7 +713,7 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         SolverEventRecord solverEvent;
         solverEvent.eventId = profile.solver.maximumEventsPerTick - remainingEvents;
         solverEvent.islandId = island.islandId;
-        solverEvent.candidateCount = static_cast<int>(candidates.size());
+        solverEvent.candidateCount = static_cast<int>(contactCandidates.size());
         solverEvent.contactCount = static_cast<int>(island.contacts.size());
         solverEvent.duplicateCandidatesRemoved = built.duplicateCandidatesRemoved;
         solverEvent.velocityIterations = solved.velocityIterations;

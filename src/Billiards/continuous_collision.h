@@ -31,10 +31,17 @@ ContinuousContactCandidate sweptBallBallCandidate(
     const BallState& first, int firstIndex,
     const BallState& second, int secondIndex,
     double maximumTimeSeconds, double combinedRadiusCm,
-    double toleranceSeconds = 1e-7);
+    double toleranceSeconds = 1e-7,
+    bool includeRestingContacts = false,
+    double approachSpeedEpsilonCmS = 0.001);
 std::vector<ContinuousContactCandidate> generateBallBallCandidates(
     const GameState& state, double maximumTimeSeconds,
     double ballRadiusCm, double toleranceSeconds = 1e-7);
+std::vector<ContinuousContactCandidate> generateBallBallCandidates(
+    const GameState& state, double maximumTimeSeconds,
+    double ballRadiusCm, double toleranceSeconds,
+    bool includeRestingContacts,
+    double approachSpeedEpsilonCmS = 0.001);
 ContinuousContactCandidate boundaryContactCandidate(
     int ballIndex, int featureId, double timeOfImpactSeconds,
     const Point3& normal, PocketBoundaryEventKind event);

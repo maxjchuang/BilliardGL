@@ -37,9 +37,17 @@ int main()
     expect(send(controller,3,"run_until",wait).response.at("ok").asBool(), "collision wait should succeed");
     expect(runtime.eventsSince(0).size() >= 1, "collision should be recorded");
     expect(runtime.state().balls[1].velocity.x > 0.0f, "collision should transfer velocity");
-    expect(!runtime.physicsTrace().frames().empty() &&
-        runtime.physicsTrace().frames().back().contacts.size() == 1 &&
-        runtime.physicsTrace().frames().back().contacts[0].normalImpulseNs > 0.0,
+    int rigidImpulses = 0;
+    if (!runtime.physicsTrace().frames().empty()) {
+        for (const billiardgl::PhysicsContactRecord& contact :
+             runtime.physicsTrace().frames().back().contacts) {
+            if (contact.kind == billiardgl::PhysicsContactKind::BallBall &&
+                contact.velocityImpulseApplied && contact.normalImpulseNs > 0.0) {
+                ++rigidImpulses;
+            }
+        }
+    }
+    expect(rigidImpulses == 1,
         "headless automation should expose the production rigid impulse");
 
     billiardgl::GameRuntime railRuntime;

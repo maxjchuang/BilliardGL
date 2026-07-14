@@ -66,7 +66,7 @@ int main()
     expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
         "sidespin decay remains unevidenced");
     expect(profile.solver.maximumIslandSize == 16 &&
-        profile.solver.velocityIterations == 12 &&
+        profile.solver.velocityIterations == 64 &&
         profile.solver.positionIterations == 4 &&
         close(profile.solver.maximumPenetrationCm, 0.5f),
         "deterministic multi-contact controls have safe defaults");

@@ -132,8 +132,20 @@ ContactSolverResult solveContactIsland(
         bool corrected = false;
         for (std::size_t index = 0; index < island.contacts.size(); ++index) {
             const ContinuousContactCandidate& contact = island.contacts[index];
+            double penetration = contact.penetrationCm;
+            if (contact.secondBall >= 0) {
+                const Point3 separation{
+                    state.balls[contact.secondBall].position.x -
+                        state.balls[contact.firstBall].position.x,
+                    state.balls[contact.secondBall].position.y -
+                        state.balls[contact.firstBall].position.y,
+                    state.balls[contact.secondBall].position.z -
+                        state.balls[contact.firstBall].position.z};
+                penetration = std::max(0.0,
+                    2.0 * profile.ball.radiusCm - std::sqrt(dot(separation, separation)));
+            }
             const double excess = std::max(0.0,
-                contact.penetrationCm - profile.solver.penetrationSlopCm);
+                penetration - profile.solver.penetrationSlopCm);
             if (excess <= 0.0) continue;
             const double share = contact.secondBall >= 0 ? 0.5 : 1.0;
             if (contact.secondBall >= 0) {
@@ -149,7 +161,6 @@ ContactSolverResult solveContactIsland(
             corrected = true;
         }
         if (!corrected) break;
-        break;
     }
 
     for (std::size_t index = 0; index < island.contacts.size(); ++index) {

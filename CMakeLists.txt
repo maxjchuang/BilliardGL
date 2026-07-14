@@ -154,6 +154,12 @@ billiardgl_add_core_test(BilliardsCueContactTests tests/cue_contact_tests.cpp)
 billiardgl_add_core_test(BilliardsTableSpecsTests tests/table_specs_tests.cpp)
 billiardgl_add_core_test(BilliardsGameRuntimeTests tests/game_runtime_tests.cpp)
 
+add_executable(BilliardsFullGameStress
+    tests/full_game_stress.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameStress)
+
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp
     src/Billiards/vec.cpp
