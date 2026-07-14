@@ -1,0 +1,50 @@
+{
+  "algorithm": {
+    "coarse_grid_step": 0.05,
+    "delta2_observation": "object_direction_deflection_from_contact_normal_in_table_plane",
+    "fine_grid_step": 0.01,
+    "objective": "mean_across_series_of_mean_squared_uncertainty_normalized_residual",
+    "stable_tie_break": [
+      "objective",
+      "normal_restitution",
+      "friction_coefficient"
+    ]
+  },
+  "dataset_lifecycle": "spent",
+  "fit": {
+    "friction_coefficient": 0.1,
+    "normal_restitution": 0.97,
+    "objective": 92.94566457583842,
+    "objective_by_series": {
+      "billiard_alpha1": 234.08979248066544,
+      "billiard_delta2": 44.48217111408977,
+      "mathavan_velocity": 0.265030132760088
+    },
+    "point_count_by_series": {
+      "billiard_alpha1": 47,
+      "billiard_delta2": 52,
+      "mathavan_velocity": 10
+    },
+    "selected_regimes": [
+      "sliding"
+    ]
+  },
+  "model": {
+    "contact_velocity": "translational_plus_angular",
+    "energy_constraint": "non_increasing_total_kinetic_energy",
+    "friction": "Coulomb_with_explicit_stick_slip",
+    "inertia_factor": 0.4,
+    "shape": "uniform_solid_sphere"
+  },
+  "parameter_bounds": {
+    "friction_coefficient": [
+      0.0,
+      1.0
+    ],
+    "normal_restitution": [
+      0.0,
+      1.0
+    ]
+  },
+  "schema_version": 2
+}
