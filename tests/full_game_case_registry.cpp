@@ -1,38 +1,21 @@
 #include "full_game_case_registry.h"
+#include "full_game_invariants.h"
 
 #include <algorithm>
 #include <cmath>
-#include <cstring>
-#include <iomanip>
 #include <set>
 #include <sstream>
 
 namespace fullgame {
 namespace {
 
-void mix(std::uint64_t& hash, const void* data, std::size_t size)
-{
-    const unsigned char* bytes = static_cast<const unsigned char*>(data);
-    for (std::size_t index = 0; index < size; ++index) {
-        hash ^= bytes[index];
-        hash *= 1099511628211ULL;
-    }
-}
-
-std::string hashText(std::uint64_t value)
-{
-    std::ostringstream stream;
-    stream << std::hex << std::setw(16) << std::setfill('0') << value;
-    return stream.str();
-}
-
 FullGameCaseResult runLegacyBreakStress(billiardgl::GameRuntime& runtime,
     std::uint32_t seed, const FullGameRunOptions& options)
 {
     FullGameCaseResult result;
     result.passed = true;
+    result.caseId = "legacy_break_stress";
     result.seed = seed;
-    std::uint64_t hash = 1469598103934665603ULL;
     for (int repeat = 0; repeat < options.repeats; ++repeat) {
         runtime.reset();
         if (!runtime.step(3).ok) {
@@ -73,8 +56,10 @@ FullGameCaseResult runLegacyBreakStress(billiardgl::GameRuntime& runtime,
             }
         }
         if (!result.passed) break;
+        result.droppedTraceFrames += runtime.physicsTrace().droppedFrames();
         for (const billiardgl::PhysicsFrame& frame :
                 runtime.physicsTrace().frames()) {
+            result.frames.push_back(frame);
             result.maximumPenetrationCm = std::max(
                 result.maximumPenetrationCm, frame.maximumPenetrationCm);
             std::set<std::string> contactKeys;
@@ -94,18 +79,8 @@ FullGameCaseResult runLegacyBreakStress(billiardgl::GameRuntime& runtime,
                     result.maximumResidualCmS, event.maximumResidualCmS);
             }
         }
-        for (const billiardgl::BallState& ball : runtime.state().balls) {
-            const float values[] = {
-                ball.position.x, ball.position.y, ball.position.z,
-                ball.velocity.x, ball.velocity.y, ball.velocity.z,
-                ball.angularVelocity.x, ball.angularVelocity.y,
-                ball.angularVelocity.z};
-            for (float value : values) {
-                if (!std::isfinite(value)) result.passed = false;
-                mix(hash, &value, sizeof(value));
-            }
-            mix(hash, &ball.pocketed, sizeof(ball.pocketed));
-        }
+        result.events.insert(result.events.end(), runtime.events().begin(),
+            runtime.events().end());
     }
     if (result.maximumPenetrationCm > 0.5 + 1e-9 ||
         result.maximumResidualCmS > 0.001 + 1e-9 ||
@@ -113,7 +88,18 @@ FullGameCaseResult runLegacyBreakStress(billiardgl::GameRuntime& runtime,
         result.passed = false;
         result.failure = "physics_invariant_failed";
     }
-    result.deterministicHash = hashText(hash);
+    const FullGameInvariantResult invariants = evaluateFullGameInvariants(
+        result.frames, result.events, result.droppedTraceFrames, 0.0, 0);
+    result.maximumPenetrationCm = invariants.maximumPenetrationCm;
+    result.maximumResidualCmS = invariants.maximumResidualCmS;
+    result.duplicateContacts = invariants.duplicateContacts;
+    result.stepFailures = invariants.stepFailures;
+    result.deterministicHash = invariants.deterministicHash;
+    if (!invariants.passed) {
+        result.passed = false;
+        if (result.failure.empty() && !invariants.failures.empty())
+            result.failure = invariants.failures.front();
+    }
     return result;
 }
 

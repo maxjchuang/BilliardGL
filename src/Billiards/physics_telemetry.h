@@ -126,6 +126,9 @@ struct PhysicsBallSample {
     Point3 angularVelocity;
     float speed = 0.0f;
     bool pocketed = false;
+    int pocketId = -1;
+    PocketInteractionPhase pocketPhase = PocketInteractionPhase::Outside;
+    std::uint64_t pocketCaptureSequence = 0;
     BallMotionState motionState = BallMotionState::Stationary;
     float contactSlipSpeedCmS = 0.0f;
     double rotationalKineticEnergyJ = 0.0;

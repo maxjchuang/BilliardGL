@@ -122,6 +122,10 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
         sample.angularVelocity = afterBall.angularVelocity;
         sample.speed = afterBall.speed;
         sample.pocketed = afterBall.pocketed;
+        sample.pocketId = afterBall.pocketInteraction.pocketId;
+        sample.pocketPhase = afterBall.pocketInteraction.phase;
+        sample.pocketCaptureSequence =
+            afterBall.pocketInteraction.captureSequence;
         sample.motionState = afterBall.motionState;
         const Point3 slip = surfaceContactSlipVelocity(
             afterBall, profile.ball.radiusCm);

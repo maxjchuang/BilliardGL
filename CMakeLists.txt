@@ -160,6 +160,10 @@ add_executable(BilliardsFullGameStress
     tests/full_game_stress.cpp
     tests/full_game_case_registry.cpp
     tests/full_game_cli.cpp
+    tests/full_game_artifacts.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 target_include_directories(BilliardsFullGameStress PRIVATE
@@ -172,10 +176,23 @@ target_compile_definitions(BilliardsFullGameStress PRIVATE
 add_test(NAME BilliardsFullGameStress COMMAND BilliardsFullGameStress
     --case legacy_break_stress --seed 101)
 
+add_executable(BilliardsFullGameArtifactTests
+    tests/full_game_artifact_tests.cpp
+    tests/full_game_artifacts.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameArtifactTests)
+
 add_executable(BilliardsFullGameCliTests
     tests/full_game_cli_tests.cpp
     tests/full_game_case_registry.cpp
     tests/full_game_cli.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsFullGameCliTests)

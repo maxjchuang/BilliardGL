@@ -23,6 +23,13 @@ struct FullGameCaseResult {
     double maximumResidualCmS = 0.0;
     int duplicateContacts = 0;
     std::string deterministicHash;
+    std::string caseId;
+    std::vector<billiardgl::PhysicsFrame> frames;
+    std::vector<billiardgl::RuntimeEvent> events;
+    std::size_t droppedTraceFrames = 0;
+    int stepFailures = 0;
+    double wallSeconds = 0.0;
+    std::uint64_t peakRssBytes = 0;
 };
 
 typedef FullGameCaseResult (*FullGameCaseRun)(

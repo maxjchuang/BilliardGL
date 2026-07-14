@@ -304,6 +304,11 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
             json::Value(sample.contactSlipSpeedCmS);
         ball["index"] = json::Value(index);
         ball["pocketed"] = json::Value(sample.pocketed);
+        ball["pocket_id"] = json::Value(sample.pocketId);
+        ball["pocket_phase"] = json::Value(
+            pocketInteractionPhaseName(sample.pocketPhase));
+        ball["pocket_capture_sequence"] =
+            json::Value(static_cast<double>(sample.pocketCaptureSequence));
         ball["position_cm"] = pointValue(sample.position);
         ball["motion_state"] = json::Value(
             ballMotionStateName(sample.motionState));

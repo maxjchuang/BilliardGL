@@ -1,10 +1,28 @@
 #include "full_game_case_registry.h"
 #include "full_game_cli.h"
+#include "full_game_artifacts.h"
+#include "full_game_invariants.h"
 
+#include <chrono>
 #include <cstdlib>
 #include <filesystem>
-#include <fstream>
 #include <iostream>
+#include <sys/resource.h>
+
+namespace {
+
+std::uint64_t peakRssBytes()
+{
+    rusage usage{};
+    if (getrusage(RUSAGE_SELF, &usage) != 0) return 0;
+#if defined(__APPLE__)
+    return static_cast<std::uint64_t>(usage.ru_maxrss);
+#else
+    return static_cast<std::uint64_t>(usage.ru_maxrss) * 1024;
+#endif
+}
+
+}  // namespace
 
 int main(int argc, char** argv)
 {
@@ -29,16 +47,34 @@ int main(int argc, char** argv)
         fullgame::findFullGameCase(command.caseId);
     if (selected == nullptr || selected->run == nullptr) return EXIT_FAILURE;
     billiardgl::GameRuntime runtime;
-    const fullgame::FullGameCaseResult result = selected->run(
+    const auto started = std::chrono::steady_clock::now();
+    fullgame::FullGameCaseResult result = selected->run(
         runtime, command.seed, fullgame::FullGameRunOptions{});
+    result.caseId = command.caseId;
+    result.wallSeconds = std::chrono::duration<double>(
+        std::chrono::steady_clock::now() - started).count();
+    result.peakRssBytes = peakRssBytes();
+    const fullgame::FullGameInvariantResult invariants =
+        fullgame::evaluateFullGameInvariants(result.frames, result.events,
+            result.droppedTraceFrames, result.wallSeconds,
+            result.peakRssBytes);
+    result.maximumPenetrationCm = invariants.maximumPenetrationCm;
+    result.maximumResidualCmS = invariants.maximumResidualCmS;
+    result.duplicateContacts = invariants.duplicateContacts;
+    result.stepFailures = invariants.stepFailures;
+    result.deterministicHash = invariants.deterministicHash;
+    if (!invariants.passed) {
+        result.passed = false;
+        if (result.failure.empty() && !invariants.failures.empty())
+            result.failure = invariants.failures.front();
+    }
     if (!command.writeDirectory.empty()) {
-        std::filesystem::create_directories(command.writeDirectory);
-        std::ofstream output(command.writeDirectory / "summary.txt");
-        if (!output) return EXIT_FAILURE;
-        output << "case=" << command.caseId << '\n'
-            << "seed=" << result.seed << '\n'
-            << "passed=" << (result.passed ? "true" : "false") << '\n'
-            << "hash=" << result.deterministicHash << '\n';
+        try {
+            fullgame::writeFullGameArtifacts(result, command.writeDirectory);
+        } catch (const std::exception& error) {
+            std::cerr << error.what() << '\n';
+            return EXIT_FAILURE;
+        }
     }
     if (!result.passed) {
         std::cerr << result.failure << '\n';
