@@ -1,0 +1,308 @@
+{
+  "accounting": {
+    "known_limitations": [],
+    "known_model_mismatches": [],
+    "missing_limitations": [],
+    "missing_model_mismatches": [],
+    "new_limitations": [],
+    "new_model_mismatches": [],
+    "unallowlistable_failures": []
+  },
+  "metadata": {
+    "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+    "dataset_id": "pocket_geometry_analytic_contract",
+    "dataset_version": "1.0.0",
+    "executable": "/private/tmp/billiardgl-phase3-check/Billiards",
+    "package": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract",
+    "package_hashes": {
+      "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+      "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+      "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+      "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+      "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+      "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+      "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+    },
+    "scenarios": {
+      "pocket_geometry_analytic_contract__corner_left_bottom_center": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__corner_left_bottom_center.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__corner_left_bottom_center.json"
+      },
+      "pocket_geometry_analytic_contract__side_left_center": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_center.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_center.json"
+      },
+      "pocket_geometry_analytic_contract__side_left_jaw": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_jaw.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_jaw.json"
+      },
+      "pocket_geometry_analytic_contract__side_left_narrow": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_narrow.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_narrow.json"
+      }
+    }
+  },
+  "partitions": {
+    "CALIBRATION": {
+      "groups": [
+        {
+          "count": 1,
+          "group_id": "corner_left_bottom_center",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        },
+        {
+          "count": 1,
+          "group_id": "side_left_center",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        },
+        {
+          "count": 1,
+          "group_id": "side_left_jaw",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        },
+        {
+          "count": 1,
+          "group_id": "side_left_narrow",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        }
+      ],
+      "points": [
+        {
+          "acceptance_interval": [
+            1.0,
+            1.0
+          ],
+          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "case_id": "corner_left_bottom_center",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "pocket_geometry_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 1.0,
+          "fit_subset": null,
+          "group_id": "corner_left_bottom_center",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "pocket_capture_event_count",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+            "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+            "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+            "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+            "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "corner_left_bottom_capture",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 1,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "pocket_geometry_analytic_contract__corner_left_bottom_center",
+          "series_id": "pocket_geometry_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:pocket:corner_left_bottom_center:capture",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__corner_left_bottom_center.json",
+          "unit": "dimensionless"
+        },
+        {
+          "acceptance_interval": [
+            1.0,
+            1.0
+          ],
+          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "case_id": "side_left_center",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "pocket_geometry_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 1.0,
+          "fit_subset": null,
+          "group_id": "side_left_center",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "pocket_capture_event_count",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+            "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+            "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+            "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+            "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "side_left_capture",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 1,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "pocket_geometry_analytic_contract__side_left_center",
+          "series_id": "pocket_geometry_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:pocket:side_left_center:capture",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_center.json",
+          "unit": "dimensionless"
+        },
+        {
+          "acceptance_interval": [
+            1.0,
+            1.0
+          ],
+          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "case_id": "side_left_jaw",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "pocket_geometry_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 1.0,
+          "fit_subset": null,
+          "group_id": "side_left_jaw",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "pocket_jaw_event_count",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+            "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+            "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+            "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+            "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "side_left_jaw_event",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 1,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "pocket_geometry_analytic_contract__side_left_jaw",
+          "series_id": "pocket_geometry_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:pocket:side_left_jaw:jaw",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_jaw.json",
+          "unit": "dimensionless"
+        },
+        {
+          "acceptance_interval": [
+            0.0,
+            0.0
+          ],
+          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "case_id": "side_left_narrow",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "pocket_geometry_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 0.0,
+          "fit_subset": null,
+          "group_id": "side_left_narrow",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "pocket_capture_event_count",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+            "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+            "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+            "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+            "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+            "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "side_left_narrow_capture",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 0,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "pocket_geometry_analytic_contract__side_left_narrow",
+          "series_id": "pocket_geometry_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:pocket:side_left_narrow:passability",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_narrow.json",
+          "unit": "dimensionless"
+        }
+      ],
+      "series": [
+        {
+          "count": 4,
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0,
+          "series_id": "pocket_geometry_v1"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "points": 4,
+        "statuses": {
+          "PASSED": 4
+        }
+      }
+    },
+    "HOLDOUT": {
+      "groups": [],
+      "points": [],
+      "series": [],
+      "summary": {
+        "passed": 0,
+        "points": 0,
+        "statuses": {}
+      }
+    }
+  },
+  "reference_limitations": []
+}

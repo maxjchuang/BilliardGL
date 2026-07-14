@@ -66,6 +66,10 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
     const PhysicsProfile& profile, bool xAxis)
 {
     StraightRailEvent event;
+    if (ball.pocketInteraction.phase == PocketInteractionPhase::ThroatCrossed ||
+        ball.pocketInteraction.phase == PocketInteractionPhase::Captured) {
+        return event;
+    }
     event.xAxis = xAxis;
     const float limit = (xAxis ? kTableInWidth : kTableInLength) / 2.0f -
         profile.ball.radiusCm;

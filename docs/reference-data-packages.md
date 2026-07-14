@@ -598,3 +598,20 @@ Before a real source package receives numerical points, record and review:
 - [ ] Package verification, unit tests, and production-process reference E2E pass offline.
 
 Do not add unaudited paper-derived values to the synthetic foundation package.
+
+## Pocket geometry analytic contract v1
+
+`pocket_geometry_analytic_contract` is a repository-authored grade-C contract for
+radius-offset corner/side mouths, throat passability, jaw events, capture-plane
+ordering, and mirror cases. Its applicability is `WPA_POOL_GEOMETRY` at the
+package level; normalized points use `NOT_APPLICABLE` because they are exact
+equation checks rather than measurements. It makes no trajectory, cloth,
+cushion-material, rebound, or real-world pot-success claim.
+
+- Package manifest SHA-256: `390c14f037c28e33e6f25efd31ba183e2265cdd40765b8dbd8731c0ecce40362`.
+- Full 2,800-row scan SHA-256:
+  `1e19a19566b0e007ba9b19a22efced1a4f287853c5bf74a9b1e7fb0a87f655f2`.
+- CALIBRATION executed four preregistered cases with four passes and zero
+  HOLDOUT rows; report SHA-256:
+  `dbb6d2bb2ed0b6486dc475d8fb7771cc94c593837104a6aacd9a4c171a50dba9`.
+- The candidate HOLDOUT remains unexecuted until after the immutable freeze.

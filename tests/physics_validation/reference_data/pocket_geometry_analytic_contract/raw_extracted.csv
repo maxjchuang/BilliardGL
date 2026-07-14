@@ -1,0 +1,9 @@
+case_id,partition,metric,exact_decimal_value,unit,source_locator
+side_left_center,CALIBRATION,pocket_capture_event_count,1,count,analytic:pocket:side_left_center:capture
+corner_left_bottom_center,CALIBRATION,pocket_capture_event_count,1,count,analytic:pocket:corner_left_bottom_center:capture
+side_left_jaw,CALIBRATION,pocket_jaw_event_count,1,count,analytic:pocket:side_left_jaw:jaw
+side_left_narrow,CALIBRATION,pocket_capture_event_count,0,count,analytic:pocket:side_left_narrow:passability
+side_right_center,HOLDOUT,pocket_capture_event_count,1,count,analytic:pocket:side_right_center:capture
+corner_right_top_center,HOLDOUT,pocket_capture_event_count,1,count,analytic:pocket:corner_right_top_center:capture
+side_right_jaw,HOLDOUT,pocket_jaw_event_count,1,count,analytic:pocket:side_right_jaw:jaw
+side_right_narrow,HOLDOUT,pocket_capture_event_count,0,count,analytic:pocket:side_right_narrow:passability

@@ -885,6 +885,19 @@ def _paired_cushion_observation(reference, scenario, frames):
 
 
 def _reference_observation(observed_metric, reference, scenario, frames):
+    if observed_metric in {
+            "pocket_capture_event_count", "pocket_jaw_event_count",
+            "pocket_throat_event_count"}:
+        event_names = {
+            "pocket_capture_event_count": {"capture"},
+            "pocket_jaw_event_count": {"left_jaw", "right_jaw"},
+            "pocket_throat_event_count": {"throat"},
+        }[observed_metric]
+        count = sum(
+            1 for frame in frames for contact in frame.get("contacts", [])
+            if contact.get("kind") == "pocket" and
+            contact.get("pocket_boundary_event") in event_names)
+        return count, None, None
     if observed_metric == "trajectory_position_rmse_mm":
         return _trajectory_observation(reference, frames)
     if observed_metric in {"stopping_time_seconds", "transition_to_rolling_time_seconds"}:

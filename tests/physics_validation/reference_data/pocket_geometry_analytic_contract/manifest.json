@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "dataset_id": "pocket_geometry_analytic_contract",
+  "dataset_version": "1.0.0",
+  "adapter_id": "pocket_geometry_analytic_v1",
+  "source": {"kind": "analytic_contract", "title": "Radius-offset pool pocket geometry", "locator": "repository-authored closed-form geometry"},
+  "acquisition": {"date": "2026-07-14", "method": "independent derivation", "license_status": "repository-authored", "source_media_committed": false},
+  "apparatus": {"pool_applicability": "WPA_POOL_GEOMETRY", "reason": "nominal equipment geometry only; no trajectory or material experiment"},
+  "evidence": {"grade": "C", "claim": "analytic geometry, passability, mirror and event-order invariants only", "experimental_validation": false},
+  "extraction_review": {"date": "2026-07-14", "method": "byte hash verification and mirror-pair audit", "operator": "Codex", "reviewed_by": "deterministic adapter tests"},
+  "files": [
+    {"id": "raw_extracted", "path": "raw_extracted.csv", "sha256": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466"},
+    {"id": "normalized", "path": "normalized.csv", "sha256": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0"},
+    {"id": "split", "path": "split.json", "sha256": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"},
+    {"id": "extraction", "path": "extraction.json", "sha256": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6"},
+    {"id": "scenario_template", "path": "scenario_template.json", "sha256": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186"},
+    {"id": "expected_model_mismatches", "path": "expected_model_mismatches.json", "sha256": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b"},
+    {"id": "expected_reference_limitations", "path": "expected_reference_limitations.json", "sha256": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b"}
+  ]
+}

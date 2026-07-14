@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "base_scenario": {
+    "schema_version": 7,
+    "id": "pocket_geometry_analytic",
+    "description": "Grade-C analytic pocket geometry contract; not experimental trajectory validation",
+    "evidence": {"grade": "C", "source": "repository analytic geometry", "equipment": "WPA_POOL"},
+    "simulation": {"ticks": 3, "time_step_seconds": 0.1},
+    "balls": [{"index": 0, "position_cm": [0.0, 89.341476, 0.0], "velocity_cm_s": [0.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0], "pocketed": false}],
+    "physics_profile": {
+      "id": "pocket_boundary_analytic_v1", "formula_version": "pocket_boundary_v1",
+      "ball": {"mass_kg": 0.17, "radius_cm": 2.8575, "inertia_factor": 0.4, "normal_restitution": 0.36, "friction_coefficient": 0.25, "material": "phenolic_resin"},
+      "surface": {"legacy_friction_acceleration_cm_s2": 0.0, "sliding_friction_coefficient": 0.0, "rolling_resistance_acceleration_cm_s2": 0.0, "torsional_spin_deceleration_rad_s2": 0.0, "slip_speed_epsilon_cm_s": 0.0001, "stop_energy_threshold_j": 1e-09, "material": "analytic_frictionless"},
+      "cue": {"effective_mass_kg": 0.5, "normal_restitution": 0.0, "chalked_friction_coefficient": 0.6, "unchalked_friction_coefficient": 0.1, "maximum_reliable_offset_radius": 0.8, "cue_speed_per_power_unit_cm_s": 1.34},
+      "cushion": {"normal_restitution": 0.9248723120650503, "friction_coefficient": 0.14, "nose_height_ratio": 1.4, "maximum_rigid_incident_speed_cm_s": 250.0, "material": "analytic_cushion"},
+      "table_boundary": {"playfield_width_cm": 127.0, "playfield_length_cm": 254.0, "corner_mouth_width_cm": 13.2, "side_mouth_width_cm": 8.6, "corner_throat_width_cm": 11.0, "side_throat_width_cm": 7.0, "jaw_radius_cm": 1.2, "throat_depth_cm": 4.0, "capture_depth_cm": 6.0, "geometry_id": "wpa_pool_analytic_v1", "material": "profiled_table_boundary"},
+      "solver": {"time_step_seconds": 0.1, "maximum_events_per_tick": 64}
+    },
+    "expectations": []
+  },
+  "cases": {
+    "side_left_center": {"position_cm": [-58.5, 89.341476, 0.0], "velocity_cm_s": [-100.0, 0.0, 0.0]},
+    "corner_left_bottom_center": {"position_cm": [-59.964466, 89.341476, -123.464466], "velocity_cm_s": [-70.710678, 0.0, -70.710678]},
+    "side_left_jaw": {"position_cm": [-63.5, 89.341476, 0.0], "velocity_cm_s": [0.0, 0.0, -100.0]},
+    "side_left_narrow": {"position_cm": [-58.5, 89.341476, 0.0], "velocity_cm_s": [-100.0, 0.0, 0.0], "side_throat_width_cm": 5.0},
+    "side_right_center": {"position_cm": [58.5, 89.341476, 0.0], "velocity_cm_s": [100.0, 0.0, 0.0]},
+    "corner_right_top_center": {"position_cm": [59.964466, 89.341476, 123.464466], "velocity_cm_s": [70.710678, 0.0, 70.710678]},
+    "side_right_jaw": {"position_cm": [63.5, 89.341476, 0.0], "velocity_cm_s": [0.0, 0.0, 100.0]},
+    "side_right_narrow": {"position_cm": [58.5, 89.341476, 0.0], "velocity_cm_s": [100.0, 0.0, 0.0], "side_throat_width_cm": 5.0}
+  }
+}
