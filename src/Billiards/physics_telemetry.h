@@ -2,6 +2,7 @@
 
 #include "game_state.h"
 #include "cue_impact.h"
+#include "physics_profile.h"
 
 #include <array>
 #include <cstddef>
@@ -60,6 +61,7 @@ struct PhysicsFrame {
     double maximumPenetrationCm = 0.0;
     bool hasCueImpactInput = false;
     CueImpactInput cueImpactInput;
+    std::string physicsProfileId;
 };
 
 Point3 translationalMomentumKgMps(
@@ -68,6 +70,9 @@ double translationalKineticEnergyJ(
     const GameState& state, float ballMassKg = kDefaultBallMassKg);
 PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
     const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry);
+PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
+    const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry,
+    const PhysicsProfile& profile);
 
 class PhysicsTrace {
 public:

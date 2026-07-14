@@ -48,7 +48,8 @@ double translationalKineticEnergyJ(const GameState& state, float ballMassKg)
 }
 
 PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
-    const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry)
+    const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry,
+    const PhysicsProfile& profile)
 {
     PhysicsFrame frame;
     frame.tick = tick;
@@ -56,8 +57,10 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     frame.deltaSeconds = deltaSeconds;
     frame.contacts = telemetry.contacts;
     frame.maximumPenetrationCm = telemetry.maximumPenetrationCm;
-    frame.linearMomentum = translationalMomentumKgMps(after);
-    frame.translationalKineticEnergyJ = translationalKineticEnergyJ(after);
+    frame.linearMomentum = translationalMomentumKgMps(after, profile.ball.massKg);
+    frame.translationalKineticEnergyJ =
+        translationalKineticEnergyJ(after, profile.ball.massKg);
+    frame.physicsProfileId = profile.id;
     frame.control.aimYaw = after.aim.yaw;
     frame.control.shotPower = after.input.shotPower;
     frame.control.shotTaken = after.players.shotTaken;
@@ -75,6 +78,14 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
         sample.pocketed = afterBall.pocketed;
     }
     return frame;
+}
+
+PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
+    const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry)
+{
+    return capturePhysicsFrame(
+        tick, timeSeconds, deltaSeconds, before, after, telemetry,
+        defaultChinesePoolPhysicsProfile());
 }
 
 void PhysicsTrace::clear()

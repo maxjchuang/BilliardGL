@@ -72,5 +72,39 @@ int main()
     traced.reset();
     expect(!traced.physicsTraceEnabled() && traced.physicsTrace().frames().empty(),
         "reset clears and disables tracing");
+
+    billiardgl::GameRuntime profiled;
+    expect(profiled.physicsProfile().id == "chinese_pool_legacy_v1",
+        "runtime should own the production profile by default");
+    billiardgl::PhysicsProfile experiment =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    experiment.id = "experiment_surface_v1";
+    experiment.ball.massKg = 0.205f;
+    const billiardgl::GameState replacement = profiled.state();
+    expect(profiled.replaceStateForScenario(replacement, experiment).ok,
+        "valid profile should apply atomically");
+    expect(profiled.physicsProfile().id == "experiment_surface_v1",
+        "runtime should retain the scenario profile");
+
+    billiardgl::PhysicsProfile invalid = experiment;
+    invalid.ball.radiusCm = 0.0f;
+    expect(!profiled.replaceStateForScenario(replacement, invalid).ok,
+        "invalid profile should be rejected");
+    expect(profiled.physicsProfile().id == "experiment_surface_v1",
+        "failed replacement should preserve the previous profile");
+
+    billiardgl::GameState before = profiled.state();
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        before.balls[index].pocketed = true;
+    }
+    billiardgl::GameState after = before;
+    after.balls[0].velocity.x = 100.0f;
+    const billiardgl::PhysicsFrame frame = billiardgl::capturePhysicsFrame(
+        1, 0.1, 0.1f, before, after,
+        billiardgl::PhysicsStepTelemetry{}, experiment);
+    expect(frame.physicsProfileId == "experiment_surface_v1",
+        "trace should include the active profile ID");
+    expect(closeEnough(frame.linearMomentum.x, 0.205f),
+        "trace momentum should use the active profile mass");
     return 0;
 }

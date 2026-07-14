@@ -263,9 +263,8 @@ ActionResult applyPhysicsScenario(GameRuntime& runtime, const PhysicsScenario& s
     GameState state;
     initializeBalls(state);
     state.balls = scenario.balls;
-    runtime.replaceStateForScenario(
+    return runtime.replaceStateForScenario(
         state, scenario.hasCueImpact ? &scenario.cueImpact : nullptr);
-    return ActionResult{};
 }
 
 }  // namespace billiardgl

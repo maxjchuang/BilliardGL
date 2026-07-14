@@ -46,6 +46,7 @@ void GameRuntime::reset()
     physicsTrace_.clear();
     hasCueImpactInput_ = false;
     cueImpactInput_ = CueImpactInput{};
+    physicsProfile_ = defaultChinesePoolPhysicsProfile();
     updateCameraFromCueBall(state_);
 }
 
@@ -136,12 +137,13 @@ ActionResult GameRuntime::step(int count)
     if (count < 0) return ActionResult{false, "invalid_argument"};
     for (int i = 0; i < count; ++i) {
         const GameState before = state_;
-        const PhysicsStepTelemetry telemetry = updatePhysics(state_, kDefaultTimeStep);
+        const float timeStep = physicsProfile_.solver.timeStepSeconds;
+        const PhysicsStepTelemetry telemetry = updatePhysics(state_, timeStep, physicsProfile_);
         ++tick_;
         if (physicsTraceEnabled_) {
             PhysicsFrame frame = capturePhysicsFrame(
-                tick_, static_cast<double>(tick_) * kDefaultTimeStep,
-                kDefaultTimeStep, before, state_, telemetry);
+                tick_, static_cast<double>(tick_) * timeStep,
+                timeStep, before, state_, telemetry, physicsProfile_);
             frame.hasCueImpactInput = hasCueImpactInput_;
             frame.cueImpactInput = cueImpactInput_;
             physicsTrace_.append(frame);
@@ -194,9 +196,23 @@ void GameRuntime::replaceState(const GameState& state)
     state_.ballsMoving = anyBallMoving(state_);
 }
 
-void GameRuntime::replaceStateForScenario(const GameState& state, const CueImpactInput* cueImpact)
+ActionResult GameRuntime::replaceStateForScenario(
+    const GameState& state, const CueImpactInput* cueImpact)
 {
+    return replaceStateForScenario(
+        state, defaultChinesePoolPhysicsProfile(), cueImpact);
+}
+
+ActionResult GameRuntime::replaceStateForScenario(
+    const GameState& state, const PhysicsProfile& profile,
+    const CueImpactInput* cueImpact)
+{
+    const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
+    if (!validation.ok) {
+        return ActionResult{false, "invalid_physics_profile"};
+    }
     replaceState(state);
+    physicsProfile_ = profile;
     tick_ = 0;
     nextSequence_ = 1;
     events_.clear();
@@ -204,6 +220,7 @@ void GameRuntime::replaceStateForScenario(const GameState& state, const CueImpac
     physicsTrace_.clear();
     hasCueImpactInput_ = cueImpact != nullptr;
     cueImpactInput_ = cueImpact ? *cueImpact : CueImpactInput{};
+    return ActionResult{};
 }
 
 void GameRuntime::clearEvents()

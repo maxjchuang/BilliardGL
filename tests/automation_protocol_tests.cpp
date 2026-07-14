@@ -30,6 +30,13 @@ int main()
     expect(state.at("camera").has("target"), "state should include camera");
     expect(state.at("players").has("current_player"), "state should include players");
 
+    runtime.setPhysicsTraceEnabled(true);
+    expect(runtime.step(1).ok, "runtime should produce a trace frame");
+    const billiardgl::json::Value physicsFrame =
+        billiardgl::serializePhysicsFrame(runtime.physicsTrace().frames().front());
+    expect(physicsFrame.at("physics_profile_id").asString() ==
+        "chinese_pool_legacy_v1", "trace should identify its physics profile");
+
     const std::string error = billiardgl::json::stringify(
         billiardgl::automationErrorResponse(7, "invalid_argument", "bad value"));
     expect(error == "{\"error\":{\"code\":\"invalid_argument\",\"message\":\"bad value\"},\"id\":7,\"ok\":false}",

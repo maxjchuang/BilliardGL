@@ -4,6 +4,7 @@
 #include "game_state.h"
 #include "cue_impact.h"
 #include "physics_telemetry.h"
+#include "physics_profile.h"
 
 #include <cstdint>
 #include <string>
@@ -35,7 +36,11 @@ public:
     std::vector<RuntimeEvent> eventsSince(std::uint64_t sequence) const;
     ActionResult setBall(int index, const BallState& ball);
     void replaceState(const GameState& state);
-    void replaceStateForScenario(const GameState& state, const CueImpactInput* cueImpact = nullptr);
+    ActionResult replaceStateForScenario(
+        const GameState& state, const CueImpactInput* cueImpact = nullptr);
+    ActionResult replaceStateForScenario(
+        const GameState& state, const PhysicsProfile& profile,
+        const CueImpactInput* cueImpact = nullptr);
     void clearEvents();
     void setPhysicsTraceEnabled(bool enabled) { physicsTraceEnabled_ = enabled; }
     bool physicsTraceEnabled() const { return physicsTraceEnabled_; }
@@ -43,6 +48,7 @@ public:
     const PhysicsTrace& physicsTrace() const { return physicsTrace_; }
     bool hasCueImpactInput() const { return hasCueImpactInput_; }
     const CueImpactInput& cueImpactInput() const { return cueImpactInput_; }
+    const PhysicsProfile& physicsProfile() const { return physicsProfile_; }
 
 private:
     void applyShot();
@@ -56,6 +62,7 @@ private:
     PhysicsTrace physicsTrace_{10000};
     bool hasCueImpactInput_ = false;
     CueImpactInput cueImpactInput_;
+    PhysicsProfile physicsProfile_;
 };
 
 }  // namespace billiardgl

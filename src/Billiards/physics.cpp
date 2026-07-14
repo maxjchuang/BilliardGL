@@ -227,7 +227,8 @@ bool updatePocketedBall(GameState& state, int ballIndex)
     return true;
 }
 
-PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)
+PhysicsStepTelemetry updatePhysics(
+    GameState& state, float timeStep, const PhysicsProfile& profile)
 {
     PhysicsStepTelemetry telemetry;
     const bool wasMoving = state.ballsMoving;
@@ -281,7 +282,9 @@ PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)
             contact.firstBall = i;
             telemetry.contacts.push_back(contact);
         }
-        applyFrictionAndMove(ball, timeStep, kDefaultFrictionAcceleration);
+        applyFrictionAndMove(
+            ball, timeStep,
+            -profile.surface.legacyFrictionAccelerationCmS2);
         if (ball.speed > 0.0f) {
             anyMoving = true;
         }
@@ -289,6 +292,11 @@ PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)
     state.ballsMoving = anyMoving;
     state.events.shotEnded = wasMoving && !anyMoving && state.players.shotTaken;
     return telemetry;
+}
+
+PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)
+{
+    return updatePhysics(state, timeStep, defaultChinesePoolPhysicsProfile());
 }
 
 }  // namespace billiardgl
