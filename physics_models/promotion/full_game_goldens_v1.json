@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {"case_id":"cue_center_hit","label":"analytic_golden","artifact":"tests/e2e/test_headless_automation.py","artifact_sha256":"8cacd49515027534ed8f12acd22282f54ab31dccb2d485efbdd5fb78fcc77e70","validated_point_id":null},
+    {"case_id":"cue_near_miscue","label":"behavior_snapshot","artifact":"tests/physics_validation/scenarios/cue_impact_v2_contract.json","artifact_sha256":"392da69774cae7b8127ef903be52fc87cef8b1af559aba0554d2a67b7d8b7066","validated_point_id":null},
+    {"case_id":"sliding_to_rolling","label":"behavior_snapshot","artifact":"physics_models/candidates/surface_motion_v1/validation/reference_report.json","artifact_sha256":"74faaf15fc9c32042a1037851dca970c7645e8a97236f630c15b298560f7688d","validated_point_id":null},
+    {"case_id":"oblique_ball_collision","label":"reality_golden","artifact":"physics_models/candidates/ball_collision_v1/validation/mathavan_2009/reference_report.json","artifact_sha256":"36b55c6d23df682ad2d8a648f1efa16b0eeb6e8f0f2acfb6883b37e168b14de8","validated_point_id":"table1_shot_03_cue_speed"},
+    {"case_id":"rail_rebound","label":"reality_golden","artifact":"physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/reference_report.json","artifact_sha256":"a2352c1b05b7fee2ca1b07af8514d3c9e66ca1e7c18ce7ee313c1579ef86e054","validated_point_id":"fig7_experimental_07"},
+    {"case_id":"side_pocket_capture","label":"analytic_golden","artifact":"physics_models/candidates/pocket_boundary_v1/validation/reference_report.json","artifact_sha256":"759053f5e3398b00eced70d9924d56da547aa1092c60cad6c34be61dfe5b3ea5","validated_point_id":"side_right_capture"},
+    {"case_id":"seeded_break","label":"behavior_snapshot","artifact":"physics_models/promotion/full_game_stress_v1.csv","artifact_sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1","validated_point_id":null},
+    {"case_id":"continuous_scoring","label":"behavior_snapshot","artifact":"physics_models/promotion/full_game_stress_v1.csv","artifact_sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1","validated_point_id":null},
+    {"case_id":"cue_ball_scratch","label":"behavior_snapshot","artifact":"physics_models/promotion/full_game_stress_v1.csv","artifact_sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1","validated_point_id":null},
+    {"case_id":"cadence_equivalence","label":"analytic_golden","artifact":"physics_models/promotion/full_game_stress_v1.csv","artifact_sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1","validated_point_id":null},
+    {"case_id":"host_load_equivalence","label":"analytic_golden","artifact":"physics_models/promotion/full_game_stress_v1.csv","artifact_sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1","validated_point_id":null}
+  ],
+  "schema_version":1
+}

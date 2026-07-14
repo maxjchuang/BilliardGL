@@ -74,3 +74,35 @@ def validate_full_game_matrix(path, root):
         if not isinstance(case.get("seed"), int):
             failures.append(f"case seed is not fixed: {case.get('id')}")
     return failures
+
+
+def validate_golden_registry(path, matrix_path, root):
+    path, matrix_path, root = Path(path), Path(matrix_path), Path(root)
+    registry = json.loads(path.read_text(encoding="utf-8"))
+    matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
+    failures = []
+    expected = {case["id"]: case["evidence_label"] for case in matrix["cases"]}
+    entries = registry.get("entries", [])
+    if registry.get("schema_version") != 1 or len(entries) != len(expected):
+        failures.append("golden registry does not match matrix size")
+    actual = {entry.get("case_id"): entry for entry in entries}
+    if set(actual) != set(expected):
+        failures.append("golden registry case set differs from matrix")
+    for case_id, label in expected.items():
+        entry = actual.get(case_id, {})
+        if entry.get("label") != label:
+            failures.append(f"golden evidence label changed: {case_id}")
+        artifact = root / entry.get("artifact", "")
+        if not artifact.is_file():
+            failures.append(f"golden artifact missing: {case_id}")
+            continue
+        if hashlib.sha256(artifact.read_bytes()).hexdigest() != entry.get("artifact_sha256"):
+            failures.append(f"golden artifact hash mismatch: {case_id}")
+        if label == "reality_golden":
+            point_id = entry.get("validated_point_id")
+            if not point_id or '"status": "PASSED"' not in artifact.read_text(encoding="utf-8") \
+                    or point_id not in artifact.read_text(encoding="utf-8"):
+                failures.append(f"reality golden lacks a passed validation point: {case_id}")
+        if label == "behavior_snapshot" and entry.get("validated_point_id") is not None:
+            failures.append(f"behavior snapshot claims validation: {case_id}")
+    return failures
