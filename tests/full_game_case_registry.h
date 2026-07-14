@@ -30,6 +30,13 @@ struct FullGameCaseResult {
     int stepFailures = 0;
     double wallSeconds = 0.0;
     std::uint64_t peakRssBytes = 0;
+    int surfaceTransitions = 0;
+    int ballCollisions = 0;
+    int railCollisions = 0;
+    int objectBallCaptures = 0;
+    int cueBallCaptures = 0;
+    bool cueContactApplied = false;
+    bool cueContactMiscue = false;
 };
 
 typedef FullGameCaseResult (*FullGameCaseRun)(

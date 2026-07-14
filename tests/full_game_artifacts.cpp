@@ -35,6 +35,12 @@ void writeFullGameArtifacts(
 
     billiardgl::json::Value summary = billiardgl::json::Value::object();
     summary["case_id"] = billiardgl::json::Value(result.caseId);
+    summary["ball_collisions"] = billiardgl::json::Value(result.ballCollisions);
+    summary["cue_ball_captures"] = billiardgl::json::Value(result.cueBallCaptures);
+    summary["cue_contact_applied"] =
+        billiardgl::json::Value(result.cueContactApplied);
+    summary["cue_contact_miscue"] =
+        billiardgl::json::Value(result.cueContactMiscue);
     summary["deterministic_hash"] = billiardgl::json::Value(digest);
     summary["dropped_trace_frames"] = billiardgl::json::Value(
         static_cast<double>(result.droppedTraceFrames));
@@ -46,12 +52,17 @@ void writeFullGameArtifacts(
         billiardgl::json::Value(result.maximumPenetrationCm);
     summary["maximum_residual_cm_s"] =
         billiardgl::json::Value(result.maximumResidualCmS);
+    summary["object_ball_captures"] =
+        billiardgl::json::Value(result.objectBallCaptures);
     summary["passed"] = billiardgl::json::Value(result.passed);
     summary["peak_rss_bytes"] = billiardgl::json::Value(
         static_cast<double>(result.peakRssBytes));
+    summary["rail_collisions"] = billiardgl::json::Value(result.railCollisions);
     summary["schema_version"] = billiardgl::json::Value(2);
     summary["seed"] = billiardgl::json::Value(static_cast<double>(result.seed));
     summary["step_failures"] = billiardgl::json::Value(result.stepFailures);
+    summary["surface_transitions"] =
+        billiardgl::json::Value(result.surfaceTransitions);
     summary["wall_seconds"] = billiardgl::json::Value(result.wallSeconds);
 
     atomicWrite(directory / "trace.json", canonical + "\n");

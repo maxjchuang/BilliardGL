@@ -1,4 +1,5 @@
 #include "full_game_case_registry.h"
+#include "full_game_component_cases.h"
 #include "full_game_invariants.h"
 
 #include <algorithm>
@@ -109,6 +110,12 @@ const std::vector<FullGameCase>& fullGameCases()
 {
     static const std::vector<FullGameCase> cases = {
         {"legacy_break_stress", runLegacyBreakStress},
+        {"cue_center_hit", runCueCenterHit},
+        {"cue_near_miscue", runCueNearMiscue},
+        {"sliding_to_rolling", runSlidingToRolling},
+        {"oblique_ball_collision", runObliqueBallCollision},
+        {"rail_rebound", runRailRebound},
+        {"side_pocket_capture", runSidePocketCapture},
     };
     return cases;
 }
