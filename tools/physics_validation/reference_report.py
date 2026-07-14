@@ -1,6 +1,7 @@
 import csv
 import json
 import math
+import re
 from pathlib import Path
 
 from .analyzer import (
@@ -60,11 +61,29 @@ _FAILURE_PRIORITY = {
     MODEL_MISMATCH: 3,
     REFERENCE_LIMITATION: 4,
 }
+_SAFE_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*")
+_SHA256 = re.compile(r"[0-9a-f]{64}")
 
 
 def _json(document):
     return json.dumps(
         document, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False) + "\n"
+
+
+def _validate_candidate_metadata(metadata):
+    has_candidate = "candidate_id" in metadata
+    has_freeze = "freeze_sha256" in metadata
+    if has_candidate != has_freeze:
+        raise ValueError(
+            "candidate metadata requires candidate_id and freeze_sha256 together")
+    if not has_candidate:
+        return
+    if not isinstance(metadata["candidate_id"], str) \
+            or _SAFE_ID.fullmatch(metadata["candidate_id"]) is None:
+        raise ValueError("candidate metadata candidate_id is invalid")
+    if not isinstance(metadata["freeze_sha256"], str) \
+            or _SHA256.fullmatch(metadata["freeze_sha256"]) is None:
+        raise ValueError("candidate metadata freeze_sha256 is invalid")
 
 
 def _scenario_id(case):
@@ -462,6 +481,7 @@ def _markdown_limitations(limitations):
 
 def write_reference_reports(
         cases, results, accounting, output_directory, metadata, *, points=(), limitations=()):
+    _validate_candidate_metadata(metadata)
     output_directory = Path(output_directory)
     output_directory.mkdir(parents=True, exist_ok=True)
     result_map = {}

@@ -267,6 +267,18 @@ class ReferenceReportTests(unittest.TestCase):
                 "Unallowlistable failures"):
             self.assertIn(heading, markdown)
 
+    def test_candidate_metadata_requires_a_complete_frozen_identity(self):
+        self.metadata["candidate_id"] = "surface_motion_v1"
+        self.metadata["freeze_sha256"] = "b" * 64
+        json_path, _, _ = self._write([], [], accounting())
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+        self.assertEqual(payload["metadata"]["candidate_id"], "surface_motion_v1")
+        self.assertEqual(payload["metadata"]["freeze_sha256"], "b" * 64)
+
+        del self.metadata["freeze_sha256"]
+        with self.assertRaisesRegex(ValueError, "candidate metadata"):
+            self._write([], [], accounting())
+
 
 if __name__ == "__main__":
     unittest.main()

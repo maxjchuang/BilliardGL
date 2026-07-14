@@ -1,0 +1,29 @@
+{
+  "datasets": [
+    {
+      "calibration_status": "calibration",
+      "dataset_id": "cross_2023_cue_impact",
+      "dataset_version": "1.0.0-admission-blocked",
+      "holdout_status": "validation"
+    },
+    {
+      "calibration_status": "calibration",
+      "dataset_id": "domenech_2023_ball_collision",
+      "dataset_version": "1.0.0",
+      "holdout_status": "validation"
+    },
+    {
+      "calibration_status": "calibration",
+      "dataset_id": "mathavan_2009_high_speed",
+      "dataset_version": "1.0.0",
+      "holdout_status": "validation"
+    },
+    {
+      "calibration_status": "calibration",
+      "dataset_id": "mathavan_2010_cushion",
+      "dataset_version": "1.0.0",
+      "holdout_status": "validation"
+    }
+  ],
+  "schema_version": 1
+}

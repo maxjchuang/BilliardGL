@@ -134,7 +134,8 @@ def _replay_command(executable, package, output, case_id):
 
 
 def _run_loaded_reference_validation(
-        executable, package_path, output, loaded, execute_once=None, case_ids=None):
+        executable, package_path, output, loaded, execute_once=None, case_ids=None,
+        metadata_labels=None):
     executor = execute_once or _execute_once
     reference_package = loaded.reference_package
     dataset_id = loaded.dataset_id
@@ -205,23 +206,29 @@ def _run_loaded_reference_validation(
         reference_package.files["expected_reference_limitations"], selected_case_ids)
     accounting = reconcile_reference_failures(
         results, model_manifest, limitation_manifest, dataset_id)
+    metadata = {
+        "build_id": _build_id(executable),
+        "dataset_id": dataset_id,
+        "dataset_version": dataset_version,
+        "executable": str(executable),
+        "package": str(package_path),
+        "package_hashes": {
+            item["id"]: item["sha256"]
+            for item in reference_package.manifest["files"]
+        },
+        "scenarios": scenario_metadata,
+    }
+    if metadata_labels is not None:
+        overlap = set(metadata) & set(metadata_labels)
+        if overlap:
+            raise ValueError(f"metadata labels cannot replace fields: {sorted(overlap)}")
+        metadata.update(metadata_labels)
     write_reference_reports(
         cases,
         results,
         accounting,
         output,
-        {
-            "build_id": _build_id(executable),
-            "dataset_id": dataset_id,
-            "dataset_version": dataset_version,
-            "executable": str(executable),
-            "package": str(package_path),
-            "package_hashes": {
-                item["id"]: item["sha256"]
-                for item in reference_package.manifest["files"]
-            },
-            "scenarios": scenario_metadata,
-        },
+        metadata,
         points=points,
         limitations=adaptation.limitations,
     )

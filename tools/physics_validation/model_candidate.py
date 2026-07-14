@@ -344,6 +344,17 @@ class ModelCandidateFreeze:
                 raise ValueError("dataset manifests do not match candidate freeze")
         return True
 
+    def verify_dataset_manifest(self, dataset_manifest):
+        record = _manifest_dataset(dataset_manifest)
+        identity = (record["dataset_id"], record["dataset_version"])
+        matches = [
+            item for item in self.datasets
+            if (item["dataset_id"], item["dataset_version"]) == identity
+        ]
+        if len(matches) != 1 or matches[0] != record:
+            raise ValueError("dataset manifest does not match candidate freeze")
+        return record
+
 
 def load_candidate_freeze(path):
     raw, document = _read_json(path, "candidate freeze")
