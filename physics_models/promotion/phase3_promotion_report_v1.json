@@ -1,0 +1,89 @@
+{
+  "candidate_summary": {
+    "limitations_preserved": 3,
+    "passed": 3
+  },
+  "evidence_labels": {
+    "analytic_golden": 4,
+    "behavior_snapshot": 5,
+    "reality_golden": 2
+  },
+  "hard_gates": {
+    "candidate_inventory": "PASSED",
+    "dual_path_equivalence": "PASSED",
+    "full_game_stress": "PASSED",
+    "golden_governance": "PASSED",
+    "performance_budget": "PASSED",
+    "unexplained_regressions": 0
+  },
+  "limitations": [
+    "cloth transfer and long-horizon spin decay remain incompletely measured",
+    "elevated cue, jump, masse, and measured miscue boundaries remain unavailable",
+    "material transfer and complete spin measurements remain limited",
+    "Chinese Pool rail material transfer and general spin incidence remain limited",
+    "real pocket trajectory and pot-success measurements remain unavailable",
+    "real break-shot and chaotic long-trajectory evidence remain unavailable"
+  ],
+  "performance": {
+    "artifact_bytes_per_tick": 3658,
+    "mean_step_ms": 0.07844856600000005,
+    "p95_step_ms": 0.083667,
+    "p99_step_ms": 0.088708,
+    "peak_rss_bytes": 5980160,
+    "schema_version": 1,
+    "ticks": 1000
+  },
+  "release": {
+    "executable_sha256": "adb9af7faa66bbf8034f22f7050f2c280d1dd380a6c813925527f75eb3fe7d61",
+    "formula_version": "full_game_integration_v1",
+    "inputs": [
+      {
+        "path": "physics_models/promotion/phase3_candidates_v1.json",
+        "sha256": "6fc79ec72993bb257caa99b37c6d628abfaa7b37f0ad5fbd5ad9ecdad3e073d4"
+      },
+      {
+        "path": "physics_models/promotion/full_game_matrix_v1.json",
+        "sha256": "78136e40aa0730d485eb08033d476f50ec49f3db749241dc3167d9c626542afe"
+      },
+      {
+        "path": "physics_models/promotion/full_game_goldens_v1.json",
+        "sha256": "30dae874fe4a703f6cea97345df8e587507ef9f96d222f35c1b53bd50c2fc278"
+      },
+      {
+        "path": "physics_models/promotion/full_game_stress_v1.csv",
+        "sha256": "f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1"
+      },
+      {
+        "path": "physics_models/promotion/full_game_performance_budget_v1.json",
+        "sha256": "595fd7ba040fc958685c7008664e6e3ca724632167252fd6dba24858b2d9db20"
+      },
+      {
+        "path": "physics_models/promotion/full_game_performance_baseline_v1.json",
+        "sha256": "36b26c69392fb680748b256c278aa12800c3ac71c73d09943373da6f82d4bb9a"
+      }
+    ],
+    "profile": {
+      "id": "chinese_pool_full_game_v1",
+      "path": "physics_models/profiles/chinese_pool_full_game_v1.json",
+      "sha256": "5cc8649d7d719040cb76e4efad0f7b1e772aa61c8d0471abff644f5e1782c2c4"
+    },
+    "schema_version": 1,
+    "source_revision": "1f9023cc12b140455e35157baff0aa2f20f95fdd",
+    "status": "PASSED_WITH_DECLARED_LIMITATIONS"
+  },
+  "replay_commands": [
+    "ctest --test-dir build/check --output-on-failure",
+    "build/check/BilliardsFullGameStress --write /tmp/full_game_stress.csv",
+    "build/check/BilliardsFullGamePerformance --write /tmp/full_game_performance.json",
+    "python3 -m unittest discover -s tests/physics_validation -p 'test_*.py'"
+  ],
+  "schema_version": 1,
+  "stress": {
+    "deterministic_seed_count": 3,
+    "duplicate_contacts": 0,
+    "maximum_penetration_cm": 0.07612295626979293,
+    "maximum_residual_cm_s": 0.0009991761577102971,
+    "repeated_breaks": 36,
+    "rows": 12
+  }
+}

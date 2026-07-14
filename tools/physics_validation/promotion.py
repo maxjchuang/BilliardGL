@@ -13,8 +13,8 @@ def validate_promotion_manifest(path, root):
     if [item.get("theme") for item in candidates] != list(range(1, 7)):
         failures.append("candidate themes must be ordered 1 through 6")
     ids = {item.get("id") for item in candidates}
-    if document.get("production_default") not in ids:
-        failures.append("production default is not inventoried")
+    if document.get("component_integration_base") not in ids:
+        failures.append("component integration base is not inventoried")
     for candidate in candidates:
         if candidate.get("evidence_grade") not in {"A", "B", "C", "mixed"}:
             failures.append(f"invalid evidence grade: {candidate.get('id')}")
@@ -105,4 +105,25 @@ def validate_golden_registry(path, matrix_path, root):
                 failures.append(f"reality golden lacks a passed validation point: {case_id}")
         if label == "behavior_snapshot" and entry.get("validated_point_id") is not None:
             failures.append(f"behavior snapshot claims validation: {case_id}")
+    return failures
+
+
+def validate_release_manifest(path, root, executable=None):
+    path, root = Path(path), Path(root)
+    release = json.loads(path.read_text(encoding="utf-8"))
+    failures = []
+    if release.get("schema_version") != 1 or release.get("status") != \
+            "PASSED_WITH_DECLARED_LIMITATIONS":
+        failures.append("release status or schema is invalid")
+    if len(release.get("source_revision", "")) != 40:
+        failures.append("release source revision is not immutable")
+    artifacts = list(release.get("inputs", [])) + [release.get("profile", {})]
+    for artifact in artifacts:
+        target = root / artifact.get("path", "")
+        if not target.is_file() or hashlib.sha256(target.read_bytes()).hexdigest() != \
+                artifact.get("sha256"):
+            failures.append(f"release artifact mismatch: {artifact.get('path')}")
+    if executable is not None and hashlib.sha256(Path(executable).read_bytes()).hexdigest() != \
+            release.get("executable_sha256"):
+        failures.append("release executable hash mismatch")
     return failures

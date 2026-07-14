@@ -41,8 +41,8 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-    profile.id = "chinese_pool_multi_contact_solver_v1";
-    profile.formulaVersion = "multi_contact_solver_v1";
+    profile.id = "chinese_pool_full_game_v1";
+    profile.formulaVersion = "full_game_integration_v1";
     profile.ball.normalRestitution = 0.36f;
     profile.ball.frictionCoefficient = 0.25f;
     profile.surface.slidingFrictionCoefficient = 0.20f;

@@ -1,0 +1,16 @@
+{
+  "executable_sha256":"adb9af7faa66bbf8034f22f7050f2c280d1dd380a6c813925527f75eb3fe7d61",
+  "formula_version":"full_game_integration_v1",
+  "inputs":[
+    {"path":"physics_models/promotion/phase3_candidates_v1.json","sha256":"6fc79ec72993bb257caa99b37c6d628abfaa7b37f0ad5fbd5ad9ecdad3e073d4"},
+    {"path":"physics_models/promotion/full_game_matrix_v1.json","sha256":"78136e40aa0730d485eb08033d476f50ec49f3db749241dc3167d9c626542afe"},
+    {"path":"physics_models/promotion/full_game_goldens_v1.json","sha256":"30dae874fe4a703f6cea97345df8e587507ef9f96d222f35c1b53bd50c2fc278"},
+    {"path":"physics_models/promotion/full_game_stress_v1.csv","sha256":"f885543bf7a7738aea6fe5a5998916a528831a8ad6ac1ca8f34d1c11cb2e4ad1"},
+    {"path":"physics_models/promotion/full_game_performance_budget_v1.json","sha256":"595fd7ba040fc958685c7008664e6e3ca724632167252fd6dba24858b2d9db20"},
+    {"path":"physics_models/promotion/full_game_performance_baseline_v1.json","sha256":"36b26c69392fb680748b256c278aa12800c3ac71c73d09943373da6f82d4bb9a"}
+  ],
+  "profile":{"id":"chinese_pool_full_game_v1","path":"physics_models/profiles/chinese_pool_full_game_v1.json","sha256":"5cc8649d7d719040cb76e4efad0f7b1e772aa61c8d0471abff644f5e1782c2c4"},
+  "schema_version":1,
+  "source_revision":"1f9023cc12b140455e35157baff0aa2f20f95fdd",
+  "status":"PASSED_WITH_DECLARED_LIMITATIONS"
+}
