@@ -32,7 +32,7 @@ Copy the complete calibration report into the candidate directory as `calibratio
 
 ```bash
 python3 -m tools.physics_validation.freeze_candidate \
-  --candidate-id surface_motion_v1 \
+  --candidate-id chinese_pool_surface_motion_v1 \
   --formula-version surface_motion_v1 \
   --source-revision "$(git rev-parse HEAD)" \
   --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \

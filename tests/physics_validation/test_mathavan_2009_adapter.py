@@ -19,6 +19,12 @@ class Mathavan2009AdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.package = load_reference_package(PACKAGE_ROOT)
+        profile_path = (
+            Path(__file__).parents[2]
+            / "physics_models/profiles/chinese_pool_surface_motion_v1.json"
+        )
+        cls.candidate_profile = json.loads(
+            profile_path.read_text(encoding="utf-8"))["runtime_profile"]
         cls.points = read_reference_points(
             cls.package.files["normalized"], cls.package.manifest["dataset_id"])
         cls.split = load_reference_split(
@@ -62,6 +68,8 @@ class Mathavan2009AdapterTests(unittest.TestCase):
         for case in table_cases:
             scenario = json.loads(case.scenario_json)
             self.assertEqual(scenario["schema_version"], 3)
+            self.assertEqual(
+                scenario["physics_profile"], self.candidate_profile)
             self.assertEqual(
                 scenario["physics_profile"]["id"],
                 "chinese_pool_surface_motion_v1",

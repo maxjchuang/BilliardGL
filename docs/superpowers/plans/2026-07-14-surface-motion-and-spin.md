@@ -463,7 +463,7 @@ git commit -m "test: execute Mathavan post-collision roll windows"
 **Files:**
 - Create: `physics_models/profiles/chinese_pool_surface_motion_v1.json`
 - Create: `physics_models/candidates/surface_motion_v1/calibration/reference_report.json`
-- Create: `physics_models/candidates/surface_motion_v1/calibration/reference_report.csv`
+- Create: `physics_models/candidates/surface_motion_v1/calibration/reference_points.csv`
 - Create: `physics_models/candidates/surface_motion_v1/calibration/reference_report.md`
 - Create: `physics_models/candidates/surface_motion_v1/freeze.json`
 - Modify: `src/Billiards/physics_profile.cpp`
@@ -539,10 +539,10 @@ Inspect only the calibration report. Remove the obsolete rolling-deceleration mi
 ```bash
 mkdir -p physics_models/candidates/surface_motion_v1/calibration
 cp /tmp/billiardgl-surface-calibration/reference_report.json physics_models/candidates/surface_motion_v1/calibration/
-cp /tmp/billiardgl-surface-calibration/reference_report.csv physics_models/candidates/surface_motion_v1/calibration/
+cp /tmp/billiardgl-surface-calibration/reference_points.csv physics_models/candidates/surface_motion_v1/calibration/
 cp /tmp/billiardgl-surface-calibration/reference_report.md physics_models/candidates/surface_motion_v1/calibration/
 python3 -m tools.physics_validation.freeze_candidate \
-  --candidate-id surface_motion_v1 \
+  --candidate-id chinese_pool_surface_motion_v1 \
   --formula-version surface_motion_v1 \
   --source-revision "$(git rev-parse HEAD)" \
   --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \
@@ -568,7 +568,7 @@ git commit -m "feat: freeze surface motion candidate v1"
 
 **Files:**
 - Create: `physics_models/candidates/surface_motion_v1/validation/reference_report.json`
-- Create: `physics_models/candidates/surface_motion_v1/validation/reference_report.csv`
+- Create: `physics_models/candidates/surface_motion_v1/validation/reference_points.csv`
 - Create: `physics_models/candidates/surface_motion_v1/validation/reference_report.md`
 - Create: `physics_models/candidates/surface_motion_v1/validation/validation_receipt.json`
 - Modify only from observed output: `tests/physics_validation/reference_data/mathavan_2009_high_speed/expected_model_mismatches.json`
@@ -613,6 +613,7 @@ If sliding deceleration passes, remove its old mismatch entry. Register exact re
 ```bash
 mkdir -p physics_models/candidates/surface_motion_v1/validation
 cp /tmp/billiardgl-surface-validation/reference_report.* physics_models/candidates/surface_motion_v1/validation/
+cp /tmp/billiardgl-surface-validation/reference_points.csv physics_models/candidates/surface_motion_v1/validation/
 cp /tmp/billiardgl-surface-validation/validation_receipt.json physics_models/candidates/surface_motion_v1/validation/
 ```
 

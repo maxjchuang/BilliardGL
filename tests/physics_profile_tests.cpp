@@ -1,5 +1,6 @@
 #include "physics_profile.h"
 
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 #include <limits>
@@ -14,6 +15,11 @@ void expect(bool condition, const char* message)
     }
 }
 
+bool close(float first, float second)
+{
+    return std::fabs(first - second) <= 0.000001f;
+}
+
 }  // namespace
 
 int main()
@@ -22,13 +28,19 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_legacy_v1",
-        "stable default profile ID");
+    expect(profile.id == "chinese_pool_surface_motion_v1",
+        "candidate ID");
+    expect(profile.formulaVersion == "surface_motion_v1",
+        "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
     expect(profile.ball.massKg == 0.17f, "legacy telemetry mass");
-    expect(profile.surface.legacyFrictionAccelerationCmS2 == 4.0f,
-        "theme zero preserves legacy friction");
+    expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
+        "Mathavan rolling calibration midpoint");
+    expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
+        "preregistered independent sliding hypothesis");
+    expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
+        "sidespin decay remains unevidenced");
     expect(billiardgl::canonicalPhysicsProfileText(profile) ==
         billiardgl::canonicalPhysicsProfileText(profile),
         "deterministic serialization");

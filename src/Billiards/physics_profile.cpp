@@ -41,8 +41,11 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-    profile.id = "chinese_pool_legacy_v1";
-    profile.formulaVersion = "legacy_v1";
+    profile.id = "chinese_pool_surface_motion_v1";
+    profile.formulaVersion = "surface_motion_v1";
+    profile.surface.slidingFrictionCoefficient = 0.20f;
+    profile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
+    profile.surface.torsionalSpinDecelerationRadS2 = 0.0f;
     return profile;
 }
 

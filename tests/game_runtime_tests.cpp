@@ -74,7 +74,7 @@ int main()
         "reset clears and disables tracing");
 
     billiardgl::GameRuntime profiled;
-    expect(profiled.physicsProfile().id == "chinese_pool_legacy_v1",
+    expect(profiled.physicsProfile().id == "chinese_pool_surface_motion_v1",
         "runtime should own the production profile by default");
     billiardgl::PhysicsProfile experiment =
         billiardgl::defaultChinesePoolPhysicsProfile();
@@ -137,7 +137,7 @@ int main()
         highRuntime.state().balls[0].position.x,
         "runtime-owned rolling resistance changes production motion");
     billiardgl::GameRuntime productionRuntime;
-    expect(productionRuntime.physicsProfile().id == "chinese_pool_legacy_v1",
+    expect(productionRuntime.physicsProfile().id == "chinese_pool_surface_motion_v1",
         "a fresh runtime retains the registered production profile");
     return 0;
 }

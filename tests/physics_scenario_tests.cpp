@@ -134,7 +134,7 @@ int main()
     expect(v3Runtime.physicsProfile().id == "domenech_billiard_pvc_v1",
         "runtime should retain the v3 profile");
     billiardgl::GameRuntime freshRuntime;
-    expect(freshRuntime.physicsProfile().id == "chinese_pool_legacy_v1",
+    expect(freshRuntime.physicsProfile().id == "chinese_pool_surface_motion_v1",
         "scenario override should not change production defaults");
 
     billiardgl::json::Value missingProfileField = validV3Document();
