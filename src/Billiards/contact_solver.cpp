@@ -90,28 +90,32 @@ ContactSolverResult solveContactIsland(
 
     for (int iteration = 0; iteration < profile.solver.velocityIterations; ++iteration) {
         result.velocityIterations = iteration + 1;
-        const bool reverse = (iteration % 2) != 0;
-        for (std::size_t step = 0; step < island.contacts.size(); ++step) {
-            const std::size_t index = reverse
-                ? island.contacts.size() - 1 - step : step;
-            const ContinuousContactCandidate& contact = island.contacts[index];
-            const double current = normalSpeed(state, contact);
-            const double effectiveInverseMass = contact.secondBall >= 0
-                ? 2.0 * inverseMass : inverseMass;
-            const double deltaNs = (target[index] - current) / 100.0 /
-                effectiveInverseMass;
-            const double updated = std::max(0.0, accumulated[index] + deltaNs);
-            const double applied = updated - accumulated[index];
-            accumulated[index] = updated;
-            const double deltaVelocityCmS = applied * inverseMass * 100.0;
-            if (contact.secondBall >= 0) {
-                addScaled(state.balls[contact.firstBall].velocity,
-                    contact.normal, -deltaVelocityCmS);
-                addScaled(state.balls[contact.secondBall].velocity,
-                    contact.normal, deltaVelocityCmS);
-            } else {
-                addScaled(state.balls[contact.firstBall].velocity,
-                    contact.normal, deltaVelocityCmS);
+        // A complete iteration uses paired forward/reverse sweeps so the
+        // converged result does not inherit the stable contact ordering.
+        for (int sweep = 0; sweep < 2; ++sweep) {
+            const bool reverse = sweep != 0;
+            for (std::size_t step = 0; step < island.contacts.size(); ++step) {
+                const std::size_t index = reverse
+                    ? island.contacts.size() - 1 - step : step;
+                const ContinuousContactCandidate& contact = island.contacts[index];
+                const double current = normalSpeed(state, contact);
+                const double effectiveInverseMass = contact.secondBall >= 0
+                    ? 2.0 * inverseMass : inverseMass;
+                const double deltaNs = (target[index] - current) / 100.0 /
+                    effectiveInverseMass;
+                const double updated = std::max(0.0, accumulated[index] + deltaNs);
+                const double applied = updated - accumulated[index];
+                accumulated[index] = updated;
+                const double deltaVelocityCmS = applied * inverseMass * 100.0;
+                if (contact.secondBall >= 0) {
+                    addScaled(state.balls[contact.firstBall].velocity,
+                        contact.normal, -deltaVelocityCmS);
+                    addScaled(state.balls[contact.secondBall].velocity,
+                        contact.normal, deltaVelocityCmS);
+                } else {
+                    addScaled(state.balls[contact.firstBall].velocity,
+                        contact.normal, deltaVelocityCmS);
+                }
             }
         }
         double residual = 0.0;

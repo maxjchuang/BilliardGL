@@ -383,5 +383,98 @@ int main()
         return fail("anyBallMoving should be false when all speeds are zero");
     }
 
+    billiardgl::PhysicsProfile eventProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    eventProfile.ball.normalRestitution = 1.0f;
+    eventProfile.ball.frictionCoefficient = 0.0f;
+    eventProfile.surface.slidingFrictionCoefficient = 0.0f;
+    eventProfile.surface.rollingResistanceAccelerationCmS2 = 0.0f;
+    eventProfile.surface.legacyFrictionAccelerationCmS2 = 0.0f;
+    billiardgl::GameState highSpeed;
+    for (billiardgl::BallState& ball : highSpeed.balls) ball.pocketed = true;
+    highSpeed.balls[0].pocketed = false;
+    highSpeed.balls[1].pocketed = false;
+    highSpeed.balls[0].position.x = -50.0f;
+    highSpeed.balls[1].position.x = 50.0f;
+    highSpeed.balls[0].velocity.x = 1000.0f;
+    highSpeed.balls[0].speed = 1000.0f;
+    const billiardgl::PhysicsStepTelemetry highSpeedTelemetry =
+        billiardgl::updatePhysics(highSpeed, 0.1f, eventProfile);
+    if (!(highSpeed.balls[0].velocity.x < 0.01f &&
+          highSpeed.balls[1].velocity.x > 999.0f)) {
+        return fail("event-driven stepper should prevent high-speed ball tunneling");
+    }
+    int continuousImpulses = 0;
+    for (const billiardgl::PhysicsContactRecord& contact : highSpeedTelemetry.contacts) {
+        if (contact.kind == billiardgl::PhysicsContactKind::BallBall &&
+            contact.velocityImpulseApplied) ++continuousImpulses;
+    }
+    if (continuousImpulses != 1) {
+        return fail("continuous crossing should receive exactly one velocity impulse");
+    }
+
+    billiardgl::GameState simultaneous;
+    for (billiardgl::BallState& ball : simultaneous.balls) ball.pocketed = true;
+    for (int index = 0; index < 3; ++index) simultaneous.balls[index].pocketed = false;
+    simultaneous.balls[0].position.x = -10.0f;
+    simultaneous.balls[1].position.x = 0.0f;
+    simultaneous.balls[2].position.x = 10.0f;
+    simultaneous.balls[0].velocity.x = 100.0f;
+    simultaneous.balls[2].velocity.x = -100.0f;
+    simultaneous.balls[0].speed = simultaneous.balls[2].speed = 100.0f;
+    billiardgl::updatePhysics(simultaneous, 0.1f, eventProfile);
+    if (!(std::fabs(simultaneous.balls[1].velocity.x) < 0.01f &&
+          simultaneous.balls[0].velocity.x < -99.0f &&
+          simultaneous.balls[2].velocity.x > 99.0f)) {
+        std::cerr << "simultaneous velocities: "
+                  << simultaneous.balls[0].velocity.x << ", "
+                  << simultaneous.balls[1].velocity.x << ", "
+                  << simultaneous.balls[2].velocity.x << '\n';
+        return fail("simultaneous symmetric contacts should be island-solved without bias");
+    }
+
+    billiardgl::GameState chained;
+    for (billiardgl::BallState& ball : chained.balls) ball.pocketed = true;
+    for (int index = 0; index < 3; ++index) chained.balls[index].pocketed = false;
+    chained.balls[0].position.x = -30.0f;
+    chained.balls[1].position.x = 0.0f;
+    chained.balls[2].position.x = 30.0f;
+    chained.balls[0].velocity.x = 1000.0f;
+    chained.balls[0].speed = 1000.0f;
+    const billiardgl::PhysicsStepTelemetry chainedTelemetry =
+        billiardgl::updatePhysics(chained, 0.06f, eventProfile);
+    int chainedImpulses = 0;
+    for (const billiardgl::PhysicsContactRecord& contact : chainedTelemetry.contacts) {
+        if (contact.kind == billiardgl::PhysicsContactKind::BallBall &&
+            contact.velocityImpulseApplied) ++chainedImpulses;
+    }
+    if (chainedImpulses != 2 || chained.balls[2].velocity.x < 999.0f) {
+        std::cerr << "chained impulses/velocities: " << chainedImpulses << ", "
+                  << chained.balls[0].velocity.x << ", "
+                  << chained.balls[1].velocity.x << ", "
+                  << chained.balls[2].velocity.x << '\n';
+        return fail("event-driven stepper should resolve multiple impacts in one tick");
+    }
+
+    billiardgl::GameState singleTick;
+    for (billiardgl::BallState& ball : singleTick.balls) ball.pocketed = true;
+    singleTick.balls[0].pocketed = singleTick.balls[1].pocketed = false;
+    singleTick.balls[0].position.x = -50.0f;
+    singleTick.balls[1].position.x = 50.0f;
+    singleTick.balls[0].velocity.x = 1000.0f;
+    singleTick.balls[0].speed = 1000.0f;
+    billiardgl::GameState subdivided = singleTick;
+    billiardgl::updatePhysics(singleTick, 0.1f, eventProfile);
+    billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
+    billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
+    for (int index = 0; index < 2; ++index) {
+        if (std::fabs(singleTick.balls[index].position.x -
+                subdivided.balls[index].position.x) > 0.001f ||
+            std::fabs(singleTick.balls[index].velocity.x -
+                subdivided.balls[index].velocity.x) > 0.001f) {
+            return fail("event-driven result should be tick-subdivision equivalent");
+        }
+    }
+
     return EXIT_SUCCESS;
 }

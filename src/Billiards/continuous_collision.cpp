@@ -67,6 +67,11 @@ ContinuousContactCandidate sweptBallBallCandidate(
     double toi = 0.0;
     if (c <= 0.0) {
         result.penetrationCm = std::max(0.0, combinedRadiusCm - distance);
+        const Point3 initialNormal = normalized(relativePosition);
+        if (result.penetrationCm <= 0.0011 &&
+            dot(relativeVelocity, initialNormal) >= -1e-9) {
+            return result;
+        }
     } else {
         if (a <= 1e-18 || b >= 0.0) return result;
         const double discriminant = b * b - 4.0 * a * c;
