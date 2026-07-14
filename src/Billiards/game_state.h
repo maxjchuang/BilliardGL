@@ -163,6 +163,7 @@ struct GameState {
     HudState hud;
     RuntimeConfig config;
     GameplayEvents events;
+    unsigned long long nextPocketCaptureSequence = 1;
     int pocketedBallCount = 0;
     bool ballsMoving = false;
     bool transitionPerspective = false;

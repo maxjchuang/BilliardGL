@@ -2,6 +2,7 @@
 
 #include "ball_ball_contact.h"
 #include "cushion_contact.h"
+#include "pocket_boundary.h"
 #include "rules.h"
 #include "table_specs.h"
 
@@ -12,54 +13,20 @@
 namespace billiardgl {
 namespace {
 
-std::array<PocketOpening, 6> currentPocketOpenings()
+bool isTraversablePocketMouth(const Point3& position,
+    const PhysicsProfile& profile)
 {
-    return buildPocketOpenings(defaultTableSpec(), defaultPocketSpec());
-}
-
-bool sameSignOrZero(float value, float reference)
-{
-    if (reference < 0.0f) {
-        return value <= 0.0f;
-    }
-    if (reference > 0.0f) {
-        return value >= 0.0f;
-    }
-    return true;
-}
-
-bool isInsideOpeningBand(const BallState& ball, const PocketOpening& opening)
-{
-    const float halfMouth = opening.mouthWidthCm / 2.0f + kBallRadius;
-    if (opening.kind == PocketKind::Side) {
-        return std::fabs(ball.position.z - opening.centerZ) <= halfMouth &&
-            sameSignOrZero(ball.position.x, opening.centerX);
-    }
-
-    return std::fabs(ball.position.x - opening.centerX) <= halfMouth &&
-        std::fabs(ball.position.z - opening.centerZ) <= halfMouth;
-}
-
-bool hasCrossedPocketDropZone(const BallState& ball, const PocketOpening& opening)
-{
-    const float halfWidth = kTableInWidth / 2.0f;
-    const float halfLength = kTableInLength / 2.0f;
-    const float depth = opening.dropZoneDepthCm;
-
-    if (opening.kind == PocketKind::Side) {
-        if (opening.centerX < 0.0f) {
-            return ball.position.x <= -halfWidth + depth;
+    const std::array<PocketBoundaryFrame, 6> frames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    for (const PocketBoundaryFrame& frame : frames) {
+        const PocketBoundaryQuery query = classifyPocketPoint(
+            frame, position, profile.ball.radiusCm);
+        if (query.passable && query.local.depthCm >= -profile.ball.radiusCm * 2.0 &&
+            query.local.depthCm <= frame.captureDepthCm) {
+            return true;
         }
-        return ball.position.x >= halfWidth - depth;
     }
-
-    const bool crossedX = opening.centerX < 0.0f
-        ? ball.position.x <= -halfWidth + depth
-        : ball.position.x >= halfWidth - depth;
-    const bool crossedZ = opening.centerZ < 0.0f
-        ? ball.position.z <= -halfLength + depth
-        : ball.position.z >= halfLength - depth;
-    return crossedX || crossedZ;
+    return false;
 }
 
 struct StraightRailEvent {
@@ -139,9 +106,86 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
 
     BallState contact = advancedCopy(ball, event.timeSeconds, profile);
     setCoordinate(contact, xAxis, event.boundaryCm);
-    if (isInPocketMouth(contact)) return StraightRailEvent{};
+    if (isTraversablePocketMouth(contact.position, profile)) {
+        return StraightRailEvent{};
+    }
     event.hit = true;
     return event;
+}
+
+struct PocketStepEvent {
+    bool hit = false;
+    PocketBoundaryEvent boundary;
+    PocketBoundaryFrame frame;
+    float timeSeconds = 0.0f;
+};
+
+PocketStepEvent earliestPocketEvent(const BallState& ball, float timeStep,
+    const PhysicsProfile& profile)
+{
+    PocketStepEvent best;
+    if (timeStep <= 0.0f) return best;
+    const BallState end = advancedCopy(ball, timeStep, profile);
+    const std::array<PocketBoundaryFrame, 6> frames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    double bestFraction = 1.0 + 1e-10;
+    for (const PocketBoundaryFrame& frame : frames) {
+        const PocketBoundaryEvent event = sweepPocketBoundary(
+            frame, ball.position, end.position, profile.ball.radiusCm);
+        if (event.kind != PocketBoundaryEventKind::None &&
+            event.kind != PocketBoundaryEventKind::Ambiguous &&
+            event.fraction < bestFraction - 1e-10) {
+            best.hit = true;
+            best.boundary = event;
+            best.frame = frame;
+            bestFraction = event.fraction;
+        }
+    }
+    best.timeSeconds = best.hit
+        ? static_cast<float>(bestFraction * timeStep) : timeStep;
+    return best;
+}
+
+const PocketBoundaryFrame* activePocketFrame(
+    const std::array<PocketBoundaryFrame, 6>& frames, int pocketId)
+{
+    for (const PocketBoundaryFrame& frame : frames) {
+        if (frame.pocketId == pocketId) return &frame;
+    }
+    return nullptr;
+}
+
+void classifyFinalPocketState(GameState& state, BallState& ball,
+    const PhysicsProfile& profile)
+{
+    const std::array<PocketBoundaryFrame, 6> frames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    const PocketBoundaryFrame* selected = activePocketFrame(
+        frames, ball.pocketInteraction.pocketId);
+    if (selected == nullptr) {
+        for (const PocketBoundaryFrame& frame : frames) {
+            const PocketBoundaryQuery query = classifyPocketPoint(
+                frame, ball.position, profile.ball.radiusCm);
+            if (query.region == PocketBoundaryRegion::Approaching) {
+                advancePocketInteraction(ball.pocketInteraction, frame.pocketId,
+                    PocketBoundaryEventKind::None, query.region, 0);
+                return;
+            }
+        }
+        return;
+    }
+    const PocketBoundaryQuery query = classifyPocketPoint(
+        *selected, ball.position, profile.ball.radiusCm);
+    PocketBoundaryEventKind event = PocketBoundaryEventKind::None;
+    unsigned long long sequence = 0;
+    if (query.region == PocketBoundaryRegion::Capture &&
+        ball.pocketInteraction.phase == PocketInteractionPhase::ThroatCrossed) {
+        event = PocketBoundaryEventKind::Capture;
+        sequence = state.nextPocketCaptureSequence;
+    }
+    const PocketTransitionResult transition = advancePocketInteraction(
+        ball.pocketInteraction, selected->pocketId, event, query.region, sequence);
+    if (transition.captureEmitted) ++state.nextPocketCaptureSequence;
 }
 
 StraightRailEvent earliestRailEvent(const BallState& ball, float timeStep,
@@ -241,7 +285,7 @@ void collideWithTableEdge(BallState& ball)
 CushionContactResult collideWithTableEdge(
     BallState& ball, const PhysicsProfile& profile)
 {
-    if (isInPocketMouth(ball)) {
+    if (isTraversablePocketMouth(ball.position, profile)) {
         return CushionContactResult{};
     }
     const StraightRailEvent event = earliestRailEvent(ball, 0.0f, profile);
@@ -254,22 +298,18 @@ CushionContactResult collideWithTableEdge(
 
 bool isInPocketMouth(const BallState& ball)
 {
-    const std::array<PocketOpening, 6> openings = currentPocketOpenings();
-    for (std::size_t i = 0; i < openings.size(); ++i) {
-        if (isInsideOpeningBand(ball, openings[i])) {
-            return true;
-        }
-    }
-    return false;
+    return isTraversablePocketMouth(
+        ball.position, defaultChinesePoolPhysicsProfile());
 }
 
 bool isInPocket(const BallState& ball)
 {
-    const std::array<PocketOpening, 6> openings = currentPocketOpenings();
-    for (std::size_t i = 0; i < openings.size(); ++i) {
-        if (isInsideOpeningBand(ball, openings[i]) && hasCrossedPocketDropZone(ball, openings[i])) {
-            return true;
-        }
+    const PhysicsProfile& profile = defaultChinesePoolPhysicsProfile();
+    const std::array<PocketBoundaryFrame, 6> frames =
+        buildPocketBoundaryFrames(profile.tableBoundary);
+    for (const PocketBoundaryFrame& frame : frames) {
+        if (classifyPocketPoint(frame, ball.position, profile.ball.radiusCm).region ==
+            PocketBoundaryRegion::Capture) return true;
     }
     return false;
 }
@@ -277,7 +317,7 @@ bool isInPocket(const BallState& ball)
 bool updatePocketedBall(GameState& state, int ballIndex)
 {
     BallState& ball = state.balls[ballIndex];
-    if (!isInPocket(ball)) {
+    if (ball.pocketInteraction.phase != PocketInteractionPhase::Captured) {
         return false;
     }
 
@@ -302,6 +342,9 @@ bool updatePocketedBall(GameState& state, int ballIndex)
     }
 
     resetBallMotion(ball);
+    if (ballIndex == 0) {
+        resetPocketInteraction(ball);
+    }
     return true;
 }
 
@@ -384,8 +427,43 @@ PhysicsStepTelemetry updatePhysics(
         }
         const StraightRailEvent railEvent = earliestRailEvent(
             ball, std::max(0.0f, timeStep), profile);
+        const PocketStepEvent pocketEvent = earliestPocketEvent(
+            ball, std::max(0.0f, timeStep), profile);
         SurfaceMotionStep surface;
-        if (railEvent.hit) {
+        const bool usePocket = pocketEvent.hit && (!railEvent.hit ||
+            pocketEvent.timeSeconds <= railEvent.timeSeconds + 0.0000001f);
+        if (usePocket) {
+            const SurfaceMotionStep beforeContact = advanceSurfaceMotion(ball,
+                pocketEvent.timeSeconds, profile.ball, profile.surface);
+            ball.position = pocketEvent.boundary.position;
+            const PocketBoundaryQuery query = classifyPocketPoint(
+                pocketEvent.frame, ball.position, profile.ball.radiusCm);
+            const PocketTransitionResult transition = advancePocketInteraction(
+                ball.pocketInteraction, pocketEvent.frame.pocketId,
+                pocketEvent.boundary.kind, query.region,
+                pocketEvent.boundary.kind == PocketBoundaryEventKind::Capture
+                    ? state.nextPocketCaptureSequence : 0);
+            if (transition.captureEmitted) ++state.nextPocketCaptureSequence;
+            if (pocketEvent.boundary.kind == PocketBoundaryEventKind::LeftJaw ||
+                pocketEvent.boundary.kind == PocketBoundaryEventKind::RightJaw) {
+                const CushionContactResult jaw = resolveCushionContact(
+                    ball, pocketEvent.boundary.inwardNormal, 0.0,
+                    profile.ball, profile.cushion);
+                if (jaw.velocityImpulseApplied || jaw.positionCorrected) {
+                    appendRailContact(telemetry, i, jaw,
+                        pocketEvent.timeSeconds);
+                }
+                if (jaw.velocityImpulseApplied) state.events.railCollision = true;
+            }
+            const float remaining = std::max(
+                0.0f, timeStep - pocketEvent.timeSeconds);
+            const SurfaceMotionStep afterContact = advanceSurfaceMotion(
+                ball, remaining, profile.ball, profile.surface);
+            surface = beforeContact;
+            surface.after = afterContact.after;
+            surface.finalSlipSpeedCmS = afterContact.finalSlipSpeedCmS;
+            classifyFinalPocketState(state, ball, profile);
+        } else if (railEvent.hit) {
             const SurfaceMotionStep beforeContact = advanceSurfaceMotion(
                 ball, railEvent.timeSeconds, profile.ball, profile.surface);
             setCoordinate(ball, railEvent.xAxis, railEvent.boundaryCm);
@@ -408,9 +486,11 @@ PhysicsStepTelemetry updatePhysics(
                 surface.transitionTimeSeconds = railEvent.timeSeconds +
                     afterContact.transitionTimeSeconds;
             }
+            classifyFinalPocketState(state, ball, profile);
         } else {
             surface = advanceSurfaceMotion(
                 ball, timeStep, profile.ball, profile.surface);
+            classifyFinalPocketState(state, ball, profile);
         }
         if (updatePocketedBall(state, i)) {
             PhysicsContactRecord contact;

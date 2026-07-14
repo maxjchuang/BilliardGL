@@ -2,6 +2,7 @@
 #include "cushion_contact.h"
 #include "game_state.h"
 #include "physics.h"
+#include "pocket_boundary.h"
 #include "surface_motion.h"
 
 #include <cmath>
@@ -247,14 +248,21 @@ int main()
         return fail("profile-aware collision must use the configured radius");
     }
 
-    state.balls[3].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
-    state.balls[3].position.z = -billiardgl::kTableInLength / 2.0f + 2.0f;
+    const billiardgl::PhysicsProfile pocketProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    const std::array<billiardgl::PocketBoundaryFrame, 6> pocketFrames =
+        billiardgl::buildPocketBoundaryFrames(pocketProfile.tableBoundary);
+    state.balls[3].position.x = pocketFrames[0].mouthCenter.x -
+        pocketFrames[0].inward.x * pocketFrames[0].captureDepthCm;
+    state.balls[3].position.z = pocketFrames[0].mouthCenter.z -
+        pocketFrames[0].inward.z * pocketFrames[0].captureDepthCm;
     if (!billiardgl::isInPocket(state.balls[3])) {
         return fail("ball crossing a corner pocket mouth should be detected as pocketed");
     }
 
-    state.balls[4].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
-    state.balls[4].position.z = 0.0f;
+    state.balls[4].position.x = pocketFrames[4].mouthCenter.x -
+        pocketFrames[4].inward.x * pocketFrames[4].captureDepthCm;
+    state.balls[4].position.z = pocketFrames[4].mouthCenter.z;
     if (!billiardgl::isInPocket(state.balls[4])) {
         return fail("ball crossing a side pocket mouth should be detected as pocketed");
     }
@@ -267,8 +275,10 @@ int main()
 
     billiardgl::GameState pocketState;
     billiardgl::initializeBalls(pocketState);
-    pocketState.balls[0].position.x = -billiardgl::kTableInWidth / 2.0f - 1.0f;
-    pocketState.balls[0].position.z = -billiardgl::kTableInLength / 2.0f + 2.0f;
+    pocketState.balls[0].pocketInteraction.phase =
+        billiardgl::PocketInteractionPhase::Captured;
+    pocketState.balls[0].pocketInteraction.pocketId = 0;
+    pocketState.balls[0].pocketInteraction.captureSequence = 1;
     if (!billiardgl::updatePocketedBall(pocketState, 0)) {
         return fail("cue ball at pocket center should be updated as pocketed");
     }
@@ -278,8 +288,10 @@ int main()
 
     billiardgl::GameState eightState;
     billiardgl::initializeBalls(eightState);
-    eightState.balls[8].position.x = billiardgl::kTableInWidth / 2.0f + 1.0f;
-    eightState.balls[8].position.z = 0.0f;
+    eightState.balls[8].pocketInteraction.phase =
+        billiardgl::PocketInteractionPhase::Captured;
+    eightState.balls[8].pocketInteraction.pocketId = 5;
+    eightState.balls[8].pocketInteraction.captureSequence = 1;
     if (!billiardgl::updatePocketedBall(eightState, 8)) {
         return fail("eight ball at pocket center should be updated as pocketed");
     }
@@ -307,6 +319,52 @@ int main()
     billiardgl::collideWithTableEdge(ordinaryRailBall);
     if (!(ordinaryRailBall.velocity.x < 0.0f)) {
         return fail("ball outside a pocket mouth should bounce off the ordinary rail");
+    }
+
+    billiardgl::GameState sweptPocketState;
+    billiardgl::initializeBalls(sweptPocketState);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        sweptPocketState.balls[index].pocketed = true;
+    }
+    sweptPocketState.balls[0].position = billiardgl::Point3{
+        -billiardgl::kTableInWidth / 2.0f + billiardgl::kBallRadius,
+        billiardgl::kTableHeight + billiardgl::kBallRadius, 0.0f};
+    sweptPocketState.balls[0].velocity.x = -400.0f;
+    sweptPocketState.balls[0].speed = 400.0f;
+    sweptPocketState.ballsMoving = true;
+    const billiardgl::PhysicsStepTelemetry pocketTelemetry =
+        billiardgl::updatePhysics(sweptPocketState, 0.1f, pocketProfile);
+    if (!sweptPocketState.events.cueBallPocketed ||
+        sweptPocketState.nextPocketCaptureSequence != 2) {
+        return fail("swept side-pocket capture should not tunnel at high speed");
+    }
+    int pocketContacts = 0;
+    for (const billiardgl::PhysicsContactRecord& contact : pocketTelemetry.contacts) {
+        if (contact.kind == billiardgl::PhysicsContactKind::Pocket) ++pocketContacts;
+    }
+    if (pocketContacts != 1) {
+        return fail("a swept capture should produce exactly one pocket contact");
+    }
+    billiardgl::updatePhysics(sweptPocketState, 0.1f, pocketProfile);
+    if (sweptPocketState.events.cueBallPocketed ||
+        sweptPocketState.nextPocketCaptureSequence != 2) {
+        return fail("cue-ball replacement must not duplicate its capture event");
+    }
+
+    billiardgl::GameState rejectedPocketState;
+    billiardgl::initializeBalls(rejectedPocketState);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        rejectedPocketState.balls[index].pocketed = true;
+    }
+    rejectedPocketState.balls[0].position = billiardgl::Point3{
+        -billiardgl::kTableInWidth / 2.0f + billiardgl::kBallRadius,
+        billiardgl::kTableHeight + billiardgl::kBallRadius, 25.0f};
+    rejectedPocketState.balls[0].velocity.x = -100.0f;
+    rejectedPocketState.balls[0].speed = 100.0f;
+    billiardgl::updatePhysics(rejectedPocketState, 0.1f, pocketProfile);
+    if (rejectedPocketState.events.cueBallPocketed ||
+        !(rejectedPocketState.balls[0].velocity.x > 0.0f)) {
+        return fail("off-mouth trajectories should rebound from visible straight rail");
     }
 
     for (billiardgl::BallState& ball : state.balls) {

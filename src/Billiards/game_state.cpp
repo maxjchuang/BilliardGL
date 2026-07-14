@@ -8,6 +8,7 @@ namespace billiardgl {
 
 void initializeBalls(GameState& state)
 {
+    state.nextPocketCaptureSequence = 1;
     const Point3 cueBallStart{0.0f, kTableHeight + kBallRadius, -kTableInLength / 4.0f};
     const Point3 rackApex{0.0f, kTableHeight + kBallRadius, kTableInLength / 4.0f};
     const float xDis = kBallRadius;
