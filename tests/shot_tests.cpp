@@ -107,6 +107,36 @@ void testCueStickModelTailPointsAwayFromShotDirection()
     expect(dot < 0.0f, "dot < 0.0f");
 }
 
+void testShotPowerMapsToPhysicalCueInput()
+{
+    const billiardgl::PhysicsProfile profile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    const billiardgl::CueImpactInput input =
+        billiardgl::cueImpactFromShotControls(0.0f, 40.0f, profile);
+
+    expect(input.cueBallIndex == 0, "cue ball index");
+    expect(std::fabs(input.cueSpeedCmS - 53.6) < 0.00001,
+        "power uses versioned cue-speed scale");
+    expect(std::fabs(input.cueMassKg - 0.5) < 0.00001, "profile cue mass");
+    expect(std::fabs(input.direction[0] - 1.0) < 0.00001 &&
+        std::fabs(input.direction[1]) < 0.00001 &&
+        std::fabs(input.direction[2]) < 0.00001, "horizontal unit direction");
+    expect(input.elevationDegrees == 0.0, "ordinary shot is horizontal");
+    expect(input.tipOffsetCm == std::array<double, 2>{{0.0, 0.0}},
+        "ordinary shot is centered");
+    expect(input.tipOffsetRadius == std::array<double, 2>{{0.0, 0.0}},
+        "dimensionless offset is centered");
+    expect(input.chalkState == "CHALKED", "ordinary cue is chalked");
+
+    const billiardgl::CueImpactInput zero =
+        billiardgl::cueImpactFromShotControls(0.0f, 0.0f, profile);
+    const billiardgl::CueImpactInput maximum =
+        billiardgl::cueImpactFromShotControls(0.0f, 200.0f, profile);
+    expect(zero.cueSpeedCmS == 0.0 &&
+        maximum.cueSpeedCmS > input.cueSpeedCmS,
+        "mapping is zero-based and monotonic");
+}
+
 }  // namespace
 
 int main()
@@ -118,5 +148,6 @@ int main()
     testCueLinePointsInShotVelocityDirection();
     testCueStickStaysBehindCueBallOutsideBallRadius();
     testCueStickModelTailPointsAwayFromShotDirection();
+    testShotPowerMapsToPhysicalCueInput();
     return EXIT_SUCCESS;
 }
