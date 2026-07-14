@@ -304,7 +304,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1 through 8 are supported";
+                "only physics scenario versions 1 through 9 are supported";
             return result;
         }
 
@@ -326,6 +326,26 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
               scenario.equipment == "SOURCE_LABORATORY_APPARATUS")) {
             throw std::runtime_error(
                 "equipment must be WPA_POOL or a version 5+ source laboratory apparatus");
+        }
+
+        if (value.has("boundary_mode")) {
+            if (version < 9 || !value.at("boundary_mode").isString()) {
+                result.errorCode = "INVALID_BOUNDARY_MODE";
+                result.errorMessage =
+                    "boundary_mode requires scenario version 9 and a string value";
+                return result;
+            }
+            const std::string mode = value.at("boundary_mode").asString();
+            if (mode == "production_table") {
+                scenario.boundaryMode = PhysicsBoundaryMode::ProductionTable;
+            } else if (mode == "unbounded") {
+                scenario.boundaryMode = PhysicsBoundaryMode::Unbounded;
+            } else {
+                result.errorCode = "INVALID_BOUNDARY_MODE";
+                result.errorMessage =
+                    "boundary_mode must be production_table or unbounded";
+                return result;
+            }
         }
 
         const json::Value& simulation = required(value, "simulation");
@@ -478,7 +498,8 @@ ActionResult applyPhysicsScenario(GameRuntime& runtime, const PhysicsScenario& s
     return runtime.replaceStateForScenario(
         state, scenario.physicsProfile,
         scenario.hasCueImpact ? &scenario.cueImpact : nullptr,
-        scenario.hasCueImpact && scenario.schemaVersion >= 4);
+        scenario.hasCueImpact && scenario.schemaVersion >= 4,
+        scenario.boundaryMode);
 }
 
 }  // namespace billiardgl

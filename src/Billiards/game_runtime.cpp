@@ -125,6 +125,7 @@ void GameRuntime::reset()
     cueContactResult_ = CueContactResult{};
     cueContactPending_ = false;
     physicsProfile_ = defaultChinesePoolPhysicsProfile();
+    boundaryMode_ = PhysicsBoundaryMode::ProductionTable;
     updateCameraFromCueBall(state_);
 }
 
@@ -209,7 +210,7 @@ ActionResult GameRuntime::step(int count)
         if (physicsTraceEnabled_) {
             PhysicsFrame frame = capturePhysicsFrame(
                 tick_, static_cast<double>(tick_) * timeStep,
-                timeStep, before, state_, telemetry, physicsProfile_);
+                timeStep, before, state_, telemetry, physicsProfile_, boundaryMode_);
             frame.hasCueImpactInput = hasCueImpactInput_;
             frame.cueImpactInput = cueImpactInput_;
             frame.hasCueContactResult = cueContactPending_;
@@ -288,7 +289,8 @@ ActionResult GameRuntime::replaceStateForScenario(
 
 ActionResult GameRuntime::replaceStateForScenario(
     const GameState& state, const PhysicsProfile& profile,
-    const CueImpactInput* cueImpact, bool executeCueImpact)
+    const CueImpactInput* cueImpact, bool executeCueImpact,
+    PhysicsBoundaryMode boundaryMode)
 {
     const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
     if (!validation.ok) {
@@ -302,6 +304,7 @@ ActionResult GameRuntime::replaceStateForScenario(
     }
     replaceState(candidate);
     physicsProfile_ = profile;
+    boundaryMode_ = boundaryMode;
     tick_ = 0;
     nextSequence_ = 1;
     events_.clear();

@@ -2,6 +2,7 @@
 
 #include "automation_json.h"
 #include "game_runtime.h"
+#include "physics_boundary_mode.h"
 
 #include <array>
 #include <string>
@@ -9,7 +10,7 @@
 
 namespace billiardgl {
 
-constexpr int kPhysicsScenarioVersion = 8;
+constexpr int kPhysicsScenarioVersion = 9;
 
 struct PhysicsExpectation {
     std::string metric;
@@ -26,6 +27,7 @@ struct PhysicsScenario {
     std::string evidenceGrade;
     std::string evidenceSource;
     std::string equipment;
+    PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable;
     int ticks = 0;
     float timeStepSeconds = kDefaultTimeStep;
     std::array<BallState, kBallCount> balls;

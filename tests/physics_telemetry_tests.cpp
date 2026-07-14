@@ -74,9 +74,14 @@ int main()
     solverEvent.maximumResidualCmS = 0.0001;
     step.solverEvents.push_back(solverEvent);
     const billiardgl::PhysicsFrame frame =
-        billiardgl::capturePhysicsFrame(7, 0.7, 0.1f, before, after, step);
+        billiardgl::capturePhysicsFrame(
+            7, 0.7, 0.1f, before, after, step,
+            billiardgl::defaultChinesePoolPhysicsProfile(),
+            billiardgl::PhysicsBoundaryMode::Unbounded);
 
     expect(frame.tick == 7 && close(frame.timeSeconds, 0.7), "tick and time");
+    expect(frame.boundaryMode == billiardgl::PhysicsBoundaryMode::Unbounded,
+        "frame capture should retain the apparatus boundary identity");
     expect(close(frame.balls[0].acceleration.x, -40.0), "acceleration derives from velocity delta");
     expect(close(frame.balls[0].angularVelocity.y, 2.0), "angular velocity is authoritative state");
     expect(frame.balls[0].motionState == billiardgl::BallMotionState::Sliding,

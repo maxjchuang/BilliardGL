@@ -5,6 +5,7 @@
 #include "cue_impact.h"
 #include "cue_contact.h"
 #include "physics_telemetry.h"
+#include "physics_boundary_mode.h"
 #include "physics_profile.h"
 
 #include <cstdint>
@@ -51,7 +52,8 @@ public:
     ActionResult replaceStateForScenario(
         const GameState& state, const PhysicsProfile& profile,
         const CueImpactInput* cueImpact = nullptr,
-        bool executeCueImpact = false);
+        bool executeCueImpact = false,
+        PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable);
     void clearEvents();
     void setPhysicsTraceEnabled(bool enabled) { physicsTraceEnabled_ = enabled; }
     bool physicsTraceEnabled() const { return physicsTraceEnabled_; }
@@ -62,6 +64,7 @@ public:
     bool hasCueContactResult() const { return hasCueContactResult_; }
     const CueContactResult& cueContactResult() const { return cueContactResult_; }
     const PhysicsProfile& physicsProfile() const { return physicsProfile_; }
+    PhysicsBoundaryMode boundaryMode() const { return boundaryMode_; }
 
 private:
     ActionResult applyShot();
@@ -79,6 +82,7 @@ private:
     CueContactResult cueContactResult_;
     bool cueContactPending_ = false;
     PhysicsProfile physicsProfile_;
+    PhysicsBoundaryMode boundaryMode_ = PhysicsBoundaryMode::ProductionTable;
 };
 
 }  // namespace billiardgl

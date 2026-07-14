@@ -51,7 +51,7 @@ double translationalKineticEnergyJ(const GameState& state, float ballMassKg)
 
 PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
     const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry,
-    const PhysicsProfile& profile)
+    const PhysicsProfile& profile, PhysicsBoundaryMode boundaryMode)
 {
     PhysicsFrame frame;
     frame.tick = tick;
@@ -78,6 +78,7 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     frame.totalKineticEnergyJ =
         frame.translationalKineticEnergyJ + frame.rotationalKineticEnergyJ;
     frame.physicsProfileId = profile.id;
+    frame.boundaryMode = boundaryMode;
     frame.control.aimYaw = after.aim.yaw;
     frame.control.shotPower = after.input.shotPower;
     frame.control.shotTaken = after.players.shotTaken;

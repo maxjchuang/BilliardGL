@@ -375,6 +375,8 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     value["delta_seconds"] = json::Value(frame.deltaSeconds);
     value["linear_momentum_kg_mps"] = pointValue(frame.linearMomentum);
     value["maximum_penetration_cm"] = json::Value(frame.maximumPenetrationCm);
+    value["boundary_mode"] = json::Value(
+        physicsBoundaryModeName(frame.boundaryMode));
     value["physics_profile_id"] = json::Value(frame.physicsProfileId);
     value["rotational_kinetic_energy_j"] =
         json::Value(frame.rotationalKineticEnergyJ);

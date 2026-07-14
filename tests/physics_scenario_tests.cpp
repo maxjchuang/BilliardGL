@@ -157,6 +157,14 @@ billiardgl::json::Value validV8Document()
     return value;
 }
 
+billiardgl::json::Value validV9Document(const char* boundaryMode = "unbounded")
+{
+    billiardgl::json::Value value = validV8Document();
+    value["schema_version"] = billiardgl::json::Value(9);
+    value["boundary_mode"] = billiardgl::json::Value(boundaryMode);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -182,6 +190,32 @@ int main()
         billiardgl::json::Value(0);
     expect(!billiardgl::parsePhysicsScenario(invalidV8).ok,
         "v8 should reject an empty island limit");
+
+    const billiardgl::PhysicsScenarioResult v9 =
+        billiardgl::parsePhysicsScenario(validV9Document());
+    expect(v9.ok &&
+        v9.scenario.boundaryMode == billiardgl::PhysicsBoundaryMode::Unbounded,
+        "v9 unbounded boundary mode should survive parsing");
+    billiardgl::json::Value missingBoundary = validV9Document();
+    missingBoundary.asObject().erase("boundary_mode");
+    const billiardgl::PhysicsScenarioResult defaultBoundary =
+        billiardgl::parsePhysicsScenario(missingBoundary);
+    expect(defaultBoundary.ok && defaultBoundary.scenario.boundaryMode ==
+        billiardgl::PhysicsBoundaryMode::ProductionTable,
+        "missing boundary mode should retain production-table behavior");
+    const billiardgl::PhysicsScenarioResult invalidBoundary =
+        billiardgl::parsePhysicsScenario(validV9Document("periodic"));
+    expect(!invalidBoundary.ok &&
+        invalidBoundary.errorCode == "INVALID_BOUNDARY_MODE",
+        "unknown boundary mode should fail closed with a stable code");
+    billiardgl::GameRuntime v9Runtime;
+    v9Runtime.setPhysicsTraceEnabled(true);
+    expect(billiardgl::applyPhysicsScenario(v9Runtime, v9.scenario).ok &&
+        v9Runtime.boundaryMode() == billiardgl::PhysicsBoundaryMode::Unbounded &&
+        v9Runtime.step(1).ok &&
+        v9Runtime.physicsTrace().frames().front().boundaryMode ==
+            billiardgl::PhysicsBoundaryMode::Unbounded,
+        "applied boundary identity should reach every runtime trace frame");
 
     billiardgl::GameRuntime runtime;
     runtime.setPhysicsTraceEnabled(true);
@@ -349,7 +383,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(9);
+    unknownVersion["schema_version"] = billiardgl::json::Value(10);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

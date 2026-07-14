@@ -7,6 +7,7 @@
 #include "cushion_contact.h"
 #include "physics_profile.h"
 #include "pocket_boundary.h"
+#include "physics_boundary_mode.h"
 #include "surface_motion.h"
 
 #include <array>
@@ -140,6 +141,7 @@ struct PhysicsFrame {
     bool hasCueContactResult = false;
     CueContactResult cueContactResult;
     std::string physicsProfileId;
+    PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable;
     std::vector<SurfaceMotionStep> surfaceTransitions;
 };
 
@@ -151,7 +153,8 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry);
 PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float deltaSeconds,
     const GameState& before, const GameState& after, const PhysicsStepTelemetry& telemetry,
-    const PhysicsProfile& profile);
+    const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable);
 
 class PhysicsTrace {
 public:
