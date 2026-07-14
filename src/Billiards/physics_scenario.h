@@ -9,7 +9,7 @@
 
 namespace billiardgl {
 
-constexpr int kPhysicsScenarioVersion = 2;
+constexpr int kPhysicsScenarioVersion = 3;
 
 struct PhysicsExpectation {
     std::string metric;
@@ -32,6 +32,7 @@ struct PhysicsScenario {
     std::vector<PhysicsExpectation> expectations;
     bool hasCueImpact = false;
     CueImpactInput cueImpact;
+    PhysicsProfile physicsProfile = defaultChinesePoolPhysicsProfile();
 };
 
 struct PhysicsScenarioResult {

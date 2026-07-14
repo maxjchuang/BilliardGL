@@ -1,0 +1,64 @@
+{
+  "schema_version": 3,
+  "id": "profile_override_v3",
+  "description": "Single-ball run with a complete scenario-local physics profile override",
+  "evidence": {
+    "grade": "C",
+    "source": "schema contract fixture; no experimental values admitted",
+    "equipment": "WPA_POOL"
+  },
+  "simulation": {
+    "ticks": 10,
+    "time_step_seconds": 0.1
+  },
+  "physics_profile": {
+    "id": "domenech_billiard_pvc_v1",
+    "formula_version": "legacy_v1",
+    "ball": {
+      "mass_kg": 0.205,
+      "radius_cm": 3.05,
+      "material": "billiard_resin"
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "sliding_friction_coefficient": 0.0,
+      "rolling_resistance_acceleration_cm_s2": 4.0,
+      "torsional_spin_deceleration_rad_s2": 0.0,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 0.000000001,
+      "material": "pvc"
+    },
+    "cue": {
+      "effective_mass_kg": 0.5
+    },
+    "cushion": {
+      "normal_restitution": 1.0,
+      "friction_coefficient": 0.0
+    },
+    "solver": {
+      "time_step_seconds": 0.1,
+      "maximum_events_per_tick": 64
+    }
+  },
+  "balls": [
+    {
+      "index": 0,
+      "position_cm": [0.0, 89.341476, 20.0],
+      "velocity_cm_s": [20.0, 0.0, 0.0],
+      "angular_velocity_rad_s": [0.0, 0.0, -7.0],
+      "pocketed": false
+    }
+  ],
+  "expectations": [
+    {
+      "metric": "finite_state",
+      "operator": "eq",
+      "value": true
+    },
+    {
+      "metric": "nonincreasing_translational_energy",
+      "operator": "eq",
+      "value": true
+    }
+  ]
+}

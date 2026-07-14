@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include <exception>
+#include <initializer_list>
+#include <set>
 #include <stdexcept>
 
 namespace billiardgl {
@@ -99,6 +101,86 @@ double optionalTolerance(const json::Value& value, const char* name)
     return tolerance;
 }
 
+void requireExactKeys(const json::Value& value,
+    std::initializer_list<const char*> expected, const char* name)
+{
+    if (!value.isObject()) {
+        throw std::runtime_error(std::string(name) + " must be an object");
+    }
+    std::set<std::string> keys;
+    for (const char* key : expected) keys.insert(key);
+    if (value.asObject().size() != keys.size()) {
+        throw std::runtime_error(std::string(name) + " keys do not match schema");
+    }
+    for (const auto& item : value.asObject()) {
+        if (keys.count(item.first) == 0) {
+            throw std::runtime_error(
+                std::string(name) + " has unknown field " + item.first);
+        }
+    }
+    for (const std::string& key : keys) {
+        if (!value.has(key)) {
+            throw std::runtime_error(
+                std::string(name) + " is missing field " + key);
+        }
+    }
+}
+
+PhysicsProfile parsePhysicsProfile(const json::Value& value)
+{
+    requireExactKeys(value,
+        {"id", "formula_version", "ball", "surface", "cue", "cushion", "solver"},
+        "physics_profile");
+    const json::Value& ball = required(value, "ball");
+    const json::Value& surface = required(value, "surface");
+    const json::Value& cue = required(value, "cue");
+    const json::Value& cushion = required(value, "cushion");
+    const json::Value& solver = required(value, "solver");
+    requireExactKeys(ball, {"mass_kg", "radius_cm", "material"}, "physics_profile.ball");
+    requireExactKeys(surface,
+        {"legacy_friction_acceleration_cm_s2", "sliding_friction_coefficient",
+         "rolling_resistance_acceleration_cm_s2", "torsional_spin_deceleration_rad_s2",
+         "slip_speed_epsilon_cm_s", "stop_energy_threshold_j", "material"},
+        "physics_profile.surface");
+    requireExactKeys(cue, {"effective_mass_kg"}, "physics_profile.cue");
+    requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
+        "physics_profile.cushion");
+    requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
+        "physics_profile.solver");
+
+    PhysicsProfile profile;
+    profile.id = requiredString(value, "id");
+    profile.formulaVersion = requiredString(value, "formula_version");
+    profile.ball.massKg = static_cast<float>(requiredNumber(ball, "mass_kg"));
+    profile.ball.radiusCm = static_cast<float>(requiredNumber(ball, "radius_cm"));
+    profile.ball.material = requiredString(ball, "material");
+    profile.surface.legacyFrictionAccelerationCmS2 = static_cast<float>(
+        requiredNumber(surface, "legacy_friction_acceleration_cm_s2"));
+    profile.surface.slidingFrictionCoefficient = static_cast<float>(
+        requiredNumber(surface, "sliding_friction_coefficient"));
+    profile.surface.rollingResistanceAccelerationCmS2 = static_cast<float>(
+        requiredNumber(surface, "rolling_resistance_acceleration_cm_s2"));
+    profile.surface.torsionalSpinDecelerationRadS2 = static_cast<float>(
+        requiredNumber(surface, "torsional_spin_deceleration_rad_s2"));
+    profile.surface.slipSpeedEpsilonCmS = static_cast<float>(
+        requiredNumber(surface, "slip_speed_epsilon_cm_s"));
+    profile.surface.stopEnergyThresholdJ = static_cast<float>(
+        requiredNumber(surface, "stop_energy_threshold_j"));
+    profile.surface.material = requiredString(surface, "material");
+    profile.cue.effectiveMassKg = static_cast<float>(
+        requiredNumber(cue, "effective_mass_kg"));
+    profile.cushion.normalRestitution = static_cast<float>(
+        requiredNumber(cushion, "normal_restitution"));
+    profile.cushion.frictionCoefficient = static_cast<float>(
+        requiredNumber(cushion, "friction_coefficient"));
+    profile.solver.timeStepSeconds = static_cast<float>(
+        requiredNumber(solver, "time_step_seconds"));
+    profile.solver.maximumEventsPerTick = required(solver, "maximum_events_per_tick").asInt();
+    const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
+    if (!validation.ok) throw std::runtime_error(validation.error);
+    return profile;
+}
+
 }  // namespace
 
 PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
@@ -108,9 +190,9 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
     try {
         if (!value.isObject()) throw std::runtime_error("scenario must be an object");
         const int version = required(value, "schema_version").asInt();
-        if (version != 1 && version != kPhysicsScenarioVersion) {
+        if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
-            result.errorMessage = "only physics scenario versions 1 and 2 are supported";
+            result.errorMessage = "only physics scenario versions 1, 2, and 3 are supported";
             return result;
         }
 
@@ -147,6 +229,18 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             return result;
         }
 
+        if (version == 3) {
+            scenario.physicsProfile = parsePhysicsProfile(required(value, "physics_profile"));
+            if (std::fabs(
+                    scenario.physicsProfile.solver.timeStepSeconds -
+                    scenario.timeStepSeconds) > 0.000001f) {
+                throw std::runtime_error(
+                    "physics profile and scenario time steps must agree");
+            }
+        } else if (value.has("physics_profile")) {
+            throw std::runtime_error("physics_profile requires schema version 3");
+        }
+
         GameState initial;
         initializeBalls(initial);
         for (BallState& ball : initial.balls) {
@@ -180,7 +274,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             scenario.balls[index] = ball;
         }
 
-        if (version == 2) {
+        if (version == 2 || (version == 3 && value.has("cue_impact"))) {
             const json::Value& cue = required(value, "cue_impact");
             if (!cue.isObject()) throw std::runtime_error("cue_impact must be an object");
             CueImpactInput input;
@@ -215,19 +309,20 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             const double cmMagnitude = std::hypot(input.tipOffsetCm[0], input.tipOffsetCm[1]);
             const double radiusMagnitude = std::hypot(
                 input.tipOffsetRadius[0], input.tipOffsetRadius[1]);
-            if (cmMagnitude > kChineseBallRadiusCm + 0.000001 || radiusMagnitude > 1.000001) {
+            const double ballRadiusCm = scenario.physicsProfile.ball.radiusCm;
+            if (cmMagnitude > ballRadiusCm + 0.000001 || radiusMagnitude > 1.000001) {
                 throw std::runtime_error("tip offset must remain within the cue-ball radius");
             }
             for (std::size_t index = 0; index < 2; ++index) {
                 if (std::fabs(input.tipOffsetCm[index] /
-                    kChineseBallRadiusCm - input.tipOffsetRadius[index]) > 0.0001) {
+                    ballRadiusCm - input.tipOffsetRadius[index]) > 0.0001) {
                     throw std::runtime_error("tip_offset_cm and tip_offset_radius are inconsistent");
                 }
             }
             scenario.hasCueImpact = true;
             scenario.cueImpact = input;
         } else if (value.has("cue_impact")) {
-            throw std::runtime_error("cue_impact requires schema version 2");
+            throw std::runtime_error("cue_impact requires schema version 2 or 3");
         }
 
         const json::Value& expectations = required(value, "expectations");
@@ -264,7 +359,8 @@ ActionResult applyPhysicsScenario(GameRuntime& runtime, const PhysicsScenario& s
     initializeBalls(state);
     state.balls = scenario.balls;
     return runtime.replaceStateForScenario(
-        state, scenario.hasCueImpact ? &scenario.cueImpact : nullptr);
+        state, scenario.physicsProfile,
+        scenario.hasCueImpact ? &scenario.cueImpact : nullptr);
 }
 
 }  // namespace billiardgl

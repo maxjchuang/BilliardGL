@@ -51,6 +51,42 @@ billiardgl::json::Value validV2Document()
     return value;
 }
 
+billiardgl::json::Value validV3Document()
+{
+    billiardgl::json::Value value = validDocument();
+    value["schema_version"] = billiardgl::json::Value(3);
+    const billiardgl::json::ParseResult profile = billiardgl::json::parse(R"json({
+      "id": "domenech_billiard_pvc_v1",
+      "formula_version": "legacy_v1",
+      "ball": {
+        "mass_kg": 0.205,
+        "radius_cm": 3.05,
+        "material": "billiard_resin"
+      },
+      "surface": {
+        "legacy_friction_acceleration_cm_s2": 4.0,
+        "sliding_friction_coefficient": 0.0,
+        "rolling_resistance_acceleration_cm_s2": 4.0,
+        "torsional_spin_deceleration_rad_s2": 0.0,
+        "slip_speed_epsilon_cm_s": 0.0001,
+        "stop_energy_threshold_j": 0.000000001,
+        "material": "pvc"
+      },
+      "cue": {"effective_mass_kg": 0.5},
+      "cushion": {
+        "normal_restitution": 1.0,
+        "friction_coefficient": 0.0
+      },
+      "solver": {
+        "time_step_seconds": 0.1,
+        "maximum_events_per_tick": 64
+      }
+    })json");
+    expect(profile.ok, "v3 profile fixture should parse");
+    value["physics_profile"] = profile.value;
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -84,6 +120,43 @@ int main()
     expect(billiardgl::applyPhysicsScenario(v2Runtime, v2.scenario).ok &&
         v2Runtime.hasCueImpactInput(), "runtime should retain requested cue input");
 
+    const billiardgl::PhysicsScenarioResult v3 =
+        billiardgl::parsePhysicsScenario(validV3Document());
+    expect(v3.ok, "valid profile scenario v3 should parse");
+    expect(std::fabs(v3.scenario.physicsProfile.ball.massKg - 0.205f) < 0.0001f &&
+        std::fabs(v3.scenario.physicsProfile.ball.radiusCm - 3.05f) < 0.0001f,
+        "v3 ball properties should survive parsing exactly");
+    expect(v3.scenario.physicsProfile.surface.material == "pvc",
+        "v3 surface material should survive parsing exactly");
+    billiardgl::GameRuntime v3Runtime;
+    expect(billiardgl::applyPhysicsScenario(v3Runtime, v3.scenario).ok,
+        "v3 profile scenario should apply atomically");
+    expect(v3Runtime.physicsProfile().id == "domenech_billiard_pvc_v1",
+        "runtime should retain the v3 profile");
+    billiardgl::GameRuntime freshRuntime;
+    expect(freshRuntime.physicsProfile().id == "chinese_pool_legacy_v1",
+        "scenario override should not change production defaults");
+
+    billiardgl::json::Value missingProfileField = validV3Document();
+    missingProfileField["physics_profile"]["ball"].asObject().erase("mass_kg");
+    expect(!billiardgl::parsePhysicsScenario(missingProfileField).ok,
+        "v3 profile should require every field");
+    billiardgl::json::Value negativeFriction = validV3Document();
+    negativeFriction["physics_profile"]["surface"]["sliding_friction_coefficient"] =
+        billiardgl::json::Value(-0.1);
+    expect(!billiardgl::parsePhysicsScenario(negativeFriction).ok,
+        "v3 profile should reject invalid physical values");
+    billiardgl::json::Value extraProfileField = validV3Document();
+    extraProfileField["physics_profile"]["ball"]["unknown"] =
+        billiardgl::json::Value(1);
+    expect(!billiardgl::parsePhysicsScenario(extraProfileField).ok,
+        "v3 profile should reject unknown fields");
+    billiardgl::json::Value mismatchedProfileStep = validV3Document();
+    mismatchedProfileStep["physics_profile"]["solver"]["time_step_seconds"] =
+        billiardgl::json::Value(0.05);
+    expect(!billiardgl::parsePhysicsScenario(mismatchedProfileStep).ok,
+        "profile and scenario time steps should agree");
+
     billiardgl::json::Value inconsistent = validV2Document();
     inconsistent["cue_impact"]["tip_offset_radius"].asArray()[1] = billiardgl::json::Value(0.2);
     expect(!billiardgl::parsePhysicsScenario(inconsistent).ok,
@@ -97,7 +170,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(3);
+    unknownVersion["schema_version"] = billiardgl::json::Value(4);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",
