@@ -41,22 +41,23 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-    profile.id = "chinese_pool_full_game_v1";
-    profile.formulaVersion = "full_game_integration_v1";
-    profile.ball.normalRestitution = 0.36f;
-    profile.ball.frictionCoefficient = 0.25f;
-    profile.surface.slidingFrictionCoefficient = 0.20f;
-    profile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
+    profile.id = "chinese_pool_full_game_v2";
+    profile.formulaVersion = "full_game_integration_v2";
+    profile.ball.normalRestitution = 0.97f;
+    profile.ball.frictionCoefficient = 0.1f;
+    profile.surface.slidingFrictionCoefficient = 0.19999996439955606f;
+    profile.surface.rollingResistanceAccelerationCmS2 = 12.499999813735489f;
     profile.surface.torsionalSpinDecelerationRadS2 = 0.0f;
-    profile.cushion.normalRestitution = 0.9248723120650503f;
-    profile.cushion.restitutionIntercept = profile.cushion.normalRestitution;
-    profile.cushion.restitutionSlopePerMps = 0.0f;
-    profile.cushion.minimumRestitution = profile.cushion.normalRestitution;
-    profile.cushion.maximumRestitution = profile.cushion.normalRestitution;
+    profile.surface.material = "mathavan_phase_correct_surface_v2";
+    profile.cushion.normalRestitution = 0.93f;
+    profile.cushion.restitutionIntercept = 1.0f;
+    profile.cushion.restitutionSlopePerMps = 0.056f;
+    profile.cushion.minimumRestitution = 0.0f;
+    profile.cushion.maximumRestitution = 0.93f;
     profile.cushion.frictionCoefficient = 0.14f;
     profile.cushion.noseHeightRatio = 1.4f;
     profile.cushion.maximumRigidIncidentSpeedCmS = 250.0f;
-    profile.cushion.material = "riley_renaissance_snooker_cushion";
+    profile.cushion.material = "mathavan_speed_dependent_cushion_v2";
     profile.tableBoundary.cornerThroatWidthCm = 11.0f;
     profile.tableBoundary.sideThroatWidthCm = 7.0f;
     profile.tableBoundary.jawRadiusCm = 1.2f;
@@ -291,6 +292,27 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "solver.passive_energy_tolerance_j="
         << profile.solver.passiveEnergyToleranceJ << '\n';
     return output.str();
+}
+
+std::string canonicalPhysicsProfileJson(const PhysicsProfile& profile)
+{
+    const auto quote = [](const std::string& value) {
+        std::string result = "\"";
+        for (const unsigned char byte : value) {
+            switch (byte) {
+            case '\\': result += "\\\\"; break;
+            case '"': result += "\\\""; break;
+            case '\n': result += "\\n"; break;
+            case '\r': result += "\\r"; break;
+            case '\t': result += "\\t"; break;
+            default: result += static_cast<char>(byte); break;
+            }
+        }
+        return result + "\"";
+    };
+    return "{\"id\":" + quote(profile.id) +
+        ",\"formula_version\":" + quote(profile.formulaVersion) +
+        ",\"canonical_text\":" + quote(canonicalPhysicsProfileText(profile)) + "}\n";
 }
 
 }  // namespace billiardgl

@@ -92,5 +92,6 @@ struct PhysicsProfileValidation {
 PhysicsProfile defaultChinesePoolPhysicsProfile();
 PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile);
 std::string canonicalPhysicsProfileText(const PhysicsProfile& profile);
+std::string canonicalPhysicsProfileJson(const PhysicsProfile& profile);
 
 }  // namespace billiardgl

@@ -28,29 +28,29 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_full_game_v1",
+    expect(profile.id == "chinese_pool_full_game_v2",
         "candidate ID");
-    expect(profile.formulaVersion == "full_game_integration_v1",
+    expect(profile.formulaVersion == "full_game_integration_v2",
         "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
     expect(profile.ball.massKg == 0.17f, "legacy telemetry mass");
     expect(close(profile.ball.inertiaFactor, 0.4f),
         "solid sphere inertia compatibility default");
-    expect(close(profile.ball.normalRestitution, 0.36f),
-        "Domenech billiard calibration restitution");
-    expect(close(profile.ball.frictionCoefficient, 0.25f),
-        "Domenech billiard calibration friction");
-    expect(close(profile.cushion.normalRestitution, 0.9248723120650503f) &&
-        close(profile.cushion.restitutionIntercept, 0.9248723120650503f) &&
-        close(profile.cushion.restitutionSlopePerMps, 0.0f) &&
-        close(profile.cushion.minimumRestitution, 0.9248723120650503f) &&
-        close(profile.cushion.maximumRestitution, 0.9248723120650503f) &&
+    expect(close(profile.ball.normalRestitution, 0.97f),
+        "series-balanced spent-data restitution fit");
+    expect(close(profile.ball.frictionCoefficient, 0.1f),
+        "series-balanced spent-data friction fit");
+    expect(close(profile.cushion.normalRestitution, 0.93f) &&
+        close(profile.cushion.restitutionIntercept, 1.0f) &&
+        close(profile.cushion.restitutionSlopePerMps, 0.056f) &&
+        close(profile.cushion.minimumRestitution, 0.0f) &&
+        close(profile.cushion.maximumRestitution, 0.93f) &&
         close(profile.cushion.frictionCoefficient, 0.14f) &&
         close(profile.cushion.noseHeightRatio, 1.4f) &&
         close(profile.cushion.maximumRigidIncidentSpeedCmS, 250.0f),
         "frozen cushion calibration values");
-    expect(profile.cushion.material == "riley_renaissance_snooker_cushion",
+    expect(profile.cushion.material == "mathavan_speed_dependent_cushion_v2",
         "source cushion material is explicit");
     expect(close(profile.tableBoundary.playfieldWidthCm, 127.0f) &&
         close(profile.tableBoundary.playfieldLengthCm, 254.0f) &&
@@ -63,10 +63,14 @@ int main()
         close(profile.tableBoundary.captureDepthCm, 6.0f) &&
         profile.tableBoundary.geometryId == "wpa_pool_analytic_v1",
         "frozen pocket boundary geometry is explicit");
-    expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
-        "Mathavan rolling calibration midpoint");
-    expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
-        "preregistered independent sliding hypothesis");
+    expect(close(profile.surface.rollingResistanceAccelerationCmS2,
+                 12.499999813735489f),
+        "phase-correct spent-data rolling fit");
+    expect(close(profile.surface.slidingFrictionCoefficient,
+                 0.19999996439955606f),
+        "phase-correct spent-data sliding fit");
+    expect(profile.surface.material == "mathavan_phase_correct_surface_v2",
+        "phase-correct surface material is explicit");
     expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
         "sidespin decay remains unevidenced");
     expect(profile.solver.maximumIslandSize == 16 &&

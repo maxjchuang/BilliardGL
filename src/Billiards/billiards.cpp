@@ -113,6 +113,12 @@ int main(int argc, char* argv[])
 {
 	const billiardgl::LaunchOptions options = billiardgl::parseLaunchOptions(argc, argv);
 	if (!options.ok) { std::fprintf(stderr, "%s\n", options.error.c_str()); return 2; }
+	if (options.printPhysicsProfile)
+	{
+		std::cout << billiardgl::canonicalPhysicsProfileJson(
+			billiardgl::defaultChinesePoolPhysicsProfile());
+		return 0;
+	}
 	Game.config = options.runtime;
 	if (options.mode == billiardgl::RunMode::AutomationHeadless)
 	{
