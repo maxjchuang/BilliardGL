@@ -9,7 +9,7 @@ endif()
 
 enable_testing()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -158,9 +158,27 @@ billiardgl_add_core_test(BilliardsGameRuntimeTests tests/game_runtime_tests.cpp)
 
 add_executable(BilliardsFullGameStress
     tests/full_game_stress.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_cli.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
-billiardgl_configure_core_test(BilliardsFullGameStress)
+target_include_directories(BilliardsFullGameStress PRIVATE
+    ${BILLIARDGL_COMMON_INCLUDE_DIRS}
+)
+target_compile_definitions(BilliardsFullGameStress PRIVATE
+    BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+    BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
+)
+add_test(NAME BilliardsFullGameStress COMMAND BilliardsFullGameStress
+    --case legacy_break_stress --seed 101)
+
+add_executable(BilliardsFullGameCliTests
+    tests/full_game_cli_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_cli.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameCliTests)
 
 add_executable(BilliardsFullGamePerformance
     tests/full_game_performance.cpp
