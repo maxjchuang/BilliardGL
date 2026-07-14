@@ -7,7 +7,10 @@ from tools.physics_validation.analyzer import (
     analyze_scenario,
     compare_integration_traces,
     compare_traces,
+    contacts_for_solver_event,
+    interpolated_transition_time,
     match_known_failures,
+    maximal_phase_segment,
 )
 
 
@@ -76,6 +79,108 @@ class AnalyzerTests(unittest.TestCase):
             "unit": unit,
         })
         return case
+
+    def test_phase_event_and_transition_selectors_use_physical_identity(self):
+        frames = [frame(index) for index in range(1, 7)]
+        phases = ["sliding", "sliding", "rolling", "sliding", "sliding", "sliding"]
+        for item, phase in zip(frames, phases):
+            item["balls"][0]["motion_state"] = phase
+        selected = maximal_phase_segment(frames, 0, "sliding")
+        self.assertEqual([item["tick"] for item in selected], [4, 5, 6])
+
+        frames[1]["contacts"] = [
+            {"solver_event_id": 17, "kind": "ball_ball"},
+            {"solver_event_id": 29, "kind": "ball_ball"},
+        ]
+        frames[2]["contacts"] = [
+            {"solver_event_id": 17, "kind": "ball_ball"},
+        ]
+        self.assertEqual(
+            contacts_for_solver_event(frames, 17),
+            [frames[1]["contacts"][0], frames[2]["contacts"][0]],
+        )
+
+        transition_frames = [frame(1), frame(2)]
+        transition_frames[0]["balls"][0]["motion_state"] = "sliding"
+        transition_frames[1]["balls"][0]["motion_state"] = "rolling"
+        transition_frames[1]["delta_seconds"] = 0.1
+        transition_frames[1]["surface_transitions"] = [{
+            "after": "rolling",
+            "ball_index": 0,
+            "before": "sliding",
+            "transition_time_seconds": 0.025,
+        }]
+        self.assertAlmostEqual(
+            interpolated_transition_time(transition_frames, 0), 0.125)
+
+    def test_phase_fit_excludes_other_motion_and_transition_uses_substep_time(self):
+        deceleration_frames = [
+            frame(1, speed=10.0), frame(2, speed=8.0), frame(3, speed=6.0),
+            frame(4, speed=100.0), frame(5, speed=100.0),
+        ]
+        for item in deceleration_frames[:3]:
+            item["balls"][0]["motion_state"] = "sliding"
+        for item in deceleration_frames[3:]:
+            item["balls"][0]["motion_state"] = "rolling"
+        deceleration = self._selection_interval(
+            "sliding_deceleration_cm_s2", 20.0,
+            {
+                "ball_index": 0,
+                "minimum_window_ticks": 3,
+                "motion_state": "sliding",
+                "sample_phase": "maximal_motion_phase",
+            },
+            "cm/s^2",
+        )
+        self.assertTrue(analyze_scenario(
+            deceleration, deceleration_frames).passed)
+
+        transition_frames = [frame(1, speed=10.0), frame(2, speed=10.0),
+                             frame(3, speed=10.0)]
+        transition_frames[0]["balls"][0]["motion_state"] = "sliding"
+        for item in transition_frames[1:]:
+            item["balls"][0].update({
+                "motion_state": "rolling",
+                "angular_velocity_rad_s": {
+                    "x": 0.0, "y": 0.0, "z": -5.0},
+            })
+        transition_frames[1]["delta_seconds"] = 0.1
+        transition_frames[1]["surface_transitions"] = [{
+            "after": "rolling", "ball_index": 0, "before": "sliding",
+            "transition_time_seconds": 0.025,
+        }]
+        transition = self._selection_interval(
+            "transition_to_rolling_time_seconds", 0.025,
+            {
+                "ball_index": 0,
+                "ball_radius_cm": 2.0,
+                "minimum_window_ticks": 2,
+                "pure_roll_tolerance_cm_s": 0.001,
+                "sample_phase": "first_stable_pure_roll",
+                "time_origin_seconds": 0.1,
+            },
+            "s",
+        )
+        self.assertTrue(analyze_scenario(transition, transition_frames).passed)
+
+    def test_unbounded_trace_rejects_boundary_contact(self):
+        case = self._selection_interval(
+            "cushion_rebound_speed_cm_s", 1.0,
+            {
+                "ball_index": 0,
+                "event_kind": "rail_collision",
+                "minimum_window_ticks": 1,
+                "sample_phase": "first_sample_after_event",
+            },
+            "cm/s",
+        )
+        observed = frame(1)
+        observed["boundary_mode"] = "unbounded"
+        observed["contacts"] = [{
+            "first_ball": 0, "kind": "rail", "second_ball": -1}]
+        result = analyze_scenario(case, [observed])
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+        self.assertIn("unbounded", result.failures[0].message)
 
     def test_trajectory_rmse_reconstructs_declared_tick_positions_in_mm(self):
         frames = [frame(1, x=1.0), frame(2, x=2.2), frame(3, x=3.0)]

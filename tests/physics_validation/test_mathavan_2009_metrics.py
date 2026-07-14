@@ -32,6 +32,7 @@ def _ball_contact():
         "kind": "ball_ball",
         "first_ball": 0,
         "second_ball": 1,
+        "solver_event_id": 17,
         "normal": [1.0, 0.0, 0.0],
         "relative_contact_velocity_before_cm_s": [-1.0, 0.0, 0.0],
         "relative_contact_velocity_after_cm_s": [1.0, 0.0, 0.0],
@@ -48,6 +49,9 @@ def _ball_contact():
 
 
 def _scenario(metric, selection, expected, lower=None, upper=None):
+    selection = dict(selection)
+    if selection.get("event_kind") == "ball_ball":
+        selection.setdefault("solver_event_scope", "single")
     return {
         "id": "metric_case",
         "evidence": {"grade": "B", "source": "experiment"},

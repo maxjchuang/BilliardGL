@@ -114,6 +114,7 @@ def _selection(point, source):
         "minimum_window_ticks": 2 if post_transition else 1,
         "sample_phase": "first_pure_roll_after_event" if post_transition
                         else "immediate_post_impact",
+        "solver_event_scope": "single",
     }
     if post_transition:
         selection.update({

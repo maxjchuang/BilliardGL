@@ -87,6 +87,11 @@ class DomenechAdapterTests(unittest.TestCase):
             ]
             impact = math.degrees(math.acos(normal[0]))
             self.assertAlmostEqual(impact, self.impacts[point.point_id]["impact_angle_degrees"])
+            self.assertEqual(
+                scenario["expectations"][0]["value"]["selection"]
+                ["solver_event_scope"],
+                "single",
+            )
         post = json.loads(cases["rubber_lambda2_001"].scenario_json)
         self.assertEqual(post["simulation"]["ticks"], 400)
         self.assertEqual(

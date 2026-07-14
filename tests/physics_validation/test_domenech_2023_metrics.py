@@ -29,6 +29,7 @@ def _contact(relative=(0.0, 0.0, 0.0), **overrides):
         "relative_contact_velocity_after_cm_s": list(relative),
         "relative_contact_velocity_before_cm_s": [-100.0, 0.0, 20.0],
         "second_ball": 1,
+        "solver_event_id": 17,
         "tangential_impulse_ns": 0.01,
         "velocity_impulse_applied": True,
     }
@@ -49,6 +50,9 @@ def _frame(tick, first, second, *, contact=False, relative=(0.0, 0.0, 0.0),
 
 
 def _scenario(metric, expected, selection):
+    selection = dict(selection)
+    if selection.get("event_kind") == "ball_ball":
+        selection.setdefault("solver_event_scope", "single")
     if isinstance(expected, str):
         expectation = {
             "metric": metric,
@@ -224,6 +228,25 @@ class DomenechMetricTests(unittest.TestCase):
             "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
 
         self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+
+    def test_multiple_solver_events_are_not_mixed_into_one_observation(self):
+        selection = {
+            "ball_index": 0,
+            "event_kind": "ball_ball",
+            "minimum_window_ticks": 1,
+            "sample_phase": "immediate_post_impact",
+        }
+        frames = [
+            _frame(1, _ball(0, (1.0, 0.0, 0.0)),
+                   _ball(1, (1.0, 0.0, 0.0)), contact=True),
+            _frame(2, _ball(0, (1.0, 0.0, 0.0)),
+                   _ball(1, (1.0, 0.0, 0.0)), contact=True,
+                   contact_overrides={"solver_event_id": 29}),
+        ]
+        result = analyze_scenario(_scenario(
+            "post_collision_angular_velocity_rad_s", 0.0, selection), frames)
+        self.assertEqual(result.failures[0].code, "INTEGRATION_MISMATCH")
+        self.assertIn("one solver event", result.failures[0].message)
 
 
 if __name__ == "__main__":

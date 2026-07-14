@@ -265,7 +265,19 @@ def _transition_time_observation(metric, reference, frames):
         for index in range(len(frames) - minimum + 1):
             window = frames[index:index + minimum]
             if all(criterion(_ball(frame, selection["ball_index"])) for frame in window):
-                actual = window[0]["time_seconds"] - origin
+                actual_time = window[0]["time_seconds"]
+                if metric == "transition_to_rolling_time_seconds":
+                    try:
+                        transition_time = interpolated_transition_time(
+                            frames, selection["ball_index"])
+                    except ValueError as error:
+                        return None, INTEGRATION_MISMATCH, str(error)
+                    if transition_time is not None:
+                        if transition_time > actual_time + 1e-12:
+                            return None, INTEGRATION_MISMATCH, \
+                                "rolling transition follows its stable window"
+                        actual_time = transition_time
+                actual = actual_time - origin
                 if not _finite_number(actual):
                     return actual, NUMERICAL_FAILURE, "transition time is not finite"
                 return actual, None, None
@@ -299,31 +311,99 @@ def _contiguous(frames):
     return True
 
 
+def maximal_phase_segment(frames, ball_index, phase):
+    """Return the longest contiguous run with the declared motion state."""
+    segments = []
+    current = []
+    for frame in frames:
+        try:
+            matches = _ball(frame, ball_index).get("motion_state") == phase
+        except (KeyError, TypeError, ValueError):
+            matches = False
+        if matches:
+            if current and frame.get("tick") != current[-1].get("tick") + 1:
+                segments.append(current)
+                current = []
+            current.append(frame)
+        elif current:
+            segments.append(current)
+            current = []
+    if current:
+        segments.append(current)
+    return max(segments, key=len, default=[])
+
+
+def contacts_for_solver_event(frames, event_id):
+    """Return contacts belonging to one solver event in trace order."""
+    return [
+        contact
+        for frame in frames
+        for contact in frame.get("contacts", [])
+        if contact.get("solver_event_id") == event_id
+    ]
+
+
+def interpolated_transition_time(frames, ball_index):
+    """Resolve a sliding-to-rolling timestamp inside its telemetry step."""
+    matches = []
+    for frame in frames:
+        for transition in frame.get("surface_transitions", []):
+            if transition.get("ball_index") == ball_index \
+                    and transition.get("before") == "sliding" \
+                    and transition.get("after") == "rolling":
+                matches.append((frame, transition))
+    if not matches:
+        return None
+    if len(matches) != 1:
+        raise ValueError("sliding-to-rolling transition is ambiguous")
+    frame, transition = matches[0]
+    end = frame.get("time_seconds")
+    delta = frame.get("delta_seconds")
+    offset = transition.get("transition_time_seconds")
+    if not all(_finite_number(value) for value in (end, delta, offset)) \
+            or delta <= 0.0 or offset < 0.0 or offset > delta + 1e-12:
+        raise ValueError("surface transition timestamp is outside its telemetry step")
+    return end - delta + offset
+
+
 def _finite_number(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) \
         and math.isfinite(value)
 
 
 def _deceleration_observation(reference, frames):
-    required = {
-        "sample_phase", "ball_index", "first_tick", "last_tick",
-        "minimum_window_ticks",
-    }
+    required = {"sample_phase", "ball_index", "minimum_window_ticks"}
     selection, code, message = _selection(reference, required)
     if code:
         return None, code, message
-    if selection["sample_phase"] != "declared_tick_window" \
-            or not isinstance(selection["first_tick"], int) \
-            or not isinstance(selection["last_tick"], int):
-        return None, REFERENCE_LIMITATION, "deceleration tick window is invalid"
-    window = [
-        frame for frame in frames
-        if selection["first_tick"] <= frame.get("tick", -1) <= selection["last_tick"]
-    ]
-    expected_ticks = selection["last_tick"] - selection["first_tick"] + 1
-    if expected_ticks < selection["minimum_window_ticks"] or len(window) != expected_ticks \
-            or not _contiguous(window):
-        return None, INTEGRATION_MISMATCH, "deceleration trace window is incomplete"
+    if selection["sample_phase"] == "maximal_motion_phase":
+        phase = selection.get("motion_state")
+        expected_phase = "rolling" if reference.get("observed_metric") == \
+            "rolling_deceleration_cm_s2" else "sliding"
+        if phase != expected_phase:
+            return None, REFERENCE_LIMITATION, \
+                "deceleration motion-state selection is invalid"
+        window = maximal_phase_segment(frames, selection["ball_index"], phase)
+        if len(window) < selection["minimum_window_ticks"]:
+            return None, INTEGRATION_MISMATCH, \
+                f"fewer than {selection['minimum_window_ticks']} {phase} samples"
+    elif selection["sample_phase"] == "declared_tick_window":
+        if not isinstance(selection.get("first_tick"), int) \
+                or not isinstance(selection.get("last_tick"), int):
+            return None, REFERENCE_LIMITATION, \
+                "deceleration tick window is invalid"
+        window = [
+            frame for frame in frames
+            if selection["first_tick"] <= frame.get("tick", -1) <=
+            selection["last_tick"]
+        ]
+        expected_ticks = selection["last_tick"] - selection["first_tick"] + 1
+        if expected_ticks < selection["minimum_window_ticks"] \
+                or len(window) != expected_ticks or not _contiguous(window):
+            return None, INTEGRATION_MISMATCH, \
+                "deceleration trace window is incomplete"
+    else:
+        return None, REFERENCE_LIMITATION, "deceleration sample phase is invalid"
     try:
         samples = [
             (frame["time_seconds"], _ball(frame, selection["ball_index"])["speed_cm_s"])
@@ -360,7 +440,7 @@ def _contact_index(frames, event_kind, ball_index):
     return None
 
 
-def _validate_ball_contact(frames, contact):
+def _validate_ball_contact(event_contacts, contact):
     required = {
         "first_ball", "second_ball", "normal",
         "relative_contact_velocity_before_cm_s",
@@ -432,7 +512,7 @@ def _validate_ball_contact(frames, contact):
 
     pair = frozenset((contact["first_ball"], contact["second_ball"]))
     applied_count = sum(
-        1 for frame in frames for item in frame.get("contacts", [])
+        1 for item in event_contacts
         if item.get("kind") == "ball_ball"
         and frozenset((item.get("first_ball"), item.get("second_ball"))) == pair
         and item.get("velocity_impulse_applied") is True)
@@ -568,6 +648,11 @@ def _event_observation(metric, reference, frames):
     selection, code, message = _selection(reference, required)
     if code:
         return None, code, message
+    if any(frame.get("boundary_mode") == "unbounded" for frame in frames) \
+            and any(contact.get("kind") in {"rail", "pocket"}
+                    for frame in frames for contact in frame.get("contacts", [])):
+        return None, INTEGRATION_MISMATCH, \
+            "unbounded trace contains an apparatus boundary contact"
     event = _contact_index(frames, selection["event_kind"], selection["ball_index"])
     if event is None:
         return None, INTEGRATION_MISMATCH, "declared contact event is absent"
@@ -577,7 +662,43 @@ def _event_observation(metric, reference, frames):
         if code:
             return None, code, message
     elif contact.get("kind") == "ball_ball":
-        code, message = _validate_ball_contact(frames, contact)
+        scope = selection.get("solver_event_scope")
+        if scope not in {None, "single"}:
+            return None, REFERENCE_LIMITATION, "solver event scope is invalid"
+        matching = [
+            item for frame in frames for item in frame.get("contacts", [])
+            if item.get("kind") == "ball_ball" and
+            selection["ball_index"] in
+            (item.get("first_ball"), item.get("second_ball"))
+        ]
+        if scope == "single":
+            event_ids = {
+                item.get("solver_event_id") for item in matching
+                if isinstance(item.get("solver_event_id"), int)
+                and not isinstance(item.get("solver_event_id"), bool)
+                and item.get("solver_event_id") >= 0
+            }
+            if len(event_ids) != 1 or len(event_ids) != len({
+                    item.get("solver_event_id") for item in matching}):
+                return None, INTEGRATION_MISMATCH, \
+                    "ball collision metric is not bound to one solver event"
+            event_id = next(iter(event_ids))
+            event_contacts = contacts_for_solver_event(frames, event_id)
+            event_frames = {
+                index for index, frame in enumerate(frames)
+                if any(item.get("solver_event_id") == event_id
+                       for item in frame.get("contacts", []))
+            }
+            if len(event_frames) != 1:
+                return None, INTEGRATION_MISMATCH, \
+                    "solver event identity repeats across trace frames"
+            selected = [item for item in event_contacts if item is contact]
+            if not selected:
+                return None, INTEGRATION_MISMATCH, \
+                    "selected contact is absent from its solver event"
+        else:
+            event_contacts = matching
+        code, message = _validate_ball_contact(event_contacts, contact)
         if code:
             return None, code, message
     # A telemetry frame is captured after its physics step, so the frame carrying

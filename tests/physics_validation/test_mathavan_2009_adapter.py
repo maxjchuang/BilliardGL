@@ -113,10 +113,9 @@ class Mathavan2009AdapterTests(unittest.TestCase):
             rolling["expectations"][0]["value"]["selection"],
             {
                 "ball_index": 0,
-                "first_tick": 1,
-                "last_tick": 5,
                 "minimum_window_ticks": 3,
-                "sample_phase": "declared_tick_window",
+                "motion_state": "rolling",
+                "sample_phase": "maximal_motion_phase",
             },
         )
 

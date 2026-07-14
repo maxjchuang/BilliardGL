@@ -127,10 +127,9 @@ def _selection(mapping, point):
     if kind == "free_motion":
         return {
             "ball_index": 0,
-            "first_tick": 1,
-            "last_tick": mapping["ticks"],
             "minimum_window_ticks": 3,
-            "sample_phase": "declared_tick_window",
+            "motion_state": mapping["motion_phase"],
+            "sample_phase": "maximal_motion_phase",
         }, 0
     if kind == "normal_cushion":
         return {
@@ -148,6 +147,7 @@ def _selection(mapping, point):
             "minimum_window_ticks": 3,
             "pure_roll_tolerance_cm_s": 0.5,
             "sample_phase": "first_pure_roll_after_event",
+            "solver_event_scope": "single",
         }, ball_index
     _fail("INVALID_ADAPTER_TEMPLATE", "Mathavan selection kind is invalid")
 
