@@ -1,0 +1,103 @@
+{
+  "applicability": {
+    "equipment": "WPA_POOL",
+    "notes": "Synthetic governance fixture; not a tuned production profile"
+  },
+  "parameter_sources": {
+    "ball.mass_kg": {
+      "evidence": "Fixture value retained from the legacy Chinese Pool profile",
+      "kind": "compatibility_default",
+      "unit": "kg"
+    },
+    "ball.radius_cm": {
+      "evidence": "Fixture value retained from the legacy Chinese Pool profile",
+      "kind": "compatibility_default",
+      "unit": "cm"
+    },
+    "cue.effective_mass_kg": {
+      "kind": "unmodeled",
+      "limitation": "No admitted cue-mass calibration in this fixture",
+      "unit": "kg"
+    },
+    "cushion.friction_coefficient": {
+      "kind": "unmodeled",
+      "limitation": "No admitted cushion-friction calibration in this fixture",
+      "unit": "1"
+    },
+    "cushion.normal_restitution": {
+      "kind": "unmodeled",
+      "limitation": "No admitted cushion-restitution calibration in this fixture",
+      "unit": "1"
+    },
+    "solver.maximum_events_per_tick": {
+      "evidence": "Deterministic solver safety bound",
+      "kind": "engineering_limit",
+      "unit": "count"
+    },
+    "solver.time_step_seconds": {
+      "evidence": "Fixture simulation step",
+      "kind": "engineering_default",
+      "unit": "s"
+    },
+    "surface.legacy_friction_acceleration_cm_s2": {
+      "evidence": "Legacy compatibility value",
+      "kind": "compatibility_default",
+      "unit": "cm/s^2"
+    },
+    "surface.rolling_resistance_acceleration_cm_s2": {
+      "evidence": "Synthetic calibration target",
+      "kind": "calibration",
+      "unit": "cm/s^2"
+    },
+    "surface.sliding_friction_coefficient": {
+      "kind": "unmodeled",
+      "limitation": "Sliding regime is not represented by the fixture model",
+      "unit": "1"
+    },
+    "surface.slip_speed_epsilon_cm_s": {
+      "evidence": "Numerical transition epsilon",
+      "kind": "engineering_default",
+      "unit": "cm/s"
+    },
+    "surface.stop_energy_threshold_j": {
+      "evidence": "Numerical stopping threshold",
+      "kind": "engineering_default",
+      "unit": "J"
+    },
+    "surface.torsional_spin_deceleration_rad_s2": {
+      "kind": "unmodeled",
+      "limitation": "Torsional spin decay is not represented by the fixture model",
+      "unit": "rad/s^2"
+    }
+  },
+  "runtime_profile": {
+    "ball": {
+      "mass_kg": 0.17,
+      "material": "phenolic_resin",
+      "radius_cm": 2.8575
+    },
+    "cue": {
+      "effective_mass_kg": 0.5
+    },
+    "cushion": {
+      "friction_coefficient": 0.0,
+      "normal_restitution": 1.0
+    },
+    "formula_version": "legacy_v1",
+    "id": "surface_motion_v1",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "time_step_seconds": 0.1
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "synthetic_fixture",
+      "rolling_resistance_acceleration_cm_s2": 4.0,
+      "sliding_friction_coefficient": 0.0,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    }
+  },
+  "schema_version": 1
+}
