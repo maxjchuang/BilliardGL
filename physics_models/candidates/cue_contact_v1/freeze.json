@@ -1,0 +1,142 @@
+{
+  "calibration_report_sha256": "1dbcccafa89a5efcb59c72b173375578500dd22083b9a28baf6ab6c1babf2e24",
+  "candidate_id": "chinese_pool_cue_contact_v1",
+  "created_at": "2026-07-14T00:00:00Z",
+  "datasets": [
+    {
+      "dataset_id": "cue_contact_analytic_contract",
+      "dataset_version": "1.0.0",
+      "manifest_sha256": "5b9c2e43020484a0ee47ab9173b558ba01172abe3da50b5f175b845232d0cb85",
+      "package_hashes": {
+        "expected_model_mismatches": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+        "expected_reference_limitations": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+        "extraction": "589db9ae0944d49f5c481217f9a451673f05a4b3a2069298a1eb7b86c927a5ac",
+        "normalized": "03e9db7710f091f7a326ee0cc3be76cff258913eb5bd3422b9fd40f70988698c",
+        "raw_extracted": "19eb80735c7a0a94b6fc5957f04c7edc13c3996cfc30d303498ae71e40fa888c",
+        "scenario_template": "41c2e485280f5bbb6d089ce585d07be5b0b03e94a66b2d003faa7f2a23117991",
+        "split": "0726f92b572d935486229993b87b965d859c6fa031492a5a804c9697cafc3fbb"
+      }
+    }
+  ],
+  "executable_sha256": "2ffa2fa2648438ad751e181799525c22c0930ec912364635d5898599304d7e53",
+  "formula_version": "cue_contact_v1",
+  "metric_targets": [
+    {
+      "lower": 0.7462611940298508,
+      "metric": "cue_contact_energy_efficiency",
+      "point_id": "center_hit_energy_efficiency",
+      "upper": 0.7462761194029851
+    },
+    {
+      "lower": 74.62611940298508,
+      "metric": "cue_impact_linear_speed_cm_s",
+      "point_id": "center_hit_linear_speed",
+      "upper": 74.62761194029851
+    },
+    {
+      "lower": 0.12686440298507462,
+      "metric": "cue_contact_normal_impulse_ns",
+      "point_id": "center_hit_normal_impulse",
+      "upper": 0.12686694029850748
+    },
+    {
+      "lower": -1e-07,
+      "metric": "cue_contact_tangential_impulse_ns",
+      "point_id": "center_hit_tangential_impulse",
+      "upper": 1e-07
+    },
+    {
+      "lower": 12.15113735783027,
+      "metric": "cue_impact_angular_speed_rad_s",
+      "point_id": "negative_vertical_stick_angular_speed",
+      "upper": 12.151380383007679
+    },
+    {
+      "lower": 0.76388125,
+      "metric": "cue_contact_energy_efficiency",
+      "point_id": "negative_vertical_stick_energy_efficiency",
+      "upper": 0.7638965277777777
+    },
+    {
+      "lower": 69.44375,
+      "metric": "cue_impact_linear_speed_cm_s",
+      "point_id": "negative_vertical_stick_linear_speed",
+      "upper": 69.44513888888889
+    },
+    {
+      "lower": 0.11566919226127155,
+      "metric": "cue_contact_normal_impulse_ns",
+      "point_id": "negative_vertical_stick_normal_impulse",
+      "upper": 0.11567150566825084
+    },
+    {
+      "lower": 0.023610875,
+      "metric": "cue_contact_tangential_impulse_ns",
+      "point_id": "negative_vertical_stick_tangential_impulse",
+      "upper": 0.02361134722222222
+    },
+    {
+      "lower": -12.151380383007679,
+      "metric": "cue_impact_angular_speed_rad_s",
+      "point_id": "positive_vertical_stick_angular_speed",
+      "upper": -12.15113735783027
+    },
+    {
+      "lower": 0.76388125,
+      "metric": "cue_contact_energy_efficiency",
+      "point_id": "positive_vertical_stick_energy_efficiency",
+      "upper": 0.7638965277777777
+    },
+    {
+      "lower": 69.44375,
+      "metric": "cue_impact_linear_speed_cm_s",
+      "point_id": "positive_vertical_stick_linear_speed",
+      "upper": 69.44513888888889
+    },
+    {
+      "lower": 0.11566919226127155,
+      "metric": "cue_contact_normal_impulse_ns",
+      "point_id": "positive_vertical_stick_normal_impulse",
+      "upper": 0.11567150566825084
+    },
+    {
+      "lower": 0.023610875,
+      "metric": "cue_contact_tangential_impulse_ns",
+      "point_id": "positive_vertical_stick_tangential_impulse",
+      "upper": 0.02361134722222222
+    },
+    {
+      "lower": 22.48630992927841,
+      "metric": "cue_impact_angular_speed_rad_s",
+      "point_id": "stick_boundary_inner_angular_speed",
+      "upper": 22.4867596599743
+    },
+    {
+      "lower": 0.8301415640823288,
+      "metric": "cue_contact_energy_efficiency",
+      "point_id": "stick_boundary_inner_energy_efficiency",
+      "upper": 0.8301581670796404
+    },
+    {
+      "lower": 49.95542232872685,
+      "metric": "cue_impact_linear_speed_cm_s",
+      "point_id": "stick_boundary_inner_linear_speed",
+      "upper": 49.95642144716461
+    },
+    {
+      "lower": 0.07282191663091707,
+      "metric": "cue_contact_normal_impulse_ns",
+      "point_id": "stick_boundary_inner_normal_impulse",
+      "upper": 0.07282337308381422
+    },
+    {
+      "lower": 0.04369314882358088,
+      "metric": "cue_contact_tangential_impulse_ns",
+      "point_id": "stick_boundary_inner_tangential_impulse",
+      "upper": 0.04369402269529606
+    }
+  ],
+  "profile_sha256": "c3dd2a167e1bca3694deff45894dce21702359deb8f6ae8d92a0ee392b6fe4ce",
+  "schema_version": 1,
+  "source_revision": "19fb9e0b9d819d7ffd350ca35cb58b7b456686a0"
+}

@@ -532,7 +532,7 @@ def write_reference_reports(
 
     csv_path = output_directory / "reference_points.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as output:
-        writer = csv.DictWriter(output, fieldnames=_CSV_FIELDS)
+        writer = csv.DictWriter(output, fieldnames=_CSV_FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(_csv_row(row) for row in rows)
 

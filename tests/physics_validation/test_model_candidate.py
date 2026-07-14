@@ -15,6 +15,8 @@ from tools.physics_validation.model_candidate import (
 FIXTURE_ROOT = Path(__file__).parent / "fixtures/model_candidate_v1"
 DATASET_MANIFEST = (
     Path(__file__).parent / "fixtures/reference_package_v1/manifest.json")
+PRODUCTION_CUE_PROFILE = Path(__file__).parents[2] / (
+    "physics_models/profiles/chinese_pool_cue_contact_v1.json")
 
 
 class ModelCandidateTests(unittest.TestCase):
@@ -85,6 +87,25 @@ class ModelCandidateTests(unittest.TestCase):
             "effective_mass_kg": 0.5,
             **extended,
         })
+
+    def test_production_cue_profile_is_analytic_only_and_fully_sourced(self):
+        document = json.loads(PRODUCTION_CUE_PROFILE.read_text(encoding="utf-8"))
+        manifest = load_profile_manifest(PRODUCTION_CUE_PROFILE)
+        self.assertEqual(document["schema_version"], 2)
+        self.assertEqual(manifest.runtime_profile["id"],
+                         "chinese_pool_cue_contact_v1")
+        self.assertEqual(manifest.runtime_profile["formula_version"],
+                         "cue_contact_v1")
+        self.assertTrue(manifest.applicability["analytic_contract_passed"])
+        self.assertTrue(manifest.applicability["experimental_validation_blocked"])
+        mapping = manifest.parameter_sources["cue.cue_speed_per_power_unit_cm_s"]
+        self.assertFalse(mapping["experimental_validation"])
+        for key in (
+                "cue.chalked_friction_coefficient",
+                "cue.unchalked_friction_coefficient",
+                "cue.maximum_reliable_offset_radius"):
+            self.assertEqual(manifest.parameter_sources[key]["kind"],
+                             "preregistered_physical_hypothesis")
 
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()
