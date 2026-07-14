@@ -90,6 +90,17 @@ python3 -m tools.physics_validation.freeze_candidate \
   --calibration-report physics_models/candidates/surface_motion_v1/calibration/reference_report.json
 ```
 
+Freeze schema v2 extends this contract for candidates calibrated against more
+than one dataset. Repeat `--calibration-report` and `--dataset-manifest` once
+per dataset, and repeat `--supplemental-artifact` for every full-precision fit
+or other derived parameter artifact. The freeze sorts reports by
+dataset/version and artifacts by repository-relative path, then binds every
+report byte, manifest byte, package-file hash, calibration interval, and
+supplemental byte. Verification requires the complete set; candidate validation
+first verifies that complete set and only then selects the requested bound
+package's HOLDOUT. Schema v1 surface and cue freezes retain their original
+single-report layout and verification behavior.
+
 `tests/physics_validation/validation_data_status.json` is the reviewed lifecycle registry. Its only legal values are `calibration`, `validation`, `spent`, and `confirmation`. Candidate validation requires the selected package's holdout status to be `validation`, derives the committed HOLDOUT cases internally, and exposes no parameter or split override:
 
 ```bash
@@ -299,6 +310,14 @@ The article says data are available on request. No author request has been sent;
 Scenario v5 now installs the source diameter, mass, inertia factor, fitted ball-contact restitution/friction, material ID, and PVC support hypothesis without changing the production Chinese Pool profile. Every one of the 214 points emits an executable case from its committed raw `impact_angle_degrees`: the cue sphere starts at `80 cm/s` in pure roll, the object sphere starts at rest, and their center separation is one source diameter minus `10^-6 cm`. Immediate and first-stable-pure-roll phases remain distinct. Non-billiard cases stay `TREND_ONLY`; billiard cases remain `CONVERTED`, not direct Pool validation.
 
 `physics_models/calibration/ball_collision_material_fit_v1.json` preserves the full deterministic calibration-only fit. The bounded two-level search uses `0 <= e, mu <= 1`, an unweighted mean squared angular residual, and stable `(objective,e,mu)` tie-breaking. Its fitted `(e, mu)` values are billiard `(0.36, 0.25)`, brass `(0.71, 0.10)`, rubber `(0.00, 0.33)`, and steel `(0.97, 0.04)`. Mutation tests prove that changing every HOLDOUT expected value cannot change these parameters or any CALIBRATION scenario byte. The PVC sliding coefficient is an explicit unmeasured apparatus hypothesis of `0.002`; post-transition cases use 400 ticks so the low-friction transition is observed without a discrete repeat impulse.
+
+The ball-collision candidate preserves both complete pre-freeze calibration
+runs under `physics_models/candidates/ball_collision_v1/calibration/`.
+Mathavan 2009 contains five CALIBRATION points (three passed and two accounted
+known model mismatches); Doménech 2023 contains 75 CALIBRATION points, all
+accounted as known model mismatches. Both reports contain zero HOLDOUT points.
+Their JSON, full-precision CSV, and Markdown renderings are committed together;
+neither candidate HOLDOUT was executed while producing these artifacts.
 
 The governed CALIBRATION execution contains 75 complete numeric rows. All 75 are finite, deterministic, and pass the approach/separation, friction-cone, energy, and no-repeat integration gates, but all 75 remain known experimental `MODEL_MISMATCH` entries at the committed digitization intervals. This is evidence that one constant restitution/friction pair per material is not sufficient to reproduce the admitted curves; it is not converted into a limitation or a pass. No HOLDOUT scenario has been executed at this stage. Only the author-data request and version-of-record PDF audit remain reference limitations.
 

@@ -3,8 +3,10 @@ import math
 import shutil
 import tempfile
 import unittest
+from contextlib import chdir
 from pathlib import Path
 
+from tools.physics_validation.freeze_candidate import main as freeze_main
 from tools.physics_validation.model_candidate import (
     load_candidate_freeze,
     load_profile_manifest,
@@ -26,8 +28,10 @@ class ModelCandidateTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.profile = self.root / "profile.json"
         self.report = self.root / "calibration_report.json"
+        self.manifest = self.root / "manifest.json"
         shutil.copyfile(FIXTURE_ROOT / "profile.json", self.profile)
         shutil.copyfile(FIXTURE_ROOT / "calibration_report.json", self.report)
+        shutil.copyfile(DATASET_MANIFEST, self.manifest)
         self.executable = self.root / "Billiards"
         self.executable.write_bytes(b"synthetic executable")
 
@@ -45,6 +49,23 @@ class ModelCandidateTests(unittest.TestCase):
         }
         arguments.update(overrides)
         return write_candidate_freeze(**arguments)
+
+    def _second_dataset(self):
+        manifest = json.loads(DATASET_MANIFEST.read_text(encoding="utf-8"))
+        manifest["dataset_id"] = "synthetic_reference_two"
+        manifest_path = self.root / "second_manifest.json"
+        manifest_path.write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        report = json.loads(self.report.read_text(encoding="utf-8"))
+        report["metadata"]["dataset_id"] = "synthetic_reference_two"
+        report_path = self.root / "second_report.json"
+        report_path.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return manifest_path, report_path
 
     def test_profile_manifest_requires_provenance_for_every_numeric_leaf(self):
         manifest = load_profile_manifest(self.profile)
@@ -225,6 +246,122 @@ class ModelCandidateTests(unittest.TestCase):
     def test_rejects_duplicate_dataset_manifests(self):
         with self.assertRaisesRegex(ValueError, "sorted and unique"):
             self._write(dataset_manifests=(DATASET_MANIFEST, DATASET_MANIFEST))
+
+    def test_schema_v2_binds_two_reports_and_supplemental_artifact_deterministically(self):
+        second_manifest, second_report = self._second_dataset()
+        fit = self.root / "material_fit.json"
+        fit.write_text('{"full_precision":true}\n', encoding="utf-8")
+        common = {
+            "calibration_report": None,
+            "calibration_reports": (second_report, self.report),
+            "dataset_manifests": (second_manifest, self.manifest),
+            "supplemental_artifacts": (fit,),
+            "repository_root": self.root,
+        }
+        first = self._write(**common)
+        second = self._write(
+            output=self.root / "regenerated_v2.json",
+            **{
+                **common,
+                "calibration_reports": tuple(reversed(common["calibration_reports"])),
+                "dataset_manifests": tuple(reversed(common["dataset_manifests"])),
+            },
+        )
+        self.assertEqual(first.read_bytes(), second.read_bytes())
+
+        freeze = load_candidate_freeze(first)
+        self.assertEqual(freeze.schema_version, 2)
+        self.assertEqual(
+            [item["dataset_id"] for item in freeze.calibration_reports],
+            ["synthetic_reference", "synthetic_reference_two"],
+        )
+        self.assertEqual(
+            freeze.supplemental_artifacts[0]["path"], "material_fit.json")
+        freeze.verify(
+            profile=self.profile,
+            executable=self.executable,
+            calibration_reports=(self.report, second_report),
+            dataset_manifests=(self.manifest, second_manifest),
+            supplemental_artifacts=(fit,),
+            repository_root=self.root,
+        )
+
+    def test_schema_v2_rejects_duplicate_report_identity(self):
+        fit = self.root / "material_fit.json"
+        fit.write_text('{}\n', encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "calibration reports.*unique"):
+            self._write(
+                calibration_report=None,
+                calibration_reports=(self.report, self.report),
+                dataset_manifests=(self.manifest,),
+                supplemental_artifacts=(fit,),
+                repository_root=self.root,
+            )
+
+    def test_schema_v2_rejects_changed_report_or_supplemental_bytes(self):
+        second_manifest, second_report = self._second_dataset()
+        fit = self.root / "material_fit.json"
+        fit.write_text('{}\n', encoding="utf-8")
+        path = self._write(
+            calibration_report=None,
+            calibration_reports=(self.report, second_report),
+            dataset_manifests=(self.manifest, second_manifest),
+            supplemental_artifacts=(fit,),
+            repository_root=self.root,
+        )
+        freeze = load_candidate_freeze(path)
+        second_report.write_text(
+            second_report.read_text(encoding="utf-8") + " ", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "calibration reports"):
+            freeze.verify(
+                profile=self.profile,
+                executable=self.executable,
+                calibration_reports=(self.report, second_report),
+                dataset_manifests=(self.manifest, second_manifest),
+                supplemental_artifacts=(fit,),
+                repository_root=self.root,
+            )
+
+        _, second_report = self._second_dataset()
+        fit.write_text('{"changed":true}\n', encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "supplemental artifacts"):
+            freeze.verify(
+                profile=self.profile,
+                executable=self.executable,
+                calibration_reports=(self.report, second_report),
+                dataset_manifests=(self.manifest, second_manifest),
+                supplemental_artifacts=(fit,),
+                repository_root=self.root,
+            )
+
+    def test_freeze_cli_accepts_repeatable_v2_inputs_in_create_and_verify_modes(self):
+        second_manifest, second_report = self._second_dataset()
+        fit = self.root / "material_fit.json"
+        fit.write_text('{}\n', encoding="utf-8")
+        output = self.root / "cli_freeze.json"
+        shared = [
+            "--profile", str(self.profile),
+            "--executable", str(self.executable),
+            "--calibration-report", str(second_report),
+            "--calibration-report", str(self.report),
+            "--dataset-manifest", str(second_manifest),
+            "--dataset-manifest", str(self.manifest),
+            "--supplemental-artifact", str(fit),
+        ]
+        with chdir(self.root):
+            self.assertEqual(freeze_main([
+                "--candidate-id", "surface_motion_v1",
+                "--formula-version", "legacy_v1",
+                "--source-revision",
+                "0123456789abcdef0123456789abcdef01234567",
+                "--created-at", "2026-07-14T00:00:00Z",
+                "--output", str(output),
+                *shared,
+            ]), 0)
+            self.assertEqual(freeze_main([
+                "--verify", str(output),
+                *shared,
+            ]), 0)
 
 
 if __name__ == "__main__":

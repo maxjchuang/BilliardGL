@@ -24,7 +24,8 @@ def _canonical(document):
 
 
 def run_candidate_validation(
-        freeze, executable, package, profile, output, execute_once=None):
+        freeze, executable, package, profile, output, execute_once=None,
+        repository_root=None):
     freeze_path = Path(freeze).resolve()
     executable = Path(executable).resolve()
     package_path = Path(package).resolve()
@@ -32,12 +33,27 @@ def run_candidate_validation(
     output = Path(output).resolve()
 
     candidate = load_candidate_freeze(freeze_path)
-    calibration_report = freeze_path.parent / "calibration/reference_report.json"
-    candidate.verify(
-        profile=profile,
-        executable=executable,
-        calibration_report=calibration_report,
-    )
+    if candidate.schema_version == 1:
+        candidate.verify(
+            profile=profile,
+            executable=executable,
+            calibration_report=(
+                freeze_path.parent / "calibration/reference_report.json"),
+        )
+    else:
+        root = Path(repository_root or Path.cwd()).resolve()
+        candidate.verify(
+            profile=profile,
+            executable=executable,
+            calibration_reports=tuple(
+                root / item["path"] for item in candidate.calibration_reports),
+            dataset_manifests=tuple(
+                root / item["manifest_path"]
+                for item in candidate.calibration_reports),
+            supplemental_artifacts=tuple(
+                root / item["path"] for item in candidate.supplemental_artifacts),
+            repository_root=root,
+        )
 
     loaded = load_reference_inputs(package_path)
     candidate.verify_dataset_manifest(package_path / "manifest.json")

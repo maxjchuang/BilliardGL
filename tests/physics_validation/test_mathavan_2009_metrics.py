@@ -27,6 +27,26 @@ def _frame(tick, time_seconds, balls, contacts=()):
     }
 
 
+def _ball_contact():
+    return {
+        "kind": "ball_ball",
+        "first_ball": 0,
+        "second_ball": 1,
+        "normal": [1.0, 0.0, 0.0],
+        "relative_contact_velocity_before_cm_s": [-1.0, 0.0, 0.0],
+        "relative_contact_velocity_after_cm_s": [1.0, 0.0, 0.0],
+        "normal_relative_speed_before_cm_s": -1.0,
+        "normal_relative_speed_after_cm_s": 1.0,
+        "normal_impulse_ns": 0.1,
+        "tangential_impulse_ns": 0.0,
+        "friction_coefficient": 0.0,
+        "regime": "frictionless",
+        "velocity_impulse_applied": True,
+        "kinetic_energy_before_j": 1.0,
+        "kinetic_energy_after_j": 0.9,
+    }
+
+
 def _scenario(metric, selection, expected, lower=None, upper=None):
     return {
         "id": "metric_case",
@@ -69,7 +89,7 @@ class Mathavan2009MetricTests(unittest.TestCase):
                 self.assertAlmostEqual(result.metrics[metric], 2.0)
 
     def test_post_collision_speed_selects_first_declared_pure_roll_sample(self):
-        contact = {"kind": "ball_ball", "first_ball": 0, "second_ball": 1}
+        contact = _ball_contact()
         frames = [
             _frame(1, 0.0, [_ball(0, 6.0, angular=[0.0, 0.0, 0.0]), _ball(1, 1.0)], [contact]),
             _frame(2, 0.1, [_ball(0, 5.0), _ball(1, 1.0)]),
@@ -94,7 +114,7 @@ class Mathavan2009MetricTests(unittest.TestCase):
         self.assertEqual(result.metrics["post_collision_linear_velocity_cm_s"], 5.0)
 
     def test_separation_angle_uses_two_post_collision_velocity_vectors(self):
-        contact = {"kind": "ball_ball", "first_ball": 0, "second_ball": 1}
+        contact = _ball_contact()
         rolling_x = _ball(0, 4.0, [4.0, 0.0, 0.0], [0.0, 0.0, -2.0])
         rolling_z = _ball(1, 3.0, [0.0, 0.0, 3.0], [1.5, 0.0, 0.0])
         frames = [

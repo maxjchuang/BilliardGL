@@ -62,6 +62,44 @@ class ValidationRunTests(unittest.TestCase):
             }],
         }), encoding="utf-8")
 
+    def _make_v2_package(self, dataset_id):
+        package = self.root / dataset_id
+        shutil.copytree(FIXTURE_ROOT, package)
+        if dataset_id != "synthetic_reference":
+            for name in ("raw_extracted.csv", "normalized.csv", "split.json"):
+                path = package / name
+                path.write_text(
+                    path.read_text(encoding="utf-8").replace(
+                        "synthetic_reference", dataset_id),
+                    encoding="utf-8",
+                )
+            extraction_path = package / "extraction.json"
+            extraction = json.loads(
+                extraction_path.read_text(encoding="utf-8"))
+            extraction["inputs"][0]["sha256"] = "sha256:" + hashlib.sha256(
+                (package / "raw_extracted.csv").read_bytes()).hexdigest()
+            extraction_path.write_text(_canonical(extraction), encoding="utf-8")
+        manifest_path = package / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["dataset_id"] = dataset_id
+        for item in manifest["files"]:
+            item["sha256"] = "sha256:" + hashlib.sha256(
+                (package / item["path"]).read_bytes()).hexdigest()
+        manifest_path.write_text(_canonical(manifest), encoding="utf-8")
+        return package, manifest
+
+    def _write_v2_lifecycle(self):
+        self.lifecycle.write_text(_canonical({
+            "schema_version": 1,
+            "datasets": [{
+                "dataset_id": dataset_id,
+                "dataset_version": "1.0.0",
+                "calibration_status": "calibration",
+                "holdout_status": "validation",
+            } for dataset_id in (
+                "synthetic_reference", "synthetic_reference_two")],
+        }), encoding="utf-8")
+
     def _run(self, execute_once, package=FIXTURE_ROOT):
         with patch(
             "tools.physics_validation.validation_run.DEFAULT_LIFECYCLE_PATH",
@@ -141,6 +179,67 @@ class ValidationRunTests(unittest.TestCase):
                 package=package,
             )
         self.assertEqual(seen, [])
+
+    def test_schema_v2_verifies_complete_freeze_and_validates_either_package(self):
+        first_package, first_manifest = self._make_v2_package(
+            "synthetic_reference")
+        second_package, second_manifest = self._make_v2_package(
+            "synthetic_reference_two")
+        reports = []
+        for package, manifest in (
+                (first_package, first_manifest),
+                (second_package, second_manifest)):
+            report = json.loads(
+                CANDIDATE_FIXTURE.joinpath(
+                    "calibration_report.json").read_text(encoding="utf-8"))
+            report["metadata"]["dataset_id"] = manifest["dataset_id"]
+            report["metadata"]["package_hashes"] = {
+                item["id"]: item["sha256"] for item in manifest["files"]}
+            path = self.candidate / "calibration" / (
+                manifest["dataset_id"] + ".json")
+            path.write_text(_canonical(report), encoding="utf-8")
+            reports.append(path)
+        fit = self.root / "material_fit.json"
+        fit.write_text('{"full_precision":true}\n', encoding="utf-8")
+        self.freeze = write_candidate_freeze(
+            candidate_id="surface_motion_v1",
+            formula_version="legacy_v1",
+            source_revision="0123456789abcdef0123456789abcdef01234567",
+            profile=self.profile,
+            executable=self.executable,
+            calibration_report=None,
+            calibration_reports=tuple(reports),
+            dataset_manifests=(
+                first_package / "manifest.json",
+                second_package / "manifest.json",
+            ),
+            supplemental_artifacts=(fit,),
+            repository_root=self.root,
+            created_at="2026-07-14T00:00:00Z",
+            output=self.candidate / "freeze.json",
+        )
+        self._write_v2_lifecycle()
+
+        for package in (first_package, second_package):
+            with self.subTest(package=package.name), patch(
+                "tools.physics_validation.validation_run.DEFAULT_LIFECYCLE_PATH",
+                self.lifecycle,
+            ):
+                seen = []
+                exit_code = run_candidate_validation(
+                    self.freeze,
+                    self.executable,
+                    package,
+                    self.profile,
+                    self.root / ("validation_" + package.name),
+                    execute_once=lambda executable, scenario: (
+                        seen.append(scenario["id"]),
+                        trace_for_scenario(scenario),
+                    )[1],
+                    repository_root=self.root,
+                )
+                self.assertEqual(exit_code, 0)
+                self.assertTrue(seen)
 
     def test_nonvalidation_lifecycle_states_fail_before_execution(self):
         for status in ("spent", "calibration"):

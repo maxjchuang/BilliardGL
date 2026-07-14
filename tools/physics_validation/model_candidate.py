@@ -40,7 +40,7 @@ _RUNTIME_SECTION_KEYS_V3["ball"] = {
     "mass_kg", "radius_cm", "inertia_factor", "normal_restitution",
     "friction_coefficient", "material",
 }
-_FREEZE_KEYS = {
+_FREEZE_KEYS_V1 = {
     "schema_version",
     "candidate_id",
     "formula_version",
@@ -52,9 +52,25 @@ _FREEZE_KEYS = {
     "metric_targets",
     "created_at",
 }
+_FREEZE_KEYS_V2 = {
+    "schema_version",
+    "candidate_id",
+    "formula_version",
+    "source_revision",
+    "profile_sha256",
+    "executable_sha256",
+    "calibration_reports",
+    "supplemental_artifacts",
+    "created_at",
+}
 _DATASET_KEYS = {
     "dataset_id", "dataset_version", "manifest_sha256", "package_hashes"}
 _TARGET_KEYS = {"point_id", "metric", "lower", "upper"}
+_CALIBRATION_REPORT_KEYS = {
+    "dataset_id", "dataset_version", "manifest_sha256", "package_hashes",
+    "manifest_path", "path", "report_sha256", "metric_targets",
+}
+_SUPPLEMENTAL_ARTIFACT_KEYS = {"path", "sha256"}
 
 
 def _reject_constant(value):
@@ -269,11 +285,73 @@ def _calibration_targets(report, executable_sha256, datasets):
     return tuple(targets)
 
 
-def _validate_freeze_document(document):
-    if not isinstance(document, dict) or set(document) != _FREEZE_KEYS:
-        raise ValueError("candidate freeze keys do not match schema version 1")
-    if document.get("schema_version") != 1:
-        raise ValueError("candidate freeze schema_version must be 1")
+def _repository_relative(path, repository_root, name):
+    root = Path(repository_root or Path.cwd()).resolve()
+    resolved = Path(path).resolve()
+    try:
+        relative = resolved.relative_to(root)
+    except ValueError as error:
+        raise ValueError(f"{name} must be inside repository_root") from error
+    if not relative.parts:
+        raise ValueError(f"{name} must name a file")
+    return relative.as_posix()
+
+
+def _calibration_records(
+        calibration_reports, executable_sha256, datasets, dataset_manifests,
+        repository_root):
+    manifests_by_identity = {}
+    for path in dataset_manifests:
+        record = _manifest_dataset(path)
+        identity = (record["dataset_id"], record["dataset_version"])
+        manifests_by_identity[identity] = path
+    records = []
+    for path in calibration_reports:
+        _, report = _read_json(path, "calibration report")
+        targets = _calibration_targets(report, executable_sha256, datasets)
+        metadata = report["metadata"]
+        identity = (metadata["dataset_id"], metadata["dataset_version"])
+        dataset = next(item for item in datasets if (
+            item["dataset_id"], item["dataset_version"]) == identity)
+        records.append({
+            "dataset_id": identity[0],
+            "dataset_version": identity[1],
+            "manifest_sha256": dataset["manifest_sha256"],
+            "manifest_path": _repository_relative(
+                manifests_by_identity[identity], repository_root,
+                "dataset manifest"),
+            "package_hashes": dataset["package_hashes"],
+            "path": _repository_relative(
+                path, repository_root, "calibration report"),
+            "report_sha256": sha256_file(path),
+            "metric_targets": list(targets),
+        })
+    identities = [
+        (item["dataset_id"], item["dataset_version"]) for item in records]
+    if len(identities) != len(set(identities)):
+        raise ValueError("calibration reports must be sorted and unique")
+    if set(identities) != {
+            (item["dataset_id"], item["dataset_version"])
+            for item in datasets}:
+        raise ValueError(
+            "calibration reports must bind every dataset manifest exactly once")
+    return tuple(sorted(records, key=lambda item: (
+        item["dataset_id"], item["dataset_version"])))
+
+
+def _supplemental_records(paths, repository_root):
+    records = [{
+        "path": _repository_relative(path, repository_root, "supplemental artifact"),
+        "sha256": sha256_file(path),
+    } for path in paths]
+    records.sort(key=lambda item: item["path"])
+    names = [item["path"] for item in records]
+    if len(names) != len(set(names)):
+        raise ValueError("supplemental artifacts must be sorted and unique")
+    return tuple(records)
+
+
+def _validate_identity(document):
     _safe_id(document.get("candidate_id"), "candidate_id")
     _safe_id(document.get("formula_version"), "formula_version")
     revision = document.get("source_revision")
@@ -282,41 +360,38 @@ def _validate_freeze_document(document):
     created_at = document.get("created_at")
     if not isinstance(created_at, str) or _TIMESTAMP.fullmatch(created_at) is None:
         raise ValueError("created_at must be an explicit UTC timestamp")
-    for field in (
-            "profile_sha256", "executable_sha256", "calibration_report_sha256"):
+    for field in ("profile_sha256", "executable_sha256"):
         _sha256(document.get(field), field)
 
-    datasets = document.get("datasets")
-    if not isinstance(datasets, list) or not datasets:
-        raise ValueError("datasets must be a nonempty sorted array")
-    identities = []
-    for dataset in datasets:
-        if not isinstance(dataset, dict) or set(dataset) != _DATASET_KEYS:
-            raise ValueError("dataset freeze keys do not match schema version 1")
-        identity = (
-            _safe_id(dataset.get("dataset_id"), "dataset_id"),
-            _safe_id(dataset.get("dataset_version"), "dataset_version"),
-        )
-        identities.append(identity)
-        _sha256(dataset.get("manifest_sha256"), "manifest_sha256")
-        package_hashes = dataset.get("package_hashes")
-        if not isinstance(package_hashes, dict) or not package_hashes:
-            raise ValueError("package_hashes must be a nonempty object")
-        if list(package_hashes) != sorted(package_hashes):
-            raise ValueError("package_hashes must be sorted")
-        for key, value in package_hashes.items():
-            _safe_id(key, "package hash id")
-            _sha256(value, f"package_hashes.{key}")
-    if identities != sorted(identities) or len(identities) != len(set(identities)):
-        raise ValueError("datasets must be sorted and unique")
 
-    targets = document.get("metric_targets")
+def _validate_dataset(dataset, schema_version):
+    if not isinstance(dataset, dict) or set(dataset) != _DATASET_KEYS:
+        raise ValueError(
+            f"dataset freeze keys do not match schema version {schema_version}")
+    identity = (
+        _safe_id(dataset.get("dataset_id"), "dataset_id"),
+        _safe_id(dataset.get("dataset_version"), "dataset_version"),
+    )
+    _sha256(dataset.get("manifest_sha256"), "manifest_sha256")
+    package_hashes = dataset.get("package_hashes")
+    if not isinstance(package_hashes, dict) or not package_hashes:
+        raise ValueError("package_hashes must be a nonempty object")
+    if list(package_hashes) != sorted(package_hashes):
+        raise ValueError("package_hashes must be sorted")
+    for key, value in package_hashes.items():
+        _safe_id(key, "package hash id")
+        _sha256(value, f"package_hashes.{key}")
+    return identity
+
+
+def _validate_targets(targets, schema_version):
     if not isinstance(targets, list) or not targets:
         raise ValueError("metric_targets must be a nonempty sorted array")
     point_ids = []
     for target in targets:
         if not isinstance(target, dict) or set(target) != _TARGET_KEYS:
-            raise ValueError("metric target keys do not match schema version 1")
+            raise ValueError(
+                f"metric target keys do not match schema version {schema_version}")
         point_ids.append(_safe_id(target.get("point_id"), "metric target point_id"))
         _safe_id(target.get("metric"), "metric target metric")
         for field in ("lower", "upper"):
@@ -330,33 +405,124 @@ def _validate_freeze_document(document):
         raise ValueError("metric targets must be sorted and unique")
 
 
+def _validate_freeze_document(document):
+    if not isinstance(document, dict):
+        raise ValueError("candidate freeze must be an object")
+    schema_version = document.get("schema_version")
+    expected_keys = {1: _FREEZE_KEYS_V1, 2: _FREEZE_KEYS_V2}.get(schema_version)
+    if expected_keys is None:
+        raise ValueError("candidate freeze schema_version must be 1 or 2")
+    if set(document) != expected_keys:
+        raise ValueError(
+            f"candidate freeze keys do not match schema version {schema_version}")
+    _validate_identity(document)
+
+    if schema_version == 2:
+        reports = document.get("calibration_reports")
+        if not isinstance(reports, list) or not reports:
+            raise ValueError("calibration_reports must be a nonempty sorted array")
+        identities = []
+        for report in reports:
+            if not isinstance(report, dict) or set(report) != _CALIBRATION_REPORT_KEYS:
+                raise ValueError("calibration report keys do not match schema version 2")
+            dataset = {key: report[key] for key in _DATASET_KEYS}
+            identities.append(_validate_dataset(dataset, 2))
+            path = report.get("path")
+            if not isinstance(path, str) or not path or Path(path).is_absolute():
+                raise ValueError("calibration report path must be repository-relative")
+            manifest_path = report.get("manifest_path")
+            if not isinstance(manifest_path, str) or not manifest_path \
+                    or Path(manifest_path).is_absolute():
+                raise ValueError("dataset manifest path must be repository-relative")
+            _sha256(report.get("report_sha256"), "report_sha256")
+            _validate_targets(report.get("metric_targets"), 2)
+        if identities != sorted(identities) or len(identities) != len(set(identities)):
+            raise ValueError("calibration reports must be sorted and unique")
+
+        artifacts = document.get("supplemental_artifacts")
+        if not isinstance(artifacts, list) or not artifacts:
+            raise ValueError("supplemental_artifacts must be a nonempty sorted array")
+        paths = []
+        for artifact in artifacts:
+            if not isinstance(artifact, dict) or set(artifact) != _SUPPLEMENTAL_ARTIFACT_KEYS:
+                raise ValueError("supplemental artifact keys do not match schema version 2")
+            path = artifact.get("path")
+            if not isinstance(path, str) or not path or Path(path).is_absolute():
+                raise ValueError("supplemental artifact path must be repository-relative")
+            paths.append(path)
+            _sha256(artifact.get("sha256"), "supplemental artifact sha256")
+        if paths != sorted(paths) or len(paths) != len(set(paths)):
+            raise ValueError("supplemental artifacts must be sorted and unique")
+        return
+
+    _sha256(document.get("calibration_report_sha256"),
+            "calibration_report_sha256")
+
+    datasets = document.get("datasets")
+    if not isinstance(datasets, list) or not datasets:
+        raise ValueError("datasets must be a nonempty sorted array")
+    identities = []
+    for dataset in datasets:
+        identities.append(_validate_dataset(dataset, 1))
+    if identities != sorted(identities) or len(identities) != len(set(identities)):
+        raise ValueError("datasets must be sorted and unique")
+
+    _validate_targets(document.get("metric_targets"), 1)
+
+
 @dataclass(frozen=True)
 class ModelCandidateFreeze:
+    schema_version: int
     candidate_id: str
     formula_version: str
     source_revision: str
     profile_sha256: str
     executable_sha256: str
-    calibration_report_sha256: str
+    calibration_report_sha256: object
+    calibration_reports: tuple
     datasets: tuple
     metric_targets: tuple
+    supplemental_artifacts: tuple
     created_at: str
 
-    def verify(self, profile, executable, calibration_report, dataset_manifests=None):
+    def verify(
+            self, profile, executable, calibration_report=None,
+            dataset_manifests=None, calibration_reports=None,
+            supplemental_artifacts=None, repository_root=None):
         actual = {
             "profile_sha256": sha256_file(profile),
             "executable_sha256": sha256_file(executable),
-            "calibration_report_sha256": sha256_file(calibration_report),
         }
         for field, value in actual.items():
             if value != getattr(self, field):
                 raise ValueError(f"{field} does not match candidate freeze")
+        if self.schema_version == 1:
+            value = sha256_file(calibration_report)
+            if value != self.calibration_report_sha256:
+                raise ValueError(
+                    "calibration_report_sha256 does not match candidate freeze")
+        else:
+            if calibration_reports is None or dataset_manifests is None \
+                    or supplemental_artifacts is None:
+                raise ValueError(
+                    "schema v2 verification requires all calibration reports, "
+                    "dataset manifests, and supplemental artifacts")
+            datasets = dataset_records(tuple(dataset_manifests))
+            reports = _calibration_records(
+                tuple(calibration_reports), self.executable_sha256, datasets,
+                tuple(dataset_manifests), repository_root)
+            if reports != self.calibration_reports:
+                raise ValueError("calibration reports do not match candidate freeze")
+            supplemental = _supplemental_records(
+                tuple(supplemental_artifacts), repository_root)
+            if supplemental != self.supplemental_artifacts:
+                raise ValueError("supplemental artifacts do not match candidate freeze")
         manifest = load_profile_manifest(profile)
         if manifest.runtime_profile["id"] != self.candidate_id:
             raise ValueError("candidate_id does not match profile")
         if manifest.runtime_profile["formula_version"] != self.formula_version:
             raise ValueError("formula_version does not match profile")
-        if dataset_manifests is not None:
+        if self.schema_version == 1 and dataset_manifests is not None:
             if dataset_records(dataset_manifests) != self.datasets:
                 raise ValueError("dataset manifests do not match candidate freeze")
         return True
@@ -379,21 +545,28 @@ def load_candidate_freeze(path):
     if raw != _canonical(document):
         raise ValueError("candidate freeze must use canonical JSON bytes")
     return ModelCandidateFreeze(
+        schema_version=document["schema_version"],
         candidate_id=document["candidate_id"],
         formula_version=document["formula_version"],
         source_revision=document["source_revision"],
         profile_sha256=document["profile_sha256"],
         executable_sha256=document["executable_sha256"],
-        calibration_report_sha256=document["calibration_report_sha256"],
-        datasets=tuple(document["datasets"]),
-        metric_targets=tuple(document["metric_targets"]),
+        calibration_report_sha256=document.get("calibration_report_sha256"),
+        calibration_reports=tuple(document.get("calibration_reports", ())),
+        datasets=tuple(document.get("datasets", ({
+            key: report[key] for key in _DATASET_KEYS
+        } for report in document.get("calibration_reports", ())))),
+        metric_targets=tuple(document.get("metric_targets", ())),
+        supplemental_artifacts=tuple(document.get("supplemental_artifacts", ())),
         created_at=document["created_at"],
     )
 
 
 def write_candidate_freeze(
         candidate_id, formula_version, source_revision, profile, executable,
-        calibration_report, dataset_manifests, created_at, output):
+        calibration_report, dataset_manifests, created_at, output,
+        calibration_reports=None, supplemental_artifacts=(),
+        repository_root=None):
     profile_manifest = load_profile_manifest(profile)
     candidate_id = _safe_id(candidate_id, "candidate_id")
     formula_version = _safe_id(formula_version, "formula_version")
@@ -408,20 +581,39 @@ def write_candidate_freeze(
 
     datasets = dataset_records(tuple(dataset_manifests))
     executable_hash = sha256_file(executable)
-    _, report_document = _read_json(calibration_report, "calibration report")
-    targets = _calibration_targets(report_document, executable_hash, datasets)
-    document = {
-        "schema_version": 1,
+    common = {
         "candidate_id": candidate_id,
         "formula_version": formula_version,
         "source_revision": source_revision,
         "profile_sha256": sha256_file(profile),
         "executable_sha256": executable_hash,
-        "calibration_report_sha256": sha256_file(calibration_report),
-        "datasets": list(datasets),
-        "metric_targets": list(targets),
         "created_at": created_at,
     }
+    if calibration_reports is None:
+        _, report_document = _read_json(calibration_report, "calibration report")
+        targets = _calibration_targets(report_document, executable_hash, datasets)
+        document = {
+            "schema_version": 1,
+            **common,
+            "calibration_report_sha256": sha256_file(calibration_report),
+            "datasets": list(datasets),
+            "metric_targets": list(targets),
+        }
+    else:
+        if calibration_report is not None:
+            raise ValueError(
+                "calibration_report and calibration_reports are mutually exclusive")
+        reports = _calibration_records(
+            tuple(calibration_reports), executable_hash, datasets,
+            tuple(dataset_manifests), repository_root)
+        artifacts = _supplemental_records(
+            tuple(supplemental_artifacts), repository_root)
+        document = {
+            "schema_version": 2,
+            **common,
+            "calibration_reports": list(reports),
+            "supplemental_artifacts": list(artifacts),
+        }
     _validate_freeze_document(document)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
