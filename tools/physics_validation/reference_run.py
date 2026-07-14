@@ -12,11 +12,8 @@ from .analyzer import (
     compare_traces,
 )
 from .reference_accounting import reconcile_reference_failures
-from .reference_adapter import default_reference_registry
-from .reference_package import load_reference_package
-from .reference_point import read_reference_points
+from .partition_run import load_reference_inputs
 from .reference_report import write_reference_reports
-from .reference_split import load_reference_split
 from .run import _build_id, _execute_once
 
 
@@ -136,20 +133,14 @@ def _replay_command(executable, package, output, case_id):
     return " ".join(shlex.quote(argument) for argument in arguments)
 
 
-def run_reference_validation(executable, package, output, execute_once=None, case_ids=None):
-    executable = Path(executable).resolve()
-    package_path = Path(package).resolve()
-    output = Path(output).resolve()
+def _run_loaded_reference_validation(
+        executable, package_path, output, loaded, execute_once=None, case_ids=None):
     executor = execute_once or _execute_once
-
-    reference_package = load_reference_package(package_path)
-    dataset_id = reference_package.manifest["dataset_id"]
-    dataset_version = reference_package.manifest["dataset_version"]
-    points = read_reference_points(reference_package.files["normalized"], dataset_id)
-    split = load_reference_split(
-        reference_package.files["split"], points, dataset_id, dataset_version)
-    adaptation = default_reference_registry().adapt_with_limitations(
-        reference_package, split, points)
+    reference_package = loaded.reference_package
+    dataset_id = loaded.dataset_id
+    dataset_version = loaded.dataset_version
+    points = loaded.points
+    adaptation = loaded.adaptation
     cases, selected_case_ids = _select_cases(adaptation.cases, case_ids)
 
     trace_directory = output / "traces"
@@ -235,6 +226,21 @@ def run_reference_validation(executable, package, output, execute_once=None, cas
         limitations=adaptation.limitations,
     )
     return 0 if accounting.ci_passed else 1
+
+
+def run_reference_validation(executable, package, output, execute_once=None, case_ids=None):
+    executable = Path(executable).resolve()
+    package_path = Path(package).resolve()
+    output = Path(output).resolve()
+    loaded = load_reference_inputs(package_path)
+    return _run_loaded_reference_validation(
+        executable,
+        package_path,
+        output,
+        loaded,
+        execute_once=execute_once,
+        case_ids=case_ids,
+    )
 
 
 def main(argv=None):
