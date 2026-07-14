@@ -16,6 +16,10 @@ PYTHONPATH="${REPO_ROOT}" python3 -m unittest discover \
     -s "${REPO_ROOT}/tests/physics_validation" \
     -p 'test_*.py' -v
 
+python3 "${REPO_ROOT}/scripts/check_phase3_physics_release.py" \
+    --root "${REPO_ROOT}" \
+    --executable "${BUILD_DIR}/Billiards"
+
 PYTHONPATH="${REPO_ROOT}" python3 -m tools.physics_validation.run \
     --executable "${BUILD_DIR}/Billiards" \
     --scenarios "${REPO_ROOT}/tests/physics_validation/scenarios" \

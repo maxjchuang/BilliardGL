@@ -265,6 +265,11 @@ add_test(NAME BilliardsReferenceValidationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_reference_validation.py
         $<TARGET_FILE:Billiards> ${CMAKE_CURRENT_BINARY_DIR}/physics-reference-validation)
 set_tests_properties(BilliardsReferenceValidationE2E PROPERTIES TIMEOUT 60 LABELS "physics-validation;reference-validation;e2e")
+add_test(NAME BilliardsPhase3PhysicsReleaseGate
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/check_phase3_physics_release.py
+        --root ${CMAKE_CURRENT_SOURCE_DIR})
+set_tests_properties(BilliardsPhase3PhysicsReleaseGate PROPERTIES
+    TIMEOUT 30 LABELS "physics-validation;release")
 add_test(NAME BilliardsRenderedAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_rendered_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsRenderedAutomationE2E PROPERTIES TIMEOUT 30 LABELS "rendered;e2e")

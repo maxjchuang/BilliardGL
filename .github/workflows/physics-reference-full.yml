@@ -1,10 +1,10 @@
-name: Full physics reference regression
+name: Full physics calibration regression
 
 on:
   workflow_dispatch:
     inputs:
       candidate_freeze_path:
-        description: Committed candidate freeze JSON to validate
+        description: Committed, unspent candidate freeze JSON to validate
         required: false
         default: ""
         type: string
@@ -14,7 +14,7 @@ on:
         default: ""
         type: string
       candidate_package_path:
-        description: Committed reference package whose holdout will be used
+        description: Committed package containing a newly registered holdout
         required: false
         default: ""
         type: string
@@ -22,7 +22,7 @@ on:
     - cron: "17 3 * * 1"
 
 jobs:
-  full-reference-regression:
+  full-calibration-regression:
     runs-on: macos-15
     timeout-minutes: 90
 
@@ -35,26 +35,26 @@ jobs:
           brew update
           brew install cmake pkg-config glew sdl2 sdl2_mixer
 
-      - name: Build and run the core validation suite
+      - name: Build and run the complete engineering suite
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
         run: ./scripts/check.sh
 
-      - name: Run every public reference point
+      - name: Re-run every reusable calibration point
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
         run: |
-          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2009_high_speed --output "${BILLIARDGL_BUILD_DIR}/full-reference/mathavan-2009"
-          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/domenech_2023_ball_collision --output "${BILLIARDGL_BUILD_DIR}/full-reference/domenech-2023"
-          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2010_cushion --output "${BILLIARDGL_BUILD_DIR}/full-reference/mathavan-2010"
-          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/full-reference/cross-2023"
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2009_high_speed --output "${BILLIARDGL_BUILD_DIR}/full-calibration/mathavan-2009"
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/domenech_2023_ball_collision --output "${BILLIARDGL_BUILD_DIR}/full-calibration/domenech-2023"
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2010_cushion --output "${BILLIARDGL_BUILD_DIR}/full-calibration/mathavan-2010"
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/full-calibration/cross-2023"
 
-      - name: Upload full reference reports
+      - name: Upload full calibration reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: full-physics-reference-reports
-          path: ${{ runner.temp }}/billiardgl-build/full-reference
+          name: full-physics-calibration-reports
+          path: ${{ runner.temp }}/billiardgl-build/full-calibration
           if-no-files-found: error
 
   frozen-candidate-validation:
@@ -69,6 +69,13 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Reject a spent Phase 3 candidate before build or data access
+        run: |
+          python3 scripts/check_candidate_holdout_access.py \
+            --root . \
+            --freeze "${{ inputs.candidate_freeze_path }}" \
+            --package "${{ inputs.candidate_package_path }}"
 
       - name: Install dependencies
         run: |
@@ -93,7 +100,7 @@ jobs:
             --executable "${BILLIARDGL_BUILD_DIR}/Billiards" \
             --calibration-report "${CANDIDATE_DIR}/calibration/reference_report.json"
 
-      - name: Run only the committed validation partition
+      - name: Run the newly registered validation partition exactly once
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-candidate-build
         run: |

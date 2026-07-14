@@ -137,3 +137,21 @@ and receipt
 `0e7bea39012d5963f00c9d0e9f72ade573b7c58cf16a6adcd719b7b7334c8732`.
 The committed HOLDOUT directory is evidence, not a replay target; future model
 work must create a new candidate/version and a newly preregistered split.
+
+## Phase 3 release gate
+
+第三阶段的八个主题通过一个只读发布门禁闭环。门禁复核候选清单、输入哈希、证据标签、完整游戏矩阵、确定性压力结果、性能预算、零未解释回归和可逐字重建的最终报告：
+
+```bash
+python3 scripts/check_phase3_physics_release.py --root .
+```
+
+本机构建产物还可以选择性核对冻结时的可执行文件哈希：
+
+```bash
+python3 scripts/check_phase3_physics_release.py \
+  --root . \
+  --executable build/check/Billiards
+```
+
+PR CI 和每周完整回归只执行可重复使用的 `CALIBRATION` 分区，不会调用通用 reference runner，因此不会再次读取已经消耗的 `HOLDOUT`。手动 candidate validation 入口仅供新候选使用，并在构建或读取数据之前强制执行 `check_candidate_holdout_access.py`；第三阶段清单中的 freeze 或已有 validation receipt 的候选会被拒绝。完整工程回归仍由 `./scripts/check.sh` 执行，包括 C++、自动化 E2E、完整游戏压力、性能预算、Python 证据验证和发布门禁。未来物理模型变更必须创建新版本、新冻结和新预注册数据划分；已提交的 validation 目录只能作为不可变证据读取。

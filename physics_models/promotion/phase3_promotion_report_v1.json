@@ -69,7 +69,8 @@
     },
     "schema_version": 1,
     "source_revision": "1f9023cc12b140455e35157baff0aa2f20f95fdd",
-    "status": "PASSED_WITH_DECLARED_LIMITATIONS"
+    "status": "PASSED_WITH_DECLARED_LIMITATIONS",
+    "unexplained_regressions": 0
   },
   "replay_commands": [
     "ctest --test-dir build/check --output-on-failure",
