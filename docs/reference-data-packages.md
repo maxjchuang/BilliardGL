@@ -319,7 +319,36 @@ accounted as known model mismatches. Both reports contain zero HOLDOUT points.
 Their JSON, full-precision CSV, and Markdown renderings are committed together;
 neither candidate HOLDOUT was executed while producing these artifacts.
 
-The governed CALIBRATION execution contains 75 complete numeric rows. All 75 are finite, deterministic, and pass the approach/separation, friction-cone, energy, and no-repeat integration gates, but all 75 remain known experimental `MODEL_MISMATCH` entries at the committed digitization intervals. This is evidence that one constant restitution/friction pair per material is not sufficient to reproduce the admitted curves; it is not converted into a limitation or a pass. No HOLDOUT scenario has been executed at this stage. Only the author-data request and version-of-record PDF audit remain reference limitations.
+The governed CALIBRATION execution contains 75 complete numeric rows. All 75 are finite, deterministic, and pass the approach/separation, friction-cone, energy, and no-repeat integration gates, but all 75 remain known experimental `MODEL_MISMATCH` entries at the committed digitization intervals. This is evidence that one constant restitution/friction pair per material is not sufficient to reproduce the admitted curves; it is not converted into a limitation or a pass. Only the author-data request and version-of-record PDF audit remain reference limitations.
+
+### Ball-collision candidate v1 validation result
+
+The immutable first validation event is preserved under
+`physics_models/candidates/ball_collision_v1/validation/`, with separate
+`domenech_2023` and `mathavan_2009` JSON, full-precision CSV, Markdown, and
+receipt files. Both receipts bind freeze SHA-256
+`3e239d04f7f66447e967e4b2c8dac3b49e5eafadbde7f58a4bcc14300e9615a1`.
+These files must not be overwritten; a replay requires a separately authorized
+governed validation event and a new output path.
+
+Mathavan 2009 produced 15 HOLDOUT rows: 12 passed and three remained
+predeclared known model mismatches (two cushion rebound speeds and one sliding
+deceleration). Its receipt is `PASSED_OR_ACCOUNTED`. Those cushion and surface
+rows are not evidence for ball-contact tuning, but their unchanged accounting
+shows that the frozen combined production profile remained reproducible.
+
+Doménech 2023 produced 139 HOLDOUT rows: four billiard cue-scattering points
+passed, 131 finite points were new `MODEL_MISMATCH` results, and four rubber
+post-transition object-angle cases were `INTEGRATION_MISMATCH` because the
+trace contained a duplicate ball velocity impulse. Its receipt is `FAILED`.
+The disagreements were not added to the preregistered mismatch list, converted
+to limitations, or used to alter parameters after freeze. The result rejects a
+claim that one constant `(e, mu)` pair per material reproduces the source
+curves, and the four duplicate-impulse traces identify a remaining persistent
+contact defect for the later multi-contact/solver theme. Non-billiard rows
+remain `TREND_ONLY`; the PVC-to-Chinese-Pool transfer and independent
+confirmation needs remain unresolved, so candidate v1 makes no real-world
+accuracy claim.
 
 Reconstruct, verify, and account for the package offline:
 

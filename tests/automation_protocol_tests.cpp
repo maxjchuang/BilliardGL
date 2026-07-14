@@ -36,7 +36,7 @@ int main()
     const billiardgl::json::Value physicsFrame =
         billiardgl::serializePhysicsFrame(runtime.physicsTrace().frames().front());
     expect(physicsFrame.at("physics_profile_id").asString() ==
-        "chinese_pool_cue_contact_v1", "trace should identify its physics profile");
+        "chinese_pool_ball_collision_v1", "trace should identify its physics profile");
     const billiardgl::json::Value& traceBall =
         physicsFrame.at("balls").asArray()[0];
     expect(traceBall.at("motion_state").asString() == "stationary",

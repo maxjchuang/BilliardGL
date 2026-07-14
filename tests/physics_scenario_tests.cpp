@@ -197,7 +197,7 @@ int main()
         v4ImpactRuntime.cueContactResult().applied,
         "v4 scenario should apply its cue contact exactly once at load");
     billiardgl::GameRuntime freshRuntime;
-    expect(freshRuntime.physicsProfile().id == "chinese_pool_cue_contact_v1",
+    expect(freshRuntime.physicsProfile().id == "chinese_pool_ball_collision_v1",
         "scenario override should not change production defaults");
 
     billiardgl::json::Value missingProfileField = validV3Document();
