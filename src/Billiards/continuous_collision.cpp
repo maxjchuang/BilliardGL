@@ -162,4 +162,11 @@ bool continuousContactLess(
                second.firstBall, second.secondBall, second.featureId);
 }
 
+std::tuple<int, int, int, int> continuousContactStableKey(
+    const ContinuousContactCandidate& candidate)
+{
+    return std::make_tuple(kindOrder(candidate.kind), candidate.firstBall,
+        candidate.secondBall, candidate.featureId);
+}
+
 }  // namespace billiardgl

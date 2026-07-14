@@ -3,6 +3,7 @@
 #include "game_state.h"
 #include "pocket_boundary.h"
 
+#include <tuple>
 #include <vector>
 
 namespace billiardgl {
@@ -48,5 +49,7 @@ ContinuousContactCandidate boundaryContactCandidate(
 bool continuousContactLess(
     const ContinuousContactCandidate& first,
     const ContinuousContactCandidate& second);
+std::tuple<int, int, int, int> continuousContactStableKey(
+    const ContinuousContactCandidate& candidate);
 
 }  // namespace billiardgl

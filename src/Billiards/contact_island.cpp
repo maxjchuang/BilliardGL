@@ -13,8 +13,14 @@ typedef std::tuple<int, int, int, int> StableKey;
 
 StableKey stableKey(const ContinuousContactCandidate& candidate)
 {
-    return StableKey(static_cast<int>(candidate.kind), candidate.firstBall,
-        candidate.secondBall, candidate.featureId);
+    return continuousContactStableKey(candidate);
+}
+
+bool isPhysicalConstraint(ContinuousContactKind kind)
+{
+    return kind == ContinuousContactKind::BallBall ||
+        kind == ContinuousContactKind::StraightRail ||
+        kind == ContinuousContactKind::Jaw;
 }
 
 int findRoot(std::map<int, int>& parent, int value)
@@ -105,6 +111,78 @@ ContactIslandBuildResult buildEarliestContactIslands(
         result.islands[index].islandId = static_cast<int>(index);
     }
     return result;
+}
+
+ContinuousEventBatch buildEarliestEventBatch(
+    const std::vector<ContinuousContactCandidate>& candidates,
+    double toiToleranceSeconds, int maximumIslandSize)
+{
+    ContinuousEventBatch batch;
+    if (!std::isfinite(toiToleranceSeconds) || toiToleranceSeconds < 0.0 ||
+        maximumIslandSize < 1) {
+        batch.limitExceeded = true;
+        batch.failureCode = ContinuousBatchFailureCode::InvalidControls;
+        return batch;
+    }
+
+    std::vector<ContinuousContactCandidate> selected;
+    for (const ContinuousContactCandidate& candidate : candidates) {
+        if (candidate.valid && std::isfinite(candidate.timeOfImpactSeconds) &&
+            candidate.timeOfImpactSeconds >= 0.0) {
+            selected.push_back(candidate);
+        }
+    }
+    if (selected.empty()) return batch;
+    std::sort(selected.begin(), selected.end(), continuousContactLess);
+    batch.earliestTimeSeconds = selected.front().timeOfImpactSeconds;
+    selected.erase(std::remove_if(selected.begin(), selected.end(),
+        [&batch, toiToleranceSeconds](const ContinuousContactCandidate& value) {
+            return value.timeOfImpactSeconds >
+                batch.earliestTimeSeconds + toiToleranceSeconds;
+        }), selected.end());
+
+    std::set<StableKey> seen;
+    std::vector<ContinuousContactCandidate> physical;
+    for (const ContinuousContactCandidate& candidate : selected) {
+        if (!seen.insert(stableKey(candidate)).second) {
+            ++batch.duplicateCandidatesRemoved;
+            continue;
+        }
+        if (isPhysicalConstraint(candidate.kind)) physical.push_back(candidate);
+        else batch.topologyTransitions.push_back(candidate);
+    }
+
+    const ContactIslandBuildResult islands = buildEarliestContactIslands(
+        physical, toiToleranceSeconds, maximumIslandSize);
+    batch.physicalIslands = islands.islands;
+    batch.duplicateCandidatesRemoved += islands.duplicateCandidatesRemoved;
+    batch.limitExceeded = islands.limitExceeded;
+    if (batch.limitExceeded) {
+        batch.failureCode = ContinuousBatchFailureCode::IslandLimit;
+    }
+    std::sort(batch.physicalIslands.begin(), batch.physicalIslands.end(),
+        [](const ContactIsland& first, const ContactIsland& second) {
+            if (first.contacts.empty()) return !second.contacts.empty();
+            if (second.contacts.empty()) return false;
+            return stableKey(first.contacts.front()) <
+                stableKey(second.contacts.front());
+        });
+    for (std::size_t index = 0; index < batch.physicalIslands.size(); ++index) {
+        batch.physicalIslands[index].islandId = static_cast<int>(index);
+    }
+
+    std::sort(batch.topologyTransitions.begin(),
+        batch.topologyTransitions.end(), continuousContactLess);
+    std::set<int> topologyBalls;
+    for (const ContinuousContactCandidate& transition :
+            batch.topologyTransitions) {
+        if (!topologyBalls.insert(transition.firstBall).second) {
+            batch.failureCode =
+                ContinuousBatchFailureCode::ContradictoryTopology;
+            break;
+        }
+    }
+    return batch;
 }
 
 }  // namespace billiardgl

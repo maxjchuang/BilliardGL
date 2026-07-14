@@ -20,7 +20,26 @@ struct ContactIslandBuildResult {
     bool limitExceeded = false;
 };
 
+enum class ContinuousBatchFailureCode {
+    None,
+    InvalidControls,
+    IslandLimit,
+    ContradictoryTopology
+};
+
+struct ContinuousEventBatch {
+    double earliestTimeSeconds = 0.0;
+    std::vector<ContactIsland> physicalIslands;
+    std::vector<ContinuousContactCandidate> topologyTransitions;
+    int duplicateCandidatesRemoved = 0;
+    bool limitExceeded = false;
+    ContinuousBatchFailureCode failureCode = ContinuousBatchFailureCode::None;
+};
+
 ContactIslandBuildResult buildEarliestContactIslands(
+    const std::vector<ContinuousContactCandidate>& candidates,
+    double toiToleranceSeconds, int maximumIslandSize);
+ContinuousEventBatch buildEarliestEventBatch(
     const std::vector<ContinuousContactCandidate>& candidates,
     double toiToleranceSeconds, int maximumIslandSize);
 

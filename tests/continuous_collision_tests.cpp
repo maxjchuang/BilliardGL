@@ -82,5 +82,10 @@ int main()
         PocketBoundaryEventKind::LeftJaw);
     expect(jaw.valid && jaw.kind == ContinuousContactKind::Jaw &&
         jaw.featureId == 5, "boundary wrapper should retain stable feature identity");
+
+    const ContinuousContactCandidate capture = boundaryContactCandidate(
+        2, 9, 0.01, Point3{}, PocketBoundaryEventKind::Capture);
+    expect(continuousContactStableKey(jaw) < continuousContactStableKey(capture),
+        "stable event ordering should place physical jaws before capture transitions");
     return 0;
 }
