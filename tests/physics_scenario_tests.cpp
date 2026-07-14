@@ -142,6 +142,21 @@ billiardgl::json::Value validV7Document()
     return value;
 }
 
+billiardgl::json::Value validV8Document()
+{
+    billiardgl::json::Value value = validV7Document();
+    value["schema_version"] = billiardgl::json::Value(8);
+    billiardgl::json::Value& solver = value["physics_profile"]["solver"];
+    solver["toi_tolerance_seconds"] = billiardgl::json::Value(0.0000001);
+    solver["maximum_island_size"] = billiardgl::json::Value(16);
+    solver["velocity_iterations"] = billiardgl::json::Value(12);
+    solver["position_iterations"] = billiardgl::json::Value(4);
+    solver["penetration_slop_cm"] = billiardgl::json::Value(0.001);
+    solver["maximum_penetration_cm"] = billiardgl::json::Value(0.5);
+    solver["residual_tolerance_cm_s"] = billiardgl::json::Value(0.001);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -155,6 +170,18 @@ int main()
     expect(parsed.scenario.balls[1].pocketed, "omitted ball should become pocketed");
     expect(parsed.scenario.expectations.size() == 2, "expectations should parse");
     expect(parsed.scenario.expectations[0].comparison == "eq", "operator maps to comparison");
+
+    const billiardgl::PhysicsScenarioResult v8 =
+        billiardgl::parsePhysicsScenario(validV8Document());
+    expect(v8.ok && v8.scenario.physicsProfile.solver.maximumIslandSize == 16 &&
+        v8.scenario.physicsProfile.solver.velocityIterations == 12 &&
+        std::fabs(v8.scenario.physicsProfile.solver.maximumPenetrationCm - 0.5f) < 0.0001f,
+        "v8 deterministic solver controls should survive parsing");
+    billiardgl::json::Value invalidV8 = validV8Document();
+    invalidV8["physics_profile"]["solver"]["maximum_island_size"] =
+        billiardgl::json::Value(0);
+    expect(!billiardgl::parsePhysicsScenario(invalidV8).ok,
+        "v8 should reject an empty island limit");
 
     billiardgl::GameRuntime runtime;
     runtime.setPhysicsTraceEnabled(true);
@@ -322,7 +349,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(8);
+    unknownVersion["schema_version"] = billiardgl::json::Value(9);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

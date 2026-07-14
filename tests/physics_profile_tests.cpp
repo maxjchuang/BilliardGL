@@ -65,6 +65,16 @@ int main()
         "preregistered independent sliding hypothesis");
     expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
         "sidespin decay remains unevidenced");
+    expect(profile.solver.maximumIslandSize == 16 &&
+        profile.solver.velocityIterations == 12 &&
+        profile.solver.positionIterations == 4 &&
+        close(profile.solver.maximumPenetrationCm, 0.5f),
+        "deterministic multi-contact controls have safe defaults");
+    billiardgl::PhysicsProfile invalidSolver = profile;
+    invalidSolver.solver.maximumPenetrationCm =
+        invalidSolver.solver.penetrationSlopCm;
+    expect(!billiardgl::validatePhysicsProfile(invalidSolver).ok,
+        "maximum penetration must exceed positional slop");
     billiardgl::PhysicsProfile invalidBoundary = profile;
     invalidBoundary.tableBoundary.cornerThroatWidthCm =
         invalidBoundary.tableBoundary.cornerMouthWidthCm + 1.0f;

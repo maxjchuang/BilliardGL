@@ -339,6 +339,40 @@ class ModelCandidateTests(unittest.TestCase):
                     "jaw_radius_cm", "capture_depth_cm"):
             self.assertIn("table_boundary." + key, manifest.parameter_sources)
 
+    def test_profile_manifest_v6_requires_solver_control_provenance(self):
+        document = json.loads(PRODUCTION_POCKET_PROFILE.read_text(encoding="utf-8"))
+        document["schema_version"] = 6
+        controls = {
+            "maximum_island_size": 16,
+            "maximum_penetration_cm": 0.5,
+            "penetration_slop_cm": 0.001,
+            "position_iterations": 4,
+            "residual_tolerance_cm_s": 0.001,
+            "toi_tolerance_seconds": 1e-7,
+            "velocity_iterations": 12,
+        }
+        document["runtime_profile"]["solver"].update(controls)
+        for key in controls:
+            document["parameter_sources"][f"solver.{key}"] = {
+                "evidence": "deterministic bounded solver control fixture",
+                "kind": "engineering_limit",
+                "unit": "count" if "iterations" in key or "size" in key else
+                        ("s" if key.endswith("seconds") else
+                         ("cm/s" if key.endswith("cm_s") else "cm")),
+            }
+        path = self.root / "profile_v6.json"
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        manifest = load_profile_manifest(path)
+        self.assertEqual(manifest.runtime_profile["solver"]["velocity_iterations"], 12)
+        del document["parameter_sources"]["solver.toi_tolerance_seconds"]
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "toi_tolerance_seconds"):
+            load_profile_manifest(path)
+
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()
         second = self._write(output=self.root / "regenerated.json")

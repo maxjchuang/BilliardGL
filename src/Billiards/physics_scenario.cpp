@@ -176,8 +176,17 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
         requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
             "physics_profile.cushion");
     }
-    requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
-        "physics_profile.solver");
+    if (scenarioVersion >= 8) {
+        requireExactKeys(solver,
+            {"time_step_seconds", "maximum_events_per_tick",
+             "toi_tolerance_seconds", "maximum_island_size",
+             "velocity_iterations", "position_iterations",
+             "penetration_slop_cm", "maximum_penetration_cm",
+             "residual_tolerance_cm_s"}, "physics_profile.solver");
+    } else {
+        requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
+            "physics_profile.solver");
+    }
     if (tableBoundary != nullptr) {
         requireExactKeys(*tableBoundary,
             {"playfield_width_cm", "playfield_length_cm",
@@ -265,6 +274,19 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     profile.solver.timeStepSeconds = static_cast<float>(
         requiredNumber(solver, "time_step_seconds"));
     profile.solver.maximumEventsPerTick = required(solver, "maximum_events_per_tick").asInt();
+    if (scenarioVersion >= 8) {
+        profile.solver.toiToleranceSeconds = static_cast<float>(
+            requiredNumber(solver, "toi_tolerance_seconds"));
+        profile.solver.maximumIslandSize = required(solver, "maximum_island_size").asInt();
+        profile.solver.velocityIterations = required(solver, "velocity_iterations").asInt();
+        profile.solver.positionIterations = required(solver, "position_iterations").asInt();
+        profile.solver.penetrationSlopCm = static_cast<float>(
+            requiredNumber(solver, "penetration_slop_cm"));
+        profile.solver.maximumPenetrationCm = static_cast<float>(
+            requiredNumber(solver, "maximum_penetration_cm"));
+        profile.solver.residualToleranceCmS = static_cast<float>(
+            requiredNumber(solver, "residual_tolerance_cm_s"));
+    }
     const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
     if (!validation.ok) throw std::runtime_error(validation.error);
     return profile;
@@ -282,7 +304,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1, 2, 3, 4, 5, 6, and 7 are supported";
+                "only physics scenario versions 1 through 8 are supported";
             return result;
         }
 

@@ -59,6 +59,13 @@ struct TableBoundaryProperties {
 struct SolverSettings {
     float timeStepSeconds = 0.1f;
     int maximumEventsPerTick = 64;
+    float toiToleranceSeconds = 0.0000001f;
+    int maximumIslandSize = 16;
+    int velocityIterations = 12;
+    int positionIterations = 4;
+    float penetrationSlopCm = 0.001f;
+    float maximumPenetrationCm = 0.5f;
+    float residualToleranceCmS = 0.001f;
 };
 
 struct PhysicsProfile {

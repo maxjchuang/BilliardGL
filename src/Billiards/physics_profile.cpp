@@ -172,6 +172,19 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
     if (profile.solver.maximumEventsPerTick <= 0) {
         return invalid("solver maximum_events_per_tick must be positive");
     }
+    if (!std::isfinite(profile.solver.toiToleranceSeconds) ||
+        profile.solver.toiToleranceSeconds < 0.0f ||
+        profile.solver.toiToleranceSeconds >= profile.solver.timeStepSeconds ||
+        profile.solver.maximumIslandSize < 1 ||
+        profile.solver.maximumIslandSize > 1024 ||
+        profile.solver.velocityIterations < 1 ||
+        profile.solver.positionIterations < 1 ||
+        !finiteNonnegative(profile.solver.penetrationSlopCm) ||
+        !std::isfinite(profile.solver.maximumPenetrationCm) ||
+        profile.solver.maximumPenetrationCm <= profile.solver.penetrationSlopCm ||
+        !finiteNonnegative(profile.solver.residualToleranceCmS)) {
+        return invalid("multi-contact solver controls are invalid or inconsistent");
+    }
     PhysicsProfileValidation result;
     result.ok = true;
     return result;
@@ -242,7 +255,14 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "table_boundary.material="
         << profile.tableBoundary.material << '\n'
         << "solver.time_step_seconds=" << profile.solver.timeStepSeconds << '\n'
-        << "solver.maximum_events_per_tick=" << profile.solver.maximumEventsPerTick << '\n';
+        << "solver.maximum_events_per_tick=" << profile.solver.maximumEventsPerTick << '\n'
+        << "solver.toi_tolerance_seconds=" << profile.solver.toiToleranceSeconds << '\n'
+        << "solver.maximum_island_size=" << profile.solver.maximumIslandSize << '\n'
+        << "solver.velocity_iterations=" << profile.solver.velocityIterations << '\n'
+        << "solver.position_iterations=" << profile.solver.positionIterations << '\n'
+        << "solver.penetration_slop_cm=" << profile.solver.penetrationSlopCm << '\n'
+        << "solver.maximum_penetration_cm=" << profile.solver.maximumPenetrationCm << '\n'
+        << "solver.residual_tolerance_cm_s=" << profile.solver.residualToleranceCmS << '\n';
     return output.str();
 }
 
