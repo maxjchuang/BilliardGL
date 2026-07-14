@@ -25,6 +25,7 @@ pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 set(BILLIARDGL_CORE_SOURCES
     src/Billiards/assets.cpp
+    src/Billiards/ball_ball_contact.cpp
     src/Billiards/cue_contact.cpp
     src/Billiards/frame_timing.cpp
     src/Billiards/game_state.cpp
@@ -112,6 +113,7 @@ add_executable(Billiards
 )
 
 billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
+billiardgl_add_core_test(BilliardsBallBallContactTests tests/ball_ball_contact_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsProfileTests tests/physics_profile_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
 billiardgl_add_core_test(BilliardsSurfaceMotionTests tests/surface_motion_tests.cpp)
