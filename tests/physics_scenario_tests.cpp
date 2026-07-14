@@ -111,6 +111,17 @@ billiardgl::json::Value validV5Document()
     return value;
 }
 
+billiardgl::json::Value validV6Document()
+{
+    billiardgl::json::Value value = validV5Document();
+    value["schema_version"] = billiardgl::json::Value(6);
+    billiardgl::json::Value& cushion = value["physics_profile"]["cushion"];
+    cushion["nose_height_ratio"] = billiardgl::json::Value(1.4);
+    cushion["maximum_rigid_incident_speed_cm_s"] = billiardgl::json::Value(250.0);
+    cushion["material"] = billiardgl::json::Value("riley_snooker_cushion");
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -176,6 +187,16 @@ int main()
         std::fabs(v5.scenario.physicsProfile.ball.normalRestitution - 0.91f) < 0.0001f &&
         std::fabs(v5.scenario.physicsProfile.ball.frictionCoefficient - 0.08f) < 0.0001f,
         "v5 ball contact properties should survive parsing exactly");
+    expect(std::fabs(v5.scenario.physicsProfile.cushion.noseHeightRatio - 1.0f) < 0.0001f &&
+        v5.scenario.physicsProfile.cushion.material == "legacy_rigid_rail",
+        "v5 profile should receive cushion compatibility defaults");
+    const billiardgl::PhysicsScenarioResult v6 =
+        billiardgl::parsePhysicsScenario(validV6Document());
+    expect(v6.ok, "valid cushion profile scenario v6 should parse");
+    expect(std::fabs(v6.scenario.physicsProfile.cushion.noseHeightRatio - 1.4f) < 0.0001f &&
+        std::fabs(v6.scenario.physicsProfile.cushion.maximumRigidIncidentSpeedCmS - 250.0f) < 0.0001f &&
+        v6.scenario.physicsProfile.cushion.material == "riley_snooker_cushion",
+        "v6 cushion properties should survive parsing exactly");
     billiardgl::json::Value sourceApparatus = validV5Document();
     sourceApparatus["evidence"]["equipment"] =
         billiardgl::json::Value("SOURCE_LABORATORY_APPARATUS");
@@ -233,6 +254,20 @@ int main()
     missingV5Field["physics_profile"]["ball"].asObject().erase("inertia_factor");
     expect(!billiardgl::parsePhysicsScenario(missingV5Field).ok,
         "v5 profile should require every ball contact field");
+    billiardgl::json::Value invalidNoseHeight = validV6Document();
+    invalidNoseHeight["physics_profile"]["cushion"]["nose_height_ratio"] =
+        billiardgl::json::Value(2.0);
+    expect(!billiardgl::parsePhysicsScenario(invalidNoseHeight).ok,
+        "v6 profile should reject cushion nose height outside the ball");
+    billiardgl::json::Value invalidRigidSpeed = validV6Document();
+    invalidRigidSpeed["physics_profile"]["cushion"]["maximum_rigid_incident_speed_cm_s"] =
+        billiardgl::json::Value(0.0);
+    expect(!billiardgl::parsePhysicsScenario(invalidRigidSpeed).ok,
+        "v6 profile should reject a nonpositive rigid speed domain");
+    billiardgl::json::Value missingCushionMaterial = validV6Document();
+    missingCushionMaterial["physics_profile"]["cushion"].asObject().erase("material");
+    expect(!billiardgl::parsePhysicsScenario(missingCushionMaterial).ok,
+        "v6 profile should require every cushion field");
     billiardgl::json::Value mismatchedProfileStep = validV3Document();
     mismatchedProfileStep["physics_profile"]["solver"]["time_step_seconds"] =
         billiardgl::json::Value(0.05);
@@ -252,7 +287,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(6);
+    unknownVersion["schema_version"] = billiardgl::json::Value(7);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

@@ -40,6 +40,11 @@ _RUNTIME_SECTION_KEYS_V3["ball"] = {
     "mass_kg", "radius_cm", "inertia_factor", "normal_restitution",
     "friction_coefficient", "material",
 }
+_RUNTIME_SECTION_KEYS_V4 = dict(_RUNTIME_SECTION_KEYS_V3)
+_RUNTIME_SECTION_KEYS_V4["cushion"] = {
+    "normal_restitution", "friction_coefficient", "nose_height_ratio",
+    "maximum_rigid_incident_speed_cm_s", "material",
+}
 _FREEZE_KEYS_V1 = {
     "schema_version",
     "candidate_id",
@@ -148,8 +153,8 @@ def load_profile_manifest(path):
     if not isinstance(document, dict) or set(document) != _PROFILE_KEYS:
         raise ValueError("profile manifest keys do not match schema version 1")
     schema_version = document.get("schema_version")
-    if schema_version not in {1, 2, 3}:
-        raise ValueError("profile manifest schema_version must be 1, 2, or 3")
+    if schema_version not in {1, 2, 3, 4}:
+        raise ValueError("profile manifest schema_version must be 1, 2, 3, or 4")
     if raw != _canonical(document):
         raise ValueError("profile manifest must use canonical JSON bytes")
 
@@ -162,6 +167,7 @@ def load_profile_manifest(path):
         1: _RUNTIME_SECTION_KEYS_V1,
         2: _RUNTIME_SECTION_KEYS_V2,
         3: _RUNTIME_SECTION_KEYS_V3,
+        4: _RUNTIME_SECTION_KEYS_V4,
     }[schema_version]
     for section, keys in section_keys.items():
         value = runtime.get(section)

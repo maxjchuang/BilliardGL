@@ -9,7 +9,7 @@
 
 namespace billiardgl {
 
-constexpr int kPhysicsScenarioVersion = 5;
+constexpr int kPhysicsScenarioVersion = 6;
 
 struct PhysicsExpectation {
     std::string metric;

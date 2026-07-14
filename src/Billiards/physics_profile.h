@@ -37,6 +37,9 @@ struct CueProperties {
 struct CushionProperties {
     float normalRestitution = 1.0f;
     float frictionCoefficient = 0.0f;
+    float noseHeightRatio = 1.0f;
+    float maximumRigidIncidentSpeedCmS = 1000000000.0f;
+    std::string material = "legacy_rigid_rail";
 };
 
 struct SolverSettings {

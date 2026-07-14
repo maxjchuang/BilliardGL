@@ -159,8 +159,15 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     } else {
         requireExactKeys(cue, {"effective_mass_kg"}, "physics_profile.cue");
     }
-    requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
-        "physics_profile.cushion");
+    if (scenarioVersion >= 6) {
+        requireExactKeys(cushion,
+            {"normal_restitution", "friction_coefficient", "nose_height_ratio",
+             "maximum_rigid_incident_speed_cm_s", "material"},
+            "physics_profile.cushion");
+    } else {
+        requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
+            "physics_profile.cushion");
+    }
     requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
         "physics_profile.solver");
 
@@ -209,6 +216,13 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
         requiredNumber(cushion, "normal_restitution"));
     profile.cushion.frictionCoefficient = static_cast<float>(
         requiredNumber(cushion, "friction_coefficient"));
+    if (scenarioVersion >= 6) {
+        profile.cushion.noseHeightRatio = static_cast<float>(
+            requiredNumber(cushion, "nose_height_ratio"));
+        profile.cushion.maximumRigidIncidentSpeedCmS = static_cast<float>(
+            requiredNumber(cushion, "maximum_rigid_incident_speed_cm_s"));
+        profile.cushion.material = requiredString(cushion, "material");
+    }
     profile.solver.timeStepSeconds = static_cast<float>(
         requiredNumber(solver, "time_step_seconds"));
     profile.solver.maximumEventsPerTick = required(solver, "maximum_events_per_tick").asInt();
@@ -229,7 +243,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1, 2, 3, 4, and 5 are supported";
+                "only physics scenario versions 1, 2, 3, 4, 5, and 6 are supported";
             return result;
         }
 
@@ -250,7 +264,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             !(version >= 5 &&
               scenario.equipment == "SOURCE_LABORATORY_APPARATUS")) {
             throw std::runtime_error(
-                "equipment must be WPA_POOL or a version 5 source laboratory apparatus");
+                "equipment must be WPA_POOL or a version 5+ source laboratory apparatus");
         }
 
         const json::Value& simulation = required(value, "simulation");

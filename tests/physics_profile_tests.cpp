@@ -41,6 +41,12 @@ int main()
         "Domenech billiard calibration restitution");
     expect(close(profile.ball.frictionCoefficient, 0.25f),
         "Domenech billiard calibration friction");
+    expect(close(profile.cushion.noseHeightRatio, 1.0f),
+        "legacy centered cushion contact compatibility default");
+    expect(profile.cushion.maximumRigidIncidentSpeedCmS > 1000000.0f,
+        "legacy cushion profile has an effectively unbounded finite domain");
+    expect(profile.cushion.material == "legacy_rigid_rail",
+        "legacy cushion material is explicit");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
@@ -85,6 +91,21 @@ int main()
     invalid.ball.frictionCoefficient = -0.1f;
     expect(!billiardgl::validatePhysicsProfile(invalid).ok,
         "negative ball contact friction rejected");
+
+    invalid = profile;
+    invalid.cushion.noseHeightRatio = 2.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "invalid cushion nose height rejected");
+
+    invalid = profile;
+    invalid.cushion.maximumRigidIncidentSpeedCmS = 0.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "nonpositive rigid cushion speed domain rejected");
+
+    invalid = profile;
+    invalid.cushion.material = "../unsafe";
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "unsafe cushion material rejected");
 
     invalid = profile;
     invalid.surface.slidingFrictionCoefficient = -0.1f;

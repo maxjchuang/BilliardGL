@@ -57,7 +57,8 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
     if (!safeId(profile.formulaVersion)) {
         return invalid("physics formula version is not a safe stable ID");
     }
-    if (!safeId(profile.ball.material) || !safeId(profile.surface.material)) {
+    if (!safeId(profile.ball.material) || !safeId(profile.surface.material) ||
+        !safeId(profile.cushion.material)) {
         return invalid("physics material is not a safe stable ID");
     }
     if (!std::isfinite(profile.ball.radiusCm) || profile.ball.radiusCm <= 0.0f) {
@@ -122,6 +123,15 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
     if (!finiteNonnegative(profile.cushion.frictionCoefficient)) {
         return invalid("cushion friction coefficient must be finite and nonnegative");
     }
+    if (!std::isfinite(profile.cushion.noseHeightRatio) ||
+        profile.cushion.noseHeightRatio <= 0.0f ||
+        profile.cushion.noseHeightRatio >= 2.0f) {
+        return invalid("cushion nose height ratio must be between zero and two");
+    }
+    if (!std::isfinite(profile.cushion.maximumRigidIncidentSpeedCmS) ||
+        profile.cushion.maximumRigidIncidentSpeedCmS <= 0.0f) {
+        return invalid("cushion maximum rigid incident speed must be finite and positive");
+    }
     if (!std::isfinite(profile.solver.timeStepSeconds) ||
         profile.solver.timeStepSeconds <= 0.0f) {
         return invalid("solver time_step_seconds must be finite and positive");
@@ -172,6 +182,10 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << profile.cue.cueSpeedPerPowerUnitCmS << '\n'
         << "cushion.normal_restitution=" << profile.cushion.normalRestitution << '\n'
         << "cushion.friction_coefficient=" << profile.cushion.frictionCoefficient << '\n'
+        << "cushion.nose_height_ratio=" << profile.cushion.noseHeightRatio << '\n'
+        << "cushion.maximum_rigid_incident_speed_cm_s="
+        << profile.cushion.maximumRigidIncidentSpeedCmS << '\n'
+        << "cushion.material=" << profile.cushion.material << '\n'
         << "solver.time_step_seconds=" << profile.solver.timeStepSeconds << '\n'
         << "solver.maximum_events_per_tick=" << profile.solver.maximumEventsPerTick << '\n';
     return output.str();

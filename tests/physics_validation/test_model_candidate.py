@@ -160,6 +160,46 @@ class ModelCandidateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "ball.normal_restitution"):
             load_profile_manifest(self.profile)
 
+    def test_profile_manifest_v4_requires_cushion_geometry_and_domain_provenance(self):
+        document = json.loads(
+            PRODUCTION_BALL_COLLISION_PROFILE.read_text(encoding="utf-8"))
+        document["schema_version"] = 4
+        extended = {
+            "maximum_rigid_incident_speed_cm_s": 250.0,
+            "nose_height_ratio": 1.4,
+        }
+        document["runtime_profile"]["cushion"].update({
+            **extended,
+            "material": "riley_snooker_cushion",
+        })
+        for key in extended:
+            document["parameter_sources"][f"cushion.{key}"] = {
+                "evidence": "Mathavan 2010 cushion profile fixture",
+                "kind": "source_apparatus",
+                "unit": "cm/s" if "speed" in key else "1",
+            }
+        path = self.root / "profile_v4.json"
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        manifest = load_profile_manifest(path)
+        self.assertEqual(manifest.runtime_profile["cushion"], {
+            "friction_coefficient": 0.0,
+            "material": "riley_snooker_cushion",
+            "maximum_rigid_incident_speed_cm_s": 250.0,
+            "normal_restitution": 1.0,
+            "nose_height_ratio": 1.4,
+        })
+        del document["parameter_sources"]["cushion.nose_height_ratio"]
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ValueError, "cushion.nose_height_ratio"):
+            load_profile_manifest(path)
+
     def test_production_cue_profile_is_analytic_only_and_fully_sourced(self):
         document = json.loads(PRODUCTION_CUE_PROFILE.read_text(encoding="utf-8"))
         manifest = load_profile_manifest(PRODUCTION_CUE_PROFILE)
