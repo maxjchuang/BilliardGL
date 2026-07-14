@@ -66,6 +66,39 @@ int main()
         symmetric.balls[2].motionState == BallMotionState::Sliding,
         "solver impulses should refresh surface motion classification");
 
+    PhysicsProfile frictional = elastic;
+    frictional.ball.normalRestitution = 0.8f;
+    frictional.ball.frictionCoefficient = 0.25f;
+    GameState oblique = stateFor(2);
+    oblique.balls[0].position.x = 0.0f;
+    oblique.balls[1].position.x = 2.0f * frictional.ball.radiusCm;
+    oblique.balls[0].velocity = Point3{100.0f, 0.0f, 40.0f};
+    ContactIsland obliqueIsland;
+    obliqueIsland.ballIndices = {0, 1};
+    obliqueIsland.contacts = {pair(0, 1)};
+    const ContactSolverResult frictionSolved = solveContactIsland(
+        oblique, obliqueIsland, frictional);
+    expect(frictionSolved.status == ContactSolverStatus::Converged,
+        "oblique frictional island should converge");
+    expect(std::fabs(
+        frictionSolved.contacts[0].accumulatedTangentialImpulseNs) <=
+        frictional.ball.frictionCoefficient *
+            frictionSolved.contacts[0].accumulatedNormalImpulseNs + 1e-12,
+        "accumulated island impulse should obey the Coulomb cone");
+    expect(std::fabs(oblique.balls[0].angularVelocity.y) > 0.0f &&
+        std::fabs(oblique.balls[1].angularVelocity.y) > 0.0f,
+        "island friction should transfer angular momentum");
+    expect(frictionSolved.contacts[0].regime == BallBallContactRegime::Stick ||
+        frictionSolved.contacts[0].regime == BallBallContactRegime::Slip,
+        "island friction should expose a stable stick/slip regime");
+    expect(frictionSolved.totalKineticEnergyAfterJ <=
+        frictionSolved.totalKineticEnergyBeforeJ + 1e-10,
+        "island solve must not create translational plus rotational energy");
+    expect(frictionSolved.contacts[0].tangentEffectiveMassKg > 0.0 &&
+        frictionSolved.contacts[0].firstContactArmM.x > 0.0f &&
+        frictionSolved.contacts[0].secondContactArmM.x < 0.0f,
+        "solver diagnostics should expose contact arms and effective mass");
+
     GameState projection = stateFor(2);
     ContactIsland overlap;
     overlap.ballIndices = {0, 1};

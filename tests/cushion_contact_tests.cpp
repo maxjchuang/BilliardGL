@@ -98,6 +98,20 @@ int main()
     expect(coupled.kineticEnergyAfterJ <= coupled.kineticEnergyBeforeJ + 1e-9,
         "rough cushion contact does not create energy");
 
+    billiardgl::BallProperties lowInertia = properties;
+    billiardgl::BallProperties highInertia = properties;
+    lowInertia.inertiaFactor = 0.2f;
+    highInertia.inertiaFactor = 0.8f;
+    billiardgl::BallState lowSpin = ball(100.0, 40.0);
+    billiardgl::BallState highSpin = lowSpin;
+    billiardgl::resolveCushionContact(
+        lowSpin, rightRailNormal, 0.0, lowInertia, rough);
+    billiardgl::resolveCushionContact(
+        highSpin, rightRailNormal, 0.0, highInertia, rough);
+    expect(std::fabs(lowSpin.angularVelocity.y) >
+        std::fabs(highSpin.angularVelocity.y),
+        "cushion angular response should honor the configured inertia factor");
+
     billiardgl::BallState mirrored = ball(-100.0, 40.0);
     const billiardgl::CushionContactResult mirrorResult =
         billiardgl::resolveCushionContact(

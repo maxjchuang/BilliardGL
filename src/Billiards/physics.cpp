@@ -754,44 +754,52 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
             contact.kind = PhysicsContactKind::BallBall;
             contact.firstBall = candidate.firstBall;
             contact.secondBall = candidate.secondBall;
-            contact.normal = candidate.normal;
+            contact.normal = solved.contacts[index].normal;
             contact.penetrationCm = candidate.penetrationCm;
             contact.timeOfImpactSeconds = toi;
             contact.normalImpulseNs = solved.contacts[index].accumulatedNormalImpulseNs;
+            contact.tangentialImpulseNs = std::fabs(
+                solved.contacts[index].accumulatedTangentialImpulseNs);
             contact.solverResidualCmS = solved.contacts[index].residualCmS;
             contact.solverProjectionCm = solved.contacts[index].projectionCm;
             contact.velocityImpulseApplied = contact.normalImpulseNs > 0.0;
-            contact.regime = contact.velocityImpulseApplied
-                ? BallBallContactRegime::Frictionless
-                : BallBallContactRegime::Separating;
+            contact.regime = solved.contacts[index].regime;
+            contact.contactTangent = solved.contacts[index].tangent;
             contact.relativeContactVelocityBeforeCmS =
                 solved.contacts[index].relativeVelocityBeforeCmS;
             contact.relativeContactVelocityAfterCmS =
                 solved.contacts[index].relativeVelocityAfterCmS;
             contact.firstContactArmCm = Point3{
-                candidate.normal.x * profile.ball.radiusCm,
-                candidate.normal.y * profile.ball.radiusCm,
-                candidate.normal.z * profile.ball.radiusCm};
+                solved.contacts[index].firstContactArmM.x * 100.0f,
+                solved.contacts[index].firstContactArmM.y * 100.0f,
+                solved.contacts[index].firstContactArmM.z * 100.0f};
             contact.secondContactArmCm = Point3{
-                -candidate.normal.x * profile.ball.radiusCm,
-                -candidate.normal.y * profile.ball.radiusCm,
-                -candidate.normal.z * profile.ball.radiusCm};
+                solved.contacts[index].secondContactArmM.x * 100.0f,
+                solved.contacts[index].secondContactArmM.y * 100.0f,
+                solved.contacts[index].secondContactArmM.z * 100.0f};
             contact.impulseOnSecondNs = Point3{
-                candidate.normal.x * static_cast<float>(contact.normalImpulseNs),
-                candidate.normal.y * static_cast<float>(contact.normalImpulseNs),
-                candidate.normal.z * static_cast<float>(contact.normalImpulseNs)};
-            contact.restitution = profile.ball.normalRestitution;
-            contact.frictionCoefficient = 0.0;
+                static_cast<float>(contact.normal.x * contact.normalImpulseNs +
+                    contact.contactTangent.x *
+                    solved.contacts[index].accumulatedTangentialImpulseNs),
+                static_cast<float>(contact.normal.y * contact.normalImpulseNs +
+                    contact.contactTangent.y *
+                    solved.contacts[index].accumulatedTangentialImpulseNs),
+                static_cast<float>(contact.normal.z * contact.normalImpulseNs +
+                    contact.contactTangent.z *
+                    solved.contacts[index].accumulatedTangentialImpulseNs)};
+            contact.restitution = solved.contacts[index].restitution;
+            contact.frictionCoefficient =
+                solved.contacts[index].frictionCoefficient;
             contact.kineticEnergyBeforeJ = solved.kineticEnergyBeforeJ;
             contact.kineticEnergyAfterJ = solved.kineticEnergyAfterJ;
             contact.normalRelativeSpeedBeforeCmS =
-                candidate.normal.x * contact.relativeContactVelocityBeforeCmS.x +
-                candidate.normal.y * contact.relativeContactVelocityBeforeCmS.y +
-                candidate.normal.z * contact.relativeContactVelocityBeforeCmS.z;
+                contact.normal.x * contact.relativeContactVelocityBeforeCmS.x +
+                contact.normal.y * contact.relativeContactVelocityBeforeCmS.y +
+                contact.normal.z * contact.relativeContactVelocityBeforeCmS.z;
             contact.normalRelativeSpeedAfterCmS =
-                candidate.normal.x * contact.relativeContactVelocityAfterCmS.x +
-                candidate.normal.y * contact.relativeContactVelocityAfterCmS.y +
-                candidate.normal.z * contact.relativeContactVelocityAfterCmS.z;
+                contact.normal.x * contact.relativeContactVelocityAfterCmS.x +
+                contact.normal.y * contact.relativeContactVelocityAfterCmS.y +
+                contact.normal.z * contact.relativeContactVelocityAfterCmS.z;
             contact.positionSlopCm = profile.solver.penetrationSlopCm;
             prefix.contacts.push_back(contact);
             impulseApplied = impulseApplied || contact.velocityImpulseApplied;

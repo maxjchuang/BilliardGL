@@ -124,6 +124,22 @@ int main()
     expect(oblique.kineticEnergyAfterJ <= oblique.kineticEnergyBeforeJ + 1e-8,
         "rough oblique collision does not create energy");
 
+    billiardgl::BallProperties lowInertia = rough;
+    billiardgl::BallProperties highInertia = rough;
+    lowInertia.inertiaFactor = 0.2f;
+    highInertia.inertiaFactor = 0.8f;
+    billiardgl::BallState lowFirst = ball(0.0, 0.0, 100.0, 40.0);
+    billiardgl::BallState lowSecond = ball(5.715, 0.0, 0.0, 0.0);
+    billiardgl::BallState highFirst = lowFirst;
+    billiardgl::BallState highSecond = lowSecond;
+    billiardgl::resolveBallBallContact(
+        lowFirst, lowSecond, lowInertia, lowInertia);
+    billiardgl::resolveBallBallContact(
+        highFirst, highSecond, highInertia, highInertia);
+    expect(std::fabs(lowFirst.angularVelocity.y) >
+        std::fabs(highFirst.angularVelocity.y),
+        "ball contact angular response should honor the configured inertia factor");
+
     billiardgl::BallProperties sticky = rough;
     sticky.frictionCoefficient = 1.0f;
     billiardgl::BallState stickFirst = ball(0.0, 0.0, 100.0, 5.0);

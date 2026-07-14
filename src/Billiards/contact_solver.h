@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ball_ball_contact.h"
 #include "contact_island.h"
 #include "physics_profile.h"
 
@@ -20,9 +21,19 @@ struct ContactImpulseDiagnostic {
     int secondBall = -1;
     int featureId = -1;
     double accumulatedNormalImpulseNs = 0.0;
+    double accumulatedTangentialImpulseNs = 0.0;
     double targetNormalSpeedCmS = 0.0;
     double residualCmS = 0.0;
     double projectionCm = 0.0;
+    double normalEffectiveMassKg = 0.0;
+    double tangentEffectiveMassKg = 0.0;
+    double restitution = 0.0;
+    double frictionCoefficient = 0.0;
+    BallBallContactRegime regime = BallBallContactRegime::NoContact;
+    Point3 normal;
+    Point3 tangent;
+    Point3 firstContactArmM;
+    Point3 secondContactArmM;
     Point3 relativeVelocityBeforeCmS;
     Point3 relativeVelocityAfterCmS;
 };
@@ -35,6 +46,8 @@ struct ContactSolverResult {
     double maximumPenetrationCm = 0.0;
     double kineticEnergyBeforeJ = 0.0;
     double kineticEnergyAfterJ = 0.0;
+    double totalKineticEnergyBeforeJ = 0.0;
+    double totalKineticEnergyAfterJ = 0.0;
     std::vector<ContactImpulseDiagnostic> contacts;
 };
 
