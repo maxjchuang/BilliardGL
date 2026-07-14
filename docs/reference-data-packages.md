@@ -296,7 +296,11 @@ The source reports 0.80 ± 0.05 m/s launch speed, a PVC laboratory bench, a came
 
 The article says data are available on request. No author request has been sent; the current authorization covers institutional-access attempts but not contacting an author. This remains a declared limitation. A publisher automation challenge also prevented a complete version-of-record PDF audit, so that audit remains separately declared.
 
-No Doménech runtime scenario is currently emitted. Production fixes ball diameter at 5.715 cm and cannot install the source diameters (6.1, 2.5, and 4.6 cm), masses, contact materials, or PVC support surface per scenario. The full numerical dataset remains available for later schema/physics work, while strict runtime accounting requires one visible geometry/material limitation for each of the seven series. This is deliberately not treated as a model pass, a skipped test, or a relabeled Pool experiment.
+Scenario v5 now installs the source diameter, mass, inertia factor, fitted ball-contact restitution/friction, material ID, and PVC support hypothesis without changing the production Chinese Pool profile. Every one of the 214 points emits an executable case from its committed raw `impact_angle_degrees`: the cue sphere starts at `80 cm/s` in pure roll, the object sphere starts at rest, and their center separation is one source diameter minus `10^-6 cm`. Immediate and first-stable-pure-roll phases remain distinct. Non-billiard cases stay `TREND_ONLY`; billiard cases remain `CONVERTED`, not direct Pool validation.
+
+`physics_models/calibration/ball_collision_material_fit_v1.json` preserves the full deterministic calibration-only fit. The bounded two-level search uses `0 <= e, mu <= 1`, an unweighted mean squared angular residual, and stable `(objective,e,mu)` tie-breaking. Its fitted `(e, mu)` values are billiard `(0.36, 0.25)`, brass `(0.71, 0.10)`, rubber `(0.00, 0.33)`, and steel `(0.97, 0.04)`. Mutation tests prove that changing every HOLDOUT expected value cannot change these parameters or any CALIBRATION scenario byte. The PVC sliding coefficient is an explicit unmeasured apparatus hypothesis of `0.002`; post-transition cases use 400 ticks so the low-friction transition is observed without a discrete repeat impulse.
+
+The governed CALIBRATION execution contains 75 complete numeric rows. All 75 are finite, deterministic, and pass the approach/separation, friction-cone, energy, and no-repeat integration gates, but all 75 remain known experimental `MODEL_MISMATCH` entries at the committed digitization intervals. This is evidence that one constant restitution/friction pair per material is not sufficient to reproduce the admitted curves; it is not converted into a limitation or a pass. No HOLDOUT scenario has been executed at this stage. Only the author-data request and version-of-record PDF audit remain reference limitations.
 
 Reconstruct, verify, and account for the package offline:
 
@@ -306,13 +310,16 @@ python3 -m tools.physics_validation.extract_domenech_2023 \
   --check
 python3 -m tools.physics_validation.reference_package \
   tests/physics_validation/reference_data/domenech_2023_ball_collision
-python3 -m tools.physics_validation.reference_run \
+python3 -m tools.physics_validation.fit_ball_collision \
+  --package tests/physics_validation/reference_data/domenech_2023_ball_collision \
+  --output physics_models/calibration/ball_collision_material_fit_v1.json
+python3 -m tools.physics_validation.calibration_run \
   --executable build/check/Billiards \
   --package tests/physics_validation/reference_data/domenech_2023_ball_collision \
-  --output build/physics-reference/domenech-2023
+  --output build/physics-reference/domenech-2023-calibration
 ```
 
-The last command executes no fabricated substitute scenarios; it produces the strict nine-entry limitation audit plus all 214 point-level rows with experimental values, partitions, source locators, missing evidence, and resolution conditions. A single-case replay command will become valid only after the scenario schema can express the source apparatus.
+The last command selects only the committed CALIBRATION groups. Candidate HOLDOUT execution is separately governed and must not be substituted with `reference_run` while the candidate is still being calibrated and frozen.
 
 ## Mathavan 2010 cushion package
 

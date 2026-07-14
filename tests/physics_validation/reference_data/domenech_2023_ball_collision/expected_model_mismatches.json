@@ -1,1 +1,530 @@
-{"failures": [], "schema_version": 1}
+{
+  "failures": [
+    {
+      "case_id": "billiard_alpha1_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_007",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_008",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_009",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_010",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_011",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_012",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_013",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_014",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_015",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_alpha1_016",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_007",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_008",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_009",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_010",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_011",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_012",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_013",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_014",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_015",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_016",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_017",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "billiard_delta2_018",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "brass_alpha1_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_007",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_008",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_009",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_delta2_010",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "separation_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_lambda2_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "object_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_lambda2_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "object_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_lambda2_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "object_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_lambda2_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "object_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "rubber_lambda2_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "object_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_007",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_008",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_009",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_010",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_011",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_012",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_alpha1_013",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_001",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_002",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_003",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_004",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_005",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_006",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    },
+    {
+      "case_id": "steel_beta1_007",
+      "code": "MODEL_MISMATCH",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "cue_scattering_angle_degrees",
+      "rationale": "The calibration-only constant restitution/friction material model produced a finite, gate-valid trace but differs from the admitted digitized CALIBRATION interval; this entry does not predeclare any HOLDOUT result."
+    }
+  ],
+  "schema_version": 1
+}

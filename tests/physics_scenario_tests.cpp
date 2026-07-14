@@ -176,6 +176,11 @@ int main()
         std::fabs(v5.scenario.physicsProfile.ball.normalRestitution - 0.91f) < 0.0001f &&
         std::fabs(v5.scenario.physicsProfile.ball.frictionCoefficient - 0.08f) < 0.0001f,
         "v5 ball contact properties should survive parsing exactly");
+    billiardgl::json::Value sourceApparatus = validV5Document();
+    sourceApparatus["evidence"]["equipment"] =
+        billiardgl::json::Value("SOURCE_LABORATORY_APPARATUS");
+    expect(billiardgl::parsePhysicsScenario(sourceApparatus).ok,
+        "v5 should explicitly admit source laboratory apparatus profiles");
     billiardgl::json::Value v4ImpactDocument = validV4Document();
     billiardgl::json::Value centeredCue = validV2Document().at("cue_impact");
     centeredCue["tip_offset_cm"] = billiardgl::json::parse("[0.0,0.0]").value;

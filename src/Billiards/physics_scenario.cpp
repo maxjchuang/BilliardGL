@@ -246,8 +246,11 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         }
         scenario.evidenceSource = requiredString(evidence, "source");
         scenario.equipment = requiredString(evidence, "equipment");
-        if (scenario.equipment != "WPA_POOL") {
-            throw std::runtime_error("equipment must be WPA_POOL");
+        if (scenario.equipment != "WPA_POOL" &&
+            !(version >= 5 &&
+              scenario.equipment == "SOURCE_LABORATORY_APPARATUS")) {
+            throw std::runtime_error(
+                "equipment must be WPA_POOL or a version 5 source laboratory apparatus");
         }
 
         const json::Value& simulation = required(value, "simulation");
