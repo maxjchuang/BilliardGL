@@ -9,10 +9,10 @@
     "unallowlistable_failures": []
   },
   "metadata": {
-    "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+    "build_id": "sha256:4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
     "dataset_id": "pocket_geometry_analytic_contract",
     "dataset_version": "1.0.0",
-    "executable": "/private/tmp/billiardgl-phase3-check/Billiards",
+    "executable": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards",
     "package": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract",
     "package_hashes": {
       "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
@@ -26,22 +26,22 @@
     "scenarios": {
       "pocket_geometry_analytic_contract__corner_left_bottom_center": {
         "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__corner_left_bottom_center.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
         "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__corner_left_bottom_center.json"
       },
       "pocket_geometry_analytic_contract__side_left_center": {
         "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_center.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
         "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_center.json"
       },
       "pocket_geometry_analytic_contract__side_left_jaw": {
         "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_jaw.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
         "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_jaw.json"
       },
       "pocket_geometry_analytic_contract__side_left_narrow": {
         "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/provenance/pocket_geometry_analytic_contract__side_left_narrow.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
         "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration/traces/pocket_geometry_analytic_contract__side_left_narrow.json"
       }
     }
@@ -84,7 +84,7 @@
             1.0,
             1.0
           ],
-          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "build_id": "sha256:4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
           "case_id": "corner_left_bottom_center",
           "combined_standard_uncertainty": 0.0,
           "conversion_uncertainty": 0.0,
@@ -117,7 +117,7 @@
           "pool_applicability": "NOT_APPLICABLE",
           "prediction": 1,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case corner_left_bottom_center",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "pocket_geometry_analytic_contract__corner_left_bottom_center",
@@ -133,7 +133,7 @@
             1.0,
             1.0
           ],
-          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "build_id": "sha256:4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
           "case_id": "side_left_center",
           "combined_standard_uncertainty": 0.0,
           "conversion_uncertainty": 0.0,
@@ -166,7 +166,7 @@
           "pool_applicability": "NOT_APPLICABLE",
           "prediction": 1,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_center",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "pocket_geometry_analytic_contract__side_left_center",
@@ -182,7 +182,7 @@
             1.0,
             1.0
           ],
-          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "build_id": "sha256:4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
           "case_id": "side_left_jaw",
           "combined_standard_uncertainty": 0.0,
           "conversion_uncertainty": 0.0,
@@ -215,7 +215,7 @@
           "pool_applicability": "NOT_APPLICABLE",
           "prediction": 1,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_jaw",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "pocket_geometry_analytic_contract__side_left_jaw",
@@ -231,7 +231,7 @@
             0.0,
             0.0
           ],
-          "build_id": "sha256:373cf69e0ca5e0d8f3934333e7d86bf5653f3634c56f70af12fc52d5be3ca8a5",
+          "build_id": "sha256:4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
           "case_id": "side_left_narrow",
           "combined_standard_uncertainty": 0.0,
           "conversion_uncertainty": 0.0,
@@ -264,7 +264,7 @@
           "pool_applicability": "NOT_APPLICABLE",
           "prediction": 0,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/pocket_geometry_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/pocket_boundary_v1/calibration --case side_left_narrow",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "pocket_geometry_analytic_contract__side_left_narrow",

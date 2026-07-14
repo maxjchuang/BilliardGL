@@ -613,5 +613,5 @@ cushion-material, rebound, or real-world pot-success claim.
   `1e19a19566b0e007ba9b19a22efced1a4f287853c5bf74a9b1e7fb0a87f655f2`.
 - CALIBRATION executed four preregistered cases with four passes and zero
   HOLDOUT rows; report SHA-256:
-  `dbb6d2bb2ed0b6486dc475d8fb7771cc94c593837104a6aacd9a4c171a50dba9`.
+  `bb2cffbf515276d145bb1e3dd4ef6e6e518c34d801b892f94c16347df2ecee53`.
 - The candidate HOLDOUT remains unexecuted until after the immutable freeze.

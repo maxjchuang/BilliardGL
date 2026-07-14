@@ -28,9 +28,9 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_cushion_collision_v1",
+    expect(profile.id == "chinese_pool_pocket_boundary_v1",
         "candidate ID");
-    expect(profile.formulaVersion == "cushion_collision_v1",
+    expect(profile.formulaVersion == "pocket_boundary_v1",
         "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
@@ -52,8 +52,13 @@ int main()
         close(profile.tableBoundary.playfieldLengthCm, 254.0f) &&
         close(profile.tableBoundary.cornerMouthWidthCm, 13.2f) &&
         close(profile.tableBoundary.sideMouthWidthCm, 8.6f) &&
-        profile.tableBoundary.geometryId == "legacy_opening_band",
-        "pocket boundary compatibility geometry is explicit");
+        close(profile.tableBoundary.cornerThroatWidthCm, 11.0f) &&
+        close(profile.tableBoundary.sideThroatWidthCm, 7.0f) &&
+        close(profile.tableBoundary.jawRadiusCm, 1.2f) &&
+        close(profile.tableBoundary.throatDepthCm, 4.0f) &&
+        close(profile.tableBoundary.captureDepthCm, 6.0f) &&
+        profile.tableBoundary.geometryId == "wpa_pool_analytic_v1",
+        "frozen pocket boundary geometry is explicit");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),

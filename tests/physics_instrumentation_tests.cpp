@@ -106,15 +106,15 @@ int main()
     billiardgl::initializeBalls(pocketState);
     pocketAll(pocketState);
     pocketState.balls[3].pocketed = false;
-    pocketState.balls[3].position = billiardgl::Point3{
-        -billiardgl::kTableInWidth / 2.0f - 1.0f,
-        billiardgl::kTableHeight + billiardgl::kBallRadius,
-        0.0f};
+    pocketState.balls[3].pocketInteraction.phase =
+        billiardgl::PocketInteractionPhase::Captured;
+    pocketState.balls[3].pocketInteraction.pocketId = 4;
+    pocketState.balls[3].pocketInteraction.captureSequence = 1;
     const billiardgl::PhysicsStepTelemetry pocket = billiardgl::updatePhysics(pocketState, 0.0f);
     expect(pocket.contacts.size() == 1 && pocket.contacts[0].kind == billiardgl::PhysicsContactKind::Pocket,
         "pocket transition emits one contact");
     expect(pocket.contacts[0].firstBall == 3 && pocket.contacts[0].normalImpulseNs == 0.0,
-        "current teleport pocket has zero impulse");
+        "captured-state rule event has zero impulse");
 
     billiardgl::GameState emptyState;
     billiardgl::initializeBalls(emptyState);

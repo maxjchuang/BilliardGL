@@ -23,6 +23,8 @@ PRODUCTION_BALL_COLLISION_PROFILE = Path(__file__).parents[2] / (
     "physics_models/profiles/chinese_pool_ball_collision_v1.json")
 PRODUCTION_CUSHION_PROFILE = Path(__file__).parents[2] / (
     "physics_models/profiles/chinese_pool_cushion_collision_v1.json")
+PRODUCTION_POCKET_PROFILE = Path(__file__).parents[2] / (
+    "physics_models/profiles/chinese_pool_pocket_boundary_v1.json")
 
 
 class ModelCandidateTests(unittest.TestCase):
@@ -318,6 +320,24 @@ class ModelCandidateTests(unittest.TestCase):
         self.assertEqual(
             manifest.parameter_sources["cushion.maximum_rigid_incident_speed_cm_s"]
             ["kind"], "source_domain_boundary")
+
+    def test_production_pocket_profile_is_grade_c_and_fully_sourced(self):
+        document = json.loads(PRODUCTION_POCKET_PROFILE.read_text(encoding="utf-8"))
+        manifest = load_profile_manifest(PRODUCTION_POCKET_PROFILE)
+        self.assertEqual(document["schema_version"], 5)
+        self.assertEqual(manifest.runtime_profile["id"],
+                         "chinese_pool_pocket_boundary_v1")
+        self.assertEqual(manifest.runtime_profile["formula_version"],
+                         "pocket_boundary_v1")
+        boundary = manifest.runtime_profile["table_boundary"]
+        self.assertEqual(boundary["corner_throat_width_cm"], 11.0)
+        self.assertEqual(boundary["side_throat_width_cm"], 7.0)
+        self.assertEqual(boundary["jaw_radius_cm"], 1.2)
+        self.assertFalse(manifest.applicability["real_world_validation_claimed"])
+        self.assertTrue(manifest.applicability["experimental_validation_pending"])
+        for key in ("corner_throat_width_cm", "side_throat_width_cm",
+                    "jaw_radius_cm", "capture_depth_cm"):
+            self.assertIn("table_boundary." + key, manifest.parameter_sources)
 
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()
