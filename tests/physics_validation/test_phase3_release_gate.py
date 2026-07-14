@@ -12,8 +12,9 @@ RELEASE = ROOT / "physics_models/promotion/phase3_release_v1.json"
 
 
 class Phase3ReleaseGateTests(unittest.TestCase):
-    def test_committed_phase3_release_passes_without_replaying_holdout(self):
-        self.assertEqual(validate_phase3_release(ROOT), [])
+    def test_committed_phase3_v1_release_is_rejected_without_replaying_holdout(self):
+        failures = validate_phase3_release(ROOT)
+        self.assertTrue(any("receipt did not pass" in value for value in failures))
 
     def test_release_gate_fails_closed_on_an_unexplained_regression(self):
         document = json.loads(RELEASE.read_text(encoding="utf-8"))

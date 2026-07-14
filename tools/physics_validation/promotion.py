@@ -3,6 +3,29 @@ import json
 from pathlib import Path
 
 
+REQUIRED_EMPTY_RECEIPT_FIELDS = (
+    "unallowlistable_failures",
+    "new_model_mismatches",
+    "new_limitations",
+    "missing_expected_failures",
+)
+
+
+def _validate_receipt(path):
+    path = Path(path)
+    receipt = json.loads(path.read_text(encoding="utf-8"))
+    failures = []
+    if receipt.get("result") != "PASSED_OR_ACCOUNTED":
+        failures.append(f"receipt did not pass: {path.as_posix()}")
+    for field in REQUIRED_EMPTY_RECEIPT_FIELDS:
+        if receipt.get(field) != []:
+            failures.append(
+                f"receipt missing or non-empty accounting field {field}: "
+                f"{path.as_posix()}"
+            )
+    return failures
+
+
 def validate_promotion_manifest(path, root):
     path, root = Path(path), Path(root)
     document = json.loads(path.read_text(encoding="utf-8"))
@@ -32,18 +55,11 @@ def validate_promotion_manifest(path, root):
             actual = hashlib.sha256(target.read_bytes()).hexdigest()
             if actual != artifact.get("sha256"):
                 failures.append(f"artifact hash mismatch: {artifact.get('path')}")
-        receipt_results = []
         for receipt in candidate.get("receipts", []):
             target = root / receipt["path"]
             if target.is_file():
-                result = json.loads(target.read_text(encoding="utf-8")).get("result")
-                receipt_results.append(result)
-                if result not in {"PASSED_OR_ACCOUNTED", "FAILED"}:
-                    failures.append(f"receipt has invalid result: {receipt['path']}")
-        disposition = candidate.get("validation_disposition")
-        expected_disposition = "limitations_preserved" \
-            if "FAILED" in receipt_results else "passed"
-        if disposition != expected_disposition:
+                failures.extend(_validate_receipt(target))
+        if candidate.get("validation_disposition") != "passed":
             failures.append(f"validation disposition mismatch: {candidate.get('id')}")
     return failures
 
