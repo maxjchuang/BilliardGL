@@ -4,6 +4,22 @@ Reference packages turn published or otherwise public experimental measurements 
 
 The `synthetic_reference_v1` package tests infrastructure only. It is not a real-world physics benchmark. The `mathavan_2009_high_speed` package is the first real experimental benchmark; later packages cover Doménech 2023, Mathavan 2010, and Cross 2023.
 
+The `cue_contact_analytic_contract` package is a grade-C equation contract generated independently with Python `Decimal`. It checks rigid-impulse invariants and reproducibility only: it is not a paper-derived dataset, equipment measurement, or real-world validation claim. Its complete precision inputs, normalized values, calibration/holdout split, equations, and hashes are committed. The generator does not import or execute the production contact implementation.
+
+Regenerate or byte-check the package offline, then expose only its committed calibration cases:
+
+```bash
+python3 -m tools.physics_validation.generate_cue_contact_analytic \
+  --package tests/physics_validation/reference_data/cue_contact_analytic_contract \
+  --check
+python3 -m tools.physics_validation.calibration_run \
+  --executable build/Billiards \
+  --package tests/physics_validation/reference_data/cue_contact_analytic_contract \
+  --output build/candidates/cue_contact_v1/calibration
+```
+
+Calibration covers center impact, mirrored vertical offsets, and the preregistered inner stick boundary. HOLDOUT contains left/right sidespin mirrors, horizontal slip-cone clamping, and the traceable zero-impulse miscue outcome. Nonzero cue elevation and a vertical slip impulse remain explicit 2.5D hard-constraint tests rather than analytic reference cases.
+
 ## Repository policy
 
 - Every code, JSON, CSV, and Markdown file is UTF-8.
@@ -144,7 +160,7 @@ dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,me
 | `partition` | `CALIBRATION` or `HOLDOUT`; must agree with `split.json`. |
 | `metric` | Trace-derived comparison metric. |
 | `expected` | Experimental central value in the declared normalized unit. |
-| `unit` | Version-1 unit: `cm`, `cm/s`, `cm/s^2`, `s`, `degree`, `rad/s`, or `dimensionless`. |
+| `unit` | Version-1 unit: `cm`, `cm/s`, `cm/s^2`, `s`, `degree`, `rad/s`, `N*s`, `J`, or `dimensionless`. |
 | `measurement_uncertainty` | Absolute standard uncertainty from the experiment. |
 | `digitization_uncertainty` | Absolute standard uncertainty introduced by graph digitization. |
 | `conversion_uncertainty` | Absolute standard uncertainty introduced by apparatus/unit conversion. |

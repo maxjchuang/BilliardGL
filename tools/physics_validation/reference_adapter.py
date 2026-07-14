@@ -207,11 +207,13 @@ def default_reference_registry():
         mathavan_2010_limitations,
     )
     from .adapters.cross_2023 import adapt_cross_2023
+    from .adapters.cue_contact_analytic import adapt_cue_contact_analytic
 
     registry = ReferenceAdapterRegistry()
     registry.register("synthetic_free_roll_v1", _adapt_synthetic)
     registry.register("domenech_2023_v1", adapt_domenech_2023)
     registry.register("cross_2023_v1", adapt_cross_2023)
+    registry.register("cue_contact_analytic_v1", adapt_cue_contact_analytic)
     registry.register(
         "mathavan_2009_v1",
         lambda package, split, points: ReferenceAdaptation(

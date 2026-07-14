@@ -1,0 +1,69 @@
+{
+  "acquisition": {
+    "date": "2026-07-14",
+    "license_status": "repository-authored",
+    "method": "independent derivation",
+    "source_media_committed": false
+  },
+  "adapter_id": "cue_contact_analytic_v1",
+  "apparatus": {
+    "pool_applicability": "NOT_APPLICABLE",
+    "reason": "equation contract is not measured equipment data"
+  },
+  "dataset_id": "cue_contact_analytic_contract",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "claim": "analytic invariants and reproducibility only",
+    "experimental_validation": false,
+    "grade": "C"
+  },
+  "extraction_review": {
+    "date": "2026-07-14",
+    "method": "independent Decimal regeneration",
+    "operator": "Codex",
+    "reviewed_by": "deterministic --check"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:19eb80735c7a0a94b6fc5957f04c7edc13c3996cfc30d303498ae71e40fa888c"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:03e9db7710f091f7a326ee0cc3be76cff258913eb5bd3422b9fd40f70988698c"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:0726f92b572d935486229993b87b965d859c6fa031492a5a804c9697cafc3fbb"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:589db9ae0944d49f5c481217f9a451673f05a4b3a2069298a1eb7b86c927a5ac"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:41c2e485280f5bbb6d089ce585d07be5b0b03e94a66b2d003faa7f2a23117991"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "kind": "analytic_contract",
+    "locator": "repository generator; no publication or experiment claimed",
+    "title": "Rigid cue-ball impulse equations"
+  }
+}

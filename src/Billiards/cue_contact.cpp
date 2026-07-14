@@ -97,14 +97,33 @@ CueContactResult resolveCueContact(BallState& ball, const CueImpactInput& input,
     const double offsetFraction = std::sqrt(
         sideOffset * sideOffset + verticalOffset * verticalOffset);
     if (offsetFraction >= 1.0) return unsupported("cue_offset_outside_ball");
+    const double radiusM = ballProperties.radiusCm / 100.0;
+    const double inertia = 0.4 * ballProperties.massKg * radiusM * radiusM;
+    const Vector ballVelocity = {{ball.velocity.x / 100.0,
+        ball.velocity.y / 100.0, ball.velocity.z / 100.0}};
+    const Vector angularVelocity = {{ball.angularVelocity.x,
+        ball.angularVelocity.y, ball.angularVelocity.z}};
+    const Vector cueVelocity = multiply(direction, input.cueSpeedCmS / 100.0);
     if (offsetFraction > cueProperties.maximumReliableOffsetRadius) {
         CueContactResult result;
         result.regime = CueContactRegime::Miscue;
         result.error = "miscue_offset_exceeds_reliable_radius";
+        result.frictionCoefficient = input.chalkState == "UNCHALKED" ?
+            cueProperties.unchalkedFrictionCoefficient :
+            cueProperties.chalkedFrictionCoefficient;
+        result.cueVelocityBeforeMS = cueVelocity;
+        result.cueVelocityAfterMS = cueVelocity;
+        result.ballVelocityBeforeMS = ballVelocity;
+        result.ballVelocityAfterMS = ballVelocity;
+        result.ballAngularVelocityBeforeRadS = angularVelocity;
+        result.ballAngularVelocityAfterRadS = angularVelocity;
+        result.inputKineticEnergyJ = ballKineticEnergy(
+            ballVelocity, angularVelocity, ballProperties.massKg, inertia) +
+            0.5 * input.cueMassKg * dot(cueVelocity, cueVelocity);
+        result.outputKineticEnergyJ = result.inputKineticEnergyJ;
         return result;
     }
 
-    const double radiusM = ballProperties.radiusCm / 100.0;
     const Vector side = {{-direction[2], 0.0, direction[0]}};
     const Vector up = {{0.0, 1.0, 0.0}};
     const Vector offset = add(multiply(side, sideOffset * radiusM),
@@ -113,17 +132,11 @@ CueContactResult resolveCueContact(BallState& ball, const CueImpactInput& input,
         -radiusM * std::sqrt(std::max(0.0, 1.0 - offsetFraction * offsetFraction))), offset);
     const Vector normal = multiply(arm, -1.0 / radiusM);
 
-    const Vector ballVelocity = {{ball.velocity.x / 100.0,
-        ball.velocity.y / 100.0, ball.velocity.z / 100.0}};
-    const Vector angularVelocity = {{ball.angularVelocity.x,
-        ball.angularVelocity.y, ball.angularVelocity.z}};
     const Vector contactVelocity = add(ballVelocity, cross(angularVelocity, arm));
-    const Vector cueVelocity = multiply(direction, input.cueSpeedCmS / 100.0);
     const Vector relativeVelocity = subtract(cueVelocity, contactVelocity);
     const double approachSpeed = dot(relativeVelocity, direction);
     if (approachSpeed <= 0.0) return unsupported("cue_not_approaching");
 
-    const double inertia = 0.4 * ballProperties.massKg * radiusM * radiusM;
     const Vector armCrossDirection = cross(arm, direction);
     const double inverseEffectiveMass = 1.0 / input.cueMassKg +
         1.0 / ballProperties.massKg + dot(armCrossDirection, armCrossDirection) / inertia;

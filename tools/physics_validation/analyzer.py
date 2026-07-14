@@ -512,7 +512,7 @@ def _cue_contact_observation(metric, reference, frames):
     regime = contact.get("regime")
     if regime not in {"stick", "slip", "miscue", "unsupported"}:
         return None, INTEGRATION_MISMATCH, "cue-contact regime is invalid"
-    if regime == "unsupported" or not contact.get("applied", False):
+    if regime == "unsupported":
         return None, REFERENCE_LIMITATION, (
             contact.get("error_code") or "requested cue contact was not applied")
     required = {
@@ -531,6 +531,16 @@ def _cue_contact_observation(metric, reference, frames):
         return None, NUMERICAL_FAILURE, "cue-contact impulse or energy is not finite"
     if friction < 0.0 or normal < 0.0 or tangent < 0.0:
         return None, INTEGRATION_MISMATCH, "cue-contact impulse signs are invalid"
+    if regime == "miscue":
+        if contact.get("applied", False) or normal != 0.0 or tangent != 0.0:
+            return None, INTEGRATION_MISMATCH, "miscue must apply no ball impulse"
+        if regime != expected_regime:
+            return regime, MODEL_MISMATCH, "cue-contact regime differs from reference"
+        if metric == "cue_contact_energy_efficiency":
+            if input_energy <= 0.0:
+                return None, INTEGRATION_MISMATCH, "cue-contact input energy is not positive"
+            return output_energy / input_energy, None, None
+        return None, INTEGRATION_MISMATCH, f"miscue metric {metric} is unavailable"
     cone_limit = friction * normal
     cone_tolerance = max(1e-12, abs(cone_limit) * 1e-9)
     if tangent > cone_limit + cone_tolerance:

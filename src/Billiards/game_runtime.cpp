@@ -46,7 +46,9 @@ CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
 
     application.contact = resolveCueContact(
         state.balls[0], input, profile.ball, profile.cue);
-    if (!application.contact.applied) {
+    const bool modeledMiscue =
+        application.contact.regime == CueContactRegime::Miscue;
+    if (!application.contact.applied && !modeledMiscue) {
         application.action = ActionResult{
             false, stableContactError(application.contact.error)};
         return application;
@@ -56,7 +58,7 @@ CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
     state.players.illegalShot = false;
     state.players.shotTaken = true;
     state.players.updatedAfterShot = false;
-    state.ballsMoving = true;
+    state.ballsMoving = application.contact.applied;
     state.camera.anchorMode = CameraAnchorMode::FreeLook;
     state.transitionPerspective = false;
     state.perspectiveRecorded = false;

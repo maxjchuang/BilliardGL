@@ -77,6 +77,17 @@ int main()
     expect(rejectedImpact.state().balls[0].velocity.x == beforeRejected.velocity.x &&
         rejectedImpact.state().balls[0].angularVelocity.z == beforeRejected.angularVelocity.z,
         "rejected contact should not mutate ball state");
+    billiardgl::CueImpactInput miscue = equivalent;
+    miscue.tipOffsetRadius = {{0.81, 0.0}};
+    miscue.tipOffsetCm = {{0.81 * billiardgl::kBallRadius, 0.0}};
+    billiardgl::GameRuntime miscueRuntime;
+    expect(miscueRuntime.applyCueImpact(miscue).ok &&
+        miscueRuntime.hasCueContactResult() &&
+        miscueRuntime.cueContactResult().regime == billiardgl::CueContactRegime::Miscue &&
+        !miscueRuntime.cueContactResult().applied,
+        "miscue should be a traceable shot attempt without a ball impulse");
+    expect(miscueRuntime.state().balls[0].velocity.x == 0.0f,
+        "miscue outcome should leave the ball unchanged");
 
     expect(first.step(5).ok, "stepping should succeed");
     expect(second.step(5).ok, "second stepping should succeed");

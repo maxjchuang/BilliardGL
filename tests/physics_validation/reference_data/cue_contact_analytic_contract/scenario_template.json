@@ -1,0 +1,131 @@
+{
+  "base_scenario": {
+    "balls": [
+      {
+        "angular_velocity_rad_s": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "index": 0,
+        "pocketed": false,
+        "position_cm": [
+          0.0,
+          89.341476,
+          20.0
+        ],
+        "velocity_cm_s": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "description": "Independent grade-C analytic rigid-impulse contract; not experimental validation",
+    "evidence": {
+      "equipment": "WPA_POOL",
+      "grade": "C",
+      "source": "independent Decimal rigid-impulse equations; equipment applicability remains NOT_APPLICABLE in package metadata"
+    },
+    "expectations": [],
+    "id": "cue_contact_analytic",
+    "physics_profile": {
+      "ball": {
+        "mass_kg": 0.17,
+        "material": "analytic_phenolic",
+        "radius_cm": 2.8575
+      },
+      "cue": {
+        "chalked_friction_coefficient": 0.6,
+        "cue_speed_per_power_unit_cm_s": 1.34,
+        "effective_mass_kg": 0.5,
+        "maximum_reliable_offset_radius": 0.8,
+        "normal_restitution": 0.0,
+        "unchalked_friction_coefficient": 0.1
+      },
+      "cushion": {
+        "friction_coefficient": 0.0,
+        "normal_restitution": 1.0
+      },
+      "formula_version": "cue_contact_v1",
+      "id": "cue_contact_analytic_v1",
+      "solver": {
+        "maximum_events_per_tick": 64,
+        "time_step_seconds": 0.1
+      },
+      "surface": {
+        "legacy_friction_acceleration_cm_s2": 0.0,
+        "material": "analytic_frictionless_surface",
+        "rolling_resistance_acceleration_cm_s2": 0.0,
+        "sliding_friction_coefficient": 0.0,
+        "slip_speed_epsilon_cm_s": 0.0001,
+        "stop_energy_threshold_j": 1e-09,
+        "torsional_spin_deceleration_rad_s2": 0.0
+      }
+    },
+    "schema_version": 4,
+    "simulation": {
+      "ticks": 2,
+      "time_step_seconds": 0.1
+    }
+  },
+  "cases": {
+    "center_hit": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        0.0,
+        0.0
+      ]
+    },
+    "horizontal_slip": {
+      "expected_regime": "slip",
+      "tip_offset_radius": [
+        0.7,
+        0.0
+      ]
+    },
+    "left_mirror": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        -0.2,
+        0.0
+      ]
+    },
+    "miscue": {
+      "expected_regime": "miscue",
+      "tip_offset_radius": [
+        0.81,
+        0.0
+      ]
+    },
+    "negative_vertical_stick": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        0.0,
+        -0.2
+      ]
+    },
+    "positive_vertical_stick": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        0.0,
+        0.2
+      ]
+    },
+    "right_mirror": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        0.2,
+        0.0
+      ]
+    },
+    "stick_boundary_inner": {
+      "expected_regime": "stick",
+      "tip_offset_radius": [
+        0.5144957454275265,
+        0.0
+      ]
+    }
+  },
+  "schema_version": 1
+}

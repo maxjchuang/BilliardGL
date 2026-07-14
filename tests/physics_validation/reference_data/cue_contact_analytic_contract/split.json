@@ -1,0 +1,17 @@
+{
+  "calibration_groups": [
+    "center_hit",
+    "positive_vertical_stick",
+    "negative_vertical_stick",
+    "stick_boundary_inner"
+  ],
+  "dataset_id": "cue_contact_analytic_contract",
+  "dataset_version": "1.0.0",
+  "holdout_groups": [
+    "left_mirror",
+    "right_mirror",
+    "horizontal_slip",
+    "miscue"
+  ],
+  "schema_version": 1
+}
