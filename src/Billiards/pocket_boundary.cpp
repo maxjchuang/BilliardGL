@@ -239,6 +239,105 @@ const char* pocketBoundaryEventKindName(PocketBoundaryEventKind kind)
     return "none";
 }
 
+PocketTransitionResult advancePocketInteraction(
+    PocketInteractionState& state, int pocketId,
+    PocketBoundaryEventKind event, PocketBoundaryRegion region,
+    unsigned long long captureSequence)
+{
+    PocketTransitionResult result;
+    result.previous = state.phase;
+    result.current = state.phase;
+
+    if (state.phase == PocketInteractionPhase::Captured) {
+        return result;
+    }
+
+    const bool hasPocket = pocketId >= 0;
+    if (state.pocketId >= 0 && hasPocket && state.pocketId != pocketId) {
+        return result;
+    }
+
+    PocketInteractionPhase next = state.phase;
+    switch (state.phase) {
+    case PocketInteractionPhase::Outside:
+        if (hasPocket && (region == PocketBoundaryRegion::Approaching ||
+                event == PocketBoundaryEventKind::LeftJaw ||
+                event == PocketBoundaryEventKind::RightJaw ||
+                event == PocketBoundaryEventKind::Throat)) {
+            next = event == PocketBoundaryEventKind::Throat
+                ? PocketInteractionPhase::ThroatCrossed
+                : (event == PocketBoundaryEventKind::LeftJaw ||
+                          event == PocketBoundaryEventKind::RightJaw
+                      ? PocketInteractionPhase::JawContact
+                      : PocketInteractionPhase::Approaching);
+        }
+        break;
+    case PocketInteractionPhase::Approaching:
+        if (event == PocketBoundaryEventKind::LeftJaw ||
+            event == PocketBoundaryEventKind::RightJaw) {
+            next = PocketInteractionPhase::JawContact;
+        } else if (event == PocketBoundaryEventKind::Throat ||
+                   region == PocketBoundaryRegion::Throat) {
+            next = PocketInteractionPhase::ThroatCrossed;
+        } else if (region == PocketBoundaryRegion::Outside) {
+            next = PocketInteractionPhase::Outside;
+        }
+        break;
+    case PocketInteractionPhase::JawContact:
+        if (event == PocketBoundaryEventKind::Throat ||
+            region == PocketBoundaryRegion::Throat) {
+            next = PocketInteractionPhase::ThroatCrossed;
+        } else if (region == PocketBoundaryRegion::Outside ||
+                   region == PocketBoundaryRegion::Solid) {
+            next = PocketInteractionPhase::Rejected;
+        }
+        break;
+    case PocketInteractionPhase::ThroatCrossed:
+        if (event == PocketBoundaryEventKind::Capture &&
+            region == PocketBoundaryRegion::Capture && captureSequence != 0) {
+            next = PocketInteractionPhase::Captured;
+        } else if (region == PocketBoundaryRegion::Outside ||
+                   region == PocketBoundaryRegion::Approaching ||
+                   region == PocketBoundaryRegion::Solid) {
+            next = PocketInteractionPhase::Rejected;
+        }
+        break;
+    case PocketInteractionPhase::Rejected:
+        break;
+    case PocketInteractionPhase::Captured:
+        break;
+    }
+
+    if (next != state.phase) {
+        state.phase = next;
+        result.changed = true;
+        if (next == PocketInteractionPhase::Outside) {
+            state.pocketId = -1;
+        } else if (state.pocketId < 0) {
+            state.pocketId = pocketId;
+        }
+        if (next == PocketInteractionPhase::Captured) {
+            state.captureSequence = captureSequence;
+            result.captureEmitted = true;
+        }
+    }
+    result.current = state.phase;
+    return result;
+}
+
+const char* pocketInteractionPhaseName(PocketInteractionPhase phase)
+{
+    switch (phase) {
+    case PocketInteractionPhase::Outside: return "outside";
+    case PocketInteractionPhase::Approaching: return "approaching";
+    case PocketInteractionPhase::JawContact: return "jaw_contact";
+    case PocketInteractionPhase::ThroatCrossed: return "throat_crossed";
+    case PocketInteractionPhase::Captured: return "captured";
+    case PocketInteractionPhase::Rejected: return "rejected";
+    }
+    return "unknown";
+}
+
 const char* pocketBoundaryRegionName(PocketBoundaryRegion region)
 {
     switch (region) {

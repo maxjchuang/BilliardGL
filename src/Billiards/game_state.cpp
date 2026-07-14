@@ -38,7 +38,13 @@ void initializeBalls(GameState& state)
         ball.rotationAngle = 0.0f;
         ball.pocketed = false;
         ball.motionState = BallMotionState::Stationary;
+        resetPocketInteraction(ball);
     }
+}
+
+void resetPocketInteraction(BallState& ball)
+{
+    ball.pocketInteraction = PocketInteractionState{};
 }
 
 void updateCameraFromCueBall(GameState& state)

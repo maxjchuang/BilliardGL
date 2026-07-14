@@ -63,6 +63,13 @@ struct PocketBoundaryEvent {
     bool passable = false;
 };
 
+struct PocketTransitionResult {
+    PocketInteractionPhase previous = PocketInteractionPhase::Outside;
+    PocketInteractionPhase current = PocketInteractionPhase::Outside;
+    bool changed = false;
+    bool captureEmitted = false;
+};
+
 std::array<PocketBoundaryFrame, 6> buildPocketBoundaryFrames(
     const TableBoundaryProperties& boundary);
 PocketLocalPoint pocketLocalPoint(
@@ -73,7 +80,12 @@ PocketBoundaryQuery classifyPocketPoint(
 PocketBoundaryEvent sweepPocketBoundary(
     const PocketBoundaryFrame& frame, const Point3& start,
     const Point3& end, double ballRadiusCm);
+PocketTransitionResult advancePocketInteraction(
+    PocketInteractionState& state, int pocketId,
+    PocketBoundaryEventKind event, PocketBoundaryRegion region,
+    unsigned long long captureSequence);
 const char* pocketBoundaryEventKindName(PocketBoundaryEventKind kind);
 const char* pocketBoundaryRegionName(PocketBoundaryRegion region);
+const char* pocketInteractionPhaseName(PocketInteractionPhase phase);
 
 }  // namespace billiardgl

@@ -30,6 +30,21 @@ struct Point3 {
 
 enum class BallMotionState : int;
 
+enum class PocketInteractionPhase {
+    Outside,
+    Approaching,
+    JawContact,
+    ThroatCrossed,
+    Captured,
+    Rejected
+};
+
+struct PocketInteractionState {
+    PocketInteractionPhase phase = PocketInteractionPhase::Outside;
+    int pocketId = -1;
+    unsigned long long captureSequence = 0;
+};
+
 struct BallState {
     Point3 position;
     Point3 velocity;
@@ -40,6 +55,7 @@ struct BallState {
     bool pocketed = false;
     unsigned int texture = 0;
     BallMotionState motionState = static_cast<BallMotionState>(0);
+    PocketInteractionState pocketInteraction;
 };
 
 enum class CameraAnchorMode {
@@ -157,6 +173,7 @@ struct GameState {
 void initializeBalls(GameState& state);
 void updateCameraFromCueBall(GameState& state);
 void resetBallMotion(BallState& ball);
+void resetPocketInteraction(BallState& ball);
 void setBallVelocity(BallState& ball, float x, float y, float z);
 bool anyBallMoving(const GameState& state);
 void clearGameplayEvents(GameState& state);
