@@ -46,3 +46,31 @@ def validate_promotion_manifest(path, root):
         if disposition != expected_disposition:
             failures.append(f"validation disposition mismatch: {candidate.get('id')}")
     return failures
+
+
+def validate_full_game_matrix(path, root):
+    path, root = Path(path), Path(root)
+    document = json.loads(path.read_text(encoding="utf-8"))
+    failures = []
+    cases = document.get("cases", [])
+    required = set(document.get("required_coverage", []))
+    covered = {value for case in cases for value in case.get("coverage", [])}
+    if document.get("schema_version") != 1 or not cases:
+        failures.append("full-game matrix must use schema version 1")
+    if covered != required:
+        failures.append(f"coverage mismatch: missing={sorted(required-covered)} extra={sorted(covered-required)}")
+    ids = [case.get("id") for case in cases]
+    if len(ids) != len(set(ids)):
+        failures.append("case IDs must be unique")
+    for case in cases:
+        label = case.get("evidence_label")
+        if label not in {"reality_golden", "analytic_golden", "behavior_snapshot"}:
+            failures.append(f"invalid evidence label: {case.get('id')}")
+        replay = case.get("replay", "")
+        if label in {"reality_golden", "analytic_golden"} and " --case " not in replay:
+            target = root / replay
+            if not target.is_file():
+                failures.append(f"golden replay artifact is missing: {case.get('id')}")
+        if not isinstance(case.get("seed"), int):
+            failures.append(f"case seed is not fixed: {case.get('id')}")
+    return failures
