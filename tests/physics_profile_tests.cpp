@@ -48,12 +48,28 @@ int main()
         "frozen cushion calibration values");
     expect(profile.cushion.material == "riley_renaissance_snooker_cushion",
         "source cushion material is explicit");
+    expect(close(profile.tableBoundary.playfieldWidthCm, 127.0f) &&
+        close(profile.tableBoundary.playfieldLengthCm, 254.0f) &&
+        close(profile.tableBoundary.cornerMouthWidthCm, 13.2f) &&
+        close(profile.tableBoundary.sideMouthWidthCm, 8.6f) &&
+        profile.tableBoundary.geometryId == "legacy_opening_band",
+        "pocket boundary compatibility geometry is explicit");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),
         "preregistered independent sliding hypothesis");
     expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
         "sidespin decay remains unevidenced");
+    billiardgl::PhysicsProfile invalidBoundary = profile;
+    invalidBoundary.tableBoundary.cornerThroatWidthCm =
+        invalidBoundary.tableBoundary.cornerMouthWidthCm + 1.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalidBoundary).ok,
+        "a throat cannot be wider than its mouth");
+    invalidBoundary = profile;
+    invalidBoundary.tableBoundary.captureDepthCm =
+        invalidBoundary.tableBoundary.throatDepthCm - 1.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalidBoundary).ok,
+        "capture depth cannot precede throat depth");
     expect(close(profile.cue.normalRestitution, 0.0f),
         "cue normal restitution compatibility default");
     expect(close(profile.cue.chalkedFrictionCoefficient, 0.6f),

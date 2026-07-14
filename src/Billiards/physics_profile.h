@@ -42,6 +42,20 @@ struct CushionProperties {
     std::string material = "legacy_rigid_rail";
 };
 
+struct TableBoundaryProperties {
+    float playfieldWidthCm = kChinesePlayfieldWidthCm;
+    float playfieldLengthCm = kChinesePlayfieldLengthCm;
+    float cornerMouthWidthCm = kChineseCornerPocketMouthWidthCm;
+    float sideMouthWidthCm = kChineseSidePocketMouthWidthCm;
+    float cornerThroatWidthCm = kChineseCornerPocketMouthWidthCm;
+    float sideThroatWidthCm = kChineseSidePocketMouthWidthCm;
+    float jawRadiusCm = 0.0001f;
+    float throatDepthCm = kChinesePocketDropZoneDepthCm;
+    float captureDepthCm = kChinesePocketDropZoneDepthCm;
+    std::string geometryId = "legacy_opening_band";
+    std::string material = "legacy_table_boundary";
+};
+
 struct SolverSettings {
     float timeStepSeconds = 0.1f;
     int maximumEventsPerTick = 64;
@@ -54,6 +68,7 @@ struct PhysicsProfile {
     SurfaceProperties surface;
     CueProperties cue;
     CushionProperties cushion;
+    TableBoundaryProperties tableBoundary;
     SolverSettings solver;
 };
 

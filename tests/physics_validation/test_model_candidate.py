@@ -206,6 +206,44 @@ class ModelCandidateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cushion.nose_height_ratio"):
             load_profile_manifest(path)
 
+    def test_profile_manifest_v5_requires_pocket_boundary_provenance(self):
+        document = json.loads(
+            PRODUCTION_CUSHION_PROFILE.read_text(encoding="utf-8"))
+        document["schema_version"] = 5
+        boundary = {
+            "capture_depth_cm": 6.0,
+            "corner_mouth_width_cm": 13.2,
+            "corner_throat_width_cm": 10.0,
+            "geometry_id": "wpa_chinese_pool_v1",
+            "jaw_radius_cm": 2.5,
+            "material": "competition_table_boundary",
+            "playfield_length_cm": 254.0,
+            "playfield_width_cm": 127.0,
+            "side_mouth_width_cm": 8.6,
+            "side_throat_width_cm": 7.0,
+            "throat_depth_cm": 3.0,
+        }
+        document["runtime_profile"]["table_boundary"] = boundary
+        for key, value in boundary.items():
+            if isinstance(value, (int, float)):
+                document["parameter_sources"][f"table_boundary.{key}"] = {
+                    "evidence": "committed competition geometry fixture",
+                    "kind": "equipment_specification",
+                    "unit": "cm",
+                }
+        path = self.root / "profile_v5.json"
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        manifest = load_profile_manifest(path)
+        self.assertEqual(manifest.runtime_profile["table_boundary"], boundary)
+        del document["parameter_sources"]["table_boundary.jaw_radius_cm"]
+        path.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "table_boundary.jaw_radius_cm"):
+            load_profile_manifest(path)
+
     def test_production_cue_profile_is_analytic_only_and_fully_sourced(self):
         document = json.loads(PRODUCTION_CUE_PROFILE.read_text(encoding="utf-8"))
         manifest = load_profile_manifest(PRODUCTION_CUE_PROFILE)

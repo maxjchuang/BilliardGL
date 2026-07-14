@@ -128,14 +128,22 @@ void requireExactKeys(const json::Value& value,
 
 PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion)
 {
-    requireExactKeys(value,
-        {"id", "formula_version", "ball", "surface", "cue", "cushion", "solver"},
-        "physics_profile");
+    if (scenarioVersion >= 7) {
+        requireExactKeys(value,
+            {"id", "formula_version", "ball", "surface", "cue", "cushion",
+             "table_boundary", "solver"}, "physics_profile");
+    } else {
+        requireExactKeys(value,
+            {"id", "formula_version", "ball", "surface", "cue", "cushion", "solver"},
+            "physics_profile");
+    }
     const json::Value& ball = required(value, "ball");
     const json::Value& surface = required(value, "surface");
     const json::Value& cue = required(value, "cue");
     const json::Value& cushion = required(value, "cushion");
     const json::Value& solver = required(value, "solver");
+    const json::Value* tableBoundary = scenarioVersion >= 7 ?
+        &required(value, "table_boundary") : nullptr;
     if (scenarioVersion >= 5) {
         requireExactKeys(ball,
             {"mass_kg", "radius_cm", "inertia_factor", "normal_restitution",
@@ -170,6 +178,14 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     }
     requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
         "physics_profile.solver");
+    if (tableBoundary != nullptr) {
+        requireExactKeys(*tableBoundary,
+            {"playfield_width_cm", "playfield_length_cm",
+             "corner_mouth_width_cm", "side_mouth_width_cm",
+             "corner_throat_width_cm", "side_throat_width_cm",
+             "jaw_radius_cm", "throat_depth_cm", "capture_depth_cm",
+             "geometry_id", "material"}, "physics_profile.table_boundary");
+    }
 
     PhysicsProfile profile;
     profile.id = requiredString(value, "id");
@@ -223,6 +239,29 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
             requiredNumber(cushion, "maximum_rigid_incident_speed_cm_s"));
         profile.cushion.material = requiredString(cushion, "material");
     }
+    if (tableBoundary != nullptr) {
+        profile.tableBoundary.playfieldWidthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "playfield_width_cm"));
+        profile.tableBoundary.playfieldLengthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "playfield_length_cm"));
+        profile.tableBoundary.cornerMouthWidthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "corner_mouth_width_cm"));
+        profile.tableBoundary.sideMouthWidthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "side_mouth_width_cm"));
+        profile.tableBoundary.cornerThroatWidthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "corner_throat_width_cm"));
+        profile.tableBoundary.sideThroatWidthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "side_throat_width_cm"));
+        profile.tableBoundary.jawRadiusCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "jaw_radius_cm"));
+        profile.tableBoundary.throatDepthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "throat_depth_cm"));
+        profile.tableBoundary.captureDepthCm = static_cast<float>(
+            requiredNumber(*tableBoundary, "capture_depth_cm"));
+        profile.tableBoundary.geometryId = requiredString(
+            *tableBoundary, "geometry_id");
+        profile.tableBoundary.material = requiredString(*tableBoundary, "material");
+    }
     profile.solver.timeStepSeconds = static_cast<float>(
         requiredNumber(solver, "time_step_seconds"));
     profile.solver.maximumEventsPerTick = required(solver, "maximum_events_per_tick").asInt();
@@ -243,7 +282,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1, 2, 3, 4, 5, and 6 are supported";
+                "only physics scenario versions 1, 2, 3, 4, 5, 6, and 7 are supported";
             return result;
         }
 

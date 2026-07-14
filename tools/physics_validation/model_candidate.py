@@ -45,6 +45,13 @@ _RUNTIME_SECTION_KEYS_V4["cushion"] = {
     "normal_restitution", "friction_coefficient", "nose_height_ratio",
     "maximum_rigid_incident_speed_cm_s", "material",
 }
+_RUNTIME_SECTION_KEYS_V5 = dict(_RUNTIME_SECTION_KEYS_V4)
+_RUNTIME_SECTION_KEYS_V5["table_boundary"] = {
+    "playfield_width_cm", "playfield_length_cm",
+    "corner_mouth_width_cm", "side_mouth_width_cm",
+    "corner_throat_width_cm", "side_throat_width_cm", "jaw_radius_cm",
+    "throat_depth_cm", "capture_depth_cm", "geometry_id", "material",
+}
 _FREEZE_KEYS_V1 = {
     "schema_version",
     "candidate_id",
@@ -153,13 +160,16 @@ def load_profile_manifest(path):
     if not isinstance(document, dict) or set(document) != _PROFILE_KEYS:
         raise ValueError("profile manifest keys do not match schema version 1")
     schema_version = document.get("schema_version")
-    if schema_version not in {1, 2, 3, 4}:
-        raise ValueError("profile manifest schema_version must be 1, 2, 3, or 4")
+    if schema_version not in {1, 2, 3, 4, 5}:
+        raise ValueError("profile manifest schema_version must be 1, 2, 3, 4, or 5")
     if raw != _canonical(document):
         raise ValueError("profile manifest must use canonical JSON bytes")
 
     runtime = document.get("runtime_profile")
-    if not isinstance(runtime, dict) or set(runtime) != _RUNTIME_KEYS:
+    runtime_keys = set(_RUNTIME_KEYS)
+    if schema_version >= 5:
+        runtime_keys.add("table_boundary")
+    if not isinstance(runtime, dict) or set(runtime) != runtime_keys:
         raise ValueError("runtime_profile keys do not match scenario v3")
     _safe_id(runtime.get("id"), "runtime_profile.id")
     _safe_id(runtime.get("formula_version"), "runtime_profile.formula_version")
@@ -168,6 +178,7 @@ def load_profile_manifest(path):
         2: _RUNTIME_SECTION_KEYS_V2,
         3: _RUNTIME_SECTION_KEYS_V3,
         4: _RUNTIME_SECTION_KEYS_V4,
+        5: _RUNTIME_SECTION_KEYS_V5,
     }[schema_version]
     for section, keys in section_keys.items():
         value = runtime.get(section)

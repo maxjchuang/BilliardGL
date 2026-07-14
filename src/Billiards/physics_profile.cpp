@@ -63,7 +63,9 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         return invalid("physics formula version is not a safe stable ID");
     }
     if (!safeId(profile.ball.material) || !safeId(profile.surface.material) ||
-        !safeId(profile.cushion.material)) {
+        !safeId(profile.cushion.material) ||
+        !safeId(profile.tableBoundary.geometryId) ||
+        !safeId(profile.tableBoundary.material)) {
         return invalid("physics material is not a safe stable ID");
     }
     if (!std::isfinite(profile.ball.radiusCm) || profile.ball.radiusCm <= 0.0f) {
@@ -137,6 +139,25 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         profile.cushion.maximumRigidIncidentSpeedCmS <= 0.0f) {
         return invalid("cushion maximum rigid incident speed must be finite and positive");
     }
+    const TableBoundaryProperties& boundary = profile.tableBoundary;
+    if (!std::isfinite(boundary.playfieldWidthCm) || boundary.playfieldWidthCm <= 0.0f ||
+        !std::isfinite(boundary.playfieldLengthCm) || boundary.playfieldLengthCm <= 0.0f ||
+        !std::isfinite(boundary.cornerMouthWidthCm) || boundary.cornerMouthWidthCm <= 0.0f ||
+        !std::isfinite(boundary.sideMouthWidthCm) || boundary.sideMouthWidthCm <= 0.0f ||
+        !std::isfinite(boundary.cornerThroatWidthCm) || boundary.cornerThroatWidthCm <= 0.0f ||
+        !std::isfinite(boundary.sideThroatWidthCm) || boundary.sideThroatWidthCm <= 0.0f ||
+        !std::isfinite(boundary.jawRadiusCm) || boundary.jawRadiusCm <= 0.0f ||
+        !std::isfinite(boundary.throatDepthCm) || boundary.throatDepthCm <= 0.0f ||
+        !std::isfinite(boundary.captureDepthCm) ||
+        boundary.captureDepthCm < boundary.throatDepthCm) {
+        return invalid("table boundary dimensions and depths must be finite, positive, and ordered");
+    }
+    if (boundary.cornerThroatWidthCm > boundary.cornerMouthWidthCm ||
+        boundary.sideThroatWidthCm > boundary.sideMouthWidthCm ||
+        boundary.cornerMouthWidthCm >= boundary.playfieldWidthCm ||
+        boundary.sideMouthWidthCm >= boundary.playfieldLengthCm) {
+        return invalid("table boundary throat and mouth widths are inconsistent");
+    }
     if (!std::isfinite(profile.solver.timeStepSeconds) ||
         profile.solver.timeStepSeconds <= 0.0f) {
         return invalid("solver time_step_seconds must be finite and positive");
@@ -191,6 +212,28 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "cushion.maximum_rigid_incident_speed_cm_s="
         << profile.cushion.maximumRigidIncidentSpeedCmS << '\n'
         << "cushion.material=" << profile.cushion.material << '\n'
+        << "table_boundary.playfield_width_cm="
+        << profile.tableBoundary.playfieldWidthCm << '\n'
+        << "table_boundary.playfield_length_cm="
+        << profile.tableBoundary.playfieldLengthCm << '\n'
+        << "table_boundary.corner_mouth_width_cm="
+        << profile.tableBoundary.cornerMouthWidthCm << '\n'
+        << "table_boundary.side_mouth_width_cm="
+        << profile.tableBoundary.sideMouthWidthCm << '\n'
+        << "table_boundary.corner_throat_width_cm="
+        << profile.tableBoundary.cornerThroatWidthCm << '\n'
+        << "table_boundary.side_throat_width_cm="
+        << profile.tableBoundary.sideThroatWidthCm << '\n'
+        << "table_boundary.jaw_radius_cm="
+        << profile.tableBoundary.jawRadiusCm << '\n'
+        << "table_boundary.throat_depth_cm="
+        << profile.tableBoundary.throatDepthCm << '\n'
+        << "table_boundary.capture_depth_cm="
+        << profile.tableBoundary.captureDepthCm << '\n'
+        << "table_boundary.geometry_id="
+        << profile.tableBoundary.geometryId << '\n'
+        << "table_boundary.material="
+        << profile.tableBoundary.material << '\n'
         << "solver.time_step_seconds=" << profile.solver.timeStepSeconds << '\n'
         << "solver.maximum_events_per_tick=" << profile.solver.maximumEventsPerTick << '\n';
     return output.str();

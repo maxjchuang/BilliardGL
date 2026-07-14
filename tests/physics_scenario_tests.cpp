@@ -122,6 +122,26 @@ billiardgl::json::Value validV6Document()
     return value;
 }
 
+billiardgl::json::Value validV7Document()
+{
+    billiardgl::json::Value value = validV6Document();
+    value["schema_version"] = billiardgl::json::Value(7);
+    billiardgl::json::Value boundary = billiardgl::json::Value::object();
+    boundary["playfield_width_cm"] = billiardgl::json::Value(127.0);
+    boundary["playfield_length_cm"] = billiardgl::json::Value(254.0);
+    boundary["corner_mouth_width_cm"] = billiardgl::json::Value(13.2);
+    boundary["side_mouth_width_cm"] = billiardgl::json::Value(8.6);
+    boundary["corner_throat_width_cm"] = billiardgl::json::Value(10.0);
+    boundary["side_throat_width_cm"] = billiardgl::json::Value(7.0);
+    boundary["jaw_radius_cm"] = billiardgl::json::Value(2.5);
+    boundary["throat_depth_cm"] = billiardgl::json::Value(3.0);
+    boundary["capture_depth_cm"] = billiardgl::json::Value(6.0);
+    boundary["geometry_id"] = billiardgl::json::Value("wpa_chinese_pool_v1");
+    boundary["material"] = billiardgl::json::Value("competition_table_boundary");
+    value["physics_profile"]["table_boundary"] = boundary;
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -197,6 +217,21 @@ int main()
         std::fabs(v6.scenario.physicsProfile.cushion.maximumRigidIncidentSpeedCmS - 250.0f) < 0.0001f &&
         v6.scenario.physicsProfile.cushion.material == "riley_snooker_cushion",
         "v6 cushion properties should survive parsing exactly");
+    expect(std::fabs(v6.scenario.physicsProfile.tableBoundary.jawRadiusCm - 0.0001f) < 0.00001f &&
+        v6.scenario.physicsProfile.tableBoundary.geometryId == "legacy_opening_band",
+        "v6 profile should receive historical pocket-boundary defaults");
+    const billiardgl::PhysicsScenarioResult v7 =
+        billiardgl::parsePhysicsScenario(validV7Document());
+    expect(v7.ok, "valid pocket-boundary profile scenario v7 should parse");
+    expect(std::fabs(v7.scenario.physicsProfile.tableBoundary.cornerThroatWidthCm - 10.0f) < 0.0001f &&
+        std::fabs(v7.scenario.physicsProfile.tableBoundary.captureDepthCm - 6.0f) < 0.0001f &&
+        v7.scenario.physicsProfile.tableBoundary.geometryId == "wpa_chinese_pool_v1",
+        "v7 pocket-boundary properties should survive parsing exactly");
+    billiardgl::json::Value invalidThroat = validV7Document();
+    invalidThroat["physics_profile"]["table_boundary"]["corner_throat_width_cm"] =
+        billiardgl::json::Value(14.0);
+    expect(!billiardgl::parsePhysicsScenario(invalidThroat).ok,
+        "v7 should reject a throat wider than its mouth");
     billiardgl::json::Value sourceApparatus = validV5Document();
     sourceApparatus["evidence"]["equipment"] =
         billiardgl::json::Value("SOURCE_LABORATORY_APPARATUS");
@@ -287,7 +322,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(7);
+    unknownVersion["schema_version"] = billiardgl::json::Value(8);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",
