@@ -1,5 +1,7 @@
 #include "physics_telemetry.h"
 
+#include <cmath>
+
 namespace billiardgl {
 namespace {
 
@@ -60,6 +62,14 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     frame.linearMomentum = translationalMomentumKgMps(after, profile.ball.massKg);
     frame.translationalKineticEnergyJ =
         translationalKineticEnergyJ(after, profile.ball.massKg);
+    for (const BallState& ball : after.balls) {
+        if (!ball.pocketed) {
+            frame.rotationalKineticEnergyJ +=
+                rotationalKineticEnergyJ(ball, profile.ball);
+        }
+    }
+    frame.totalKineticEnergyJ =
+        frame.translationalKineticEnergyJ + frame.rotationalKineticEnergyJ;
     frame.physicsProfileId = profile.id;
     frame.control.aimYaw = after.aim.yaw;
     frame.control.shotPower = after.input.shotPower;
@@ -76,6 +86,11 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
         sample.angularVelocity = afterBall.angularVelocity;
         sample.speed = afterBall.speed;
         sample.pocketed = afterBall.pocketed;
+        sample.motionState = afterBall.motionState;
+        const Point3 slip = surfaceContactSlipVelocity(
+            afterBall, profile.ball.radiusCm);
+        sample.contactSlipSpeedCmS = std::sqrt(
+            slip.x * slip.x + slip.z * slip.z);
     }
     return frame;
 }

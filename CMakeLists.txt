@@ -36,6 +36,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/rules.cpp
     src/Billiards/input.cpp
     src/Billiards/shot.cpp
+    src/Billiards/surface_motion.cpp
     src/Billiards/table_specs.cpp
     src/Billiards/vec.cpp
 )
@@ -112,6 +113,7 @@ add_executable(Billiards
 billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsProfileTests tests/physics_profile_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
+billiardgl_add_core_test(BilliardsSurfaceMotionTests tests/surface_motion_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsInstrumentationTests tests/physics_instrumentation_tests.cpp)
 billiardgl_add_core_test(BilliardsRulesTests tests/rules_tests.cpp)
 

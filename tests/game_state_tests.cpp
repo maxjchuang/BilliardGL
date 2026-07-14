@@ -1,4 +1,5 @@
 #include "game_state.h"
+#include "surface_motion.h"
 
 #include <array>
 #include <cmath>
@@ -27,6 +28,11 @@ int main()
         return fail("aim guide line should be disabled by default");
     }
     billiardgl::initializeBalls(state);
+    for (const billiardgl::BallState& ball : state.balls) {
+        if (ball.motionState != billiardgl::BallMotionState::Stationary) {
+            return fail("initialized balls should have authoritative stationary state");
+        }
+    }
     if (!nearlyEqual(billiardgl::kBallRadius, 2.8575f)) {
         return fail("ball radius should use real Chinese billiards radius");
     }
@@ -63,6 +69,15 @@ int main()
     state.balls[0].rotationAngle = 7.0f;
     state.balls[0].pocketed = true;
     state.balls[0].texture = 42;
+    state.balls[0].motionState = billiardgl::BallMotionState::Sliding;
+    billiardgl::resetBallMotion(state.balls[0]);
+    if (state.balls[0].motionState != billiardgl::BallMotionState::Stationary) {
+        return fail("resetBallMotion should reset authoritative motion state");
+    }
+    state.balls[0].velocity = billiardgl::Point3{4.0f, 0.0f, 5.0f};
+    state.balls[0].speed = 6.0f;
+    state.balls[0].rotationAngle = 7.0f;
+    state.balls[0].pocketed = true;
 
     std::array<billiardgl::LegacyBallAdapter, billiardgl::kBallCount> legacyBalls;
     billiardgl::copyBallStateToLegacy(state, legacyBalls);

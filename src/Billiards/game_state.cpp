@@ -1,5 +1,7 @@
 #include "game_state.h"
 
+#include "surface_motion.h"
+
 #include <cmath>
 
 namespace billiardgl {
@@ -35,6 +37,7 @@ void initializeBalls(GameState& state)
         ball.speed = 0.0f;
         ball.rotationAngle = 0.0f;
         ball.pocketed = false;
+        ball.motionState = BallMotionState::Stationary;
     }
 }
 
@@ -55,6 +58,7 @@ void resetBallMotion(BallState& ball)
     ball.rotationAxis = Point3{};
     ball.speed = 0.0f;
     ball.rotationAngle = 0.0f;
+    ball.motionState = BallMotionState::Stationary;
 }
 
 void setBallVelocity(BallState& ball, float x, float y, float z)
@@ -62,6 +66,9 @@ void setBallVelocity(BallState& ball, float x, float y, float z)
     ball.velocity.x = x;
     ball.velocity.y = y;
     ball.velocity.z = z;
+    ball.motionState = (x == 0.0f && y == 0.0f && z == 0.0f)
+        ? BallMotionState::Stationary
+        : BallMotionState::Sliding;
 }
 
 bool anyBallMoving(const GameState& state)

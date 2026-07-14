@@ -3,6 +3,7 @@
 #include "game_state.h"
 #include "cue_impact.h"
 #include "physics_profile.h"
+#include "surface_motion.h"
 
 #include <array>
 #include <cstddef>
@@ -36,6 +37,8 @@ struct PhysicsBallSample {
     Point3 angularVelocity;
     float speed = 0.0f;
     bool pocketed = false;
+    BallMotionState motionState = BallMotionState::Stationary;
+    float contactSlipSpeedCmS = 0.0f;
 };
 
 struct PhysicsControlSample {
@@ -58,6 +61,8 @@ struct PhysicsFrame {
     std::vector<PhysicsContactRecord> contacts;
     Point3 linearMomentum;
     double translationalKineticEnergyJ = 0.0;
+    double rotationalKineticEnergyJ = 0.0;
+    double totalKineticEnergyJ = 0.0;
     double maximumPenetrationCm = 0.0;
     bool hasCueImpactInput = false;
     CueImpactInput cueImpactInput;

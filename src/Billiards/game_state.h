@@ -28,6 +28,8 @@ struct Point3 {
     float z = 0.0f;
 };
 
+enum class BallMotionState : int;
+
 struct BallState {
     Point3 position;
     Point3 velocity;
@@ -37,6 +39,7 @@ struct BallState {
     float rotationAngle = 0.0f;
     bool pocketed = false;
     unsigned int texture = 0;
+    BallMotionState motionState = static_cast<BallMotionState>(0);
 };
 
 enum class CameraAnchorMode {
