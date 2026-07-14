@@ -1,5 +1,6 @@
 import csv
 import json
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 
@@ -63,7 +64,31 @@ def _validate_performance(budget_path, baseline_path):
     return failures
 
 
-def validate_phase3_release(root, release_path=None, executable=None):
+def _git_head(root):
+    return subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=root, check=True,
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def _git_is_ancestor(root, source, head):
+    return subprocess.run(
+        ["git", "merge-base", "--is-ancestor", source, head],
+        cwd=root, check=False, capture_output=True, text=True,
+    ).returncode == 0
+
+
+def _executable_profile_id(executable):
+    completed = subprocess.run(
+        [str(executable), "--print-physics-profile"], check=True,
+        capture_output=True, text=True,
+    )
+    return json.loads(completed.stdout)["id"]
+
+
+def validate_phase3_release(
+        root, release_path=None, executable=None, head_revision=None,
+        is_ancestor=None, executable_profile_id=None):
     """Validate frozen Phase 3 evidence without executing any reference partition."""
     root = Path(root).resolve()
     promotion = root / "physics_models/promotion"
@@ -71,6 +96,20 @@ def validate_phase3_release(root, release_path=None, executable=None):
     failures = []
     try:
         release = _json(release_path)
+        if release.get("schema_version") == 2:
+            if head_revision is None:
+                head_revision = _git_head(root)
+            if is_ancestor is None:
+                is_ancestor = lambda source, head: _git_is_ancestor(
+                    root, source, head)
+            if executable_profile_id is None and executable is not None:
+                executable_profile_id = _executable_profile_id(executable)
+            failures.extend(validate_release_manifest(
+                release_path, root, executable, head_revision,
+                is_ancestor, executable_profile_id))
+            if release.get("unexplained_regressions") != 0:
+                failures.append("release has unexplained regressions")
+            return failures
         candidates = promotion / "phase3_candidates_v1.json"
         matrix = promotion / "full_game_matrix_v1.json"
         goldens = promotion / "full_game_goldens_v1.json"

@@ -124,14 +124,24 @@ def validate_golden_registry(path, matrix_path, root):
     return failures
 
 
-def validate_release_manifest(path, root, executable=None):
+def validate_release_manifest(
+        path, root, executable=None, head_revision=None,
+        is_ancestor=None, executable_profile_id=None):
     path, root = Path(path), Path(root)
     release = json.loads(path.read_text(encoding="utf-8"))
     failures = []
-    if release.get("schema_version") != 1 or release.get("status") != \
-            "PASSED_WITH_DECLARED_LIMITATIONS":
+    schema_version = release.get("schema_version")
+    if schema_version == 1:
+        if release.get("status") != "PASSED_WITH_DECLARED_LIMITATIONS":
+            failures.append("release status or schema is invalid")
+    elif schema_version == 2:
+        if release.get("status") != "PASSED":
+            failures.append("v2 release status must be PASSED")
+    else:
         failures.append("release status or schema is invalid")
-    if len(release.get("source_revision", "")) != 40:
+    source_revision = release.get("source_revision", "")
+    if (len(source_revision) != 40 or
+            any(character not in "0123456789abcdef" for character in source_revision)):
         failures.append("release source revision is not immutable")
     artifacts = list(release.get("inputs", [])) + [release.get("profile", {})]
     for artifact in artifacts:
@@ -142,4 +152,14 @@ def validate_release_manifest(path, root, executable=None):
     if executable is not None and hashlib.sha256(Path(executable).read_bytes()).hexdigest() != \
             release.get("executable_sha256"):
         failures.append("release executable hash mismatch")
+    if schema_version == 2:
+        if head_revision is None or is_ancestor is None:
+            failures.append("release source ancestry was not verified")
+        elif not is_ancestor(source_revision, head_revision):
+            failures.append("release source revision is not an ancestor of HEAD")
+        frozen_profile_id = release.get("profile", {}).get("id")
+        if executable_profile_id is None:
+            failures.append("production default profile was not verified")
+        elif executable_profile_id != frozen_profile_id:
+            failures.append("production default profile differs from frozen profile")
     return failures
