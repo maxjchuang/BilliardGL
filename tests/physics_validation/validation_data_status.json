@@ -13,22 +13,28 @@
       "holdout_status": "validation"
     },
     {
+      "calibration_status": "confirmation",
+      "dataset_id": "derby_fuller_1999",
+      "dataset_version": "1.0.0",
+      "holdout_status": "confirmation"
+    },
+    {
       "calibration_status": "calibration",
       "dataset_id": "domenech_2023_ball_collision",
       "dataset_version": "1.0.0",
-      "holdout_status": "validation"
+      "holdout_status": "spent"
     },
     {
       "calibration_status": "calibration",
       "dataset_id": "mathavan_2009_high_speed",
       "dataset_version": "1.0.0",
-      "holdout_status": "validation"
+      "holdout_status": "spent"
     },
     {
       "calibration_status": "calibration",
       "dataset_id": "mathavan_2010_cushion",
       "dataset_version": "1.0.0",
-      "holdout_status": "validation"
+      "holdout_status": "spent"
     },
     {
       "calibration_status": "calibration",
@@ -41,6 +47,12 @@
       "dataset_id": "pocket_geometry_analytic_contract",
       "dataset_version": "1.0.0",
       "holdout_status": "validation"
+    },
+    {
+      "calibration_status": "confirmation",
+      "dataset_id": "sudo_2002",
+      "dataset_version": "1.0.0",
+      "holdout_status": "confirmation"
     }
   ],
   "schema_version": 1

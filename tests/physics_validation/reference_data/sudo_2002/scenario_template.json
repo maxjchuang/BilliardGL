@@ -1,0 +1,40 @@
+{
+  "base_scenario": {
+    "balls": [],
+    "description": "sudo_2002 published scalar confirmation evidence",
+    "evidence": {
+      "grade": "B",
+      "pool_applicability": "DIRECT",
+      "source": "sudo_2002"
+    },
+    "expectations": [],
+    "schema_version": 6
+  },
+  "cases": {
+    "cushion_e_low_speed": {
+      "reference_point_id": "cushion_e_low_speed",
+      "status": "confirmation_only"
+    },
+    "cushion_e_all_speed": {
+      "reference_point_id": "cushion_e_all_speed",
+      "status": "confirmation_only"
+    },
+    "cushion_contact_time_plateau": {
+      "reference_point_id": "cushion_contact_time_plateau",
+      "status": "confirmation_only"
+    },
+    "ball_ball_e_head_on": {
+      "reference_point_id": "ball_ball_e_head_on",
+      "status": "confirmation_only"
+    },
+    "separation_angle_mean": {
+      "reference_point_id": "separation_angle_mean",
+      "status": "confirmation_only"
+    },
+    "transverse_momentum_deficit": {
+      "reference_point_id": "transverse_momentum_deficit",
+      "status": "confirmation_only"
+    }
+  },
+  "schema_version": 1
+}

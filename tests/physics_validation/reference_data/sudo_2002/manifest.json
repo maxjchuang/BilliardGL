@@ -1,0 +1,89 @@
+{
+  "acquisition": {
+    "acquired_copy_url": "https://www.jstage.jst.go.jp/article/jvs1990/22/1Supplement/22_1Supplement_153/_pdf/-char/en",
+    "license_status": "publisher-copyright-no-redistribution-grant-recorded",
+    "retrieved_on": "2026-07-14",
+    "source_media_committed": false,
+    "source_sha256": "sha256:a727998333226e703d387a353f95ff882a071bccd9d16508fcf01fa447b22ff2"
+  },
+  "adapter_id": "sudo_2002_confirmation_v1",
+  "apparatus": {
+    "balls": "Brunswick phenolic resin balls",
+    "ball_mass_mean_kg": 0.16862,
+    "ball_diameter_mean_cm": 5.7172,
+    "table": "slate table covered with wool cloth"
+  },
+  "dataset_id": "sudo_2002",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "grade": "B",
+    "method": "published experimental scalar confirmation targets",
+    "candidate_selection_input": false,
+    "confirmation_only": true,
+    "target_count": 6
+  },
+  "extraction_review": {
+    "date": "2026-07-14",
+    "method": "page-and-paragraph second-pass comparison",
+    "reviewed_by": "Codex independent transcription review"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:ad55353fd502273384ee53d498d465e05c0921c37885351cd0e221c00f979bcf"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:d520f588ece441234044cf98198eb0807eda1a5b17a0435a57693ba3376bd424"
+    },
+    {
+      "id": "scalars",
+      "path": "scalars.csv",
+      "sha256": "sha256:ad55353fd502273384ee53d498d465e05c0921c37885351cd0e221c00f979bcf"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:3186f713f92b7a07f0f2fdf7a0da21fdd84164bf418d61a5f2eb0b1117998bcb"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:57d2d20eee8917d5d8ff9ef0e0100736216a1591e323e6975579d710b6c0a9b7"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:180a3db820f739964cc19a5b620d1a25abb32613f4516326a468bf9356bc2d6b"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:b4fdc6e991467e640c96a84b365401e95fa66babc143cad27d45263c67c609e4"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "source_access_audit",
+      "path": "source_access_audit.json",
+      "sha256": "sha256:c694559a1f721679a62132e0d802a5abdaa9d3e6d392af0934b632976a630b94"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "D. Sudo",
+      "M. Shibata"
+    ],
+    "doi": "10.11426/jjv.22.153",
+    "journal": "Journal of Visualization",
+    "pages": "22 supplement 1:153-156",
+    "title": "Experimental Analysis of Billiard Ball Collision and Motion",
+    "year": 2002
+  }
+}
