@@ -6,7 +6,6 @@
 
 namespace billiardgl {
 
-void applyFrictionAndMove(BallState& ball, float timeStep, float frictionAcceleration);
 bool collideBalls(BallState& first, BallState& second);
 void collideWithTableEdge(BallState& ball);
 bool isInPocketMouth(const BallState& ball);

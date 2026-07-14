@@ -95,37 +95,6 @@ void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
 
 }  // namespace
 
-void applyFrictionAndMove(BallState& ball, float timeStep, float frictionAcceleration)
-{
-    const float speedSquared = ball.velocity.x * ball.velocity.x + ball.velocity.z * ball.velocity.z;
-    if (speedSquared <= 0.1f) {
-        ball.speed = 0.0f;
-        ball.velocity.x = 0.0f;
-        ball.velocity.z = 0.0f;
-        return;
-    }
-
-    ball.speed = std::sqrt(speedSquared);
-    const float vx = ball.velocity.x / ball.speed;
-    const float vz = ball.velocity.z / ball.speed;
-    ball.speed += frictionAcceleration * timeStep;
-
-    if (ball.speed <= 0.0f) {
-        ball.speed = 0.0f;
-        ball.velocity.x = 0.0f;
-        ball.velocity.z = 0.0f;
-        return;
-    }
-
-    ball.velocity.x = ball.speed * vx;
-    ball.velocity.z = ball.speed * vz;
-    ball.position.x += ball.velocity.x * timeStep;
-    ball.position.z += ball.velocity.z * timeStep;
-    ball.rotationAxis.x = -vz;
-    ball.rotationAxis.z = vx;
-    ball.rotationAngle += -180.0f * ball.speed * timeStep / (kBallRadius * kPi);
-}
-
 bool collideBalls(BallState& first, BallState& second)
 {
     const float dx = second.position.x - first.position.x;
@@ -223,7 +192,7 @@ bool updatePocketedBall(GameState& state, int ballIndex)
         }
     }
 
-    ball.velocity = Point3{};
+    resetBallMotion(ball);
     return true;
 }
 
@@ -282,9 +251,10 @@ PhysicsStepTelemetry updatePhysics(
             contact.firstBall = i;
             telemetry.contacts.push_back(contact);
         }
-        applyFrictionAndMove(
-            ball, timeStep,
-            -profile.surface.legacyFrictionAccelerationCmS2);
+        SurfaceMotionStep surface = advanceSurfaceMotion(
+            ball, timeStep, profile.ball, profile.surface);
+        surface.ballIndex = i;
+        telemetry.surfaceMotion.push_back(surface);
         if (ball.speed > 0.0f) {
             anyMoving = true;
         }

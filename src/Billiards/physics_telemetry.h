@@ -49,6 +49,7 @@ struct PhysicsControlSample {
 
 struct PhysicsStepTelemetry {
     std::vector<PhysicsContactRecord> contacts;
+    std::vector<SurfaceMotionStep> surfaceMotion;
     double maximumPenetrationCm = 0.0;
 };
 

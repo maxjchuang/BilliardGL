@@ -106,5 +106,38 @@ int main()
         "trace should include the active profile ID");
     expect(closeEnough(frame.linearMomentum.x, 0.205f),
         "trace momentum should use the active profile mass");
+
+    billiardgl::GameState rollingState;
+    billiardgl::initializeBalls(rollingState);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        rollingState.balls[index].pocketed = true;
+    }
+    rollingState.balls[0].position.z = 20.0f;
+    rollingState.balls[0].velocity.x = 20.0f;
+    rollingState.balls[0].speed = 20.0f;
+    rollingState.balls[0].angularVelocity.z =
+        -20.0f / billiardgl::kBallRadius;
+    rollingState.balls[0].motionState = billiardgl::BallMotionState::Rolling;
+    billiardgl::PhysicsProfile lowResistance =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    lowResistance.id = "rolling_resistance_4";
+    lowResistance.surface.rollingResistanceAccelerationCmS2 = 4.0f;
+    billiardgl::PhysicsProfile highResistance = lowResistance;
+    highResistance.id = "rolling_resistance_12_5";
+    highResistance.surface.rollingResistanceAccelerationCmS2 = 12.5f;
+    billiardgl::GameRuntime lowRuntime;
+    billiardgl::GameRuntime highRuntime;
+    expect(lowRuntime.replaceStateForScenario(
+        rollingState, lowResistance).ok, "low-resistance profile installs");
+    expect(highRuntime.replaceStateForScenario(
+        rollingState, highResistance).ok, "high-resistance profile installs");
+    expect(lowRuntime.step(1).ok && highRuntime.step(1).ok,
+        "profiled runtimes step independently");
+    expect(lowRuntime.state().balls[0].position.x >
+        highRuntime.state().balls[0].position.x,
+        "runtime-owned rolling resistance changes production motion");
+    billiardgl::GameRuntime productionRuntime;
+    expect(productionRuntime.physicsProfile().id == "chinese_pool_legacy_v1",
+        "a fresh runtime retains the registered production profile");
     return 0;
 }

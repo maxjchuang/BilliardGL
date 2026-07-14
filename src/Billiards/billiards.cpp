@@ -64,12 +64,13 @@ static billiardgl::RenderResources Render;
 static double LastIdleTimeSeconds = 0.0;
 static float PhysicsTimeAccumulatorSeconds = 0.0f;
 static const int kMaxPhysicsStepsPerIdle = 5;
+static const billiardgl::PhysicsProfile ProductionPhysicsProfile =
+	billiardgl::defaultChinesePoolPhysicsProfile();
 
 //变量申明
 int& width = Game.config.width;
 int& height = Game.config.height;
 int i = 0, j = 0, k = 0, ballcnt = 16;
-static GLfloat M = 1, U = 0.2, T = 0.1, Radius = 5.715, G = -4;
 GLfloat m[16];
 
 
@@ -208,7 +209,9 @@ void prepareScreenshotScene()
 		Game.players.shotTaken = true;
 		Game.ballsMoving = true;
 		for (int step = 0; step < 30; ++step)
-			billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
+			billiardgl::updatePhysics(
+				Game, ProductionPhysicsProfile.solver.timeStepSeconds,
+				ProductionPhysicsProfile);
 		billiardgl::updateCameraFromCueBall(Game);
 		Game.camera.target[0] = Game.camera.target[0];
 		Game.camera.target[1] = Game.camera.target[1];
@@ -348,11 +351,13 @@ void myIdle(void)
 	const billiardgl::FrameStepResult frameSteps = billiardgl::advanceFixedStepAccumulator(
 		PhysicsTimeAccumulatorSeconds,
 		elapsedSeconds,
-		billiardgl::kDefaultTimeStep,
+		ProductionPhysicsProfile.solver.timeStepSeconds,
 		kMaxPhysicsStepsPerIdle);
 	for (int step = 0; step < frameSteps.steps; ++step)
 	{
-		billiardgl::updatePhysics(Game, billiardgl::kDefaultTimeStep);
+		billiardgl::updatePhysics(
+			Game, ProductionPhysicsProfile.solver.timeStepSeconds,
+			ProductionPhysicsProfile);
 		if (Game.events.ballCollision || Game.events.railCollision)
 			billiardgl::playHit();
 		if (Game.events.ballPocketed || Game.events.cueBallPocketed)

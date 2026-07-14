@@ -1,5 +1,6 @@
 #include "game_state.h"
 #include "physics.h"
+#include "surface_motion.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -28,20 +29,34 @@ int main()
         return fail("cue ball should start on the table");
     }
 
-    state.balls[0].velocity.x = 20.0f;
-    billiardgl::applyFrictionAndMove(state.balls[0], 0.1f, -4.0f);
-    if (!(state.balls[0].speed < 20.0f)) {
-        return fail("friction should reduce speed");
+    billiardgl::GameState profiledMotion;
+    billiardgl::initializeBalls(profiledMotion);
+    for (int index = 1; index < billiardgl::kBallCount; ++index) {
+        profiledMotion.balls[index].pocketed = true;
     }
-    if (!(state.balls[0].position.x > 0.0f)) {
-        return fail("ball should move after physics update");
+    profiledMotion.balls[0].position.z = 20.0f;
+    profiledMotion.balls[0].velocity.x = 20.0f;
+    profiledMotion.balls[0].speed = 20.0f;
+    profiledMotion.balls[0].angularVelocity.z =
+        -20.0f / billiardgl::kBallRadius;
+    profiledMotion.balls[0].motionState = billiardgl::BallMotionState::Rolling;
+    billiardgl::PhysicsProfile motionProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    motionProfile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
+    billiardgl::BallState expectedMotion = profiledMotion.balls[0];
+    billiardgl::advanceSurfaceMotion(
+        expectedMotion, 0.1f, motionProfile.ball, motionProfile.surface);
+    const billiardgl::PhysicsStepTelemetry motionTelemetry =
+        billiardgl::updatePhysics(profiledMotion, 0.1f, motionProfile);
+    if (!nearlyEqual(profiledMotion.balls[0].position.x, expectedMotion.position.x) ||
+        !nearlyEqual(profiledMotion.balls[0].velocity.x, expectedMotion.velocity.x) ||
+        !nearlyEqual(profiledMotion.balls[0].angularVelocity.z,
+            expectedMotion.angularVelocity.z)) {
+        return fail("production update should use profile-based surface motion");
     }
-
-    state.balls[0].velocity.x = 0.1f;
-    state.balls[0].velocity.z = 0.0f;
-    billiardgl::applyFrictionAndMove(state.balls[0], 0.1f, -4.0f);
-    if (!nearlyEqual(state.balls[0].speed, 0.0f)) {
-        return fail("very slow ball should stop");
+    if (motionTelemetry.surfaceMotion.size() != 1 ||
+        motionTelemetry.surfaceMotion[0].ballIndex != 0) {
+        return fail("production update should retain per-ball surface telemetry");
     }
 
     state.balls[0].position.x = billiardgl::kTableInWidth / 2.0f;

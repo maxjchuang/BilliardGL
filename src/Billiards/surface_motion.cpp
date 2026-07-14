@@ -44,10 +44,6 @@ float advanceRollingSegment(
     ball.speed = finalSpeed;
     ball.angularVelocity.x = ball.velocity.z / ballProperties.radiusCm;
     ball.angularVelocity.z = -ball.velocity.x / ballProperties.radiusCm;
-    ball.rotationAxis.x = -direction.z;
-    ball.rotationAxis.z = direction.x;
-    ball.rotationAngle +=
-        -180.0f * distance / (ballProperties.radiusCm * kPi);
     ball.motionState = segment < deltaSeconds
         ? BallMotionState::Stationary
         : BallMotionState::Rolling;
@@ -188,11 +184,23 @@ SurfaceMotionStep advanceSurfaceMotion(
             }
         }
     } else {
-        ball.motionState = BallMotionState::Stationary;
+        ball.speed = horizontalLength(ball.velocity);
+        ball.motionState = step.before;
     }
     step.after = ball.motionState;
     step.finalSlipSpeedCmS = horizontalLength(
         surfaceContactSlipVelocity(ball, ballProperties.radiusCm));
+    const float angularSpeed = std::sqrt(
+        ball.angularVelocity.x * ball.angularVelocity.x +
+        ball.angularVelocity.y * ball.angularVelocity.y +
+        ball.angularVelocity.z * ball.angularVelocity.z);
+    if (angularSpeed > 0.0f) {
+        ball.rotationAxis.x = ball.angularVelocity.x / angularSpeed;
+        ball.rotationAxis.y = ball.angularVelocity.y / angularSpeed;
+        ball.rotationAxis.z = ball.angularVelocity.z / angularSpeed;
+        ball.rotationAngle +=
+            angularSpeed * deltaSeconds * 180.0f / kPi;
+    }
     return step;
 }
 

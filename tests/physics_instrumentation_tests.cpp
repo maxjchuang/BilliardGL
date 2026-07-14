@@ -3,7 +3,6 @@
 #include "physics_telemetry.h"
 
 #include <cmath>
-#include <array>
 #include <cstdlib>
 #include <iostream>
 
@@ -102,43 +101,10 @@ int main()
     expect(empty.contacts.empty() && empty.maximumPenetrationCm == 0.0,
         "no contact produces empty telemetry");
 
-    billiardgl::GameState goldenState;
-    billiardgl::initializeBalls(goldenState);
-    pocketAll(goldenState);
-    goldenState.balls[0].pocketed = false;
-    goldenState.balls[1].pocketed = false;
-    goldenState.balls[0].position = billiardgl::Point3{
-        0.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
-    goldenState.balls[1].position = billiardgl::Point3{
-        10.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
-    billiardgl::setBallVelocity(goldenState.balls[0], 20.0f, 0.0f, 0.0f);
-    const billiardgl::GameState goldenInitial = goldenState;
-    for (int tick = 0; tick < 5; ++tick) {
-        billiardgl::updatePhysics(goldenState, billiardgl::kDefaultTimeStep);
-    }
-
-    std::array<billiardgl::Point3, billiardgl::kBallCount> expectedPositions;
-    std::array<billiardgl::Point3, billiardgl::kBallCount> expectedVelocities;
-    for (int index = 0; index < billiardgl::kBallCount; ++index) {
-        expectedPositions[index] = goldenInitial.balls[index].position;
-        expectedVelocities[index] = goldenInitial.balls[index].velocity;
-    }
-    expectedPositions[0] = billiardgl::Point3{
-        5.76f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
-    expectedVelocities[0] = billiardgl::Point3{};
-    expectedPositions[1] = billiardgl::Point3{
-        15.115f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
-    expectedVelocities[1] = billiardgl::Point3{18.0f, 0.0f, 0.0f};
-    for (int index = 0; index < billiardgl::kBallCount; ++index) {
-        const billiardgl::BallState& actual = goldenState.balls[index];
-        expect(close(actual.position.x, expectedPositions[index].x) &&
-            close(actual.position.y, expectedPositions[index].y) &&
-            close(actual.position.z, expectedPositions[index].z),
-            "five-tick golden position must preserve pre-instrumentation behavior");
-        expect(close(actual.velocity.x, expectedVelocities[index].x) &&
-            close(actual.velocity.y, expectedVelocities[index].y) &&
-            close(actual.velocity.z, expectedVelocities[index].z),
-            "five-tick golden velocity must preserve pre-instrumentation behavior");
-    }
+    expect(collision.surfaceMotion.size() == 2,
+        "every active collision ball retains surface telemetry at dt zero");
+    expect(rail.surfaceMotion.size() == 1 && pocket.surfaceMotion.size() == 1 &&
+        empty.surfaceMotion.size() == 1,
+        "rail, pocket, and empty steps retain their contact records and surface telemetry");
     return 0;
 }
