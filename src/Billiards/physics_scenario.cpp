@@ -359,9 +359,11 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (scenario.timeStepSeconds <= 0.0f) {
             throw std::runtime_error("time_step_seconds must be positive");
         }
-        if (std::fabs(scenario.timeStepSeconds - kDefaultTimeStep) > 0.000001f) {
+        if (version < 3 &&
+            std::fabs(scenario.timeStepSeconds - kDefaultTimeStep) > 0.000001f) {
             result.errorCode = "unsupported_time_step";
-            result.errorMessage = "runtime currently supports only the default 0.1 second time step";
+            result.errorMessage =
+                "legacy scenarios without a physics profile require the default 0.1 second time step";
             return result;
         }
 

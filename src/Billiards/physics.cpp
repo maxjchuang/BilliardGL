@@ -405,7 +405,8 @@ bool updatePocketedBall(GameState& state, int ballIndex)
 }
 
 PhysicsStepTelemetry updatePhysicsDiscrete(
-    GameState& state, float timeStep, const PhysicsProfile& profile)
+    GameState& state, float timeStep, const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode, bool resolveBallContacts = true)
 {
     PhysicsStepTelemetry telemetry;
     const bool wasMoving = state.ballsMoving;
@@ -416,7 +417,7 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
         if (ball.pocketed) {
             continue;
         }
-        for (int j = i + 1; j < kBallCount; ++j) {
+        for (int j = i + 1; resolveBallContacts && j < kBallCount; ++j) {
             if (!state.balls[j].pocketed) {
                 const BallBallContactResult result = resolveBallBallContact(
                     ball, state.balls[j], profile.ball, profile.ball);
@@ -481,10 +482,14 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
                 }
             }
         }
-        const StraightRailEvent railEvent = earliestRailEvent(
-            ball, std::max(0.0f, timeStep), profile);
-        const PocketStepEvent pocketEvent = earliestPocketEvent(
-            ball, std::max(0.0f, timeStep), profile);
+        StraightRailEvent railEvent;
+        PocketStepEvent pocketEvent;
+        if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+            railEvent = earliestRailEvent(
+                ball, std::max(0.0f, timeStep), profile);
+            pocketEvent = earliestPocketEvent(
+                ball, std::max(0.0f, timeStep), profile);
+        }
         SurfaceMotionStep surface;
         const bool usePocket = pocketEvent.hit && (!railEvent.hit ||
             pocketEvent.timeSeconds <= railEvent.timeSeconds + 0.0000001f);
@@ -523,8 +528,10 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
             surface = beforeContact;
             surface.after = afterContact.after;
             surface.finalSlipSpeedCmS = afterContact.finalSlipSpeedCmS;
-            classifyFinalPocketState(state, ball, profile, telemetry, i,
-                timeStep);
+            if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+                classifyFinalPocketState(state, ball, profile, telemetry, i,
+                    timeStep);
+            }
         } else if (railEvent.hit) {
             const SurfaceMotionStep beforeContact = advanceSurfaceMotion(
                 ball, railEvent.timeSeconds, profile.ball, profile.surface);
@@ -548,15 +555,20 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
                 surface.transitionTimeSeconds = railEvent.timeSeconds +
                     afterContact.transitionTimeSeconds;
             }
-            classifyFinalPocketState(state, ball, profile, telemetry, i,
-                timeStep);
+            if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+                classifyFinalPocketState(state, ball, profile, telemetry, i,
+                    timeStep);
+            }
         } else {
             surface = advanceSurfaceMotion(
                 ball, timeStep, profile.ball, profile.surface);
-            classifyFinalPocketState(state, ball, profile, telemetry, i,
-                timeStep);
+            if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+                classifyFinalPocketState(state, ball, profile, telemetry, i,
+                    timeStep);
+            }
         }
-        if (updatePocketedBall(state, i)) {
+        if (boundaryMode == PhysicsBoundaryMode::ProductionTable &&
+            updatePocketedBall(state, i)) {
             const bool alreadyRecorded = !telemetry.contacts.empty() &&
                 telemetry.contacts.back().kind == PhysicsContactKind::Pocket &&
                 telemetry.contacts.back().firstBall == i &&
@@ -616,26 +628,30 @@ void prependTelemetry(PhysicsStepTelemetry& tail,
 
 PhysicsStepTelemetry updatePhysicsEventDriven(
     GameState& state, float timeStep, const PhysicsProfile& profile,
-    int remainingEvents)
+    int remainingEvents, PhysicsBoundaryMode boundaryMode)
 {
     if (timeStep <= 0.0f || remainingEvents <= 0) {
-        return updatePhysicsDiscrete(state, timeStep, profile);
+        return updatePhysicsDiscrete(state, timeStep, profile, boundaryMode);
     }
     const std::vector<ContinuousContactCandidate> candidates =
         generateBallBallCandidates(state, timeStep, profile.ball.radiusCm,
             profile.solver.toiToleranceSeconds, false,
             profile.solver.residualToleranceCmS);
-    const double boundaryTime = earliestBoundaryTime(state, timeStep, profile);
+    const double boundaryTime = boundaryMode == PhysicsBoundaryMode::ProductionTable ?
+        earliestBoundaryTime(state, timeStep, profile) : timeStep + 1.0;
     const bool hasBoundary = boundaryTime <= timeStep;
     if (candidates.empty()) {
-        if (!hasBoundary) return updatePhysicsDiscrete(state, timeStep, profile);
+        if (!hasBoundary) {
+            return updatePhysicsDiscrete(
+                state, timeStep, profile, boundaryMode, false);
+        }
         const GameplayEvents beforeEvents = state.events;
         PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
-            state, static_cast<float>(boundaryTime), profile);
+            state, static_cast<float>(boundaryTime), profile, boundaryMode, false);
         const GameplayEvents boundaryEvents = state.events;
         PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
             std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
-            profile, remainingEvents - 1);
+            profile, remainingEvents - 1, boundaryMode);
         prependTelemetry(tail, prefix);
         state.events.ballCollision = state.events.ballCollision ||
             boundaryEvents.ballCollision || beforeEvents.ballCollision;
@@ -654,11 +670,11 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         toi > boundaryTime + profile.solver.toiToleranceSeconds) {
         const GameplayEvents beforeEvents = state.events;
         PhysicsStepTelemetry prefix = updatePhysicsDiscrete(
-            state, static_cast<float>(boundaryTime), profile);
+            state, static_cast<float>(boundaryTime), profile, boundaryMode, false);
         const GameplayEvents boundaryEvents = state.events;
         PhysicsStepTelemetry tail = updatePhysicsEventDriven(state,
             std::max(0.0f, timeStep - static_cast<float>(boundaryTime)),
-            profile, remainingEvents - 1);
+            profile, remainingEvents - 1, boundaryMode);
         prependTelemetry(tail, prefix);
         state.events.ballCollision = state.events.ballCollision ||
             boundaryEvents.ballCollision || beforeEvents.ballCollision;
@@ -745,14 +761,37 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
             contact.solverResidualCmS = solved.contacts[index].residualCmS;
             contact.solverProjectionCm = solved.contacts[index].projectionCm;
             contact.velocityImpulseApplied = contact.normalImpulseNs > 0.0;
+            contact.regime = contact.velocityImpulseApplied
+                ? BallBallContactRegime::Frictionless
+                : BallBallContactRegime::Separating;
+            contact.relativeContactVelocityBeforeCmS =
+                solved.contacts[index].relativeVelocityBeforeCmS;
+            contact.relativeContactVelocityAfterCmS =
+                solved.contacts[index].relativeVelocityAfterCmS;
+            contact.firstContactArmCm = Point3{
+                candidate.normal.x * profile.ball.radiusCm,
+                candidate.normal.y * profile.ball.radiusCm,
+                candidate.normal.z * profile.ball.radiusCm};
+            contact.secondContactArmCm = Point3{
+                -candidate.normal.x * profile.ball.radiusCm,
+                -candidate.normal.y * profile.ball.radiusCm,
+                -candidate.normal.z * profile.ball.radiusCm};
+            contact.impulseOnSecondNs = Point3{
+                candidate.normal.x * static_cast<float>(contact.normalImpulseNs),
+                candidate.normal.y * static_cast<float>(contact.normalImpulseNs),
+                candidate.normal.z * static_cast<float>(contact.normalImpulseNs)};
+            contact.restitution = profile.ball.normalRestitution;
+            contact.frictionCoefficient = 0.0;
             contact.kineticEnergyBeforeJ = solved.kineticEnergyBeforeJ;
             contact.kineticEnergyAfterJ = solved.kineticEnergyAfterJ;
             contact.normalRelativeSpeedBeforeCmS =
-                -solved.contacts[index].targetNormalSpeedCmS /
-                std::max(0.000001f, profile.ball.normalRestitution);
+                candidate.normal.x * contact.relativeContactVelocityBeforeCmS.x +
+                candidate.normal.y * contact.relativeContactVelocityBeforeCmS.y +
+                candidate.normal.z * contact.relativeContactVelocityBeforeCmS.z;
             contact.normalRelativeSpeedAfterCmS =
-                solved.contacts[index].targetNormalSpeedCmS -
-                solved.contacts[index].residualCmS;
+                candidate.normal.x * contact.relativeContactVelocityAfterCmS.x +
+                candidate.normal.y * contact.relativeContactVelocityAfterCmS.y +
+                candidate.normal.z * contact.relativeContactVelocityAfterCmS.z;
             contact.positionSlopCm = profile.solver.penetrationSlopCm;
             prefix.contacts.push_back(contact);
             impulseApplied = impulseApplied || contact.velocityImpulseApplied;
@@ -763,8 +802,15 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         return prefix;
     }
     const float remaining = std::max(0.0f, timeStep - static_cast<float>(toi));
+    if (remaining <= 0.0f) {
+        if (impulseApplied) {
+            state.events.ballCollision = true;
+            state.ballsMoving = anyBallMoving(state);
+        }
+        return prefix;
+    }
     PhysicsStepTelemetry tail = updatePhysicsEventDriven(
-        state, remaining, profile, remainingEvents - 1);
+        state, remaining, profile, remainingEvents - 1, boundaryMode);
     prependTelemetry(tail, prefix);
     if (impulseApplied) {
         state.events.ballCollision = true;
@@ -778,8 +824,17 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
 PhysicsStepTelemetry updatePhysics(
     GameState& state, float timeStep, const PhysicsProfile& profile)
 {
+    return updatePhysics(
+        state, timeStep, profile, PhysicsBoundaryMode::ProductionTable);
+}
+
+PhysicsStepTelemetry updatePhysics(
+    GameState& state, float timeStep, const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode)
+{
     return updatePhysicsEventDriven(
-        state, timeStep, profile, profile.solver.maximumEventsPerTick);
+        state, timeStep, profile, profile.solver.maximumEventsPerTick,
+        boundaryMode);
 }
 
 PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)

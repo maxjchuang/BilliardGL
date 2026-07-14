@@ -19,5 +19,8 @@ bool updatePocketedBall(GameState& state, int ballIndex);
 PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep);
 PhysicsStepTelemetry updatePhysics(
     GameState& state, float timeStep, const PhysicsProfile& profile);
+PhysicsStepTelemetry updatePhysics(
+    GameState& state, float timeStep, const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode);
 
 }  // namespace billiardgl

@@ -1,4 +1,5 @@
 #include "contact_solver.h"
+#include "surface_motion.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -58,6 +59,12 @@ int main()
         solved.contacts[0].accumulatedNormalImpulseNs > 0.0 &&
         solved.contacts[1].accumulatedNormalImpulseNs > 0.0,
         "each simultaneous constraint should expose one accumulated impulse");
+    expect(solved.contacts[0].relativeVelocityBeforeCmS.x == -100.0f &&
+        solved.contacts[0].relativeVelocityAfterCmS.x > 0.0f,
+        "solver diagnostics should preserve the contact-relative velocity transition");
+    expect(symmetric.balls[0].motionState == BallMotionState::Sliding &&
+        symmetric.balls[2].motionState == BallMotionState::Sliding,
+        "solver impulses should refresh surface motion classification");
 
     GameState projection = stateFor(2);
     ContactIsland overlap;

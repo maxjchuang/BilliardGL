@@ -1,0 +1,148 @@
+{
+  "balls": [
+    {
+      "angular_velocity_rad_s": [
+        0.0,
+        0.0,
+        -34.78260869565218
+      ],
+      "index": 0,
+      "pocketed": false,
+      "position_cm": [
+        -36.52347481135915,
+        92.3,
+        0.8355690462189619
+      ],
+      "velocity_cm_s": [
+        80.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "angular_velocity_rad_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "index": 1,
+      "pocketed": false,
+      "position_cm": [
+        0.0,
+        92.3,
+        0.0
+      ],
+      "velocity_cm_s": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "boundary_mode": "unbounded",
+  "description": "Doménech-Carbó 2023 experimental ball-collision reference",
+  "evidence": {
+    "approach_time_seconds": 0.4,
+    "equipment": "SOURCE_LABORATORY_APPARATUS",
+    "grade": "B",
+    "pool_applicability": "TREND_ONLY",
+    "preimpact_samples": 3,
+    "source": "doi:10.1016/j.mechrescom.2023.104149",
+    "source_surface": "PVC laboratory bench"
+  },
+  "expectations": [
+    {
+      "metric": "value_within_interval",
+      "operator": "eq",
+      "value": {
+        "ball_index": 1,
+        "expected": 9.488987,
+        "lower": 9.336938195643471,
+        "observed_metric": "object_scattering_angle_degrees",
+        "point_id": "rubber_lambda2_001",
+        "selection": {
+          "angle_reference_axis": [
+            1.0,
+            0.0
+          ],
+          "ball_index": 1,
+          "ball_radius_cm": 2.3,
+          "event_kind": "ball_ball",
+          "minimum_window_ticks": 2,
+          "positive_orientation": "clockwise",
+          "pure_roll_tolerance_cm_s": 0.001,
+          "sample_phase": "first_pure_roll_after_event",
+          "solver_event_scope": "single"
+        },
+        "unit": "degree",
+        "upper": 9.641035804356529
+      }
+    }
+  ],
+  "id": "domenech_2023_ball_collision__rubber_lambda2_001_v2",
+  "physics_profile": {
+    "ball": {
+      "friction_coefficient": 0.33,
+      "inertia_factor": 0.4,
+      "mass_kg": 0.0464,
+      "material": "rubber",
+      "normal_restitution": 0.0,
+      "radius_cm": 2.3
+    },
+    "cue": {
+      "chalked_friction_coefficient": 0.6,
+      "cue_speed_per_power_unit_cm_s": 1.34,
+      "effective_mass_kg": 0.5,
+      "maximum_reliable_offset_radius": 0.8,
+      "normal_restitution": 0.0,
+      "unchalked_friction_coefficient": 0.1
+    },
+    "cushion": {
+      "friction_coefficient": 0.0,
+      "material": "unbounded_bench_no_cushion",
+      "maximum_rigid_incident_speed_cm_s": 250.0,
+      "normal_restitution": 1.0,
+      "nose_height_ratio": 1.0
+    },
+    "formula_version": "ball_collision_v1",
+    "id": "domenech_2023_rubber_post_transition_v2",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "maximum_island_size": 16,
+      "maximum_penetration_cm": 0.5,
+      "penetration_slop_cm": 0.001,
+      "position_iterations": 4,
+      "residual_tolerance_cm_s": 0.001,
+      "time_step_seconds": 0.1,
+      "toi_tolerance_seconds": 1e-07,
+      "velocity_iterations": 12
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "pvc_source_hypothesis",
+      "rolling_resistance_acceleration_cm_s2": 0.0,
+      "sliding_friction_coefficient": 0.002,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    },
+    "table_boundary": {
+      "capture_depth_cm": 6.0,
+      "corner_mouth_width_cm": 13.2,
+      "corner_throat_width_cm": 11.0,
+      "geometry_id": "wpa_pool_analytic_v1",
+      "jaw_radius_cm": 1.2,
+      "material": "profiled_table_boundary",
+      "playfield_length_cm": 254.0,
+      "playfield_width_cm": 127.0,
+      "side_mouth_width_cm": 8.6,
+      "side_throat_width_cm": 7.0,
+      "throat_depth_cm": 4.0
+    }
+  },
+  "schema_version": 9,
+  "simulation": {
+    "ticks": 404,
+    "time_step_seconds": 0.1
+  }
+}

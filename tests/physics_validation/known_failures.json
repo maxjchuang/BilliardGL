@@ -1,4 +1,15 @@
 {
   "schema_version": 1,
-  "failures": []
+  "failures": [
+    {
+      "code": "MODEL_MISMATCH",
+      "metric": "object_scattering_angle_degrees",
+      "scenario_id": "domenech_2023_ball_collision__rubber_lambda2_001_v2"
+    },
+    {
+      "code": "MODEL_MISMATCH",
+      "metric": "cushion_rebound_speed_cm_s",
+      "scenario_id": "mathavan_2010_cushion__fig7_experimental_06_v2"
+    }
+  ]
 }

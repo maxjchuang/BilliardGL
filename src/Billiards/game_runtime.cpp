@@ -205,7 +205,8 @@ ActionResult GameRuntime::step(int count)
     for (int i = 0; i < count; ++i) {
         const GameState before = state_;
         const float timeStep = physicsProfile_.solver.timeStepSeconds;
-        const PhysicsStepTelemetry telemetry = updatePhysics(state_, timeStep, physicsProfile_);
+        const PhysicsStepTelemetry telemetry = updatePhysics(
+            state_, timeStep, physicsProfile_, boundaryMode_);
         ++tick_;
         if (physicsTraceEnabled_) {
             PhysicsFrame frame = capturePhysicsFrame(

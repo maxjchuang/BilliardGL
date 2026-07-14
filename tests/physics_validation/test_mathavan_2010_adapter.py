@@ -43,13 +43,31 @@ class Mathavan2010AdapterTests(unittest.TestCase):
         self.assertIn("fit_subset", provenance)
         self.assertIn("rigid_cushion_domain", provenance)
         self.assertNotIn("coefficient_of_restitution", scenario)
-        self.assertEqual(scenario["schema_version"], 6)
+        self.assertEqual(scenario["schema_version"], 9)
         profile = scenario["physics_profile"]
         self.assertEqual(profile["ball"]["mass_kg"], 0.1406)
         self.assertEqual(profile["ball"]["radius_cm"], 2.625)
         self.assertEqual(profile["cushion"]["nose_height_ratio"], 1.4)
         self.assertEqual(
             profile["cushion"]["maximum_rigid_incident_speed_cm_s"], 250.0)
+
+    def test_fastest_v2_cushion_case_starts_inside_with_three_approach_samples(self):
+        cases = adapt_mathavan_2010(self.package, self.split, self.points)
+        case = max(cases, key=lambda item: json.loads(
+            item.provenance_json)["incident_speed_cm_s"])
+        scenario = json.loads(case.scenario_json)
+        profile = scenario["physics_profile"]
+        ball = scenario["balls"][0]
+        half_width = profile["table_boundary"]["playfield_width_cm"] / 2.0
+        self.assertTrue(scenario["id"].endswith("_v2"))
+        self.assertEqual(scenario["schema_version"], 9)
+        self.assertEqual(scenario["boundary_mode"], "production_table")
+        self.assertEqual(scenario["simulation"]["time_step_seconds"], 0.001)
+        self.assertGreaterEqual(scenario["evidence"]["preimpact_samples"], 3)
+        self.assertLessEqual(
+            abs(ball["position_cm"][0]),
+            half_width - profile["ball"]["radius_cm"],
+        )
 
     def test_theory_only_series_is_rejected(self):
         theory = replace(self.points[0], series_id="fig8_theory_curve")

@@ -230,6 +230,29 @@ int main()
             billiardgl::PhysicsBoundaryMode::Unbounded,
         "applied boundary identity should reach every runtime trace frame");
 
+    billiardgl::PhysicsScenario openBench = v9.scenario;
+    const float xLimit =
+        openBench.physicsProfile.tableBoundary.playfieldWidthCm * 0.5f -
+        openBench.physicsProfile.ball.radiusCm;
+    openBench.balls[0].position.x = xLimit;
+    openBench.balls[0].velocity = billiardgl::Point3{100.0f, 0.0f, 0.0f};
+    openBench.balls[0].speed = 100.0f;
+    billiardgl::GameRuntime openBenchRuntime;
+    openBenchRuntime.setPhysicsTraceEnabled(true);
+    expect(billiardgl::applyPhysicsScenario(openBenchRuntime, openBench).ok &&
+        openBenchRuntime.step(1).ok &&
+        openBenchRuntime.state().balls[0].position.x > xLimit &&
+        openBenchRuntime.physicsTrace().frames()[0].contacts.empty(),
+        "unbounded apparatus should not generate rail or pocket contacts");
+
+    billiardgl::json::Value substepDocument = validV9Document();
+    substepDocument["simulation"]["time_step_seconds"] =
+        billiardgl::json::Value(0.001);
+    substepDocument["physics_profile"]["solver"]["time_step_seconds"] =
+        billiardgl::json::Value(0.001);
+    expect(billiardgl::parsePhysicsScenario(substepDocument).ok,
+        "v9 apparatus should support an explicit positive physics substep");
+
     billiardgl::GameRuntime runtime;
     runtime.setPhysicsTraceEnabled(true);
     expect(billiardgl::applyPhysicsScenario(runtime, parsed.scenario).ok,

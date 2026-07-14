@@ -95,6 +95,18 @@ class ReferenceAccountingTests(unittest.TestCase):
         self.assertEqual(len(missing.missing_model_mismatches), 1)
         self.assertEqual(len(missing.missing_limitations), 1)
 
+    def test_versioned_scenario_id_reconciles_to_stable_reference_case(self):
+        versioned = ScenarioResult(
+            "synthetic_reference__case_model_v2", False, "B", {},
+            (failure("MODEL_MISMATCH", "speed"),))
+
+        accounting = reconcile_reference_failures(
+            [versioned], self._manifest([model_item()]), self._manifest([]),
+            "synthetic_reference",
+            {versioned.scenario_id: "case_model"})
+
+        self.assertTrue(accounting.ci_passed)
+
     def test_actual_numerical_integration_and_nondeterministic_failures_are_unallowlistable(self):
         results = [
             result("numeric", failure("NUMERICAL_FAILURE", "finite_state")),

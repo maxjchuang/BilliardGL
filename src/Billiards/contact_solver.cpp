@@ -1,4 +1,5 @@
 #include "contact_solver.h"
+#include "surface_motion.h"
 
 #include <algorithm>
 #include <cmath>
@@ -51,6 +52,21 @@ double normalSpeed(const GameState& state,
     return dot(state.balls[contact.firstBall].velocity, contact.normal);
 }
 
+Point3 relativeVelocity(const GameState& state,
+    const ContinuousContactCandidate& contact)
+{
+    if (contact.secondBall >= 0) {
+        return Point3{
+            state.balls[contact.secondBall].velocity.x -
+                state.balls[contact.firstBall].velocity.x,
+            state.balls[contact.secondBall].velocity.y -
+                state.balls[contact.firstBall].velocity.y,
+            state.balls[contact.secondBall].velocity.z -
+                state.balls[contact.firstBall].velocity.z};
+    }
+    return state.balls[contact.firstBall].velocity;
+}
+
 }  // namespace
 
 ContactSolverResult solveContactIsland(
@@ -75,6 +91,7 @@ ContactSolverResult solveContactIsland(
         diagnostic.firstBall = contact.firstBall;
         diagnostic.secondBall = contact.secondBall;
         diagnostic.featureId = contact.featureId;
+        diagnostic.relativeVelocityBeforeCmS = relativeVelocity(state, contact);
         const double restitution = contact.secondBall >= 0
             ? profile.ball.normalRestitution : profile.cushion.normalRestitution;
         const double before = normalSpeed(state, contact);
@@ -165,6 +182,8 @@ ContactSolverResult solveContactIsland(
 
     for (std::size_t index = 0; index < island.contacts.size(); ++index) {
         result.contacts[index].accumulatedNormalImpulseNs = accumulated[index];
+        result.contacts[index].relativeVelocityAfterCmS =
+            relativeVelocity(state, island.contacts[index]);
         result.contacts[index].residualCmS = std::max(
             0.0, target[index] - normalSpeed(state, island.contacts[index]));
     }
@@ -177,6 +196,8 @@ ContactSolverResult solveContactIsland(
         }
         state.balls[index].speed = static_cast<float>(std::sqrt(
             dot(state.balls[index].velocity, state.balls[index].velocity)));
+        state.balls[index].motionState = classifySurfaceMotion(
+            state.balls[index], profile.ball, profile.surface);
     }
     if (result.maximumResidualCmS > profile.solver.residualToleranceCmS) {
         result.status = ContactSolverStatus::IterationLimit;

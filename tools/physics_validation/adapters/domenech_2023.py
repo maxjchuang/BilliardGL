@@ -17,8 +17,24 @@ from ..reference_adapter import (
 
 
 _BALL_Y_BASE_CM = 90.0
-_CONTACT_OVERLAP_CM = 0.000001
 _LAUNCH_SPEED_CM_S = 80.0
+_PREIMPACT_SAMPLES = 3
+_TIME_STEP_SECONDS = 0.1
+_APPROACH_TIME_SECONDS = (_PREIMPACT_SAMPLES + 1) * _TIME_STEP_SECONDS
+
+_TABLE_BOUNDARY = {
+    "capture_depth_cm": 6.0,
+    "corner_mouth_width_cm": 13.2,
+    "corner_throat_width_cm": 11.0,
+    "geometry_id": "wpa_pool_analytic_v1",
+    "jaw_radius_cm": 1.2,
+    "material": "profiled_table_boundary",
+    "playfield_length_cm": 254.0,
+    "playfield_width_cm": 127.0,
+    "side_mouth_width_cm": 8.6,
+    "side_throat_width_cm": 7.0,
+    "throat_depth_cm": 4.0,
+}
 
 
 def _admission_limitations(dataset_id):
@@ -42,7 +58,7 @@ def _admission_limitations(dataset_id):
 
 def _profile(material, source, fit, post_transition):
     return {
-        "id": f"domenech_2023_{material}_{'post_transition' if post_transition else 'immediate'}_v1",
+        "id": f"domenech_2023_{material}_{'post_transition' if post_transition else 'immediate'}_v2",
         "formula_version": "ball_collision_v1",
         "ball": {
             "friction_coefficient": fit["friction_coefficient"],
@@ -71,18 +87,29 @@ def _profile(material, source, fit, post_transition):
         },
         "cushion": {
             "friction_coefficient": 0.0,
+            "material": "unbounded_bench_no_cushion",
+            "maximum_rigid_incident_speed_cm_s": 250.0,
             "normal_restitution": 1.0,
+            "nose_height_ratio": 1.0,
         },
         "solver": {
             "maximum_events_per_tick": 64,
-            "time_step_seconds": 0.1,
+            "maximum_island_size": 16,
+            "maximum_penetration_cm": 0.5,
+            "penetration_slop_cm": 0.001,
+            "position_iterations": 4,
+            "residual_tolerance_cm_s": 0.001,
+            "time_step_seconds": _TIME_STEP_SECONDS,
+            "toi_tolerance_seconds": 0.0000001,
+            "velocity_iterations": 12,
         },
+        "table_boundary": dict(_TABLE_BOUNDARY),
     }
 
 
 def _balls(source, impact_degrees):
     radius = source["diameter_cm"] / 2.0
-    contact_distance = source["diameter_cm"] - _CONTACT_OVERLAP_CM
+    contact_distance = source["diameter_cm"]
     angle = math.radians(impact_degrees)
     y = _BALL_Y_BASE_CM + radius
     return [
@@ -91,7 +118,8 @@ def _balls(source, impact_degrees):
             "index": 0,
             "pocketed": False,
             "position_cm": [
-                -contact_distance * math.cos(angle), y,
+                -contact_distance * math.cos(angle) -
+                    _LAUNCH_SPEED_CM_S * _APPROACH_TIME_SECONDS, y,
                 contact_distance * math.sin(angle),
             ],
             "velocity_cm_s": [_LAUNCH_SPEED_CM_S, 0.0, 0.0],
@@ -167,12 +195,14 @@ def adapt_domenech_2023(package, split, points):
         post_transition = point.series_id in {"steel_beta1", "rubber_lambda2"}
         scenario = json.loads(json.dumps(
             template["base_scenario"], allow_nan=False))
-        scenario["schema_version"] = 5
-        scenario["id"] = f"{dataset_id}__{point.case_id}"
+        scenario["schema_version"] = 9
+        scenario["boundary_mode"] = "unbounded"
+        scenario["id"] = f"{dataset_id}__{point.case_id}_v2"
         scenario["physics_profile"] = _profile(
             material, source, fits[material], post_transition)
         scenario["balls"] = _balls(source, impact["impact_angle_degrees"])
-        scenario["simulation"]["ticks"] = 400 if post_transition else 40
+        scenario["simulation"]["ticks"] = (
+            400 if post_transition else 40) + _PREIMPACT_SAMPLES + 1
         lower, upper = point.acceptance_interval
         scenario["expectations"] = [{
             "metric": "value_within_interval",
@@ -190,6 +220,8 @@ def adapt_domenech_2023(package, split, points):
             },
         }]
         scenario["evidence"]["pool_applicability"] = point.pool_applicability
+        scenario["evidence"]["preimpact_samples"] = _PREIMPACT_SAMPLES
+        scenario["evidence"]["approach_time_seconds"] = _APPROACH_TIME_SECONDS
         provenance = {
             "adapter_id": package.manifest["adapter_id"],
             "case_id": point.case_id,
@@ -201,6 +233,8 @@ def adapt_domenech_2023(package, split, points):
                 "normal_restitution": fits[material]["normal_restitution"],
             },
             "impact_angle_degrees": impact["impact_angle_degrees"],
+            "preimpact_samples": _PREIMPACT_SAMPLES,
+            "approach_time_seconds": _APPROACH_TIME_SECONDS,
             "package_hashes": package_hashes,
             "point_ids": [point.point_id],
             "source_locators": [point.source_locator],

@@ -23,6 +23,8 @@ struct ContactImpulseDiagnostic {
     double targetNormalSpeedCmS = 0.0;
     double residualCmS = 0.0;
     double projectionCm = 0.0;
+    Point3 relativeVelocityBeforeCmS;
+    Point3 relativeVelocityAfterCmS;
 };
 
 struct ContactSolverResult {

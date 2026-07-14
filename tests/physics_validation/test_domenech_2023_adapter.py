@@ -55,7 +55,7 @@ class DomenechAdapterTests(unittest.TestCase):
         self.assertEqual(
             sum(case.partition == "HOLDOUT" for case in first.cases), 139)
 
-    def test_v5_scenarios_install_exact_source_geometry_material_and_impact_angle(self):
+    def test_v2_scenarios_install_source_geometry_with_a_valid_approach(self):
         adaptation = adapt_domenech_2023(self.package, self.split, self.points)
         cases = {case.case_id: case for case in adaptation.cases}
         for case_id in (
@@ -66,7 +66,7 @@ class DomenechAdapterTests(unittest.TestCase):
             material = point.series_id.split("_")[0]
             source = self.package.manifest["apparatus"]["materials"][material]
             ball = scenario["physics_profile"]["ball"]
-            self.assertEqual(scenario["schema_version"], 5)
+            self.assertEqual(scenario["schema_version"], 9)
             self.assertEqual(scenario["evidence"]["equipment"],
                              "SOURCE_LABORATORY_APPARATUS")
             self.assertEqual(ball["radius_cm"], source["diameter_cm"] / 2.0)
@@ -79,10 +79,14 @@ class DomenechAdapterTests(unittest.TestCase):
             self.assertEqual(cue["velocity_cm_s"], [80.0, 0.0, 0.0])
             self.assertAlmostEqual(
                 cue["angular_velocity_rad_s"][2], -80.0 / ball["radius_cm"])
-            distance = math.dist(cue["position_cm"], object_ball["position_cm"])
-            self.assertAlmostEqual(distance, source["diameter_cm"] - 1e-6, places=7)
+            self.assertGreaterEqual(scenario["evidence"]["preimpact_samples"], 3)
+            approach = scenario["evidence"]["approach_time_seconds"]
+            contact_position = list(cue["position_cm"])
+            contact_position[0] += cue["velocity_cm_s"][0] * approach
+            distance = math.dist(contact_position, object_ball["position_cm"])
+            self.assertAlmostEqual(distance, source["diameter_cm"], places=7)
             normal = [
-                (object_ball["position_cm"][axis] - cue["position_cm"][axis]) /
+                (object_ball["position_cm"][axis] - contact_position[axis]) /
                 distance for axis in range(3)
             ]
             impact = math.degrees(math.acos(normal[0]))
@@ -93,10 +97,21 @@ class DomenechAdapterTests(unittest.TestCase):
                 "single",
             )
         post = json.loads(cases["rubber_lambda2_001"].scenario_json)
-        self.assertEqual(post["simulation"]["ticks"], 400)
+        self.assertEqual(post["simulation"]["ticks"], 404)
         self.assertEqual(
             post["physics_profile"]["surface"]["sliding_friction_coefficient"],
             0.002)
+
+    def test_v2_uses_open_bench_apparatus(self):
+        scenario = json.loads(adapt_domenech_2023(
+            self.package, self.split, self.points).cases[0].scenario_json)
+        self.assertTrue(scenario["id"].endswith("_v2"))
+        self.assertEqual(scenario["schema_version"], 9)
+        self.assertEqual(scenario["boundary_mode"], "unbounded")
+        self.assertEqual(scenario.get("initial_contact_epsilon_cm", 0.0), 0.0)
+        self.assertIn("table_boundary", scenario["physics_profile"])
+        self.assertEqual(
+            scenario["evidence"]["source_surface"], "PVC laboratory bench")
 
     def test_holdout_expected_mutation_cannot_change_fit_or_calibration_scenarios(self):
         mutated = tuple(

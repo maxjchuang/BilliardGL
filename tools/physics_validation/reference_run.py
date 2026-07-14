@@ -205,7 +205,11 @@ def _run_loaded_reference_validation(
     limitation_manifest = _selected_manifest(
         reference_package.files["expected_reference_limitations"], selected_case_ids)
     accounting = reconcile_reference_failures(
-        results, model_manifest, limitation_manifest, dataset_id)
+        results, model_manifest, limitation_manifest, dataset_id,
+        {
+            json.loads(case.scenario_json)["id"]: case.case_id
+            for case in cases
+        })
     metadata = {
         "build_id": _build_id(executable),
         "dataset_id": dataset_id,

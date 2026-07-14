@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "artifact_id": "phase3_v2_apparatus_corrections",
+  "calibration_artifact": "physics_models/calibration/phase3_v2_apparatus/reference_report.json",
+  "no_v1_holdout_rerun": true,
+  "representative_scenarios": {
+    "mathavan_2010_cushion__fig7_experimental_06_v2": {
+      "path": "tests/physics_validation/scenarios/mathavan_2010_cushion_v2.json",
+      "sha256": "sha256:24f957d689908d27f27464e61c32380be1ba822a44fdd4a22f6eb7b14b66c3fa"
+    },
+    "domenech_2023_ball_collision__rubber_lambda2_001_v2": {
+      "path": "tests/physics_validation/scenarios/domenech_2023_open_bench_v2.json",
+      "sha256": "sha256:a052fe4c549cefe440613ed1c415c267b7018a995b81899a8472b12f3b1abc1e"
+    }
+  },
+  "corrections": [
+    {
+      "original_v1_failure_id": "mathavan_2009_high_speed:sliding_deceleration:sliding_deceleration_cm_s2",
+      "v2_scenario_id": "mathavan_2009_high_speed__sliding_deceleration",
+      "cause_code": "CROSS_PHASE_SELECTION",
+      "correction": "Select the maximal contiguous sliding phase instead of fitting a fixed window that crosses into rolling."
+    },
+    {
+      "original_v1_failure_id": "mathavan_2010_cushion:fig7_experimental_17:cushion_rebound_speed_cm_s",
+      "v2_scenario_id": "mathavan_2010_cushion__fig7_experimental_06_v2",
+      "cause_code": "INITIAL_STATE_OUTSIDE_DOMAIN",
+      "correction": "Use a 1 ms scenario step and a bounded approach whose initial center stays inside the table with at least three pre-impact samples."
+    },
+    {
+      "original_v1_failure_id": "mathavan_2010_cushion:fig7_experimental_18:cushion_rebound_speed_cm_s",
+      "v2_scenario_id": "mathavan_2010_cushion__fig7_experimental_06_v2",
+      "cause_code": "INITIAL_STATE_OUTSIDE_DOMAIN",
+      "correction": "Use a 1 ms scenario step and a bounded approach whose initial center stays inside the table with at least three pre-impact samples."
+    },
+    {
+      "original_v1_failure_id": "mathavan_2010_cushion:fig7_experimental_19:cushion_rebound_speed_cm_s",
+      "v2_scenario_id": "mathavan_2010_cushion__fig7_experimental_06_v2",
+      "cause_code": "INITIAL_STATE_OUTSIDE_DOMAIN",
+      "correction": "Use a 1 ms scenario step and a bounded approach whose initial center stays inside the table with at least three pre-impact samples."
+    },
+    {
+      "original_v1_failure_id": "domenech_2023_ball_collision:rubber_lambda2_007:object_scattering_angle_degrees",
+      "v2_scenario_id": "domenech_2023_ball_collision__rubber_lambda2_001_v2",
+      "cause_code": "UNINTENDED_SECOND_COLLISION",
+      "correction": "Start separated on the unbounded source bench, retain three pre-impact samples, bind the metric to one solver event, and suppress zero-time tail re-resolution."
+    },
+    {
+      "original_v1_failure_id": "domenech_2023_ball_collision:rubber_lambda2_013:object_scattering_angle_degrees",
+      "v2_scenario_id": "domenech_2023_ball_collision__rubber_lambda2_001_v2",
+      "cause_code": "UNINTENDED_SECOND_COLLISION",
+      "correction": "Start separated on the unbounded source bench, retain three pre-impact samples, bind the metric to one solver event, and suppress zero-time tail re-resolution."
+    },
+    {
+      "original_v1_failure_id": "domenech_2023_ball_collision:rubber_lambda2_021:object_scattering_angle_degrees",
+      "v2_scenario_id": "domenech_2023_ball_collision__rubber_lambda2_001_v2",
+      "cause_code": "UNINTENDED_SECOND_COLLISION",
+      "correction": "Start separated on the unbounded source bench, retain three pre-impact samples, bind the metric to one solver event, and suppress zero-time tail re-resolution."
+    },
+    {
+      "original_v1_failure_id": "domenech_2023_ball_collision:rubber_lambda2_022:object_scattering_angle_degrees",
+      "v2_scenario_id": "domenech_2023_ball_collision__rubber_lambda2_001_v2",
+      "cause_code": "UNINTENDED_SECOND_COLLISION",
+      "correction": "Start separated on the unbounded source bench, retain three pre-impact samples, bind the metric to one solver event, and suppress zero-time tail re-resolution."
+    }
+  ]
+}

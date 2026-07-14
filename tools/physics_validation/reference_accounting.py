@@ -108,7 +108,9 @@ def _case_id(scenario_id, dataset_id):
     return _safe_id(case_id, "case_id")
 
 
-def reconcile_reference_failures(results, model_manifest, limitation_manifest, dataset_id):
+def reconcile_reference_failures(
+        results, model_manifest, limitation_manifest, dataset_id,
+        case_id_by_scenario=None):
     _safe_id(dataset_id, "dataset_id")
     expected_model = _expected_failures(
         model_manifest, dataset_id, MODEL_MISMATCH)
@@ -118,8 +120,12 @@ def reconcile_reference_failures(results, model_manifest, limitation_manifest, d
     actual_model = set()
     actual_limitations = set()
     unallowlistable = set()
+    stable_cases = case_id_by_scenario or {}
     for result in results:
-        case_id = _case_id(result.scenario_id, dataset_id)
+        case_id = _safe_id(
+            stable_cases.get(result.scenario_id,
+                             _case_id(result.scenario_id, dataset_id)),
+            "case_id")
         for failure in result.failures:
             metric = _safe_id(failure.metric, "metric")
             key = ReferenceFailureKey(dataset_id, case_id, failure.code, metric)

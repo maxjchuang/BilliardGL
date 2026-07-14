@@ -413,6 +413,38 @@ int main()
         return fail("continuous crossing should receive exactly one velocity impulse");
     }
 
+    billiardgl::PhysicsProfile tickEndProfile = eventProfile;
+    tickEndProfile.ball.radiusCm = 2.3f;
+    tickEndProfile.ball.massKg = 0.0464f;
+    tickEndProfile.ball.normalRestitution = 0.0f;
+    tickEndProfile.surface.slidingFrictionCoefficient = 0.002f;
+    tickEndProfile.surface.rollingResistanceAccelerationCmS2 = 0.0f;
+    billiardgl::GameState tickEnd;
+    for (billiardgl::BallState& ball : tickEnd.balls) ball.pocketed = true;
+    tickEnd.balls[0].pocketed = tickEnd.balls[1].pocketed = false;
+    tickEnd.balls[0].position = billiardgl::Point3{
+        -36.2933008f, 92.3f, 1.6515350f};
+    tickEnd.balls[1].position = billiardgl::Point3{0.0f, 92.3f, 0.0f};
+    tickEnd.balls[0].velocity.x = 80.0f;
+    tickEnd.balls[0].speed = 80.0f;
+    tickEnd.balls[0].angularVelocity.z = -80.0f / 2.3f;
+    billiardgl::PhysicsStepTelemetry tickEndTelemetry;
+    for (int tick = 0; tick < 4; ++tick) {
+        tickEndTelemetry = billiardgl::updatePhysics(
+            tickEnd, 0.1f, tickEndProfile,
+            billiardgl::PhysicsBoundaryMode::Unbounded);
+    }
+    int tickEndContacts = 0;
+    for (const billiardgl::PhysicsContactRecord& contact :
+            tickEndTelemetry.contacts) {
+        if (contact.kind == billiardgl::PhysicsContactKind::BallBall) {
+            ++tickEndContacts;
+        }
+    }
+    if (tickEndContacts != 1 || tickEndTelemetry.contacts[0].solverEventId < 0) {
+        return fail("tick-end event must not be re-resolved by a zero-time tail");
+    }
+
     billiardgl::GameState simultaneous;
     for (billiardgl::BallState& ball : simultaneous.balls) ball.pocketed = true;
     for (int index = 0; index < 3; ++index) simultaneous.balls[index].pocketed = false;
