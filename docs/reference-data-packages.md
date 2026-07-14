@@ -66,6 +66,16 @@ python3 -m tools.physics_validation.validation_run \
 
 Validation writes the unchanged reference reports plus canonical `validation_receipt.json`. The receipt binds the candidate and freeze hashes, dataset/version, HOLDOUT partition, report hash, and accounted result; it never edits the model or lifecycle registry. If anyone later uses those holdout results to tune or choose a successor candidate, changing that dataset's holdout status to `spent` is a separate reviewed commit. `confirmation` is reserved for data admitted in advance solely for final confirmation of an already selected model.
 
+### Surface-motion candidate v1 result
+
+The frozen `surface_motion_v1` formula uses rolling resistance `12.5 cm/s²`, a preregistered sliding-friction coefficient of `0.20`, and zero torsional-spin decay because no admitted sidespin-decay experiment is available. The complete parameter provenance is in `physics_models/profiles/chinese_pool_surface_motion_v1.json`; the calibration report and freeze are in `physics_models/candidates/surface_motion_v1/`.
+
+The calibration partition executed five points: rolling deceleration and both Table I shot 02 velocities passed, while both Table I shot 01 velocities remained one known theme-3 collision mismatch. The previously blocked post-collision pure-roll transition is now executable; unresolved Fig. 9 markers, snooker-to-pool equipment conversion, and unmeasured initial spin remain explicit evidence limitations.
+
+The one-time frozen HOLDOUT execution produced 15 complete point rows: 12 passed and three remained known model mismatches. Fig. 9 cases 07 and 08 retain cushion-response mismatches. Sliding deceleration predicted `29.274413626277244 cm/s²` against the experimental `207.5 cm/s²`, so candidate v1 failed the sliding experimental validation and must not be described as a fully validated surface model. No parameter, interval, formula branch, or sampling window was changed after this result.
+
+The immutable first validation report and receipt are stored under `physics_models/candidates/surface_motion_v1/validation/`. Its receipt says `FAILED` because the first-run accounting still contained obsolete expected mismatches for Fig. 9 cases 05 and 06; both points actually passed and those two stale entries were removed only after preserving the report. There were no new mismatches, integration failures, numerical failures, or nondeterministic results. The calibration and validation commands above are the canonical replay commands; HOLDOUT replay requires a new governed validation event rather than overwriting the committed first receipt.
+
 ## Package layout
 
 Each package is one directory containing:

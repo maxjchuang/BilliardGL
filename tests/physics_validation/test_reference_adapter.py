@@ -49,6 +49,16 @@ class ReferenceAdapterTests(unittest.TestCase):
         )
         self.assertEqual(scenarios[0]["balls"][0]["velocity_cm_s"], [20.0, 0.0, 0.0])
         self.assertEqual(scenarios[1]["balls"][0]["velocity_cm_s"], [30.0, 0.0, 0.0])
+        self.assertTrue(all(scenario["schema_version"] == 3 for scenario in scenarios))
+        self.assertTrue(all(
+            scenario["physics_profile"]["id"] == "synthetic_reference_surface_v1"
+            for scenario in scenarios
+        ))
+        radius = scenarios[0]["physics_profile"]["ball"]["radius_cm"]
+        self.assertEqual(
+            scenarios[1]["balls"][0]["angular_velocity_rad_s"],
+            [0.0, 0.0, -30.0 / radius],
+        )
 
     def test_repeated_fresh_registries_produce_byte_identical_payloads(self):
         first = default_reference_registry().adapt(self.package, self.split, self.points)

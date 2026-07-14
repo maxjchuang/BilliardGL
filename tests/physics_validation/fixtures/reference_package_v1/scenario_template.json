@@ -28,7 +28,36 @@
       "source": "synthetic_fixture"
     },
     "expectations": [],
-    "schema_version": 1,
+    "schema_version": 3,
+    "physics_profile": {
+      "id": "synthetic_reference_surface_v1",
+      "formula_version": "surface_motion_v1",
+      "ball": {
+        "mass_kg": 0.17,
+        "radius_cm": 2.8575,
+        "material": "synthetic_fixture"
+      },
+      "surface": {
+        "legacy_friction_acceleration_cm_s2": 4.0,
+        "sliding_friction_coefficient": 0.0,
+        "rolling_resistance_acceleration_cm_s2": 4.0,
+        "torsional_spin_deceleration_rad_s2": 0.0,
+        "slip_speed_epsilon_cm_s": 0.0001,
+        "stop_energy_threshold_j": 0.000000001,
+        "material": "synthetic_fixture"
+      },
+      "cue": {
+        "effective_mass_kg": 0.5
+      },
+      "cushion": {
+        "normal_restitution": 1.0,
+        "friction_coefficient": 0.0
+      },
+      "solver": {
+        "time_step_seconds": 0.1,
+        "maximum_events_per_tick": 64
+      }
+    },
     "simulation": {
       "ticks": 10,
       "time_step_seconds": 0.1

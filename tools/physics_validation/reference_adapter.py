@@ -147,9 +147,16 @@ def _adapt_synthetic(package, split, points):
 
         scenario = json.loads(json.dumps(template["base_scenario"], allow_nan=False))
         try:
-            scenario["balls"][0]["velocity_cm_s"] = mapping["initial_velocity_cm_s"]
+            velocity = mapping["initial_velocity_cm_s"]
+            radius = scenario["physics_profile"]["ball"]["radius_cm"]
+            scenario["balls"][0]["velocity_cm_s"] = velocity
+            scenario["balls"][0]["angular_velocity_rad_s"] = [
+                velocity[2] / radius,
+                0.0,
+                -velocity[0] / radius,
+            ]
             scenario["simulation"]["ticks"] = mapping["ticks"]
-        except (KeyError, IndexError, TypeError) as error:
+        except (KeyError, IndexError, TypeError, ZeroDivisionError) as error:
             _fail("INVALID_ADAPTER_TEMPLATE", f"base scenario cannot accept mapping: {error}")
         scenario["id"] = f"{package.manifest['dataset_id']}__{case_id}"
         scenario["expectations"] = []

@@ -600,7 +600,6 @@ python3 -m tools.physics_validation.validation_run \
   --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \
   --executable /tmp/billiardgl-phase3/Billiards \
   --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
-  --data-lifecycle tests/physics_validation/validation_data_status.json \
   --output /tmp/billiardgl-surface-validation
 ```
 
