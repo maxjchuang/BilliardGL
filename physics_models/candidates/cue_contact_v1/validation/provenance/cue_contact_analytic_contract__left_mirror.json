@@ -1,0 +1,31 @@
+{
+  "adapter_id": "cue_contact_analytic_v1",
+  "case_id": "left_mirror",
+  "dataset_id": "cue_contact_analytic_contract",
+  "dataset_version": "1.0.0",
+  "evidence_grade": "C",
+  "experimental_validation": false,
+  "package_hashes": {
+    "expected_model_mismatches": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+    "expected_reference_limitations": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+    "extraction": "sha256:589db9ae0944d49f5c481217f9a451673f05a4b3a2069298a1eb7b86c927a5ac",
+    "normalized": "sha256:03e9db7710f091f7a326ee0cc3be76cff258913eb5bd3422b9fd40f70988698c",
+    "raw_extracted": "sha256:19eb80735c7a0a94b6fc5957f04c7edc13c3996cfc30d303498ae71e40fa888c",
+    "scenario_template": "sha256:41c2e485280f5bbb6d089ce585d07be5b0b03e94a66b2d003faa7f2a23117991",
+    "split": "sha256:0726f92b572d935486229993b87b965d859c6fa031492a5a804c9697cafc3fbb"
+  },
+  "point_ids": [
+    "left_mirror_angular_speed",
+    "left_mirror_energy_efficiency",
+    "left_mirror_linear_speed",
+    "left_mirror_normal_impulse",
+    "left_mirror_tangential_impulse"
+  ],
+  "source_locators": [
+    "analytic:rigid-impulse:left_mirror:angular_speed",
+    "analytic:rigid-impulse:left_mirror:energy_efficiency",
+    "analytic:rigid-impulse:left_mirror:linear_speed",
+    "analytic:rigid-impulse:left_mirror:normal_impulse",
+    "analytic:rigid-impulse:left_mirror:tangential_impulse"
+  ]
+}

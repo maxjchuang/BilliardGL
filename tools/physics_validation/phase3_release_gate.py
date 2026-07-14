@@ -10,6 +10,7 @@ from .promotion import (
     validate_release_manifest,
 )
 from .promotion_report import build_report, markdown
+from .validation_artifacts import validate_validation_artifact_manifest
 
 
 def _json(path):
@@ -76,6 +77,7 @@ def validate_phase3_release(root, release_path=None, executable=None):
         stress = promotion / "full_game_stress_v1.csv"
         budget = promotion / "full_game_performance_budget_v1.json"
         baseline = promotion / "full_game_performance_baseline_v1.json"
+        validation_artifacts = promotion / "phase3_validation_artifacts_v1.json"
 
         failures.extend(validate_promotion_manifest(candidates, root))
         failures.extend(validate_full_game_matrix(matrix, root))
@@ -83,6 +85,8 @@ def validate_phase3_release(root, release_path=None, executable=None):
         failures.extend(validate_release_manifest(release_path, root, executable))
         failures.extend(_validate_stress(stress))
         failures.extend(_validate_performance(budget, baseline))
+        failures.extend(validate_validation_artifact_manifest(
+            validation_artifacts, root, candidates))
 
         if release.get("unexplained_regressions") != 0:
             failures.append("release has unexplained regressions")
