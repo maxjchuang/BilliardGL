@@ -813,7 +813,12 @@ def _paired_cushion_observation(reference, scenario, frames):
         if tangent_speed > roll_tolerance or abs(angular[1]) > sidespin_tolerance \
                 or slip_speed > roll_tolerance:
             return None, INTEGRATION_MISMATCH, "scenario is not perpendicular pure roll with zero sidespin"
-        event_time = frames[event_index]["time_seconds"]
+        step_start_time = frames[event_index - 1]["time_seconds"]
+        event_time = step_start_time + contact["time_of_impact_seconds"]
+        if event_time < step_start_time - 1e-12 \
+                or event_time > frames[event_index]["time_seconds"] + 1e-12:
+            return None, INTEGRATION_MISMATCH, \
+                "cushion time of impact lies outside its telemetry step"
         incident_samples = [
             (frame["time_seconds"], _ball(frame, selection["ball_index"])["speed_cm_s"])
             for frame in frames[event_index - incident_count:event_index]

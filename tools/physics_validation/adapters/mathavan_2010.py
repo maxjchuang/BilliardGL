@@ -4,10 +4,9 @@ import json
 from ..reference_adapter import ReferenceCase, ReferenceLimitation, _canonical, _fail, _read_template
 
 
-_ENGINE_RADIUS_CM = 2.8575
 _SOURCE_RADIUS_CM = 2.625
-_BALL_Y_CM = 89.341476
-_CONTACT_CENTER_X_CM = 63.5 - _ENGINE_RADIUS_CM
+_BALL_Y_CM = 86.483976 + _SOURCE_RADIUS_CM
+_CONTACT_CENTER_X_CM = 63.5 - _SOURCE_RADIUS_CM
 
 
 def _raw_by_point(package):
@@ -29,16 +28,20 @@ def adapt_mathavan_2010(package, split, points):
             _fail("ADAPTER_MAPPING_MISSING", f"point {point.point_id} lacks experimental raw evidence")
         partition = split.partition_for(point)
         incident_at_impact = float(source["incident_speed_m_s"]) * 100.0
-        # Four 0.1 s approach steps at the production rolling deceleration lose
-        # approximately 1.6 cm/s before the paired incident fit reaches contact.
-        launch_speed = incident_at_impact + 1.6
+        # Reserve four 0.1 s approach samples. The versioned 12.5 cm/s^2
+        # rolling resistance removes 5 cm/s before the paired fit reaches contact.
+        launch_speed = incident_at_impact + 5.0
         scenario = json.loads(json.dumps(template["base_scenario"], allow_nan=False))
         scenario["id"] = f"{package.manifest['dataset_id']}__{point.case_id}"
         scenario["balls"] = [{
-            "angular_velocity_rad_s": [0.0, 0.0, -launch_speed / _ENGINE_RADIUS_CM],
+            "angular_velocity_rad_s": [0.0, 0.0, -launch_speed / _SOURCE_RADIUS_CM],
             "index": 0,
             "pocketed": False,
-            "position_cm": [_CONTACT_CENTER_X_CM - launch_speed * 0.20, _BALL_Y_CM, 20.0],
+            "position_cm": [
+                _CONTACT_CENTER_X_CM - (launch_speed * 0.40 - 1.0),
+                _BALL_Y_CM,
+                20.0,
+            ],
             "velocity_cm_s": [launch_speed, 0.0, 0.0],
         }]
         lower, upper = point.acceptance_interval
@@ -53,7 +56,7 @@ def adapt_mathavan_2010(package, split, points):
                 "point_id": point.point_id,
                 "selection": {
                     "ball_index": 0,
-                    "ball_radius_cm": _ENGINE_RADIUS_CM,
+                    "ball_radius_cm": _SOURCE_RADIUS_CM,
                     "event_kind": "rail_collision",
                     "incident_speed_cm_s": incident_at_impact,
                     "incident_speed_tolerance_cm_s": 0.25,

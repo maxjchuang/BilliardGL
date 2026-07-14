@@ -34,7 +34,7 @@ class Mathavan2010AdapterTests(unittest.TestCase):
         ball = scenario["balls"][0]
         speed = ball["velocity_cm_s"][0]
         self.assertEqual(ball["velocity_cm_s"][2], 0.0)
-        self.assertAlmostEqual(ball["angular_velocity_rad_s"][2], -speed / 2.8575)
+        self.assertAlmostEqual(ball["angular_velocity_rad_s"][2], -speed / 2.625)
         self.assertEqual(ball["angular_velocity_rad_s"][1], 0.0)
         selection = scenario["expectations"][0]["value"]["selection"]
         self.assertEqual(selection["incident_window_ticks"], 3)
@@ -43,6 +43,13 @@ class Mathavan2010AdapterTests(unittest.TestCase):
         self.assertIn("fit_subset", provenance)
         self.assertIn("rigid_cushion_domain", provenance)
         self.assertNotIn("coefficient_of_restitution", scenario)
+        self.assertEqual(scenario["schema_version"], 6)
+        profile = scenario["physics_profile"]
+        self.assertEqual(profile["ball"]["mass_kg"], 0.1406)
+        self.assertEqual(profile["ball"]["radius_cm"], 2.625)
+        self.assertEqual(profile["cushion"]["nose_height_ratio"], 1.4)
+        self.assertEqual(
+            profile["cushion"]["maximum_rigid_incident_speed_cm_s"], 250.0)
 
     def test_theory_only_series_is_rejected(self):
         theory = replace(self.points[0], series_id="fig8_theory_curve")

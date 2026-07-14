@@ -377,29 +377,25 @@ Only the 19 experimental diamonds in Fig. 7(a) are admitted. Fig. 7(b) repeats e
 
 The raw data marks incident speeds below 150 cm/s as the paper's parameter-fit subset and speeds above 250 cm/s as outside the authors' reliable rigid-cushion domain. `incident_low` is calibration; middle, high, and every extreme marker are holdout. All results remain `TREND_ONLY` because the Riley Renaissance snooker cushion, cloth, and 52.5 mm balls are not production Chinese Pool equipment.
 
-Each executable case approaches the rail in perpendicular pure roll with zero sidespin. Three pre-impact and three post-impact telemetry samples are fit locally to evaluate incident and rebound speed at the first rail event. The current production rail response preserves normal speed magnitude, so all 19 finite results are locked as model mismatches rather than being hidden by wider experimental intervals. Reports include incident speed, fit/domain flags, per-band RMSE/maximum error, partition, provenance, and replay command. Four source/equipment limitations remain strictly accounted.
+Each executable scenario-v6 case uses the source 140.6 g, 52.5 mm ball and approaches the rail in perpendicular pure roll with zero sidespin. Three pre-impact and three post-impact telemetry samples are fit at the recorded within-step time of impact. Candidate v1 fits a constant restitution from `incident_low` CALIBRATION only; perpendicular zero-sidespin markers cannot identify cushion friction, so the paper's reported `0.14` is retained with that limitation visible. The full-precision fit is committed at `physics_models/calibration/cushion_fit_v1.json`. Its six calibration points produce two interval passes and four preregistered finite model mismatches. The 13 HOLDOUT points have not been executed for this candidate. Four source/equipment limitations remain strictly accounted.
 
-Reconstruct and run the full offline audit:
+Reconstruct, reproduce the fit, and run only the calibration partition:
 
 ```bash
 python3 -m tools.physics_validation.extract_mathavan_2010 \
   --package tests/physics_validation/reference_data/mathavan_2010_cushion \
   --check
-python3 -m tools.physics_validation.reference_run \
+python3 -m tools.physics_validation.fit_cushion \
+  --package tests/physics_validation/reference_data/mathavan_2010_cushion \
+  --output physics_models/calibration/cushion_fit_v1.json
+python3 -m tools.physics_validation.calibration_run \
   --executable build/check/Billiards \
   --package tests/physics_validation/reference_data/mathavan_2010_cushion \
-  --output build/physics-reference/mathavan-2010
+  --output build/physics-reference/mathavan-2010-calibration
 ```
 
-Replay the highest-speed extreme holdout:
-
-```bash
-python3 -m tools.physics_validation.reference_run \
-  --executable build/check/Billiards \
-  --package tests/physics_validation/reference_data/mathavan_2010_cushion \
-  --output build/physics-reference/mathavan-2010-replay \
-  --case fig7_experimental_19
-```
+Candidate HOLDOUT replay is prohibited until the calibration reports, fit,
+profile, and executable are frozen by the candidate-v1 workflow.
 
 ## Cross 2023 cue-impact admission package
 

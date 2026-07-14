@@ -30,7 +30,7 @@ def _frame(tick, speed, contact=False):
         "rigid_domain_exceeded": False,
         "second_ball": -1,
         "tangential_impulse_ns": 0.0,
-        "time_of_impact_seconds": 0.0,
+        "time_of_impact_seconds": 0.1,
         "velocity_impulse_applied": True,
     }
     return {
