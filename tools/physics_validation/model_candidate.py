@@ -14,7 +14,7 @@ _PROFILE_KEYS = {
     "schema_version", "runtime_profile", "parameter_sources", "applicability"}
 _RUNTIME_KEYS = {
     "id", "formula_version", "ball", "surface", "cue", "cushion", "solver"}
-_RUNTIME_SECTION_KEYS = {
+_RUNTIME_SECTION_KEYS_V1 = {
     "ball": {"mass_kg", "radius_cm", "material"},
     "surface": {
         "legacy_friction_acceleration_cm_s2",
@@ -28,6 +28,12 @@ _RUNTIME_SECTION_KEYS = {
     "cue": {"effective_mass_kg"},
     "cushion": {"normal_restitution", "friction_coefficient"},
     "solver": {"time_step_seconds", "maximum_events_per_tick"},
+}
+_RUNTIME_SECTION_KEYS_V2 = dict(_RUNTIME_SECTION_KEYS_V1)
+_RUNTIME_SECTION_KEYS_V2["cue"] = {
+    "effective_mass_kg", "normal_restitution",
+    "chalked_friction_coefficient", "unchalked_friction_coefficient",
+    "maximum_reliable_offset_radius", "cue_speed_per_power_unit_cm_s",
 }
 _FREEZE_KEYS = {
     "schema_version",
@@ -120,8 +126,9 @@ def load_profile_manifest(path):
     raw, document = _read_json(path, "profile manifest")
     if not isinstance(document, dict) or set(document) != _PROFILE_KEYS:
         raise ValueError("profile manifest keys do not match schema version 1")
-    if document.get("schema_version") != 1:
-        raise ValueError("profile manifest schema_version must be 1")
+    schema_version = document.get("schema_version")
+    if schema_version not in {1, 2}:
+        raise ValueError("profile manifest schema_version must be 1 or 2")
     if raw != _canonical(document):
         raise ValueError("profile manifest must use canonical JSON bytes")
 
@@ -130,7 +137,10 @@ def load_profile_manifest(path):
         raise ValueError("runtime_profile keys do not match scenario v3")
     _safe_id(runtime.get("id"), "runtime_profile.id")
     _safe_id(runtime.get("formula_version"), "runtime_profile.formula_version")
-    for section, keys in _RUNTIME_SECTION_KEYS.items():
+    section_keys = (
+        _RUNTIME_SECTION_KEYS_V1 if schema_version == 1
+        else _RUNTIME_SECTION_KEYS_V2)
+    for section, keys in section_keys.items():
         value = runtime.get(section)
         if not isinstance(value, dict) or set(value) != keys:
             raise ValueError(f"runtime_profile.{section} keys do not match scenario v3")

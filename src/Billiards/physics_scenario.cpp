@@ -126,7 +126,7 @@ void requireExactKeys(const json::Value& value,
     }
 }
 
-PhysicsProfile parsePhysicsProfile(const json::Value& value)
+PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion)
 {
     requireExactKeys(value,
         {"id", "formula_version", "ball", "surface", "cue", "cushion", "solver"},
@@ -142,7 +142,15 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value)
          "rolling_resistance_acceleration_cm_s2", "torsional_spin_deceleration_rad_s2",
          "slip_speed_epsilon_cm_s", "stop_energy_threshold_j", "material"},
         "physics_profile.surface");
-    requireExactKeys(cue, {"effective_mass_kg"}, "physics_profile.cue");
+    if (scenarioVersion >= 4) {
+        requireExactKeys(cue,
+            {"effective_mass_kg", "normal_restitution",
+             "chalked_friction_coefficient", "unchalked_friction_coefficient",
+             "maximum_reliable_offset_radius", "cue_speed_per_power_unit_cm_s"},
+            "physics_profile.cue");
+    } else {
+        requireExactKeys(cue, {"effective_mass_kg"}, "physics_profile.cue");
+    }
     requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
         "physics_profile.cushion");
     requireExactKeys(solver, {"time_step_seconds", "maximum_events_per_tick"},
@@ -169,6 +177,18 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value)
     profile.surface.material = requiredString(surface, "material");
     profile.cue.effectiveMassKg = static_cast<float>(
         requiredNumber(cue, "effective_mass_kg"));
+    if (scenarioVersion >= 4) {
+        profile.cue.normalRestitution = static_cast<float>(
+            requiredNumber(cue, "normal_restitution"));
+        profile.cue.chalkedFrictionCoefficient = static_cast<float>(
+            requiredNumber(cue, "chalked_friction_coefficient"));
+        profile.cue.unchalkedFrictionCoefficient = static_cast<float>(
+            requiredNumber(cue, "unchalked_friction_coefficient"));
+        profile.cue.maximumReliableOffsetRadius = static_cast<float>(
+            requiredNumber(cue, "maximum_reliable_offset_radius"));
+        profile.cue.cueSpeedPerPowerUnitCmS = static_cast<float>(
+            requiredNumber(cue, "cue_speed_per_power_unit_cm_s"));
+    }
     profile.cushion.normalRestitution = static_cast<float>(
         requiredNumber(cushion, "normal_restitution"));
     profile.cushion.frictionCoefficient = static_cast<float>(
@@ -192,7 +212,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         const int version = required(value, "schema_version").asInt();
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
-            result.errorMessage = "only physics scenario versions 1, 2, and 3 are supported";
+            result.errorMessage = "only physics scenario versions 1, 2, 3, and 4 are supported";
             return result;
         }
 
@@ -229,8 +249,9 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             return result;
         }
 
-        if (version == 3) {
-            scenario.physicsProfile = parsePhysicsProfile(required(value, "physics_profile"));
+        if (version == 3 || version == 4) {
+            scenario.physicsProfile = parsePhysicsProfile(
+                required(value, "physics_profile"), version);
             if (std::fabs(
                     scenario.physicsProfile.solver.timeStepSeconds -
                     scenario.timeStepSeconds) > 0.000001f) {
@@ -274,7 +295,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             scenario.balls[index] = ball;
         }
 
-        if (version == 2 || (version == 3 && value.has("cue_impact"))) {
+        if (version == 2 || ((version == 3 || version == 4) && value.has("cue_impact"))) {
             const json::Value& cue = required(value, "cue_impact");
             if (!cue.isObject()) throw std::runtime_error("cue_impact must be an object");
             CueImpactInput input;
@@ -322,7 +343,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             scenario.hasCueImpact = true;
             scenario.cueImpact = input;
         } else if (value.has("cue_impact")) {
-            throw std::runtime_error("cue_impact requires schema version 2 or 3");
+            throw std::runtime_error("cue_impact requires schema version 2, 3, or 4");
         }
 
         const json::Value& expectations = required(value, "expectations");

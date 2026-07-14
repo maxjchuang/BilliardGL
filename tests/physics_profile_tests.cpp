@@ -41,6 +41,16 @@ int main()
         "preregistered independent sliding hypothesis");
     expect(profile.surface.torsionalSpinDecelerationRadS2 == 0.0f,
         "sidespin decay remains unevidenced");
+    expect(close(profile.cue.normalRestitution, 0.0f),
+        "cue normal restitution compatibility default");
+    expect(close(profile.cue.chalkedFrictionCoefficient, 0.6f),
+        "chalked cue friction hypothesis");
+    expect(close(profile.cue.unchalkedFrictionCoefficient, 0.1f),
+        "unchalked cue friction hypothesis");
+    expect(close(profile.cue.maximumReliableOffsetRadius, 0.8f),
+        "miscue reliability boundary");
+    expect(close(profile.cue.cueSpeedPerPowerUnitCmS, 1.34f),
+        "versioned shot power mapping");
     expect(billiardgl::canonicalPhysicsProfileText(profile) ==
         billiardgl::canonicalPhysicsProfileText(profile),
         "deterministic serialization");
@@ -59,5 +69,10 @@ int main()
     invalid.surface.slidingFrictionCoefficient = -0.1f;
     expect(!billiardgl::validatePhysicsProfile(invalid).ok,
         "negative friction rejected");
+
+    invalid = profile;
+    invalid.cue.maximumReliableOffsetRadius = 1.0f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "cue offset boundary must remain inside the ball radius");
     return 0;
 }

@@ -85,6 +85,23 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
     if (!std::isfinite(profile.cue.effectiveMassKg) || profile.cue.effectiveMassKg <= 0.0f) {
         return invalid("cue effective mass_kg must be finite and positive");
     }
+    if (!std::isfinite(profile.cue.normalRestitution) ||
+        profile.cue.normalRestitution < 0.0f || profile.cue.normalRestitution > 1.0f) {
+        return invalid("cue normal restitution must be between zero and one");
+    }
+    if (!finiteNonnegative(profile.cue.chalkedFrictionCoefficient) ||
+        !finiteNonnegative(profile.cue.unchalkedFrictionCoefficient)) {
+        return invalid("cue friction coefficients must be finite and nonnegative");
+    }
+    if (!std::isfinite(profile.cue.maximumReliableOffsetRadius) ||
+        profile.cue.maximumReliableOffsetRadius <= 0.0f ||
+        profile.cue.maximumReliableOffsetRadius >= 1.0f) {
+        return invalid("cue maximum reliable offset radius must be between zero and one");
+    }
+    if (!std::isfinite(profile.cue.cueSpeedPerPowerUnitCmS) ||
+        profile.cue.cueSpeedPerPowerUnitCmS <= 0.0f) {
+        return invalid("cue speed per power unit must be finite and positive");
+    }
     if (!std::isfinite(profile.cushion.normalRestitution) ||
         profile.cushion.normalRestitution < 0.0f ||
         profile.cushion.normalRestitution > 1.0f) {
@@ -129,6 +146,15 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << profile.surface.stopEnergyThresholdJ << '\n'
         << "surface.material=" << profile.surface.material << '\n'
         << "cue.effective_mass_kg=" << profile.cue.effectiveMassKg << '\n'
+        << "cue.normal_restitution=" << profile.cue.normalRestitution << '\n'
+        << "cue.chalked_friction_coefficient="
+        << profile.cue.chalkedFrictionCoefficient << '\n'
+        << "cue.unchalked_friction_coefficient="
+        << profile.cue.unchalkedFrictionCoefficient << '\n'
+        << "cue.maximum_reliable_offset_radius="
+        << profile.cue.maximumReliableOffsetRadius << '\n'
+        << "cue.cue_speed_per_power_unit_cm_s="
+        << profile.cue.cueSpeedPerPowerUnitCmS << '\n'
         << "cushion.normal_restitution=" << profile.cushion.normalRestitution << '\n'
         << "cushion.friction_coefficient=" << profile.cushion.frictionCoefficient << '\n'
         << "solver.time_step_seconds=" << profile.solver.timeStepSeconds << '\n'

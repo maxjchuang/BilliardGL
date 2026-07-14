@@ -58,6 +58,34 @@ class ModelCandidateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "ball.mass_kg"):
             load_profile_manifest(self.profile)
 
+    def test_profile_manifest_v2_accepts_extended_cue_numeric_provenance(self):
+        document = json.loads(self.profile.read_text(encoding="utf-8"))
+        document["schema_version"] = 2
+        extended = {
+            "normal_restitution": 0.0,
+            "chalked_friction_coefficient": 0.6,
+            "unchalked_friction_coefficient": 0.1,
+            "maximum_reliable_offset_radius": 0.8,
+            "cue_speed_per_power_unit_cm_s": 1.34,
+        }
+        for key, value in extended.items():
+            document["runtime_profile"]["cue"][key] = value
+            document["parameter_sources"][f"cue.{key}"] = {
+                "evidence": "analytic cue profile v2 test fixture",
+                "kind": "analytic_contract",
+                "unit": "1",
+            }
+        self.profile.write_text(
+            json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        manifest = load_profile_manifest(self.profile)
+        self.assertEqual(manifest.runtime_profile["cue"], {
+            "effective_mass_kg": 0.5,
+            **extended,
+        })
+
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()
         second = self._write(output=self.root / "regenerated.json")

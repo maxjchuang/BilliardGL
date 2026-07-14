@@ -24,6 +24,11 @@ struct SurfaceProperties {
 
 struct CueProperties {
     float effectiveMassKg = 0.5f;
+    float normalRestitution = 0.0f;
+    float chalkedFrictionCoefficient = 0.6f;
+    float unchalkedFrictionCoefficient = 0.1f;
+    float maximumReliableOffsetRadius = 0.8f;
+    float cueSpeedPerPowerUnitCmS = 1.34f;
 };
 
 struct CushionProperties {

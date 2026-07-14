@@ -87,6 +87,19 @@ billiardgl::json::Value validV3Document()
     return value;
 }
 
+billiardgl::json::Value validV4Document()
+{
+    billiardgl::json::Value value = validV3Document();
+    value["schema_version"] = billiardgl::json::Value(4);
+    billiardgl::json::Value& cue = value["physics_profile"]["cue"];
+    cue["normal_restitution"] = billiardgl::json::Value(0.0);
+    cue["chalked_friction_coefficient"] = billiardgl::json::Value(0.6);
+    cue["unchalked_friction_coefficient"] = billiardgl::json::Value(0.1);
+    cue["maximum_reliable_offset_radius"] = billiardgl::json::Value(0.8);
+    cue["cue_speed_per_power_unit_cm_s"] = billiardgl::json::Value(1.34);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -133,6 +146,14 @@ int main()
         "v3 profile scenario should apply atomically");
     expect(v3Runtime.physicsProfile().id == "domenech_billiard_pvc_v1",
         "runtime should retain the v3 profile");
+    const billiardgl::PhysicsScenarioResult v4 =
+        billiardgl::parsePhysicsScenario(validV4Document());
+    expect(v4.ok, "valid extended cue profile scenario v4 should parse");
+    expect(std::fabs(v4.scenario.physicsProfile.cue.chalkedFrictionCoefficient - 0.6f) < 0.0001f &&
+        std::fabs(v4.scenario.physicsProfile.cue.cueSpeedPerPowerUnitCmS - 1.34f) < 0.0001f,
+        "v4 cue properties should survive parsing exactly");
+    expect(std::fabs(v3.scenario.physicsProfile.cue.chalkedFrictionCoefficient - 0.6f) < 0.0001f,
+        "v3 profile should receive extended cue compatibility defaults");
     billiardgl::GameRuntime freshRuntime;
     expect(freshRuntime.physicsProfile().id == "chinese_pool_surface_motion_v1",
         "scenario override should not change production defaults");
@@ -170,7 +191,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(4);
+    unknownVersion["schema_version"] = billiardgl::json::Value(5);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",
