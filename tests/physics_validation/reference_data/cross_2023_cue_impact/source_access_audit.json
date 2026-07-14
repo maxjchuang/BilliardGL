@@ -1,9 +1,9 @@
 {
-  "audited_on": "2026-07-13",
+  "audited_on": "2026-07-14",
   "doi": "10.1177/17543371231184011",
   "outcome": "CLOSED_ACCESS_NO_REPOSITORY_FULL_TEXT",
   "queries": [
-    {"service": "SAGE", "result": "purchase or institutional access; PDF endpoint denied anonymous access"},
+    {"service": "SAGE", "result": "restricted access confirmed; PDF endpoint redirects to abstract; institutional authentication or GBP 32 purchase offered, but no authenticated entitlement was available"},
     {"service": "OpenAlex", "result": "is_oa=false; any_repository_has_fulltext=false"},
     {"service": "OpenAIRE", "result": "CLOSED; Crossref metadata location only"},
     {"service": "Semantic Scholar", "result": "openAccessPdf status CLOSED"},

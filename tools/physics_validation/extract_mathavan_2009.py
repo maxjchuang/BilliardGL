@@ -52,6 +52,27 @@ def _format(value):
     return text or "0"
 
 
+_SIX_PLACES = Decimal("0.000001")
+
+
+def _reconstruct_figure_observation(row, axis):
+    pixel = _decimal(row[f"pixel_{axis}"])
+    if axis == "x":
+        low_pixel = _decimal(row["axis_x0_pixel"])
+        high_pixel = _decimal(row["axis_x4_pixel"])
+        value = (pixel - low_pixel) * Decimal("4") / (high_pixel - low_pixel)
+    else:
+        low_pixel = _decimal(row["axis_y0_pixel"])
+        high_pixel = _decimal(row["axis_y3_5_pixel"])
+        value = (low_pixel - pixel) * Decimal("3.5") / (low_pixel - high_pixel)
+    reconstructed = value.quantize(_SIX_PLACES)
+    field = f"converted_{axis}_m_s"
+    if _decimal(row[field]) != reconstructed:
+        raise ValueError(
+            f"digitized point {row['point_id']} {field} does not match pixel reconstruction")
+    return value, reconstructed
+
+
 def _base(row, *, point_id, metric, expected, unit, measurement, digitization="0"):
     return {
         "dataset_id": _DATASET_ID,
@@ -74,15 +95,20 @@ def _base(row, *, point_id, metric, expected, unit, measurement, digitization="0
     }
 
 
-def _digitization_uncertainties(rows):
+def _digitization_values(rows):
     values = {}
     for row in rows:
-        values.setdefault(row["point_id"], []).append(_decimal(row["converted_y_m_s"]))
+        _reconstruct_figure_observation(row, "x")
+        value, rounded = _reconstruct_figure_observation(row, "y")
+        values.setdefault(row["point_id"], []).append((value, rounded))
     result = {}
     for point_id, observations in values.items():
         if len(observations) != 2:
             raise ValueError(f"digitized point {point_id} requires exactly two extraction passes")
-        result[point_id] = abs(observations[0] - observations[1]) * Decimal("50")
+        result[point_id] = (
+            ((observations[0][0] + observations[1][0]) / 2).quantize(_SIX_PLACES),
+            abs(observations[0][1] - observations[1][1]) * Decimal("50"),
+        )
     return result
 
 
@@ -96,7 +122,7 @@ def normalize_rows(raw_path, digitization_path, extraction_path):
     figure_rows = [row for row in raw_rows if row["record_type"] == "figure_marker"]
     if len(figure_rows) != 31:
         raise ValueError("Fig. 9 inventory must preserve all 31 reported shots")
-    digitization_uncertainty = _digitization_uncertainties(digitization_rows)
+    digitization_values = _digitization_values(digitization_rows)
 
     normalized = []
     for row in raw_rows:
@@ -114,14 +140,18 @@ def normalize_rows(raw_path, digitization_path, extraction_path):
                 measurement=(upper - lower) / 2,
             ))
         elif row["record_type"] == "figure_marker":
+            expected, digitization_uncertainty = digitization_values[row["point_id"]]
+            if abs(_decimal(row["y_value"]) - expected) > _SIX_PLACES:
+                raise ValueError(
+                    f"raw point {row['point_id']} y_value disagrees with pixel reconstruction")
             normalized.append(_base(
                 row,
                 point_id=row["point_id"],
                 metric="cushion_rebound_speed_cm_s",
-                expected=_decimal(row["y_value"]) * Decimal("100"),
+                expected=expected * Decimal("100"),
                 unit="cm/s",
                 measurement=Decimal("21.213203"),
-                digitization=digitization_uncertainty[row["point_id"]],
+                digitization=digitization_uncertainty,
             ))
         elif row["record_type"] == "table_shot":
             normalized.append(_base(

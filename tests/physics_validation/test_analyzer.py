@@ -27,6 +27,7 @@ def scenario(metric, value=True, operator="eq", absolute_tolerance=0.0, grade="C
 def frame(tick, energy=1.0, x=0.0, speed=1.0):
     return {
         "tick": tick,
+        "time_seconds": tick * 0.1,
         "translational_kinetic_energy_j": energy,
         "maximum_penetration_cm": 0.0,
         "balls": [{
@@ -63,6 +64,82 @@ def interval_scenario(lower=4.5, upper=5.5, observed_metric="stopping_distance_c
 
 
 class AnalyzerTests(unittest.TestCase):
+    def _selection_interval(self, metric, expected, selection, unit):
+        case = interval_scenario(
+            lower=expected - 1e-9,
+            upper=expected + 1e-9,
+            observed_metric=metric,
+        )
+        case["expectations"][0]["value"].update({
+            "expected": expected,
+            "selection": selection,
+            "unit": unit,
+        })
+        return case
+
+    def test_trajectory_rmse_reconstructs_declared_tick_positions_in_mm(self):
+        frames = [frame(1, x=1.0), frame(2, x=2.2), frame(3, x=3.0)]
+        case = self._selection_interval(
+            "trajectory_position_rmse_mm",
+            2.0 / (3.0 ** 0.5),
+            {
+                "ball_index": 0,
+                "minimum_window_ticks": 3,
+                "reference_positions_cm": [
+                    {"tick": 1, "position_cm": [1.0, 0.0, 0.0]},
+                    {"tick": 2, "position_cm": [2.0, 0.0, 0.0]},
+                    {"tick": 3, "position_cm": [3.0, 0.0, 0.0]},
+                ],
+                "sample_phase": "declared_trajectory_ticks",
+            },
+            "mm",
+        )
+
+        result = analyze_scenario(case, frames)
+
+        self.assertTrue(result.passed)
+
+    def test_stopping_and_rolling_transition_times_use_first_stable_window(self):
+        frames = [frame(1, speed=10.0), frame(2, speed=0.05), frame(3, speed=0.04)]
+        stop = self._selection_interval(
+            "stopping_time_seconds",
+            0.1,
+            {
+                "ball_index": 0,
+                "minimum_window_ticks": 2,
+                "sample_phase": "first_stable_stop",
+                "speed_threshold_cm_s": 0.1,
+                "time_origin_seconds": 0.1,
+            },
+            "s",
+        )
+        rolling_frames = [frame(1, speed=10.0), frame(2, speed=10.0), frame(3, speed=10.0)]
+        for item in rolling_frames:
+            item["balls"][0]["angular_velocity_rad_s"] = {
+                "x": 0.0, "y": 0.0, "z": -item["balls"][0]["speed_cm_s"] / 2.0}
+        transition = self._selection_interval(
+            "transition_to_rolling_time_seconds",
+            0.0,
+            {
+                "ball_index": 0,
+                "ball_radius_cm": 2.0,
+                "minimum_window_ticks": 3,
+                "pure_roll_tolerance_cm_s": 0.001,
+                "sample_phase": "first_stable_pure_roll",
+                "time_origin_seconds": 0.1,
+            },
+            "s",
+        )
+
+        self.assertTrue(analyze_scenario(stop, frames).passed)
+        self.assertTrue(analyze_scenario(transition, rolling_frames).passed)
+
+        nonfinite = [frame(1, speed=float("nan")), frame(2, speed=0.0)]
+        self.assertEqual(
+            analyze_scenario(stop, nonfinite).failures[0].code,
+            "NUMERICAL_FAILURE",
+        )
+
     def test_reference_value_inside_interval_comes_from_trace(self):
         result_y = frame(1, x=3.0)
         result_y["balls"][0]["position_cm"]["y"] = 4.0

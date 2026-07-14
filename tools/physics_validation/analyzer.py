@@ -95,6 +95,9 @@ def _scenario_ball(scenario, index):
 
 
 _EXPERIMENTAL_METRICS = {
+    "trajectory_position_rmse_mm",
+    "stopping_time_seconds",
+    "transition_to_rolling_time_seconds",
     "rolling_deceleration_cm_s2",
     "sliding_deceleration_cm_s2",
     "post_collision_linear_velocity_cm_s",
@@ -108,6 +111,94 @@ _EXPERIMENTAL_METRICS = {
     "cue_impact_linear_speed_cm_s",
     "cue_impact_angular_speed_rad_s",
 }
+
+
+def _trajectory_observation(reference, frames):
+    required = {
+        "sample_phase", "ball_index", "minimum_window_ticks",
+        "reference_positions_cm",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    samples = selection["reference_positions_cm"]
+    if selection["sample_phase"] != "declared_trajectory_ticks" \
+            or not isinstance(samples, list) \
+            or len(samples) < selection["minimum_window_ticks"]:
+        return None, REFERENCE_LIMITATION, "trajectory reference samples are invalid"
+    by_tick = {frame.get("tick"): frame for frame in frames}
+    squared_errors = []
+    try:
+        for sample in samples:
+            if not isinstance(sample, dict) or set(sample) != {"tick", "position_cm"}:
+                return None, REFERENCE_LIMITATION, "trajectory sample fields are invalid"
+            tick = sample["tick"]
+            expected = _vector(sample["position_cm"])
+            if not isinstance(tick, int) or isinstance(tick, bool) or len(expected) != 3 \
+                    or not all(_finite_number(value) for value in expected):
+                return None, REFERENCE_LIMITATION, "trajectory sample values are invalid"
+            actual = _vector(_ball(by_tick[tick], selection["ball_index"])["position_cm"])
+            if len(actual) != 3:
+                return None, INTEGRATION_MISMATCH, "trajectory position dimension is invalid"
+            if not all(_finite_number(value) for value in actual):
+                return None, NUMERICAL_FAILURE, "trajectory position is not finite"
+            squared_errors.append(sum((a - b) ** 2 for a, b in zip(actual, expected)))
+    except (KeyError, TypeError, ValueError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    return math.sqrt(sum(squared_errors) / len(squared_errors)) * 10.0, None, None
+
+
+def _transition_time_observation(metric, reference, frames):
+    required = {
+        "sample_phase", "ball_index", "minimum_window_ticks", "time_origin_seconds",
+    }
+    selection, code, message = _selection(reference, required)
+    if code:
+        return None, code, message
+    origin = selection["time_origin_seconds"]
+    if not _finite_number(origin):
+        return None, REFERENCE_LIMITATION, "transition time origin is invalid"
+    if not _contiguous(frames):
+        return None, INTEGRATION_MISMATCH, "transition trace timing is invalid"
+    if metric == "stopping_time_seconds":
+        threshold = selection.get("speed_threshold_cm_s")
+        if selection["sample_phase"] != "first_stable_stop" \
+                or not _finite_number(threshold) or threshold < 0.0:
+            return None, REFERENCE_LIMITATION, "stable-stop selection is invalid"
+        criterion = lambda ball: _finite_number(ball.get("speed_cm_s")) \
+            and ball["speed_cm_s"] <= threshold
+    else:
+        radius = selection.get("ball_radius_cm")
+        tolerance = selection.get("pure_roll_tolerance_cm_s")
+        if selection["sample_phase"] != "first_stable_pure_roll" \
+                or not _finite_number(radius) or radius <= 0.0 \
+                or not _finite_number(tolerance) or tolerance < 0.0:
+            return None, REFERENCE_LIMITATION, "pure-roll transition selection is invalid"
+        criterion = lambda ball: _is_pure_roll(ball, radius, tolerance)
+    minimum = selection["minimum_window_ticks"]
+    try:
+        for frame in frames:
+            if not _finite_number(frame.get("time_seconds")):
+                return None, NUMERICAL_FAILURE, "transition sample time is not finite"
+            ball = _ball(frame, selection["ball_index"])
+            if metric == "stopping_time_seconds":
+                if not _finite_number(ball.get("speed_cm_s")):
+                    return None, NUMERICAL_FAILURE, "stopping speed is not finite"
+            else:
+                velocity = _vector(ball["velocity_cm_s"])
+                angular = _vector(ball["angular_velocity_rad_s"])
+                if not all(_finite_number(value) for value in velocity + angular):
+                    return None, NUMERICAL_FAILURE, "pure-roll state is not finite"
+        for index in range(len(frames) - minimum + 1):
+            window = frames[index:index + minimum]
+            if all(criterion(_ball(frame, selection["ball_index"])) for frame in window):
+                actual = window[0]["time_seconds"] - origin
+                if not _finite_number(actual):
+                    return actual, NUMERICAL_FAILURE, "transition time is not finite"
+                return actual, None, None
+    except (KeyError, TypeError, ValueError) as error:
+        return None, INTEGRATION_MISMATCH, str(error)
+    return None, INTEGRATION_MISMATCH, "declared stable transition window is absent"
 
 
 def _selection(reference, required):
@@ -458,6 +549,10 @@ def _paired_cushion_observation(reference, scenario, frames):
 
 
 def _reference_observation(observed_metric, reference, scenario, frames):
+    if observed_metric == "trajectory_position_rmse_mm":
+        return _trajectory_observation(reference, frames)
+    if observed_metric in {"stopping_time_seconds", "transition_to_rolling_time_seconds"}:
+        return _transition_time_observation(observed_metric, reference, frames)
     if observed_metric in {"rolling_deceleration_cm_s2", "sliding_deceleration_cm_s2"}:
         return _deceleration_observation(reference, frames)
     if observed_metric == "cushion_rebound_speed_cm_s" \

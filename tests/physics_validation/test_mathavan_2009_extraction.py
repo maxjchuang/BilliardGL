@@ -2,6 +2,7 @@ import csv
 import hashlib
 import json
 import unittest
+import tempfile
 from pathlib import Path
 
 
@@ -209,6 +210,21 @@ class Mathavan2009NormalizationTests(unittest.TestCase):
 
         self.assertEqual(first, second)
         self.assertEqual(first, (PACKAGE / "normalized.csv").read_bytes())
+
+    def test_figure_values_are_audited_against_pixel_reconstruction(self):
+        with (PACKAGE / "digitization.csv").open(
+                "r", encoding="utf-8", newline="") as source:
+            rows = list(csv.DictReader(source))
+        rows[0]["converted_y_m_s"] = "999"
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "digitization.csv"
+            with path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.DictWriter(output, fieldnames=rows[0])
+                writer.writeheader()
+                writer.writerows(rows)
+            from tools.physics_validation.extract_mathavan_2009 import normalize_rows
+            with self.assertRaisesRegex(ValueError, "converted_y_m_s"):
+                normalize_rows(PACKAGE / "raw_extracted.csv", path, PACKAGE / "extraction.json")
 
 
 if __name__ == "__main__":

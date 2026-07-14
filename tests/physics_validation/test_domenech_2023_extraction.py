@@ -1,5 +1,6 @@
 import csv
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -113,6 +114,18 @@ class Domenech2023AdmissionTests(unittest.TestCase):
 
         self.assertEqual(first, second)
         self.assertEqual(first, (PACKAGE / "normalized.csv").read_bytes())
+
+    def test_converted_columns_are_audited_against_pixel_reconstruction(self):
+        rows = self._csv("digitization.csv")
+        rows[0]["converted_y_degrees"] = "999"
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "digitization.csv"
+            with path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.DictWriter(output, fieldnames=rows[0])
+                writer.writeheader()
+                writer.writerows(rows)
+            with self.assertRaisesRegex(ValueError, "converted_y_degrees"):
+                normalize_rows(PACKAGE / "raw_extracted.csv", path, PACKAGE / "extraction.json")
 
     def test_theory_curves_and_unfinished_admission_steps_are_explicit_limitations(self):
         evidence = self._json("manifest.json")["evidence"]

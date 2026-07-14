@@ -91,6 +91,11 @@ int main()
     billiardgl::json::Value nonUnit = validV2Document();
     nonUnit["cue_impact"]["direction"].asArray()[0] = billiardgl::json::Value(2.0);
     expect(!billiardgl::parsePhysicsScenario(nonUnit).ok, "cue direction must be unit length");
+    billiardgl::json::Value nonPlanarDirection = validV2Document();
+    nonPlanarDirection["cue_impact"]["direction"] =
+        billiardgl::json::parse("[0.8,0.6,0.0]").value;
+    expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
+        "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
     unknownVersion["schema_version"] = billiardgl::json::Value(3);
     const billiardgl::PhysicsScenarioResult versionResult =

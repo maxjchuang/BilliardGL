@@ -166,8 +166,13 @@ def _validate_extraction(path, manifest):
     }.get(schema_version)
     if expected_keys is None:
         _error("INVALID_EXTRACTION_METADATA", "extraction schema_version must be 1 or 2")
-    if set(extraction) != expected_keys:
+    optional_keys = {"axis_calibration"}
+    if not expected_keys <= set(extraction) or set(extraction) - expected_keys - optional_keys:
         _error("INVALID_EXTRACTION_METADATA", "extraction metadata keys are incomplete")
+    if "axis_calibration" in extraction and (
+            not isinstance(extraction["axis_calibration"], dict)
+            or not extraction["axis_calibration"]):
+        _error("INVALID_EXTRACTION_METADATA", "axis calibration must be a nonempty object")
     for field in ("method", "date", "operator", "rounding_policy"):
         if not isinstance(extraction.get(field), str) or not extraction[field].strip():
             _error("INVALID_EXTRACTION_METADATA", f"extraction {field} is required")

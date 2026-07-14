@@ -6,7 +6,7 @@
   ],
   "method": "Native embedded-image grayscale component extraction of Fig. 7(a) experimental diamonds only",
   "operator": "Codex experimental-marker admission pass",
-  "output_sha256": "sha256:018a45a77daa5a8463f4ab892f7bf714c97c7c50cdcdb9efcf76903cfd4668bd",
+  "output_sha256": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
   "review": {"date": "2026-07-13", "method": "component centroid versus component bounding-box center", "reviewed_by": "method-disjoint second coordinate pass"},
   "rounding_policy": "Raw pixels and m/s values retain six decimals; normalized cm/s removes trailing zeroes only.",
   "schema_version": 2,

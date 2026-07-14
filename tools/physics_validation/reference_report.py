@@ -50,6 +50,8 @@ _CSV_FIELDS = (
     "build_id",
     "replay_command",
     "package_hashes",
+    "missing_evidence",
+    "resolution_condition",
 )
 _FAILURE_PRIORITY = {
     NUMERICAL_FAILURE: 0,
@@ -202,6 +204,61 @@ def _point_row(case, point, result, accounting, metadata):
         "status": status,
         "trace_path": scenario_metadata.get("trace_path"),
         "unit": point.unit,
+        "missing_evidence": None,
+        "resolution_condition": None,
+    }
+
+
+def _limitation_point_row(point, limitation, accounting, metadata):
+    key = ReferenceFailureKey(
+        limitation.dataset_id,
+        limitation.case_id,
+        REFERENCE_LIMITATION,
+        limitation.metric,
+    )
+    status = (
+        "REFERENCE_LIMITATION_KNOWN"
+        if key in accounting.known_limitations
+        else "REFERENCE_LIMITATION_NEW"
+    )
+    lower, upper = point.acceptance_interval
+    return {
+        "acceptance_interval": [lower, upper],
+        "build_id": metadata.get("build_id"),
+        "case_id": limitation.case_id,
+        "combined_standard_uncertainty": point.combined_standard_uncertainty,
+        "conversion_uncertainty": point.conversion_uncertainty,
+        "coverage_factor": point.coverage_factor,
+        "dataset_id": point.dataset_id,
+        "dataset_version": metadata.get("dataset_version"),
+        "digitization_uncertainty": point.digitization_uncertainty,
+        "engineering_absolute_tolerance": point.engineering_absolute_tolerance,
+        "engineering_relative_tolerance": point.engineering_relative_tolerance,
+        "experimental_value": point.expected,
+        "fit_subset": None,
+        "group_id": point.group_id,
+        "group_maximum_absolute_error": None,
+        "group_rmse": None,
+        "incident_speed_cm_s": None,
+        "measurement_uncertainty": point.measurement_uncertainty,
+        "metric": point.metric,
+        "missing_evidence": limitation.missing_evidence,
+        "package_hashes": metadata.get("package_hashes", {}),
+        "partition": point.partition,
+        "point_id": point.point_id,
+        "pool_applicability": point.pool_applicability,
+        "prediction": None,
+        "prediction_nonfinite": None,
+        "replay_command": None,
+        "resolution_condition": limitation.resolution_condition,
+        "rigid_cushion_domain": None,
+        "scenario_id": None,
+        "series_id": point.series_id,
+        "signed_error": None,
+        "source_locator": point.source_locator,
+        "status": status,
+        "trace_path": None,
+        "unit": point.unit,
     }
 
 
@@ -296,6 +353,20 @@ def _accounting_document(accounting):
     }
 
 
+def _limitations_document(limitations):
+    return [
+        {
+            "case_id": item.case_id,
+            "dataset_id": item.dataset_id,
+            "metric": item.metric,
+            "missing_evidence": item.missing_evidence,
+            "point_ids": list(item.point_ids),
+            "resolution_condition": item.resolution_condition,
+        }
+        for item in sorted(limitations, key=lambda value: (value.dataset_id, value.case_id))
+    ]
+
+
 def _csv_value(value):
     if value is None:
         return ""
@@ -372,7 +443,25 @@ def _markdown_accounting(accounting_document):
     return lines
 
 
-def write_reference_reports(cases, results, accounting, output_directory, metadata):
+def _markdown_limitations(limitations):
+    lines = ["## Reference limitation details", ""]
+    for item in limitations:
+        lines.extend([
+            f"### {item['dataset_id']}:{item['case_id']}",
+            "",
+            f"- Metric: {item['metric']}",
+            f"- Missing evidence: {item['missing_evidence']}",
+            f"- Resolution condition: {item['resolution_condition']}",
+            f"- Affected points: {len(item['point_ids'])}",
+            "",
+        ])
+    if not limitations:
+        lines.extend(["None.", ""])
+    return lines
+
+
+def write_reference_reports(
+        cases, results, accounting, output_directory, metadata, *, points=(), limitations=()):
     output_directory = Path(output_directory)
     output_directory.mkdir(parents=True, exist_ok=True)
     result_map = {}
@@ -387,6 +476,19 @@ def write_reference_reports(cases, results, accounting, output_directory, metada
         result = result_map.get(scenario_id)
         for point in sorted(case.points, key=lambda item: item.point_id):
             rows.append(_point_row(case, point, result, accounting, metadata))
+    executable_point_ids = {point.point_id for case in cases for point in case.points}
+    limitation_by_point_id = {}
+    for limitation in limitations:
+        for point_id in limitation.point_ids:
+            if point_id in limitation_by_point_id:
+                raise ValueError(f"point {point_id} is claimed by multiple limitations")
+            limitation_by_point_id[point_id] = limitation
+    for point in points:
+        if point.point_id in executable_point_ids:
+            continue
+        limitation = limitation_by_point_id.get(point.point_id)
+        if limitation is not None:
+            rows.append(_limitation_point_row(point, limitation, accounting, metadata))
     rows.sort(key=lambda row: (
         row["partition"], row["dataset_id"], row["case_id"], row["point_id"]))
     partition_rows = {
@@ -394,6 +496,7 @@ def write_reference_reports(cases, results, accounting, output_directory, metada
         for partition in _PARTITIONS
     }
     accounting_payload = _accounting_document(accounting)
+    limitation_payload = _limitations_document(limitations)
     payload = {
         "accounting": accounting_payload,
         "metadata": metadata,
@@ -401,6 +504,7 @@ def write_reference_reports(cases, results, accounting, output_directory, metada
             partition: _partition(partition_rows[partition])
             for partition in _PARTITIONS
         },
+        "reference_limitations": limitation_payload,
     }
 
     json_path = output_directory / "reference_report.json"
@@ -421,6 +525,7 @@ def write_reference_reports(cases, results, accounting, output_directory, metada
     for partition in _PARTITIONS:
         markdown_lines.extend(_markdown_table(partition, partition_rows[partition]))
     markdown_lines.extend(_markdown_accounting(accounting_payload))
+    markdown_lines.extend(_markdown_limitations(limitation_payload))
     markdown_path = output_directory / "reference_report.md"
     markdown_path.write_text("\n".join(markdown_lines), encoding="utf-8")
     return json_path, csv_path, markdown_path

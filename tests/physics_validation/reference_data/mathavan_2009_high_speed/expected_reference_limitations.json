@@ -24,6 +24,14 @@
       "metric": "initial_spin_rad_s",
       "missing_evidence": "The experiment did not measure initial ball spin for the collision series.",
       "resolution_condition": "Acquire synchronized translational and rotational measurements for each shot."
+    },
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "case_id": "table1_post_collision_roll_transition_unmodeled",
+      "code": "REFERENCE_LIMITATION",
+      "metric": "post_collision_linear_velocity_cm_s",
+      "missing_evidence": "The production engine does not produce the post-impact sliding-to-pure-rolling transition required by the Table I measurement phase.",
+      "resolution_condition": "Implement and instrument post-collision friction/spin transfer until both balls expose a stable pure-rolling window, then execute these points without changing their source values."
     }
   ]
 }

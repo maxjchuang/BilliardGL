@@ -21,8 +21,13 @@ class Cross2023AdapterTests(unittest.TestCase):
         self.assertEqual(adaptation.cases, ())
         self.assertEqual({item.case_id for item in adaptation.limitations}, {
             "full_text_not_acquired", "experimental_markers_not_admitted",
-            "cue_speed_to_power_mapping_missing",
+            "cue_speed_to_power_mapping_missing", "cue_contact_regime_telemetry_missing",
         })
+        regime = next(
+            item for item in adaptation.limitations
+            if item.case_id == "cue_contact_regime_telemetry_missing")
+        self.assertIn("tangential", regime.missing_evidence)
+        self.assertIn("stick/slip", regime.resolution_condition)
         self.assertEqual(sum(len(case.points) for case in adaptation.cases), len(points))
 
 

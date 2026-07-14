@@ -27,6 +27,22 @@ def _format(value):
     return text or "0"
 
 
+_SIX_PLACES = Decimal("0.000001")
+
+
+def _reconstruct(row):
+    pixel_x = Decimal(row["pixel_x"])
+    pixel_y = Decimal(row["pixel_y"])
+    incident = ((pixel_x - 66) * 4 / (523 - 66)).quantize(_SIX_PLACES)
+    rebound = ((440 - pixel_y) * 3 / (440 - 5)).quantize(_SIX_PLACES)
+    for field, value in (
+            ("incident_speed_m_s", incident), ("rebound_speed_m_s", rebound)):
+        if Decimal(row[field]) != value:
+            raise ValueError(
+                f"point {row['point_id']} {field} does not match pixel reconstruction")
+    return incident, rebound
+
+
 def normalize_rows(raw_path, digitization_path, extraction_path):
     raw = _read_csv(raw_path)
     digitization = _read_csv(digitization_path)
@@ -43,8 +59,13 @@ def normalize_rows(raw_path, digitization_path, extraction_path):
         passes = by_point.get(source["point_id"], [])
         if len(passes) != 2 or {item["pass_id"] for item in passes} != {"1", "2"}:
             raise ValueError(f"point {source['point_id']} requires two digitization passes")
-        rebound = [Decimal(item["rebound_speed_m_s"]) for item in passes]
+        reconstructed = [_reconstruct(item) for item in passes]
+        rebound = [item[1] for item in reconstructed]
         residual = max(Decimal(item["y_axis_residual_m_s"]) for item in passes)
+        expected = sum(rebound) / Decimal("2")
+        if abs(Decimal(source["rebound_speed_m_s"]) - expected) > _SIX_PLACES:
+            raise ValueError(
+                f"point {source['point_id']} raw rebound speed disagrees with pixels")
         rows.append({
             "dataset_id": _DATASET_ID,
             "series_id": source["series_id"],
@@ -53,7 +74,7 @@ def normalize_rows(raw_path, digitization_path, extraction_path):
             "point_id": source["point_id"],
             "partition": "CALIBRATION" if source["group_id"] == "incident_low" else "HOLDOUT",
             "metric": "cushion_rebound_speed_cm_s",
-            "expected": _format(Decimal(source["rebound_speed_m_s"]) * 100),
+            "expected": _format(expected * 100),
             "unit": "cm/s",
             "measurement_uncertainty": "0",
             "digitization_uncertainty": _format(abs(rebound[0] - rebound[1]) * 50),

@@ -26,6 +26,7 @@ class ReferenceLimitation:
     metric: str
     missing_evidence: str
     resolution_condition: str
+    point_ids: tuple = ()
 
 
 @dataclass(frozen=True)
@@ -87,6 +88,18 @@ class ReferenceAdapterRegistry:
             _fail("INVALID_ADAPTER", f"adapter {adapter_id} returned an invalid limitation")
         if any(item.dataset_id != dataset_id for item in limitations):
             _fail("DATASET_MISMATCH", f"adapter {adapter_id} returned another dataset limitation")
+        valid_point_ids = {point.point_id for point in points}
+        claimed_point_ids = []
+        for limitation in limitations:
+            unknown = set(limitation.point_ids) - valid_point_ids
+            if unknown:
+                _fail(
+                    "UNKNOWN_LIMITATION_POINT",
+                    f"limitation {limitation.case_id} claims unknown points {sorted(unknown)}",
+                )
+            claimed_point_ids.extend(limitation.point_ids)
+        if len(claimed_point_ids) != len(set(claimed_point_ids)):
+            _fail("DUPLICATE_LIMITATION_POINT", "a point is claimed by multiple limitations")
         return ReferenceAdaptation(cases, limitations)
 
     def adapt(self, package, split, points):
@@ -196,7 +209,7 @@ def default_reference_registry():
         "mathavan_2009_v1",
         lambda package, split, points: ReferenceAdaptation(
             adapt_mathavan_2009(package, split, points),
-            mathavan_2009_limitations(package),
+            mathavan_2009_limitations(package, points),
         ),
     )
     registry.register(

@@ -149,13 +149,15 @@ When `raw_extracted.csv` changes, update its hash inside `extraction.json` befor
 
 Schema version `2` additionally locks the non-redistributed source SHA-256, normalized output SHA-256, extractor module/version, and uncertainty interpretation. This allows a bounded reported range to remain distinguishable from a Gaussian standard deviation.
 
+Digitized packages reconstruct source-axis values from committed pixel coordinates and explicit axis calibrations. Stored converted columns are audited duplicates: a mismatch fails reconstruction rather than becoming a new numeric truth source.
+
 ## Mathavan 2009 high-speed package
 
 `mathavan_2009_high_speed` records the experiment in S. Mathavan, M. R. Jackson, and R. M. Parkin, “Application of high-speed imaging to determine the dynamics of billiards,” DOI `10.1119/1.3157159`.
 
 The committed numerical evidence contains 20 acceptance points: two Fig. 6 deceleration summaries, eight independently distinguishable Fig. 9 cushion markers, and both measured post-slip speeds from each of the five Table I collision shots. The raw inventory also preserves all 31 reported Fig. 9 shot IDs. Twenty-three overlapping markers cannot be assigned independent coordinates and therefore remain a structured reference limitation instead of being reconstructed from the fitted theoretical curve. Fig. 12 is excluded from numerical acceptance because initial spin was not measured.
 
-The apparatus was a Riley Renaissance snooker table with 52.4 mm balls, so every point is `TREND_ONLY` for the current Chinese/WPA Pool runtime. The package separately records the missing material/geometry conversion and unmeasured initial spin. Calibration contains the rolling summary and the two preregistered Table I groups; sliding, all visible Fig. 9 markers, and the remaining Table I shots are holdout. No command-line split override exists.
+The apparatus was a Riley Renaissance snooker table with 52.4 mm balls, so every point is `TREND_ONLY` for the current Chinese/WPA Pool runtime. The package separately records the missing material/geometry conversion and unmeasured initial spin. Calibration contains the rolling summary and the two preregistered Table I groups; sliding, all visible Fig. 9 markers, and the remaining Table I shots are holdout. No command-line split override exists. The ten Table I points remain present in reports as point-level limitations: production currently provides no post-collision sliding-to-pure-rolling transition, so sampling an immediate post-impact frame would use the wrong experimental phase.
 
 Reconstruct and verify the committed normalized bytes offline:
 
@@ -194,7 +196,7 @@ The package commits all 214 admitted experimental markers and both coordinate re
 
 The source reports 0.80 ± 0.05 m/s launch speed, a PVC laboratory bench, a camera 75 cm above contact, and a track ending 50 cm before contact. Billiard, brass, steel, and rubber data retain separate IDs and split groups. Low-angle groups are calibration; middle/high groups are holdout. All non-billiard data are `TREND_ONLY`.
 
-The article says data are available on request. No request has been sent because that external communication requires explicit user authorization; this remains a declared limitation. A publisher automation challenge also prevented a complete version-of-record PDF audit, so that audit remains separately declared.
+The article says data are available on request. No author request has been sent; the current authorization covers institutional-access attempts but not contacting an author. This remains a declared limitation. A publisher automation challenge also prevented a complete version-of-record PDF audit, so that audit remains separately declared.
 
 No Doménech runtime scenario is currently emitted. Production fixes ball diameter at 5.715 cm and cannot install the source diameters (6.1, 2.5, and 4.6 cm), masses, contact materials, or PVC support surface per scenario. The full numerical dataset remains available for later schema/physics work, while strict runtime accounting requires one visible geometry/material limitation for each of the seven series. This is deliberately not treated as a model pass, a skipped test, or a relabeled Pool experiment.
 
@@ -212,7 +214,7 @@ python3 -m tools.physics_validation.reference_run \
   --output build/physics-reference/domenech-2023
 ```
 
-The last command executes no fabricated substitute scenarios; it produces the strict nine-entry limitation audit. A single-case replay command will become valid only after the scenario schema can express the source apparatus.
+The last command executes no fabricated substitute scenarios; it produces the strict nine-entry limitation audit plus all 214 point-level rows with experimental values, partitions, source locators, missing evidence, and resolution conditions. A single-case replay command will become valid only after the scenario schema can express the source apparatus.
 
 ## Mathavan 2010 cushion package
 
@@ -250,7 +252,7 @@ python3 -m tools.physics_validation.reference_run \
 
 `cross_2023_cue_impact` identifies Rod Cross, “Impact of a cue with a billiard ball,” DOI `10.1177/17543371231184011`, first online 29 June 2023 and published in volume 239(4), pages 647–651 in December 2025.
 
-As audited on 13 July 2026, SAGE requires purchase/institutional access, and OpenAlex, OpenAIRE, and Semantic Scholar all report closed access with no repository full text. Therefore the package deliberately contains zero normalized numerical points. It commits the complete access audit, exact empty numeric dataset, scenario-v2 template, and three strict limitations. Values from the abstract, snippets, or Cross 2008 are prohibited substitutes. This is an admission-gated package, not a claim that the Cross experimental dataset has been completed.
+As re-audited on 14 July 2026, SAGE marks the article restricted, redirects the PDF endpoint to the abstract, and offers institutional authentication or paid access; the scholarly indexes still expose no repository full text. Therefore the package deliberately contains zero normalized numerical points. It commits the complete access audit, exact empty numeric dataset, scenario-v2 template, and four strict limitations, including the missing cue-contact telemetry required to classify stick/slip. Values from the abstract, snippets, or Cross 2008 are prohibited substitutes. This is an admission-gated package, not a claim that the Cross experimental dataset has been completed.
 
 Offline verification:
 
@@ -280,6 +282,10 @@ The template contains canonical production-runtime inputs plus explicit per-case
 - reports a structured package error when a mapping cannot be expressed.
 
 Production execution continues through the existing automation process and `GameRuntime`; reference validation does not implement a second physics engine.
+
+The cue-impact v2 `direction` is a unit heading in the table plane. `elevation_degrees` is the sole vertical-angle field, so contradictory direction/elevation encodings are rejected.
+
+The manual and weekly `.github/workflows/physics-reference-full.yml` workflow runs every calibration and holdout point without a case filter and uploads the complete numeric reports. Pull-request CI retains representative-case runs for latency.
 
 ## Expected failure manifests
 

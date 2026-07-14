@@ -1,0 +1,42 @@
+name: Full physics reference regression
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+jobs:
+  full-reference-regression:
+    runs-on: macos-15
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install cmake pkg-config glew sdl2 sdl2_mixer
+
+      - name: Build and run the core validation suite
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: ./scripts/check.sh
+
+      - name: Run every public reference point
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2009_high_speed --output "${BILLIARDGL_BUILD_DIR}/full-reference/mathavan-2009"
+          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/domenech_2023_ball_collision --output "${BILLIARDGL_BUILD_DIR}/full-reference/domenech-2023"
+          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2010_cushion --output "${BILLIARDGL_BUILD_DIR}/full-reference/mathavan-2010"
+          python3 -m tools.physics_validation.reference_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/full-reference/cross-2023"
+
+      - name: Upload full reference reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-physics-reference-reports
+          path: ${{ runner.temp }}/billiardgl-build/full-reference
+          if-no-files-found: error

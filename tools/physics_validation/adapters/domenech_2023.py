@@ -75,5 +75,7 @@ def adapt_domenech_2023(package, split, points):
                 "Add scenario-level ball geometry, mass, material/contact, and support-surface "
                 "parameters without changing global production defaults."
             ),
+            tuple(sorted(
+                point.point_id for point in points if point.series_id == series_id)),
         ))
     return ReferenceAdaptation((), tuple(limitations))

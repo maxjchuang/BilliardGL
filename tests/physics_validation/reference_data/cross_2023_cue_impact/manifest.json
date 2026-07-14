@@ -1,7 +1,7 @@
 {
   "acquisition": {
     "acquisition_url": "https://journals.sagepub.com/doi/pdf/10.1177/17543371231184011",
-    "audited_on": "2026-07-13",
+    "audited_on": "2026-07-14",
     "license_status": "publisher TDM license metadata only; no redistribution grant or full-text access",
     "source_media_committed": false,
     "source_sha256": null,
@@ -35,15 +35,15 @@
     "reviewed_by": "committed source_access_audit.json"
   },
   "files": [
-    {"id": "source_access_audit", "path": "source_access_audit.json", "sha256": "sha256:193067b0a953662469ac6c833cd6220c11e81934aff30b4129f30104df419988"},
+    {"id": "source_access_audit", "path": "source_access_audit.json", "sha256": "sha256:0b5d6b9ef13d5f8bad1cae620185fbfb589e409c221ff59cb6e62d5c52901929"},
     {"id": "raw_extracted", "path": "raw_extracted.csv", "sha256": "sha256:af5c6536bcea3b43f84bf0056e915352151f68ec763171abc2269ebc85324368"},
     {"id": "digitization", "path": "digitization.csv", "sha256": "sha256:a7286ce433218063773860ba216215e625f817cdd209c28df94ef63a3ff8df37"},
     {"id": "normalized", "path": "normalized.csv", "sha256": "sha256:0ec04fa9ad9910be2f6b8906e6b7af518bce2abb4cf4eb43143e6b758abf1b8e"},
     {"id": "split", "path": "split.json", "sha256": "sha256:cbea13d9b9d7e70e0003f48b54988cc9830f69ecacee32046dc3e42040207401"},
-    {"id": "extraction", "path": "extraction.json", "sha256": "sha256:69adc7248aaf15718642604ec657ece323db9adc7eec3be64a30b1588abbd149"},
+    {"id": "extraction", "path": "extraction.json", "sha256": "sha256:f94f9d40911b6ab9d329ff8d5362e06dd6cd753ee2196265a2fb039d8c14292a"},
     {"id": "scenario_template", "path": "scenario_template.json", "sha256": "sha256:bb934bb47cecaa4758ac0fa0858eab897c81cfd434be255d404a14810c5643bd"},
     {"id": "expected_model_mismatches", "path": "expected_model_mismatches.json", "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"},
-    {"id": "expected_reference_limitations", "path": "expected_reference_limitations.json", "sha256": "sha256:47767aba1d0be6088b917d91c2d4d13588a08b5940da1c49a60482d319e70128"}
+    {"id": "expected_reference_limitations", "path": "expected_reference_limitations.json", "sha256": "sha256:c8efc94756d3abfc9d485607a0c1abea9824de7ddaa8500adfd4b7c5aa128ced"}
   ],
   "schema_version": 1,
   "source": {

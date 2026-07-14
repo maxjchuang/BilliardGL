@@ -231,6 +231,8 @@ def run_reference_validation(executable, package, output, execute_once=None, cas
             },
             "scenarios": scenario_metadata,
         },
+        points=points,
+        limitations=adaptation.limitations,
     )
     return 0 if accounting.ci_passed else 1
 

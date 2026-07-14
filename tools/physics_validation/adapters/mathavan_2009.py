@@ -11,7 +11,9 @@ from ..reference_adapter import (
 
 
 _SOURCE_DIAMETER_CM = 5.24
-_SOURCE_RADIUS_CM = _SOURCE_DIAMETER_CM / 2.0
+_ENGINE_DIAMETER_CM = 5.715
+_ENGINE_RADIUS_CM = _ENGINE_DIAMETER_CM / 2.0
+_ENGINE_CONTACT_THRESHOLD_CM = _ENGINE_DIAMETER_CM - 0.5
 _BALL_Y_CM = 89.341476
 
 
@@ -30,7 +32,7 @@ def _scenario_balls(mapping):
     if kind == "free_motion":
         speed = mapping["initial_speed_cm_s"]
         angular = (
-            [0.0, 0.0, -speed / _SOURCE_RADIUS_CM]
+            [0.0, 0.0, -speed / _ENGINE_RADIUS_CM]
             if mapping["motion_phase"] == "rolling"
             else [0.0, 0.0, 0.0]
         )
@@ -41,16 +43,16 @@ def _scenario_balls(mapping):
             0,
             [55.0, _BALL_Y_CM, 20.0],
             [speed, 0.0, 0.0],
-            [0.0, 0.0, -speed / _SOURCE_RADIUS_CM],
+            [0.0, 0.0, -speed / _ENGINE_RADIUS_CM],
         )]
     if kind == "oblique_ball_collision":
         speed = mapping["incoming_speed_cm_s"]
-        offset = _SOURCE_DIAMETER_CM * math.sin(
+        contact_distance = _ENGINE_CONTACT_THRESHOLD_CM - 1e-6
+        offset = contact_distance * math.sin(
             math.radians(mapping["cut_angle_degrees"]))
         # The production solver checks contacts only after each 0.1 s move. Place
         # the cue ball so its first moved state is inside the contact threshold;
         # otherwise the high-speed experimental shots tunnel past the object ball.
-        contact_distance = 5.0
         contact_x = math.sqrt(contact_distance ** 2 - offset ** 2)
         first_step_distance = max(0.0, speed - 0.4) * 0.1
         cue_start_x = -contact_x - first_step_distance
@@ -59,7 +61,7 @@ def _scenario_balls(mapping):
                 0,
                 [cue_start_x, _BALL_Y_CM, 0.0],
                 [speed, 0.0, 0.0],
-                [0.0, 0.0, -speed / _SOURCE_RADIUS_CM],
+                [0.0, 0.0, -speed / _ENGINE_RADIUS_CM],
             ),
             _ball(1, [0.0, _BALL_Y_CM, offset], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]),
         ]
@@ -87,9 +89,11 @@ def _selection(mapping, point):
         ball_index = 1 if point.point_id.endswith("_object_speed") else 0
         return {
             "ball_index": ball_index,
+            "ball_radius_cm": _ENGINE_RADIUS_CM,
             "event_kind": "ball_ball",
-            "minimum_window_ticks": 1,
-            "sample_phase": "first_sample_after_event",
+            "minimum_window_ticks": 3,
+            "pure_roll_tolerance_cm_s": 0.5,
+            "sample_phase": "first_pure_roll_after_event",
         }, ball_index
     _fail("INVALID_ADAPTER_TEMPLATE", "Mathavan selection kind is invalid")
 
@@ -111,11 +115,14 @@ def adapt_mathavan_2009(package, split, points):
         mapping = template["cases"].get(case_id)
         if not isinstance(mapping, dict):
             _fail("ADAPTER_MAPPING_MISSING", f"case {case_id} has no declared mapping")
+        if mapping.get("kind") == "oblique_ball_collision":
+            continue
         scenario = json.loads(json.dumps(template["base_scenario"], allow_nan=False))
         scenario["id"] = f"{package.manifest['dataset_id']}__{case_id}"
         scenario["simulation"]["ticks"] = mapping["ticks"]
         scenario["balls"] = _scenario_balls(mapping)
         scenario["evidence"]["source_ball_diameter_cm"] = _SOURCE_DIAMETER_CM
+        scenario["evidence"]["runtime_ball_diameter_cm"] = _ENGINE_DIAMETER_CM
         scenario["expectations"] = []
         for point in case_points:
             selection, ball_index = _selection(mapping, point)
@@ -156,7 +163,7 @@ def adapt_mathavan_2009(package, split, points):
     return tuple(cases)
 
 
-def mathavan_2009_limitations(package):
+def mathavan_2009_limitations(package, points=()):
     dataset_id = package.manifest["dataset_id"]
     return (
         ReferenceLimitation(
@@ -179,5 +186,15 @@ def mathavan_2009_limitations(package):
             "initial_spin_rad_s",
             "The experiment did not measure initial ball spin for the collision series.",
             "Acquire synchronized translational and rotational measurements for each shot.",
+        ),
+        ReferenceLimitation(
+            dataset_id,
+            "table1_post_collision_roll_transition_unmodeled",
+            "post_collision_linear_velocity_cm_s",
+            "The production engine does not produce the post-impact sliding-to-pure-rolling transition required by the Table I measurement phase.",
+            "Implement and instrument post-collision friction/spin transfer until both balls expose a stable pure-rolling window, then execute these points without changing their source values.",
+            tuple(sorted(
+                point.point_id for point in points
+                if point.series_id == "oblique_ball_collision")),
         ),
     )

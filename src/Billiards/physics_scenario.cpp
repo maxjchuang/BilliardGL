@@ -201,6 +201,10 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             if (std::fabs(directionLength - 1.0) > 0.000001) {
                 throw std::runtime_error("direction must be a unit vector");
             }
+            if (std::fabs(input.direction[1]) > 0.000001) {
+                throw std::runtime_error(
+                    "direction must be a table-plane heading; use elevation_degrees separately");
+            }
             input.elevationDegrees = requiredNumber(cue, "elevation_degrees");
             if (input.elevationDegrees < -90.0 || input.elevationDegrees > 90.0) {
                 throw std::runtime_error("elevation_degrees must be between -90 and 90");

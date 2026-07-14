@@ -1,6 +1,7 @@
 import csv
 import json
 import unittest
+import tempfile
 from pathlib import Path
 
 from tools.physics_validation.extract_mathavan_2010 import normalize_rows, write_normalized
@@ -64,6 +65,18 @@ class Mathavan2010ExtractionTests(unittest.TestCase):
             "snooker_cushion_to_pool_material_conversion_missing",
             "rigid_cushion_domain_warning",
         } <= {item["case_id"] for item in limitations})
+
+    def test_converted_columns_are_audited_against_declared_axis_formula(self):
+        rows = self._csv("digitization.csv")
+        rows[0]["rebound_speed_m_s"] = "999"
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "digitization.csv"
+            with path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.DictWriter(output, fieldnames=rows[0])
+                writer.writeheader()
+                writer.writerows(rows)
+            with self.assertRaisesRegex(ValueError, "rebound_speed_m_s"):
+                normalize_rows(PACKAGE / "raw_extracted.csv", path, PACKAGE / "extraction.json")
 
 
 if __name__ == "__main__":
