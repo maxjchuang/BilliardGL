@@ -2,6 +2,7 @@
 
 #include "game_state.h"
 #include "cue_impact.h"
+#include "cue_contact.h"
 #include "physics_profile.h"
 #include "surface_motion.h"
 
@@ -68,6 +69,8 @@ struct PhysicsFrame {
     double maximumPenetrationCm = 0.0;
     bool hasCueImpactInput = false;
     CueImpactInput cueImpactInput;
+    bool hasCueContactResult = false;
+    CueContactResult cueContactResult;
     std::string physicsProfileId;
     std::vector<SurfaceMotionStep> surfaceTransitions;
 };

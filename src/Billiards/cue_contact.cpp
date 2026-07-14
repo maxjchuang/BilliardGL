@@ -53,6 +53,13 @@ CueContactResult unsupported(const char* error)
     return result;
 }
 
+double ballKineticEnergy(const Vector& velocity, const Vector& angularVelocity,
+    double massKg, double inertia)
+{
+    return 0.5 * massKg * dot(velocity, velocity) +
+        0.5 * inertia * dot(angularVelocity, angularVelocity);
+}
+
 }  // namespace
 
 const char* cueContactRegimeName(CueContactRegime regime)
@@ -133,11 +140,23 @@ CueContactResult resolveCueContact(BallState& ball, const CueImpactInput& input,
     CueContactResult result;
     result.frictionCoefficient = friction;
     result.normalImpulseNs = normalImpulse;
-    result.normalRelativeSpeedBeforeMS = approachSpeed;
+    result.normalRelativeSpeedBeforeMS = dot(relativeVelocity, normal);
     result.contactArmM = arm;
     result.contactNormal = normal;
     result.tangentialRelativeVelocityBeforeMS = subtract(
         relativeVelocity, multiply(normal, dot(relativeVelocity, normal)));
+    result.tangentialRelativeSpeedBeforeMS =
+        magnitude(result.tangentialRelativeVelocityBeforeMS);
+    result.cueVelocityBeforeMS = cueVelocity;
+    result.cueVelocityAfterMS = cueVelocity;
+    result.ballVelocityBeforeMS = ballVelocity;
+    result.ballVelocityAfterMS = ballVelocity;
+    result.ballAngularVelocityBeforeRadS = angularVelocity;
+    result.ballAngularVelocityAfterRadS = angularVelocity;
+    result.inputKineticEnergyJ = ballKineticEnergy(
+        ballVelocity, angularVelocity, ballProperties.massKg, inertia) +
+        0.5 * input.cueMassKg * dot(cueVelocity, cueVelocity);
+    result.outputKineticEnergyJ = result.inputKineticEnergyJ;
 
     Vector impulse = desiredImpulse;
     if (desiredTangentialMagnitude <= friction * normalImpulse + 1e-12) {
@@ -169,6 +188,13 @@ CueContactResult resolveCueContact(BallState& ball, const CueImpactInput& input,
     result.impulseNs = impulse;
     result.cueVelocityAfterMS = subtract(cueVelocity,
         multiply(impulse, 1.0 / input.cueMassKg));
+    result.ballVelocityAfterMS = add(ballVelocity, deltaVelocity);
+    result.ballAngularVelocityAfterRadS = add(
+        angularVelocity, deltaAngularVelocity);
+    result.outputKineticEnergyJ = ballKineticEnergy(
+        result.ballVelocityAfterMS, result.ballAngularVelocityAfterRadS,
+        ballProperties.massKg, inertia) + 0.5 * input.cueMassKg *
+        dot(result.cueVelocityAfterMS, result.cueVelocityAfterMS);
     result.applied = true;
     return result;
 }

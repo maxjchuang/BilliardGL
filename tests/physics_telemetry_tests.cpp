@@ -1,6 +1,8 @@
 #include "game_state.h"
 #include "physics_telemetry.h"
 #include "surface_motion.h"
+#include "game_runtime.h"
+#include "shot.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -86,5 +88,24 @@ int main()
         "zero-capacity trace drops every frame");
     disabled.clear();
     expect(disabled.droppedFrames() == 0, "clear resets dropped count");
+
+    billiardgl::GameRuntime cueRuntime;
+    cueRuntime.setPhysicsTraceEnabled(true);
+    const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(
+        0.0f, 40.0f, cueRuntime.physicsProfile());
+    expect(cueRuntime.applyCueImpact(cue).ok && cueRuntime.step(2).ok,
+        "applied cue contact should remain independently traceable");
+    expect(cueRuntime.physicsTrace().frames()[0].hasCueContactResult &&
+        cueRuntime.physicsTrace().frames()[0].cueContactResult.applied,
+        "first post-shot frame should contain cue contact telemetry");
+    expect(!cueRuntime.physicsTrace().frames()[1].hasCueContactResult,
+        "cue contact is an event and should not repeat on later frames");
+    const billiardgl::CueContactResult& cueResult =
+        cueRuntime.physicsTrace().frames()[0].cueContactResult;
+    expect(std::isfinite(cueResult.normalImpulseNs) &&
+        std::isfinite(cueResult.tangentialImpulseNs) &&
+        std::isfinite(cueResult.inputKineticEnergyJ) &&
+        std::isfinite(cueResult.outputKineticEnergyJ),
+        "cue contact impulse and energy telemetry should be finite");
     return 0;
 }

@@ -20,6 +20,21 @@ def _frame(tick, speed=12.0, spin=3.0, traced=True):
     return frame
 
 
+def _contact_frame(regime="stick", normal=0.1, tangent=0.02,
+                   friction=0.6, input_energy=1.0, output_energy=0.8,
+                   applied=True, error=""):
+    frame = _frame(1)
+    frame["cue_contact"] = {
+        "regime": regime, "applied": applied, "error_code": error,
+        "friction_coefficient": friction,
+        "normal_impulse_ns": normal,
+        "tangential_impulse_ns": tangent,
+        "input_kinetic_energy_j": input_energy,
+        "output_kinetic_energy_j": output_energy,
+    }
+    return frame
+
+
 def _scenario(metric, expected, selection):
     return {
         "id": "cross_metric",
@@ -77,6 +92,29 @@ class Cross2023MetricTests(unittest.TestCase):
             [_frame(1, spin=0.0), _frame(2, spin=0.0)],
         )
         self.assertEqual(result.failures[0].code, "MODEL_MISMATCH")
+
+    def test_contact_metrics_cross_check_regime_and_friction_cone(self):
+        selection = dict(self.selection, expected_regime="stick")
+        scenario = _scenario("cue_contact_normal_impulse_ns", 0.1, selection)
+        self.assertTrue(analyze_scenario(scenario, [_contact_frame()]).passed)
+        invalid = analyze_scenario(
+            scenario, [_contact_frame(regime="stick", tangent=0.07)])
+        self.assertEqual(invalid.failures[0].code, "INTEGRATION_MISMATCH")
+
+    def test_contact_nonfinite_energy_is_numerical_failure(self):
+        selection = dict(self.selection, expected_regime="stick")
+        scenario = _scenario("cue_contact_energy_efficiency", 0.8, selection)
+        result = analyze_scenario(
+            scenario, [_contact_frame(output_energy=float("nan"))])
+        self.assertEqual(result.failures[0].code, "NUMERICAL_FAILURE")
+
+    def test_unsupported_3d_contact_is_reference_limitation(self):
+        selection = dict(self.selection, expected_regime="unsupported")
+        scenario = _scenario("cue_contact_normal_impulse_ns", 0.0, selection)
+        result = analyze_scenario(scenario, [_contact_frame(
+            regime="unsupported", normal=0.0, tangent=0.0, applied=False,
+            error="vertical_ball_impulse_requires_3d")])
+        self.assertEqual(result.failures[0].code, "REFERENCE_LIMITATION")
 
 
 if __name__ == "__main__":

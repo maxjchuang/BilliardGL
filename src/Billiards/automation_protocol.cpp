@@ -53,9 +53,10 @@ json::Value cueImpactValue(const CueImpactInput& input)
     return value;
 }
 
-json::Value cueImpactSupportValue(const CueImpactInput& input)
+json::Value cueImpactSupportValue(
+    const CueImpactInput& input, const CueContactResult* result = nullptr)
 {
-    const CueImpactSupport support = evaluateCueImpactSupport(input);
+    const CueImpactSupport support = evaluateCueImpactSupport(input, result);
     json::Value supported = json::Value::array();
     for (const std::string& field : support.exactlyConsumableFields)
         supported.asArray().push_back(json::Value(field));
@@ -66,6 +67,46 @@ json::Value cueImpactSupportValue(const CueImpactInput& input)
     value["exactly_consumable_fields"] = supported;
     value["shot_executed"] = json::Value(support.shotExecuted);
     value["unsupported_codes"] = unsupported;
+    return value;
+}
+
+json::Value vectorValue(const std::array<double, 3>& vector, double scale = 1.0)
+{
+    json::Value value = json::Value::object();
+    value["x"] = json::Value(vector[0] * scale);
+    value["y"] = json::Value(vector[1] * scale);
+    value["z"] = json::Value(vector[2] * scale);
+    return value;
+}
+
+json::Value cueContactValue(const CueContactResult& result)
+{
+    json::Value value = json::Value::object();
+    value["applied"] = json::Value(result.applied);
+    value["ball_angular_velocity_after_rad_s"] =
+        vectorValue(result.ballAngularVelocityAfterRadS);
+    value["ball_angular_velocity_before_rad_s"] =
+        vectorValue(result.ballAngularVelocityBeforeRadS);
+    value["ball_velocity_after_cm_s"] = vectorValue(result.ballVelocityAfterMS, 100.0);
+    value["ball_velocity_before_cm_s"] = vectorValue(result.ballVelocityBeforeMS, 100.0);
+    value["contact_arm_cm"] = vectorValue(result.contactArmM, 100.0);
+    value["contact_normal"] = vectorValue(result.contactNormal);
+    value["cue_velocity_after_cm_s"] = vectorValue(result.cueVelocityAfterMS, 100.0);
+    value["cue_velocity_before_cm_s"] = vectorValue(result.cueVelocityBeforeMS, 100.0);
+    value["error_code"] = json::Value(result.error);
+    value["friction_coefficient"] = json::Value(result.frictionCoefficient);
+    value["impulse_ns"] = vectorValue(result.impulseNs);
+    value["input_kinetic_energy_j"] = json::Value(result.inputKineticEnergyJ);
+    value["normal_impulse_ns"] = json::Value(result.normalImpulseNs);
+    value["normal_relative_speed_before_cm_s"] =
+        json::Value(result.normalRelativeSpeedBeforeMS * 100.0);
+    value["output_kinetic_energy_j"] = json::Value(result.outputKineticEnergyJ);
+    value["regime"] = json::Value(cueContactRegimeName(result.regime));
+    value["tangential_impulse_ns"] = json::Value(result.tangentialImpulseNs);
+    value["tangential_relative_speed_before_cm_s"] =
+        json::Value(result.tangentialRelativeSpeedBeforeMS * 100.0);
+    value["tangential_relative_velocity_before_cm_s"] =
+        vectorValue(result.tangentialRelativeVelocityBeforeMS, 100.0);
     return value;
 }
 
@@ -251,6 +292,8 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
         json::Value(frame.translationalKineticEnergyJ);
     value["total_kinetic_energy_j"] = json::Value(frame.totalKineticEnergyJ);
     if (frame.hasCueImpactInput) value["cue_impact"] = cueImpactValue(frame.cueImpactInput);
+    if (frame.hasCueContactResult)
+        value["cue_contact"] = cueContactValue(frame.cueContactResult);
     return value;
 }
 
@@ -321,7 +364,11 @@ json::Value serializeAutomationState(const GameRuntime& runtime)
     result["tick"] = json::Value(static_cast<double>(runtime.tick()));
     if (runtime.hasCueImpactInput()) {
         result["cue_impact"] = cueImpactValue(runtime.cueImpactInput());
-        result["cue_impact_support"] = cueImpactSupportValue(runtime.cueImpactInput());
+        result["cue_impact_support"] = cueImpactSupportValue(
+            runtime.cueImpactInput(), runtime.hasCueContactResult() ?
+                &runtime.cueContactResult() : nullptr);
+        if (runtime.hasCueContactResult())
+            result["cue_contact"] = cueContactValue(runtime.cueContactResult());
     }
     return result;
 }

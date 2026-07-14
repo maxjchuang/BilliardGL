@@ -77,6 +77,7 @@ private:
     CueImpactInput cueImpactInput_;
     bool hasCueContactResult_ = false;
     CueContactResult cueContactResult_;
+    bool cueContactPending_ = false;
     PhysicsProfile physicsProfile_;
 };
 

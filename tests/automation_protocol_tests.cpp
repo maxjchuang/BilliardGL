@@ -1,4 +1,5 @@
 #include "automation_protocol.h"
+#include "shot.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -47,6 +48,31 @@ int main()
         physicsFrame.has("total_kinetic_energy_j") &&
         physicsFrame.has("surface_transitions"),
         "trace should serialize frame surface energy and transitions");
+
+    billiardgl::GameRuntime cueRuntime;
+    cueRuntime.setPhysicsTraceEnabled(true);
+    const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(
+        0.0f, 40.0f, cueRuntime.physicsProfile());
+    expect(cueRuntime.applyCueImpact(cue).ok && cueRuntime.step(1).ok,
+        "cue contact should execute before serialization");
+    const billiardgl::json::Value cueFrame = billiardgl::serializePhysicsFrame(
+        cueRuntime.physicsTrace().frames().front());
+    const billiardgl::json::Value& contact = cueFrame.at("cue_contact");
+    expect(contact.at("regime").asString() == "stick" &&
+        contact.at("applied").asBool(), "contact regime should be stable lowercase");
+    expect(contact.has("cue_velocity_before_cm_s") &&
+        contact.has("cue_velocity_after_cm_s") &&
+        contact.has("contact_arm_cm") && contact.has("contact_normal") &&
+        contact.has("normal_relative_speed_before_cm_s") &&
+        contact.has("tangential_relative_velocity_before_cm_s") &&
+        contact.has("normal_impulse_ns") && contact.has("tangential_impulse_ns") &&
+        contact.has("impulse_ns") && contact.has("input_kinetic_energy_j") &&
+        contact.has("output_kinetic_energy_j") && contact.has("error_code"),
+        "cue contact should serialize every physical diagnostic with units");
+    const billiardgl::json::Value cueState =
+        billiardgl::serializeAutomationState(cueRuntime);
+    expect(cueState.at("cue_impact_support").at("shot_executed").asBool(),
+        "state support should report the actual applied result");
 
     const std::string error = billiardgl::json::stringify(
         billiardgl::automationErrorResponse(7, "invalid_argument", "bad value"));

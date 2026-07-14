@@ -496,6 +496,60 @@ def _cue_impact_observation(metric, reference, frames):
     return None, INTEGRATION_MISMATCH, "stable cue-impact output window is absent"
 
 
+def _cue_contact_observation(metric, reference, frames):
+    selection = reference.get("selection")
+    if not isinstance(selection, dict):
+        return None, REFERENCE_LIMITATION, "cue-contact selection metadata is absent"
+    expected_regime = selection.get("expected_regime")
+    if expected_regime not in {"stick", "slip", "miscue", "unsupported"}:
+        return None, REFERENCE_LIMITATION, "expected cue-contact regime is invalid"
+    contacts = [frame.get("cue_contact") for frame in frames
+                if isinstance(frame.get("cue_contact"), dict)]
+    if len(contacts) != 1:
+        return None, INTEGRATION_MISMATCH, (
+            "cue contact must appear on exactly one trace frame")
+    contact = contacts[0]
+    regime = contact.get("regime")
+    if regime not in {"stick", "slip", "miscue", "unsupported"}:
+        return None, INTEGRATION_MISMATCH, "cue-contact regime is invalid"
+    if regime == "unsupported" or not contact.get("applied", False):
+        return None, REFERENCE_LIMITATION, (
+            contact.get("error_code") or "requested cue contact was not applied")
+    required = {
+        "friction_coefficient", "normal_impulse_ns", "tangential_impulse_ns",
+        "input_kinetic_energy_j", "output_kinetic_energy_j",
+    }
+    if not required <= set(contact):
+        return None, INTEGRATION_MISMATCH, "cue-contact telemetry fields are incomplete"
+    friction = contact["friction_coefficient"]
+    normal = contact["normal_impulse_ns"]
+    tangent = contact["tangential_impulse_ns"]
+    input_energy = contact["input_kinetic_energy_j"]
+    output_energy = contact["output_kinetic_energy_j"]
+    if not all(_finite_number(value) for value in
+               (friction, normal, tangent, input_energy, output_energy)):
+        return None, NUMERICAL_FAILURE, "cue-contact impulse or energy is not finite"
+    if friction < 0.0 or normal < 0.0 or tangent < 0.0:
+        return None, INTEGRATION_MISMATCH, "cue-contact impulse signs are invalid"
+    cone_limit = friction * normal
+    cone_tolerance = max(1e-12, abs(cone_limit) * 1e-9)
+    if tangent > cone_limit + cone_tolerance:
+        return None, INTEGRATION_MISMATCH, "cue-contact impulse exceeds friction cone"
+    if regime == "slip" and abs(tangent - cone_limit) > cone_tolerance:
+        return None, INTEGRATION_MISMATCH, "slip label disagrees with friction-cone clamp"
+    if regime != expected_regime:
+        return regime, MODEL_MISMATCH, "cue-contact regime differs from reference"
+    if metric == "cue_contact_normal_impulse_ns":
+        return normal, None, None
+    if metric == "cue_contact_tangential_impulse_ns":
+        return tangent, None, None
+    if metric == "cue_contact_energy_efficiency":
+        if input_energy <= 0.0:
+            return None, INTEGRATION_MISMATCH, "cue-contact input energy is not positive"
+        return output_energy / input_energy, None, None
+    return None, INTEGRATION_MISMATCH, f"cue-contact metric {metric} is unavailable"
+
+
 def _linear_value_at(samples, target_time):
     if len(samples) < 2 or not all(
             _finite_number(value) for sample in samples for value in sample):
@@ -606,6 +660,11 @@ def _reference_observation(observed_metric, reference, scenario, frames):
     if observed_metric in {
             "cue_impact_linear_speed_cm_s", "cue_impact_angular_speed_rad_s"}:
         return _cue_impact_observation(observed_metric, reference, frames)
+    if observed_metric in {
+            "cue_contact_normal_impulse_ns",
+            "cue_contact_tangential_impulse_ns",
+            "cue_contact_energy_efficiency"}:
+        return _cue_contact_observation(observed_metric, reference, frames)
     if observed_metric in _EXPERIMENTAL_METRICS:
         return _event_observation(observed_metric, reference, frames)
     if observed_metric != "stopping_distance_cm":

@@ -23,6 +23,8 @@ struct CueImpactSupport {
     bool shotExecuted = false;
 };
 
-CueImpactSupport evaluateCueImpactSupport(const CueImpactInput& input);
+struct CueContactResult;
+CueImpactSupport evaluateCueImpactSupport(
+    const CueImpactInput& input, const CueContactResult* result = nullptr);
 
 }  // namespace billiardgl

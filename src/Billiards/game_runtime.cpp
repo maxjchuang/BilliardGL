@@ -66,9 +66,25 @@ CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
     return application;
 }
 
-CueImpactSupport evaluateCueImpactSupport(const CueImpactInput& input)
+CueImpactSupport evaluateCueImpactSupport(
+    const CueImpactInput& input, const CueContactResult* result)
 {
     CueImpactSupport support;
+    if (result) {
+        support.shotExecuted = result->applied;
+        if (result->applied) {
+            support.exactlyConsumableFields.push_back("cue_ball_index");
+            support.exactlyConsumableFields.push_back("cue_speed_cm_s");
+            support.exactlyConsumableFields.push_back("cue_mass_kg");
+            support.exactlyConsumableFields.push_back("horizontal_direction");
+            support.exactlyConsumableFields.push_back("horizontal_tip_offset");
+            support.exactlyConsumableFields.push_back("vertical_tip_offset");
+            support.exactlyConsumableFields.push_back("chalk_state");
+        }
+        if (!result->applied && !result->error.empty())
+            support.unsupportedCodes.push_back(result->error);
+        return support;
+    }
     if (input.cueBallIndex == 0) support.exactlyConsumableFields.push_back("cue_ball_index");
     else support.unsupportedCodes.push_back("cue_ball_index_not_supported");
     if (std::fabs(input.direction[1]) <= 0.000001 &&
@@ -105,6 +121,7 @@ void GameRuntime::reset()
     cueImpactInput_ = CueImpactInput{};
     hasCueContactResult_ = false;
     cueContactResult_ = CueContactResult{};
+    cueContactPending_ = false;
     physicsProfile_ = defaultChinesePoolPhysicsProfile();
     updateCameraFromCueBall(state_);
 }
@@ -193,7 +210,10 @@ ActionResult GameRuntime::step(int count)
                 timeStep, before, state_, telemetry, physicsProfile_);
             frame.hasCueImpactInput = hasCueImpactInput_;
             frame.cueImpactInput = cueImpactInput_;
+            frame.hasCueContactResult = cueContactPending_;
+            frame.cueContactResult = cueContactResult_;
             physicsTrace_.append(frame);
+            cueContactPending_ = false;
         }
         recordEvents();
         if (state_.events.shotEnded || (!state_.transitionPerspective && state_.players.shotTaken))
@@ -246,6 +266,7 @@ ActionResult GameRuntime::applyCueImpact(const CueImpactInput& input)
     cueImpactInput_ = input;
     hasCueContactResult_ = true;
     cueContactResult_ = application.contact;
+    cueContactPending_ = true;
     if (application.action.ok) state_ = candidate;
     return application.action;
 }
@@ -289,6 +310,7 @@ ActionResult GameRuntime::replaceStateForScenario(
     hasCueContactResult_ = cueImpact && executeCueImpact;
     cueContactResult_ = hasCueContactResult_ ?
         application.contact : CueContactResult{};
+    cueContactPending_ = hasCueContactResult_;
     return ActionResult{};
 }
 
