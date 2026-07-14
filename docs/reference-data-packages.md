@@ -20,6 +20,27 @@ python3 -m tools.physics_validation.calibration_run \
 
 Calibration covers center impact, mirrored vertical offsets, and the preregistered inner stick boundary. HOLDOUT contains left/right sidespin mirrors, horizontal slip-cone clamping, and the traceable zero-impulse miscue outcome. Nonzero cue elevation and a vertical slip impulse remain explicit 2.5D hard-constraint tests rather than analytic reference cases.
 
+### Cue-contact candidate v1 result
+
+The frozen `cue_contact_v1` formula converts the versioned UI power scale into physical cue speed, then resolves one SI-unit rigid impulse at the declared contact arm. It classifies stick versus Coulomb-limited slip, produces full 3D angular velocity, records zero-impulse miscues, and atomically rejects results requiring vertical ball translation in the 2.5D runtime. The profile retains cue mass `0.5 kg`, normal restitution `0`, chalked/unchalked friction `0.6/0.1`, maximum reliable offset fraction `0.8`, and compatibility mapping `1.34 cm/s` per power unit. Their exact evidence classifications are in `physics_models/profiles/chinese_pool_cue_contact_v1.json`.
+
+Before freeze, all 19 CALIBRATION points passed and no HOLDOUT rows were exposed. The single post-freeze HOLDOUT execution then passed all 16 points: left/right sidespin mirrors, horizontal slip impulse/energy/speed, and the zero-impulse miscue. The immutable calibration, freeze, validation report, full-precision CSV, Markdown report, and receipt are under `physics_models/candidates/cue_contact_v1/`; the receipt result is `PASSED_OR_ACCOUNTED` with no known or new failures.
+
+This result establishes analytic consistency only. Cross 2023 still has no admitted numerical points, so real-world cue-impact accuracy remains unvalidated. The candidate profile explicitly records `analytic_contract_passed=true`, `experimental_validation_blocked=true`, and `experimental_validation=false` for the UI power mapping. Replaying HOLDOUT requires a new governed validation event; do not overwrite the committed first receipt.
+
+Verify the frozen local artifacts without exposing HOLDOUT:
+
+```bash
+python3 -m tools.physics_validation.freeze_candidate \
+  --verify physics_models/candidates/cue_contact_v1/freeze.json \
+  --profile physics_models/profiles/chinese_pool_cue_contact_v1.json \
+  --executable build/Billiards \
+  --calibration-report physics_models/candidates/cue_contact_v1/calibration/reference_report.json \
+  --dataset-manifest tests/physics_validation/reference_data/cue_contact_analytic_contract/manifest.json
+```
+
+Only after authorizing a new governed validation event, use `validation_run` with that freeze, profile, executable, package, and a new output directory. The committed first receipt under `physics_models/candidates/cue_contact_v1/validation/` is immutable.
+
 ## Repository policy
 
 - Every code, JSON, CSV, and Markdown file is UTF-8.
@@ -329,7 +350,7 @@ python3 -m tools.physics_validation.reference_run \
 
 `cross_2023_cue_impact` identifies Rod Cross, “Impact of a cue with a billiard ball,” DOI `10.1177/17543371231184011`, first online 29 June 2023 and published in volume 239(4), pages 647–651 in December 2025.
 
-As re-audited on 14 July 2026, SAGE marks the article restricted, redirects the PDF endpoint to the abstract, and offers institutional authentication or paid access; the scholarly indexes still expose no repository full text. Therefore the package deliberately contains zero normalized numerical points. It commits the complete access audit, exact empty numeric dataset, scenario-v2 template, and four strict limitations, including the missing cue-contact telemetry required to classify stick/slip. Values from the abstract, snippets, or Cross 2008 are prohibited substitutes. This is an admission-gated package, not a claim that the Cross experimental dataset has been completed.
+As re-audited on 14 July 2026, SAGE marks the article restricted, redirects the PDF endpoint to the abstract, and offers institutional authentication or paid access; the scholarly indexes still expose no repository full text. Therefore the package deliberately contains zero normalized numerical points. It commits the complete access audit, exact empty numeric dataset, scenario-v2 template, and three strict limitations. Production now records cue contact relative velocity, impulse, friction cone, energy, and stick/slip/miscue regime, so the former telemetry limitation is resolved. Values from the abstract, snippets, or Cross 2008 remain prohibited substitutes. This is an admission-gated package, not a claim that the Cross experimental dataset has been completed.
 
 Offline verification:
 
@@ -344,7 +365,7 @@ python3 -m tools.physics_validation.reference_run \
   --output build/physics-reference/cross-2023
 ```
 
-The blockers can only be removed after a lawful full text is hashed and reviewed, every experimental marker/table is separated from model output and committed with uncertainties/splits, and an independent cue-speed/tip-offset mapping exists. The source PDF itself must not be redistributed without permission.
+The remaining blockers can only be removed after a lawful full text is hashed and reviewed, every experimental marker/table is separated from model output and committed with uncertainties/splits, and the compatibility UI-power scale is replaced or supported by an independently validated physical cue-speed mapping. The source PDF itself must not be redistributed without permission.
 
 ## `scenario_template.json` and adapters
 

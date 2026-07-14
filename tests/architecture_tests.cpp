@@ -50,6 +50,7 @@ void assertProjectTestDoesNotUseAssert(const std::string& relativePath)
 int main()
 {
     const std::string billiards = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/billiards.cpp");
+    const std::string gameRuntime = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/game_runtime.cpp");
     const std::string renderer = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/renderer.cpp");
     const std::string renderResources = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/src/Billiards/render_resources.cpp");
     const std::string cmake = readFile(std::string(BILLIARDGL_SOURCE_ROOT) + "/CMakeLists.txt");
@@ -78,7 +79,9 @@ int main()
     assertContains(billiards, "billiardgl::handleCameraAnchorToggleKey(Game)");
     assertContains(billiards, "billiardgl::handleCameraReturnToCueBallKey(Game)");
     assertContains(billiards, "billiardgl::beginCameraPan(Game, x, y)");
-    assertContains(billiards, "Game.camera.anchorMode = billiardgl::CameraAnchorMode::FreeLook;");
+    assertNotContains(billiards, "Game.camera.anchorMode = billiardgl::CameraAnchorMode::FreeLook;");
+    assertContains(billiards, "billiardgl::applyCueShot(");
+    assertContains(gameRuntime, "state.camera.anchorMode = CameraAnchorMode::FreeLook;");
     assertContains(billiards, "Game.transitionPerspective = false;");
     assertContains(billiards, "billiardgl::installPlatformScrollHandler");
     assertContains(billiards, "Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim");

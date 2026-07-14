@@ -22,13 +22,8 @@ def adapt_cross_2023(package, split, points):
         ),
         ReferenceLimitation(
             dataset_id, "cue_speed_to_power_mapping_missing", "cue_input_mapping",
-            "The production shot path has no independently evidenced conversion from physical cue speed/mass/offset to user shot power.",
-            "Publish an independently validated mechanical mapping and add real vertical tip-offset contact physics.",
-        ),
-        ReferenceLimitation(
-            dataset_id, "cue_contact_regime_telemetry_missing", "cue_contact_regime",
-            "Production traces do not expose cue-tip/ball tangential relative velocity, normal and tangential impulse, or contact-state transitions.",
-            "Instrument cue contact kinematics and impulses, then classify stick/slip transitions from signed tangential relative velocity without changing production dynamics.",
+            "The versioned production power scale is a compatibility mapping, not an independently evidenced conversion from user shot power to physical cue speed.",
+            "Publish and validate a mechanical or synchronized player-input mapping from user control to cue speed.",
         ),
     )
     return ReferenceAdaptation((), limitations)
