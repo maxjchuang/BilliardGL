@@ -1,0 +1,310 @@
+{
+  "accounting": {
+    "known_limitations": [],
+    "known_model_mismatches": [],
+    "missing_limitations": [],
+    "missing_model_mismatches": [],
+    "new_limitations": [],
+    "new_model_mismatches": [],
+    "unallowlistable_failures": []
+  },
+  "metadata": {
+    "build_id": "sha256:6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+    "candidate_id": "chinese_pool_multi_contact_solver_v1",
+    "dataset_id": "multi_contact_solver_analytic_contract",
+    "dataset_version": "1.0.0",
+    "executable": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards",
+    "freeze_sha256": "360c85919e3167c3a86351068cdb147b02974ff336b019a3ffa18ac82eaf4969",
+    "package": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract",
+    "package_hashes": {
+      "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+      "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+      "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+      "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+      "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+      "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+      "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+    },
+    "scenarios": {
+      "multi_contact_solver_analytic_contract__chain_right": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/provenance/multi_contact_solver_analytic_contract__chain_right.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case chain_right",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__chain_right.json"
+      },
+      "multi_contact_solver_analytic_contract__line_toi_right": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/provenance/multi_contact_solver_analytic_contract__line_toi_right.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case line_toi_right",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__line_toi_right.json"
+      },
+      "multi_contact_solver_analytic_contract__overlap_right": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/provenance/multi_contact_solver_analytic_contract__overlap_right.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case overlap_right",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__overlap_right.json"
+      },
+      "multi_contact_solver_analytic_contract__symmetric_right": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/provenance/multi_contact_solver_analytic_contract__symmetric_right.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case symmetric_right",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__symmetric_right.json"
+      }
+    }
+  },
+  "partitions": {
+    "CALIBRATION": {
+      "groups": [],
+      "points": [],
+      "series": [],
+      "summary": {
+        "passed": 0,
+        "points": 0,
+        "statuses": {}
+      }
+    },
+    "HOLDOUT": {
+      "groups": [
+        {
+          "count": 1,
+          "group_id": "chain_right",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        },
+        {
+          "count": 1,
+          "group_id": "line_toi_right",
+          "maximum_absolute_error": 1.5258789023975261e-09,
+          "pass_rate": 1.0,
+          "rmse": 1.5258789023975261e-09
+        },
+        {
+          "count": 1,
+          "group_id": "overlap_right",
+          "maximum_absolute_error": 0.0,
+          "pass_rate": 1.0,
+          "rmse": 0.0
+        },
+        {
+          "count": 1,
+          "group_id": "symmetric_right",
+          "maximum_absolute_error": 0.0002899169921875,
+          "pass_rate": 1.0,
+          "rmse": 0.0002899169921875
+        }
+      ],
+      "points": [
+        {
+          "acceptance_interval": [
+            -1e-09,
+            1e-09
+          ],
+          "build_id": "sha256:6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+          "case_id": "chain_right",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "multi_contact_solver_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 1e-09,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 0.0,
+          "fit_subset": null,
+          "group_id": "chain_right",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "solver_energy_growth_j",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+            "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+            "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+            "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+            "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "chain_passivity_right",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 0.0,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case chain_right",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "multi_contact_solver_analytic_contract__chain_right",
+          "series_id": "solver_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:solver:chain:right:passivity",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__chain_right.json",
+          "unit": "J"
+        },
+        {
+          "acceptance_interval": [
+            0.042849,
+            0.042851
+          ],
+          "build_id": "sha256:6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+          "case_id": "line_toi_right",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "multi_contact_solver_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 1e-06,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 0.04285,
+          "fit_subset": null,
+          "group_id": "line_toi_right",
+          "group_maximum_absolute_error": 1.5258789023975261e-09,
+          "group_rmse": 1.5258789023975261e-09,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "solver_first_toi_seconds",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+            "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+            "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+            "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+            "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "line_toi_right",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 0.0428499984741211,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case line_toi_right",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "multi_contact_solver_analytic_contract__line_toi_right",
+          "series_id": "solver_v1",
+          "signed_error": -1.5258789023975261e-09,
+          "source_locator": "analytic:solver:line:right:toi",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__line_toi_right.json",
+          "unit": "s"
+        },
+        {
+          "acceptance_interval": [
+            2.0,
+            2.0
+          ],
+          "build_id": "sha256:6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+          "case_id": "overlap_right",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "multi_contact_solver_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 2.0,
+          "fit_subset": null,
+          "group_id": "overlap_right",
+          "group_maximum_absolute_error": 0.0,
+          "group_rmse": 0.0,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "solver_penetration_limit_count",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+            "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+            "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+            "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+            "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "overlap_limit_right",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 2,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case overlap_right",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "multi_contact_solver_analytic_contract__overlap_right",
+          "series_id": "solver_v1",
+          "signed_error": 0.0,
+          "source_locator": "analytic:solver:overlap:right:limit",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__overlap_right.json",
+          "unit": "dimensionless"
+        },
+        {
+          "acceptance_interval": [
+            -0.001,
+            0.001
+          ],
+          "build_id": "sha256:6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+          "case_id": "symmetric_right",
+          "combined_standard_uncertainty": 0.0,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 2.0,
+          "dataset_id": "multi_contact_solver_analytic_contract",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.001,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 0.0,
+          "fit_subset": null,
+          "group_id": "symmetric_right",
+          "group_maximum_absolute_error": 0.0002899169921875,
+          "group_rmse": 0.0002899169921875,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.0,
+          "metric": "solver_max_residual_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+            "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+            "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+            "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+            "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+            "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "symmetric_residual_right",
+          "pool_applicability": "NOT_APPLICABLE",
+          "prediction": 0.0002899169921875,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/multi_contact_solver_analytic_contract --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation --case symmetric_right",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "multi_contact_solver_analytic_contract__symmetric_right",
+          "series_id": "solver_v1",
+          "signed_error": 0.0002899169921875,
+          "source_locator": "analytic:solver:symmetric:right:residual",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/multi_contact_solver_v1/validation/traces/multi_contact_solver_analytic_contract__symmetric_right.json",
+          "unit": "cm/s"
+        }
+      ],
+      "series": [
+        {
+          "count": 4,
+          "maximum_absolute_error": 0.0002899169921875,
+          "pass_rate": 1.0,
+          "rmse": 0.00014495849609575773,
+          "series_id": "solver_v1"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "points": 4,
+        "statuses": {
+          "PASSED": 4
+        }
+      }
+    }
+  },
+  "reference_limitations": []
+}

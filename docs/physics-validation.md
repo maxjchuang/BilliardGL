@@ -126,3 +126,14 @@ stress matrix. This establishes reproducible engineering invariants only. No
 real break-shot experiment or sufficiently long chaotic trajectory dataset is
 currently available, so the project does not claim experimental validation of
 full-rack dispersion or long-horizon trajectory accuracy.
+
+The frozen HOLDOUT was executed exactly once on 2026-07-14: 4/4 points passed
+with no accounted failure. All 12 validation files (four traces, four provenance
+records, point table, JSON/Markdown reports, and receipt) are committed. The
+immutable hashes are freeze
+`360c85919e3167c3a86351068cdb147b02974ff336b019a3ffa18ac82eaf4969`,
+report `86c2dc17b5e504b0068bae57e3a95a8bfbc88b212715a86661ed97afbbce2eb1`,
+and receipt
+`0e7bea39012d5963f00c9d0e9f72ade573b7c58cf16a6adcd719b7b7334c8732`.
+The committed HOLDOUT directory is evidence, not a replay target; future model
+work must create a new candidate/version and a newly preregistered split.

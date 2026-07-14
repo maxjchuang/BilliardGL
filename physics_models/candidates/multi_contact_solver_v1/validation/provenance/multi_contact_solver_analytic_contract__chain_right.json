@@ -1,0 +1,23 @@
+{
+  "adapter_id": "multi_contact_solver_analytic_v1",
+  "case_id": "chain_right",
+  "dataset_id": "multi_contact_solver_analytic_contract",
+  "dataset_version": "1.0.0",
+  "evidence_grade": "C",
+  "experimental_validation": false,
+  "package_hashes": {
+    "expected_model_mismatches": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+    "expected_reference_limitations": "sha256:4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+    "extraction": "sha256:dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+    "normalized": "sha256:e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+    "raw_extracted": "sha256:9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+    "scenario_template": "sha256:f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+    "split": "sha256:fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+  },
+  "point_ids": [
+    "chain_passivity_right"
+  ],
+  "source_locators": [
+    "analytic:solver:chain:right:passivity"
+  ]
+}
