@@ -174,6 +174,18 @@ billiardgl::json::Value validV10Document()
     return value;
 }
 
+billiardgl::json::Value validV11Document()
+{
+    billiardgl::json::Value value = validV10Document();
+    value["schema_version"] = billiardgl::json::Value(11);
+    billiardgl::json::Value& cushion = value["physics_profile"]["cushion"];
+    cushion["restitution_intercept"] = billiardgl::json::Value(1.0);
+    cushion["restitution_slope_per_mps"] = billiardgl::json::Value(0.056);
+    cushion["minimum_restitution"] = billiardgl::json::Value(0.0);
+    cushion["maximum_restitution"] = billiardgl::json::Value(0.93);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -446,8 +458,13 @@ int main()
         billiardgl::json::parse("[0.8,0.6,0.0]").value;
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
+    const billiardgl::PhysicsScenarioResult v11 =
+        billiardgl::parsePhysicsScenario(validV11Document());
+    expect(v11.ok && std::fabs(
+        v11.scenario.physicsProfile.cushion.restitutionSlopePerMps - 0.056f) < 1e-6f,
+        "v11 should parse the bounded affine cushion law");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(11);
+    unknownVersion["schema_version"] = billiardgl::json::Value(12);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

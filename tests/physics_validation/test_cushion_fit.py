@@ -1,3 +1,4 @@
+import hashlib
 import json
 import math
 import unittest
@@ -6,7 +7,8 @@ from pathlib import Path
 
 from tools.physics_validation.adapters.mathavan_2010 import adapt_mathavan_2010
 from tools.physics_validation.fit_cushion import (
-    build_fit_report, fit_cushion_parameters, read_incident_inputs)
+    build_fit_report, build_v2_fit_report, fit_cushion_parameters,
+    read_incident_inputs)
 from tools.physics_validation.reference_package import load_reference_package
 from tools.physics_validation.reference_point import read_reference_points
 from tools.physics_validation.reference_split import load_reference_split
@@ -14,6 +16,9 @@ from tools.physics_validation.reference_split import load_reference_split
 
 PACKAGE_PATH = Path(__file__).parent / "reference_data/mathavan_2010_cushion"
 FIT_PATH = Path(__file__).parents[2] / "physics_models/calibration/cushion_fit_v1.json"
+V2_INPUTS = Path(__file__).parents[2] / (
+    "physics_models/calibration/cushion_fit_v2_inputs.csv")
+V2_FIT = Path(__file__).parents[2] / "physics_models/calibration/cushion_fit_v2.json"
 
 
 class CushionFitTests(unittest.TestCase):
@@ -69,6 +74,45 @@ class CushionFitTests(unittest.TestCase):
         self.assertFalse(report["source_reported_sensitivity_center"]
                          ["used_as_experimental_expected_values"])
         self.assertEqual(json.loads(FIT_PATH.read_text(encoding="utf-8")), report)
+
+    def test_fitted_cushion_law_is_finite_bounded_and_nonincreasing(self):
+        fit = fit_cushion_parameters(read_incident_inputs(V2_INPUTS))
+
+        self.assertGreaterEqual(fit.e_slope, 0.0)
+        self.assertTrue(0.0 <= fit.e_min <= fit.e_max <= 1.0)
+        values = [fit.restitution(speed) for speed in (0.0, 0.5, 1.8, 4.0)]
+        self.assertEqual(values, sorted(values, reverse=True))
+        self.assertTrue(math.isfinite(fit.objective))
+        self.assertEqual(
+            (fit.e_intercept, fit.e_slope, fit.e_min, fit.e_max),
+            (1.0, 0.056, 0.0, 0.93),
+        )
+        self.assertEqual(len(fit.residuals), len(read_incident_inputs(V2_INPUTS)))
+        self.assertEqual(
+            json.loads(V2_FIT.read_text(encoding="utf-8")),
+            build_v2_fit_report(read_incident_inputs(V2_INPUTS))[0],
+        )
+
+    def test_v2_inputs_are_spent_and_exclude_confirmation(self):
+        rows = read_incident_inputs(V2_INPUTS)
+        dataset_ids = {row.dataset_id for row in rows}
+
+        self.assertEqual(
+            dataset_ids,
+            {"mathavan_2009_high_speed", "mathavan_2010_cushion"},
+        )
+        self.assertEqual({row.lifecycle for row in rows}, {"spent"})
+        self.assertNotIn("sudo_2002", dataset_ids)
+
+    def test_v2_inputs_are_bound_to_committed_numeric_sources(self):
+        root = Path(__file__).parents[2]
+        for row in read_incident_inputs(V2_INPUTS):
+            for path_value, expected in (
+                    (row.normalized_path, row.normalized_sha256),
+                    (row.raw_extracted_path, row.raw_extracted_sha256)):
+                actual = "sha256:" + hashlib.sha256(
+                    (root / path_value).read_bytes()).hexdigest()
+                self.assertEqual(actual, expected)
 
 
 if __name__ == "__main__":

@@ -59,6 +59,14 @@ bool valid(const BallProperties& ball, const CushionProperties& cushion)
         std::isfinite(ball.inertiaFactor) && ball.inertiaFactor > 0.0f &&
         std::isfinite(cushion.normalRestitution) &&
         cushion.normalRestitution >= 0.0f && cushion.normalRestitution <= 1.0f &&
+        std::isfinite(cushion.restitutionIntercept) &&
+        std::isfinite(cushion.restitutionSlopePerMps) &&
+        cushion.restitutionSlopePerMps >= 0.0f &&
+        std::isfinite(cushion.minimumRestitution) &&
+        std::isfinite(cushion.maximumRestitution) &&
+        cushion.minimumRestitution >= 0.0f &&
+        cushion.minimumRestitution <= cushion.maximumRestitution &&
+        cushion.maximumRestitution <= 1.0f &&
         std::isfinite(cushion.frictionCoefficient) &&
         cushion.frictionCoefficient >= 0.0f &&
         std::isfinite(cushion.noseHeightRatio) &&
@@ -111,6 +119,28 @@ void applyPositionCorrection(BallState& ball, const Vector& correction)
 
 }  // namespace
 
+double cushionRestitution(
+    const CushionProperties& cushionProperties, double incidentSpeedCmS)
+{
+    if (!std::isfinite(incidentSpeedCmS) || incidentSpeedCmS < 0.0 ||
+        !std::isfinite(cushionProperties.restitutionIntercept) ||
+        !std::isfinite(cushionProperties.restitutionSlopePerMps) ||
+        cushionProperties.restitutionSlopePerMps < 0.0f ||
+        !std::isfinite(cushionProperties.minimumRestitution) ||
+        !std::isfinite(cushionProperties.maximumRestitution) ||
+        cushionProperties.minimumRestitution < 0.0f ||
+        cushionProperties.minimumRestitution >
+            cushionProperties.maximumRestitution ||
+        cushionProperties.maximumRestitution > 1.0f) {
+        return 0.0;
+    }
+    const double incidentSpeedMS = incidentSpeedCmS / 100.0;
+    const double affine = cushionProperties.restitutionIntercept -
+        cushionProperties.restitutionSlopePerMps * incidentSpeedMS;
+    return std::max<double>(cushionProperties.minimumRestitution,
+        std::min<double>(cushionProperties.maximumRestitution, affine));
+}
+
 const char* cushionContactRegimeName(CushionContactRegime regime)
 {
     switch (regime) {
@@ -142,7 +172,6 @@ CushionContactResult resolveCushionContact(
     result.contactNormal = normal;
     result.contactTangent = cross(Vector{{0.0, 1.0, 0.0}}, normal);
     result.penetrationM = penetrationM;
-    result.restitution = cushionProperties.normalRestitution;
     result.frictionCoefficient = cushionProperties.frictionCoefficient;
     result.noseHeightRatio = cushionProperties.noseHeightRatio;
     result.maximumRigidIncidentSpeedMS =
@@ -165,6 +194,8 @@ CushionContactResult resolveCushionContact(
     const double normalSpeed = dot(result.contactVelocityBeforeMS, normal);
     result.normalRelativeSpeedBeforeMS = normalSpeed;
     result.incidentSpeedMS = std::max(0.0, -normalSpeed);
+    result.restitution = cushionRestitution(
+        cushionProperties, result.incidentSpeedMS * 100.0);
     result.rigidDomainExceeded =
         result.incidentSpeedMS > result.maximumRigidIncidentSpeedMS + 1e-12;
     if (normalSpeed >= -1e-12) {

@@ -73,6 +73,9 @@ int main()
     billiardgl::PhysicsProfile cushionProfile =
         billiardgl::defaultChinesePoolPhysicsProfile();
     cushionProfile.cushion.normalRestitution = 0.5f;
+    cushionProfile.cushion.restitutionIntercept = 0.5f;
+    cushionProfile.cushion.minimumRestitution = 0.5f;
+    cushionProfile.cushion.maximumRestitution = 0.5f;
     cushionProfile.cushion.frictionCoefficient = 0.2f;
     cushionProfile.cushion.noseHeightRatio = 1.4f;
     billiardgl::GameState cushionState;

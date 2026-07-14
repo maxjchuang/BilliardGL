@@ -36,6 +36,10 @@ struct CueProperties {
 
 struct CushionProperties {
     float normalRestitution = 1.0f;
+    float restitutionIntercept = 1.0f;
+    float restitutionSlopePerMps = 0.0f;
+    float minimumRestitution = 1.0f;
+    float maximumRestitution = 1.0f;
     float frictionCoefficient = 0.0f;
     float noseHeightRatio = 1.0f;
     float maximumRigidIncidentSpeedCmS = 1000000000.0f;

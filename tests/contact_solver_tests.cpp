@@ -101,6 +101,9 @@ int main()
 
     PhysicsProfile cushion = elastic;
     cushion.cushion.normalRestitution = 0.7f;
+    cushion.cushion.restitutionIntercept = 0.7f;
+    cushion.cushion.minimumRestitution = 0.7f;
+    cushion.cushion.maximumRestitution = 0.7f;
     cushion.cushion.frictionCoefficient = 0.2f;
     cushion.cushion.noseHeightRatio = 1.4f;
     GameState railState = stateFor(1);

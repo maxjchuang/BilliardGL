@@ -49,6 +49,10 @@ PhysicsProfile defaultChinesePoolPhysicsProfile()
     profile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
     profile.surface.torsionalSpinDecelerationRadS2 = 0.0f;
     profile.cushion.normalRestitution = 0.9248723120650503f;
+    profile.cushion.restitutionIntercept = profile.cushion.normalRestitution;
+    profile.cushion.restitutionSlopePerMps = 0.0f;
+    profile.cushion.minimumRestitution = profile.cushion.normalRestitution;
+    profile.cushion.maximumRestitution = profile.cushion.normalRestitution;
     profile.cushion.frictionCoefficient = 0.14f;
     profile.cushion.noseHeightRatio = 1.4f;
     profile.cushion.maximumRigidIncidentSpeedCmS = 250.0f;
@@ -133,6 +137,15 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         profile.cushion.normalRestitution < 0.0f ||
         profile.cushion.normalRestitution > 1.0f) {
         return invalid("cushion normal restitution must be between zero and one");
+    }
+    if (!std::isfinite(profile.cushion.restitutionIntercept) ||
+        !finiteNonnegative(profile.cushion.restitutionSlopePerMps) ||
+        !std::isfinite(profile.cushion.minimumRestitution) ||
+        !std::isfinite(profile.cushion.maximumRestitution) ||
+        profile.cushion.minimumRestitution < 0.0f ||
+        profile.cushion.minimumRestitution > profile.cushion.maximumRestitution ||
+        profile.cushion.maximumRestitution > 1.0f) {
+        return invalid("cushion affine restitution law is invalid");
     }
     if (!finiteNonnegative(profile.cushion.frictionCoefficient)) {
         return invalid("cushion friction coefficient must be finite and nonnegative");
@@ -231,6 +244,14 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "cue.cue_speed_per_power_unit_cm_s="
         << profile.cue.cueSpeedPerPowerUnitCmS << '\n'
         << "cushion.normal_restitution=" << profile.cushion.normalRestitution << '\n'
+        << "cushion.restitution_intercept="
+        << profile.cushion.restitutionIntercept << '\n'
+        << "cushion.restitution_slope_per_mps="
+        << profile.cushion.restitutionSlopePerMps << '\n'
+        << "cushion.minimum_restitution="
+        << profile.cushion.minimumRestitution << '\n'
+        << "cushion.maximum_restitution="
+        << profile.cushion.maximumRestitution << '\n'
         << "cushion.friction_coefficient=" << profile.cushion.frictionCoefficient << '\n'
         << "cushion.nose_height_ratio=" << profile.cushion.noseHeightRatio << '\n'
         << "cushion.maximum_rigid_incident_speed_cm_s="

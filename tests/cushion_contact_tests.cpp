@@ -58,10 +58,16 @@ int main()
     billiardgl::BallProperties properties;
     billiardgl::CushionProperties cushion;
     cushion.normalRestitution = 0.8f;
+    cushion.restitutionIntercept = 0.9f;
+    cushion.restitutionSlopePerMps = 0.1f;
+    cushion.minimumRestitution = 0.5f;
+    cushion.maximumRestitution = 0.95f;
     cushion.frictionCoefficient = 0.0f;
     cushion.noseHeightRatio = 1.0f;
     cushion.maximumRigidIncidentSpeedCmS = 250.0f;
     const billiardgl::Point3 rightRailNormal(-1.0f, 0.0f, 0.0f);
+    expect(close(billiardgl::cushionRestitution(cushion, 50.0), 0.85, 1e-7),
+        "cushion restitution evaluates bounded affine speed law in m/s");
 
     billiardgl::BallState headOn = ball(100.0, 0.0);
     const billiardgl::CushionContactResult elastic =

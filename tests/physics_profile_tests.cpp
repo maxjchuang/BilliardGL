@@ -42,6 +42,10 @@ int main()
     expect(close(profile.ball.frictionCoefficient, 0.25f),
         "Domenech billiard calibration friction");
     expect(close(profile.cushion.normalRestitution, 0.9248723120650503f) &&
+        close(profile.cushion.restitutionIntercept, 0.9248723120650503f) &&
+        close(profile.cushion.restitutionSlopePerMps, 0.0f) &&
+        close(profile.cushion.minimumRestitution, 0.9248723120650503f) &&
+        close(profile.cushion.maximumRestitution, 0.9248723120650503f) &&
         close(profile.cushion.frictionCoefficient, 0.14f) &&
         close(profile.cushion.noseHeightRatio, 1.4f) &&
         close(profile.cushion.maximumRigidIncidentSpeedCmS, 250.0f),
@@ -139,6 +143,17 @@ int main()
     invalid.cushion.maximumRigidIncidentSpeedCmS = 0.0f;
     expect(!billiardgl::validatePhysicsProfile(invalid).ok,
         "nonpositive rigid cushion speed domain rejected");
+
+    invalid = profile;
+    invalid.cushion.restitutionSlopePerMps = -0.1f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "negative cushion restitution slope rejected");
+
+    invalid = profile;
+    invalid.cushion.minimumRestitution = 0.9f;
+    invalid.cushion.maximumRestitution = 0.8f;
+    expect(!billiardgl::validatePhysicsProfile(invalid).ok,
+        "cushion restitution clamp bounds must be ordered");
 
     invalid = profile;
     invalid.cushion.material = "../unsafe";

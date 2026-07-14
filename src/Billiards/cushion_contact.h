@@ -48,6 +48,8 @@ CushionContactResult resolveCushionContact(
     BallState& ball, const Point3& inwardNormal, double penetrationM,
     const BallProperties& ballProperties,
     const CushionProperties& cushionProperties);
+double cushionRestitution(
+    const CushionProperties& cushionProperties, double incidentSpeedCmS);
 const char* cushionContactRegimeName(CushionContactRegime regime);
 
 }  // namespace billiardgl

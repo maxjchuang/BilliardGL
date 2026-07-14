@@ -1,4 +1,5 @@
 #include "contact_solver.h"
+#include "cushion_contact.h"
 #include "surface_motion.h"
 
 #include <algorithm>
@@ -186,7 +187,6 @@ SolverConstraint makeConstraint(const GameState& state,
             scaled(constraint.normal, -radiusM),
             Point3{0.0f,
                 radiusM * (profile.cushion.noseHeightRatio - 1.0f), 0.0f});
-        constraint.restitution = profile.cushion.normalRestitution;
         constraint.friction = profile.cushion.frictionCoefficient;
         constraint.boundaryPlaneCoordinateCm = dot(
             state.balls[candidate.firstBall].position, constraint.normal) +
@@ -194,6 +194,10 @@ SolverConstraint makeConstraint(const GameState& state,
     }
     const Point3 relative = relativeVelocity(state, constraint);
     const double normalSpeed = dot(relative, constraint.normal);
+    if (candidate.secondBall < 0) {
+        constraint.restitution = cushionRestitution(
+            profile.cushion, std::max(0.0, -normalSpeed));
+    }
     const Point3 tangential = subtracted(
         relative, scaled(constraint.normal, normalSpeed));
     constraint.tangent = length(tangential) > 1e-9

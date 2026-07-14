@@ -168,7 +168,14 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     } else {
         requireExactKeys(cue, {"effective_mass_kg"}, "physics_profile.cue");
     }
-    if (scenarioVersion >= 6) {
+    if (scenarioVersion >= 11) {
+        requireExactKeys(cushion,
+            {"normal_restitution", "restitution_intercept",
+             "restitution_slope_per_mps", "minimum_restitution",
+             "maximum_restitution", "friction_coefficient", "nose_height_ratio",
+             "maximum_rigid_incident_speed_cm_s", "material"},
+            "physics_profile.cushion");
+    } else if (scenarioVersion >= 6) {
         requireExactKeys(cushion,
             {"normal_restitution", "friction_coefficient", "nose_height_ratio",
              "maximum_rigid_incident_speed_cm_s", "material"},
@@ -248,8 +255,22 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     }
     profile.cushion.normalRestitution = static_cast<float>(
         requiredNumber(cushion, "normal_restitution"));
+    profile.cushion.restitutionIntercept = profile.cushion.normalRestitution;
+    profile.cushion.restitutionSlopePerMps = 0.0f;
+    profile.cushion.minimumRestitution = profile.cushion.normalRestitution;
+    profile.cushion.maximumRestitution = profile.cushion.normalRestitution;
     profile.cushion.frictionCoefficient = static_cast<float>(
         requiredNumber(cushion, "friction_coefficient"));
+    if (scenarioVersion >= 11) {
+        profile.cushion.restitutionIntercept = static_cast<float>(
+            requiredNumber(cushion, "restitution_intercept"));
+        profile.cushion.restitutionSlopePerMps = static_cast<float>(
+            requiredNumber(cushion, "restitution_slope_per_mps"));
+        profile.cushion.minimumRestitution = static_cast<float>(
+            requiredNumber(cushion, "minimum_restitution"));
+        profile.cushion.maximumRestitution = static_cast<float>(
+            requiredNumber(cushion, "maximum_restitution"));
+    }
     if (scenarioVersion >= 6) {
         profile.cushion.noseHeightRatio = static_cast<float>(
             requiredNumber(cushion, "nose_height_ratio"));
@@ -317,7 +338,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1 through 9 are supported";
+                "only physics scenario versions 1 through 11 are supported";
             return result;
         }
 
