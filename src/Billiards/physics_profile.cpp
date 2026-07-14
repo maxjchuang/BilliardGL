@@ -41,13 +41,18 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-    profile.id = "chinese_pool_ball_collision_v1";
-    profile.formulaVersion = "ball_collision_v1";
+    profile.id = "chinese_pool_cushion_collision_v1";
+    profile.formulaVersion = "cushion_collision_v1";
     profile.ball.normalRestitution = 0.36f;
     profile.ball.frictionCoefficient = 0.25f;
     profile.surface.slidingFrictionCoefficient = 0.20f;
     profile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
     profile.surface.torsionalSpinDecelerationRadS2 = 0.0f;
+    profile.cushion.normalRestitution = 0.9248723120650503f;
+    profile.cushion.frictionCoefficient = 0.14f;
+    profile.cushion.noseHeightRatio = 1.4f;
+    profile.cushion.maximumRigidIncidentSpeedCmS = 250.0f;
+    profile.cushion.material = "riley_renaissance_snooker_cushion";
     return profile;
 }
 

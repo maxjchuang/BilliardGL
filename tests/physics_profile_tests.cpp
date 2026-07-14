@@ -28,9 +28,9 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_ball_collision_v1",
+    expect(profile.id == "chinese_pool_cushion_collision_v1",
         "candidate ID");
-    expect(profile.formulaVersion == "ball_collision_v1",
+    expect(profile.formulaVersion == "cushion_collision_v1",
         "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");
@@ -41,12 +41,13 @@ int main()
         "Domenech billiard calibration restitution");
     expect(close(profile.ball.frictionCoefficient, 0.25f),
         "Domenech billiard calibration friction");
-    expect(close(profile.cushion.noseHeightRatio, 1.0f),
-        "legacy centered cushion contact compatibility default");
-    expect(profile.cushion.maximumRigidIncidentSpeedCmS > 1000000.0f,
-        "legacy cushion profile has an effectively unbounded finite domain");
-    expect(profile.cushion.material == "legacy_rigid_rail",
-        "legacy cushion material is explicit");
+    expect(close(profile.cushion.normalRestitution, 0.9248723120650503f) &&
+        close(profile.cushion.frictionCoefficient, 0.14f) &&
+        close(profile.cushion.noseHeightRatio, 1.4f) &&
+        close(profile.cushion.maximumRigidIncidentSpeedCmS, 250.0f),
+        "frozen cushion calibration values");
+    expect(profile.cushion.material == "riley_renaissance_snooker_cushion",
+        "source cushion material is explicit");
     expect(close(profile.surface.rollingResistanceAccelerationCmS2, 12.5f),
         "Mathavan rolling calibration midpoint");
     expect(close(profile.surface.slidingFrictionCoefficient, 0.20f),

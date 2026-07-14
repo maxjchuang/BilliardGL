@@ -34,7 +34,7 @@
     "unallowlistable_failures": []
   },
   "metadata": {
-    "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+    "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
     "dataset_id": "mathavan_2010_cushion",
     "dataset_version": "1.0.0",
     "executable": "/private/tmp/billiardgl-phase3-check/Billiards",
@@ -51,34 +51,34 @@
     },
     "scenarios": {
       "mathavan_2010_cushion__fig7_experimental_01": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_01.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_01",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_01.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_01.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_01",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_01.json"
       },
       "mathavan_2010_cushion__fig7_experimental_02": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_02.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_02",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_02.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_02.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_02",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_02.json"
       },
       "mathavan_2010_cushion__fig7_experimental_03": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_03.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_03",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_03.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_03.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_03",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_03.json"
       },
       "mathavan_2010_cushion__fig7_experimental_04": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_04.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_04",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_04.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_04.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_04",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_04.json"
       },
       "mathavan_2010_cushion__fig7_experimental_05": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_05.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_05",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_05.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_05.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_05",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_05.json"
       },
       "mathavan_2010_cushion__fig7_experimental_06": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/provenance/mathavan_2010_cushion__fig7_experimental_06.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_06",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_06.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/provenance/mathavan_2010_cushion__fig7_experimental_06.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_06",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_06.json"
       }
     }
   },
@@ -99,7 +99,7 @@
             22.94003276452061,
             23.940167235479393
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_01",
           "combined_standard_uncertainty": 0.5000672354793904,
           "conversion_uncertainty": 0.5,
@@ -133,7 +133,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 24.324052020907384,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_01",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_01",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_01",
@@ -141,7 +141,7 @@
           "signed_error": 0.8839520209073832,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_01.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_01.json",
           "unit": "cm/s"
         },
         {
@@ -149,7 +149,7 @@
             31.84718404470587,
             32.855015955294135
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_02",
           "combined_standard_uncertainty": 0.5039159552941344,
           "conversion_uncertainty": 0.5,
@@ -183,7 +183,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 32.831399500370004,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_02",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_02",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_02",
@@ -191,7 +191,7 @@
           "signed_error": 0.4802995003700019,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "PASSED",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_02.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_02.json",
           "unit": "cm/s"
         },
         {
@@ -199,7 +199,7 @@
             37.80640873261104,
             38.80839126738896
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_03",
           "combined_standard_uncertainty": 0.5009912673889636,
           "conversion_uncertainty": 0.5,
@@ -233,7 +233,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 38.663090217858546,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_03",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_03",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_03",
@@ -241,7 +241,7 @@
           "signed_error": 0.3556902178585446,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "PASSED",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_03.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_03.json",
           "unit": "cm/s"
         },
         {
@@ -249,7 +249,7 @@
             57.80762531494796,
             58.80977468505204
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_04",
           "combined_standard_uncertainty": 0.5010746850520389,
           "conversion_uncertainty": 0.5,
@@ -283,7 +283,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 60.18847619613849,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_04",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_04",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_04",
@@ -291,7 +291,7 @@
           "signed_error": 1.8797761961384865,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_04.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_04.json",
           "unit": "cm/s"
         },
         {
@@ -299,7 +299,7 @@
             66.00875132300355,
             67.01214867699646
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_05",
           "combined_standard_uncertainty": 0.5016986769964616,
           "conversion_uncertainty": 0.5,
@@ -333,7 +333,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 65.12332119460396,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_05",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_05",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_05",
@@ -341,7 +341,7 @@
           "signed_error": -1.3871288053960455,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_05.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_05.json",
           "unit": "cm/s"
         },
         {
@@ -349,7 +349,7 @@
             78.5741635388112,
             79.60433646118881
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "fig7_experimental_06",
           "combined_standard_uncertainty": 0.5150864611887989,
           "conversion_uncertainty": 0.5,
@@ -383,7 +383,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 78.1445012912154,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-calibration-final-2010 --case fig7_experimental_06",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /private/tmp/billiardgl-cushion-freeze-cal-2010 --case fig7_experimental_06",
           "resolution_condition": null,
           "rigid_cushion_domain": true,
           "scenario_id": "mathavan_2010_cushion__fig7_experimental_06",
@@ -391,7 +391,7 @@
           "signed_error": -0.9447487087846014,
           "source_locator": "journal p. 1870 Fig. 7(a)",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2010/traces/mathavan_2010_cushion__fig7_experimental_06.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2010/traces/mathavan_2010_cushion__fig7_experimental_06.json",
           "unit": "cm/s"
         }
       ],

@@ -22,7 +22,7 @@
     "unallowlistable_failures": []
   },
   "metadata": {
-    "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+    "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
     "dataset_id": "mathavan_2009_high_speed",
     "dataset_version": "1.0.0",
     "executable": "/private/tmp/billiardgl-phase3-check/Billiards",
@@ -39,19 +39,19 @@
     },
     "scenarios": {
       "mathavan_2009_high_speed__rolling_deceleration": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/provenance/mathavan_2009_high_speed__rolling_deceleration.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case rolling_deceleration",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__rolling_deceleration.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case rolling_deceleration",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json"
       },
       "mathavan_2009_high_speed__table1_shot_01": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/provenance/mathavan_2009_high_speed__table1_shot_01.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_01",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_01.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__table1_shot_01.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json"
       },
       "mathavan_2009_high_speed__table1_shot_02": {
-        "provenance_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/provenance/mathavan_2009_high_speed__table1_shot_02.json",
-        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_02",
-        "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_02.json"
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__table1_shot_02.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json"
       }
     }
   },
@@ -79,7 +79,7 @@
             12.4,
             12.6
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "rolling_deceleration",
           "combined_standard_uncertainty": 0.1,
           "conversion_uncertainty": 0.0,
@@ -113,7 +113,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 12.499999813735489,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case rolling_deceleration",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case rolling_deceleration",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "mathavan_2009_high_speed__rolling_deceleration",
@@ -121,7 +121,7 @@
           "signed_error": -1.8626451137038202e-07,
           "source_locator": "Fig. 6 and p. 790",
           "status": "PASSED",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json",
           "unit": "cm/s^2"
         },
         {
@@ -129,7 +129,7 @@
             75.23603899999999,
             87.963961
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "table1_shot_01",
           "combined_standard_uncertainty": 6.363961,
           "conversion_uncertainty": 0.0,
@@ -163,7 +163,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 92.20242309570312,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_01",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "mathavan_2009_high_speed__table1_shot_01",
@@ -171,7 +171,7 @@
           "signed_error": 10.60242309570313,
           "source_locator": "Table I row 1",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
           "unit": "cm/s"
         },
         {
@@ -179,7 +179,7 @@
             77.23603899999999,
             89.963961
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "table1_shot_01",
           "combined_standard_uncertainty": 6.363961,
           "conversion_uncertainty": 0.0,
@@ -213,7 +213,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 49.44283676147461,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_01",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "mathavan_2009_high_speed__table1_shot_01",
@@ -221,7 +221,7 @@
           "signed_error": -34.157163238525385,
           "source_locator": "Table I row 1",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
           "unit": "cm/s"
         },
         {
@@ -229,7 +229,7 @@
             45.636039,
             58.363961
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "table1_shot_02",
           "combined_standard_uncertainty": 6.363961,
           "conversion_uncertainty": 0.0,
@@ -263,7 +263,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 54.71088790893555,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_02",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "mathavan_2009_high_speed__table1_shot_02",
@@ -271,7 +271,7 @@
           "signed_error": 2.710887908935547,
           "source_locator": "Table I row 2",
           "status": "PASSED",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
           "unit": "cm/s"
         },
         {
@@ -279,7 +279,7 @@
             56.536039,
             69.263961
           ],
-          "build_id": "sha256:4dfaf475b85c6959e0e387afc8af58a6deb1e3d19cff98cd286bc0867f99cdef",
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
           "case_id": "table1_shot_02",
           "combined_standard_uncertainty": 6.363961,
           "conversion_uncertainty": 0.0,
@@ -313,7 +313,7 @@
           "pool_applicability": "TREND_ONLY",
           "prediction": 34.58061981201172,
           "prediction_nonfinite": null,
-          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-calibration-final-2009 --case table1_shot_02",
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
           "resolution_condition": null,
           "rigid_cushion_domain": null,
           "scenario_id": "mathavan_2009_high_speed__table1_shot_02",
@@ -321,7 +321,7 @@
           "signed_error": -28.31938018798828,
           "source_locator": "Table I row 2",
           "status": "MODEL_MISMATCH_KNOWN",
-          "trace_path": "/private/tmp/billiardgl-cushion-calibration-final-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
           "unit": "cm/s"
         }
       ],

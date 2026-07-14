@@ -401,14 +401,22 @@ The pre-freeze cushion-candidate calibration evidence is committed byte-for-byte
 
 - `physics_models/candidates/cushion_collision_v1/calibration/mathavan_2010/`
   contains 6 CALIBRATION points (2 passed, 4 known model mismatches), zero
-  HOLDOUT points; report SHA-256 `b0ac637d2708272c81ff685ce8fa1bb29ac13a9989391640d49b36f10e8b8646`.
+  HOLDOUT points; report SHA-256 `dd6ee986a0c1c7f055f529d1ae4311ff93823af2bd1552fedfc4f61b16c79d61`.
 - `physics_models/candidates/cushion_collision_v1/calibration/mathavan_2009/`
   contains 5 CALIBRATION points (2 passed, 3 known model mismatches), zero
-  HOLDOUT points; report SHA-256 `21e6a07319ef985f459cc67f152a9d6da8c381e070fb9f0d0d513a9f1a5e0749`.
+  HOLDOUT points; report SHA-256 `8897927a80406fe6db425dd791fb8e02f7e7ac6bdb5aa3af84d893636e9005f8`.
 - The fit SHA-256 is
   `aeb441e3a29bdb6a2be57614ccb33e60b1ed1e26d6b0852dbe668e23ec0e2392`;
   its six point IDs are all Mathavan 2010 CALIBRATION IDs. The Mathavan 2009
   report is a combined-profile regression and supplies no fitter input.
+
+Candidate v1 is frozen at
+`physics_models/candidates/cushion_collision_v1/freeze.json`. The schema-v2
+freeze binds both calibration reports, both package manifests, the complete fit,
+the production profile, source revision, and executable SHA-256 before either
+candidate HOLDOUT partition is executed. The production ID is
+`chinese_pool_cushion_collision_v1`; the valid rigid-model domain ends at
+250 cm/s. This freeze makes no real-world Chinese Pool accuracy claim.
 
 ## Cross 2023 cue-impact admission package
 

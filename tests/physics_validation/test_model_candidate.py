@@ -21,6 +21,8 @@ PRODUCTION_CUE_PROFILE = Path(__file__).parents[2] / (
     "physics_models/profiles/chinese_pool_cue_contact_v1.json")
 PRODUCTION_BALL_COLLISION_PROFILE = Path(__file__).parents[2] / (
     "physics_models/profiles/chinese_pool_ball_collision_v1.json")
+PRODUCTION_CUSHION_PROFILE = Path(__file__).parents[2] / (
+    "physics_models/profiles/chinese_pool_cushion_collision_v1.json")
 
 
 class ModelCandidateTests(unittest.TestCase):
@@ -192,6 +194,10 @@ class ModelCandidateTests(unittest.TestCase):
             "normal_restitution": 1.0,
             "nose_height_ratio": 1.4,
         })
+        previous = load_profile_manifest(PRODUCTION_BALL_COLLISION_PROFILE)
+        for section in ("ball", "cue", "surface", "solver"):
+            self.assertEqual(manifest.runtime_profile[section],
+                             previous.runtime_profile[section])
         del document["parameter_sources"]["cushion.nose_height_ratio"]
         path.write_text(
             json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -249,6 +255,31 @@ class ModelCandidateTests(unittest.TestCase):
                              "domenech_2023_ball_collision")
             self.assertEqual(source["partition"], "CALIBRATION")
             self.assertIn("PVC", source["limitation"])
+
+    def test_production_cushion_profile_is_calibration_only_and_fully_sourced(self):
+        document = json.loads(PRODUCTION_CUSHION_PROFILE.read_text(encoding="utf-8"))
+        manifest = load_profile_manifest(PRODUCTION_CUSHION_PROFILE)
+        self.assertEqual(document["schema_version"], 4)
+        self.assertEqual(manifest.runtime_profile["id"],
+                         "chinese_pool_cushion_collision_v1")
+        self.assertEqual(manifest.runtime_profile["formula_version"],
+                         "cushion_collision_v1")
+        self.assertEqual(manifest.runtime_profile["cushion"], {
+            "friction_coefficient": 0.14,
+            "material": "riley_renaissance_snooker_cushion",
+            "maximum_rigid_incident_speed_cm_s": 250.0,
+            "normal_restitution": 0.9248723120650503,
+            "nose_height_ratio": 1.4,
+        })
+        self.assertFalse(manifest.applicability["real_world_validation_claimed"])
+        self.assertTrue(manifest.applicability["experimental_validation_pending"])
+        for key in ("cushion.normal_restitution", "cushion.friction_coefficient"):
+            source = manifest.parameter_sources[key]
+            self.assertEqual(source["dataset_id"], "mathavan_2010_cushion")
+            self.assertEqual(source["partition"], "CALIBRATION")
+        self.assertEqual(
+            manifest.parameter_sources["cushion.maximum_rigid_incident_speed_cm_s"]
+            ["kind"], "source_domain_boundary")
 
     def test_freeze_is_canonical_deterministic_and_verifiable(self):
         first = self._write()
