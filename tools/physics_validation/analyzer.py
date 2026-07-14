@@ -189,6 +189,7 @@ def _transition_time_observation(metric, reference, frames):
                 angular = _vector(ball["angular_velocity_rad_s"])
                 if not all(_finite_number(value) for value in velocity + angular):
                     return None, NUMERICAL_FAILURE, "pure-roll state is not finite"
+                _is_pure_roll(ball, radius, tolerance)
         for index in range(len(frames) - minimum + 1):
             window = frames[index:index + minimum]
             if all(criterion(_ball(frame, selection["ball_index"])) for frame in window):
@@ -196,6 +197,10 @@ def _transition_time_observation(metric, reference, frames):
                 if not _finite_number(actual):
                     return actual, NUMERICAL_FAILURE, "transition time is not finite"
                 return actual, None, None
+    except _NonfiniteSurfaceState as error:
+        return None, NUMERICAL_FAILURE, str(error)
+    except _SurfaceStateMismatch as error:
+        return None, INTEGRATION_MISMATCH, str(error)
     except (KeyError, TypeError, ValueError) as error:
         return None, INTEGRATION_MISMATCH, str(error)
     return None, INTEGRATION_MISMATCH, "declared stable transition window is absent"
@@ -283,12 +288,47 @@ def _contact_index(frames, event_kind, ball_index):
     return None
 
 
+class _NonfiniteSurfaceState(Exception):
+    pass
+
+
+class _SurfaceStateMismatch(Exception):
+    pass
+
+
 def _is_pure_roll(ball, radius, tolerance):
     velocity = _vector(ball["velocity_cm_s"])
     angular = _vector(ball["angular_velocity_rad_s"])
     slip_x = velocity[0] + radius * angular[2]
     slip_z = velocity[2] - radius * angular[0]
-    return math.hypot(slip_x, slip_z) <= tolerance
+    slip = math.hypot(slip_x, slip_z)
+    if not all(_finite_number(value) for value in velocity + angular) \
+            or not _finite_number(slip):
+        raise _NonfiniteSurfaceState("surface kinematics are not finite")
+    reported_slip = ball.get("contact_slip_speed_cm_s")
+    if reported_slip is not None:
+        if not _finite_number(reported_slip):
+            raise _NonfiniteSurfaceState("contact slip speed is not finite")
+        if abs(reported_slip - slip) > max(tolerance, 1e-6):
+            raise _SurfaceStateMismatch(
+                "reported contact slip disagrees with velocity and spin")
+    rotational_energy = ball.get("rotational_kinetic_energy_j")
+    if rotational_energy is not None and not _finite_number(rotational_energy):
+        raise _NonfiniteSurfaceState("rotational kinetic energy is not finite")
+    state = ball.get("motion_state")
+    if state is None:
+        return slip <= tolerance
+    if state not in {"stationary", "sliding", "rolling"}:
+        raise _SurfaceStateMismatch("motion state is invalid")
+    if state == "rolling":
+        if slip > tolerance:
+            raise _SurfaceStateMismatch(
+                "rolling motion state has nonzero contact slip")
+        return True
+    if state == "sliding" and slip <= tolerance:
+        raise _SurfaceStateMismatch(
+            "sliding motion state has rolling contact kinematics")
+    return False
 
 
 def _event_observation(metric, reference, frames):
@@ -338,6 +378,10 @@ def _event_observation(metric, reference, frames):
                 ):
                     selected_index = index
                     break
+        except _NonfiniteSurfaceState as error:
+            return None, NUMERICAL_FAILURE, str(error)
+        except _SurfaceStateMismatch as error:
+            return None, INTEGRATION_MISMATCH, str(error)
         except (KeyError, TypeError, ValueError, IndexError) as error:
             return None, INTEGRATION_MISMATCH, str(error)
     else:

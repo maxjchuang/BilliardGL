@@ -191,9 +191,15 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
         json::Value ball = json::Value::object();
         ball["acceleration_cm_s2"] = pointValue(sample.acceleration);
         ball["angular_velocity_rad_s"] = pointValue(sample.angularVelocity);
+        ball["contact_slip_speed_cm_s"] =
+            json::Value(sample.contactSlipSpeedCmS);
         ball["index"] = json::Value(index);
         ball["pocketed"] = json::Value(sample.pocketed);
         ball["position_cm"] = pointValue(sample.position);
+        ball["motion_state"] = json::Value(
+            ballMotionStateName(sample.motionState));
+        ball["rotational_kinetic_energy_j"] =
+            json::Value(sample.rotationalKineticEnergyJ);
         ball["speed_cm_s"] = json::Value(sample.speed);
         ball["velocity_cm_s"] = pointValue(sample.velocity);
         balls.asArray().push_back(ball);
@@ -209,6 +215,25 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     control["shot_power"] = json::Value(frame.control.shotPower);
     control["shot_taken"] = json::Value(frame.control.shotTaken);
 
+    json::Value surfaceTransitions = json::Value::array();
+    for (const SurfaceMotionStep& step : frame.surfaceTransitions) {
+        json::Value transition = json::Value::object();
+        transition["after"] = json::Value(ballMotionStateName(step.after));
+        transition["angular_acceleration_rad_s2"] =
+            pointValue(step.angularAccelerationRadS2);
+        transition["ball_index"] = json::Value(step.ballIndex);
+        transition["before"] = json::Value(ballMotionStateName(step.before));
+        transition["final_slip_speed_cm_s"] =
+            json::Value(step.finalSlipSpeedCmS);
+        transition["friction_acceleration_cm_s2"] =
+            pointValue(step.frictionAccelerationCmS2);
+        transition["initial_slip_speed_cm_s"] =
+            json::Value(step.initialSlipSpeedCmS);
+        transition["transition_time_seconds"] =
+            json::Value(step.transitionTimeSeconds);
+        surfaceTransitions.asArray().push_back(transition);
+    }
+
     json::Value value = json::Value::object();
     value["balls"] = balls;
     value["contacts"] = contacts;
@@ -217,10 +242,14 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     value["linear_momentum_kg_mps"] = pointValue(frame.linearMomentum);
     value["maximum_penetration_cm"] = json::Value(frame.maximumPenetrationCm);
     value["physics_profile_id"] = json::Value(frame.physicsProfileId);
+    value["rotational_kinetic_energy_j"] =
+        json::Value(frame.rotationalKineticEnergyJ);
+    value["surface_transitions"] = surfaceTransitions;
     value["tick"] = json::Value(static_cast<double>(frame.tick));
     value["time_seconds"] = json::Value(frame.timeSeconds);
     value["translational_kinetic_energy_j"] =
         json::Value(frame.translationalKineticEnergyJ);
+    value["total_kinetic_energy_j"] = json::Value(frame.totalKineticEnergyJ);
     if (frame.hasCueImpactInput) value["cue_impact"] = cueImpactValue(frame.cueImpactInput);
     return value;
 }

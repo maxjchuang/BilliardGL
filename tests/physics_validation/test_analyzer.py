@@ -140,6 +140,46 @@ class AnalyzerTests(unittest.TestCase):
             "NUMERICAL_FAILURE",
         )
 
+    def test_explicit_surface_state_is_cross_checked_against_kinematics(self):
+        selection = {
+            "ball_index": 0,
+            "ball_radius_cm": 2.0,
+            "minimum_window_ticks": 1,
+            "pure_roll_tolerance_cm_s": 0.001,
+            "sample_phase": "first_stable_pure_roll",
+            "time_origin_seconds": 0.0,
+        }
+        case = self._selection_interval(
+            "transition_to_rolling_time_seconds", 0.1, selection, "s")
+        consistent = frame(1, speed=10.0)
+        consistent["balls"][0].update({
+            "motion_state": "rolling",
+            "contact_slip_speed_cm_s": 0.0,
+            "rotational_kinetic_energy_j": 0.01,
+            "angular_velocity_rad_s": {"x": 0.0, "y": 0.0, "z": -5.0},
+        })
+        self.assertTrue(analyze_scenario(case, [consistent]).passed)
+
+        inconsistent = frame(1, speed=10.0)
+        inconsistent["balls"][0].update({
+            "motion_state": "rolling",
+            "contact_slip_speed_cm_s": 10.0,
+            "rotational_kinetic_energy_j": 0.0,
+        })
+        self.assertEqual(
+            analyze_scenario(case, [inconsistent]).failures[0].code,
+            "INTEGRATION_MISMATCH",
+        )
+
+        for field in ("contact_slip_speed_cm_s", "rotational_kinetic_energy_j"):
+            with self.subTest(field=field):
+                nonfinite_surface = json.loads(json.dumps(consistent))
+                nonfinite_surface["balls"][0][field] = float("nan")
+                self.assertEqual(
+                    analyze_scenario(case, [nonfinite_surface]).failures[0].code,
+                    "NUMERICAL_FAILURE",
+                )
+
     def test_reference_value_inside_interval_comes_from_trace(self):
         result_y = frame(1, x=3.0)
         result_y["balls"][0]["position_cm"]["y"] = 4.0

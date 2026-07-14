@@ -39,6 +39,7 @@ struct PhysicsBallSample {
     bool pocketed = false;
     BallMotionState motionState = BallMotionState::Stationary;
     float contactSlipSpeedCmS = 0.0f;
+    double rotationalKineticEnergyJ = 0.0;
 };
 
 struct PhysicsControlSample {
@@ -68,6 +69,7 @@ struct PhysicsFrame {
     bool hasCueImpactInput = false;
     CueImpactInput cueImpactInput;
     std::string physicsProfileId;
+    std::vector<SurfaceMotionStep> surfaceTransitions;
 };
 
 Point3 translationalMomentumKgMps(

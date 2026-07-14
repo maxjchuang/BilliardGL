@@ -43,6 +43,12 @@ int main()
     after.balls[0].motionState = billiardgl::BallMotionState::Sliding;
 
     billiardgl::PhysicsStepTelemetry step;
+    billiardgl::SurfaceMotionStep transition;
+    transition.ballIndex = 0;
+    transition.before = billiardgl::BallMotionState::Sliding;
+    transition.after = billiardgl::BallMotionState::Rolling;
+    transition.transitionTimeSeconds = 0.05f;
+    step.surfaceMotion.push_back(transition);
     const billiardgl::PhysicsFrame frame =
         billiardgl::capturePhysicsFrame(7, 0.7, 0.1f, before, after, step);
 
@@ -58,9 +64,14 @@ int main()
     expect(close(frame.translationalKineticEnergyJ, 0.5 * 0.17 * 0.96 * 0.96), "energy uses SI units");
     expect(frame.rotationalKineticEnergyJ > 0.0,
         "rotational kinetic energy is included");
+    expect(frame.balls[0].rotationalKineticEnergyJ > 0.0,
+        "per-ball rotational kinetic energy is traced");
     expect(close(frame.totalKineticEnergyJ,
         frame.translationalKineticEnergyJ + frame.rotationalKineticEnergyJ),
         "total energy has one definition");
+    expect(frame.surfaceTransitions.size() == 1 &&
+        frame.surfaceTransitions[0].transitionTimeSeconds == 0.05f,
+        "surface transition records survive frame capture");
 
     billiardgl::PhysicsTrace trace(2);
     trace.append(frame);

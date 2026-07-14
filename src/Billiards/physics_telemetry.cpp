@@ -58,6 +58,12 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
     frame.timeSeconds = timeSeconds;
     frame.deltaSeconds = deltaSeconds;
     frame.contacts = telemetry.contacts;
+    for (const SurfaceMotionStep& surface : telemetry.surfaceMotion) {
+        if (surface.before != surface.after ||
+            surface.transitionTimeSeconds >= 0.0f) {
+            frame.surfaceTransitions.push_back(surface);
+        }
+    }
     frame.maximumPenetrationCm = telemetry.maximumPenetrationCm;
     frame.linearMomentum = translationalMomentumKgMps(after, profile.ball.massKg);
     frame.translationalKineticEnergyJ =
@@ -91,6 +97,8 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
             afterBall, profile.ball.radiusCm);
         sample.contactSlipSpeedCmS = std::sqrt(
             slip.x * slip.x + slip.z * slip.z);
+        sample.rotationalKineticEnergyJ =
+            rotationalKineticEnergyJ(afterBall, profile.ball);
     }
     return frame;
 }

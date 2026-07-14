@@ -36,6 +36,17 @@ int main()
         billiardgl::serializePhysicsFrame(runtime.physicsTrace().frames().front());
     expect(physicsFrame.at("physics_profile_id").asString() ==
         "chinese_pool_legacy_v1", "trace should identify its physics profile");
+    const billiardgl::json::Value& traceBall =
+        physicsFrame.at("balls").asArray()[0];
+    expect(traceBall.at("motion_state").asString() == "stationary",
+        "trace should serialize stable lowercase motion state");
+    expect(traceBall.has("contact_slip_speed_cm_s") &&
+        traceBall.has("rotational_kinetic_energy_j"),
+        "trace should serialize per-ball surface quantities");
+    expect(physicsFrame.has("rotational_kinetic_energy_j") &&
+        physicsFrame.has("total_kinetic_energy_j") &&
+        physicsFrame.has("surface_transitions"),
+        "trace should serialize frame surface energy and transitions");
 
     const std::string error = billiardgl::json::stringify(
         billiardgl::automationErrorResponse(7, "invalid_argument", "bad value"));
