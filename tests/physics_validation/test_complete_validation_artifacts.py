@@ -1,7 +1,10 @@
 import json
+import hashlib
+import tempfile
 import unittest
 from pathlib import Path
 
+import tools.physics_validation.validation_artifacts as validation_artifacts
 from tools.physics_validation.validation_artifacts import (
     build_validation_artifact_manifest,
     validate_validation_artifact_manifest,
@@ -14,6 +17,40 @@ MANIFEST = ROOT / "physics_models/promotion/phase3_validation_artifacts_v1.json"
 
 
 class CompleteValidationArtifactTests(unittest.TestCase):
+    def test_schema_v2_manifest_inventories_every_declared_artifact(self):
+        build = getattr(validation_artifacts, "build_declared_artifact_manifest", None)
+        validate = getattr(validation_artifacts, "validate_declared_artifact_manifest", None)
+        self.assertIsNotNone(build, "schema-v2 artifact inventory is not implemented")
+        self.assertIsNotNone(validate, "schema-v2 artifact validation is not implemented")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            artifacts = root / "artifacts"
+            artifacts.mkdir()
+            first = artifacts / "first.json"
+            second = artifacts / "second.csv"
+            first.write_text("{}", encoding="utf-8")
+            second.write_text("x,y\n1,2\n", encoding="utf-8")
+            freeze = root / "freeze.json"
+            document = {
+                "artifacts": [
+                    {"path": "artifacts/first.json", "role": "trace",
+                     "sha256": hashlib.sha256(first.read_bytes()).hexdigest()},
+                    {"path": "artifacts/second.csv", "role": "source_numeric_input",
+                     "sha256": hashlib.sha256(second.read_bytes()).hexdigest()},
+                ],
+                "schema_version": 2,
+            }
+            freeze.write_text(json.dumps(document), encoding="utf-8")
+            manifest = root / "manifest.json"
+            expected = build(root, freeze)
+            manifest.write_text(json.dumps(expected), encoding="utf-8")
+            self.assertEqual(validate(manifest, root, freeze), [])
+            second.write_text("changed", encoding="utf-8")
+            self.assertEqual(
+                validate(manifest, root, freeze),
+                ["declared artifact manifest is stale or incomplete"],
+            )
+
     def test_complete_artifact_manifest_reconstructs_and_hashes_every_file(self):
         expected = build_validation_artifact_manifest(ROOT, INVENTORY)
         committed = json.loads(MANIFEST.read_text(encoding="utf-8"))
