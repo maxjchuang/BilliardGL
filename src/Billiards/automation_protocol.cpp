@@ -265,6 +265,26 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["time_of_impact_seconds"] = json::Value(contact.timeOfImpactSeconds);
     value["penetration_cm"] = json::Value(contact.penetrationCm);
     value["second_ball"] = json::Value(contact.secondBall);
+    value["pocket_id"] = json::Value(contact.pocketId);
+    value["pocket_kind"] = json::Value(
+        contact.pocketKind == PocketKind::Corner ? "corner" : "side");
+    value["pocket_boundary_event"] = json::Value(
+        pocketBoundaryEventKindName(contact.pocketBoundaryEvent));
+    value["pocket_phase_before"] = json::Value(
+        pocketInteractionPhaseName(contact.pocketPhaseBefore));
+    value["pocket_phase_after"] = json::Value(
+        pocketInteractionPhaseName(contact.pocketPhaseAfter));
+    value["pocket_local_depth_cm"] = json::Value(contact.pocketLocal.depthCm);
+    value["pocket_local_offset_cm"] = json::Value(contact.pocketLocal.offsetCm);
+    value["pocket_jaw_center_cm"] = pointValue(contact.pocketJawCenterCm);
+    value["pocket_jaw_radius_cm"] = json::Value(contact.pocketJawRadiusCm);
+    value["pocket_throat_signed_distance_cm"] =
+        json::Value(contact.pocketThroatSignedDistanceCm);
+    value["pocket_capture_signed_distance_cm"] =
+        json::Value(contact.pocketCaptureSignedDistanceCm);
+    value["pocket_passable"] = json::Value(contact.pocketPassable);
+    value["pocket_capture_sequence"] =
+        json::Value(static_cast<double>(contact.pocketCaptureSequence));
     return value;
 }
 

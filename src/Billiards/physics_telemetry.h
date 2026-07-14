@@ -6,6 +6,7 @@
 #include "cue_contact.h"
 #include "cushion_contact.h"
 #include "physics_profile.h"
+#include "pocket_boundary.h"
 #include "surface_motion.h"
 
 #include <array>
@@ -62,6 +63,18 @@ struct PhysicsContactRecord {
     bool rigidDomainExceeded = false;
     bool positionCorrected = false;
     double timeOfImpactSeconds = 0.0;
+    int pocketId = -1;
+    PocketKind pocketKind = PocketKind::Corner;
+    PocketBoundaryEventKind pocketBoundaryEvent = PocketBoundaryEventKind::None;
+    PocketInteractionPhase pocketPhaseBefore = PocketInteractionPhase::Outside;
+    PocketInteractionPhase pocketPhaseAfter = PocketInteractionPhase::Outside;
+    PocketLocalPoint pocketLocal;
+    Point3 pocketJawCenterCm;
+    double pocketJawRadiusCm = 0.0;
+    double pocketThroatSignedDistanceCm = 0.0;
+    double pocketCaptureSignedDistanceCm = 0.0;
+    bool pocketPassable = false;
+    unsigned long long pocketCaptureSequence = 0;
 };
 
 struct PhysicsBallSample {

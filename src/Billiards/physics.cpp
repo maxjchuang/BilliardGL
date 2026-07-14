@@ -155,8 +155,14 @@ const PocketBoundaryFrame* activePocketFrame(
     return nullptr;
 }
 
+void appendPocketContact(PhysicsStepTelemetry& telemetry, int ballIndex,
+    const PocketBoundaryFrame& frame, const PocketBoundaryEvent& event,
+    const PocketBoundaryQuery& query, const PocketTransitionResult& transition,
+    unsigned long long captureSequence, double timeOfImpactSeconds);
+
 void classifyFinalPocketState(GameState& state, BallState& ball,
-    const PhysicsProfile& profile)
+    const PhysicsProfile& profile, PhysicsStepTelemetry& telemetry,
+    int ballIndex, double timeOfImpactSeconds)
 {
     const std::array<PocketBoundaryFrame, 6> frames =
         buildPocketBoundaryFrames(profile.tableBoundary);
@@ -185,7 +191,18 @@ void classifyFinalPocketState(GameState& state, BallState& ball,
     }
     const PocketTransitionResult transition = advancePocketInteraction(
         ball.pocketInteraction, selected->pocketId, event, query.region, sequence);
-    if (transition.captureEmitted) ++state.nextPocketCaptureSequence;
+    if (transition.captureEmitted) {
+        PocketBoundaryEvent boundary;
+        boundary.kind = PocketBoundaryEventKind::Capture;
+        boundary.pocketId = selected->pocketId;
+        boundary.position = ball.position;
+        boundary.inwardNormal = selected->inward;
+        boundary.local = query.local;
+        boundary.passable = query.passable;
+        appendPocketContact(telemetry, ballIndex, *selected, boundary, query,
+            transition, sequence, timeOfImpactSeconds);
+        ++state.nextPocketCaptureSequence;
+    }
 }
 
 StraightRailEvent earliestRailEvent(const BallState& ball, float timeStep,
@@ -259,6 +276,35 @@ void appendRailContact(PhysicsStepTelemetry& telemetry, int ballIndex,
     contact.timeOfImpactSeconds = timeOfImpactSeconds;
     telemetry.maximumPenetrationCm = std::max(
         telemetry.maximumPenetrationCm, contact.penetrationCm);
+    telemetry.contacts.push_back(contact);
+}
+
+void appendPocketContact(PhysicsStepTelemetry& telemetry, int ballIndex,
+    const PocketBoundaryFrame& frame, const PocketBoundaryEvent& event,
+    const PocketBoundaryQuery& query, const PocketTransitionResult& transition,
+    unsigned long long captureSequence, double timeOfImpactSeconds)
+{
+    PhysicsContactRecord contact;
+    contact.kind = PhysicsContactKind::Pocket;
+    contact.firstBall = ballIndex;
+    contact.normal = event.inwardNormal;
+    contact.timeOfImpactSeconds = timeOfImpactSeconds;
+    contact.pocketId = frame.pocketId;
+    contact.pocketKind = frame.kind;
+    contact.pocketBoundaryEvent = event.kind;
+    contact.pocketPhaseBefore = transition.previous;
+    contact.pocketPhaseAfter = transition.current;
+    contact.pocketLocal = query.local;
+    if (event.kind == PocketBoundaryEventKind::LeftJaw ||
+        event.kind == PocketBoundaryEventKind::RightJaw) {
+        contact.pocketJawCenterCm = pocketJawCenter(frame,
+            event.kind == PocketBoundaryEventKind::LeftJaw ? -1 : 1);
+    }
+    contact.pocketJawRadiusCm = frame.jawRadiusCm;
+    contact.pocketThroatSignedDistanceCm = query.throatSignedDistanceCm;
+    contact.pocketCaptureSignedDistanceCm = query.captureSignedDistanceCm;
+    contact.pocketPassable = query.passable;
+    contact.pocketCaptureSequence = captureSequence;
     telemetry.contacts.push_back(contact);
 }
 
@@ -455,6 +501,11 @@ PhysicsStepTelemetry updatePhysics(
                 }
                 if (jaw.velocityImpulseApplied) state.events.railCollision = true;
             }
+            appendPocketContact(telemetry, i, pocketEvent.frame,
+                pocketEvent.boundary, query, transition,
+                transition.captureEmitted
+                    ? ball.pocketInteraction.captureSequence : 0,
+                pocketEvent.timeSeconds);
             const float remaining = std::max(
                 0.0f, timeStep - pocketEvent.timeSeconds);
             const SurfaceMotionStep afterContact = advanceSurfaceMotion(
@@ -462,7 +513,8 @@ PhysicsStepTelemetry updatePhysics(
             surface = beforeContact;
             surface.after = afterContact.after;
             surface.finalSlipSpeedCmS = afterContact.finalSlipSpeedCmS;
-            classifyFinalPocketState(state, ball, profile);
+            classifyFinalPocketState(state, ball, profile, telemetry, i,
+                timeStep);
         } else if (railEvent.hit) {
             const SurfaceMotionStep beforeContact = advanceSurfaceMotion(
                 ball, railEvent.timeSeconds, profile.ball, profile.surface);
@@ -486,17 +538,27 @@ PhysicsStepTelemetry updatePhysics(
                 surface.transitionTimeSeconds = railEvent.timeSeconds +
                     afterContact.transitionTimeSeconds;
             }
-            classifyFinalPocketState(state, ball, profile);
+            classifyFinalPocketState(state, ball, profile, telemetry, i,
+                timeStep);
         } else {
             surface = advanceSurfaceMotion(
                 ball, timeStep, profile.ball, profile.surface);
-            classifyFinalPocketState(state, ball, profile);
+            classifyFinalPocketState(state, ball, profile, telemetry, i,
+                timeStep);
         }
         if (updatePocketedBall(state, i)) {
-            PhysicsContactRecord contact;
-            contact.kind = PhysicsContactKind::Pocket;
-            contact.firstBall = i;
-            telemetry.contacts.push_back(contact);
+            const bool alreadyRecorded = !telemetry.contacts.empty() &&
+                telemetry.contacts.back().kind == PhysicsContactKind::Pocket &&
+                telemetry.contacts.back().firstBall == i &&
+                telemetry.contacts.back().pocketBoundaryEvent ==
+                    PocketBoundaryEventKind::Capture;
+            if (!alreadyRecorded) {
+                PhysicsContactRecord contact;
+                contact.kind = PhysicsContactKind::Pocket;
+                contact.firstBall = i;
+                contact.pocketBoundaryEvent = PocketBoundaryEventKind::Capture;
+                telemetry.contacts.push_back(contact);
+            }
         }
         surface.ballIndex = i;
         telemetry.surfaceMotion.push_back(surface);

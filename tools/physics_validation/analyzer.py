@@ -10,6 +10,47 @@ INTEGRATION_MISMATCH = "INTEGRATION_MISMATCH"
 REFERENCE_LIMITATION = "REFERENCE_LIMITATION"
 
 
+def analyze_pocket_scan(rows):
+    """Return structural/physical invariant failures for a pocket scan matrix."""
+    failures = []
+    seen = set()
+    mirrors = {}
+    numeric = {
+        "normalized_offset", "offset_cm", "angle_deg", "speed_cm_s",
+        "topspin_rad_s", "sidespin_rad_s", "jaw_side", "mouth_width_cm",
+        "throat_width_cm", "jaw_radius_cm", "throat_depth_cm",
+        "capture_depth_cm", "ball_radius_cm",
+    }
+    for row in rows:
+        case_id = row.get("case_id")
+        if case_id in seen:
+            failures.append(f"duplicate case_id: {case_id}")
+        seen.add(case_id)
+        if any(not _finite_number(row.get(field)) for field in numeric):
+            failures.append(f"nonfinite numeric field: {case_id}")
+            continue
+        if row["capture_depth_cm"] < row["throat_depth_cm"]:
+            failures.append(f"capture precedes throat: {case_id}")
+        diameter = 2.0 * row["ball_radius_cm"]
+        expected_mouth = row["mouth_width_cm"] >= diameter and \
+            abs(row["offset_cm"]) <= (row["mouth_width_cm"] - diameter) * 0.5 + 1e-12
+        expected_throat = row["throat_width_cm"] >= diameter and \
+            abs(row["offset_cm"]) <= (row["throat_width_cm"] - diameter) * 0.5 + 1e-12
+        if row["mouth_passable"] != expected_mouth or \
+                row["throat_passable"] != expected_throat:
+            failures.append(f"passability mismatch: {case_id}")
+        signature = (row["pocket_kind"], abs(row["normalized_offset"]),
+                     abs(row["angle_deg"]), row["speed_cm_s"],
+                     row["topspin_rad_s"], abs(row["sidespin_rad_s"]),
+                     abs(row["jaw_side"]))
+        outcome = (row["mouth_passable"], row["throat_passable"],
+                   row["expected_outcome"])
+        if signature in mirrors and mirrors[signature] != outcome:
+            failures.append(f"mirror mismatch: {case_id}")
+        mirrors[signature] = outcome
+    return failures
+
+
 @dataclass(frozen=True)
 class Failure:
     code: str

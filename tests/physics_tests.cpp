@@ -338,12 +338,16 @@ int main()
         sweptPocketState.nextPocketCaptureSequence != 2) {
         return fail("swept side-pocket capture should not tunnel at high speed");
     }
-    int pocketContacts = 0;
+    int captureContacts = 0;
     for (const billiardgl::PhysicsContactRecord& contact : pocketTelemetry.contacts) {
-        if (contact.kind == billiardgl::PhysicsContactKind::Pocket) ++pocketContacts;
+        if (contact.kind == billiardgl::PhysicsContactKind::Pocket &&
+            contact.pocketBoundaryEvent ==
+                billiardgl::PocketBoundaryEventKind::Capture) {
+            ++captureContacts;
+        }
     }
-    if (pocketContacts != 1) {
-        return fail("a swept capture should produce exactly one pocket contact");
+    if (captureContacts != 1) {
+        return fail("a swept capture should produce exactly one capture contact");
     }
     billiardgl::updatePhysics(sweptPocketState, 0.1f, pocketProfile);
     if (sweptPocketState.events.cueBallPocketed ||

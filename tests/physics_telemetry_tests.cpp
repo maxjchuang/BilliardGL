@@ -123,6 +123,28 @@ int main()
         close(railFrame.contacts[0].timeOfImpactSeconds, 0.004),
         "cushion diagnostics survive frame capture without reconstruction");
 
+    billiardgl::PhysicsContactRecord pocketContact;
+    pocketContact.kind = billiardgl::PhysicsContactKind::Pocket;
+    pocketContact.pocketId = 4;
+    pocketContact.pocketKind = billiardgl::PocketKind::Side;
+    pocketContact.pocketBoundaryEvent = billiardgl::PocketBoundaryEventKind::Capture;
+    pocketContact.pocketPhaseBefore = billiardgl::PocketInteractionPhase::ThroatCrossed;
+    pocketContact.pocketPhaseAfter = billiardgl::PocketInteractionPhase::Captured;
+    pocketContact.pocketLocal.depthCm = 6.0;
+    pocketContact.pocketLocal.offsetCm = 0.25;
+    pocketContact.pocketJawRadiusCm = 0.8;
+    pocketContact.pocketPassable = true;
+    pocketContact.pocketCaptureSequence = 9;
+    step.contacts.clear();
+    step.contacts.push_back(pocketContact);
+    const billiardgl::PhysicsFrame pocketFrame =
+        billiardgl::capturePhysicsFrame(9, 0.9, 0.1f, before, after, step);
+    expect(pocketFrame.contacts[0].pocketId == 4 &&
+        pocketFrame.contacts[0].pocketPhaseAfter ==
+            billiardgl::PocketInteractionPhase::Captured &&
+        pocketFrame.contacts[0].pocketCaptureSequence == 9,
+        "pocket geometry and transition diagnostics survive frame capture");
+
     billiardgl::PhysicsTrace trace(2);
     trace.append(frame);
     trace.append(frame);

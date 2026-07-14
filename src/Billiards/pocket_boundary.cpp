@@ -151,6 +151,11 @@ PocketLocalPoint pocketLocalPoint(
     return local;
 }
 
+Point3 pocketJawCenter(const PocketBoundaryFrame& frame, int side)
+{
+    return jawCenter(frame, side < 0 ? -1.0 : 1.0);
+}
+
 PocketBoundaryQuery classifyPocketPoint(
     const PocketBoundaryFrame& frame, const Point3& position,
     double ballRadiusCm)

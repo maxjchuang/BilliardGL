@@ -74,6 +74,7 @@ std::array<PocketBoundaryFrame, 6> buildPocketBoundaryFrames(
     const TableBoundaryProperties& boundary);
 PocketLocalPoint pocketLocalPoint(
     const PocketBoundaryFrame& frame, const Point3& position);
+Point3 pocketJawCenter(const PocketBoundaryFrame& frame, int side);
 PocketBoundaryQuery classifyPocketPoint(
     const PocketBoundaryFrame& frame, const Point3& position,
     double ballRadiusCm);

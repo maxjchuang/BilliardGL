@@ -118,6 +118,34 @@ int main()
         serializedRail.has("time_of_impact_seconds"),
         "rail contact serialization should expose complete diagnostics with units");
 
+    billiardgl::PhysicsContactRecord pocketContact;
+    pocketContact.kind = billiardgl::PhysicsContactKind::Pocket;
+    pocketContact.pocketId = 5;
+    pocketContact.pocketKind = billiardgl::PocketKind::Side;
+    pocketContact.pocketBoundaryEvent = billiardgl::PocketBoundaryEventKind::Capture;
+    pocketContact.pocketPhaseBefore = billiardgl::PocketInteractionPhase::ThroatCrossed;
+    pocketContact.pocketPhaseAfter = billiardgl::PocketInteractionPhase::Captured;
+    pocketContact.pocketLocal.depthCm = 6.0;
+    pocketContact.pocketLocal.offsetCm = -0.25;
+    pocketContact.pocketPassable = true;
+    pocketContact.pocketCaptureSequence = 12;
+    const billiardgl::json::Value serializedPocket =
+        billiardgl::serializePhysicsContact(pocketContact);
+    expect(serializedPocket.at("pocket_id").asInt() == 5 &&
+        serializedPocket.at("pocket_kind").asString() == "side" &&
+        serializedPocket.at("pocket_boundary_event").asString() == "capture" &&
+        serializedPocket.at("pocket_phase_before").asString() == "throat_crossed" &&
+        serializedPocket.at("pocket_phase_after").asString() == "captured" &&
+        serializedPocket.at("pocket_capture_sequence").asInt() == 12 &&
+        serializedPocket.has("pocket_local_depth_cm") &&
+        serializedPocket.has("pocket_local_offset_cm") &&
+        serializedPocket.has("pocket_jaw_center_cm") &&
+        serializedPocket.has("pocket_jaw_radius_cm") &&
+        serializedPocket.has("pocket_throat_signed_distance_cm") &&
+        serializedPocket.has("pocket_capture_signed_distance_cm") &&
+        serializedPocket.has("pocket_passable"),
+        "pocket contact serialization should expose complete geometry and state");
+
     billiardgl::GameRuntime cueRuntime;
     cueRuntime.setPhysicsTraceEnabled(true);
     const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(
