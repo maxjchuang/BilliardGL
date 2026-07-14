@@ -1,4 +1,5 @@
 #include "physics_scenario.h"
+#include "scenario_geometry.h"
 #include "table_specs.h"
 
 #include <cmath>
@@ -376,6 +377,16 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         } else if (value.has("physics_profile")) {
             throw std::runtime_error("physics_profile requires schema version 3");
         }
+        if (value.has("initial_contact_epsilon_cm")) {
+            scenario.initialContactEpsilonCm = static_cast<float>(
+                requiredNumber(value, "initial_contact_epsilon_cm"));
+            if (scenario.initialContactEpsilonCm < 0.0f ||
+                scenario.initialContactEpsilonCm >=
+                    2.0f * scenario.physicsProfile.ball.radiusCm) {
+                throw std::runtime_error(
+                    "initial_contact_epsilon_cm must be nonnegative and smaller than the ball diameter");
+            }
+        }
 
         GameState initial;
         initializeBalls(initial);
@@ -492,6 +503,10 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
 
 ActionResult applyPhysicsScenario(GameRuntime& runtime, const PhysicsScenario& scenario)
 {
+    const ScenarioGeometryResult geometry = validateScenarioGeometry(scenario);
+    if (!geometry.ok) {
+        return ActionResult{false, "INTEGRATION_MISMATCH"};
+    }
     GameState state;
     initializeBalls(state);
     state.balls = scenario.balls;

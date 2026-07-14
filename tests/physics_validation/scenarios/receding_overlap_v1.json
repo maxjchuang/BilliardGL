@@ -2,6 +2,7 @@
   "schema_version": 1,
   "id": "receding_overlap_v1",
   "description": "Overlapping balls moving apart must not receive a collision impulse",
+  "initial_contact_epsilon_cm": 0.72,
   "evidence": {"grade": "C", "source": "analytic", "equipment": "WPA_POOL"},
   "simulation": {"ticks": 1, "time_step_seconds": 0.1},
   "balls": [

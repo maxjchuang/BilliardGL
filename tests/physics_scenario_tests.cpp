@@ -196,6 +196,19 @@ int main()
     expect(v9.ok &&
         v9.scenario.boundaryMode == billiardgl::PhysicsBoundaryMode::Unbounded,
         "v9 unbounded boundary mode should survive parsing");
+    billiardgl::json::Value epsilonDocument = validV9Document();
+    epsilonDocument["initial_contact_epsilon_cm"] =
+        billiardgl::json::Value(0.02);
+    const billiardgl::PhysicsScenarioResult epsilonScenario =
+        billiardgl::parsePhysicsScenario(epsilonDocument);
+    expect(epsilonScenario.ok &&
+        std::fabs(epsilonScenario.scenario.initialContactEpsilonCm - 0.02f) <
+            0.000001f,
+        "v9 should retain an explicit initial-contact epsilon");
+    epsilonDocument["initial_contact_epsilon_cm"] =
+        billiardgl::json::Value(-0.01);
+    expect(!billiardgl::parsePhysicsScenario(epsilonDocument).ok,
+        "negative initial-contact epsilon should fail closed");
     billiardgl::json::Value missingBoundary = validV9Document();
     missingBoundary.asObject().erase("boundary_mode");
     const billiardgl::PhysicsScenarioResult defaultBoundary =
@@ -225,6 +238,20 @@ int main()
     runtime.step(parsed.scenario.ticks);
     expect(runtime.physicsTrace().frames().size() == 10,
         "direct runtime path should execute canonical fixture");
+
+    const billiardgl::Point3 stateBeforeRejectedScenario =
+        runtime.state().balls[0].position;
+    billiardgl::PhysicsScenario overlappingScenario = parsed.scenario;
+    overlappingScenario.balls[1] = overlappingScenario.balls[0];
+    overlappingScenario.balls[1].pocketed = false;
+    const billiardgl::ActionResult rejectedGeometry =
+        billiardgl::applyPhysicsScenario(runtime, overlappingScenario);
+    expect(!rejectedGeometry.ok &&
+        std::string(rejectedGeometry.errorCode) == "INTEGRATION_MISMATCH" &&
+        runtime.tick() == 10 &&
+        runtime.state().balls[0].position.x == stateBeforeRejectedScenario.x &&
+        runtime.state().balls[0].position.z == stateBeforeRejectedScenario.z,
+        "invalid geometry should fail before mutating runtime state");
 
     const billiardgl::PhysicsScenarioResult v2 =
         billiardgl::parsePhysicsScenario(validV2Document());

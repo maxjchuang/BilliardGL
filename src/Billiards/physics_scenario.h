@@ -28,6 +28,7 @@ struct PhysicsScenario {
     std::string evidenceSource;
     std::string equipment;
     PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable;
+    float initialContactEpsilonCm = 0.0f;
     int ticks = 0;
     float timeStepSeconds = kDefaultTimeStep;
     std::array<BallState, kBallCount> balls;
