@@ -31,6 +31,7 @@ _SOLVER_CONTROLS = {
     "maximum_penetration_cm": 0.5,
     "penetration_slop_cm": 0.001,
     "position_iterations": 4,
+    "passive_energy_tolerance_j": 1e-10,
     "residual_tolerance_cm_s": 0.001,
     "toi_tolerance_seconds": 0.0000001,
     "velocity_iterations": 12,
@@ -53,7 +54,7 @@ def approach_time_seconds(speed_cm_s, distance_to_boundary_cm,
     return samples * dt, dt, samples
 
 
-def _v9_profile(profile, time_step_seconds):
+def _v10_profile(profile, time_step_seconds):
     result = json.loads(json.dumps(profile, allow_nan=False))
     result["id"] = f"{result['id']}_v2"
     result["table_boundary"] = dict(_TABLE_BOUNDARY)
@@ -92,9 +93,9 @@ def adapt_mathavan_2010(package, split, points):
         scenario = json.loads(json.dumps(template["base_scenario"], allow_nan=False))
         scenario["id"] = (
             f"{package.manifest['dataset_id']}__{point.case_id}_v2")
-        scenario["schema_version"] = 9
+        scenario["schema_version"] = 10
         scenario["boundary_mode"] = "production_table"
-        scenario["physics_profile"] = _v9_profile(
+        scenario["physics_profile"] = _v10_profile(
             scenario["physics_profile"], time_step)
         scenario["simulation"] = {
             "ticks": preimpact_samples + 10,

@@ -165,6 +165,15 @@ billiardgl::json::Value validV9Document(const char* boundaryMode = "unbounded")
     return value;
 }
 
+billiardgl::json::Value validV10Document()
+{
+    billiardgl::json::Value value = validV9Document();
+    value["schema_version"] = billiardgl::json::Value(10);
+    value["physics_profile"]["solver"]["passive_energy_tolerance_j"] =
+        billiardgl::json::Value(0.0000000001);
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -196,6 +205,11 @@ int main()
     expect(v9.ok &&
         v9.scenario.boundaryMode == billiardgl::PhysicsBoundaryMode::Unbounded,
         "v9 unbounded boundary mode should survive parsing");
+    const billiardgl::PhysicsScenarioResult v10 =
+        billiardgl::parsePhysicsScenario(validV10Document());
+    expect(v10.ok &&
+        v10.scenario.physicsProfile.solver.passiveEnergyToleranceJ == 1e-10,
+        "v10 passive-energy tolerance should survive parsing");
     billiardgl::json::Value epsilonDocument = validV9Document();
     epsilonDocument["initial_contact_epsilon_cm"] =
         billiardgl::json::Value(0.02);
@@ -433,7 +447,7 @@ int main()
     expect(!billiardgl::parsePhysicsScenario(nonPlanarDirection).ok,
         "cue direction is a table-plane heading; elevation is declared separately");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(10);
+    unknownVersion["schema_version"] = billiardgl::json::Value(11);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

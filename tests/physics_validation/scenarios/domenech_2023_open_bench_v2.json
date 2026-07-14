@@ -112,6 +112,7 @@
       "maximum_penetration_cm": 0.5,
       "penetration_slop_cm": 0.001,
       "position_iterations": 4,
+      "passive_energy_tolerance_j": 1e-10,
       "residual_tolerance_cm_s": 0.001,
       "time_step_seconds": 0.1,
       "toi_tolerance_seconds": 1e-07,
@@ -140,7 +141,7 @@
       "throat_depth_cm": 4.0
     }
   },
-  "schema_version": 9,
+  "schema_version": 10,
   "simulation": {
     "ticks": 404,
     "time_step_seconds": 0.1

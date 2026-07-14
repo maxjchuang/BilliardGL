@@ -175,6 +175,31 @@ int main()
     expect(lowRuntime.state().balls[0].position.x >
         highRuntime.state().balls[0].position.x,
         "runtime-owned rolling resistance changes production motion");
+    billiardgl::GameState failingState = rollingState;
+    failingState.balls[1].pocketed = false;
+    failingState.balls[0].position.x = 0.0f;
+    failingState.balls[1].position = failingState.balls[0].position;
+    billiardgl::PhysicsProfile failingProfile = lowResistance;
+    failingProfile.id = "transactional_failure";
+    failingProfile.solver.maximumPenetrationCm = 0.01f;
+    billiardgl::GameRuntime failingRuntime;
+    failingRuntime.setPhysicsTraceEnabled(true);
+    expect(failingRuntime.replaceStateForScenario(
+        failingState, failingProfile).ok, "failure fixture installs");
+    const std::uint64_t failingTick = failingRuntime.tick();
+    const billiardgl::GameState failingBefore = failingRuntime.state();
+    const billiardgl::ActionResult failedStep = failingRuntime.step(1);
+    expect(!failedStep.ok && std::string(failedStep.errorCode) ==
+            "penetration_limit" && failingRuntime.tick() == failingTick,
+        "failed runtime ticks expose a stable code without advancing time");
+    expect(failingRuntime.state().balls[0].position.x ==
+            failingBefore.balls[0].position.x &&
+        failingRuntime.state().balls[1].position.x ==
+            failingBefore.balls[1].position.x &&
+        failingRuntime.physicsTrace().frames().size() == 1 &&
+        failingRuntime.physicsTrace().frames().back().stepStatus ==
+            billiardgl::PhysicsStepStatus::Failed,
+        "failed runtime ticks restore state while retaining diagnostics");
     billiardgl::GameRuntime productionRuntime;
     expect(productionRuntime.physicsProfile().id == "chinese_pool_full_game_v1",
         "a fresh runtime retains the registered production profile");

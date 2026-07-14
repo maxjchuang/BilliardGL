@@ -207,9 +207,29 @@ std::vector<ContinuousContactCandidate> generateBoundaryCandidates(
             candidate.penetrationCm = rail.penetrationM * 100.0;
             result.push_back(candidate);
         }
-        if (timeStep <= 0.0f) continue;
+        if (timeStep <= 0.0f ||
+            (std::fabs(ball.velocity.x) <= 1e-9f &&
+             std::fabs(ball.velocity.z) <= 1e-9f)) continue;
         const BallState end = advancedCopy(ball, timeStep, profile);
         for (const PocketBoundaryFrame& frame : frames) {
+            const PocketLocalPoint startLocal = pocketLocalPoint(
+                frame, ball.position);
+            const PocketLocalPoint endLocal = pocketLocalPoint(
+                frame, end.position);
+            const double reach = frame.jawRadiusCm + profile.ball.radiusCm;
+            const double minimumDepth = std::min(
+                startLocal.depthCm, endLocal.depthCm);
+            const double maximumDepth = std::max(
+                startLocal.depthCm, endLocal.depthCm);
+            const double minimumOffset = std::min(
+                startLocal.offsetCm, endLocal.offsetCm);
+            const double maximumOffset = std::max(
+                startLocal.offsetCm, endLocal.offsetCm);
+            const double lateralReach = frame.mouthWidthCm * 0.5 + reach;
+            if (maximumDepth < -reach ||
+                minimumDepth > frame.captureDepthCm ||
+                maximumOffset < -lateralReach ||
+                minimumOffset > lateralReach) continue;
             const std::vector<PocketBoundaryEvent> events =
                 sweepPocketBoundaryEvents(frame, ball.position, end.position,
                     profile.ball.radiusCm);
@@ -690,6 +710,73 @@ void mergeGameplayEvents(GameplayEvents& target, const GameplayEvents& source)
     target.shotEnded = target.shotEnded || source.shotEnded;
 }
 
+void failStep(PhysicsStepTelemetry& telemetry, PhysicsFailureCode code,
+    int eventId = -1, int islandId = -1)
+{
+    if (telemetry.stepStatus == PhysicsStepStatus::Failed) return;
+    telemetry.stepStatus = PhysicsStepStatus::Failed;
+    telemetry.failureCode = code;
+    telemetry.failingEventId = eventId;
+    telemetry.failingIslandId = islandId;
+}
+
+PhysicsFailureCode batchFailureCode(ContinuousBatchFailureCode code)
+{
+    switch (code) {
+    case ContinuousBatchFailureCode::None: return PhysicsFailureCode::None;
+    case ContinuousBatchFailureCode::InvalidControls:
+        return PhysicsFailureCode::InvalidControls;
+    case ContinuousBatchFailureCode::IslandLimit:
+        return PhysicsFailureCode::IslandLimit;
+    case ContinuousBatchFailureCode::ContradictoryTopology:
+        return PhysicsFailureCode::ContradictoryTopology;
+    }
+    return PhysicsFailureCode::InvalidControls;
+}
+
+PhysicsFailureCode solverFailureCode(ContactSolverStatus status)
+{
+    switch (status) {
+    case ContactSolverStatus::Converged: return PhysicsFailureCode::None;
+    case ContactSolverStatus::IterationLimit:
+        return PhysicsFailureCode::ResidualLimit;
+    case ContactSolverStatus::IslandLimit:
+        return PhysicsFailureCode::IslandLimit;
+    case ContactSolverStatus::PenetrationLimit:
+        return PhysicsFailureCode::PenetrationLimit;
+    case ContactSolverStatus::NonfiniteState:
+        return PhysicsFailureCode::NonfiniteState;
+    }
+    return PhysicsFailureCode::NonfiniteState;
+}
+
+bool finiteGameState(const GameState& state)
+{
+    for (const BallState& ball : state.balls) {
+        if (!std::isfinite(ball.position.x) ||
+            !std::isfinite(ball.position.y) ||
+            !std::isfinite(ball.position.z) ||
+            !std::isfinite(ball.velocity.x) ||
+            !std::isfinite(ball.velocity.y) ||
+            !std::isfinite(ball.velocity.z) ||
+            !std::isfinite(ball.angularVelocity.x) ||
+            !std::isfinite(ball.angularVelocity.y) ||
+            !std::isfinite(ball.angularVelocity.z) ||
+            !std::isfinite(ball.speed)) return false;
+    }
+    return true;
+}
+
+double totalGameEnergyJ(const GameState& state, const PhysicsProfile& profile)
+{
+    double energy = translationalKineticEnergyJ(state, profile.ball.massKg);
+    for (const BallState& ball : state.balls) {
+        if (!ball.pocketed) energy += rotationalKineticEnergyJ(
+            ball, profile.ball);
+    }
+    return energy;
+}
+
 CushionContactRegime cushionRegime(BallBallContactRegime regime)
 {
     switch (regime) {
@@ -783,8 +870,19 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     GameState& state, float timeStep, const PhysicsProfile& profile,
     int remainingEvents, PhysicsBoundaryMode boundaryMode)
 {
-    if (timeStep <= 0.0f || remainingEvents <= 0) {
+    if (!std::isfinite(timeStep)) {
+        PhysicsStepTelemetry failed;
+        failStep(failed, PhysicsFailureCode::NonfiniteState);
+        return failed;
+    }
+    if (timeStep <= 0.0f) {
         return updatePhysicsDiscrete(state, timeStep, profile, boundaryMode);
+    }
+    if (remainingEvents <= 0) {
+        PhysicsStepTelemetry failed;
+        failStep(failed, PhysicsFailureCode::EventBudget,
+            profile.solver.maximumEventsPerTick);
+        return failed;
     }
     std::vector<ContinuousContactCandidate> candidates =
         generateBallBallCandidates(state, timeStep, profile.ball.radiusCm,
@@ -799,9 +897,9 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         return updatePhysicsDiscrete(
             state, timeStep, profile, boundaryMode, false);
     }
-    const ContinuousEventBatch batch = buildEarliestEventBatch(candidates,
+    const ContinuousEventBatch initialBatch = buildEarliestEventBatch(candidates,
         profile.solver.toiToleranceSeconds, profile.solver.maximumIslandSize);
-    const double toi = batch.earliestTimeSeconds;
+    const double toi = initialBatch.earliestTimeSeconds;
 
     PhysicsStepTelemetry prefix;
     for (int index = 0; index < kBallCount; ++index) {
@@ -811,6 +909,26 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         motion.ballIndex = index;
         prefix.surfaceMotion.push_back(motion);
     }
+    std::vector<ContinuousContactCandidate> activeCandidates =
+        generateBallBallCandidates(state, 0.0, profile.ball.radiusCm,
+            profile.solver.toiToleranceSeconds, true,
+            profile.solver.residualToleranceCmS);
+    if (boundaryMode == PhysicsBoundaryMode::ProductionTable) {
+        std::vector<ContinuousContactCandidate> activeBoundary =
+            generateBoundaryCandidates(state, 0.0f, profile);
+        activeCandidates.insert(activeCandidates.end(),
+            activeBoundary.begin(), activeBoundary.end());
+    }
+    for (const ContinuousContactCandidate& candidate : candidates) {
+        if (candidate.timeOfImpactSeconds >
+            toi + profile.solver.toiToleranceSeconds) continue;
+        ContinuousContactCandidate active = candidate;
+        active.timeOfImpactSeconds = 0.0;
+        activeCandidates.push_back(active);
+    }
+    const ContinuousEventBatch batch = buildEarliestEventBatch(
+        activeCandidates, profile.solver.toiToleranceSeconds,
+        profile.solver.maximumIslandSize);
     bool ballImpulseApplied = false;
     bool railImpulseApplied = false;
     bool hardFailure = batch.failureCode != ContinuousBatchFailureCode::None;
@@ -818,6 +936,10 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         batch.topologyTransitions;
     const std::array<PocketBoundaryFrame, 6> pocketFrames =
         buildPocketBoundaryFrames(profile.tableBoundary);
+    if (hardFailure) {
+        failStep(prefix, batchFailureCode(batch.failureCode),
+            profile.solver.maximumEventsPerTick - remainingEvents);
+    }
     for (const ContactIsland& island : batch.physicalIslands) {
         const ContactSolverResult solved = solveContactIsland(state, island, profile);
         SolverEventRecord solverEvent;
@@ -836,6 +958,21 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         solverEvent.failureCode = contactSolverStatusName(solved.status);
         prefix.solverEvents.push_back(solverEvent);
         hardFailure = hardFailure || solved.status != ContactSolverStatus::Converged;
+        if (solved.status != ContactSolverStatus::Converged) {
+            failStep(prefix, solverFailureCode(solved.status),
+                solverEvent.eventId, island.islandId);
+        } else if (!std::isfinite(solved.totalKineticEnergyBeforeJ) ||
+            !std::isfinite(solved.totalKineticEnergyAfterJ)) {
+            hardFailure = true;
+            failStep(prefix, PhysicsFailureCode::NonfiniteEnergy,
+                solverEvent.eventId, island.islandId);
+        } else if (solved.totalKineticEnergyAfterJ >
+            solved.totalKineticEnergyBeforeJ +
+                profile.solver.passiveEnergyToleranceJ) {
+            hardFailure = true;
+            failStep(prefix, PhysicsFailureCode::PassiveEnergyCreation,
+                solverEvent.eventId, island.islandId);
+        }
         prefix.maximumPenetrationCm = std::max(
             prefix.maximumPenetrationCm, solved.maximumPenetrationCm);
         const std::size_t solvedCount = std::min(
@@ -946,6 +1083,8 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     }
     if (!applyTopologyTransitions(state, topologyToCommit, profile,
             pocketFrames, prefix, toi)) {
+        failStep(prefix, PhysicsFailureCode::ContradictoryTopology,
+            profile.solver.maximumEventsPerTick - remainingEvents);
         state.ballsMoving = anyBallMoving(state);
         return prefix;
     }
@@ -981,9 +1120,32 @@ PhysicsStepTelemetry updatePhysics(
     GameState& state, float timeStep, const PhysicsProfile& profile,
     PhysicsBoundaryMode boundaryMode)
 {
-    return updatePhysicsEventDriven(
+    const GameState snapshot = state;
+    PhysicsStepTelemetry telemetry;
+    const double energyBefore = totalGameEnergyJ(snapshot, profile);
+    if (!finiteGameState(snapshot) || !std::isfinite(energyBefore) ||
+        !std::isfinite(timeStep)) {
+        failStep(telemetry, !std::isfinite(energyBefore)
+            ? PhysicsFailureCode::NonfiniteEnergy
+            : PhysicsFailureCode::NonfiniteState);
+        return telemetry;
+    }
+    telemetry = updatePhysicsEventDriven(
         state, timeStep, profile, profile.solver.maximumEventsPerTick,
         boundaryMode);
+    const double energyAfter = totalGameEnergyJ(state, profile);
+    if (telemetry.stepStatus == PhysicsStepStatus::Succeeded &&
+        (!finiteGameState(state) || !std::isfinite(energyAfter))) {
+        failStep(telemetry, !std::isfinite(energyAfter)
+            ? PhysicsFailureCode::NonfiniteEnergy
+            : PhysicsFailureCode::NonfiniteState);
+    }
+    if (telemetry.stepStatus == PhysicsStepStatus::Succeeded &&
+        energyAfter > energyBefore + profile.solver.passiveEnergyToleranceJ) {
+        failStep(telemetry, PhysicsFailureCode::PassiveEnergyCreation);
+    }
+    if (telemetry.stepStatus == PhysicsStepStatus::Failed) state = snapshot;
+    return telemetry;
 }
 
 PhysicsStepTelemetry updatePhysics(GameState& state, float timeStep)

@@ -169,6 +169,10 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         profile.solver.timeStepSeconds <= 0.0f) {
         return invalid("solver time_step_seconds must be finite and positive");
     }
+    if (!std::isfinite(profile.solver.passiveEnergyToleranceJ) ||
+        profile.solver.passiveEnergyToleranceJ < 0.0) {
+        return invalid("solver passive_energy_tolerance_j must be finite and nonnegative");
+    }
     if (profile.solver.maximumEventsPerTick <= 0) {
         return invalid("solver maximum_events_per_tick must be positive");
     }
@@ -262,7 +266,9 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "solver.position_iterations=" << profile.solver.positionIterations << '\n'
         << "solver.penetration_slop_cm=" << profile.solver.penetrationSlopCm << '\n'
         << "solver.maximum_penetration_cm=" << profile.solver.maximumPenetrationCm << '\n'
-        << "solver.residual_tolerance_cm_s=" << profile.solver.residualToleranceCmS << '\n';
+        << "solver.residual_tolerance_cm_s=" << profile.solver.residualToleranceCmS << '\n'
+        << "solver.passive_energy_tolerance_j="
+        << profile.solver.passiveEnergyToleranceJ << '\n';
     return output.str();
 }
 

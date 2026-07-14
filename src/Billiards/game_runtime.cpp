@@ -207,6 +207,21 @@ ActionResult GameRuntime::step(int count)
         const float timeStep = physicsProfile_.solver.timeStepSeconds;
         const PhysicsStepTelemetry telemetry = updatePhysics(
             state_, timeStep, physicsProfile_, boundaryMode_);
+        if (telemetry.stepStatus == PhysicsStepStatus::Failed) {
+            if (physicsTraceEnabled_) {
+                PhysicsFrame frame = capturePhysicsFrame(
+                    tick_ + 1, static_cast<double>(tick_ + 1) * timeStep,
+                    timeStep, before, state_, telemetry, physicsProfile_,
+                    boundaryMode_);
+                frame.hasCueImpactInput = hasCueImpactInput_;
+                frame.cueImpactInput = cueImpactInput_;
+                frame.hasCueContactResult = cueContactPending_;
+                frame.cueContactResult = cueContactResult_;
+                physicsTrace_.append(frame);
+            }
+            return ActionResult{false,
+                physicsFailureCodeName(telemetry.failureCode)};
+        }
         ++tick_;
         if (physicsTraceEnabled_) {
             PhysicsFrame frame = capturePhysicsFrame(

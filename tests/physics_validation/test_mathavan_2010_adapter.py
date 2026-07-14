@@ -43,7 +43,7 @@ class Mathavan2010AdapterTests(unittest.TestCase):
         self.assertIn("fit_subset", provenance)
         self.assertIn("rigid_cushion_domain", provenance)
         self.assertNotIn("coefficient_of_restitution", scenario)
-        self.assertEqual(scenario["schema_version"], 9)
+        self.assertEqual(scenario["schema_version"], 10)
         profile = scenario["physics_profile"]
         self.assertEqual(profile["ball"]["mass_kg"], 0.1406)
         self.assertEqual(profile["ball"]["radius_cm"], 2.625)
@@ -60,7 +60,7 @@ class Mathavan2010AdapterTests(unittest.TestCase):
         ball = scenario["balls"][0]
         half_width = profile["table_boundary"]["playfield_width_cm"] / 2.0
         self.assertTrue(scenario["id"].endswith("_v2"))
-        self.assertEqual(scenario["schema_version"], 9)
+        self.assertEqual(scenario["schema_version"], 10)
         self.assertEqual(scenario["boundary_mode"], "production_table")
         self.assertEqual(scenario["simulation"]["time_step_seconds"], 0.001)
         self.assertGreaterEqual(scenario["evidence"]["preimpact_samples"], 3)

@@ -26,6 +26,27 @@ enum class PhysicsContactKind {
     Pocket
 };
 
+enum class PhysicsStepStatus {
+    Succeeded,
+    Failed
+};
+
+enum class PhysicsFailureCode {
+    None,
+    EventBudget,
+    InvalidControls,
+    IslandLimit,
+    ResidualLimit,
+    PenetrationLimit,
+    NonfiniteState,
+    NonfiniteEnergy,
+    PassiveEnergyCreation,
+    ContradictoryTopology
+};
+
+const char* physicsStepStatusName(PhysicsStepStatus status);
+const char* physicsFailureCodeName(PhysicsFailureCode code);
+
 struct PhysicsContactRecord {
     int solverEventId = -1;
     int solverIslandId = -1;
@@ -117,6 +138,10 @@ struct PhysicsControlSample {
 };
 
 struct PhysicsStepTelemetry {
+    PhysicsStepStatus stepStatus = PhysicsStepStatus::Succeeded;
+    PhysicsFailureCode failureCode = PhysicsFailureCode::None;
+    int failingEventId = -1;
+    int failingIslandId = -1;
     std::vector<PhysicsContactRecord> contacts;
     std::vector<SolverEventRecord> solverEvents;
     std::vector<SurfaceMotionStep> surfaceMotion;
@@ -136,6 +161,10 @@ struct PhysicsFrame {
     double rotationalKineticEnergyJ = 0.0;
     double totalKineticEnergyJ = 0.0;
     double maximumPenetrationCm = 0.0;
+    PhysicsStepStatus stepStatus = PhysicsStepStatus::Succeeded;
+    PhysicsFailureCode failureCode = PhysicsFailureCode::None;
+    int failingEventId = -1;
+    int failingIslandId = -1;
     bool hasCueImpactInput = false;
     CueImpactInput cueImpactInput;
     bool hasCueContactResult = false;

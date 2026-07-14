@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 
@@ -461,12 +462,145 @@ int main()
     failedPhysicalBatch.balls[2].speed = 100.0f;
     const billiardgl::PhysicsStepTelemetry failedBatchTelemetry =
         billiardgl::updatePhysics(failedPhysicalBatch, 0.01f, eventProfile);
-    if (failedBatchTelemetry.solverEvents.empty() ||
+    if (failedBatchTelemetry.stepStatus !=
+            billiardgl::PhysicsStepStatus::Failed ||
+        failedBatchTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::PenetrationLimit ||
+        failedBatchTelemetry.solverEvents.empty() ||
         std::string(failedBatchTelemetry.solverEvents[0].failureCode) !=
             "penetration_limit" ||
+        !nearlyEqual(failedPhysicalBatch.balls[0].position.x, 0.0f) ||
+        !nearlyEqual(failedPhysicalBatch.balls[1].position.x, 1.0f) ||
         failedPhysicalBatch.balls[2].pocketInteraction.phase !=
             billiardgl::PocketInteractionPhase::Outside) {
-        return fail("pocket topology must not commit when a same-batch physical island fails");
+        return fail("a failed physical batch must report and roll back atomically");
+    }
+
+    billiardgl::GameState islandLimitState;
+    for (billiardgl::BallState& ball : islandLimitState.balls)
+        ball.pocketed = true;
+    for (int index = 0; index < 3; ++index) {
+        islandLimitState.balls[index].pocketed = false;
+        islandLimitState.balls[index].position = billiardgl::Point3{
+            index * 2.0f * eventProfile.ball.radiusCm,
+            billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    }
+    for (int index = 0; index < 3; ++index) {
+        islandLimitState.balls[index].velocity.x =
+            300.0f - index * 100.0f;
+        islandLimitState.balls[index].speed =
+            300.0f - index * 100.0f;
+    }
+    billiardgl::PhysicsProfile islandLimitProfile = eventProfile;
+    islandLimitProfile.solver.maximumIslandSize = 2;
+    const billiardgl::PhysicsStepTelemetry islandLimitTelemetry =
+        billiardgl::updatePhysics(
+            islandLimitState, 0.01f, islandLimitProfile);
+    if (islandLimitTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::IslandLimit ||
+        !nearlyEqual(islandLimitState.balls[0].velocity.x, 300.0f)) {
+        return fail("island-limit failure must roll back the complete tick");
+    }
+
+    billiardgl::GameState residualState = islandLimitState;
+    billiardgl::PhysicsProfile residualProfile = eventProfile;
+    residualProfile.solver.velocityIterations = 1;
+    residualProfile.solver.residualToleranceCmS = 0.0f;
+    const billiardgl::PhysicsStepTelemetry residualTelemetry =
+        billiardgl::updatePhysics(residualState, 0.01f, residualProfile);
+    if (residualTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::ResidualLimit ||
+        !nearlyEqual(residualState.balls[0].velocity.x, 300.0f)) {
+        return fail("residual-limit failure must roll back the complete tick");
+    }
+
+    billiardgl::GameState passiveGateState;
+    for (billiardgl::BallState& ball : passiveGateState.balls)
+        ball.pocketed = true;
+    passiveGateState.balls[0].pocketed = false;
+    passiveGateState.balls[1].pocketed = false;
+    passiveGateState.balls[0].position = billiardgl::Point3{
+        0.0f, billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    passiveGateState.balls[1].position = billiardgl::Point3{
+        2.0f * eventProfile.ball.radiusCm,
+        billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    passiveGateState.balls[0].velocity.x = 100.0f;
+    passiveGateState.balls[0].speed = 100.0f;
+    billiardgl::PhysicsProfile activeContactProfile = eventProfile;
+    activeContactProfile.ball.normalRestitution = 2.0f;
+    activeContactProfile.solver.passiveEnergyToleranceJ = 0.0;
+    const billiardgl::PhysicsStepTelemetry passiveGateTelemetry =
+        billiardgl::updatePhysics(
+            passiveGateState, 0.01f, activeContactProfile);
+    if (passiveGateTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::PassiveEnergyCreation ||
+        !nearlyEqual(passiveGateState.balls[0].velocity.x, 100.0f) ||
+        !nearlyEqual(passiveGateState.balls[1].velocity.x, 0.0f)) {
+        return fail("passive-energy failure must roll back the complete tick");
+    }
+
+    billiardgl::GameState eventBudgetState;
+    for (billiardgl::BallState& ball : eventBudgetState.balls)
+        ball.pocketed = true;
+    for (int index = 0; index < 3; ++index) {
+        eventBudgetState.balls[index].pocketed = false;
+        eventBudgetState.balls[index].position = billiardgl::Point3{
+            index * 10.0f,
+            billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    }
+    eventBudgetState.balls[0].velocity.x = 300.0f;
+    eventBudgetState.balls[0].speed = 300.0f;
+    billiardgl::PhysicsProfile eventBudgetProfile = eventProfile;
+    eventBudgetProfile.solver.maximumEventsPerTick = 1;
+    const billiardgl::PhysicsStepTelemetry eventBudgetTelemetry =
+        billiardgl::updatePhysics(
+            eventBudgetState, 0.1f, eventBudgetProfile);
+    if (eventBudgetTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::EventBudget ||
+        !nearlyEqual(eventBudgetState.balls[0].position.x, 0.0f) ||
+        !nearlyEqual(eventBudgetState.balls[0].velocity.x, 300.0f)) {
+        return fail("event-budget exhaustion must roll back the complete tick");
+    }
+
+    billiardgl::GameState topologyConflict;
+    for (billiardgl::BallState& ball : topologyConflict.balls)
+        ball.pocketed = true;
+    topologyConflict.balls[0].pocketed = false;
+    billiardgl::PhysicsProfile topologyProfile = eventProfile;
+    topologyProfile.tableBoundary.captureDepthCm =
+        topologyProfile.tableBoundary.throatDepthCm;
+    const std::array<billiardgl::PocketBoundaryFrame, 6> conflictFrames =
+        billiardgl::buildPocketBoundaryFrames(
+            topologyProfile.tableBoundary);
+    const billiardgl::PocketBoundaryFrame& conflictFrame = conflictFrames[4];
+    topologyConflict.balls[0].position = billiardgl::Point3{
+        conflictFrame.mouthCenter.x - conflictFrame.inward.x *
+            conflictFrame.throatDepthCm,
+        billiardgl::kTableHeight + topologyProfile.ball.radiusCm,
+        conflictFrame.mouthCenter.z - conflictFrame.inward.z *
+            conflictFrame.throatDepthCm};
+    topologyConflict.balls[0].velocity = billiardgl::Point3{
+        -conflictFrame.inward.x * 100.0f, 0.0f,
+        -conflictFrame.inward.z * 100.0f};
+    topologyConflict.balls[0].speed = 100.0f;
+    const billiardgl::PhysicsStepTelemetry conflictTelemetry =
+        billiardgl::updatePhysics(
+            topologyConflict, 0.01f, topologyProfile);
+    if (conflictTelemetry.failureCode !=
+            billiardgl::PhysicsFailureCode::ContradictoryTopology ||
+        topologyConflict.balls[0].pocketInteraction.phase !=
+            billiardgl::PocketInteractionPhase::Outside) {
+        return fail("contradictory topology must fail before state commit");
+    }
+
+    billiardgl::GameState nonfiniteEnergy = islandLimitState;
+    nonfiniteEnergy.balls[0].angularVelocity.x =
+        std::numeric_limits<float>::max();
+    const billiardgl::PhysicsStepTelemetry nonfiniteEnergyTelemetry =
+        billiardgl::updatePhysics(nonfiniteEnergy, 0.01f, eventProfile);
+    if (nonfiniteEnergyTelemetry.failureCode !=
+        billiardgl::PhysicsFailureCode::NonfiniteEnergy) {
+        return fail("nonfinite energy must fail before authoritative mutation");
     }
 
     billiardgl::PhysicsProfile tickEndProfile = eventProfile;

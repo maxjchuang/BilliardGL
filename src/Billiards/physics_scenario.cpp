@@ -177,7 +177,15 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
         requireExactKeys(cushion, {"normal_restitution", "friction_coefficient"},
             "physics_profile.cushion");
     }
-    if (scenarioVersion >= 8) {
+    if (scenarioVersion >= 10) {
+        requireExactKeys(solver,
+            {"time_step_seconds", "maximum_events_per_tick",
+             "toi_tolerance_seconds", "maximum_island_size",
+             "velocity_iterations", "position_iterations",
+             "penetration_slop_cm", "maximum_penetration_cm",
+             "residual_tolerance_cm_s", "passive_energy_tolerance_j"},
+            "physics_profile.solver");
+    } else if (scenarioVersion >= 8) {
         requireExactKeys(solver,
             {"time_step_seconds", "maximum_events_per_tick",
              "toi_tolerance_seconds", "maximum_island_size",
@@ -287,6 +295,10 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
             requiredNumber(solver, "maximum_penetration_cm"));
         profile.solver.residualToleranceCmS = static_cast<float>(
             requiredNumber(solver, "residual_tolerance_cm_s"));
+        if (scenarioVersion >= 10) {
+            profile.solver.passiveEnergyToleranceJ = requiredNumber(
+                solver, "passive_energy_tolerance_j");
+        }
     }
     const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
     if (!validation.ok) throw std::runtime_error(validation.error);

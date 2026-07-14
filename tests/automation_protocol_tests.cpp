@@ -39,6 +39,11 @@ int main()
         "chinese_pool_full_game_v1", "trace should identify its physics profile");
     expect(physicsFrame.at("boundary_mode").asString() == "production_table",
         "trace should serialize the active apparatus boundary mode");
+    expect(physicsFrame.at("step_status").asString() == "succeeded" &&
+        physicsFrame.at("failure_code").asString() == "none" &&
+        physicsFrame.has("failing_event_id") &&
+        physicsFrame.has("failing_island_id"),
+        "trace should serialize transactional step status");
     const billiardgl::json::Value& traceBall =
         physicsFrame.at("balls").asArray()[0];
     expect(traceBall.at("motion_state").asString() == "stationary",

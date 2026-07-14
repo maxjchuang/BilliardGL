@@ -66,7 +66,7 @@ class DomenechAdapterTests(unittest.TestCase):
             material = point.series_id.split("_")[0]
             source = self.package.manifest["apparatus"]["materials"][material]
             ball = scenario["physics_profile"]["ball"]
-            self.assertEqual(scenario["schema_version"], 9)
+            self.assertEqual(scenario["schema_version"], 10)
             self.assertEqual(scenario["evidence"]["equipment"],
                              "SOURCE_LABORATORY_APPARATUS")
             self.assertEqual(ball["radius_cm"], source["diameter_cm"] / 2.0)
@@ -106,7 +106,7 @@ class DomenechAdapterTests(unittest.TestCase):
         scenario = json.loads(adapt_domenech_2023(
             self.package, self.split, self.points).cases[0].scenario_json)
         self.assertTrue(scenario["id"].endswith("_v2"))
-        self.assertEqual(scenario["schema_version"], 9)
+        self.assertEqual(scenario["schema_version"], 10)
         self.assertEqual(scenario["boundary_mode"], "unbounded")
         self.assertEqual(scenario.get("initial_contact_epsilon_cm", 0.0), 0.0)
         self.assertIn("table_boundary", scenario["physics_profile"])

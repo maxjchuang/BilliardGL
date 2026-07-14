@@ -375,6 +375,12 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
     value["delta_seconds"] = json::Value(frame.deltaSeconds);
     value["linear_momentum_kg_mps"] = pointValue(frame.linearMomentum);
     value["maximum_penetration_cm"] = json::Value(frame.maximumPenetrationCm);
+    value["step_status"] = json::Value(
+        physicsStepStatusName(frame.stepStatus));
+    value["failure_code"] = json::Value(
+        physicsFailureCodeName(frame.failureCode));
+    value["failing_event_id"] = json::Value(frame.failingEventId);
+    value["failing_island_id"] = json::Value(frame.failingIslandId);
     value["boundary_mode"] = json::Value(
         physicsBoundaryModeName(frame.boundaryMode));
     value["physics_profile_id"] = json::Value(frame.physicsProfileId);

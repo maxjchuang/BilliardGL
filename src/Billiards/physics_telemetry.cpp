@@ -20,6 +20,30 @@ Point3 accelerationBetween(const Point3& before, const Point3& after, float delt
 
 }  // namespace
 
+const char* physicsStepStatusName(PhysicsStepStatus status)
+{
+    return status == PhysicsStepStatus::Succeeded ? "succeeded" : "failed";
+}
+
+const char* physicsFailureCodeName(PhysicsFailureCode code)
+{
+    switch (code) {
+    case PhysicsFailureCode::None: return "none";
+    case PhysicsFailureCode::EventBudget: return "event_budget";
+    case PhysicsFailureCode::InvalidControls: return "invalid_controls";
+    case PhysicsFailureCode::IslandLimit: return "island_limit";
+    case PhysicsFailureCode::ResidualLimit: return "residual_limit";
+    case PhysicsFailureCode::PenetrationLimit: return "penetration_limit";
+    case PhysicsFailureCode::NonfiniteState: return "nonfinite_state";
+    case PhysicsFailureCode::NonfiniteEnergy: return "nonfinite_energy";
+    case PhysicsFailureCode::PassiveEnergyCreation:
+        return "passive_energy_creation";
+    case PhysicsFailureCode::ContradictoryTopology:
+        return "contradictory_topology";
+    }
+    return "nonfinite_state";
+}
+
 Point3 translationalMomentumKgMps(const GameState& state, float ballMassKg)
 {
     Point3 momentum;
@@ -66,6 +90,10 @@ PhysicsFrame capturePhysicsFrame(std::uint64_t tick, double timeSeconds, float d
         }
     }
     frame.maximumPenetrationCm = telemetry.maximumPenetrationCm;
+    frame.stepStatus = telemetry.stepStatus;
+    frame.failureCode = telemetry.failureCode;
+    frame.failingEventId = telemetry.failingEventId;
+    frame.failingIslandId = telemetry.failingIslandId;
     frame.linearMomentum = translationalMomentumKgMps(after, profile.ball.massKg);
     frame.translationalKineticEnergyJ =
         translationalKineticEnergyJ(after, profile.ball.massKg);

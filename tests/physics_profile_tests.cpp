@@ -70,6 +70,12 @@ int main()
         profile.solver.positionIterations == 4 &&
         close(profile.solver.maximumPenetrationCm, 0.5f),
         "deterministic multi-contact controls have safe defaults");
+    expect(profile.solver.passiveEnergyToleranceJ == 1e-10,
+        "passive energy tolerance is explicit in the frozen solver profile");
+    billiardgl::PhysicsProfile invalidEnergyTolerance = profile;
+    invalidEnergyTolerance.solver.passiveEnergyToleranceJ = -1.0;
+    expect(!billiardgl::validatePhysicsProfile(invalidEnergyTolerance).ok,
+        "negative passive energy tolerance must be rejected");
     billiardgl::PhysicsProfile invalidSolver = profile;
     invalidSolver.solver.maximumPenetrationCm =
         invalidSolver.solver.penetrationSlopCm;

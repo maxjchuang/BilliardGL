@@ -66,6 +66,7 @@ struct SolverSettings {
     float penetrationSlopCm = 0.001f;
     float maximumPenetrationCm = 0.5f;
     float residualToleranceCmS = 0.001f;
+    double passiveEnergyToleranceJ = 0.0000000001;
 };
 
 struct PhysicsProfile {

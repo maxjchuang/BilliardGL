@@ -73,6 +73,10 @@ int main()
     solverEvent.velocityIterations = 4;
     solverEvent.maximumResidualCmS = 0.0001;
     step.solverEvents.push_back(solverEvent);
+    step.stepStatus = billiardgl::PhysicsStepStatus::Failed;
+    step.failureCode = billiardgl::PhysicsFailureCode::ResidualLimit;
+    step.failingEventId = 3;
+    step.failingIslandId = 1;
     const billiardgl::PhysicsFrame frame =
         billiardgl::capturePhysicsFrame(
             7, 0.7, 0.1f, before, after, step,
@@ -80,6 +84,10 @@ int main()
             billiardgl::PhysicsBoundaryMode::Unbounded);
 
     expect(frame.tick == 7 && close(frame.timeSeconds, 0.7), "tick and time");
+    expect(frame.stepStatus == billiardgl::PhysicsStepStatus::Failed &&
+        frame.failureCode == billiardgl::PhysicsFailureCode::ResidualLimit &&
+        frame.failingEventId == 3 && frame.failingIslandId == 1,
+        "step failure identity survives frame capture");
     expect(frame.boundaryMode == billiardgl::PhysicsBoundaryMode::Unbounded,
         "frame capture should retain the apparatus boundary identity");
     expect(close(frame.balls[0].acceleration.x, -40.0), "acceleration derives from velocity delta");

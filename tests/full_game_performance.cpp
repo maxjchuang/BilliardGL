@@ -20,6 +20,8 @@ struct Metrics {
     double p99Ms = 0.0;
     std::size_t peakRssBytes = 0;
     std::size_t artifactBytesPerTick = 0;
+    std::string failureCode;
+    std::uint64_t failureTick = 0;
 };
 
 Metrics measure()
@@ -36,15 +38,21 @@ Metrics measure()
     input.tipOffsetRadius = {{0.0, 0.0}};
     input.chalkState = "chalked";
     runtime.applyCueImpact(input);
+    Metrics metrics;
     std::vector<double> durations;
     durations.reserve(1000);
     for (int tick = 0; tick < 1000; ++tick) {
         const auto start = std::chrono::steady_clock::now();
-        runtime.step(1);
+        const billiardgl::ActionResult result = runtime.step(1);
         const auto end = std::chrono::steady_clock::now();
+        if (!result.ok) {
+            metrics.failureCode = result.errorCode;
+            metrics.failureTick = runtime.tick() + 1;
+            break;
+        }
         durations.push_back(std::chrono::duration<double, std::milli>(end - start).count());
     }
-    Metrics metrics;
+    if (!metrics.failureCode.empty()) return metrics;
     metrics.meanMs = std::accumulate(durations.begin(), durations.end(), 0.0) /
         durations.size();
     std::sort(durations.begin(), durations.end());
@@ -73,6 +81,12 @@ Metrics measure()
 int main(int argc, char** argv)
 {
     const Metrics metrics = measure();
+    if (!metrics.failureCode.empty()) {
+        std::cerr << "physics step failed during performance run: "
+                  << metrics.failureCode << " at tick "
+                  << metrics.failureTick << '\n';
+        return EXIT_FAILURE;
+    }
     if (!std::isfinite(metrics.meanMs) || metrics.meanMs > 1.0 ||
         metrics.p95Ms > 2.0 || metrics.p99Ms > 5.0 ||
         metrics.peakRssBytes > 536870912ULL ||

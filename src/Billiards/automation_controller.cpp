@@ -202,13 +202,21 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         if (command == "step") {
             const int ticks = intParam(params, "ticks");
             if (ticks < 0 || ticks > 100000) return failure(request.id, "invalid_argument", "ticks must be between 0 and 100000");
-            runtime_.step(ticks); json::Value value = json::Value::object(); value["tick"] = json::Value(static_cast<double>(runtime_.tick())); return success(request.id, value);
+            const ActionResult result = runtime_.step(ticks);
+            if (!result.ok) return failure(request.id, result.errorCode,
+                "physics step failed and was rolled back");
+            json::Value value = json::Value::object(); value["tick"] = json::Value(static_cast<double>(runtime_.tick())); return success(request.id, value);
         }
         if (command == "run_until") {
             const std::string condition=stringParam(params,"condition"); const int maxSteps=params.has("max_steps") ? params.at("max_steps").asInt() : 10000;
             if (maxSteps < 0 || maxSteps > 1000000) return failure(request.id,"invalid_argument","max_steps must be between 0 and 1000000");
             const std::uint64_t sequence = runtime_.events().empty() ? 0 : runtime_.events().back().sequence;
-            int steps=0; while (steps<maxSteps && !eventConditionMet(runtime_,condition,sequence)) { runtime_.step(1); ++steps; }
+            int steps=0; while (steps<maxSteps && !eventConditionMet(runtime_,condition,sequence)) {
+                const ActionResult result = runtime_.step(1);
+                if (!result.ok) return failure(request.id, result.errorCode,
+                    "physics step failed and was rolled back");
+                ++steps;
+            }
             json::Value value=json::Value::object(); value["tick"]=json::Value(static_cast<double>(runtime_.tick())); value["steps"]=json::Value(steps); value["balls_moving"]=json::Value(runtime_.state().ballsMoving);
             if (!eventConditionMet(runtime_,condition,sequence)) { ControllerResult result=failure(request.id,"condition_not_met","condition was not met before max_steps"); result.response["result"]=value; return result; }
             return success(request.id,value);

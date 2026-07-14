@@ -98,6 +98,7 @@ def _profile(material, source, fit, post_transition):
             "maximum_penetration_cm": 0.5,
             "penetration_slop_cm": 0.001,
             "position_iterations": 4,
+            "passive_energy_tolerance_j": 1e-10,
             "residual_tolerance_cm_s": 0.001,
             "time_step_seconds": _TIME_STEP_SECONDS,
             "toi_tolerance_seconds": 0.0000001,
@@ -195,7 +196,7 @@ def adapt_domenech_2023(package, split, points):
         post_transition = point.series_id in {"steel_beta1", "rubber_lambda2"}
         scenario = json.loads(json.dumps(
             template["base_scenario"], allow_nan=False))
-        scenario["schema_version"] = 9
+        scenario["schema_version"] = 10
         scenario["boundary_mode"] = "unbounded"
         scenario["id"] = f"{dataset_id}__{point.case_id}_v2"
         scenario["physics_profile"] = _profile(

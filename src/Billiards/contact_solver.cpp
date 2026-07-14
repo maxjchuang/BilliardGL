@@ -221,6 +221,7 @@ ContactSolverResult solveContactIsland(
         return result;
     }
 
+    const GameState velocitySnapshot = state;
     result.totalKineticEnergyBeforeJ = totalEnergy(state, island, profile);
     result.kineticEnergyBeforeJ = result.totalKineticEnergyBeforeJ;
     std::vector<SolverConstraint> constraints;
@@ -309,6 +310,62 @@ ContactSolverResult solveContactIsland(
         if (residual <= profile.solver.residualToleranceCmS) break;
     }
 
+    const bool validRestitution = std::all_of(constraints.begin(),
+        constraints.end(), [](const SolverConstraint& constraint) {
+            return constraint.restitution >= 0.0 &&
+                constraint.restitution <= 1.0;
+        });
+    if (validRestitution && totalEnergy(state, island, profile) >
+            result.totalKineticEnergyBeforeJ +
+                profile.solver.passiveEnergyToleranceJ) {
+        const auto restoreAndApply = [&](double scale) {
+            for (int ballIndex : island.ballIndices) {
+                state.balls[ballIndex].velocity =
+                    velocitySnapshot.balls[ballIndex].velocity;
+                state.balls[ballIndex].angularVelocity =
+                    velocitySnapshot.balls[ballIndex].angularVelocity;
+            }
+            for (const SolverConstraint& constraint : constraints) {
+                const Point3 impulse = added(
+                    scaled(constraint.normal,
+                        constraint.lambdaNormalNs * scale),
+                    scaled(constraint.tangent,
+                        constraint.lambdaTangentNs * scale));
+                applyConstraintImpulse(state, constraint, impulse, profile);
+            }
+            return totalEnergy(state, island, profile);
+        };
+        double lower = 0.0;
+        double upper = 1.0;
+        for (int iteration = 0; iteration < 60; ++iteration) {
+            const double middle = (lower + upper) * 0.5;
+            if (restoreAndApply(middle) <=
+                result.totalKineticEnergyBeforeJ +
+                    profile.solver.passiveEnergyToleranceJ) {
+                lower = middle;
+            } else {
+                upper = middle;
+            }
+        }
+        restoreAndApply(lower);
+        for (std::size_t index = 0; index < constraints.size(); ++index) {
+            SolverConstraint& constraint = constraints[index];
+            constraint.lambdaNormalNs *= lower;
+            constraint.lambdaTangentNs *= lower;
+            const double achievedNormalSpeed = dot(
+                relativeVelocity(state, constraint), constraint.normal);
+            constraint.targetNormalSpeedCmS = std::min(
+                constraint.targetNormalSpeedCmS, achievedNormalSpeed);
+            const double incidentNormalSpeed = -dot(
+                result.contacts[index].relativeVelocityBeforeCmS,
+                constraint.normal);
+            if (incidentNormalSpeed > 1e-12) {
+                constraint.restitution = std::max(0.0,
+                    achievedNormalSpeed / incidentNormalSpeed);
+            }
+        }
+    }
+
     for (int iteration = 0; iteration < profile.solver.positionIterations;
             ++iteration) {
         result.positionIterations = iteration + 1;
@@ -351,6 +408,7 @@ ContactSolverResult solveContactIsland(
         diagnostic.accumulatedNormalImpulseNs = constraint.lambdaNormalNs;
         diagnostic.accumulatedTangentialImpulseNs =
             constraint.lambdaTangentNs;
+        diagnostic.restitution = constraint.restitution;
         diagnostic.relativeVelocityAfterCmS = relativeVelocity(state, constraint);
         diagnostic.residualCmS = std::max(0.0,
             constraint.targetNormalSpeedCmS - dot(
