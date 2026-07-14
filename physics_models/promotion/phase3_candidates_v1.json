@@ -1,0 +1,158 @@
+{
+  "candidates": [
+    {
+      "id": "chinese_pool_surface_motion_v1",
+      "theme": 1,
+      "evidence_grade": "mixed",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_surface_motion_v1.json",
+        "sha256": "644649da8137dc9dd87e4ab4c898e01fc559f026d9b1a9fd3d86854cd13c042e"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/surface_motion_v1/freeze.json",
+        "sha256": "f92b934d7b69d07fe46fdc2b1921b607cb5dd4785149edef369324168772b3ee"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/surface_motion_v1/validation/validation_receipt.json",
+          "sha256": "cd0cbc051d7ce11dcbde4b272d3add654a6140e6230904703ccf53b6b022c748"
+        }
+      ],
+      "limitations": [
+        "cloth transfer and long-horizon spin decay remain incompletely measured"
+      ],
+      "validation_disposition": "limitations_preserved"
+    },
+    {
+      "id": "chinese_pool_cue_contact_v1",
+      "theme": 2,
+      "evidence_grade": "C",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_cue_contact_v1.json",
+        "sha256": "c3dd2a167e1bca3694deff45894dce21702359deb8f6ae8d92a0ee392b6fe4ce"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/cue_contact_v1/freeze.json",
+        "sha256": "d02a8def68a2ddedf60c155fb1ab075956eb1766a7256f81af4c90837e369a9f"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/cue_contact_v1/validation/validation_receipt.json",
+          "sha256": "e658b59ae799ede34433ae9cee3499decf2da7d5cf33c30094fc708af6c24238"
+        }
+      ],
+      "limitations": [
+        "elevated cue, jump, masse, and measured miscue boundaries remain unavailable"
+      ],
+      "validation_disposition": "passed"
+    },
+    {
+      "id": "chinese_pool_ball_collision_v1",
+      "theme": 3,
+      "evidence_grade": "mixed",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_ball_collision_v1.json",
+        "sha256": "99f0ec7da812cb7e71e730acac6fda7f2b630b38ce401ff340dadc300d4e220c"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/ball_collision_v1/freeze.json",
+        "sha256": "3e239d04f7f66447e967e4b2c8dac3b49e5eafadbde7f58a4bcc14300e9615a1"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/ball_collision_v1/validation/domenech_2023/validation_receipt.json",
+          "sha256": "b6d3cd86753063eb5cb5a87f1b7ee02e884c3f2ec24514f55763d4e9dbe80f68"
+        },
+        {
+          "path": "physics_models/candidates/ball_collision_v1/validation/mathavan_2009/validation_receipt.json",
+          "sha256": "dffbce73e5ceb31a751ec9cbc175a0a993b3de1aa88968065c8dbd600a7e9758"
+        }
+      ],
+      "limitations": [
+        "material transfer and complete spin measurements remain limited"
+      ],
+      "validation_disposition": "limitations_preserved"
+    },
+    {
+      "id": "chinese_pool_cushion_collision_v1",
+      "theme": 4,
+      "evidence_grade": "mixed",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_cushion_collision_v1.json",
+        "sha256": "6eef1e7310746babf741fb6e382439408602035cb324c7abfa8b81efc4b3f250"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/cushion_collision_v1/freeze.json",
+        "sha256": "805d7d0de87b8a89863d81635ad6574848ac5abfc89c9c8e611c244a879fb5c6"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/cushion_collision_v1/validation/mathavan_2009/validation_receipt.json",
+          "sha256": "50cbb3da5d4117bd9121e9f773589e91d251e52a00af8afe3b658b3c94a3f696"
+        },
+        {
+          "path": "physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/validation_receipt.json",
+          "sha256": "f2b9155f7b5d23d136fa3de3554018faf9f9c550b6b1e71c3e22301a8d812025"
+        }
+      ],
+      "limitations": [
+        "Chinese Pool rail material transfer and general spin incidence remain limited"
+      ],
+      "validation_disposition": "limitations_preserved"
+    },
+    {
+      "id": "chinese_pool_pocket_boundary_v1",
+      "theme": 5,
+      "evidence_grade": "C",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_pocket_boundary_v1.json",
+        "sha256": "8d6d445a0335001caa28e32cb99e6e3dcbd17eae8b9bb46174806022b262d58f"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/pocket_boundary_v1/freeze.json",
+        "sha256": "15aef7e9fb7a83eb4be0a80dd959df4ad1770e3c48c1ea6061284ce2f1cc851f"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/pocket_boundary_v1/validation/validation_receipt.json",
+          "sha256": "2955241d33b8bfac7cce672584b2d7f14383530dc735152dba0b950c296745f0"
+        }
+      ],
+      "limitations": [
+        "real pocket trajectory and pot-success measurements remain unavailable"
+      ],
+      "validation_disposition": "passed"
+    },
+    {
+      "id": "chinese_pool_multi_contact_solver_v1",
+      "theme": 6,
+      "evidence_grade": "C",
+      "real_world_claim": "bounded",
+      "profile": {
+        "path": "physics_models/profiles/chinese_pool_multi_contact_solver_v1.json",
+        "sha256": "e7975d8cef5f24f4e9cf76f132d490592628fb6d38a82e85f8f6cfb8260391fd"
+      },
+      "freeze": {
+        "path": "physics_models/candidates/multi_contact_solver_v1/freeze.json",
+        "sha256": "360c85919e3167c3a86351068cdb147b02974ff336b019a3ffa18ac82eaf4969"
+      },
+      "receipts": [
+        {
+          "path": "physics_models/candidates/multi_contact_solver_v1/validation/validation_receipt.json",
+          "sha256": "0e7bea39012d5963f00c9d0e9f72ade573b7c58cf16a6adcd719b7b7334c8732"
+        }
+      ],
+      "limitations": [
+        "real break-shot and chaotic long-trajectory evidence remain unavailable"
+      ],
+      "validation_disposition": "passed"
+    }
+  ],
+  "production_default": "chinese_pool_multi_contact_solver_v1",
+  "schema_version": 1
+}
