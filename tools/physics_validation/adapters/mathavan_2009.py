@@ -19,19 +19,17 @@ _CANDIDATE_ROLLING_RESISTANCE_CM_S2 = 12.5
 _CANDIDATE_SLIDING_FRICTION_COEFFICIENT = 0.20
 
 
-def _surface_motion_candidate_profile():
-    """Return the preregistered profile used to exercise post-impact roll windows.
-
-    The production default is deliberately not changed until the candidate is
-    fitted and frozen. Reference scenarios therefore carry the complete v3
-    override while calibration coverage is being established.
-    """
+def _combined_candidate_profile():
+    """Bind the frozen Theme 1-3 values plus the calibration-only cushion fit."""
     return {
-        "id": "chinese_pool_surface_motion_v1",
-        "formula_version": "surface_motion_v1",
+        "id": "mathavan_2009_combined_calibration_v1",
+        "formula_version": "cushion_collision_v1",
         "ball": {
             "mass_kg": 0.17,
             "radius_cm": _ENGINE_RADIUS_CM,
+            "inertia_factor": 0.4,
+            "normal_restitution": 0.36,
+            "friction_coefficient": 0.25,
             "material": "phenolic_resin",
         },
         "surface": {
@@ -45,10 +43,20 @@ def _surface_motion_candidate_profile():
             "stop_energy_threshold_j": 0.000000001,
             "material": "production_cloth_legacy",
         },
-        "cue": {"effective_mass_kg": 0.5},
+        "cue": {
+            "effective_mass_kg": 0.5,
+            "normal_restitution": 0.0,
+            "chalked_friction_coefficient": 0.6,
+            "unchalked_friction_coefficient": 0.1,
+            "maximum_reliable_offset_radius": 0.8,
+            "cue_speed_per_power_unit_cm_s": 1.34,
+        },
         "cushion": {
-            "normal_restitution": 1.0,
-            "friction_coefficient": 0.0,
+            "normal_restitution": 0.9248723120650503,
+            "friction_coefficient": 0.14,
+            "nose_height_ratio": 1.4,
+            "maximum_rigid_incident_speed_cm_s": 250.0,
+            "material": "riley_renaissance_snooker_cushion",
         },
         "solver": {
             "time_step_seconds": 0.1,
@@ -165,9 +173,8 @@ def adapt_mathavan_2009(package, split, points):
         scenario["id"] = f"{package.manifest['dataset_id']}__{case_id}"
         scenario["simulation"]["ticks"] = mapping["ticks"]
         scenario["balls"] = _scenario_balls(mapping)
-        if mapping["kind"] == "oblique_ball_collision":
-            scenario["schema_version"] = 3
-            scenario["physics_profile"] = _surface_motion_candidate_profile()
+        scenario["schema_version"] = 6
+        scenario["physics_profile"] = _combined_candidate_profile()
         scenario["evidence"]["source_ball_diameter_cm"] = _SOURCE_DIAMETER_CM
         scenario["evidence"]["runtime_ball_diameter_cm"] = _ENGINE_DIAMETER_CM
         scenario["expectations"] = []

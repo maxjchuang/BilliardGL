@@ -19,12 +19,6 @@ class Mathavan2009AdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.package = load_reference_package(PACKAGE_ROOT)
-        profile_path = (
-            Path(__file__).parents[2]
-            / "physics_models/profiles/chinese_pool_surface_motion_v1.json"
-        )
-        cls.candidate_profile = json.loads(
-            profile_path.read_text(encoding="utf-8"))["runtime_profile"]
         cls.points = read_reference_points(
             cls.package.files["normalized"], cls.package.manifest["dataset_id"])
         cls.split = load_reference_split(
@@ -67,12 +61,10 @@ class Mathavan2009AdapterTests(unittest.TestCase):
         )
         for case in table_cases:
             scenario = json.loads(case.scenario_json)
-            self.assertEqual(scenario["schema_version"], 3)
-            self.assertEqual(
-                scenario["physics_profile"], self.candidate_profile)
+            self.assertEqual(scenario["schema_version"], 6)
             self.assertEqual(
                 scenario["physics_profile"]["id"],
-                "chinese_pool_surface_motion_v1",
+                "mathavan_2009_combined_calibration_v1",
             )
             self.assertEqual(
                 scenario["physics_profile"]["surface"]
@@ -84,6 +76,11 @@ class Mathavan2009AdapterTests(unittest.TestCase):
                 ["rolling_resistance_acceleration_cm_s2"],
                 12.5,
             )
+            self.assertEqual(
+                scenario["physics_profile"]["ball"]["normal_restitution"], 0.36)
+            self.assertEqual(
+                scenario["physics_profile"]["cushion"]["normal_restitution"],
+                0.9248723120650503)
             self.assertTrue(all(
                 item["value"]["selection"]["sample_phase"] ==
                 "first_pure_roll_after_event"

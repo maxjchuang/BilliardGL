@@ -2,8 +2,9 @@
   "schema_version": 1,
   "failures": [
     {"dataset_id": "mathavan_2009_high_speed", "case_id": "sliding_deceleration", "code": "MODEL_MISMATCH", "metric": "sliding_deceleration_cm_s2", "rationale": "The runtime does not distinguish sliding from rolling friction and remains at 4 cm/s^2."},
-    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_01", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The executable surface-transition window is stable, but the legacy ball-ball collision response overpredicts the calibrated post-collision speeds; collision response is deferred to theme 3."},
-    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_07", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."},
-    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_08", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The current cushion response is effectively lossless apart from one friction step at this incident speed."}
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_01", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The frozen rigid ball-contact candidate cannot reproduce both unmeasured-spin post-slip speeds for this transferred snooker shot."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "table1_shot_02", "code": "MODEL_MISMATCH", "metric": "post_collision_linear_velocity_cm_s", "rationale": "The frozen rigid ball-contact candidate cannot reproduce both unmeasured-spin post-slip speeds for this transferred snooker shot."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_07", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The constant low-speed calibrated cushion response cannot represent the source curve's speed-dependent loss at this above-domain incident speed."},
+    {"dataset_id": "mathavan_2009_high_speed", "case_id": "fig9_visible_08", "code": "MODEL_MISMATCH", "metric": "cushion_rebound_speed_cm_s", "rationale": "The constant low-speed calibrated cushion response cannot represent the source curve's speed-dependent loss at this above-domain incident speed."}
   ]
 }
