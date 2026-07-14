@@ -21,8 +21,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert exit_code == 0
     payload = json.loads((output / "report.json").read_text(encoding="utf-8"))
     assert payload["summary"] == {
-        "passed": 5,
-        "failed_known": 1,
+        "passed": 6,
+        "failed_known": 0,
         "failed_new": 0,
         "reference_limited": 0,
     }
@@ -30,9 +30,10 @@ with tempfile.TemporaryDirectory() as directory:
     assert len(traces) == 7
     assert (output / "traces/reverse_cradle_v1__permuted.json").is_file()
     markdown = (output / "report.md").read_text(encoding="utf-8")
-    assert markdown.count("FAILED (KNOWN)") == 1
+    assert markdown.count("FAILED (KNOWN)") == 0
     assert "free_roll_v1 | PASSED" in markdown
     assert "cue_impact_v2_contract | PASSED" in markdown
     assert "profile_override_v3 | PASSED" in markdown
     assert "high_speed_tunneling_v1 | PASSED" in markdown
     assert "receding_overlap_v1 | PASSED" in markdown
+    assert "reverse_cradle_v1 | PASSED" in markdown

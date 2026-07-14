@@ -640,6 +640,7 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         candidates, profile.solver.toiToleranceSeconds,
         profile.solver.maximumIslandSize);
     bool impulseApplied = false;
+    bool hardFailure = false;
     for (const ContactIsland& island : built.islands) {
         const ContactSolverResult solved = solveContactIsland(state, island, profile);
         SolverEventRecord solverEvent;
@@ -657,6 +658,7 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
         solverEvent.islandLimitExceeded = island.limitExceeded;
         solverEvent.failureCode = contactSolverStatusName(solved.status);
         prefix.solverEvents.push_back(solverEvent);
+        hardFailure = hardFailure || solved.status != ContactSolverStatus::Converged;
         prefix.maximumPenetrationCm = std::max(
             prefix.maximumPenetrationCm, solved.maximumPenetrationCm);
         const std::size_t solvedCount = std::min(
@@ -688,6 +690,10 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
             prefix.contacts.push_back(contact);
             impulseApplied = impulseApplied || contact.velocityImpulseApplied;
         }
+    }
+    if (hardFailure) {
+        state.ballsMoving = anyBallMoving(state);
+        return prefix;
     }
     const float remaining = std::max(0.0f, timeStep - static_cast<float>(toi));
     PhysicsStepTelemetry tail = updatePhysicsEventDriven(

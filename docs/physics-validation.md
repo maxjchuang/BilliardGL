@@ -117,3 +117,12 @@ v2 当前只解决实验输入的无损表达与 state/trace 追踪，不添加 
 ## 论文数据接入边界
 
 公开实验数据进入仓库前，必须记录来源、DOI/链接、图表或页码、器材、许可、单位转换、测量误差和数字化误差，并预先划分标定集与盲测集。没有这些元数据的 A/B 场景必须报告 `REFERENCE_LIMITATION`，不得降低为通过。
+# Multi-contact solver v1 evidence boundary
+
+The production multi-contact solver is frozen against a repository-authored
+Grade-C analytic contract for swept-sphere TOI, simultaneous-contact symmetry,
+impact passivity, and explicit numerical limits, plus a committed deterministic
+stress matrix. This establishes reproducible engineering invariants only. No
+real break-shot experiment or sufficiently long chaotic trajectory dataset is
+currently available, so the project does not claim experimental validation of
+full-rack dispersion or long-horizon trajectory accuracy.

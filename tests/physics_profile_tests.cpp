@@ -28,9 +28,9 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_pocket_boundary_v1",
+    expect(profile.id == "chinese_pool_multi_contact_solver_v1",
         "candidate ID");
-    expect(profile.formulaVersion == "pocket_boundary_v1",
+    expect(profile.formulaVersion == "multi_contact_solver_v1",
         "formula version");
     expect(profile.ball.radiusCm == billiardgl::kChineseBallRadiusCm,
         "ball radius unit");

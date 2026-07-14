@@ -476,5 +476,20 @@ int main()
         }
     }
 
+    billiardgl::GameState limited;
+    for (billiardgl::BallState& ball : limited.balls) ball.pocketed = true;
+    limited.balls[0].pocketed = limited.balls[1].pocketed = false;
+    limited.balls[0].position.x = -2.5f;
+    limited.balls[1].position.x = 2.5f;
+    billiardgl::PhysicsProfile limitedProfile = eventProfile;
+    limitedProfile.solver.maximumPenetrationCm = 0.5f;
+    const billiardgl::PhysicsStepTelemetry limitedTelemetry =
+        billiardgl::updatePhysics(limited, 0.1f, limitedProfile);
+    if (limitedTelemetry.solverEvents.size() != 1 ||
+        std::string(limitedTelemetry.solverEvents[0].failureCode) !=
+            "penetration_limit") {
+        return fail("solver hard limit should stop the tick with one explicit failure");
+    }
+
     return EXIT_SUCCESS;
 }

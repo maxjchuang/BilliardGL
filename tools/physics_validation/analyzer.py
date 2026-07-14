@@ -916,6 +916,24 @@ def _paired_cushion_observation(reference, scenario, frames):
 
 
 def _reference_observation(observed_metric, reference, scenario, frames):
+    if observed_metric.startswith("solver_"):
+        events = [event for frame in frames for event in frame.get("solver_events", [])]
+        contacts = [contact for frame in frames for contact in frame.get("contacts", [])
+                    if contact.get("solver_event_id", -1) >= 0]
+        if observed_metric == "solver_event_count":
+            return len(events), None, None
+        if observed_metric == "solver_penetration_limit_count":
+            return sum(event.get("failure_code") == "penetration_limit"
+                       for event in events), None, None
+        if observed_metric == "solver_max_residual_cm_s":
+            return max((event.get("maximum_residual_cm_s", 0.0) for event in events), default=0.0), None, None
+        if observed_metric == "solver_energy_growth_j":
+            return max((event.get("kinetic_energy_after_j", 0.0) -
+                        event.get("kinetic_energy_before_j", 0.0) for event in events), default=0.0), None, None
+        if observed_metric == "solver_max_penetration_cm":
+            return max((event.get("maximum_penetration_cm", 0.0) for event in events), default=0.0), None, None
+        if observed_metric == "solver_first_toi_seconds":
+            return min((contact.get("time_of_impact_seconds", 0.0) for contact in contacts), default=0.0), None, None
     if observed_metric in {
             "pocket_capture_event_count", "pocket_jaw_event_count",
             "pocket_throat_event_count"}:

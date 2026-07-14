@@ -209,6 +209,7 @@ def default_reference_registry():
     from .adapters.cross_2023 import adapt_cross_2023
     from .adapters.cue_contact_analytic import adapt_cue_contact_analytic
     from .adapters.pocket_geometry_analytic import adapt_pocket_geometry_analytic
+    from .adapters.multi_contact_solver_analytic import adapt_multi_contact_solver_analytic
 
     registry = ReferenceAdapterRegistry()
     registry.register("synthetic_free_roll_v1", _adapt_synthetic)
@@ -216,6 +217,7 @@ def default_reference_registry():
     registry.register("cross_2023_v1", adapt_cross_2023)
     registry.register("cue_contact_analytic_v1", adapt_cue_contact_analytic)
     registry.register("pocket_geometry_analytic_v1", adapt_pocket_geometry_analytic)
+    registry.register("multi_contact_solver_analytic_v1", adapt_multi_contact_solver_analytic)
     registry.register(
         "mathavan_2009_v1",
         lambda package, split, points: ReferenceAdaptation(
