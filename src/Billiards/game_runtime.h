@@ -3,6 +3,7 @@
 #include "game_action.h"
 #include "game_state.h"
 #include "cue_impact.h"
+#include "cue_contact.h"
 #include "physics_telemetry.h"
 #include "physics_profile.h"
 
@@ -21,6 +22,14 @@ struct RuntimeEvent {
     std::string name;
 };
 
+struct CueShotApplication {
+    CueContactResult contact;
+    ActionResult action;
+};
+
+CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
+    const PhysicsProfile& profile);
+
 class GameRuntime {
 public:
     GameRuntime();
@@ -35,12 +44,14 @@ public:
     const std::vector<RuntimeEvent>& events() const { return events_; }
     std::vector<RuntimeEvent> eventsSince(std::uint64_t sequence) const;
     ActionResult setBall(int index, const BallState& ball);
+    ActionResult applyCueImpact(const CueImpactInput& input);
     void replaceState(const GameState& state);
     ActionResult replaceStateForScenario(
         const GameState& state, const CueImpactInput* cueImpact = nullptr);
     ActionResult replaceStateForScenario(
         const GameState& state, const PhysicsProfile& profile,
-        const CueImpactInput* cueImpact = nullptr);
+        const CueImpactInput* cueImpact = nullptr,
+        bool executeCueImpact = false);
     void clearEvents();
     void setPhysicsTraceEnabled(bool enabled) { physicsTraceEnabled_ = enabled; }
     bool physicsTraceEnabled() const { return physicsTraceEnabled_; }
@@ -48,10 +59,12 @@ public:
     const PhysicsTrace& physicsTrace() const { return physicsTrace_; }
     bool hasCueImpactInput() const { return hasCueImpactInput_; }
     const CueImpactInput& cueImpactInput() const { return cueImpactInput_; }
+    bool hasCueContactResult() const { return hasCueContactResult_; }
+    const CueContactResult& cueContactResult() const { return cueContactResult_; }
     const PhysicsProfile& physicsProfile() const { return physicsProfile_; }
 
 private:
-    void applyShot();
+    ActionResult applyShot();
     void recordEvents();
 
     GameState state_;
@@ -62,6 +75,8 @@ private:
     PhysicsTrace physicsTrace_{10000};
     bool hasCueImpactInput_ = false;
     CueImpactInput cueImpactInput_;
+    bool hasCueContactResult_ = false;
+    CueContactResult cueContactResult_;
     PhysicsProfile physicsProfile_;
 };
 

@@ -171,6 +171,24 @@ int main()
         runtime.physicsTrace().frames().front());
     expect(cueFrame.has("cue_impact"), "trace should round-trip requested cue input");
 
+    billiardgl::json::Value cueV4 = fixture("profile_override_v3.json");
+    cueV4["schema_version"] = billiardgl::json::Value(4);
+    cueV4["physics_profile"]["cue"]["normal_restitution"] = billiardgl::json::Value(0.0);
+    cueV4["physics_profile"]["cue"]["chalked_friction_coefficient"] = billiardgl::json::Value(0.6);
+    cueV4["physics_profile"]["cue"]["unchalked_friction_coefficient"] = billiardgl::json::Value(0.1);
+    cueV4["physics_profile"]["cue"]["maximum_reliable_offset_radius"] = billiardgl::json::Value(0.8);
+    cueV4["physics_profile"]["cue"]["cue_speed_per_power_unit_cm_s"] = billiardgl::json::Value(1.34);
+    cueV4["cue_impact"] = cueV2.at("cue_impact");
+    cueV4["cue_impact"]["tip_offset_cm"] = billiardgl::json::parse("[0.0,0.0]").value;
+    cueV4["cue_impact"]["tip_offset_radius"] = billiardgl::json::parse("[0.0,0.0]").value;
+    cueV4["cue_impact"]["chalk_state"] = billiardgl::json::Value("CHALKED");
+    cueParams["scenario"] = cueV4;
+    expect(send(controller, 231, "load_scenario", cueParams).response.at("ok").asBool(),
+        "automation should execute supported v4 cue contact");
+    expect(runtime.state().balls[0].velocity.x > 0.0f &&
+        runtime.hasCueContactResult() && runtime.cueContactResult().applied,
+        "automation and scenario path should retain the applied contact");
+
     billiardgl::json::Value malformed = cueV2;
     malformed["cue_impact"]["cue_speed_cm_s"] = billiardgl::json::Value(-1.0);
     cueParams["scenario"] = malformed;

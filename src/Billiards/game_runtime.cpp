@@ -9,6 +9,63 @@
 
 namespace billiardgl {
 
+namespace {
+
+const char* stableContactError(const std::string& error)
+{
+    if (error == "invalid_cue_contact_input") return "invalid_cue_contact_input";
+    if (error == "cue_elevation_requires_3d") return "cue_elevation_requires_3d";
+    if (error == "invalid_cue_direction") return "invalid_cue_direction";
+    if (error == "cue_offset_outside_ball") return "cue_offset_outside_ball";
+    if (error == "miscue_offset_exceeds_reliable_radius")
+        return "miscue_offset_exceeds_reliable_radius";
+    if (error == "cue_not_approaching") return "cue_not_approaching";
+    if (error == "cue_not_approaching_contact_normal")
+        return "cue_not_approaching_contact_normal";
+    if (error == "vertical_ball_impulse_requires_3d")
+        return "vertical_ball_impulse_requires_3d";
+    return "cue_contact_failed";
+}
+
+}  // namespace
+
+CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
+    const PhysicsProfile& profile)
+{
+    CueShotApplication application;
+    if (input.cueBallIndex != 0) {
+        application.action = ActionResult{false, "cue_ball_index_not_supported"};
+        application.contact.error = "cue_ball_index_not_supported";
+        return application;
+    }
+    if (state.balls[0].pocketed) {
+        application.action = ActionResult{false, "cue_ball_not_in_play"};
+        application.contact.error = "cue_ball_not_in_play";
+        return application;
+    }
+
+    application.contact = resolveCueContact(
+        state.balls[0], input, profile.ball, profile.cue);
+    if (!application.contact.applied) {
+        application.action = ActionResult{
+            false, stableContactError(application.contact.error)};
+        return application;
+    }
+
+    state.players.nextPlayer = 1 - state.players.currentPlayer;
+    state.players.illegalShot = false;
+    state.players.shotTaken = true;
+    state.players.updatedAfterShot = false;
+    state.ballsMoving = true;
+    state.camera.anchorMode = CameraAnchorMode::FreeLook;
+    state.transitionPerspective = false;
+    state.perspectiveRecorded = false;
+    state.aim.mode = AimMode::Observe;
+    state.players.aimingAtCueBall = false;
+    state.input.hitRequested = false;
+    return application;
+}
+
 CueImpactSupport evaluateCueImpactSupport(const CueImpactInput& input)
 {
     CueImpactSupport support;
@@ -46,6 +103,8 @@ void GameRuntime::reset()
     physicsTrace_.clear();
     hasCueImpactInput_ = false;
     cueImpactInput_ = CueImpactInput{};
+    hasCueContactResult_ = false;
+    cueContactResult_ = CueContactResult{};
     physicsProfile_ = defaultChinesePoolPhysicsProfile();
     updateCameraFromCueBall(state_);
 }
@@ -79,7 +138,7 @@ ActionResult GameRuntime::dispatch(const GameAction& action)
         if (state_.ballsMoving) return ActionResult{false, "invalid_state"};
         const MouseButton button = action.firstInt == 0 ? MouseButton::Left : action.firstInt == 1 ? MouseButton::Right : MouseButton::Other;
         handleMouseButton(state_, button, action.secondInt == 0 ? ButtonState::Down : ButtonState::Up, action.thirdInt, static_cast<int>(action.first));
-        if (state_.input.hitRequested) applyShot();
+        if (state_.input.hitRequested) return applyShot();
         return ActionResult{};
     }
     case ActionType::Resize:
@@ -108,28 +167,16 @@ ActionResult GameRuntime::dispatch(const GameAction& action)
         return ActionResult{};
     case ActionType::Shoot:
         if (state_.ballsMoving) return ActionResult{false, "invalid_state"};
-        applyShot();
-        return ActionResult{};
+        return applyShot();
     default:
         return ActionResult{false, "unsupported_action"};
     }
 }
 
-void GameRuntime::applyShot()
+ActionResult GameRuntime::applyShot()
 {
-    const Point3 velocity = shotVelocityFromAim(state_.aim.yaw, state_.input.shotPower);
-    setBallVelocity(state_.balls[0], velocity.x, velocity.y, velocity.z);
-    state_.players.nextPlayer = 1 - state_.players.currentPlayer;
-    state_.players.illegalShot = false;
-    state_.players.shotTaken = true;
-    state_.players.updatedAfterShot = false;
-    state_.ballsMoving = true;
-    state_.camera.anchorMode = CameraAnchorMode::FreeLook;
-    state_.transitionPerspective = false;
-    state_.perspectiveRecorded = false;
-    state_.aim.mode = AimMode::Observe;
-    state_.players.aimingAtCueBall = false;
-    state_.input.hitRequested = false;
+    return applyCueImpact(cueImpactFromShotControls(
+        state_.aim.yaw, state_.input.shotPower, physicsProfile_));
 }
 
 ActionResult GameRuntime::step(int count)
@@ -190,6 +237,19 @@ ActionResult GameRuntime::setBall(int index, const BallState& ball)
     return ActionResult{};
 }
 
+ActionResult GameRuntime::applyCueImpact(const CueImpactInput& input)
+{
+    if (state_.ballsMoving) return ActionResult{false, "invalid_state"};
+    GameState candidate = state_;
+    const CueShotApplication application = applyCueShot(candidate, input, physicsProfile_);
+    hasCueImpactInput_ = true;
+    cueImpactInput_ = input;
+    hasCueContactResult_ = true;
+    cueContactResult_ = application.contact;
+    if (application.action.ok) state_ = candidate;
+    return application.action;
+}
+
 void GameRuntime::replaceState(const GameState& state)
 {
     state_ = state;
@@ -205,13 +265,19 @@ ActionResult GameRuntime::replaceStateForScenario(
 
 ActionResult GameRuntime::replaceStateForScenario(
     const GameState& state, const PhysicsProfile& profile,
-    const CueImpactInput* cueImpact)
+    const CueImpactInput* cueImpact, bool executeCueImpact)
 {
     const PhysicsProfileValidation validation = validatePhysicsProfile(profile);
     if (!validation.ok) {
         return ActionResult{false, "invalid_physics_profile"};
     }
-    replaceState(state);
+    GameState candidate = state;
+    CueShotApplication application;
+    if (cueImpact && executeCueImpact) {
+        application = applyCueShot(candidate, *cueImpact, profile);
+        if (!application.action.ok) return application.action;
+    }
+    replaceState(candidate);
     physicsProfile_ = profile;
     tick_ = 0;
     nextSequence_ = 1;
@@ -220,6 +286,9 @@ ActionResult GameRuntime::replaceStateForScenario(
     physicsTrace_.clear();
     hasCueImpactInput_ = cueImpact != nullptr;
     cueImpactInput_ = cueImpact ? *cueImpact : CueImpactInput{};
+    hasCueContactResult_ = cueImpact && executeCueImpact;
+    cueContactResult_ = hasCueContactResult_ ?
+        application.contact : CueContactResult{};
     return ActionResult{};
 }
 

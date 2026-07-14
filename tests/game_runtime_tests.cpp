@@ -1,4 +1,5 @@
 #include "game_runtime.h"
+#include "shot.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -49,6 +50,33 @@ int main()
     applyShot(first);
     applyShot(second);
     expect(first.state().balls[0].velocity.x > 39.9f, "shot should use normal aim logic");
+    expect(first.hasCueContactResult() && first.cueContactResult().applied,
+        "player shot should retain the authoritative cue contact result");
+
+    billiardgl::GameRuntime explicitImpact;
+    const billiardgl::CueImpactInput equivalent = billiardgl::cueImpactFromShotControls(
+        0.0f, 40.0f, explicitImpact.physicsProfile());
+    expect(explicitImpact.applyCueImpact(equivalent).ok,
+        "equivalent explicit cue input should execute");
+    expect(first.state().balls[0].velocity.x == explicitImpact.state().balls[0].velocity.x &&
+        first.state().balls[0].velocity.y == explicitImpact.state().balls[0].velocity.y &&
+        first.state().balls[0].velocity.z == explicitImpact.state().balls[0].velocity.z &&
+        first.state().balls[0].angularVelocity.x == explicitImpact.state().balls[0].angularVelocity.x &&
+        first.state().balls[0].angularVelocity.y == explicitImpact.state().balls[0].angularVelocity.y &&
+        first.state().balls[0].angularVelocity.z == explicitImpact.state().balls[0].angularVelocity.z,
+        "UI and explicit input should produce byte-equal motion state");
+
+    billiardgl::GameRuntime rejectedImpact;
+    billiardgl::CueImpactInput vertical = equivalent;
+    vertical.tipOffsetRadius = {{0.0, 0.7}};
+    vertical.tipOffsetCm = {{0.0, 0.7 * billiardgl::kBallRadius}};
+    const billiardgl::BallState beforeRejected = rejectedImpact.state().balls[0];
+    const billiardgl::ActionResult rejection = rejectedImpact.applyCueImpact(vertical);
+    expect(!rejection.ok && std::string(rejection.errorCode) ==
+        "vertical_ball_impulse_requires_3d", "vertical slip should expose a stable action error");
+    expect(rejectedImpact.state().balls[0].velocity.x == beforeRejected.velocity.x &&
+        rejectedImpact.state().balls[0].angularVelocity.z == beforeRejected.angularVelocity.z,
+        "rejected contact should not mutate ball state");
 
     expect(first.step(5).ok, "stepping should succeed");
     expect(second.step(5).ok, "second stepping should succeed");

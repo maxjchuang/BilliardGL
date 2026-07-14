@@ -154,6 +154,21 @@ int main()
         "v4 cue properties should survive parsing exactly");
     expect(std::fabs(v3.scenario.physicsProfile.cue.chalkedFrictionCoefficient - 0.6f) < 0.0001f,
         "v3 profile should receive extended cue compatibility defaults");
+    billiardgl::json::Value v4ImpactDocument = validV4Document();
+    billiardgl::json::Value centeredCue = validV2Document().at("cue_impact");
+    centeredCue["tip_offset_cm"] = billiardgl::json::parse("[0.0,0.0]").value;
+    centeredCue["tip_offset_radius"] = billiardgl::json::parse("[0.0,0.0]").value;
+    centeredCue["chalk_state"] = billiardgl::json::Value("CHALKED");
+    v4ImpactDocument["cue_impact"] = centeredCue;
+    const billiardgl::PhysicsScenarioResult v4Impact =
+        billiardgl::parsePhysicsScenario(v4ImpactDocument);
+    billiardgl::GameRuntime v4ImpactRuntime;
+    expect(v4Impact.ok && billiardgl::applyPhysicsScenario(
+        v4ImpactRuntime, v4Impact.scenario).ok, "supported v4 cue impact should execute");
+    expect(v4ImpactRuntime.state().balls[0].velocity.x > 0.0f &&
+        v4ImpactRuntime.hasCueContactResult() &&
+        v4ImpactRuntime.cueContactResult().applied,
+        "v4 scenario should apply its cue contact exactly once at load");
     billiardgl::GameRuntime freshRuntime;
     expect(freshRuntime.physicsProfile().id == "chinese_pool_surface_motion_v1",
         "scenario override should not change production defaults");

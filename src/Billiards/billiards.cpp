@@ -323,20 +323,14 @@ void myIdle(void)
 
 	if (Game.input.hitRequested == 1)
 	{
-		const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(Game.aim.yaw, Game.input.shotPower);
-		billiardgl::setBallVelocity(Game.balls[0], velocity.x, velocity.y, velocity.z);
-		Game.players.nextPlayer = 1 - Game.players.currentPlayer;
-		Game.players.illegalShot = false;
-		Game.players.shotTaken = true;
-		Game.players.updatedAfterShot = false;
-		Game.ballsMoving = true;
-		Game.camera.anchorMode = billiardgl::CameraAnchorMode::FreeLook;
-		Game.transitionPerspective = false;
-		Game.perspectiveRecorded = false;
-		Game.aim.mode = billiardgl::AimMode::Observe;
-		Game.players.aimingAtCueBall = false;
-		Game.input.hitRequested = 0;
-		billiardgl::playHit();
+		const billiardgl::CueImpactInput input = billiardgl::cueImpactFromShotControls(
+			Game.aim.yaw, Game.input.shotPower, ProductionPhysicsProfile);
+		const billiardgl::CueShotApplication application = billiardgl::applyCueShot(
+			Game, input, ProductionPhysicsProfile);
+		if (application.action.ok)
+			billiardgl::playHit();
+		else
+			Game.input.hitRequested = 0;
 	}
 
 	if (Game.input.leftMouseDown)
