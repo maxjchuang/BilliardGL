@@ -136,8 +136,9 @@ int main()
     const ContactSolverResult projected = solveContactIsland(projection, overlap, elastic);
     expect(projected.status == ContactSolverStatus::Converged &&
         projected.contacts[0].projectionCm > 0.09 &&
-        projected.kineticEnergyAfterJ == 0.0,
-        "position projection should remove overlap without adding velocity energy");
+        projected.kineticEnergyAfterJ == 0.0 &&
+        projected.positionIterations == elastic.solver.positionIterations,
+        "position projection should run its fixed count without adding velocity energy");
 
     ContactIsland tooLarge = island;
     tooLarge.limitExceeded = true;

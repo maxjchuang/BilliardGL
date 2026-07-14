@@ -725,6 +725,60 @@ const PocketBoundaryFrame* pocketFrameById(
     return nullptr;
 }
 
+bool applyTopologyTransitions(GameState& state,
+    std::vector<ContinuousContactCandidate> transitions,
+    const PhysicsProfile& profile,
+    const std::array<PocketBoundaryFrame, 6>& pocketFrames,
+    PhysicsStepTelemetry& telemetry, double timeOfImpactSeconds)
+{
+    std::sort(transitions.begin(), transitions.end(), continuousContactLess);
+    for (std::size_t first = 0; first < transitions.size(); ++first) {
+        for (std::size_t second = first + 1; second < transitions.size();
+                ++second) {
+            if (transitions[first].firstBall !=
+                    transitions[second].firstBall) continue;
+            if (transitions[first].pocketId != transitions[second].pocketId ||
+                transitions[first].pocketEvent ==
+                    transitions[second].pocketEvent) return false;
+        }
+    }
+    for (const ContinuousContactCandidate& candidate : transitions) {
+        const PocketBoundaryFrame* frame = pocketFrameById(
+            pocketFrames, candidate.pocketId);
+        if (frame == nullptr) continue;
+        BallState& ball = state.balls[candidate.firstBall];
+        if (ball.pocketInteraction.phase ==
+            PocketInteractionPhase::Captured) continue;
+        const PocketBoundaryQuery query = classifyPocketPoint(
+            *frame, ball.position, profile.ball.radiusCm);
+        const unsigned long long sequence =
+            candidate.kind == ContinuousContactKind::Capture
+                ? state.nextPocketCaptureSequence : 0;
+        const PocketTransitionResult transition = advancePocketInteraction(
+            ball.pocketInteraction, frame->pocketId, candidate.pocketEvent,
+            query.region, sequence);
+        PocketBoundaryEvent event;
+        event.kind = candidate.pocketEvent;
+        event.pocketId = frame->pocketId;
+        event.position = ball.position;
+        event.inwardNormal = candidate.normal;
+        event.local = query.local;
+        event.passable = query.passable;
+        if (candidate.kind != ContinuousContactKind::Capture ||
+            transition.captureEmitted) {
+            appendPocketContact(telemetry, candidate.firstBall, *frame, event,
+                query, transition,
+                transition.captureEmitted ? sequence : 0,
+                timeOfImpactSeconds);
+        }
+        if (transition.captureEmitted) {
+            ++state.nextPocketCaptureSequence;
+            updatePocketedBall(state, candidate.firstBall);
+        }
+    }
+    return true;
+}
+
 PhysicsStepTelemetry updatePhysicsEventDriven(
     GameState& state, float timeStep, const PhysicsProfile& profile,
     int remainingEvents, PhysicsBoundaryMode boundaryMode)
@@ -759,7 +813,9 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
     }
     bool ballImpulseApplied = false;
     bool railImpulseApplied = false;
-    bool hardFailure = false;
+    bool hardFailure = batch.failureCode != ContinuousBatchFailureCode::None;
+    std::vector<ContinuousContactCandidate> topologyToCommit =
+        batch.topologyTransitions;
     const std::array<PocketBoundaryFrame, 6> pocketFrames =
         buildPocketBoundaryFrames(profile.tableBoundary);
     for (const ContactIsland& island : batch.physicalIslands) {
@@ -880,62 +936,16 @@ PhysicsStepTelemetry updatePhysicsEventDriven(
                 (!ballBall && contact.velocityImpulseApplied);
 
             if (candidate.kind == ContinuousContactKind::Jaw) {
-                const PocketBoundaryFrame* frame = pocketFrameById(
-                    pocketFrames, candidate.pocketId);
-                if (frame != nullptr) {
-                    BallState& ball = state.balls[candidate.firstBall];
-                    const PocketBoundaryQuery query = classifyPocketPoint(
-                        *frame, ball.position, profile.ball.radiusCm);
-                    const PocketTransitionResult transition =
-                        advancePocketInteraction(ball.pocketInteraction,
-                            frame->pocketId, candidate.pocketEvent,
-                            query.region, 0);
-                    PocketBoundaryEvent event;
-                    event.kind = candidate.pocketEvent;
-                    event.pocketId = frame->pocketId;
-                    event.position = ball.position;
-                    event.inwardNormal = candidate.normal;
-                    event.local = query.local;
-                    event.passable = query.passable;
-                    appendPocketContact(prefix, candidate.firstBall, *frame,
-                        event, query, transition, 0, toi);
-                }
+                topologyToCommit.push_back(candidate);
             }
         }
     }
-    for (const ContinuousContactCandidate& candidate :
-            batch.topologyTransitions) {
-        const PocketBoundaryFrame* frame = pocketFrameById(
-            pocketFrames, candidate.pocketId);
-        if (frame == nullptr) continue;
-        BallState& ball = state.balls[candidate.firstBall];
-        const PocketBoundaryQuery query = classifyPocketPoint(
-            *frame, ball.position, profile.ball.radiusCm);
-        const unsigned long long sequence =
-            candidate.kind == ContinuousContactKind::Capture
-                ? state.nextPocketCaptureSequence : 0;
-        const PocketTransitionResult transition = advancePocketInteraction(
-            ball.pocketInteraction, frame->pocketId, candidate.pocketEvent,
-            query.region, sequence);
-        PocketBoundaryEvent event;
-        event.kind = candidate.pocketEvent;
-        event.pocketId = frame->pocketId;
-        event.position = ball.position;
-        event.inwardNormal = candidate.normal;
-        event.local = query.local;
-        event.passable = query.passable;
-        if (candidate.kind != ContinuousContactKind::Capture ||
-            transition.captureEmitted) {
-            appendPocketContact(prefix, candidate.firstBall, *frame, event,
-                query, transition,
-                transition.captureEmitted ? sequence : 0, toi);
-        }
-        if (transition.captureEmitted) {
-            ++state.nextPocketCaptureSequence;
-            updatePocketedBall(state, candidate.firstBall);
-        }
-    }
     if (hardFailure) {
+        state.ballsMoving = anyBallMoving(state);
+        return prefix;
+    }
+    if (!applyTopologyTransitions(state, topologyToCommit, profile,
+            pocketFrames, prefix, toi)) {
         state.ballsMoving = anyBallMoving(state);
         return prefix;
     }

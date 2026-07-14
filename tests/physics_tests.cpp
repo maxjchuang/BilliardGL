@@ -437,6 +437,38 @@ int main()
         return fail("same-TOI ball and straight-rail contacts must solve in one island");
     }
 
+    billiardgl::GameState failedPhysicalBatch;
+    for (billiardgl::BallState& ball : failedPhysicalBatch.balls)
+        ball.pocketed = true;
+    for (int index = 0; index < 3; ++index)
+        failedPhysicalBatch.balls[index].pocketed = false;
+    failedPhysicalBatch.balls[0].position = billiardgl::Point3{
+        0.0f, billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    failedPhysicalBatch.balls[1].position = billiardgl::Point3{
+        1.0f, billiardgl::kTableHeight + eventProfile.ball.radiusCm, 25.0f};
+    const std::array<billiardgl::PocketBoundaryFrame, 6> failedBatchFrames =
+        billiardgl::buildPocketBoundaryFrames(eventProfile.tableBoundary);
+    const billiardgl::PocketBoundaryFrame& sideFrame = failedBatchFrames[4];
+    failedPhysicalBatch.balls[2].position = billiardgl::Point3{
+        sideFrame.mouthCenter.x - sideFrame.inward.x *
+            sideFrame.throatDepthCm,
+        billiardgl::kTableHeight + eventProfile.ball.radiusCm,
+        sideFrame.mouthCenter.z - sideFrame.inward.z *
+            sideFrame.throatDepthCm};
+    failedPhysicalBatch.balls[2].velocity = billiardgl::Point3{
+        -sideFrame.inward.x * 100.0f, 0.0f,
+        -sideFrame.inward.z * 100.0f};
+    failedPhysicalBatch.balls[2].speed = 100.0f;
+    const billiardgl::PhysicsStepTelemetry failedBatchTelemetry =
+        billiardgl::updatePhysics(failedPhysicalBatch, 0.01f, eventProfile);
+    if (failedBatchTelemetry.solverEvents.empty() ||
+        std::string(failedBatchTelemetry.solverEvents[0].failureCode) !=
+            "penetration_limit" ||
+        failedPhysicalBatch.balls[2].pocketInteraction.phase !=
+            billiardgl::PocketInteractionPhase::Outside) {
+        return fail("pocket topology must not commit when a same-batch physical island fails");
+    }
+
     billiardgl::PhysicsProfile tickEndProfile = eventProfile;
     tickEndProfile.ball.radiusCm = 2.3f;
     tickEndProfile.ball.massKg = 0.0464f;

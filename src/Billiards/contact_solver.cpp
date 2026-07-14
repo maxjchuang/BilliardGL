@@ -19,6 +19,7 @@ struct SolverConstraint {
     double lambdaTangentNs = 0.0;
     double inverseNormalEffectiveMass = 0.0;
     double inverseTangentEffectiveMass = 0.0;
+    double boundaryPlaneCoordinateCm = 0.0;
     double restitution = 0.0;
     double friction = 0.0;
     BallBallContactRegime regime = BallBallContactRegime::Frictionless;
@@ -187,6 +188,9 @@ SolverConstraint makeConstraint(const GameState& state,
                 radiusM * (profile.cushion.noseHeightRatio - 1.0f), 0.0f});
         constraint.restitution = profile.cushion.normalRestitution;
         constraint.friction = profile.cushion.frictionCoefficient;
+        constraint.boundaryPlaneCoordinateCm = dot(
+            state.balls[candidate.firstBall].position, constraint.normal) +
+            candidate.penetrationCm;
     }
     const Point3 relative = relativeVelocity(state, constraint);
     const double normalSpeed = dot(relative, constraint.normal);
@@ -308,7 +312,6 @@ ContactSolverResult solveContactIsland(
     for (int iteration = 0; iteration < profile.solver.positionIterations;
             ++iteration) {
         result.positionIterations = iteration + 1;
-        bool corrected = false;
         for (std::size_t index = 0; index < constraints.size(); ++index) {
             const ContinuousContactCandidate& contact =
                 constraints[index].candidate;
@@ -319,6 +322,11 @@ ContactSolverResult solveContactIsland(
                     state.balls[contact.firstBall].position);
                 penetration = std::max(0.0,
                     2.0 * profile.ball.radiusCm - length(separation));
+            } else {
+                penetration = std::max(0.0,
+                    constraints[index].boundaryPlaneCoordinateCm - dot(
+                        state.balls[contact.firstBall].position,
+                        contact.normal));
             }
             const double excess = std::max(
                 0.0, penetration - profile.solver.penetrationSlopCm);
@@ -334,9 +342,7 @@ ContactSolverResult solveContactIsland(
                     contact.normal, excess);
             }
             result.contacts[index].projectionCm += excess;
-            corrected = true;
         }
-        if (!corrected) break;
     }
 
     for (std::size_t index = 0; index < constraints.size(); ++index) {
