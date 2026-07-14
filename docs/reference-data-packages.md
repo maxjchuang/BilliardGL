@@ -15,6 +15,57 @@ The `synthetic_reference_v1` package tests infrastructure only. It is not a real
 - Calibration and holdout membership is committed and versioned. The runner cannot override it.
 - Foundation packages and synthetic fixtures do not authorize production physics changes.
 
+## Calibrated candidate lifecycle
+
+Candidate tuning uses five explicit states: calibration, freeze, validation, receipt, and—if validation results influence another model choice—spent. Committed values provide process isolation rather than secrecy: all full-precision numerical data remain reviewable in Git, while separate commands and committed partitions prevent validation values from entering calibration accidentally.
+
+Run only the package's committed calibration cases. This command exposes no case, partition, holdout, or split override:
+
+```bash
+python3 -m tools.physics_validation.calibration_run \
+  --executable build/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
+  --output build/candidates/surface_motion_v1/calibration
+```
+
+Copy the complete calibration report into the candidate directory as `calibration/reference_report.json`. The profile manifest must be canonical UTF-8 JSON with top-level `runtime_profile`, `parameter_sources`, and `applicability` objects. Every numeric runtime leaf needs a unit plus a nonempty evidence or limitation statement. Freeze the exact source revision, profile bytes, executable bytes, calibration report bytes, data package hashes, and calibration metric intervals before any holdout execution:
+
+```bash
+python3 -m tools.physics_validation.freeze_candidate \
+  --candidate-id surface_motion_v1 \
+  --formula-version surface_motion_v1 \
+  --source-revision "$(git rev-parse HEAD)" \
+  --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \
+  --executable build/Billiards \
+  --calibration-report physics_models/candidates/surface_motion_v1/calibration/reference_report.json \
+  --dataset-manifest tests/physics_validation/reference_data/mathavan_2009_high_speed/manifest.json \
+  --created-at 2026-07-14T00:00:00Z \
+  --output physics_models/candidates/surface_motion_v1/freeze.json
+```
+
+The freeze is deterministic for identical inputs. Verify its three local artifacts before validation; package hashes are then verified by the validation command itself:
+
+```bash
+python3 -m tools.physics_validation.freeze_candidate \
+  --verify physics_models/candidates/surface_motion_v1/freeze.json \
+  --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \
+  --executable build/Billiards \
+  --calibration-report physics_models/candidates/surface_motion_v1/calibration/reference_report.json
+```
+
+`tests/physics_validation/validation_data_status.json` is the reviewed lifecycle registry. Its only legal values are `calibration`, `validation`, `spent`, and `confirmation`. Candidate validation requires the selected package's holdout status to be `validation`, derives the committed HOLDOUT cases internally, and exposes no parameter or split override:
+
+```bash
+python3 -m tools.physics_validation.validation_run \
+  --freeze physics_models/candidates/surface_motion_v1/freeze.json \
+  --executable build/Billiards \
+  --package tests/physics_validation/reference_data/mathavan_2009_high_speed \
+  --profile physics_models/profiles/chinese_pool_surface_motion_v1.json \
+  --output physics_models/candidates/surface_motion_v1/validation
+```
+
+Validation writes the unchanged reference reports plus canonical `validation_receipt.json`. The receipt binds the candidate and freeze hashes, dataset/version, HOLDOUT partition, report hash, and accounted result; it never edits the model or lifecycle registry. If anyone later uses those holdout results to tune or choose a successor candidate, changing that dataset's holdout status to `spent` is a separate reviewed commit. `confirmation` is reserved for data admitted in advance solely for final confirmation of an already selected model.
+
 ## Package layout
 
 Each package is one directory containing:
