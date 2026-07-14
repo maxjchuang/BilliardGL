@@ -614,4 +614,19 @@ cushion-material, rebound, or real-world pot-success claim.
 - CALIBRATION executed four preregistered cases with four passes and zero
   HOLDOUT rows; report SHA-256:
   `bb2cffbf515276d145bb1e3dd4ef6e6e518c34d801b892f94c16347df2ecee53`.
-- The candidate HOLDOUT remains unexecuted until after the immutable freeze.
+- The frozen candidate HOLDOUT was executed exactly once on 2026-07-14. All
+  four preregistered HOLDOUT points passed: mirrored corner/side capture,
+  mirrored side-jaw contact, and a ball-diameter-closed side throat. There were
+  zero model mismatches, reference limitations, integration failures, numerical
+  failures, or nondeterministic failures.
+- Freeze SHA-256:
+  `15aef7e9fb7a83eb4be0a80dd959df4ad1770e3c48c1ea6061284ce2f1cc851f`.
+- Immutable HOLDOUT report SHA-256:
+  `759053f5e3398b00eced70d9924d56da547aa1092c60cad6c34be61dfe5b3ea5`.
+- Validation receipt SHA-256:
+  `2955241d33b8bfac7cce672584b2d7f14383530dc735152dba0b950c296745f0`.
+
+The HOLDOUT directory must never be regenerated. Verification uses the stored
+freeze/report/receipt hashes and package reconstruction; it does not call the
+candidate validation runner again. Passing this contract establishes only the
+grade-C analytic geometry domain described above.
