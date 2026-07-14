@@ -3,7 +3,9 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from tools.physics_validation.confirmation_run import build_confirmation_result
 from tools.physics_validation.holdout_access import validate_confirmation_access
 from tools.physics_validation.validation_run import (
     ConfirmationAccessError,
@@ -15,6 +17,10 @@ ROOT = Path(__file__).resolve().parents[2]
 FREEZE = ROOT / "physics_models/candidates/phase3_integrated_v2/freeze.json"
 SUDO = ROOT / "tests/physics_validation/reference_data/sudo_2002"
 DERBY = ROOT / "tests/physics_validation/reference_data/derby_fuller_1999"
+REAL_LEDGER = (
+    ROOT / "physics_models/candidates/phase3_integrated_v2/confirmation_consumption.json")
+SUDO_RESULT = (
+    ROOT / "physics_models/candidates/phase3_integrated_v2/confirmation/sudo_2002")
 FIT_SURFACE = ROOT / "tools/physics_validation/fit_surface.py"
 FIT_BALL = ROOT / "tools/physics_validation/fit_ball_collision.py"
 FIT_CUSHION = ROOT / "tools/physics_validation/fit_cushion.py"
@@ -44,6 +50,23 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             self.assertNotIn("sudo_2002", text)
             self.assertNotIn("derby_fuller_1999", text)
+
+    def test_committed_sudo_attempt_is_rejected_fail_closed(self):
+        receipt = json.loads(
+            (SUDO_RESULT / "validation_receipt.json").read_text(
+                encoding="utf-8"))
+        ledger = json.loads(REAL_LEDGER.read_text(encoding="utf-8"))
+        self.assertEqual(receipt["result"], "FAILED")
+        self.assertEqual(ledger["records"], [receipt])
+        self.assertEqual(ledger["attempts"][0]["state"], "STARTED")
+        for relative, expected in receipt["files"].items():
+            self.assertEqual(digest(SUDO_RESULT / relative), expected)
+        self.assertIn("confirmation partition is already consumed",
+                      validate_confirmation_access(
+                          ROOT, FREEZE, SUDO, REAL_LEDGER))
+        self.assertFalse(
+            (ROOT / "physics_models/candidates/phase3_integrated_v2/confirmation"
+             / "derby_fuller_1999").exists())
 
     def test_second_confirmation_execution_is_rejected(self):
         calls = []
@@ -110,6 +133,27 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
                       validate_confirmation_access(
                           ROOT, FREEZE, SUDO, self.ledger))
 
+    def test_runner_exception_is_failed_closed_and_reserved_before_execution(self):
+        observed = []
+
+        def crashing_runner():
+            ledger = json.loads(self.ledger.read_text(encoding="utf-8"))
+            observed.append(ledger["attempts"][0]["state"])
+            raise RuntimeError("missing expected contact")
+
+        receipt = consume_confirmation(
+            FREEZE, SUDO, self.output, self.ledger, crashing_runner,
+            repository_root=ROOT,
+        )
+        self.assertEqual(observed, ["STARTED"])
+        self.assertEqual(receipt["result"], "FAILED")
+        failure = json.loads((self.output / "failure.json").read_text())
+        self.assertEqual(failure["exception_type"], "RuntimeError")
+        self.assertEqual(failure["message"], "missing expected contact")
+        self.assertIn("confirmation partition is already consumed",
+                      validate_confirmation_access(
+                          ROOT, FREEZE, SUDO, self.ledger))
+
     def test_malformed_ledger_and_runner_supplied_receipt_fail_closed(self):
         self.ledger.write_text("{}\n", encoding="utf-8")
         failures = validate_confirmation_access(
@@ -127,7 +171,54 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
                 repository_root=ROOT,
             )
         self.assertFalse(self.output.exists())
-        self.assertFalse(self.ledger.exists())
+        ledger = json.loads(self.ledger.read_text(encoding="utf-8"))
+        self.assertEqual(ledger["attempts"][0]["state"], "STARTED")
+        self.assertEqual(ledger["records"], [])
+        self.assertIn("confirmation partition is already consumed",
+                      validate_confirmation_access(
+                          ROOT, FREEZE, SUDO, self.ledger))
+
+    def test_confirmation_metric_contract_is_fixed_before_real_execution(self):
+        freeze = json.loads(FREEZE.read_text(encoding="utf-8"))
+
+        def fake_execute(executable, scenario):
+            frames = [{
+                "tick": tick,
+                "contacts": [],
+                "balls": [],
+                "surface_transitions": [],
+            } for tick in range(1, scenario["simulation"]["ticks"] + 1)]
+            if "cushion" in scenario["id"]:
+                frames[0]["contacts"] = [{"kind": "rail", "restitution": 0.9}]
+            else:
+                frames[0]["contacts"] = [{
+                    "kind": "ball_ball", "restitution": 0.97,
+                }]
+                frames[0]["balls"] = [
+                    {"index": 0, "velocity_cm_s": {"x": 30.0, "z": 10.0}},
+                    {"index": 1, "velocity_cm_s": {"x": 60.0, "z": -10.0}},
+                ]
+            return frames
+
+        executable = self.scratch / "frozen-executable-fixture"
+        executable.write_bytes(b"fixture")
+        with patch(
+                "tools.physics_validation.confirmation_run._sha256",
+                return_value=freeze["executable_sha256"]):
+            result = build_confirmation_result(
+                executable, FREEZE, SUDO, ROOT, execute_once=fake_execute)
+        report = json.loads(result["files"]["reference_report.json"])
+        self.assertEqual(report["dataset_id"], "sudo_2002")
+        self.assertEqual(report["summary"]["points"], 6)
+        self.assertEqual(result["result"], "FAILED")
+        scenarios = [
+            json.loads(value) for path, value in result["files"].items()
+            if path.startswith("scenarios/")
+        ]
+        initial_speeds = sorted(
+            scenario["balls"][0]["velocity_cm_s"][0]
+            for scenario in scenarios)
+        self.assertEqual(initial_speeds, [98.0, 180.0, 250.0])
 
 
 if __name__ == "__main__":

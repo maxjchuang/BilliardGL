@@ -11,6 +11,7 @@ from .holdout_access import validate_confirmation_access
 from .model_candidate import load_candidate_freeze, sha256_file
 from .partition_run import case_ids_for_partition, load_reference_inputs
 from .reference_run import _run_loaded_reference_validation
+from .confirmation_run import build_confirmation_result
 
 
 DEFAULT_LIFECYCLE_PATH = (
@@ -84,6 +85,60 @@ def write_json_exclusive(path, document):
             f"exclusive confirmation file already exists: {path}") from error
 
 
+def reserve_confirmation_attempt_exclusive(
+        ledger_path, freeze_path, package_path):
+    ledger_path = Path(ledger_path).resolve()
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path = Path(package_path).resolve() / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    attempt = {
+        "schema_version": 1,
+        "candidate_id": "phase3_integrated_v2",
+        "freeze_sha256": hashlib.sha256(
+            Path(freeze_path).read_bytes()).hexdigest(),
+        "dataset_id": manifest["dataset_id"],
+        "dataset_version": manifest["dataset_version"],
+        "partition": "CONFIRMATION",
+        "package_manifest_sha256": hashlib.sha256(
+            manifest_path.read_bytes()).hexdigest(),
+        "state": "STARTED",
+    }
+    lock = ledger_path.with_name(ledger_path.name + ".lock")
+    try:
+        descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise ConfirmationAccessError("confirmation ledger is locked") from error
+    os.close(descriptor)
+    temporary = ledger_path.with_name(ledger_path.name + ".tmp")
+    try:
+        if ledger_path.exists():
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+            if ledger.get("schema_version") != 1 or \
+                    not isinstance(ledger.get("records"), list) or \
+                    not isinstance(ledger.get("attempts", []), list):
+                raise ConfirmationAccessError("confirmation ledger is invalid")
+        else:
+            ledger = {"schema_version": 1, "attempts": [], "records": []}
+        identity = (attempt["dataset_id"], attempt["dataset_version"])
+        consumed = ledger.get("attempts", []) + ledger["records"]
+        if any((record.get("dataset_id"), record.get("dataset_version")) == identity
+               and record.get("partition") == "CONFIRMATION"
+               for record in consumed):
+            raise ConfirmationAccessError(
+                "confirmation partition is already consumed")
+        ledger.setdefault("attempts", []).append(attempt)
+        with temporary.open("x", encoding="utf-8", newline="") as stream:
+            stream.write(_canonical(ledger))
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, ledger_path)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+        lock.unlink(missing_ok=True)
+    return attempt
+
+
 def append_consumption_record_exclusive(ledger_path, receipt):
     ledger_path = Path(ledger_path).resolve()
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
@@ -130,7 +185,23 @@ def consume_confirmation(freeze_path, package_path, output_path, ledger_path,
         root, freeze_path, package_path, ledger_path)
     if failures:
         raise ConfirmationAccessError("; ".join(failures))
-    result = runner()
+    reserve_confirmation_attempt_exclusive(
+        ledger_path, freeze_path, package_path)
+    try:
+        result = runner()
+    except Exception as error:
+        result = {
+            "result": "FAILED",
+            "files": {
+                "failure.json": _canonical({
+                    "schema_version": 1,
+                    "failure_stage": "confirmation_runner",
+                    "exception_type": type(error).__name__,
+                    "message": str(error),
+                    "policy": "fail_closed_without_replay",
+                }).encode("utf-8"),
+            },
+        }
     if not isinstance(result, dict) or set(result) != {"result", "files"}:
         raise ConfirmationAccessError("confirmation runner result is invalid")
     if result["result"] not in {"PASSED_OR_ACCOUNTED", "FAILED"} or \
@@ -239,9 +310,27 @@ def main(argv=None):
     parser.add_argument("--freeze", required=True, type=Path)
     parser.add_argument("--executable", required=True, type=Path)
     parser.add_argument("--package", required=True, type=Path)
-    parser.add_argument("--profile", required=True, type=Path)
+    parser.add_argument("--profile", type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--ledger", type=Path)
     arguments = parser.parse_args(argv)
+    if arguments.ledger is not None:
+        receipt = consume_confirmation(
+            arguments.freeze,
+            arguments.package,
+            arguments.output,
+            arguments.ledger,
+            lambda: build_confirmation_result(
+                arguments.executable,
+                arguments.freeze,
+                arguments.package,
+                Path.cwd(),
+            ),
+            repository_root=Path.cwd(),
+        )
+        return 0 if receipt["result"] == "PASSED_OR_ACCOUNTED" else 1
+    if arguments.profile is None:
+        parser.error("legacy validation requires --profile")
     return run_candidate_validation(
         arguments.freeze,
         arguments.executable,

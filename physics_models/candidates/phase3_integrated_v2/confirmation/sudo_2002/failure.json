@@ -1,0 +1,18 @@
+{
+  "candidate_id": "phase3_integrated_v2",
+  "dataset_id": "sudo_2002",
+  "dataset_version": "1.0.0",
+  "failure_stage": "confirmation_transaction",
+  "invocation_count": 1,
+  "message": "The sole authorized confirmation invocation returned without an atomic output directory, validation receipt, or consumption ledger. The physical outcome is indeterminate and replay is prohibited, so the candidate is rejected fail-closed.",
+  "observations": {
+    "confirmation_output_after_invocation": "ABSENT",
+    "consumption_ledger_after_invocation": "ABSENT",
+    "preflight_access_check_after_invocation": "PASSED",
+    "temporary_or_lock_files_after_invocation": "ABSENT"
+  },
+  "partition": "CONFIRMATION",
+  "policy": "fail_closed_without_replay",
+  "result": "FAILED",
+  "schema_version": 1
+}

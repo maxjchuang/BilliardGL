@@ -157,11 +157,12 @@ def validate_confirmation_access(root, freeze_path, package_path, ledger_path,
             failures.append("confirmation ledger is unreadable")
             return failures
         if ledger.get("schema_version") != 1 or \
-                not isinstance(ledger.get("records"), list):
+                not isinstance(ledger.get("records"), list) or \
+                not isinstance(ledger.get("attempts", []), list):
             failures.append("confirmation ledger is invalid")
             return failures
         identity = (manifest.get("dataset_id"), manifest.get("dataset_version"))
-        for record in ledger["records"]:
+        for record in ledger.get("attempts", []) + ledger["records"]:
             if not isinstance(record, dict):
                 failures.append("confirmation ledger record is invalid")
                 continue
