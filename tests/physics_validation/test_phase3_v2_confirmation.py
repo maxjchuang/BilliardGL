@@ -36,11 +36,13 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.scratch = Path(self.temporary.name)
         self.ledger = self.scratch / "confirmation_consumption.json"
-        self.output = self.scratch / "confirmation" / "sudo_2002"
+        self.package = DERBY
+        self.output = self.scratch / "confirmation" / "derby_fuller_1999"
 
-    def test_confirmation_runner_requires_frozen_unopened_candidate(self):
-        self.assertEqual(
-            validate_confirmation_access(ROOT, FREEZE, SUDO, self.ledger), [])
+    def test_spent_sudo_is_closed_while_derby_remains_unopened(self):
+        self.assertIn(
+            "reference partition is not in confirmation state",
+            validate_confirmation_access(ROOT, FREEZE, SUDO, self.ledger))
         self.assertEqual(
             validate_confirmation_access(ROOT, FREEZE, DERBY, self.ledger), [])
         self.assertFalse(self.ledger.exists())
@@ -71,7 +73,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
     def test_second_confirmation_execution_is_rejected(self):
         calls = []
         consume_confirmation(
-            FREEZE, SUDO, self.output, self.ledger,
+            FREEZE, self.package, self.output, self.ledger,
             lambda: {
                 "result": "PASSED_OR_ACCOUNTED",
                 "files": {"metrics.csv": b"metric,value\ne,0.9\n"},
@@ -82,13 +84,13 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
                 ConfirmationAccessError,
                 "confirmation partition is already consumed"):
             consume_confirmation(
-                FREEZE, SUDO, self.scratch / "second", self.ledger,
+                FREEZE, self.package, self.scratch / "second", self.ledger,
                 lambda: calls.append("executed"), repository_root=ROOT)
         self.assertEqual(calls, [])
 
     def test_atomic_output_receipt_and_ledger_hash_every_result(self):
         receipt = consume_confirmation(
-            FREEZE, SUDO, self.output, self.ledger,
+            FREEZE, self.package, self.output, self.ledger,
             lambda: {
                 "result": "PASSED_OR_ACCOUNTED",
                 "files": {
@@ -119,19 +121,19 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         with self.assertRaisesRegex(ConfirmationAccessError,
                                     "output path already exists"):
             consume_confirmation(
-                FREEZE, SUDO, self.output, self.ledger,
+                FREEZE, self.package, self.output, self.ledger,
                 lambda: self.fail("runner must not execute"),
                 repository_root=ROOT)
         self.output.rmdir()
         receipt = consume_confirmation(
-            FREEZE, SUDO, self.output, self.ledger,
+            FREEZE, self.package, self.output, self.ledger,
             lambda: {"result": "FAILED", "files": {"failure.json": b'{}\n'}},
             repository_root=ROOT,
         )
         self.assertEqual(receipt["result"], "FAILED")
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, SUDO, self.ledger))
+                          ROOT, FREEZE, self.package, self.ledger))
 
     def test_runner_exception_is_failed_closed_and_reserved_before_execution(self):
         observed = []
@@ -142,7 +144,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             raise RuntimeError("missing expected contact")
 
         receipt = consume_confirmation(
-            FREEZE, SUDO, self.output, self.ledger, crashing_runner,
+            FREEZE, self.package, self.output, self.ledger, crashing_runner,
             repository_root=ROOT,
         )
         self.assertEqual(observed, ["STARTED"])
@@ -152,18 +154,18 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         self.assertEqual(failure["message"], "missing expected contact")
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, SUDO, self.ledger))
+                          ROOT, FREEZE, self.package, self.ledger))
 
     def test_malformed_ledger_and_runner_supplied_receipt_fail_closed(self):
         self.ledger.write_text("{}\n", encoding="utf-8")
         failures = validate_confirmation_access(
-            ROOT, FREEZE, SUDO, self.ledger)
+            ROOT, FREEZE, self.package, self.ledger)
         self.assertIn("confirmation ledger is invalid", failures)
         self.ledger.unlink()
         with self.assertRaisesRegex(ConfirmationAccessError,
                                     "cannot provide its own receipt"):
             consume_confirmation(
-                FREEZE, SUDO, self.output, self.ledger,
+                FREEZE, self.package, self.output, self.ledger,
                 lambda: {
                     "result": "PASSED_OR_ACCOUNTED",
                     "files": {"validation_receipt.json": b"{}\n"},
@@ -176,7 +178,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         self.assertEqual(ledger["records"], [])
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, SUDO, self.ledger))
+                          ROOT, FREEZE, self.package, self.ledger))
 
     def test_confirmation_metric_contract_is_fixed_before_real_execution(self):
         freeze = json.loads(FREEZE.read_text(encoding="utf-8"))

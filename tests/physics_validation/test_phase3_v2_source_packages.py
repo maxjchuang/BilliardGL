@@ -17,6 +17,11 @@ EXPECTED_SPENT = {
     "domenech_2023_ball_collision",
     "mathavan_2009_high_speed",
     "mathavan_2010_cushion",
+    "sudo_2002",
+}
+EXPECTED_HOLDOUT_STATUS = {
+    "sudo_2002": "spent",
+    "derby_fuller_1999": "confirmation",
 }
 EXPECTED_SCALARS = {
     "sudo_2002": {
@@ -49,7 +54,7 @@ class Phase3V2SourcePackageTests(unittest.TestCase):
                 "spent",
             )
 
-    def test_confirmation_packages_are_complete_and_hash_verified(self):
+    def test_successor_source_packages_are_complete_and_hash_verified(self):
         registry = load_data_lifecycle(STATUS)
         for package_id, expected_ids in EXPECTED_SCALARS.items():
             package_path = REFERENCE_ROOT / package_id
@@ -59,7 +64,7 @@ class Phase3V2SourcePackageTests(unittest.TestCase):
             self.assertFalse(package.manifest["evidence"]["candidate_selection_input"])
             self.assertEqual(
                 registry.entry(package_id, version).holdout_status,
-                "confirmation",
+                EXPECTED_HOLDOUT_STATUS[package_id],
             )
             rows = csv_rows(package.files["scalars"])
             self.assertEqual({row["point_id"] for row in rows}, expected_ids)
