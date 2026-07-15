@@ -46,6 +46,16 @@ class ConfirmationAdapterTests(unittest.TestCase):
             },
         ])
 
+    def test_base_scenario_selects_schema_12_only_for_frozen_contact(self):
+        profile = json.loads(json.dumps(PROFILE))
+        profile["frozen_cue_contact"] = {"normal_stiffness_n_per_m32": 1.0}
+        self.assertEqual(base_scenario(
+            PROFILE, "v4", BALLS, "unbounded", 2, "v4 fixture"
+        )["schema_version"], 11)
+        self.assertEqual(base_scenario(
+            profile, "v5", BALLS, "unbounded", 2, "v5 fixture"
+        )["schema_version"], 12)
+
     def test_unknown_adapter_fails_closed(self):
         with self.assertRaisesRegex(
                 ValueError, "unsupported confirmation package: unknown"):

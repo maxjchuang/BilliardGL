@@ -201,8 +201,6 @@ def build_alciatore_scenarios(profile, package):
             evidence_source=DATASET_ID,
         )
         scenario["initial_contact_epsilon_cm"] = INITIAL_CONTACT_EPSILON_CM
-        if "frozen_cue_contact" in profile:
-            scenario["schema_version"] = 12
         scenario["cue_impact"] = {
             "cue_ball_index": 0,
             "cue_speed_cm_s": CUE_SPEED_CM_S,

@@ -38,7 +38,7 @@ def confirmation_adapter(dataset_id):
 def base_scenario(profile, scenario_id, balls, boundary_mode, ticks,
                   description, *, evidence_source="confirmation_contract"):
     return {
-        "schema_version": 11,
+        "schema_version": 12 if "frozen_cue_contact" in profile else 11,
         "id": scenario_id,
         "description": description,
         "boundary_mode": boundary_mode,

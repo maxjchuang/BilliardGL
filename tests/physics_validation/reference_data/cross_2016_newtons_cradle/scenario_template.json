@@ -1,0 +1,30 @@
+{
+  "apparatus_transfer": {
+    "ball_diameter_cm": 5.715,
+    "ball_dimension_source": "WPA pool transfer value; Cross does not publish diameter",
+    "ball_mass_kg": 0.115,
+    "ball_mass_source": "Cross 2016 section 2",
+    "cloth": "felt stretched over a small table"
+  },
+  "case_id": "cross_cue_frozen_pair",
+  "cue_direction": [
+    1,
+    0,
+    0
+  ],
+  "cue_elevation_degrees": 0,
+  "cue_tip_offset_radius": [
+    0,
+    0
+  ],
+  "initial_ball_gap_cm": 0,
+  "ratio_absolute_floor": 0.05,
+  "ratio_uncertainty_multiplier": 2,
+  "schema_version": 1,
+  "source_observed_ratio": 0.987432580352645,
+  "source_ratio_standard_uncertainty": 0.02610928824969865,
+  "stable_source_frame_window": [
+    80,
+    95
+  ]
+}

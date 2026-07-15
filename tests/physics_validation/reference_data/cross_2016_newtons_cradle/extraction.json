@@ -1,0 +1,43 @@
+{
+  "date": "2026-07-16",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:bac4f1fc76eadf62e57276d0dc268d2ff68f85ab78848a6c1a4e8c8d02623e49"
+    }
+  ],
+  "method": "Frame-by-frame center digitization of the complete registered stable release window in supplementary video 4582; ordinary least squares independently fits each ball position versus the published 600 frame/s source time base",
+  "operator": "Codex primary-source video extraction",
+  "output_sha256": "sha256:e0a7f1f11b97fc38d8ec9ac02c0c40b7c052d53fd6b83cb87550b4ac3e04bc25",
+  "review": {
+    "date": "2026-07-16",
+    "method": "Visual contact-sheet review at frames 80, 85, 90, and 95 plus residual review of every committed coordinate",
+    "reviewed_by": "Codex frame-track visual cross-check"
+  },
+  "rounding_policy": "Preserve digitized centers to six decimal places and all derived IEEE-754 values with 17 significant digits",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.extract_cross_2016_newtons_cradle",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:e6d00c57364dff30c4047ac3ca9443dfde740b4d6719e416b49bec78a2dc4226",
+  "tool": {
+    "name": "deterministic reviewed center-track normalizer",
+    "version": "1.0.0"
+  },
+  "transformations": [
+    {
+      "formula": "t = source_frame / 600; x_cm = x_px / pixels_per_cm; velocity = OLS(x_cm, t)",
+      "id": "stable_window_velocity",
+      "input_unit": "source frame, pixel",
+      "output_unit": "cm/s"
+    },
+    {
+      "formula": "ratio = OLS(back_x,t) / OLS(front_x,t)",
+      "id": "equal_speed_ratio",
+      "input_unit": "pixel, second",
+      "output_unit": "dimensionless"
+    }
+  ],
+  "uncertainty_interpretation": "One-pixel standard coordinate uncertainty is propagated through both OLS slopes. The half-source-frame absolute time offset is retained on every row and cancels exactly in the speed ratio because both balls share the same frames and clock."
+}

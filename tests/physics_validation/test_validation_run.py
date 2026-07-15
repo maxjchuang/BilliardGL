@@ -306,7 +306,7 @@ class ValidationRunTests(unittest.TestCase):
 
     def test_lifecycle_schema_and_committed_registry_are_strict(self):
         registry = load_data_lifecycle(COMMITTED_LIFECYCLE)
-        self.assertEqual(len(registry.datasets), 12)
+        self.assertEqual(len(registry.datasets), 13)
         self.assertEqual(
             registry.entry(
                 "alciatore_2005_tp_a15", "1.0.0").holdout_status,
@@ -320,6 +320,10 @@ class ValidationRunTests(unittest.TestCase):
         self.assertEqual(
             registry.entry("han_2005", "1.0.0").holdout_status,
             "confirmation")
+        cross = registry.entry("cross_2016_newtons_cradle", "1.0.0")
+        self.assertEqual(
+            (cross.calibration_status, cross.holdout_status),
+            ("confirmation", "confirmation"))
         self.assertEqual(
             registry.entry(
                 "mathavan_2010_cushion", "1.0.0").holdout_status,

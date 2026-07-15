@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 
 from . import alciatore_confirmation as _alciatore_confirmation
+from . import cross_2016_confirmation as _cross_2016_confirmation
 from . import han_confirmation as _han_confirmation
 from .confirmation_adapters import (
     ConfirmationAdapter,
