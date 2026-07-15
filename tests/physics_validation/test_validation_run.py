@@ -306,7 +306,7 @@ class ValidationRunTests(unittest.TestCase):
 
     def test_lifecycle_schema_and_committed_registry_are_strict(self):
         registry = load_data_lifecycle(COMMITTED_LIFECYCLE)
-        self.assertEqual(len(registry.datasets), 11)
+        self.assertEqual(len(registry.datasets), 12)
         self.assertEqual(
             registry.entry(
                 "alciatore_2005_tp_a15", "1.0.0").holdout_status,
@@ -335,6 +335,10 @@ class ValidationRunTests(unittest.TestCase):
             registry.entry(
                 "multi_contact_solver_analytic_contract", "1.0.0").holdout_status,
             "validation")
+        shimamura = registry.entry("shimamura_2006_cue_contact", "1.0.0")
+        self.assertEqual(
+            (shimamura.calibration_status, shimamura.holdout_status),
+            ("calibration", "spent"))
         document = json.loads(self.lifecycle.read_text(encoding="utf-8"))
         document["datasets"][0]["holdout_status"] = "secret"
         self.lifecycle.write_text(_canonical(document), encoding="utf-8")
