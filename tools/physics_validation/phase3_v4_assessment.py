@@ -226,6 +226,7 @@ def main(argv=None):
         rejection = {
             **assessment,
             "assessment_sha256": _sha256(arguments.output),
+            "han_2005": "NOT_EXECUTED",
         }
         arguments.rejection_output.parent.mkdir(parents=True, exist_ok=True)
         arguments.rejection_output.write_text(

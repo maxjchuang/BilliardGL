@@ -1,0 +1,154 @@
+{
+  "balls": [
+    {
+      "angular_velocity_rad_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "index": 0,
+      "pocketed": false,
+      "position_cm": [
+        -2.8575,
+        89.34147644042969,
+        0.0
+      ],
+      "velocity_cm_s": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "angular_velocity_rad_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "index": 1,
+      "pocketed": false,
+      "position_cm": [
+        2.8575,
+        89.34147644042969,
+        0.0
+      ],
+      "velocity_cm_s": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "boundary_mode": "unbounded",
+  "cue_impact": {
+    "chalk_state": "CHALKED",
+    "cue_ball_index": 0,
+    "cue_mass_kg": 0.5,
+    "cue_speed_cm_s": 100.0,
+    "direction": [
+      0.8290375725550417,
+      0.0,
+      0.5591929034707469
+    ],
+    "elevation_degrees": 0,
+    "tip_offset_cm": [
+      0,
+      0
+    ],
+    "tip_offset_radius": [
+      0,
+      0
+    ]
+  },
+  "description": "Alciatore frozen cue-ball shot at phi=34 degrees",
+  "evidence": {
+    "equipment": "WPA_POOL",
+    "grade": "B",
+    "pool_applicability": "DIRECT",
+    "source": "alciatore_2005_tp_a15"
+  },
+  "expectations": [
+    {
+      "metric": "finite_state",
+      "operator": "eq",
+      "value": true
+    },
+    {
+      "metric": "nonincreasing_translational_energy",
+      "operator": "eq",
+      "value": true
+    }
+  ],
+  "id": "alciatore_2005_tp_a15__alciatore_cut_034",
+  "initial_contact_epsilon_cm": 1e-06,
+  "physics_profile": {
+    "ball": {
+      "friction_coefficient": 0.1,
+      "inertia_factor": 0.4,
+      "mass_kg": 0.17,
+      "material": "phenolic_resin",
+      "normal_restitution": 0.97,
+      "radius_cm": 2.8575
+    },
+    "cue": {
+      "chalked_friction_coefficient": 0.6,
+      "cue_speed_per_power_unit_cm_s": 1.34,
+      "effective_mass_kg": 0.5,
+      "maximum_reliable_offset_radius": 0.8,
+      "normal_restitution": 0.0,
+      "unchalked_friction_coefficient": 0.1
+    },
+    "cushion": {
+      "friction_coefficient": 0.14,
+      "material": "mathavan_speed_dependent_cushion_v2",
+      "maximum_restitution": 0.93,
+      "maximum_rigid_incident_speed_cm_s": 250.0,
+      "minimum_restitution": 0.0,
+      "normal_restitution": 0.93,
+      "nose_height_ratio": 1.4,
+      "restitution_intercept": 1.0,
+      "restitution_slope_per_mps": 0.056
+    },
+    "formula_version": "full_game_integration_v3",
+    "id": "chinese_pool_full_game_v4",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "maximum_island_size": 16,
+      "maximum_penetration_cm": 0.5,
+      "passive_energy_tolerance_j": 1e-10,
+      "penetration_slop_cm": 0.001,
+      "position_iterations": 4,
+      "residual_tolerance_cm_s": 0.001,
+      "time_step_seconds": 0.1,
+      "toi_tolerance_seconds": 1e-07,
+      "velocity_iterations": 64
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "mathavan_phase_correct_surface_v2",
+      "rolling_resistance_acceleration_cm_s2": 12.499999813735489,
+      "sliding_friction_coefficient": 0.19999996439955606,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    },
+    "table_boundary": {
+      "capture_depth_cm": 6.0,
+      "corner_mouth_width_cm": 13.2,
+      "corner_throat_width_cm": 11.0,
+      "geometry_id": "wpa_pool_analytic_v1",
+      "jaw_radius_cm": 1.2,
+      "material": "profiled_table_boundary",
+      "playfield_length_cm": 254.0,
+      "playfield_width_cm": 127.0,
+      "side_mouth_width_cm": 8.6,
+      "side_throat_width_cm": 7.0,
+      "throat_depth_cm": 4.0
+    }
+  },
+  "schema_version": 11,
+  "simulation": {
+    "ticks": 8,
+    "time_step_seconds": 0.1
+  }
+}

@@ -113,10 +113,27 @@ def synthetic_repository(root, results):
 
 
 class Phase3V4AssessmentTests(unittest.TestCase):
-    def test_live_preconfirmation_tree_requires_alciatore(self):
-        with self.assertRaisesRegex(ValueError,
-                                    "Alciatore confirmation is absent"):
-            build_final_assessment(LIVE_ROOT)
+    def test_live_failed_alciatore_tree_is_rejected_and_hash_bound(self):
+        candidate = LIVE_ROOT / "physics_models/candidates" / CANDIDATE_ID
+        assessment_path = candidate / "final_assessment.json"
+        assessment = build_final_assessment(LIVE_ROOT)
+        committed = json.loads(
+            assessment_path.read_text(encoding="utf-8"))
+        self.assertEqual(assessment, committed)
+        self.assertEqual(assessment["disposition"], "REJECTED")
+        self.assertEqual(set(assessment["confirmations"]),
+                         {"alciatore_2005_tp_a15"})
+        evidence = assessment["confirmations"]["alciatore_2005_tp_a15"]
+        self.assertEqual(evidence["receipt"]["result"], "FAILED")
+        self.assertEqual(
+            evidence["tree_sha256"],
+            tree_digest(candidate / "confirmation/alciatore_2005_tp_a15"))
+        rejection = json.loads((
+            LIVE_ROOT / "physics_models/promotion/"
+            "phase3_integrated_v4_rejection.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(rejection["han_2005"], "NOT_EXECUTED")
+        self.assertEqual(rejection["assessment_sha256"], digest(assessment_path))
 
     def test_passing_alciatore_requires_han(self):
         with tempfile.TemporaryDirectory() as directory:
