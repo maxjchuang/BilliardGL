@@ -187,6 +187,71 @@ int main()
         billiardgl::serializeAutomationState(cueRuntime);
     expect(cueState.at("cue_impact_support").at("shot_executed").asBool(),
         "state support should report the actual applied result");
+    expect(contact.at("microtrace_schema_version").asInt() == 1 &&
+        contact.at("microsteps").asArray().empty(),
+        "ordinary v4 contact exposes an empty versioned microtrace");
+
+    billiardgl::GameState frozenState;
+    billiardgl::initializeBalls(frozenState);
+    for (billiardgl::BallState& ball : frozenState.balls) {
+        ball.pocketed = true;
+        ball.position = billiardgl::Point3{};
+        ball.velocity = billiardgl::Point3{};
+        ball.angularVelocity = billiardgl::Point3{};
+    }
+    frozenState.balls[0].pocketed = false;
+    frozenState.balls[1].pocketed = false;
+    billiardgl::PhysicsProfile frozenProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    frozenProfile.id = "automation_frozen_failure";
+    frozenProfile.frozenCueContact.enabled = true;
+    frozenProfile.frozenCueContact.maximumContactSeconds =
+        2.0 * frozenProfile.frozenCueContact.microstepSeconds;
+    frozenState.balls[1].position.x =
+        2.0f * frozenProfile.ball.radiusCm;
+    billiardgl::CueImpactInput frozenInput;
+    frozenInput.cueBallIndex = 0;
+    frozenInput.cueSpeedCmS = 200.0;
+    frozenInput.cueMassKg = 0.5;
+    frozenInput.direction = {{1.0, 0.0, 0.0}};
+    frozenInput.chalkState = "CHALKED";
+    billiardgl::GameRuntime frozenRuntime;
+    expect(frozenRuntime.replaceStateForScenario(
+        frozenState, frozenProfile).ok,
+        "automation frozen fixture installs");
+    const billiardgl::ActionResult frozenFailure =
+        frozenRuntime.applyCueImpact(frozenInput);
+    expect(!frozenFailure.ok && std::string(frozenFailure.errorCode) ==
+        "cue_contact_no_release",
+        "automation fixture preserves the failed-shot code");
+    const billiardgl::json::Value frozenStateJson =
+        billiardgl::serializeAutomationState(frozenRuntime);
+    const billiardgl::json::Value& frozenContact =
+        frozenStateJson.at("cue_contact");
+    expect(frozenContact.at("error_code").asString() ==
+        "cue_contact_no_release" &&
+        !frozenContact.at("microsteps").asArray().empty(),
+        "get_state retains failed frozen microsteps without committing a shot");
+    const billiardgl::json::Value& microstep =
+        frozenContact.at("microsteps").asArray().front();
+    const char* microstepKeys[] = {
+        "index", "time_seconds", "cue_position_m", "cue_velocity_m_s",
+        "cue_acceleration_m_s2", "compression_m", "compression_rate_m_s",
+        "normal_force_n", "tangential_force_n", "normal_impulse_n_s",
+        "tangential_impulse_n_s", "kinetic_energy_j", "elastic_energy_j",
+        "dissipated_energy_j", "energy_residual_j", "maximum_penetration_cm",
+        "solver_residual_cm_s", "solver_iterations", "regime", "balls",
+        "contacts"};
+    for (const char* key : microstepKeys) {
+        expect(microstep.has(key),
+            "every coupled microstep field must cross the protocol boundary");
+    }
+    const std::string firstFrozenSerialization =
+        billiardgl::json::stringify(frozenStateJson);
+    const std::string secondFrozenSerialization = billiardgl::json::stringify(
+        billiardgl::serializeAutomationState(frozenRuntime));
+    expect(firstFrozenSerialization == secondFrozenSerialization,
+        "repeated frozen state serialization is byte-identical");
 
     const std::string error = billiardgl::json::stringify(
         billiardgl::automationErrorResponse(7, "invalid_argument", "bad value"));

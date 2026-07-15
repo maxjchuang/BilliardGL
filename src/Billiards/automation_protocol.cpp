@@ -1,6 +1,7 @@
 #include "automation_protocol.h"
 
 #include <algorithm>
+#include <cmath>
 #include <exception>
 
 namespace billiardgl {
@@ -79,6 +80,78 @@ json::Value vectorValue(const std::array<double, 3>& vector, double scale = 1.0)
     return value;
 }
 
+json::Value finiteNumber(double value)
+{
+    return json::Value(std::isfinite(value) ? value : 0.0);
+}
+
+json::Value cueContactBallSampleValue(const CueContactBallSample& sample)
+{
+    json::Value value = json::Value::object();
+    value["acceleration_cm_s2"] = pointValue(sample.accelerationCmS2);
+    value["angular_velocity_rad_s"] =
+        pointValue(sample.angularVelocityRadS);
+    value["index"] = json::Value(sample.index);
+    value["position_cm"] = pointValue(sample.positionCm);
+    value["velocity_cm_s"] = pointValue(sample.velocityCmS);
+    return value;
+}
+
+json::Value cueContactConstraintSampleValue(
+    const CueContactConstraintSample& sample)
+{
+    json::Value value = json::Value::object();
+    value["feature_id"] = json::Value(sample.featureId);
+    value["first_ball"] = json::Value(sample.firstBall);
+    value["kind"] = json::Value(sample.kind);
+    value["normal"] = pointValue(sample.normal);
+    value["normal_impulse_n_s"] = finiteNumber(sample.normalImpulseNs);
+    value["penetration_cm"] = finiteNumber(sample.penetrationCm);
+    value["residual_cm_s"] = finiteNumber(sample.residualCmS);
+    value["second_ball"] = json::Value(sample.secondBall);
+    value["tangential_impulse_n_s"] =
+        finiteNumber(sample.tangentialImpulseNs);
+    return value;
+}
+
+json::Value cueContactMicrostepValue(const CueContactMicrostep& step)
+{
+    json::Value balls = json::Value::array();
+    for (const CueContactBallSample& sample : step.balls) {
+        balls.asArray().push_back(cueContactBallSampleValue(sample));
+    }
+    json::Value contacts = json::Value::array();
+    for (const CueContactConstraintSample& sample : step.contacts) {
+        contacts.asArray().push_back(
+            cueContactConstraintSampleValue(sample));
+    }
+    json::Value value = json::Value::object();
+    value["balls"] = balls;
+    value["compression_m"] = finiteNumber(step.compressionM);
+    value["compression_rate_m_s"] = finiteNumber(step.compressionRateMS);
+    value["contacts"] = contacts;
+    value["cue_acceleration_m_s2"] = finiteNumber(step.cueAccelerationMS2);
+    value["cue_position_m"] = finiteNumber(step.cuePositionM);
+    value["cue_velocity_m_s"] = finiteNumber(step.cueVelocityMS);
+    value["dissipated_energy_j"] = finiteNumber(step.dissipatedEnergyJ);
+    value["elastic_energy_j"] = finiteNumber(step.elasticEnergyJ);
+    value["energy_residual_j"] = finiteNumber(step.energyResidualJ);
+    value["index"] = json::Value(step.index);
+    value["kinetic_energy_j"] = finiteNumber(step.kineticEnergyJ);
+    value["maximum_penetration_cm"] =
+        finiteNumber(step.maximumPenetrationCm);
+    value["normal_force_n"] = finiteNumber(step.normalForceN);
+    value["normal_impulse_n_s"] = finiteNumber(step.normalImpulseNs);
+    value["regime"] = json::Value(cueContactRegimeName(step.regime));
+    value["solver_iterations"] = json::Value(step.solverIterations);
+    value["solver_residual_cm_s"] = finiteNumber(step.solverResidualCmS);
+    value["tangential_force_n"] = finiteNumber(step.tangentialForceN);
+    value["tangential_impulse_n_s"] =
+        finiteNumber(step.tangentialImpulseNs);
+    value["time_seconds"] = finiteNumber(step.timeSeconds);
+    return value;
+}
+
 json::Value cueContactValue(const CueContactResult& result)
 {
     json::Value value = json::Value::object();
@@ -97,6 +170,13 @@ json::Value cueContactValue(const CueContactResult& result)
     value["friction_coefficient"] = json::Value(result.frictionCoefficient);
     value["impulse_ns"] = vectorValue(result.impulseNs);
     value["input_kinetic_energy_j"] = json::Value(result.inputKineticEnergyJ);
+    value["microtrace_schema_version"] =
+        json::Value(result.microtraceSchemaVersion);
+    json::Value microsteps = json::Value::array();
+    for (const CueContactMicrostep& step : result.microsteps) {
+        microsteps.asArray().push_back(cueContactMicrostepValue(step));
+    }
+    value["microsteps"] = microsteps;
     value["normal_impulse_ns"] = json::Value(result.normalImpulseNs);
     value["normal_relative_speed_before_cm_s"] =
         json::Value(result.normalRelativeSpeedBeforeMS * 100.0);

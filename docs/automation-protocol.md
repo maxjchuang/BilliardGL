@@ -80,6 +80,10 @@ rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 P
 
 schema v2 额外要求 `cue_impact`，包含 cue ball、物理 cue 速度/质量、单位方向、仰角、以 cm 和球半径比例表示且相互一致的二维 tip offset，以及 chalk 状态。runtime 和每个后续 trace frame 会原样返回这组请求输入；state 中的 `cue_impact_support` 逐项列出 `exactly_consumable_fields`、`unsupported_codes` 和 `shot_executed`。该 capability 只表示“可解析和追踪”，不表示引擎已经支持竖直偏杆、cue 质量或从 cue 速度到游戏力度的物理映射；当前加载 v2 不会自动击球。
 
+`cue_contact` 始终包含 `microtrace_schema_version: 1` 和 `microsteps`。普通 v4 击球的 `microsteps` 是空数组；启用冻结接触模型的 v5 击球会按求解顺序返回完整微迹。冻结求解失败时，游戏状态与规则事件会回滚，但 `get_state.cue_contact.error_code` 和已经产生的 `microsteps` 仍会保留，便于定位失败。
+
+每个微步包含带单位后缀的球杆位置、速度、加速度、压缩量与压缩率、法向/切向力和累计冲量、动能/弹性能/耗散能/能量残差、最大穿透、刚性求解残差与迭代数，以及该步的 16 球状态和接触约束数组。位置分别使用 `m`（球杆瞬态量）或 `cm`（游戏球状态），速度使用 `m_s` 或 `cm_s`，力使用 `n`，冲量使用 `n_s`，能量使用 `j`。JSON 不会输出 NaN 或 Infinity；非有限状态会先转化为稳定失败码。
+
 事件包含 `event`、单调递增 `sequence` 和产生它的 `tick`。`get_events {after_sequence}` 只返回更大的序号。历史最多保留 10000 条。
 
 ## 错误码
@@ -111,4 +115,4 @@ with AutomationClient("build/check/Billiards") as game:
 
 ## 扩展传输
 
-新传输实现 `AutomationTransport::readMessage/writeMessage`，只负责连接、分帧和 I/O。TCP、Unix Socket 或 WebSocket 适配器必须把相同 JSON 文本交给 `runAutomation` 和 `AutomationController`，不得实现游戏规则或改变协议语义。
+新传输实现 `AutomationTransport::readMessage/writeMessage`，只负责连接、分帧和 I/O。TCP、Unix Socket、WebSocket 或其他 socket 适配器必须把完全相同的命令、状态和 trace JSON 对象交给 `runAutomation` 和 `AutomationController`，包括 `cue_contact` 的版本化微迹；不得删减字段、实现游戏规则或改变协议语义。

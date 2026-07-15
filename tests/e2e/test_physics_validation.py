@@ -6,8 +6,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / "tests/e2e"))
 
 from tools.physics_validation.run import run_validation
+from automation_client import AutomationClient
 
 
 with tempfile.TemporaryDirectory() as directory:
@@ -39,3 +41,16 @@ with tempfile.TemporaryDirectory() as directory:
     assert "high_speed_tunneling_v1 | PASSED" in markdown
     assert "receding_overlap_v1 | PASSED" in markdown
     assert "reverse_cradle_v1 | PASSED" in markdown
+
+with AutomationClient(sys.argv[1]) as game:
+    game.toggle_aim()
+    game.set_aim_yaw(0.0)
+    game.set_shot_power(40.0)
+    game.shoot()
+    first_state = game.state()
+    second_state = game.state()
+    contact = first_state["cue_contact"]
+    assert contact["microtrace_schema_version"] == 1
+    assert contact["microsteps"] == []
+    assert json.dumps(first_state, sort_keys=True, separators=(",", ":")) == \
+        json.dumps(second_state, sort_keys=True, separators=(",", ":"))
