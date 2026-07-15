@@ -1,6 +1,12 @@
 {
   "datasets": [
     {
+      "calibration_status": "confirmation",
+      "dataset_id": "alciatore_2005_tp_a15",
+      "dataset_version": "1.0.0",
+      "holdout_status": "confirmation"
+    },
+    {
       "calibration_status": "calibration",
       "dataset_id": "cross_2023_cue_impact",
       "dataset_version": "1.0.0-admission-blocked",

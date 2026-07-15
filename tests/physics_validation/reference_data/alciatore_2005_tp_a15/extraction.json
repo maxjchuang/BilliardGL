@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-15",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:8f527a6f6600edcf0e34ba696ff1d1dc445a37b0d88aa732cdf2c8cc2e96dc70"
+    }
+  ],
+  "method": "Direct transcription of all nine rows in M_exper after visually checking the rendered primary PDF; Mathcad column <1> phi_exper is the input cut angle and column <0> theta_exper is the resulting cue-ball target-line angle",
+  "operator": "Codex primary-source extraction",
+  "output_sha256": "sha256:17e888b524053994ea3124972aad4351c5df65598c797422752369c3ee05bf8a",
+  "review": {
+    "date": "2026-07-15",
+    "method": "Text extraction plus visual review of PDF pages 1-3, including the diagram, M_exper assignments, and plot axes",
+    "reviewed_by": "Codex primary-source visual cross-check"
+  },
+  "rounding_policy": "Preserve every published integer degree exactly; interpret the printed last-place half-unit as rectangular source resolution, not as an experimental confidence interval",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.extract_alciatore_2005_tp_a15",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:92b79d5f6ca4dff5d781cbfe4128bc94c75a6a5d9b49117c59b48ae2a038e985",
+  "tool": {
+    "name": "Python standard-library deterministic transcriber",
+    "version": "2026-07-15"
+  },
+  "transformations": [
+    {
+      "formula": "phi_exper (cut angle) -> theta_exper (cue-ball target-line angle)",
+      "id": "mathcad_column_orientation",
+      "input_unit": "degree",
+      "output_unit": "degree"
+    }
+  ],
+  "uncertainty_interpretation": "The source prints integer degrees without confidence intervals. A 0.5-degree half-unit divided by sqrt(3) records only rectangular numeric resolution; the 3/5-degree engineering gates are preregistered separately."
+}

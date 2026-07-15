@@ -53,11 +53,11 @@ and a replacement independent confirmation source.
 ### Alciatore TP A.15
 
 David G. Alciatore's public technical proof TP A.15 reports a high-speed-video
-experiment relating the source-defined cut angle and target-ball direction for
-a frozen cue-ball shot. The published integer-degree pairs are retained in
-full:
+experiment relating the source-defined cut angle and the resulting cue-ball
+target-line direction for a frozen cue-ball shot. The published integer-degree
+pairs are retained in full:
 
-| Source cut angle (degrees) | Target-ball angle (degrees) |
+| Source cut angle φ (degrees) | Cue-ball target-line angle θ (degrees) |
 | ---: | ---: |
 | 0 | 0 |
 | 8 | 13 |
@@ -184,7 +184,7 @@ cue and object balls, applies a centered horizontal cue input, and records:
 - per-frame ball position, linear velocity, angular velocity, and derived
   acceleration;
 - ball-ball contact time, normal, impulse, restitution, and friction response;
-- the target ball's earliest stable separating trajectory angle;
+- the cue ball's earliest stable separating trajectory angle;
 - energy and momentum diagnostics.
 
 The seven non-degenerate interior points are the primary angular comparison.
@@ -209,8 +209,9 @@ The endpoints remain in the package and report:
 - at both endpoints, finite state, valid contact-impulse direction, and no
   non-physical energy increase.
 
-The 90-degree trajectory angle is not fabricated when target speed is too
-small to define a stable direction.
+The 90-degree cue-ball trajectory remains well-defined; the object-ball speed
+ratio is evaluated independently and no object-ball trajectory angle is
+fabricated when that speed is too small to define a stable direction.
 
 ## Han metrics
 

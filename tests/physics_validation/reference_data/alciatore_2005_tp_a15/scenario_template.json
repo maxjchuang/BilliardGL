@@ -1,0 +1,103 @@
+{
+  "base_scenario": {
+    "description": "Frozen cue-ball target-line confirmation from Alciatore TP A.15",
+    "evidence": {
+      "grade": "B",
+      "pool_applicability": "DIRECT",
+      "source": "alciatore_2005_tp_a15"
+    },
+    "expectations": [
+      {
+        "metric": "finite_state",
+        "operator": "eq",
+        "value": true
+      },
+      {
+        "metric": "nonincreasing_translational_energy",
+        "operator": "eq",
+        "value": true
+      }
+    ],
+    "schema_version": 6
+  },
+  "cases": {
+    "alciatore_cut_000": {
+      "cut_angle_phi_degrees": 0,
+      "evaluation_role": "endpoint_invariant",
+      "reference_point_id": "alciatore_cut_000",
+      "target_angle_theta_degrees": 0
+    },
+    "alciatore_cut_008": {
+      "cut_angle_phi_degrees": 8,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_008",
+      "target_angle_theta_degrees": 13
+    },
+    "alciatore_cut_020": {
+      "cut_angle_phi_degrees": 20,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_020",
+      "target_angle_theta_degrees": 34
+    },
+    "alciatore_cut_034": {
+      "cut_angle_phi_degrees": 34,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_034",
+      "target_angle_theta_degrees": 50
+    },
+    "alciatore_cut_046": {
+      "cut_angle_phi_degrees": 46,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_046",
+      "target_angle_theta_degrees": 61
+    },
+    "alciatore_cut_057": {
+      "cut_angle_phi_degrees": 57,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_057",
+      "target_angle_theta_degrees": 70
+    },
+    "alciatore_cut_067": {
+      "cut_angle_phi_degrees": 67,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_067",
+      "target_angle_theta_degrees": 78
+    },
+    "alciatore_cut_077": {
+      "cut_angle_phi_degrees": 77,
+      "evaluation_role": "interior_angle",
+      "reference_point_id": "alciatore_cut_077",
+      "target_angle_theta_degrees": 87
+    },
+    "alciatore_cut_090": {
+      "cut_angle_phi_degrees": 90,
+      "evaluation_role": "endpoint_invariant",
+      "reference_point_id": "alciatore_cut_090",
+      "target_angle_theta_degrees": 90
+    }
+  },
+  "coordinate_contract": {
+    "cue_direction_formula": "[cos(phi), 0, sin(phi)]",
+    "engine_table_plane": "x-z",
+    "engine_vertical_axis": "+y",
+    "impact_line_unit_vector": [
+      1,
+      0,
+      0
+    ],
+    "observed_theta_formula": "atan2(cue_ball_vz, cue_ball_vx)",
+    "positive_tangent_unit_vector": [
+      0,
+      0,
+      1
+    ],
+    "source_cut_angle_definition": "phi_exper is the angle from the impact line (line of centers) toward the cue aiming direction",
+    "source_target_angle_definition": "theta_exper is the angle from the impact line to the resulting cue-ball target-line direction"
+  },
+  "grazing_target_to_incident_speed_ratio_maximum": 0.001,
+  "head_on_direction_error_degrees_maximum": 1,
+  "head_on_lateral_to_incident_speed_ratio_maximum": 0.001,
+  "interior_absolute_error_degrees_maximum": 5,
+  "interior_rmse_degrees_maximum": 3,
+  "schema_version": 1
+}

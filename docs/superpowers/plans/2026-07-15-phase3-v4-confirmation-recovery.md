@@ -501,8 +501,8 @@ PAIRS = ((0, 0), (8, 13), (20, 34), (34, 50), (46, 61),
 
 def test_all_published_pairs_are_preserved(self):
     rows = list(csv.DictReader((PACKAGE / "raw_extracted.csv").open()))
-    self.assertEqual(tuple((int(row["cut_angle_degrees"]),
-                            int(row["target_angle_degrees"])) for row in rows),
+    self.assertEqual(tuple((int(row["cut_angle_phi_degrees"]),
+                            int(row["target_angle_theta_degrees"])) for row in rows),
                      PAIRS)
 
 def test_package_is_confirmation_only(self):
@@ -541,7 +541,7 @@ PAIRS = ((0, 0), (8, 13), (20, 34), (34, 50), (46, 61),
 
 Generate one raw and normalized row for every pair. Use point IDs
 `alciatore_cut_000` through `alciatore_cut_090`, `partition=CONFIRMATION`,
-`metric=target_ball_angle`, `unit=degree`, source numeric resolution `0.5`,
+`metric=cue_ball_target_line_angle`, `unit=degree`, source numeric resolution `0.5`,
 engineering absolute tolerance `3`, and no relative tolerance. Keep the
 normalized CSV on the repository's standard reference-point header. The
 scenario template maps the two endpoint point IDs to
@@ -569,8 +569,9 @@ Expected: verifier exits 0; all nine rows and every manifest hash reproduce.
 - [ ] **Step 5: Obtain independent review of the source-coordinate mapping**
 
 Present the nine committed pairs, the report's two original column labels, the
-definition of source cut angle, the definition of target-ball angle, and the
-engine coordinate transform. Record the review outcome and reviewed extraction
+definition of source cut angle, the definition of the resulting cue-ball
+target-line angle, and the engine coordinate transform. Record the review
+outcome and reviewed extraction
 SHA-256 in `source_access_audit.json`, regenerate the manifest, and rerun
 `--verify`. Do not continue if the reviewer disputes the column orientation.
 

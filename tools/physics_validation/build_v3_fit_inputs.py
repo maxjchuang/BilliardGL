@@ -26,6 +26,11 @@ STRUCTURAL_FIELDS = (
     "point_id", "dataset_id", "dataset_version", "lifecycle", "metric",
     "expected", "unit", "observed", "status", "source_locator", "rationale",
 )
+CONFIRMATION_DATASETS = frozenset({
+    "alciatore_2005_tp_a15",
+    "derby_fuller_1999",
+    "han_2005",
+})
 
 
 def _read_csv(path):
@@ -85,7 +90,7 @@ def _require_spent_rows(root, rows):
         if entry.holdout_status != "spent":
             raise ValueError(
                 f"{row['dataset_id']} is not spent in the lifecycle registry")
-        if row["dataset_id"] in {"derby_fuller_1999", "han_2005"}:
+        if row["dataset_id"] in CONFIRMATION_DATASETS:
             raise ValueError("confirmation evidence cannot enter v3 fitting")
     return rows
 

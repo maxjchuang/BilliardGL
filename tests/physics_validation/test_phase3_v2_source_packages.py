@@ -20,11 +20,21 @@ EXPECTED_SPENT = {
     "sudo_2002",
 }
 EXPECTED_HOLDOUT_STATUS = {
+    "alciatore_2005_tp_a15": "confirmation",
     "sudo_2002": "spent",
     "derby_fuller_1999": "spent",
     "han_2005": "confirmation",
 }
 EXPECTED_SCALARS = {
+    "alciatore_2005_tp_a15": {
+        "alciatore_cut_000", "alciatore_cut_008", "alciatore_cut_020",
+        "alciatore_cut_034", "alciatore_cut_046", "alciatore_cut_057",
+        "alciatore_cut_067", "alciatore_cut_077", "alciatore_cut_090",
+        "source_frozen_ball_contact", "source_high_speed_video",
+        "contract_initial_ball_gap_cm", "contract_cue_elevation_degrees",
+        "contract_centered_tip_lateral_fraction",
+        "contract_centered_tip_vertical_fraction",
+    },
     "sudo_2002": {
         "ball_mass_mean", "ball_mass_sd", "ball_diameter_mean",
         "ball_diameter_sd", "cushion_e_low_speed", "cushion_e_all_speed",

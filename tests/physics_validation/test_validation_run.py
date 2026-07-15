@@ -306,7 +306,11 @@ class ValidationRunTests(unittest.TestCase):
 
     def test_lifecycle_schema_and_committed_registry_are_strict(self):
         registry = load_data_lifecycle(COMMITTED_LIFECYCLE)
-        self.assertEqual(len(registry.datasets), 10)
+        self.assertEqual(len(registry.datasets), 11)
+        self.assertEqual(
+            registry.entry(
+                "alciatore_2005_tp_a15", "1.0.0").holdout_status,
+            "confirmation")
         self.assertEqual(
             registry.entry("sudo_2002", "1.0.0").holdout_status,
             "spent")

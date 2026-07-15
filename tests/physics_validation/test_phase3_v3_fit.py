@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from tools.physics_validation.build_v3_fit_inputs import (
+    CONFIRMATION_DATASETS,
     build_ball_inputs,
     build_cushion_inputs,
     write_v3_fit_inputs,
@@ -38,13 +39,18 @@ def csv_rows(path):
 
 
 class Phase3V3FitTests(unittest.TestCase):
+    def test_confirmation_deny_set_includes_every_v4_confirmation_source(self):
+        self.assertEqual(CONFIRMATION_DATASETS, frozenset({
+            "alciatore_2005_tp_a15", "derby_fuller_1999", "han_2005",
+        }))
+
     def test_v3_inputs_include_sudo_as_spent_and_no_confirmation(self):
         rows = build_ball_inputs(ROOT) + build_cushion_inputs(ROOT)
         dataset_ids = {row["dataset_id"] for row in rows}
         self.assertIn("sudo_2002", dataset_ids)
         self.assertEqual({row["lifecycle"] for row in rows}, {"spent"})
         self.assertFalse(
-            {"derby_fuller_1999", "han_2005"} & dataset_ids)
+            CONFIRMATION_DATASETS & dataset_ids)
 
     def test_every_series_has_equal_objective_weight(self):
         ball_report, _ = build_ball_v3_fit_report(
