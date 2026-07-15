@@ -1,5 +1,6 @@
 import hashlib
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -17,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[2]
 FREEZE = ROOT / "physics_models/candidates/phase3_integrated_v2/freeze.json"
 SUDO = ROOT / "tests/physics_validation/reference_data/sudo_2002"
 DERBY = ROOT / "tests/physics_validation/reference_data/derby_fuller_1999"
+TRANSACTION_FIXTURE = (
+    ROOT / "tests/physics_validation/fixtures/confirmation_transaction_v1")
 REAL_LEDGER = (
     ROOT / "physics_models/candidates/phase3_integrated_v2/confirmation_consumption.json")
 SUDO_RESULT = (
@@ -32,19 +35,52 @@ def digest(path):
 
 class Phase3V2ConfirmationTests(unittest.TestCase):
     def setUp(self):
-        self.temporary = tempfile.TemporaryDirectory()
+        self.temporary = tempfile.TemporaryDirectory(dir=ROOT / "build")
         self.addCleanup(self.temporary.cleanup)
         self.scratch = Path(self.temporary.name)
+        self.package = self.scratch / "fixture_confirmation"
+        shutil.copytree(TRANSACTION_FIXTURE, self.package)
+        manifest_sha256 = digest(self.package / "manifest.json")
+        fixture_relative = self.package.relative_to(ROOT).as_posix()
+        self.freeze = self.scratch / "freeze.json"
+        self.freeze.write_text(json.dumps({
+            "artifacts": [{
+                "path": f"{fixture_relative}/manifest.json",
+                "role": "confirmation_package_manifest",
+                "sha256": manifest_sha256,
+            }],
+            "candidate_id": "confirmation_transaction_fixture",
+            "schema_version": 2,
+        }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        self.lifecycle = self.scratch / "lifecycle.json"
+        self.lifecycle.write_text(json.dumps({
+            "datasets": [{
+                "calibration_status": "confirmation",
+                "dataset_id": "fixture_confirmation",
+                "dataset_version": "1.0.0",
+                "holdout_status": "confirmation",
+            }],
+            "schema_version": 1,
+        }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        lifecycle_patch = patch(
+            "tools.physics_validation.validation_run.DEFAULT_LIFECYCLE_PATH",
+            self.lifecycle)
+        lifecycle_patch.start()
+        self.addCleanup(lifecycle_patch.stop)
         self.ledger = self.scratch / "confirmation_consumption.json"
-        self.package = DERBY
-        self.output = self.scratch / "confirmation" / "derby_fuller_1999"
+        self.output = self.scratch / "confirmation" / "fixture_confirmation"
 
-    def test_spent_sudo_is_closed_while_derby_remains_unopened(self):
+    def test_spent_sources_are_closed_while_fixture_remains_unopened(self):
         self.assertIn(
             "reference partition is not in confirmation state",
             validate_confirmation_access(ROOT, FREEZE, SUDO, self.ledger))
+        self.assertIn(
+            "reference partition is not in confirmation state",
+            validate_confirmation_access(ROOT, FREEZE, DERBY, self.ledger))
         self.assertEqual(
-            validate_confirmation_access(ROOT, FREEZE, DERBY, self.ledger), [])
+            validate_confirmation_access(
+                ROOT, self.freeze, self.package, self.ledger,
+                self.lifecycle), [])
         self.assertFalse(self.ledger.exists())
 
     def test_fitters_do_not_read_confirmation_packages(self):
@@ -74,7 +110,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
     def test_second_confirmation_execution_is_rejected(self):
         calls = []
         consume_confirmation(
-            FREEZE, self.package, self.output, self.ledger,
+            self.freeze, self.package, self.output, self.ledger,
             lambda: {
                 "result": "PASSED_OR_ACCOUNTED",
                 "files": {"metrics.csv": b"metric,value\ne,0.9\n"},
@@ -85,13 +121,13 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
                 ConfirmationAccessError,
                 "confirmation partition is already consumed"):
             consume_confirmation(
-                FREEZE, self.package, self.scratch / "second", self.ledger,
+                self.freeze, self.package, self.scratch / "second", self.ledger,
                 lambda: calls.append("executed"), repository_root=ROOT)
         self.assertEqual(calls, [])
 
     def test_atomic_output_receipt_and_ledger_hash_every_result(self):
         receipt = consume_confirmation(
-            FREEZE, self.package, self.output, self.ledger,
+            self.freeze, self.package, self.output, self.ledger,
             lambda: {
                 "result": "PASSED_OR_ACCOUNTED",
                 "files": {
@@ -102,7 +138,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             repository_root=ROOT,
         )
         self.assertEqual(receipt["result"], "PASSED_OR_ACCOUNTED")
-        self.assertEqual(receipt["freeze_sha256"], digest(FREEZE))
+        self.assertEqual(receipt["freeze_sha256"], digest(self.freeze))
         self.assertEqual(
             receipt["files"], {
                 "metrics.csv": digest(self.output / "metrics.csv"),
@@ -122,19 +158,20 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         with self.assertRaisesRegex(ConfirmationAccessError,
                                     "output path already exists"):
             consume_confirmation(
-                FREEZE, self.package, self.output, self.ledger,
+                self.freeze, self.package, self.output, self.ledger,
                 lambda: self.fail("runner must not execute"),
                 repository_root=ROOT)
         self.output.rmdir()
         receipt = consume_confirmation(
-            FREEZE, self.package, self.output, self.ledger,
+            self.freeze, self.package, self.output, self.ledger,
             lambda: {"result": "FAILED", "files": {"failure.json": b'{}\n'}},
             repository_root=ROOT,
         )
         self.assertEqual(receipt["result"], "FAILED")
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, self.package, self.ledger))
+                          ROOT, self.freeze, self.package, self.ledger,
+                          self.lifecycle))
 
     def test_runner_exception_is_failed_closed_and_reserved_before_execution(self):
         observed = []
@@ -145,7 +182,7 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             raise RuntimeError("missing expected contact")
 
         receipt = consume_confirmation(
-            FREEZE, self.package, self.output, self.ledger, crashing_runner,
+            self.freeze, self.package, self.output, self.ledger, crashing_runner,
             repository_root=ROOT,
         )
         self.assertEqual(observed, ["STARTED"])
@@ -155,16 +192,17 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         self.assertEqual(failure["message"], "missing expected contact")
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, self.package, self.ledger))
+                          ROOT, self.freeze, self.package, self.ledger,
+                          self.lifecycle))
 
     def test_malformed_ledger_and_runner_supplied_receipt_fail_closed(self):
         self.ledger.write_text("{}\n", encoding="utf-8")
         failures = validate_confirmation_access(
-            ROOT, FREEZE, self.package, self.ledger)
+            ROOT, self.freeze, self.package, self.ledger, self.lifecycle)
         self.assertIn("confirmation ledger is invalid", failures)
         self.ledger.unlink()
         receipt = consume_confirmation(
-            FREEZE, self.package, self.output, self.ledger,
+            self.freeze, self.package, self.output, self.ledger,
             lambda: {
                 "result": "PASSED_OR_ACCOUNTED",
                 "files": {"validation_receipt.json": b"{}\n"},
@@ -180,7 +218,8 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
         self.assertEqual(ledger["records"], [receipt])
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
-                          ROOT, FREEZE, self.package, self.ledger))
+                          ROOT, self.freeze, self.package, self.ledger,
+                          self.lifecycle))
 
     def test_confirmation_metric_contract_is_fixed_before_real_execution(self):
         freeze = json.loads(FREEZE.read_text(encoding="utf-8"))

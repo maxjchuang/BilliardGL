@@ -57,12 +57,16 @@ class Phase3V3FreezeTests(unittest.TestCase):
                          recipe["executable_relative_path"])
 
     def test_freeze_is_pre_confirmation_and_rebuild_does_not_open_packages(self):
-        self.assertFalse(
-            (ROOT / "physics_models/candidates/phase3_integrated_v3/confirmation")
-            .exists())
-        self.assertFalse(
-            (ROOT / "physics_models/candidates/phase3_integrated_v3/"
-                    "confirmation_consumption.json").exists())
+        for path in (
+                "physics_models/candidates/phase3_integrated_v3/confirmation",
+                "physics_models/candidates/phase3_integrated_v3/"
+                "confirmation_consumption.json"):
+            result = subprocess.run(
+                ["git", "cat-file", "-e", f"{SELECTED_REVISION}:{path}"],
+                cwd=ROOT, capture_output=True)
+            self.assertNotEqual(
+                result.returncode, 0,
+                f"frozen source revision unexpectedly contains {path}")
         source = (ROOT / "tools/physics_validation/rebuild_frozen.py") \
             .read_text(encoding="utf-8")
         self.assertNotIn("reference_data", source)

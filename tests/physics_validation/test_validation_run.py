@@ -312,7 +312,7 @@ class ValidationRunTests(unittest.TestCase):
             "spent")
         self.assertEqual(
             registry.entry("derby_fuller_1999", "1.0.0").holdout_status,
-            "confirmation")
+            "spent")
         self.assertEqual(
             registry.entry("han_2005", "1.0.0").holdout_status,
             "confirmation")

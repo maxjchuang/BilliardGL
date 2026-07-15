@@ -64,6 +64,10 @@
 - Create: `tests/physics_validation/test_phase3_v4_lifecycle.py`
 - Create: `physics_models/promotion/phase3_integrated_v3_derby_spent_transition.json`
 - Modify: `tests/physics_validation/validation_data_status.json`
+- Modify: `tests/physics_validation/test_phase3_v3_freeze.py`
+- Modify: `tests/physics_validation/test_phase3_v2_confirmation.py`
+- Modify: `tests/physics_validation/test_phase3_v2_source_packages.py`
+- Modify: `tests/physics_validation/test_validation_run.py`
 
 **Interfaces:**
 - Consumes: committed v3 `freeze.json`, Derby `failure.json`, `validation_receipt.json`, `confirmation_consumption.json`, rejection, and package manifest.
@@ -114,6 +118,15 @@ class Phase3V4LifecycleTests(unittest.TestCase):
             "rejection",
         })
 ```
+
+Replace the stale current-worktree absence assertions in
+`test_phase3_v3_freeze.py` with `git cat-file -e` checks proving that the
+frozen `SELECTED_REVISION` itself has neither confirmation output path. Keep
+the source scan proving `rebuild_frozen.py` cannot open reference packages.
+Move historical transaction-mechanics tests from the now-spent Derby package
+to `fixtures/confirmation_transaction_v1` with a repository-local temporary
+freeze and lifecycle registry. Update historical lifecycle assertions to
+expect Derby `spent`; never override Derby itself back to confirmation.
 
 - [ ] **Step 2: Run the focused test and verify it fails**
 
@@ -181,6 +194,10 @@ Expected: all tests pass; the diff contains no path below `physics_models/candid
 ```bash
 git add tools/physics_validation/phase3_v4_lifecycle.py \
   tests/physics_validation/test_phase3_v4_lifecycle.py \
+  tests/physics_validation/test_phase3_v3_freeze.py \
+  tests/physics_validation/test_phase3_v2_confirmation.py \
+  tests/physics_validation/test_phase3_v2_source_packages.py \
+  tests/physics_validation/test_validation_run.py \
   tests/physics_validation/validation_data_status.json \
   physics_models/promotion/phase3_integrated_v3_derby_spent_transition.json
 git commit -m "data: spend failed phase 3 v3 Derby confirmation"

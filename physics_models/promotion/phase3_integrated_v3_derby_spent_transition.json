@@ -1,0 +1,19 @@
+{
+  "dataset_id": "derby_fuller_1999",
+  "dataset_version": "1.0.0",
+  "evidence_sha256": {
+    "failure": "07a3d014cdcfa2fb35ea4398769ca7848f6e0e30844735fe29e50538fee25c7b",
+    "freeze": "cc7cd5f2b583fc13550de1677fc5ea13c5460786794ef0bc7ff1364b834c9c08",
+    "ledger": "27239d6285f0cbf26593d5b9f49733882c4e627e0c675db00428a0b37cea3aa3",
+    "package_manifest": "3e8c979e48e207317384dc63e47d4d5f28bae9b21cc8486183cd35ea9fe2b3d1",
+    "receipt": "c001f4693ab24cb50ef84b1434ab693355499b374cd388480064764a5b1d9ce7",
+    "rejection": "0c8a179288fe712f292f1f61047be2ba4ac8f2f8b3f3bc828c55b5eb247062b5"
+  },
+  "failure_category": "SCENARIO_CONTRACT_INTEGRATION_FAILURE",
+  "failure_message": "invalid_scenario: expectations must be a nonempty array",
+  "from": "confirmation",
+  "reason": "the sole Derby transaction is immutable and cannot be reused",
+  "rejected_candidate": "phase3_integrated_v3",
+  "schema_version": 1,
+  "to": "spent"
+}
