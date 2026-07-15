@@ -129,7 +129,12 @@ void requireExactKeys(const json::Value& value,
 
 PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion)
 {
-    if (scenarioVersion >= 7) {
+    if (scenarioVersion >= 12) {
+        requireExactKeys(value,
+            {"id", "formula_version", "ball", "surface", "cue", "cushion",
+             "table_boundary", "solver", "frozen_cue_contact"},
+            "physics_profile");
+    } else if (scenarioVersion >= 7) {
         requireExactKeys(value,
             {"id", "formula_version", "ball", "surface", "cue", "cushion",
              "table_boundary", "solver"}, "physics_profile");
@@ -143,6 +148,8 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
     const json::Value& cue = required(value, "cue");
     const json::Value& cushion = required(value, "cushion");
     const json::Value& solver = required(value, "solver");
+    const json::Value* frozenCueContact = scenarioVersion >= 12 ?
+        &required(value, "frozen_cue_contact") : nullptr;
     const json::Value* tableBoundary = scenarioVersion >= 7 ?
         &required(value, "table_boundary") : nullptr;
     if (scenarioVersion >= 5) {
@@ -211,6 +218,19 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
              "jaw_radius_cm", "throat_depth_cm", "capture_depth_cm",
              "geometry_id", "material"}, "physics_profile.table_boundary");
     }
+    if (frozenCueContact != nullptr) {
+        requireExactKeys(*frozenCueContact,
+            {"enabled", "normal_stiffness_n_per_m32",
+             "normal_dissipation_s_per_m", "tangential_stiffness_n_per_m",
+             "tangential_damping_ns_per_m", "microstep_seconds",
+             "maximum_contact_seconds", "release_compression_m",
+             "maximum_compression_m", "maximum_normal_force_n"},
+            "physics_profile.frozen_cue_contact");
+        if (!required(*frozenCueContact, "enabled").isBool()) {
+            throw std::runtime_error(
+                "physics_profile.frozen_cue_contact.enabled must be boolean");
+        }
+    }
 
     PhysicsProfile profile;
     profile.id = requiredString(value, "id");
@@ -252,6 +272,28 @@ PhysicsProfile parsePhysicsProfile(const json::Value& value, int scenarioVersion
             requiredNumber(cue, "maximum_reliable_offset_radius"));
         profile.cue.cueSpeedPerPowerUnitCmS = static_cast<float>(
             requiredNumber(cue, "cue_speed_per_power_unit_cm_s"));
+    }
+    if (frozenCueContact != nullptr) {
+        profile.frozenCueContact.enabled =
+            required(*frozenCueContact, "enabled").asBool();
+        profile.frozenCueContact.normalStiffnessNPerM32 = requiredNumber(
+            *frozenCueContact, "normal_stiffness_n_per_m32");
+        profile.frozenCueContact.normalDissipationSPerM = requiredNumber(
+            *frozenCueContact, "normal_dissipation_s_per_m");
+        profile.frozenCueContact.tangentialStiffnessNPerM = requiredNumber(
+            *frozenCueContact, "tangential_stiffness_n_per_m");
+        profile.frozenCueContact.tangentialDampingNsPerM = requiredNumber(
+            *frozenCueContact, "tangential_damping_ns_per_m");
+        profile.frozenCueContact.microstepSeconds = requiredNumber(
+            *frozenCueContact, "microstep_seconds");
+        profile.frozenCueContact.maximumContactSeconds = requiredNumber(
+            *frozenCueContact, "maximum_contact_seconds");
+        profile.frozenCueContact.releaseCompressionM = requiredNumber(
+            *frozenCueContact, "release_compression_m");
+        profile.frozenCueContact.maximumCompressionM = requiredNumber(
+            *frozenCueContact, "maximum_compression_m");
+        profile.frozenCueContact.maximumNormalForceN = requiredNumber(
+            *frozenCueContact, "maximum_normal_force_n");
     }
     profile.cushion.normalRestitution = static_cast<float>(
         requiredNumber(cushion, "normal_restitution"));
@@ -338,7 +380,7 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
         if (version < 1 || version > kPhysicsScenarioVersion) {
             result.errorCode = "unsupported_scenario_version";
             result.errorMessage =
-                "only physics scenario versions 1 through 11 are supported";
+                "only physics scenario versions 1 through 12 are supported";
             return result;
         }
 

@@ -109,6 +109,31 @@ int main()
         "miscue reliability boundary");
     expect(close(profile.cue.cueSpeedPerPowerUnitCmS, 1.34f),
         "versioned shot power mapping");
+
+    billiardgl::PhysicsProfile coupled = profile;
+    coupled.frozenCueContact.enabled = true;
+    coupled.frozenCueContact.normalStiffnessNPerM32 = 1.25e7;
+    coupled.frozenCueContact.normalDissipationSPerM = 0.05;
+    coupled.frozenCueContact.tangentialStiffnessNPerM = 4.0e5;
+    coupled.frozenCueContact.tangentialDampingNsPerM = 25.0;
+    coupled.frozenCueContact.microstepSeconds = 0.00001;
+    coupled.frozenCueContact.maximumContactSeconds = 0.006;
+    coupled.frozenCueContact.releaseCompressionM = 1e-8;
+    coupled.frozenCueContact.maximumCompressionM = 0.004;
+    coupled.frozenCueContact.maximumNormalForceN = 10000.0;
+    expect(billiardgl::validatePhysicsProfile(coupled).ok,
+        "finite ordered frozen-contact controls are valid");
+    const std::string coupledText =
+        billiardgl::canonicalPhysicsProfileText(coupled);
+    expect(coupledText.find(
+        "frozen_cue_contact.normal_stiffness_n_per_m32=12500000") !=
+        std::string::npos,
+        "canonical profile binds normal stiffness with units");
+    coupled.frozenCueContact.microstepSeconds =
+        coupled.frozenCueContact.maximumContactSeconds;
+    expect(!billiardgl::validatePhysicsProfile(coupled).ok,
+        "microstep must be smaller than maximum contact duration");
+
     expect(billiardgl::canonicalPhysicsProfileText(profile) ==
         billiardgl::canonicalPhysicsProfileText(profile),
         "deterministic serialization");

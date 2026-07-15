@@ -111,6 +111,27 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         profile.cue.cueSpeedPerPowerUnitCmS <= 0.0f) {
         return invalid("cue speed per power unit must be finite and positive");
     }
+    const FrozenCueContactProperties& frozen = profile.frozenCueContact;
+    if (!std::isfinite(frozen.normalStiffnessNPerM32) ||
+        frozen.normalStiffnessNPerM32 <= 0.0 ||
+        !std::isfinite(frozen.normalDissipationSPerM) ||
+        frozen.normalDissipationSPerM < 0.0 ||
+        !std::isfinite(frozen.tangentialStiffnessNPerM) ||
+        frozen.tangentialStiffnessNPerM <= 0.0 ||
+        !std::isfinite(frozen.tangentialDampingNsPerM) ||
+        frozen.tangentialDampingNsPerM < 0.0 ||
+        !std::isfinite(frozen.microstepSeconds) ||
+        frozen.microstepSeconds <= 0.0 ||
+        !std::isfinite(frozen.maximumContactSeconds) ||
+        frozen.maximumContactSeconds <= frozen.microstepSeconds ||
+        !std::isfinite(frozen.releaseCompressionM) ||
+        frozen.releaseCompressionM < 0.0 ||
+        !std::isfinite(frozen.maximumCompressionM) ||
+        frozen.maximumCompressionM <= frozen.releaseCompressionM ||
+        !std::isfinite(frozen.maximumNormalForceN) ||
+        frozen.maximumNormalForceN <= 0.0) {
+        return invalid("frozen cue contact controls are invalid or inconsistent");
+    }
     if (!std::isfinite(profile.cushion.normalRestitution) ||
         profile.cushion.normalRestitution < 0.0f ||
         profile.cushion.normalRestitution > 1.0f) {
@@ -268,6 +289,28 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << "solver.residual_tolerance_cm_s=" << profile.solver.residualToleranceCmS << '\n'
         << "solver.passive_energy_tolerance_j="
         << profile.solver.passiveEnergyToleranceJ << '\n';
+    if (profile.frozenCueContact.enabled) {
+        output << std::setprecision(std::numeric_limits<double>::max_digits10)
+            << "frozen_cue_contact.enabled=1\n"
+            << "frozen_cue_contact.normal_stiffness_n_per_m32="
+            << profile.frozenCueContact.normalStiffnessNPerM32 << '\n'
+            << "frozen_cue_contact.normal_dissipation_s_per_m="
+            << profile.frozenCueContact.normalDissipationSPerM << '\n'
+            << "frozen_cue_contact.tangential_stiffness_n_per_m="
+            << profile.frozenCueContact.tangentialStiffnessNPerM << '\n'
+            << "frozen_cue_contact.tangential_damping_ns_per_m="
+            << profile.frozenCueContact.tangentialDampingNsPerM << '\n'
+            << "frozen_cue_contact.microstep_seconds="
+            << profile.frozenCueContact.microstepSeconds << '\n'
+            << "frozen_cue_contact.maximum_contact_seconds="
+            << profile.frozenCueContact.maximumContactSeconds << '\n'
+            << "frozen_cue_contact.release_compression_m="
+            << profile.frozenCueContact.releaseCompressionM << '\n'
+            << "frozen_cue_contact.maximum_compression_m="
+            << profile.frozenCueContact.maximumCompressionM << '\n'
+            << "frozen_cue_contact.maximum_normal_force_n="
+            << profile.frozenCueContact.maximumNormalForceN << '\n';
+    }
     return output.str();
 }
 

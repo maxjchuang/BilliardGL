@@ -186,6 +186,27 @@ billiardgl::json::Value validV11Document()
     return value;
 }
 
+billiardgl::json::Value validV12Document()
+{
+    billiardgl::json::Value value = validV11Document();
+    value["schema_version"] = billiardgl::json::Value(12);
+    billiardgl::json::Value contact = billiardgl::json::Value::object();
+    contact["enabled"] = billiardgl::json::Value(true);
+    contact["normal_stiffness_n_per_m32"] =
+        billiardgl::json::Value(12500000.0);
+    contact["normal_dissipation_s_per_m"] = billiardgl::json::Value(0.05);
+    contact["tangential_stiffness_n_per_m"] =
+        billiardgl::json::Value(400000.0);
+    contact["tangential_damping_ns_per_m"] = billiardgl::json::Value(25.0);
+    contact["microstep_seconds"] = billiardgl::json::Value(0.00001);
+    contact["maximum_contact_seconds"] = billiardgl::json::Value(0.006);
+    contact["release_compression_m"] = billiardgl::json::Value(0.00000001);
+    contact["maximum_compression_m"] = billiardgl::json::Value(0.004);
+    contact["maximum_normal_force_n"] = billiardgl::json::Value(10000.0);
+    value["physics_profile"]["frozen_cue_contact"] = contact;
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -463,8 +484,24 @@ int main()
     expect(v11.ok && std::fabs(
         v11.scenario.physicsProfile.cushion.restitutionSlopePerMps - 0.056f) < 1e-6f,
         "v11 should parse the bounded affine cushion law");
+    const billiardgl::PhysicsScenarioResult v12 =
+        billiardgl::parsePhysicsScenario(validV12Document());
+    expect(v12.ok && v12.scenario.physicsProfile.frozenCueContact.enabled &&
+        std::fabs(v12.scenario.physicsProfile.frozenCueContact.
+            normalStiffnessNPerM32 - 12500000.0) < 0.001,
+        "v12 should parse the complete frozen cue-contact contract");
+    billiardgl::json::Value missingV12Field = validV12Document();
+    missingV12Field["physics_profile"]["frozen_cue_contact"].
+        asObject().erase("maximum_normal_force_n");
+    expect(!billiardgl::parsePhysicsScenario(missingV12Field).ok,
+        "v12 should reject a missing frozen cue-contact field");
+    billiardgl::json::Value extraV12Field = validV12Document();
+    extraV12Field["physics_profile"]["frozen_cue_contact"]["unknown"] =
+        billiardgl::json::Value(1.0);
+    expect(!billiardgl::parsePhysicsScenario(extraV12Field).ok,
+        "v12 should reject an unknown frozen cue-contact field");
     billiardgl::json::Value unknownVersion = validDocument();
-    unknownVersion["schema_version"] = billiardgl::json::Value(12);
+    unknownVersion["schema_version"] = billiardgl::json::Value(13);
     const billiardgl::PhysicsScenarioResult versionResult =
         billiardgl::parsePhysicsScenario(unknownVersion);
     expect(!versionResult.ok && versionResult.errorCode == "unsupported_scenario_version",

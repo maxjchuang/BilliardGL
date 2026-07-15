@@ -34,6 +34,19 @@ struct CueProperties {
     float cueSpeedPerPowerUnitCmS = 1.34f;
 };
 
+struct FrozenCueContactProperties {
+    bool enabled = false;
+    double normalStiffnessNPerM32 = 1.25e7;
+    double normalDissipationSPerM = 0.05;
+    double tangentialStiffnessNPerM = 4.0e5;
+    double tangentialDampingNsPerM = 25.0;
+    double microstepSeconds = 0.00001;
+    double maximumContactSeconds = 0.006;
+    double releaseCompressionM = 1e-8;
+    double maximumCompressionM = 0.004;
+    double maximumNormalForceN = 10000.0;
+};
+
 struct CushionProperties {
     float normalRestitution = 1.0f;
     float restitutionIntercept = 1.0f;
@@ -79,6 +92,7 @@ struct PhysicsProfile {
     BallProperties ball;
     SurfaceProperties surface;
     CueProperties cue;
+    FrozenCueContactProperties frozenCueContact;
     CushionProperties cushion;
     TableBoundaryProperties tableBoundary;
     SolverSettings solver;
