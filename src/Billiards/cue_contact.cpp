@@ -68,6 +68,7 @@ const char* cueContactRegimeName(CueContactRegime regime)
     case CueContactRegime::Stick: return "stick";
     case CueContactRegime::Slip: return "slip";
     case CueContactRegime::Miscue: return "miscue";
+    case CueContactRegime::Released: return "released";
     case CueContactRegime::Unsupported: return "unsupported";
     }
     return "unsupported";
