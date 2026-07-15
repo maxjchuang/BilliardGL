@@ -35,6 +35,47 @@ def _tree_digest(directory):
     return hashlib.sha256("".join(entries).encode("utf-8")).hexdigest()
 
 
+def validate_contract_proof(proof, executable_sha256):
+    try:
+        if isinstance(proof, dict):
+            document = proof
+        elif isinstance(proof, bytes):
+            document = json.loads(proof)
+        else:
+            document = json.loads(Path(proof).read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError) as error:
+        return [f"confirmation contract proof is unreadable: {error}"]
+    failures = []
+    if document.get("schema_version") != 1 or \
+            document.get("dataset_id") != "fixture_confirmation" or \
+            document.get("result") != "PASSED" or \
+            document.get("parse_succeeded") is not True:
+        failures.append("confirmation contract proof result is invalid")
+    if not isinstance(document.get("frames"), int) or \
+            document.get("frames", 0) <= 0:
+        failures.append("confirmation contract proof has no frames")
+    if document.get("executable_sha256") != executable_sha256:
+        failures.append(
+            "confirmation contract proof executable does not match freeze")
+    for field in (
+            "fixture_manifest_sha256", "scenario_sha256",
+            "first_trace_sha256", "second_trace_sha256",
+            "protocol_transcript_sha256"):
+        value = document.get(field)
+        if not isinstance(value, str) or len(value) != 64 or any(
+                character not in "0123456789abcdef" for character in value):
+            failures.append(
+                f"confirmation contract proof {field} is invalid")
+    if document.get("first_trace_sha256") != \
+            document.get("second_trace_sha256"):
+        failures.append("confirmation contract proof traces differ")
+    if document.get("return_code") != 0:
+        failures.append("confirmation contract proof process did not exit cleanly")
+    if document.get("stderr") != "":
+        failures.append("confirmation contract proof stderr is not empty")
+    return failures
+
+
 def _spent_fit_inputs(root):
     result = []
     for relative in (
@@ -45,7 +86,7 @@ def _spent_fit_inputs(root):
     return result
 
 
-def build_readiness(root, freeze, inventory, full_game):
+def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
     root = Path(root).resolve()
     freeze_path = Path(freeze).resolve()
     inventory_path = Path(inventory).resolve()
@@ -140,6 +181,12 @@ def build_readiness(root, freeze, inventory, full_game):
         len(package_state) == 2 and
         all(item.get("ready") for item in package_state.values()))
 
+    if contract_proof is not None:
+        proof_failures = validate_contract_proof(
+            contract_proof, freeze_document.get("executable_sha256"))
+        checks["confirmation_contract_real_path"] = not proof_failures
+        failures.extend(proof_failures)
+
     failures = sorted(set(failures))
     return {
         "candidate_id": candidate_id,
@@ -211,11 +258,12 @@ def main(argv=None):
     parser.add_argument("--freeze", required=True, type=Path)
     parser.add_argument("--inventory", required=True, type=Path)
     parser.add_argument("--full-game", required=True, type=Path)
+    parser.add_argument("--contract-proof", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     arguments = parser.parse_args(argv)
     document = build_readiness(
         arguments.root, arguments.freeze, arguments.inventory,
-        arguments.full_game)
+        arguments.full_game, arguments.contract_proof)
     arguments.output.parent.mkdir(parents=True, exist_ok=True)
     arguments.output.write_text(_canonical(document), encoding="utf-8")
     return 0 if document["status"] == "READY" else 1

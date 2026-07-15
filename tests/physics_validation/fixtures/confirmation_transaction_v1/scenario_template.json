@@ -2,7 +2,18 @@
   "base_scenario": {
     "balls": [],
     "description": "synthetic confirmation transaction fixture",
-    "expectations": [],
+    "expectations": [
+      {
+        "metric": "finite_state",
+        "operator": "eq",
+        "value": true
+      },
+      {
+        "metric": "nonincreasing_translational_energy",
+        "operator": "eq",
+        "value": true
+      }
+    ],
     "schema_version": 6
   },
   "cases": {

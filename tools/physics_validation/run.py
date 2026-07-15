@@ -3,6 +3,7 @@ import hashlib
 import json
 import re
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
 from .analyzer import (
@@ -22,6 +23,14 @@ if str(E2E_ROOT) not in sys.path:
     sys.path.insert(0, str(E2E_ROOT))
 
 from automation_client import AutomationClient
+
+
+@dataclass(frozen=True)
+class ExecutionEvidence:
+    frames: tuple
+    protocol_transcript: tuple
+    stderr: str
+    return_code: int
 
 
 def _read_json(path):
@@ -116,7 +125,7 @@ def _fetch_trace(client):
             raise RuntimeError("trace pagination reported more data without returning a frame")
 
 
-def _execute_once(executable, scenario):
+def _execute_once_with_evidence(executable, scenario):
     with AutomationClient(str(executable), mode="headless") as client:
         if client.ready.get("event") != "ready":
             raise RuntimeError("automation process did not emit ready")
@@ -130,7 +139,13 @@ def _execute_once(executable, scenario):
         if len(frames) != expected_count:
             raise RuntimeError(
                 f"expected {expected_count} trace frames, received {len(frames)}")
-        return frames
+    return ExecutionEvidence(
+        tuple(frames), tuple(client.transcript), client.stderr_text,
+        client.return_code)
+
+
+def _execute_once(executable, scenario):
+    return list(_execute_once_with_evidence(executable, scenario).frames)
 
 
 def _integration_failure(scenario, error):
