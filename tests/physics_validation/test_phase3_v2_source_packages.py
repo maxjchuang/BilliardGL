@@ -20,7 +20,7 @@ EXPECTED_SPENT = {
     "sudo_2002",
 }
 EXPECTED_HOLDOUT_STATUS = {
-    "alciatore_2005_tp_a15": "confirmation",
+    "alciatore_2005_tp_a15": "spent",
     "sudo_2002": "spent",
     "derby_fuller_1999": "spent",
     "han_2005": "confirmation",

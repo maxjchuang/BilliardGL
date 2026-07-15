@@ -1,10 +1,16 @@
+import copy
+import csv
+import hashlib
+import io
 import json
 import math
+from pathlib import Path
 
 from .confirmation_adapters import (
     ConfirmationAdapter,
     ConfirmationEvaluation,
     base_scenario,
+    execute_deterministically,
     register_confirmation_adapter,
     scenario_ball,
 )
@@ -64,6 +70,17 @@ def _first_contact_index(trace):
         for contact in frame.get("contacts", []):
             if contact.get("kind") == "ball_ball":
                 return index, contact
+        cue_contact = frame.get("cue_contact", {})
+        for microstep in cue_contact.get("microsteps", []):
+            for contact in microstep.get("contacts", []):
+                if contact.get("kind") == 0 and contact.get("second_ball", -1) >= 0:
+                    impulse = contact.get("normal_impulse_n_s", 0.0)
+                    return index, {
+                        "kind": "ball_ball",
+                        "normal": contact.get("normal"),
+                        "normal_impulse_ns": impulse,
+                        "velocity_impulse_applied": impulse > 0.0,
+                    }
     return None, None
 
 
@@ -84,10 +101,24 @@ def _incident_speed(trace):
         contact = frame.get("cue_contact")
         if isinstance(contact, dict) and contact.get("applied") is True:
             try:
+                microsteps = contact.get("microsteps", [])
+                coupled_speeds = []
+                for step in microsteps:
+                    cue_ball = next((ball for ball in step.get("balls", [])
+                                     if ball.get("index") == 0), None)
+                    if cue_ball is not None:
+                        coupled_speeds.append(_speed(cue_ball["velocity_cm_s"]))
+                if coupled_speeds and max(coupled_speeds) > 0.0:
+                    return max(coupled_speeds)
                 value = _speed(contact["ball_velocity_after_cm_s"])
             except (KeyError, TypeError, ValueError):
                 return None
-            return value if math.isfinite(value) and value > 0.0 else None
+            if math.isfinite(value) and value > 0.0:
+                return value
+            cue_impact = frame.get("cue_impact", {})
+            fallback = cue_impact.get("cue_speed_cm_s")
+            return (float(fallback) if isinstance(fallback, (int, float))
+                    and math.isfinite(fallback) and fallback > 0.0 else None)
     return None
 
 
@@ -104,9 +135,18 @@ def _stable_velocity(trace, ball_index, start_index=0):
         except (KeyError, TypeError, ValueError):
             candidates.append(None)
             continue
-        candidates.append(velocity if _finite(velocity) and speed > 1e-6 else None)
+        candidates.append(velocity if _finite(velocity) and math.isfinite(speed)
+                          else None)
     for first, second in zip(candidates, candidates[1:]):
         if first is None or second is None:
+            continue
+        first_speed = _speed(first)
+        second_speed = _speed(second)
+        if first_speed <= 1e-6 and second_speed <= 1e-6:
+            if max(abs(a - b) for a, b in zip(first, second)) <= 1e-6:
+                return second
+            continue
+        if first_speed <= 1e-6 or second_speed <= 1e-6:
             continue
         first_angle = math.degrees(math.atan2(first[2], first[0]))
         second_angle = math.degrees(math.atan2(second[2], second[0]))
@@ -161,6 +201,8 @@ def build_alciatore_scenarios(profile, package):
             evidence_source=DATASET_ID,
         )
         scenario["initial_contact_epsilon_cm"] = INITIAL_CONTACT_EPSILON_CM
+        if "frozen_cue_contact" in profile:
+            scenario["schema_version"] = 12
         scenario["cue_impact"] = {
             "cue_ball_index": 0,
             "cue_speed_cm_s": CUE_SPEED_CM_S,
@@ -186,9 +228,9 @@ def evaluate_alciatore(traces, profile, package):
     rows = []
     diagnostics = []
     interior_errors = []
-    head_on_lateral_ratio = None
-    head_on_direction_error = None
-    grazing_object_speed_ratio = None
+    head_on_cue_residual_speed_ratio = None
+    head_on_cue_lateral_speed_ratio = None
+    grazing_target_speed_ratio = None
 
     for point_id, case in sorted(template["cases"].items()):
         point = points_by_id[point_id]
@@ -210,42 +252,45 @@ def evaluate_alciatore(traces, profile, package):
         cue_velocity = (_stable_velocity(trace, 0, start)
                         if case_finite else None)
         observed = None
-        if cue_velocity is not None:
+        error = None
+        if (case["evaluation_role"] == "interior_angle"
+                and cue_velocity is not None
+                and _speed(cue_velocity) > 1e-6):
             observed = math.degrees(math.atan2(cue_velocity[2], cue_velocity[0]))
             if observed < 0.0:
                 observed += 360.0
-        error = observed - point.expected if observed is not None else None
+            error = observed - point.expected
         case_passed = (case_finite and case_energy and case_contact
-                       and incident is not None and error is not None)
+                       and incident is not None)
         if case["evaluation_role"] == "interior_angle":
             if error is not None:
                 interior_errors.append(error)
-            case_passed = case_passed and abs(error) <= template[
-                "interior_absolute_error_degrees_maximum"]
+            case_passed = case_passed and error is not None and abs(error) <= \
+                template["interior_absolute_error_degrees_maximum"]
         elif phi == 0:
             if cue_velocity is not None and incident:
-                head_on_lateral_ratio = abs(cue_velocity[2]) / incident
-                head_on_direction_error = abs(error)
-            case_passed = case_passed and head_on_lateral_ratio is not None \
-                and head_on_lateral_ratio <= template[
-                    "head_on_lateral_to_incident_speed_ratio_maximum"] \
-                and head_on_direction_error <= template[
-                    "head_on_direction_error_degrees_maximum"]
+                head_on_cue_residual_speed_ratio = (
+                    _speed(cue_velocity) / incident)
+                head_on_cue_lateral_speed_ratio = (
+                    abs(cue_velocity[2]) / incident)
+            endpoint_limit = template[
+                "head_on_lateral_to_incident_speed_ratio_maximum"]
+            case_passed = case_passed \
+                and head_on_cue_residual_speed_ratio is not None \
+                and head_on_cue_lateral_speed_ratio is not None \
+                and head_on_cue_lateral_speed_ratio <= endpoint_limit
         else:
-            object_ball = _ball(trace[0], 1) if case_finite else None
-            if object_ball is not None and incident:
-                try:
-                    grazing_object_speed_ratio = (
-                        _speed(object_ball["velocity_cm_s"]) / incident)
-                except (KeyError, TypeError, ValueError):
-                    grazing_object_speed_ratio = None
-            case_passed = case_passed and grazing_object_speed_ratio is not None \
-                and grazing_object_speed_ratio <= template[
+            target_velocity = (_stable_velocity(trace, 1, start)
+                               if case_finite else None)
+            if target_velocity is not None and incident:
+                grazing_target_speed_ratio = _speed(target_velocity) / incident
+            case_passed = case_passed and grazing_target_speed_ratio is not None \
+                and grazing_target_speed_ratio <= template[
                     "grazing_target_to_incident_speed_ratio_maximum"]
         rows.append(_row(
             point, observed, "PASSED" if case_passed else "FAILED",
-            ("earliest two-frame-stable separating cue-ball direction; "
-             "endpoint speed ratios use post-step ball velocities"),
+            ("interior: earliest two-frame-stable separating cue-ball direction; "
+             "endpoints: speed ratios only, undefined stopped-ball angle is null"),
         ))
         diagnostics.append({
             "contact_required": contact_required,
@@ -266,27 +311,23 @@ def evaluate_alciatore(traces, profile, package):
     maximum_limit = template["interior_absolute_error_degrees_maximum"]
     lateral_limit = template[
         "head_on_lateral_to_incident_speed_ratio_maximum"]
-    direction_limit = template["head_on_direction_error_degrees_maximum"]
     grazing_limit = template[
         "grazing_target_to_incident_speed_ratio_maximum"]
     summary = {
         "contact_complete_passed": contact_complete,
         "finite_state_passed": finite_state,
-        "grazing_object_speed_ratio": grazing_object_speed_ratio,
-        "grazing_object_speed_ratio_maximum": grazing_limit,
-        "grazing_object_speed_ratio_passed": (
-            grazing_object_speed_ratio is not None
-            and grazing_object_speed_ratio <= grazing_limit),
-        "head_on_direction_error_degrees": head_on_direction_error,
-        "head_on_direction_error_degrees_maximum": direction_limit,
-        "head_on_direction_passed": (
-            head_on_direction_error is not None
-            and head_on_direction_error <= direction_limit),
-        "head_on_lateral_ratio": head_on_lateral_ratio,
-        "head_on_lateral_ratio_maximum": lateral_limit,
-        "head_on_lateral_ratio_passed": (
-            head_on_lateral_ratio is not None
-            and head_on_lateral_ratio <= lateral_limit),
+        "grazing_target_speed_ratio": grazing_target_speed_ratio,
+        "grazing_target_speed_ratio_maximum": grazing_limit,
+        "grazing_target_speed_ratio_passed": (
+            grazing_target_speed_ratio is not None
+            and grazing_target_speed_ratio <= grazing_limit),
+        "head_on_cue_lateral_speed_ratio": head_on_cue_lateral_speed_ratio,
+        "head_on_cue_lateral_speed_ratio_maximum": lateral_limit,
+        "head_on_cue_lateral_speed_ratio_passed": (
+            head_on_cue_lateral_speed_ratio is not None
+            and head_on_cue_lateral_speed_ratio <= lateral_limit),
+        "head_on_cue_residual_speed_ratio":
+            head_on_cue_residual_speed_ratio,
         "interior_maximum_absolute_error_degrees": maximum,
         "interior_maximum_absolute_error_degrees_maximum": maximum_limit,
         "interior_maximum_passed": (
@@ -301,3 +342,178 @@ def evaluate_alciatore(traces, profile, package):
 
 register_confirmation_adapter(ConfirmationAdapter(
     DATASET_ID, build_alciatore_scenarios, evaluate_alciatore))
+
+
+def phase3_v5_regression_profile(v4_document, fit_document):
+    profile = copy.deepcopy(v4_document["runtime_profile"])
+    winner = fit_document["winner"]
+    fixed = fit_document["fixed"]
+    profile["id"] = "phase3_integrated_v5"
+    profile["formula_version"] = "phase3_integrated_v5"
+    profile["frozen_cue_contact"] = {
+        "enabled": True,
+        "normal_stiffness_n_per_m32": winner["stiffness_n_per_m32"],
+        "normal_dissipation_s_per_m": winner["dissipation_s_per_m"],
+        "tangential_stiffness_n_per_m":
+            fixed["tangential_stiffness_n_per_m"],
+        "tangential_damping_ns_per_m":
+            fixed["tangential_damping_n_s_per_m"],
+        "microstep_seconds": 0.0000025,
+        "maximum_contact_seconds": 0.006,
+        "release_compression_m": 0.00000001,
+        "maximum_compression_m": 0.004,
+        "maximum_normal_force_n": 10000.0,
+    }
+    return profile
+
+
+def _canonical_bytes(document):
+    return (json.dumps(document, ensure_ascii=False, indent=2,
+                       sort_keys=True, allow_nan=False) + "\n").encode("utf-8")
+
+
+def _csv_bytes(header, rows):
+    stream = io.StringIO(newline="")
+    writer = csv.writer(stream, lineterminator="\n")
+    writer.writerow(header)
+    writer.writerows(rows)
+    return stream.getvalue().encode("utf-8")
+
+
+def _evaluation_passed(evaluation):
+    return (all(row["status"] == "PASSED" for row in evaluation.rows)
+            and all(value for key, value in evaluation.summary_metrics.items()
+                    if key.endswith("_passed")))
+
+
+def build_alciatore_v5_artifacts(executable, profile, package,
+                                  execute_once=None):
+    if execute_once is None:
+        from .run import _execute_once
+        execute_once = _execute_once
+
+    scenarios = build_alciatore_scenarios(profile, package)
+    traces = execute_deterministically(executable, scenarios, execute_once)
+    evaluation = evaluate_alciatore(traces, profile, package)
+    template = _template(package)
+    diagnostics = {row["point_id"]: row for row in evaluation.diagnostics}
+
+    input_header = (
+        "point_id", "cut_angle_phi_degrees", "cue_speed_cm_s",
+        "normal_stiffness_n_per_m32", "normal_dissipation_s_per_m",
+        "microstep_seconds", "partition")
+    settings = profile["frozen_cue_contact"]
+    input_rows = []
+    for point_id, case in sorted(template["cases"].items()):
+        input_rows.append((
+            point_id, case["cut_angle_phi_degrees"], CUE_SPEED_CM_S,
+            settings["normal_stiffness_n_per_m32"],
+            settings["normal_dissipation_s_per_m"],
+            settings["microstep_seconds"], "spent_regression"))
+
+    residual_header = (
+        "point_id", "evaluation_role", "expected_angle_degrees",
+        "observed_angle_degrees", "signed_error_degrees",
+        "normalized_error", "head_on_cue_residual_speed_ratio",
+        "head_on_cue_lateral_speed_ratio", "grazing_target_speed_ratio",
+        "status")
+    residual_rows = []
+    for row in evaluation.rows:
+        point_id = row["point_id"]
+        role = template["cases"][point_id]["evaluation_role"]
+        residual_rows.append((
+            point_id, role, row["expected"], row["observed"],
+            diagnostics[point_id]["signed_error_degrees"],
+            row["normalized_error"],
+            (evaluation.summary_metrics["head_on_cue_residual_speed_ratio"]
+             if point_id == "alciatore_cut_000" else ""),
+            (evaluation.summary_metrics["head_on_cue_lateral_speed_ratio"]
+             if point_id == "alciatore_cut_000" else ""),
+            (evaluation.summary_metrics["grazing_target_speed_ratio"]
+             if point_id == "alciatore_cut_090" else ""),
+            row["status"],
+        ))
+
+    sensitivity_header = (
+        "parameter", "scale", "normal_stiffness_n_per_m32",
+        "normal_dissipation_s_per_m", "interior_rmse_degrees",
+        "interior_maximum_absolute_error_degrees",
+        "head_on_cue_residual_speed_ratio",
+        "head_on_cue_lateral_speed_ratio", "grazing_target_speed_ratio",
+        "passed")
+    sensitivity_rows = []
+    for parameter in ("normal_stiffness_n_per_m32",
+                      "normal_dissipation_s_per_m"):
+        for scale in (0.5, 1.0, 2.0):
+            varied = copy.deepcopy(profile)
+            varied["id"] = f"phase3_integrated_v5_sensitivity_{parameter}_{scale:g}"
+            varied["frozen_cue_contact"][parameter] *= scale
+            varied_scenarios = build_alciatore_scenarios(varied, package)
+            varied_traces = execute_deterministically(
+                executable, varied_scenarios, execute_once)
+            varied_evaluation = evaluate_alciatore(
+                varied_traces, varied, package)
+            summary = varied_evaluation.summary_metrics
+            sensitivity_rows.append((
+                parameter, scale,
+                varied["frozen_cue_contact"]["normal_stiffness_n_per_m32"],
+                varied["frozen_cue_contact"]["normal_dissipation_s_per_m"],
+                summary["interior_rmse_degrees"],
+                summary["interior_maximum_absolute_error_degrees"],
+                summary["head_on_cue_residual_speed_ratio"],
+                summary["head_on_cue_lateral_speed_ratio"],
+                summary["grazing_target_speed_ratio"],
+                _evaluation_passed(varied_evaluation),
+            ))
+
+    trace_hashes = {
+        point_id: "sha256:" + hashlib.sha256(
+            _canonical_bytes(trace)).hexdigest()
+        for point_id, trace in sorted(traces.items())
+    }
+    report = {
+        "dataset_id": DATASET_ID,
+        "dataset_version": "1.0.0",
+        "deterministic_double_execution": True,
+        "evaluation_rows": list(evaluation.rows),
+        "fit_role": "spent_regression",
+        "profile_id": profile["id"],
+        "schema_version": 1,
+        "summary_metrics": evaluation.summary_metrics,
+        "trace_sha256": trace_hashes,
+    }
+    return {
+        "alciatore_frozen_contact_v5_inputs.csv":
+            _csv_bytes(input_header, input_rows),
+        "alciatore_frozen_contact_v5_residuals.csv":
+            _csv_bytes(residual_header, residual_rows),
+        "alciatore_frozen_contact_v5_sensitivity.csv":
+            _csv_bytes(sensitivity_header, sensitivity_rows),
+        "alciatore_frozen_contact_v5_report.json": _canonical_bytes(report),
+    }
+
+
+def main(argv=None):
+    import argparse
+    from .reference_package import load_reference_package
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--executable", type=Path, required=True)
+    parser.add_argument("--v4-profile", type=Path, required=True)
+    parser.add_argument("--fit", type=Path, required=True)
+    parser.add_argument("--package", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    arguments = parser.parse_args(argv)
+    profile = phase3_v5_regression_profile(
+        json.loads(arguments.v4_profile.read_text(encoding="utf-8")),
+        json.loads(arguments.fit.read_text(encoding="utf-8")))
+    package = load_reference_package(arguments.package)
+    artifacts = build_alciatore_v5_artifacts(
+        arguments.executable, profile, package)
+    arguments.output.mkdir(parents=True, exist_ok=True)
+    for name, data in artifacts.items():
+        (arguments.output / name).write_bytes(data)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -57,12 +57,12 @@ class Alciatore2005ExtractionTests(unittest.TestCase):
         self.assertNotIn("target_ball_angle",
                          (PACKAGE / "normalized.csv").read_text(encoding="utf-8"))
 
-    def test_package_is_confirmation_only(self):
+    def test_package_is_spent_after_v5_regression(self):
         entry = load_data_lifecycle(STATUS).entry(
             "alciatore_2005_tp_a15", "1.0.0")
         self.assertEqual(
             (entry.calibration_status, entry.holdout_status),
-            ("confirmation", "confirmation"),
+            ("spent", "spent"),
         )
         package = load_reference_package(PACKAGE)
         self.assertFalse(package.manifest["evidence"]["candidate_selection_input"])

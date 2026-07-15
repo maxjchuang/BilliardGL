@@ -310,7 +310,7 @@ class ValidationRunTests(unittest.TestCase):
         self.assertEqual(
             registry.entry(
                 "alciatore_2005_tp_a15", "1.0.0").holdout_status,
-            "confirmation")
+            "spent")
         self.assertEqual(
             registry.entry("sudo_2002", "1.0.0").holdout_status,
             "spent")
