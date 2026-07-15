@@ -163,20 +163,21 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             ROOT, FREEZE, self.package, self.ledger)
         self.assertIn("confirmation ledger is invalid", failures)
         self.ledger.unlink()
-        with self.assertRaisesRegex(ConfirmationAccessError,
-                                    "cannot provide its own receipt"):
-            consume_confirmation(
-                FREEZE, self.package, self.output, self.ledger,
-                lambda: {
-                    "result": "PASSED_OR_ACCOUNTED",
-                    "files": {"validation_receipt.json": b"{}\n"},
-                },
-                repository_root=ROOT,
-            )
-        self.assertFalse(self.output.exists())
+        receipt = consume_confirmation(
+            FREEZE, self.package, self.output, self.ledger,
+            lambda: {
+                "result": "PASSED_OR_ACCOUNTED",
+                "files": {"validation_receipt.json": b"{}\n"},
+            },
+            repository_root=ROOT,
+        )
+        self.assertEqual(receipt["result"], "FAILED")
+        self.assertEqual(
+            receipt["failure_code"], "FAILED_EVALUATOR_EXCEPTION")
+        self.assertTrue(self.output.exists())
         ledger = json.loads(self.ledger.read_text(encoding="utf-8"))
         self.assertEqual(ledger["attempts"][0]["state"], "STARTED")
-        self.assertEqual(ledger["records"], [])
+        self.assertEqual(ledger["records"], [receipt])
         self.assertIn("confirmation partition is already consumed",
                       validate_confirmation_access(
                           ROOT, FREEZE, self.package, self.ledger))

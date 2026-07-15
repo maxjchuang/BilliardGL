@@ -275,7 +275,9 @@ def build_confirmation_result(executable, freeze_path, package_path,
     profile_document = json.loads(
         (root / freeze["profile"]["path"]).read_text(encoding="utf-8"))
     profile = profile_document["runtime_profile"]
-    package = load_reference_package(package_path)
+    package = (package_path if hasattr(package_path, "manifest")
+               and hasattr(package_path, "files")
+               else load_reference_package(package_path))
     dataset_id = package.manifest["dataset_id"]
     points = read_reference_points(package.files["normalized"], dataset_id)
     with package.files["scalars"].open(encoding="utf-8", newline="") as stream:
@@ -304,7 +306,7 @@ def build_confirmation_result(executable, freeze_path, package_path,
             "dataset_id": dataset_id,
             "executable_sha256": freeze["executable_sha256"],
             "freeze_sha256": _sha256(freeze_path),
-            "package_manifest_sha256": _sha256(Path(package_path) / "manifest.json"),
+            "package_manifest_sha256": _sha256(package.root / "manifest.json"),
             "scenario_id": scenario["id"],
             "source_revision": freeze["source_revision"],
         }).encode("utf-8")

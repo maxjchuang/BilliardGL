@@ -1,0 +1,2 @@
+dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,measurement_uncertainty,digitization_uncertainty,conversion_uncertainty,coverage_factor,engineering_absolute_tolerance,engineering_relative_tolerance,source_locator,pool_applicability
+fixture_confirmation,fixture_series,fixture_group,fixture_case,fixture_point,HOLDOUT,stopping_distance_cm,1,cm,0.1,0,0,2,0.2,0,synthetic:fixture,NOT_APPLICABLE

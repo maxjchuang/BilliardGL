@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .data_lifecycle import load_data_lifecycle
 from .reference_package import load_reference_package
+from .confirmation_transaction import validate_confirmation_access_from_freeze
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -66,6 +67,18 @@ def validate_candidate_holdout_access(root, freeze_path, package_path=None):
 
 def validate_confirmation_access(root, freeze_path, package_path, ledger_path,
                                  lifecycle_path=DEFAULT_LIFECYCLE):
+    return validate_confirmation_access_from_freeze(
+        root,
+        freeze_path,
+        Path(package_path).name,
+        ledger_path,
+        lifecycle_path,
+    )
+
+
+def _validate_confirmation_access_v2_legacy(
+        root, freeze_path, package_path, ledger_path,
+        lifecycle_path=DEFAULT_LIFECYCLE):
     root = Path(root).resolve()
     freeze_path = Path(freeze_path).resolve()
     package_path = Path(package_path).resolve()
@@ -177,11 +190,18 @@ def main(argv=None):
     parser = argparse.ArgumentParser(
         description="Check one-time Phase 3 confirmation access")
     parser.add_argument("--freeze", required=True, type=Path)
-    parser.add_argument("--package", required=True, type=Path)
+    package = parser.add_mutually_exclusive_group(required=True)
+    package.add_argument("--package", type=Path)
+    package.add_argument("--package-key")
     parser.add_argument("--ledger", required=True, type=Path)
     arguments = parser.parse_args(argv)
-    failures = validate_confirmation_access(
-        Path.cwd(), arguments.freeze, arguments.package, arguments.ledger)
+    if arguments.package_key:
+        failures = validate_confirmation_access_from_freeze(
+            Path.cwd(), arguments.freeze, arguments.package_key,
+            arguments.ledger)
+    else:
+        failures = validate_confirmation_access(
+            Path.cwd(), arguments.freeze, arguments.package, arguments.ledger)
     if failures:
         for failure in failures:
             print(failure)

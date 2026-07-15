@@ -12,6 +12,10 @@ from .model_candidate import load_candidate_freeze, sha256_file
 from .partition_run import case_ids_for_partition, load_reference_inputs
 from .reference_run import _run_loaded_reference_validation
 from .confirmation_run import build_confirmation_result
+from .confirmation_transaction import (
+    ConfirmationAccessError,
+    consume_confirmation as consume_confirmation_transaction,
+)
 
 
 DEFAULT_LIFECYCLE_PATH = (
@@ -27,10 +31,6 @@ def _canonical(document):
         sort_keys=True,
         allow_nan=False,
     ) + "\n"
-
-
-class ConfirmationAccessError(RuntimeError):
-    pass
 
 
 def _safe_output_path(root, value):
@@ -177,6 +177,20 @@ def append_consumption_record_exclusive(ledger_path, receipt):
 
 def consume_confirmation(freeze_path, package_path, output_path, ledger_path,
                          runner, repository_root=None):
+    return consume_confirmation_transaction(
+        freeze_path,
+        Path(package_path).name,
+        output_path,
+        ledger_path,
+        lambda package: runner(),
+        repository_root=repository_root,
+        lifecycle_path=DEFAULT_LIFECYCLE_PATH,
+    )
+
+
+def _consume_confirmation_v2_legacy(
+        freeze_path, package_path, output_path, ledger_path, runner,
+        repository_root=None):
     root = Path(repository_root or Path.cwd()).resolve()
     output_path = Path(output_path).resolve()
     if output_path.exists():
@@ -309,26 +323,33 @@ def main(argv=None):
         description="Validate a frozen physics candidate on committed holdout data")
     parser.add_argument("--freeze", required=True, type=Path)
     parser.add_argument("--executable", required=True, type=Path)
-    parser.add_argument("--package", required=True, type=Path)
+    package = parser.add_mutually_exclusive_group(required=True)
+    package.add_argument("--package", type=Path)
+    package.add_argument("--package-key")
     parser.add_argument("--profile", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--ledger", type=Path)
     arguments = parser.parse_args(argv)
     if arguments.ledger is not None:
-        receipt = consume_confirmation(
+        package_key = arguments.package_key or arguments.package.name
+        receipt = consume_confirmation_transaction(
             arguments.freeze,
-            arguments.package,
+            package_key,
             arguments.output,
             arguments.ledger,
-            lambda: build_confirmation_result(
+            lambda opened_package: build_confirmation_result(
                 arguments.executable,
                 arguments.freeze,
-                arguments.package,
+                opened_package,
                 Path.cwd(),
             ),
             repository_root=Path.cwd(),
+            lifecycle_path=DEFAULT_LIFECYCLE_PATH,
         )
-        return 0 if receipt["result"] == "PASSED_OR_ACCOUNTED" else 1
+        return 0 if receipt["result"] in {
+            "PASSED", "PASSED_OR_ACCOUNTED"} else 1
+    if arguments.package is None:
+        parser.error("legacy validation requires --package")
     if arguments.profile is None:
         parser.error("legacy validation requires --profile")
     return run_candidate_validation(
