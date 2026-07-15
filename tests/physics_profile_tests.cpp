@@ -28,7 +28,7 @@ int main()
         billiardgl::defaultChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
         "default profile is valid");
-    expect(profile.id == "chinese_pool_full_game_v3",
+    expect(profile.id == "chinese_pool_full_game_v4",
         "candidate ID");
     expect(profile.formulaVersion == "full_game_integration_v3",
         "formula version");

@@ -24,7 +24,7 @@ class CandidateWorkflowContractTests(unittest.TestCase):
         )
         self.assertEqual(
             json.loads(completed.stdout)["id"],
-            "chinese_pool_full_game_v3",
+            "chinese_pool_full_game_v4",
         )
 
     def test_integrated_profile_uses_committed_fit_outputs(self):

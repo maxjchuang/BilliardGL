@@ -1,0 +1,113 @@
+{
+  "applicability": {
+    "confirmation_pending": true,
+    "equipment": "WPA_POOL_GEOMETRY",
+    "notes": "Pre-freeze Phase 3 v4 confirmation candidate. Its physics is exactly the selected v3 runtime; Derby/Fuller has been spent, while Alciatore TP A.15 and Han remain unopened confirmation packages.",
+    "real_world_validation_claimed": false
+  },
+  "limitations": [
+    "Cue v1 elevated-cue, jump, masse, and measured miscue boundaries remain unavailable.",
+    "Pocket v1 real trajectory and pot-success measurements remain unavailable.",
+    "The instantaneous rigid cushion law does not predict finite cushion contact duration.",
+    "The cushion law is supported only through 250 cm/s incident speed; higher speeds execute with an explicit domain warning.",
+    "Sudo 2002 finite cushion contact duration remains a visible structural gap.",
+    "Alciatore 2005 TP A.15 and Han 2005 confirmation partitions remain unopened."
+  ],
+  "parameter_sources": {
+    "ball": {
+      "fit_artifact": "physics_models/calibration/ball_collision_fit_v3.json",
+      "partition": "spent"
+    },
+    "cue": {
+      "claim": "bounded_v1",
+      "profile_artifact": "physics_models/profiles/chinese_pool_cue_contact_v1.json"
+    },
+    "cushion": {
+      "fit_artifact": "physics_models/calibration/cushion_fit_v3.json",
+      "partition": "spent"
+    },
+    "solver": {
+      "profile_artifact": "physics_models/profiles/chinese_pool_multi_contact_solver_v1.json",
+      "runtime_revision": "phase3_solver_v2"
+    },
+    "surface": {
+      "fit_artifact": "physics_models/calibration/surface_fit_v2.json",
+      "partition": "spent"
+    },
+    "table_boundary": {
+      "claim": "bounded_v1",
+      "profile_artifact": "physics_models/profiles/chinese_pool_pocket_boundary_v1.json"
+    }
+  },
+  "runtime_profile": {
+    "ball": {
+      "friction_coefficient": 0.1,
+      "inertia_factor": 0.4,
+      "mass_kg": 0.17,
+      "material": "phenolic_resin",
+      "normal_restitution": 0.97,
+      "radius_cm": 2.8575
+    },
+    "cue": {
+      "chalked_friction_coefficient": 0.6,
+      "cue_speed_per_power_unit_cm_s": 1.34,
+      "effective_mass_kg": 0.5,
+      "maximum_reliable_offset_radius": 0.8,
+      "normal_restitution": 0.0,
+      "unchalked_friction_coefficient": 0.1
+    },
+    "cushion": {
+      "friction_coefficient": 0.14,
+      "material": "mathavan_speed_dependent_cushion_v2",
+      "maximum_restitution": 0.93,
+      "maximum_rigid_incident_speed_cm_s": 250.0,
+      "minimum_restitution": 0.0,
+      "normal_restitution": 0.93,
+      "nose_height_ratio": 1.4,
+      "restitution_intercept": 1.0,
+      "restitution_slope_per_mps": 0.056
+    },
+    "formula_version": "full_game_integration_v3",
+    "id": "chinese_pool_full_game_v4",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "maximum_island_size": 16,
+      "maximum_penetration_cm": 0.5,
+      "passive_energy_tolerance_j": 1e-10,
+      "penetration_slop_cm": 0.001,
+      "position_iterations": 4,
+      "residual_tolerance_cm_s": 0.001,
+      "time_step_seconds": 0.1,
+      "toi_tolerance_seconds": 1e-07,
+      "velocity_iterations": 64
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "mathavan_phase_correct_surface_v2",
+      "rolling_resistance_acceleration_cm_s2": 12.499999813735489,
+      "sliding_friction_coefficient": 0.19999996439955606,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    },
+    "table_boundary": {
+      "capture_depth_cm": 6.0,
+      "corner_mouth_width_cm": 13.2,
+      "corner_throat_width_cm": 11.0,
+      "geometry_id": "wpa_pool_analytic_v1",
+      "jaw_radius_cm": 1.2,
+      "material": "profiled_table_boundary",
+      "playfield_length_cm": 254.0,
+      "playfield_width_cm": 127.0,
+      "side_mouth_width_cm": 8.6,
+      "side_throat_width_cm": 7.0,
+      "throat_depth_cm": 4.0
+    }
+  },
+  "runtime_query": {
+    "canonical_text_sha256": "5651da5d0b4030d6a1e8138fa039b4dc5cbb7dd0a1f2d787f800803c05f2257a",
+    "formula_version": "full_game_integration_v3",
+    "id": "chinese_pool_full_game_v4"
+  },
+  "schema_version": 8
+}

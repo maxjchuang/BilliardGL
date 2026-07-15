@@ -36,7 +36,7 @@ int main()
     const billiardgl::json::Value physicsFrame =
         billiardgl::serializePhysicsFrame(runtime.physicsTrace().frames().front());
     expect(physicsFrame.at("physics_profile_id").asString() ==
-        "chinese_pool_full_game_v3", "trace should identify its physics profile");
+        "chinese_pool_full_game_v4", "trace should identify its physics profile");
     expect(physicsFrame.at("boundary_mode").asString() == "production_table",
         "trace should serialize the active apparatus boundary mode");
     expect(physicsFrame.at("step_status").asString() == "succeeded" &&
