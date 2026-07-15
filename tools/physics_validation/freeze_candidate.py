@@ -33,6 +33,7 @@ def _clean_build_evidence(repository_root, source_revision,
         raise ValueError(f"stable clean-build path already exists: {checkout}")
     executable_digests = []
     profile_digests = []
+    generators = []
     try:
         for _ in range(2):
             added = False
@@ -43,6 +44,11 @@ def _clean_build_evidence(repository_root, source_revision,
                 build = checkout / "build"
                 _run(("cmake", "-S", checkout, "-B", build,
                       "-DCMAKE_BUILD_TYPE=Release"), repository_root)
+                cache = (build / "CMakeCache.txt").read_text(encoding="utf-8")
+                generator = next(
+                    line.split("=", 1)[1] for line in cache.splitlines()
+                    if line.startswith("CMAKE_GENERATOR:INTERNAL="))
+                generators.append(generator)
                 _run(("cmake", "--build", build, "--target", "Billiards",
                       "-j", str(jobs)), repository_root)
                 executable = build / "Billiards"
@@ -61,7 +67,19 @@ def _clean_build_evidence(repository_root, source_revision,
                     shutil.rmtree(checkout)
     finally:
         _run(("git", "worktree", "prune"), repository_root)
-    return executable_digests, profile_digests
+    if len(set(generators)) != 1:
+        raise ValueError("two clean builds selected different CMake generators")
+    recipe = {
+        "build_directory": "build",
+        "cmake_generator": generators[0],
+        "configuration": "Release",
+        "executable_relative_path": "build/Billiards",
+        "full_game_runner_relative_path": "build/BilliardsFullGameStress",
+        "schema_version": 1,
+        "temporary_root": "system",
+        "worktree_leaf": checkout.name,
+    }
+    return executable_digests, profile_digests, recipe
 
 
 def _inventory_artifacts(inventory):
@@ -81,12 +99,12 @@ def _inventory_artifacts(inventory):
 
 
 def phase3_freeze_document(source_revision, build_digests, profile_digests,
-                           inventory):
+                           inventory, build_recipe=None):
     if len(build_digests) != 2 or len(set(build_digests)) != 1:
         raise ValueError("two clean build executable digests differ")
     if len(profile_digests) != 2 or len(set(profile_digests)) != 1:
         raise ValueError("two clean build profile outputs differ")
-    return {
+    document = {
         "schema_version": 2,
         "candidate_id": inventory["candidate_id"],
         "source_revision": source_revision,
@@ -101,6 +119,9 @@ def phase3_freeze_document(source_revision, build_digests, profile_digests,
         },
         "artifacts": _inventory_artifacts(inventory),
     }
+    if build_recipe is not None:
+        document["build_recipe"] = build_recipe
+    return document
 
 
 def freeze_phase3_candidate(repository_root, source_revision, inventory_path,
@@ -127,10 +148,10 @@ def freeze_phase3_candidate(repository_root, source_revision, inventory_path,
         (repository_root / inventory["profile"]["path"])
         .read_text(encoding="utf-8"))
     expected_profile_id = profile_document["runtime_profile"]["id"]
-    build_digests, profile_digests = _clean_build_evidence(
+    build_digests, profile_digests, build_recipe = _clean_build_evidence(
         repository_root, revision, expected_profile_id, jobs=jobs)
     document = phase3_freeze_document(
-        revision, build_digests, profile_digests, inventory)
+        revision, build_digests, profile_digests, inventory, build_recipe)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
