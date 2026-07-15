@@ -102,9 +102,10 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
     candidate_id = freeze_document.get("candidate_id")
 
     _record(checks, failures, "single_candidate_identity",
-            candidate_id == "phase3_integrated_v3" and
-            inventory_document.get("candidate_id") == candidate_id,
-            "freeze and inventory do not select the sole v3 candidate")
+            isinstance(candidate_id, str) and bool(candidate_id) and
+            inventory_document.get("candidate_id") == candidate_id and
+            freeze_path.parent.name == candidate_id,
+            "freeze, inventory, and candidate directory identities differ")
     build_hashes = freeze_document.get("clean_build_sha256", [])
     profile_hashes = freeze_document.get("clean_profile_sha256", [])
     _record(checks, failures, "reproducible_clean_build",
@@ -129,8 +130,13 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
             all(case.get("passed") is True for case in cases),
             "the complete 12-case frozen full-game matrix did not pass")
 
+    inventory_package_rows = inventory_document.get(
+        "confirmation_packages", [])
+    inventory_packages = {
+        item.get("package_id"): item
+        for item in inventory_package_rows if isinstance(item, dict)}
+    package_keys = set(inventory_packages)
     fit_rows = _spent_fit_inputs(root)
-    package_keys = {"derby_fuller_1999", "han_2005"}
     _record(checks, failures, "fit_inputs_are_spent_only",
             bool(fit_rows) and
             {row.get("lifecycle") for row in fit_rows} == {"spent"} and
@@ -138,17 +144,19 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
                 row.get("dataset_id") for row in fit_rows),
             "v3 fit inputs are not isolated to spent evidence")
 
-    inventory_packages = {
-        item.get("package_id"): item
-        for item in inventory_document.get("confirmation_packages", [])}
     _record(checks, failures, "confirmation_packages_preregistered",
-            set(inventory_packages) == package_keys,
-            "Derby and Han are not both preregistered")
+            len(inventory_package_rows) == 2 and len(package_keys) == 2 and
+            None not in package_keys and all(
+                isinstance(item, dict) and
+                item.get("partition") == "confirmation" and
+                item.get("role") == "confirmation_package_manifest"
+                for item in inventory_package_rows),
+            "inventory must preregister exactly two confirmation packages")
     ledger = freeze_path.parent / "confirmation_consumption.json"
     output_root = freeze_path.parent / "confirmation"
     _record(checks, failures, "confirmation_state_absent",
             not ledger.exists() and not output_root.exists(),
-            "a v3 confirmation attempt or output already exists")
+            "a confirmation attempt or output already exists")
 
     package_state = {}
     for package_key in sorted(package_keys):

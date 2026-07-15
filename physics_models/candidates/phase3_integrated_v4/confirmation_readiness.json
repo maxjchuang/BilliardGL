@@ -1,0 +1,38 @@
+{
+  "candidate_id": "phase3_integrated_v4",
+  "checks": {
+    "confirmation_access_ready": true,
+    "confirmation_contract_real_path": true,
+    "confirmation_packages_preregistered": true,
+    "confirmation_state_absent": true,
+    "fit_inputs_are_spent_only": true,
+    "frozen_source_is_ancestor": true,
+    "full_game_matrix_passed": true,
+    "reproducible_clean_build": true,
+    "reproducible_runtime_profile": true,
+    "single_candidate_identity": true
+  },
+  "confirmation_packages": {
+    "alciatore_2005_tp_a15": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/alciatore_2005_tp_a15/manifest.json",
+      "manifest_sha256": "32a06c7aa02eebe14e46b0ec3f6275754b39f4571230dd68a60f20c7c78cbdce",
+      "ready": true
+    },
+    "han_2005": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/han_2005/manifest.json",
+      "manifest_sha256": "5860ce9a6856cd8d3bacc7cb791642d30c6dc2a334550b430becdc417435a87d",
+      "ready": true
+    }
+  },
+  "failures": [],
+  "freeze_sha256": "cf6e471be78190a795f27b797be08416843e0ba8bddcd63142dabb4fdbd9a07e",
+  "full_game_case_count": 12,
+  "full_game_matrix_summary_sha256": "4d54e62009aa3fa2f1b9db786792ecbd40ea4598d95759821dda932bc8eef81f",
+  "full_game_tree_sha256": "3ab43e0abc34e460d49995fc978f30a5aa4cc66d3f938ea5440427770d96975f",
+  "inventory_sha256": "a66d310dfc70d8da578e3142c8daf4f6cdc58aa8d402c24d3fd31ee55ee8a4cd",
+  "schema_version": 1,
+  "source_revision": "8728e1a227af209d9bd3b4f06085571f8d9a9f1c",
+  "status": "READY"
+}
