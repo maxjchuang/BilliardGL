@@ -5,6 +5,8 @@ import json
 import math
 from pathlib import Path
 
+from . import alciatore_confirmation as _alciatore_confirmation
+from . import han_confirmation as _han_confirmation
 from .confirmation_adapters import (
     ConfirmationAdapter,
     ConfirmationEvaluation,
@@ -16,7 +18,7 @@ from .confirmation_adapters import (
 )
 from .reference_package import load_reference_package
 from .reference_point import read_reference_points
-from .run import _execute_once
+from .run import _execute_once_with_evidence
 
 
 METRIC_FIELDS = (
@@ -30,6 +32,14 @@ def _canonical(document):
     return json.dumps(
         document, ensure_ascii=False, indent=2, sort_keys=True,
         allow_nan=False) + "\n"
+
+
+def _canonical_bytes(document):
+    return _canonical(document).encode("utf-8")
+
+
+def _sha256_bytes(value):
+    return hashlib.sha256(value).hexdigest()
 
 
 def _sha256(path):
@@ -93,6 +103,62 @@ def _confirmation_scenarios(dataset_id, profile, scalars):
 
 def _execute_deterministically(executable, scenarios, execute_once):
     return execute_deterministically(executable, scenarios, execute_once)
+
+
+def _execution_document(frames, transcript, stderr, return_code,
+                        fixture_executor):
+    return {
+        "fixture_executor": fixture_executor,
+        "frame_count": len(frames),
+        "protocol_transcript": list(transcript),
+        "return_code": return_code,
+        "schema_version": 1,
+        "stderr": stderr,
+        "trace_sha256": _sha256_bytes(_canonical_bytes(list(frames))),
+    }
+
+
+def _execute_with_evidence(executable, scenarios, execute_once):
+    traces = {}
+    files = {}
+    fixture_executor = execute_once is not None
+    for key, scenario in scenarios.items():
+        if fixture_executor:
+            first_frames = tuple(execute_once(executable, scenario))
+            second_frames = tuple(execute_once(executable, scenario))
+            first = _execution_document(first_frames, (), None, None, True)
+            second = _execution_document(second_frames, (), None, None, True)
+        else:
+            first_evidence = _execute_once_with_evidence(executable, scenario)
+            second_evidence = _execute_once_with_evidence(executable, scenario)
+            first_frames = first_evidence.frames
+            second_frames = second_evidence.frames
+            for evidence in (first_evidence, second_evidence):
+                if evidence.return_code != 0:
+                    raise RuntimeError(
+                        f"confirmation process did not exit cleanly: {key}")
+                if evidence.stderr:
+                    raise RuntimeError(
+                        f"confirmation process wrote stderr: {key}")
+            if first_evidence.protocol_transcript != \
+                    second_evidence.protocol_transcript:
+                raise RuntimeError(
+                    f"confirmation protocol is nondeterministic: {key}")
+            first = _execution_document(
+                first_frames, first_evidence.protocol_transcript,
+                first_evidence.stderr, first_evidence.return_code, False)
+            second = _execution_document(
+                second_frames, second_evidence.protocol_transcript,
+                second_evidence.stderr, second_evidence.return_code, False)
+        if first_frames != second_frames:
+            raise RuntimeError(
+                f"confirmation trace is nondeterministic: {key}")
+        if len(first_frames) != scenario["simulation"]["ticks"]:
+            raise RuntimeError(f"confirmation trace is incomplete: {key}")
+        traces[key] = list(first_frames)
+        files[f"execution/{key}-first.json"] = _canonical_bytes(first)
+        files[f"execution/{key}-second.json"] = _canonical_bytes(second)
+    return traces, files, fixture_executor
 
 
 def _first_contact(trace, kind):
@@ -305,8 +371,8 @@ def build_confirmation_result(executable, freeze_path, package_path,
     _register_legacy_adapters()
     adapter = confirmation_adapter(dataset_id)
     scenarios = adapter.build_scenarios(profile, package)
-    traces = _execute_deterministically(
-        executable, scenarios, execute_once or _execute_once)
+    traces, execution_files, fixture_executor = _execute_with_evidence(
+        executable, scenarios, execute_once)
     evaluation = adapter.evaluate(traces, profile, package)
     rows = list(evaluation.rows)
     failed = [row for row in rows if row["status"] == "FAILED"]
@@ -317,6 +383,7 @@ def build_confirmation_result(executable, freeze_path, package_path,
         "metrics.csv": _csv_bytes(METRIC_FIELDS, rows),
         "source_scalars.csv": package.files["scalars"].read_bytes(),
     }
+    files.update(execution_files)
     for key, scenario in scenarios.items():
         files[f"scenarios/{key}.json"] = _canonical(scenario).encode("utf-8")
         files[f"traces/{key}.json"] = _canonical(traces[key]).encode("utf-8")
@@ -347,6 +414,12 @@ def build_confirmation_result(executable, freeze_path, package_path,
         },
         "points": rows,
         "summary_metrics": evaluation.summary_metrics,
+        "execution": {
+            "fixture_executor": fixture_executor,
+            "scenario_count": len(scenarios),
+            "two_runs_per_scenario": True,
+        },
+        "evaluation_diagnostics": list(evaluation.diagnostics),
         "diagnostics": [row for row in scalar_rows if row["role"] == "diagnostic"],
         "apparatus": [row for row in scalar_rows if row["role"] == "apparatus"],
     }

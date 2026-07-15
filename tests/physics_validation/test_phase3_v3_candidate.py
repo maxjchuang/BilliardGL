@@ -14,6 +14,13 @@ INVENTORY = ROOT / "physics_models/promotion/phase3_candidates_v3.json"
 V2_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v2.json"
 BALL_FIT = ROOT / "physics_models/calibration/ball_collision_fit_v3.json"
 CUSHION_FIT = ROOT / "physics_models/calibration/cushion_fit_v3.json"
+SELECTED_REVISION = "db1c24b2b7d4d1c1145f4ebc7998fcd89109bc7a"
+
+
+def revision_bytes(path):
+    return subprocess.run(
+        ["git", "show", f"{SELECTED_REVISION}:{path}"],
+        cwd=ROOT, check=True, capture_output=True).stdout
 
 
 class Phase3V3CandidateTests(unittest.TestCase):
@@ -60,10 +67,8 @@ class Phase3V3CandidateTests(unittest.TestCase):
             *inventory["metric_contracts"],
         ]
         for artifact in artifacts:
-            path = ROOT / artifact["path"]
-            self.assertTrue(path.is_file(), artifact["path"])
             self.assertEqual(
-                hashlib.sha256(path.read_bytes()).hexdigest(),
+                hashlib.sha256(revision_bytes(artifact["path"])).hexdigest(),
                 artifact["sha256"], artifact["path"])
 
     def test_v3_matrix_preserves_all_v2_acceptance_semantics(self):

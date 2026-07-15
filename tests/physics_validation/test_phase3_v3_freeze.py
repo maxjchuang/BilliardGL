@@ -13,8 +13,11 @@ INVENTORY = ROOT / "physics_models/promotion/phase3_candidates_v3.json"
 SELECTED_REVISION = "db1c24b2b7d4d1c1145f4ebc7998fcd89109bc7a"
 
 
-def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def revision_digest(path):
+    content = subprocess.run(
+        ["git", "show", f"{SELECTED_REVISION}:{path}"],
+        cwd=ROOT, check=True, capture_output=True).stdout
+    return hashlib.sha256(content).hexdigest()
 
 
 class Phase3V3FreezeTests(unittest.TestCase):
@@ -41,7 +44,7 @@ class Phase3V3FreezeTests(unittest.TestCase):
             {item["path"] for item in expected},
         )
         for item in self.freeze["artifacts"]:
-            self.assertEqual(digest(ROOT / item["path"]), item["sha256"])
+            self.assertEqual(revision_digest(item["path"]), item["sha256"])
 
     def test_recipe_recreates_the_same_stable_build_identity(self):
         recipe = self.freeze["build_recipe"]

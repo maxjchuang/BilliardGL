@@ -7,7 +7,18 @@
       "pool_applicability": "TRANSFER_LIMITED",
       "source": "han_2005"
     },
-    "expectations": [],
+    "expectations": [
+      {
+        "metric": "finite_state",
+        "operator": "eq",
+        "value": true
+      },
+      {
+        "metric": "nonincreasing_translational_energy",
+        "operator": "eq",
+        "value": true
+      }
+    ],
     "schema_version": 6
   },
   "cases": {
@@ -37,6 +48,10 @@
       "status": "confirmation_only_transfer_limited_absolute"
     }
   },
+  "continuity": {
+    "maximum_adjacent_normalized_change": 0.5,
+    "method": "ordered five-speed discrete continuity bound"
+  },
   "hard_metrics": [
     "normalized_curve_rmse",
     "finite_bounded_response",
@@ -53,5 +68,11 @@
     ]
   },
   "normalized_curve_rmse_maximum": 0.15,
-  "schema_version": 1
+  "schema_version": 1,
+  "source_domain": {
+    "incident_speed_relative_tolerance": 0.01,
+    "maximum_m_s": 2.5,
+    "minimum_m_s": 0.5,
+    "rigid_domain_exceeded": false
+  }
 }

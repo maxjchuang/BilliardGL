@@ -51,6 +51,15 @@ class Han2005ExtractionTests(unittest.TestCase):
         contract = json.loads(
             (HAN / "scenario_template.json").read_text(encoding="utf-8"))
         self.assertEqual(contract["normalized_curve_rmse_maximum"], 0.15)
+        self.assertEqual(contract["continuity"][
+            "maximum_adjacent_normalized_change"], 0.5)
+        self.assertEqual(contract["source_domain"], {
+            "incident_speed_relative_tolerance": 0.01,
+            "maximum_m_s": 2.5,
+            "minimum_m_s": 0.5,
+            "rigid_domain_exceeded": False,
+        })
+        self.assertTrue(contract["base_scenario"]["expectations"])
         self.assertEqual(
             contract["hard_metrics"],
             [

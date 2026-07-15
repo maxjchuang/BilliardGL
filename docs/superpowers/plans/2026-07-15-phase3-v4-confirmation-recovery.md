@@ -659,9 +659,9 @@ Expected: imports for both modules fail.
 - [ ] **Step 3: Implement Alciatore scenarios and evaluator**
 
 For each source row, build a schema-v11 unbounded scenario with two touching
-balls and a centered horizontal cue impact. Set the contact geometry from the
+balls and a centered horizontal cue impact. Set the cue direction from the
 source cut angle, use `initial_contact_epsilon_cm` no larger than the frozen
-solver's accepted epsilon, and evaluate the first stable separating target
+solver's accepted epsilon, and evaluate the first stable separating cue-ball
 velocity. Use:
 
 ```python
@@ -672,8 +672,9 @@ maximum = max(abs(value) for value in interior_errors)
 ```
 
 Emit every point even when aggregate gates fail. For the 90-degree endpoint,
-emit `observed=None` and evaluate only the target/incident speed ratio when the
-direction is undefined.
+emit the well-defined cue-ball target-line angle and evaluate the
+object-ball/incident speed ratio separately. Do not fabricate an object-ball
+direction when its speed is zero.
 
 - [ ] **Step 4: Implement Han scenarios and evaluator**
 
@@ -682,7 +683,11 @@ observed restitution from the first rail contact, normalize all observations by
 the observed value at 0.5 m/s, and calculate the curve RMSE against the
 committed normalized equation values. Evaluate boundedness, continuity,
 domain coverage, and nonincreasing total energy exactly as named in the Han
-template. Do not compare absolute restitution as a direct pass/fail metric.
+template: restitution stays finite within `[0, 1]`, the largest adjacent
+normalized response change is at most `0.5`, all five contacts remain within
+1% of their commanded speeds without rigid-domain exceedance, and total energy
+does not increase beyond the profile tolerance. Do not compare absolute
+restitution as a direct pass/fail metric.
 
 - [ ] **Step 5: Register both adapters and enforce aggregate failure**
 

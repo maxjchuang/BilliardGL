@@ -220,10 +220,25 @@ def _documents(raw_bytes, normalized):
                     "pool_applicability": "TRANSFER_LIMITED",
                     "source": DATASET_ID,
                 },
-                "expectations": [],
+                "expectations": [
+                    {
+                        "metric": "finite_state",
+                        "operator": "eq",
+                        "value": True,
+                    },
+                    {
+                        "metric": "nonincreasing_translational_energy",
+                        "operator": "eq",
+                        "value": True,
+                    },
+                ],
                 "schema_version": 6,
             },
             "cases": cases,
+            "continuity": {
+                "maximum_adjacent_normalized_change": 0.5,
+                "method": "ordered five-speed discrete continuity bound",
+            },
             "hard_metrics": [
                 "normalized_curve_rmse",
                 "finite_bounded_response",
@@ -238,6 +253,12 @@ def _documents(raw_bytes, normalized):
             },
             "normalized_curve_rmse_maximum": 0.15,
             "schema_version": 1,
+            "source_domain": {
+                "incident_speed_relative_tolerance": 0.01,
+                "maximum_m_s": 2.5,
+                "minimum_m_s": 0.5,
+                "rigid_domain_exceeded": False,
+            },
         },
         "expected_model_mismatches.json": {
             "failures": [],

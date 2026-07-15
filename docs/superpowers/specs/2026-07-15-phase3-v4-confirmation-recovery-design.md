@@ -223,6 +223,14 @@ The current pre-registered Han contract remains unchanged:
 - `source_domain_response == true`;
 - `nonincreasing_total_energy == true`.
 
+The executable definitions are fixed before confirmation: finite/bounded means
+every observed normal restitution is finite and within `[0, 1]`; discrete
+continuity means the largest adjacent change in the ordered normalized
+five-speed response is at most `0.5`; source-domain response requires all five
+0.5-2.5 m/s contacts, incident speed within 1% of its commanded value, and no
+rigid-domain exceedance. Total kinetic energy may not increase beyond the
+profile's passive-energy tolerance after initialization.
+
 The result must continue distinguishing trend confirmation from the known
 absolute-equipment transfer limitation.
 

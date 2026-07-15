@@ -8,6 +8,7 @@ from unittest.mock import patch
 
 from tools.physics_validation.confirmation_run import build_confirmation_result
 from tools.physics_validation.holdout_access import validate_confirmation_access
+from tools.physics_validation.run import ExecutionEvidence
 from tools.physics_validation.validation_run import (
     ConfirmationAccessError,
     consume_confirmation,
@@ -264,6 +265,64 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             scenario["balls"][0]["velocity_cm_s"][0]
             for scenario in scenarios)
         self.assertEqual(initial_speeds, [98.0, 180.0, 250.0])
+        execution = [
+            json.loads(value) for path, value in result["files"].items()
+            if path.startswith("execution/")
+        ]
+        self.assertEqual(len(execution), 6)
+        self.assertTrue(all(item["fixture_executor"] for item in execution))
+        self.assertTrue(report["execution"]["fixture_executor"])
+
+    def test_production_executor_preserves_two_protocol_evidence_records(self):
+        freeze = json.loads(FREEZE.read_text(encoding="utf-8"))
+
+        def fake_frames(scenario):
+            frames = [{
+                "tick": tick,
+                "contacts": [],
+                "balls": [],
+                "surface_transitions": [],
+            } for tick in range(1, scenario["simulation"]["ticks"] + 1)]
+            if "cushion" in scenario["id"]:
+                frames[0]["contacts"] = [{"kind": "rail", "restitution": 0.9}]
+            else:
+                frames[0]["contacts"] = [{
+                    "kind": "ball_ball", "restitution": 0.97,
+                }]
+                frames[0]["balls"] = [
+                    {"index": 0, "velocity_cm_s": {"x": 30.0, "z": 10.0}},
+                    {"index": 1, "velocity_cm_s": {"x": 60.0, "z": -10.0}},
+                ]
+            return frames
+
+        def fake_evidence(_executable, scenario):
+            return ExecutionEvidence(
+                tuple(fake_frames(scenario)),
+                ({"direction": "request", "scenario_id": scenario["id"]},),
+                "",
+                0,
+            )
+
+        executable = self.scratch / "frozen-executable-production-fixture"
+        executable.write_bytes(b"fixture")
+        with patch(
+                "tools.physics_validation.confirmation_run._sha256",
+                return_value=freeze["executable_sha256"]), patch(
+                "tools.physics_validation.confirmation_run."
+                "_execute_once_with_evidence",
+                side_effect=fake_evidence):
+            result = build_confirmation_result(
+                executable, FREEZE, SUDO, ROOT)
+        report = json.loads(result["files"]["reference_report.json"])
+        execution = [
+            json.loads(value) for path, value in result["files"].items()
+            if path.startswith("execution/")
+        ]
+        self.assertEqual(len(execution), 6)
+        self.assertTrue(all(not item["fixture_executor"] for item in execution))
+        self.assertTrue(all(item["protocol_transcript"] for item in execution))
+        self.assertTrue(all(item["return_code"] == 0 for item in execution))
+        self.assertFalse(report["execution"]["fixture_executor"])
 
 
 if __name__ == "__main__":
