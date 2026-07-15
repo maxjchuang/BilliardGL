@@ -32,6 +32,7 @@ set(BILLIARDGL_CORE_SOURCES
     src/Billiards/contact_solver.cpp
     src/Billiards/cue_contact.cpp
     src/Billiards/frame_timing.cpp
+    src/Billiards/frozen_cue_topology.cpp
     src/Billiards/game_state.cpp
     src/Billiards/game_runtime.cpp
     src/Billiards/image_loader.cpp
@@ -125,6 +126,7 @@ billiardgl_add_core_test(BilliardsPocketBoundaryTests tests/pocket_boundary_test
 billiardgl_add_core_test(BilliardsPocketStateMachineTests tests/pocket_state_machine_tests.cpp)
 billiardgl_add_core_test(BilliardsContinuousCollisionTests tests/continuous_collision_tests.cpp)
 billiardgl_add_core_test(BilliardsContactIslandTests tests/contact_island_tests.cpp)
+billiardgl_add_core_test(BilliardsFrozenCueTopologyTests tests/frozen_cue_topology_tests.cpp)
 billiardgl_add_core_test(BilliardsContactSolverTests tests/contact_solver_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsProfileTests tests/physics_profile_tests.cpp)
 billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
