@@ -258,6 +258,8 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             json.loads(value) for path, value in result["files"].items()
             if path.startswith("scenarios/")
         ]
+        self.assertTrue(scenarios)
+        self.assertTrue(all(scenario["expectations"] for scenario in scenarios))
         initial_speeds = sorted(
             scenario["balls"][0]["velocity_cm_s"][0]
             for scenario in scenarios)

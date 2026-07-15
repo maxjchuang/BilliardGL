@@ -1,4 +1,3 @@
-import copy
 import csv
 import hashlib
 import io
@@ -6,6 +5,15 @@ import json
 import math
 from pathlib import Path
 
+from .confirmation_adapters import (
+    ConfirmationAdapter,
+    ConfirmationEvaluation,
+    base_scenario,
+    confirmation_adapter,
+    execute_deterministically,
+    register_confirmation_adapter,
+    scenario_ball,
+)
 from .reference_package import load_reference_package
 from .reference_point import read_reference_points
 from .run import _execute_once
@@ -29,37 +37,13 @@ def _sha256(path):
 
 
 def _scenario(profile, scenario_id, balls, boundary_mode, ticks, description):
-    return {
-        "schema_version": 11,
-        "id": scenario_id,
-        "description": description,
-        "boundary_mode": boundary_mode,
-        "physics_profile": copy.deepcopy(profile),
-        "balls": balls,
-        "simulation": {
-            "ticks": ticks,
-            "time_step_seconds": profile["solver"]["time_step_seconds"],
-        },
-        "expectations": [],
-        "evidence": {
-            "equipment": "WPA_POOL",
-            "grade": "B",
-            "pool_applicability": "DIRECT",
-            "source": "phase3_v2_confirmation_contract",
-        },
-    }
+    return base_scenario(
+        profile, scenario_id, balls, boundary_mode, ticks, description,
+        evidence_source="phase3_v2_confirmation_contract")
 
 
 def _ball(index, position, velocity, radius, rolling=True):
-    speed_x = velocity[0]
-    spin_z = -speed_x / radius if rolling else 0.0
-    return {
-        "index": index,
-        "position_cm": position,
-        "velocity_cm_s": velocity,
-        "angular_velocity_rad_s": [0.0, 0.0, spin_z],
-        "pocketed": False,
-    }
+    return scenario_ball(index, position, velocity, radius, rolling)
 
 
 def _confirmation_scenarios(dataset_id, profile, scalars):
@@ -108,16 +92,7 @@ def _confirmation_scenarios(dataset_id, profile, scalars):
 
 
 def _execute_deterministically(executable, scenarios, execute_once):
-    traces = {}
-    for key, scenario in scenarios.items():
-        first = execute_once(executable, scenario)
-        second = execute_once(executable, scenario)
-        if first != second:
-            raise RuntimeError(f"confirmation trace is nondeterministic: {key}")
-        if len(first) != scenario["simulation"]["ticks"]:
-            raise RuntimeError(f"confirmation trace is incomplete: {key}")
-        traces[key] = first
-    return traces
+    return execute_deterministically(executable, scenarios, execute_once)
 
 
 def _first_contact(trace, kind):
@@ -265,6 +240,53 @@ def _csv_bytes(fields, rows):
     return stream.getvalue().encode("utf-8")
 
 
+def _package_scalar_rows(package):
+    with package.files["scalars"].open(
+            encoding="utf-8", newline="") as stream:
+        return list(csv.DictReader(stream))
+
+
+def _package_scalars(package):
+    return {
+        row["point_id"]: float(row["normalized_value"])
+        for row in _package_scalar_rows(package)
+    }
+
+
+def _legacy_scenarios(dataset_id, profile, package):
+    return _confirmation_scenarios(
+        dataset_id, profile, _package_scalars(package))
+
+
+def _legacy_evaluation(dataset_id, traces, profile, package):
+    points = read_reference_points(
+        package.files["normalized"], dataset_id)
+    scalars = _package_scalars(package)
+    if dataset_id == "sudo_2002":
+        predictions = _sudo_predictions(traces, profile)
+    else:
+        predictions = _derby_predictions(traces, profile, scalars)
+    return ConfirmationEvaluation(
+        tuple(_metric_rows(
+            points, predictions, _known_mismatches(package))),
+        {},
+    )
+
+
+def _register_legacy_adapters():
+    for dataset_id in ("sudo_2002", "derby_fuller_1999"):
+        try:
+            confirmation_adapter(dataset_id)
+        except ValueError:
+            register_confirmation_adapter(ConfirmationAdapter(
+                dataset_id,
+                lambda profile, package, value=dataset_id:
+                    _legacy_scenarios(value, profile, package),
+                lambda traces, profile, package, value=dataset_id:
+                    _legacy_evaluation(value, traces, profile, package),
+            ))
+
+
 def build_confirmation_result(executable, freeze_path, package_path,
                               repository_root, execute_once=None):
     root = Path(repository_root).resolve()
@@ -279,20 +301,18 @@ def build_confirmation_result(executable, freeze_path, package_path,
                and hasattr(package_path, "files")
                else load_reference_package(package_path))
     dataset_id = package.manifest["dataset_id"]
-    points = read_reference_points(package.files["normalized"], dataset_id)
-    with package.files["scalars"].open(encoding="utf-8", newline="") as stream:
-        scalar_rows = list(csv.DictReader(stream))
-    scalars = {row["point_id"]: float(row["normalized_value"])
-               for row in scalar_rows}
-    scenarios = _confirmation_scenarios(dataset_id, profile, scalars)
+    scalar_rows = _package_scalar_rows(package)
+    _register_legacy_adapters()
+    adapter = confirmation_adapter(dataset_id)
+    scenarios = adapter.build_scenarios(profile, package)
     traces = _execute_deterministically(
         executable, scenarios, execute_once or _execute_once)
-    if dataset_id == "sudo_2002":
-        predictions = _sudo_predictions(traces, profile)
-    else:
-        predictions = _derby_predictions(traces, profile, scalars)
-    rows = _metric_rows(points, predictions, _known_mismatches(package))
+    evaluation = adapter.evaluate(traces, profile, package)
+    rows = list(evaluation.rows)
     failed = [row for row in rows if row["status"] == "FAILED"]
+    failed_summary = any(
+        name.endswith("_passed") and value is False
+        for name, value in evaluation.summary_metrics.items())
     files = {
         "metrics.csv": _csv_bytes(METRIC_FIELDS, rows),
         "source_scalars.csv": package.files["scalars"].read_bytes(),
@@ -316,7 +336,8 @@ def build_confirmation_result(executable, freeze_path, package_path,
         "dataset_id": dataset_id,
         "dataset_version": package.manifest["dataset_version"],
         "partition": "CONFIRMATION",
-        "result": "FAILED" if failed else "PASSED_OR_ACCOUNTED",
+        "result": (
+            "FAILED" if failed or failed_summary else "PASSED_OR_ACCOUNTED"),
         "summary": {
             "points": len(rows),
             "passed": sum(row["status"] == "PASSED" for row in rows),
@@ -325,6 +346,7 @@ def build_confirmation_result(executable, freeze_path, package_path,
             "failed": len(failed),
         },
         "points": rows,
+        "summary_metrics": evaluation.summary_metrics,
         "diagnostics": [row for row in scalar_rows if row["role"] == "diagnostic"],
         "apparatus": [row for row in scalar_rows if row["role"] == "apparatus"],
     }
