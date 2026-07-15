@@ -3,6 +3,7 @@
 #include "frozen_cue_topology.h"
 #include "game_state.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -63,6 +64,135 @@ billiardgl::FrozenCueTopology componentTopology(
             billiardgl::PhysicsBoundaryMode::Unbounded);
     state.balls[1].pocketed = true;
     return topology;
+}
+
+billiardgl::FrozenCueTopology topologyFor(const billiardgl::GameState& state,
+    const billiardgl::PhysicsProfile& profile,
+    billiardgl::PhysicsBoundaryMode boundaryMode =
+        billiardgl::PhysicsBoundaryMode::Unbounded)
+{
+    return billiardgl::detectFrozenCueTopology(
+        state, 0, profile, boundaryMode);
+}
+
+void testRigidContactsAreCoupledDuringLoading()
+{
+    billiardgl::PhysicsProfile profile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    profile.frozenCueContact.enabled = true;
+    const float diameter = 2.0f * profile.ball.radiusCm;
+
+    billiardgl::GameState pair = isolatedState();
+    pair.balls[1].pocketed = false;
+    pair.balls[1].position.x = diameter;
+    const auto pairResult = billiardgl::solveCoupledCueContact(
+        pair, topologyFor(pair, profile), inputAt(0.0), profile);
+    expect(pairResult.status == billiardgl::CoupledCueContactStatus::Released &&
+        pairResult.state.balls[1].velocity.x > 0.0f,
+        "a frozen neighbour receives impulse during cue loading");
+    for (const auto& step : pairResult.contact.microsteps) {
+        expect(step.maximumPenetrationCm <=
+            profile.solver.maximumPenetrationCm &&
+            step.solverResidualCmS <= profile.solver.residualToleranceCmS,
+            "rigid microsteps remain inside penetration and residual limits");
+        expect(step.contacts.size() == 1,
+            "the pair constraint is captured in every complete microstep");
+    }
+
+    billiardgl::GameState chain = pair;
+    chain.balls[2].pocketed = false;
+    chain.balls[2].position.x = 2.0f * diameter;
+    const auto chainResult = billiardgl::solveCoupledCueContact(
+        chain, topologyFor(chain, profile), inputAt(0.0), profile);
+    if (chainResult.status != billiardgl::CoupledCueContactStatus::Released) {
+        std::cerr << "chain error=" << chainResult.error
+                  << " steps=" << chainResult.contact.microsteps.size()
+                  << " v1=" << chainResult.state.balls[1].velocity.x
+                  << " v2=" << chainResult.state.balls[2].velocity.x << '\n';
+    }
+    expect(chainResult.status == billiardgl::CoupledCueContactStatus::Released &&
+        chainResult.state.balls[1].velocity.x > 0.0f &&
+        chainResult.state.balls[2].velocity.x > 0.0f,
+        "a three-ball frozen chain is loaded in the same transaction");
+
+    billiardgl::GameState symmetric = isolatedState();
+    symmetric.balls[1].pocketed = false;
+    symmetric.balls[1].position = billiardgl::Point3{
+        diameter * 0.8660254f, 0.0f, diameter * 0.5f};
+    symmetric.balls[2].pocketed = false;
+    symmetric.balls[2].position = billiardgl::Point3{
+        diameter * 0.8660254f, 0.0f, -diameter * 0.5f};
+    const billiardgl::FrozenCueTopology symmetricTopology =
+        topologyFor(symmetric, profile);
+    const auto symmetricResult = billiardgl::solveCoupledCueContact(
+        symmetric, symmetricTopology, inputAt(0.0), profile);
+    if (symmetricResult.status !=
+            billiardgl::CoupledCueContactStatus::Released ||
+        !close(symmetricResult.state.balls[1].velocity.x,
+            symmetricResult.state.balls[2].velocity.x, 0.01) ||
+        !close(symmetricResult.state.balls[1].velocity.z,
+            -symmetricResult.state.balls[2].velocity.z, 0.01)) {
+        std::cerr << "symmetric error=" << symmetricResult.error
+                  << " topology=" << static_cast<int>(symmetricTopology.status)
+                  << " contacts=" << symmetricTopology.island.contacts.size()
+                  << " v1=" << symmetricResult.state.balls[1].velocity.x
+                  << "," << symmetricResult.state.balls[1].velocity.z
+                  << " v2=" << symmetricResult.state.balls[2].velocity.x
+                  << "," << symmetricResult.state.balls[2].velocity.z << '\n';
+    }
+    expect(symmetricResult.status ==
+            billiardgl::CoupledCueContactStatus::Released &&
+        close(symmetricResult.state.balls[1].velocity.x,
+            symmetricResult.state.balls[2].velocity.x, 0.01) &&
+        close(symmetricResult.state.balls[1].velocity.z,
+            -symmetricResult.state.balls[2].velocity.z, 0.01),
+        "symmetric frozen neighbours remain mirrored");
+
+    billiardgl::FrozenCueTopology reversed = symmetricTopology;
+    std::reverse(reversed.island.contacts.begin(),
+        reversed.island.contacts.end());
+    const auto reversedResult = billiardgl::solveCoupledCueContact(
+        symmetric, reversed, inputAt(0.0), profile);
+    expect(reversedResult.status ==
+        billiardgl::CoupledCueContactStatus::Released,
+        "a permuted contact input still solves");
+    for (int index = 0; index < billiardgl::kBallCount; ++index) {
+        expect(samePoint(symmetricResult.state.balls[index].position,
+                   reversedResult.state.balls[index].position) &&
+            samePoint(symmetricResult.state.balls[index].velocity,
+                reversedResult.state.balls[index].velocity) &&
+            samePoint(symmetricResult.state.balls[index].angularVelocity,
+                reversedResult.state.balls[index].angularVelocity),
+            "canonical rigid solves ignore input contact permutation");
+    }
+
+    billiardgl::GameState rail = isolatedState();
+    rail.balls[0].position.x =
+        profile.tableBoundary.playfieldWidthCm * 0.5f -
+        profile.ball.radiusCm;
+    rail.balls[0].position.z = 30.0f;
+    const auto railResult = billiardgl::solveCoupledCueContact(rail,
+        topologyFor(rail, profile,
+            billiardgl::PhysicsBoundaryMode::ProductionTable),
+        inputAt(0.0), profile);
+    expect(railResult.status == billiardgl::CoupledCueContactStatus::Released &&
+        !railResult.contact.microsteps.empty() &&
+        !railResult.contact.microsteps.front().contacts.empty(),
+        "a frozen cue-ball cushion constraint is solved during loading");
+
+    billiardgl::PhysicsProfile refined = profile;
+    refined.frozenCueContact.microstepSeconds *= 0.5;
+    const auto refinedPair = billiardgl::solveCoupledCueContact(
+        pair, topologyFor(pair, refined), inputAt(0.0), refined);
+    expect(refinedPair.status == billiardgl::CoupledCueContactStatus::Released,
+        "the halved microstep fixture releases");
+    for (int index : std::vector<int>{0, 1}) {
+        expect(std::fabs(pairResult.state.balls[index].velocity.x -
+                   refinedPair.state.balls[index].velocity.x) <= 0.5 &&
+            std::fabs(pairResult.state.balls[index].velocity.z -
+                refinedPair.state.balls[index].velocity.z) <= 0.5,
+            "halving the microstep changes final velocity by at most 0.5 cm/s");
+    }
 }
 
 void expectSameTrace(const billiardgl::CueContactResult& first,
@@ -233,5 +363,6 @@ int main()
     const auto repeated = billiardgl::solveCoupledCueContact(
         state, topology, inputAt(0.0), profile);
     expectSameTrace(centered.contact, repeated.contact);
+    testRigidContactsAreCoupledDuringLoading();
     return EXIT_SUCCESS;
 }

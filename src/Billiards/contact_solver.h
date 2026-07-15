@@ -54,6 +54,9 @@ struct ContactSolverResult {
 ContactSolverResult solveContactIsland(
     GameState& state, const ContactIsland& island,
     const PhysicsProfile& profile);
+ContactSolverResult solveContactIslandIteration(GameState& state,
+    const ContactIsland& island, const PhysicsProfile& profile,
+    int velocityIterations, int positionIterations);
 const char* contactSolverStatusName(ContactSolverStatus status);
 
 }  // namespace billiardgl

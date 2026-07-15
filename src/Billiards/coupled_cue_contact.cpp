@@ -1,5 +1,7 @@
 #include "coupled_cue_contact.h"
 
+#include "contact_solver.h"
+
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -220,9 +222,27 @@ CoupledCueContactResult solveCoupledCueContact(const GameState& state,
     result.contact.inputKineticEnergyJ = initialEnergy;
     const int maximumSteps = static_cast<int>(std::ceil(
         settings.maximumContactSeconds / settings.microstepSeconds));
+    ContactIsland rigidIsland = topology.island;
+    rigidIsland.ballIndices.erase(std::remove_if(
+        rigidIsland.ballIndices.begin(), rigidIsland.ballIndices.end(),
+        [&](int index) { return result.state.balls[index].pocketed; }),
+        rigidIsland.ballIndices.end());
+    rigidIsland.contacts.erase(std::remove_if(
+        rigidIsland.contacts.begin(), rigidIsland.contacts.end(),
+        [&](const ContinuousContactCandidate& contact) {
+            return result.state.balls[contact.firstBall].pocketed ||
+                (contact.secondBall >= 0 &&
+                    result.state.balls[contact.secondBall].pocketed);
+        }), rigidIsland.contacts.end());
+    std::sort(rigidIsland.contacts.begin(), rigidIsland.contacts.end(),
+        continuousContactLess);
 
     for (int stepIndex = 0; stepIndex < maximumSteps; ++stepIndex) {
         const double dt = settings.microstepSeconds;
+        std::array<Point3, kBallCount> velocityBeforeStep;
+        for (int index = 0; index < kBallCount; ++index) {
+            velocityBeforeStep[index] = result.state.balls[index].velocity;
+        }
         relative = subtract(multiply(direction, cueVelocityMS),
             add(velocityM(ball), cross(angular(ball), arm)));
         const double compressionRateMS = dot(relative, normal);
@@ -264,15 +284,47 @@ CoupledCueContactResult solveCoupledCueContact(const GameState& state,
         const Vector force = add(multiply(normal, normalForceN),
             multiply(tangent, tangentialForceN));
         const Vector impulse = multiply(force, dt);
-        const Vector oldBallVelocity = velocityM(ball);
         addVelocity(ball, multiply(impulse, 1.0 / profile.ball.massKg));
         addAngularVelocity(ball, multiply(cross(arm, impulse), 1.0 / inertia));
         const double cueAccelerationMS2 = -dot(force, direction) / input.cueMassKg;
         cueVelocityMS += cueAccelerationMS2 * dt;
         cuePositionM += cueVelocityMS * dt;
-        ball.position.x += static_cast<float>(ball.velocity.x * dt);
-        ball.position.y += static_cast<float>(ball.velocity.y * dt);
-        ball.position.z += static_cast<float>(ball.velocity.z * dt);
+        const ContactSolverResult rigid = solveContactIslandIteration(
+            result.state, rigidIsland, profile,
+            profile.solver.velocityIterations, 1);
+        if (rigid.status != ContactSolverStatus::Converged) {
+            switch (rigid.status) {
+            case ContactSolverStatus::IslandLimit:
+                setFailure(result, CoupledCueContactStatus::ContactIslandLimit,
+                    "contact_island_limit");
+                break;
+            case ContactSolverStatus::PenetrationLimit:
+                setFailure(result, CoupledCueContactStatus::PenetrationLimit,
+                    "compression_limit");
+                break;
+            case ContactSolverStatus::NonfiniteState:
+                setFailure(result, CoupledCueContactStatus::NonfiniteState,
+                    "nonfinite_state");
+                break;
+            case ContactSolverStatus::IterationLimit:
+                setFailure(result, CoupledCueContactStatus::Nonconvergence,
+                    "cue_contact_nonconvergence");
+                break;
+            case ContactSolverStatus::Converged:
+                break;
+            }
+            return result;
+        }
+        for (int ballIndex : rigidIsland.ballIndices) {
+            BallState& movingBall = result.state.balls[ballIndex];
+            if (movingBall.pocketed) continue;
+            movingBall.position.x +=
+                static_cast<float>(movingBall.velocity.x * dt);
+            movingBall.position.y +=
+                static_cast<float>(movingBall.velocity.y * dt);
+            movingBall.position.z +=
+                static_cast<float>(movingBall.velocity.z * dt);
+        }
         normalImpulseNs += normalForceN * dt;
         tangentialImpulseNs += std::fabs(tangentialForceN) * dt;
         signedTangentialImpulseNs += tangentialForceN * dt;
@@ -377,6 +429,9 @@ CoupledCueContactResult solveCoupledCueContact(const GameState& state,
             recoverableTangentialEnergy;
         step.energyResidualJ =
             kineticEnergy + recoverableElasticEnergy - initialEnergy;
+        step.maximumPenetrationCm = rigid.maximumPenetrationCm;
+        step.solverResidualCmS = rigid.maximumResidualCmS;
+        step.solverIterations = rigid.velocityIterations;
         step.regime = slipping ? CueContactRegime::Slip : CueContactRegime::Stick;
         for (int index = 0; index < kBallCount; ++index) {
             CueContactBallSample& sample = step.balls[index];
@@ -385,12 +440,34 @@ CoupledCueContactResult solveCoupledCueContact(const GameState& state,
             sample.velocityCmS = result.state.balls[index].velocity;
             sample.angularVelocityRadS = result.state.balls[index].angularVelocity;
         }
-        const Vector acceleration = multiply(subtract(velocityM(ball),
-            oldBallVelocity), 100.0 / dt);
-        step.balls[input.cueBallIndex].accelerationCmS2 = Point3{
-            static_cast<float>(acceleration[0]),
-            static_cast<float>(acceleration[1]),
-            static_cast<float>(acceleration[2])};
+        for (int ballIndex : rigidIsland.ballIndices) {
+            const Point3& before = velocityBeforeStep[ballIndex];
+            const Point3& after = result.state.balls[ballIndex].velocity;
+            step.balls[ballIndex].accelerationCmS2 = Point3{
+                static_cast<float>((after.x - before.x) / dt),
+                static_cast<float>((after.y - before.y) / dt),
+                static_cast<float>((after.z - before.z) / dt)};
+        }
+        for (std::size_t contactIndex = 0;
+             contactIndex < rigid.contacts.size(); ++contactIndex) {
+            const ContactImpulseDiagnostic& diagnostic =
+                rigid.contacts[contactIndex];
+            CueContactConstraintSample sample;
+            sample.kind = static_cast<int>(
+                rigidIsland.contacts[contactIndex].kind);
+            sample.firstBall = diagnostic.firstBall;
+            sample.secondBall = diagnostic.secondBall;
+            sample.featureId = diagnostic.featureId;
+            sample.normal = diagnostic.normal;
+            sample.normalImpulseNs =
+                diagnostic.accumulatedNormalImpulseNs;
+            sample.tangentialImpulseNs =
+                diagnostic.accumulatedTangentialImpulseNs;
+            sample.penetrationCm =
+                rigidIsland.contacts[contactIndex].penetrationCm;
+            sample.residualCmS = diagnostic.residualCmS;
+            step.contacts.push_back(sample);
+        }
         result.contact.microsteps.push_back(step);
 
         if (!finiteBall(ball) || !std::isfinite(cueVelocityMS) ||

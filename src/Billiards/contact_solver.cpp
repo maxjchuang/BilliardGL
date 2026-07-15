@@ -213,11 +213,15 @@ SolverConstraint makeConstraint(const GameState& state,
 
 }  // namespace
 
-ContactSolverResult solveContactIsland(
-    GameState& state, const ContactIsland& island,
-    const PhysicsProfile& profile)
+ContactSolverResult solveContactIslandIteration(GameState& state,
+    const ContactIsland& island, const PhysicsProfile& profile,
+    int velocityIterations, int positionIterations)
 {
     ContactSolverResult result;
+    if (velocityIterations <= 0 || positionIterations <= 0) {
+        result.status = ContactSolverStatus::IterationLimit;
+        return result;
+    }
     if (island.limitExceeded ||
         static_cast<int>(island.ballIndices.size()) >
             profile.solver.maximumIslandSize) {
@@ -258,7 +262,7 @@ ContactSolverResult solveContactIsland(
         return result;
     }
 
-    for (int iteration = 0; iteration < profile.solver.velocityIterations;
+    for (int iteration = 0; iteration < velocityIterations;
             ++iteration) {
         result.velocityIterations = iteration + 1;
         for (int sweep = 0; sweep < 2; ++sweep) {
@@ -370,7 +374,7 @@ ContactSolverResult solveContactIsland(
         }
     }
 
-    for (int iteration = 0; iteration < profile.solver.positionIterations;
+    for (int iteration = 0; iteration < positionIterations;
             ++iteration) {
         result.positionIterations = iteration + 1;
         for (std::size_t index = 0; index < constraints.size(); ++index) {
@@ -437,6 +441,14 @@ ContactSolverResult solveContactIsland(
         result.status = ContactSolverStatus::IterationLimit;
     }
     return result;
+}
+
+ContactSolverResult solveContactIsland(
+    GameState& state, const ContactIsland& island,
+    const PhysicsProfile& profile)
+{
+    return solveContactIslandIteration(state, island, profile,
+        profile.solver.velocityIterations, profile.solver.positionIterations);
 }
 
 const char* contactSolverStatusName(ContactSolverStatus status)

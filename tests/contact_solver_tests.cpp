@@ -164,5 +164,27 @@ int main()
     const ContactSolverResult limited = solveContactIsland(chain, island, bounded);
     expect(limited.status == ContactSolverStatus::IterationLimit,
         "unconverged chain should return an iteration-limit status");
+
+    GameState delegated = stateFor(2);
+    delegated.balls[0].velocity.x = 100.0f;
+    ContactIsland delegatedIsland;
+    delegatedIsland.ballIndices = {0, 1};
+    delegatedIsland.contacts = {pair(0, 1)};
+    GameState boundedEntry = delegated;
+    const ContactSolverResult wrapperResult = solveContactIsland(
+        delegated, delegatedIsland, elastic);
+    const ContactSolverResult boundedResult = solveContactIslandIteration(
+        boundedEntry, delegatedIsland, elastic,
+        elastic.solver.velocityIterations,
+        elastic.solver.positionIterations);
+    expect(wrapperResult.status == boundedResult.status &&
+        delegated.balls[0].velocity.x == boundedEntry.balls[0].velocity.x &&
+        delegated.balls[1].velocity.x == boundedEntry.balls[1].velocity.x,
+        "the legacy solver delegates without changing its output");
+    expect(solveContactIslandIteration(boundedEntry, delegatedIsland, elastic,
+        0, 1).status == ContactSolverStatus::IterationLimit &&
+        solveContactIslandIteration(boundedEntry, delegatedIsland, elastic,
+        1, 0).status == ContactSolverStatus::IterationLimit,
+        "nonpositive bounded iteration counts are rejected");
     return 0;
 }

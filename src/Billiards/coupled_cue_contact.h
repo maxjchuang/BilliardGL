@@ -12,6 +12,8 @@ enum class CoupledCueContactStatus {
     PassiveEnergyGain,
     CompressionLimit,
     ForceLimit,
+    ContactIslandLimit,
+    PenetrationLimit,
     NoRelease,
     Nonconvergence
 };
