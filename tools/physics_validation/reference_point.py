@@ -27,7 +27,13 @@ _HEADER = (
 _SAFE_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*")
 _UNITS = {"cm", "cm/s", "cm/s^2", "s", "degree", "rad/s", "N*s", "J", "dimensionless"}
 _PARTITIONS = {"CALIBRATION", "HOLDOUT"}
-_POOL_APPLICABILITY = {"DIRECT", "CONVERTED", "TREND_ONLY", "NOT_APPLICABLE"}
+_POOL_APPLICABILITY = {
+    "DIRECT",
+    "CONVERTED",
+    "TREND_ONLY",
+    "TRANSFER_LIMITED",
+    "NOT_APPLICABLE",
+}
 
 
 @dataclass(frozen=True)

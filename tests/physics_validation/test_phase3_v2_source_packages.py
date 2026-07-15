@@ -22,6 +22,7 @@ EXPECTED_SPENT = {
 EXPECTED_HOLDOUT_STATUS = {
     "sudo_2002": "spent",
     "derby_fuller_1999": "confirmation",
+    "han_2005": "confirmation",
 }
 EXPECTED_SCALARS = {
     "sudo_2002": {
@@ -36,6 +37,11 @@ EXPECTED_SCALARS = {
         "cue_sliding_time", "target_sliding_time", "cue_final_speed",
         "target_final_speed", "momentum_before", "momentum_after",
         "kinetic_energy_loss",
+    },
+    "han_2005": {
+        "coefficient_a", "coefficient_b", "coefficient_c",
+        "han_speed_050", "han_speed_100", "han_speed_150",
+        "han_speed_200", "han_speed_250",
     },
 }
 

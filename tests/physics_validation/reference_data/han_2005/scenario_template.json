@@ -1,0 +1,57 @@
+{
+  "base_scenario": {
+    "balls": [],
+    "description": "Han 2005 cross-equipment cushion restitution trend confirmation",
+    "evidence": {
+      "grade": "B",
+      "pool_applicability": "TRANSFER_LIMITED",
+      "source": "han_2005"
+    },
+    "expectations": [],
+    "schema_version": 6
+  },
+  "cases": {
+    "han_speed_050": {
+      "incident_normal_speed_m_s": 0.5,
+      "reference_point_id": "han_speed_050",
+      "status": "confirmation_only_transfer_limited_absolute"
+    },
+    "han_speed_100": {
+      "incident_normal_speed_m_s": 1.0,
+      "reference_point_id": "han_speed_100",
+      "status": "confirmation_only_transfer_limited_absolute"
+    },
+    "han_speed_150": {
+      "incident_normal_speed_m_s": 1.5,
+      "reference_point_id": "han_speed_150",
+      "status": "confirmation_only_transfer_limited_absolute"
+    },
+    "han_speed_200": {
+      "incident_normal_speed_m_s": 2.0,
+      "reference_point_id": "han_speed_200",
+      "status": "confirmation_only_transfer_limited_absolute"
+    },
+    "han_speed_250": {
+      "incident_normal_speed_m_s": 2.5,
+      "reference_point_id": "han_speed_250",
+      "status": "confirmation_only_transfer_limited_absolute"
+    }
+  },
+  "hard_metrics": [
+    "normalized_curve_rmse",
+    "finite_bounded_response",
+    "continuous_response",
+    "source_domain_response",
+    "nonincreasing_total_energy"
+  ],
+  "normalization": {
+    "equation": "curve_value=e(v)/e(0.5 m/s)",
+    "reference_speed_m_s": 0.5,
+    "source_evaluation_domain_m_s": [
+      0.5,
+      2.5
+    ]
+  },
+  "normalized_curve_rmse_maximum": 0.15,
+  "schema_version": 1
+}

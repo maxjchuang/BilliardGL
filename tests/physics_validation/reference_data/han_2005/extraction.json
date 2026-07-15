@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-15",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:394d7d67515e2374225c7f5f065556d193b6c8abfd16c8455b6a6d74d12b9535"
+    }
+  ],
+  "method": "Deterministic evaluation of the empirical restitution polynomial printed in Eq. (26) of the locally audited primary publication",
+  "operator": "Codex source-evidence audit",
+  "output_sha256": "sha256:b20ab42b5ae7a2fa3548ca1efc0cf7cd38cb51a30e77cb2f9cb2e91883e88317",
+  "review": {
+    "date": "2026-07-15",
+    "method": "Second-pass comparison of coefficients, apparatus, page, and equation locator against all nine PDF pages",
+    "reviewed_by": "Codex independent transcription review"
+  },
+  "rounding_policy": "Preserve printed coefficients exactly; derived points use IEEE-754 double evaluation serialized with 17 significant digits; coefficient last-place half-units are independent rectangular uncertainties.",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.extract_han_2005",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:22bfcd09368da94ce90c5f0f953d0fadf8f15a00163b6c7384109927546c5f3d",
+  "tool": {
+    "name": "Python standard-library polynomial evaluator",
+    "version": "2026-07-15"
+  },
+  "transformations": [
+    {
+      "formula": "e=0.39+0.257*v-0.044*v^2",
+      "id": "han_equation_26",
+      "input_unit": "m/s",
+      "output_unit": "dimensionless"
+    }
+  ],
+  "uncertainty_interpretation": "Independent standard uncertainties propagated from the printed coefficient resolutions; the 0.15 normalized-curve engineering threshold is preregistered separately."
+}
