@@ -24,7 +24,8 @@ def _run(command, cwd):
     )
 
 
-def _clean_build_evidence(repository_root, source_revision, jobs=2):
+def _clean_build_evidence(repository_root, source_revision,
+                          expected_profile_id="chinese_pool_full_game_v2", jobs=2):
     """Build twice from detached checkouts at one stable, freshly cleared path."""
     repository_root = Path(repository_root).resolve()
     checkout = Path(tempfile.gettempdir()) / "billiardgl-phase3-freeze-worktree"
@@ -49,7 +50,7 @@ def _clean_build_evidence(repository_root, source_revision, jobs=2):
                 profile = _run(
                     (executable, "--print-physics-profile"), checkout).stdout
                 parsed = json.loads(profile)
-                if parsed.get("id") != "chinese_pool_full_game_v2":
+                if parsed.get("id") != expected_profile_id:
                     raise ValueError("clean build selected an unexpected profile")
                 profile_digests.append(_sha256_bytes(profile))
             finally:
@@ -87,7 +88,7 @@ def phase3_freeze_document(source_revision, build_digests, profile_digests,
         raise ValueError("two clean build profile outputs differ")
     return {
         "schema_version": 2,
-        "candidate_id": "phase3_integrated_v2",
+        "candidate_id": inventory["candidate_id"],
         "source_revision": source_revision,
         "executable_sha256": build_digests[0],
         "clean_build_sha256": list(build_digests),
@@ -111,7 +112,8 @@ def freeze_phase3_candidate(repository_root, source_revision, inventory_path,
             raise ValueError("phase 3 freeze requires a clean working tree")
     inventory_path = Path(inventory_path)
     inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
-    if inventory.get("candidate_id") != "phase3_integrated_v2":
+    if inventory.get("candidate_id") not in {
+            "phase3_integrated_v2", "phase3_integrated_v3"}:
         raise ValueError("unexpected phase 3 inventory candidate")
     for artifact in _inventory_artifacts(inventory):
         path = repository_root / artifact["path"]
@@ -121,8 +123,12 @@ def freeze_phase3_candidate(repository_root, source_revision, inventory_path,
         ("git", "rev-parse", f"{source_revision}^{{commit}}"),
         repository_root,
     ).stdout.decode("ascii").strip()
+    profile_document = json.loads(
+        (repository_root / inventory["profile"]["path"])
+        .read_text(encoding="utf-8"))
+    expected_profile_id = profile_document["runtime_profile"]["id"]
     build_digests, profile_digests = _clean_build_evidence(
-        repository_root, revision, jobs=jobs)
+        repository_root, revision, expected_profile_id, jobs=jobs)
     document = phase3_freeze_document(
         revision, build_digests, profile_digests, inventory)
     output = Path(output)

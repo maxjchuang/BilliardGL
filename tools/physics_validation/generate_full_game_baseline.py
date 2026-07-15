@@ -23,6 +23,8 @@ def generate_documents(root, freeze_path, matrix_path, budget_path,
     root = Path(root).resolve()
     freeze = json.loads(Path(freeze_path).read_text(encoding="utf-8"))
     matrix = json.loads(Path(matrix_path).read_text(encoding="utf-8"))
+    expected_profile_id = matrix.get(
+        "physics_profile_id", "chinese_pool_full_game_v2")
     cases = {}
     rows = []
     for specification in matrix["cases"]:
@@ -34,7 +36,7 @@ def generate_documents(root, freeze_path, matrix_path, budget_path,
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
         trace = json.loads(trace_path.read_text(encoding="utf-8"))
         profile_ids = {frame["physics_profile_id"] for frame in trace["frames"]}
-        if profile_ids != {"chinese_pool_full_game_v2"}:
+        if profile_ids != {expected_profile_id}:
             raise ValueError(f"unexpected profile IDs for {case_id}: {profile_ids}")
         evidence = {
             "seed": summary["seed"],
@@ -47,7 +49,7 @@ def generate_documents(root, freeze_path, matrix_path, budget_path,
             "dropped_trace_frames": summary["dropped_trace_frames"],
             "step_failures": summary["step_failures"],
             "deterministic_hash": summary["deterministic_hash"],
-            "physics_profile_id": "chinese_pool_full_game_v2",
+            "physics_profile_id": expected_profile_id,
             "summary_sha256": sha256(summary_path),
             "trace_sha256": sha256(trace_path),
             "index_sha256": sha256(index_path),

@@ -41,30 +41,7 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-    profile.id = "chinese_pool_full_game_v2";
-    profile.formulaVersion = "full_game_integration_v2";
-    profile.ball.normalRestitution = 0.97f;
-    profile.ball.frictionCoefficient = 0.1f;
-    profile.surface.slidingFrictionCoefficient = 0.19999996439955606f;
-    profile.surface.rollingResistanceAccelerationCmS2 = 12.499999813735489f;
-    profile.surface.torsionalSpinDecelerationRadS2 = 0.0f;
-    profile.surface.material = "mathavan_phase_correct_surface_v2";
-    profile.cushion.normalRestitution = 0.93f;
-    profile.cushion.restitutionIntercept = 1.0f;
-    profile.cushion.restitutionSlopePerMps = 0.056f;
-    profile.cushion.minimumRestitution = 0.0f;
-    profile.cushion.maximumRestitution = 0.93f;
-    profile.cushion.frictionCoefficient = 0.14f;
-    profile.cushion.noseHeightRatio = 1.4f;
-    profile.cushion.maximumRigidIncidentSpeedCmS = 250.0f;
-    profile.cushion.material = "mathavan_speed_dependent_cushion_v2";
-    profile.tableBoundary.cornerThroatWidthCm = 11.0f;
-    profile.tableBoundary.sideThroatWidthCm = 7.0f;
-    profile.tableBoundary.jawRadiusCm = 1.2f;
-    profile.tableBoundary.throatDepthCm = 4.0f;
-    profile.tableBoundary.captureDepthCm = 6.0f;
-    profile.tableBoundary.geometryId = "wpa_pool_analytic_v1";
-    profile.tableBoundary.material = "profiled_table_boundary";
+#include "generated/phase3_v3_profile.inc"
     return profile;
 }
 
