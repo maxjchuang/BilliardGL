@@ -1,0 +1,41 @@
+{
+  "candidate_id": "phase3_integrated_v5",
+  "checks": {
+    "candidate_contract_admitted": true,
+    "complete_inventory_bound": true,
+    "confirmation_access_ready": true,
+    "confirmation_contract_real_path": true,
+    "confirmation_packages_preregistered": true,
+    "confirmation_state_absent": true,
+    "fit_inputs_are_spent_only": true,
+    "frozen_source_is_ancestor": true,
+    "full_game_matrix_passed": true,
+    "reproducible_clean_build": true,
+    "reproducible_runtime_profile": true,
+    "single_candidate_identity": true
+  },
+  "confirmation_contract_proof_sha256": "e4943990eda25d3228912acdfd42a7d41c1b05712fbb349a53413c6efd71166d",
+  "confirmation_packages": {
+    "cross_2016_newtons_cradle": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/cross_2016_newtons_cradle/manifest.json",
+      "manifest_sha256": "f1f9397a4f3bdf936434c628fb74c320c15bdea1ae25c5faf6a313ed9d016086",
+      "ready": true
+    },
+    "han_2005": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/han_2005/manifest.json",
+      "manifest_sha256": "5860ce9a6856cd8d3bacc7cb791642d30c6dc2a334550b430becdc417435a87d",
+      "ready": true
+    }
+  },
+  "failures": [],
+  "freeze_sha256": "8c483182747fe5cc9a51968321670b8c6c70ff27650b7ff6bbec13ca8be62438",
+  "full_game_case_count": 12,
+  "full_game_matrix_summary_sha256": "bdce39d41f41d37517be7936d0e3fb7fed0f931c0156d2b9637ea10f090d1c0b",
+  "full_game_tree_sha256": "6fc8965e6b40358a811161d6acbe562f9757543b8eb2c99af8207536ea5ec2d2",
+  "inventory_sha256": "87bfe894bb31cf2edba73c3d97f46eb3899e1c9b3d0ab2497be506989110caf4",
+  "schema_version": 1,
+  "source_revision": "0245f115850e94a94917e65c49556c354eba20f3",
+  "status": "READY"
+}

@@ -11,6 +11,26 @@ from .confirmation_transaction import (
 )
 
 
+_CANDIDATE_CONTRACTS = {
+    "phase3_integrated_v2": {
+        "profile": "physics_models/profiles/chinese_pool_full_game_v2.json",
+        "packages": {"derby_fuller_1999", "sudo_2002"},
+    },
+    "phase3_integrated_v3": {
+        "profile": "physics_models/profiles/chinese_pool_full_game_v3.json",
+        "packages": {"derby_fuller_1999", "han_2005"},
+    },
+    "phase3_integrated_v4": {
+        "profile": "physics_models/profiles/chinese_pool_full_game_v4.json",
+        "packages": {"alciatore_2005_tp_a15", "han_2005"},
+    },
+    "phase3_integrated_v5": {
+        "profile": "physics_models/profiles/chinese_pool_full_game_v5.json",
+        "packages": {"cross_2016_newtons_cradle", "han_2005"},
+    },
+}
+
+
 def _sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -86,6 +106,17 @@ def _spent_fit_inputs(root):
     return result
 
 
+def _inventory_artifacts(inventory):
+    artifacts = [
+        inventory.get("profile"), inventory.get("full_game_matrix"),
+        inventory.get("performance_budget"),
+        *inventory.get("calibration_reports", []),
+        *inventory.get("confirmation_packages", []),
+        *inventory.get("metric_contracts", []),
+    ]
+    return [item for item in artifacts if isinstance(item, dict)]
+
+
 def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
     root = Path(root).resolve()
     freeze_path = Path(freeze).resolve()
@@ -100,12 +131,30 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
     checks = {}
     failures = []
     candidate_id = freeze_document.get("candidate_id")
+    candidate_contract = _CANDIDATE_CONTRACTS.get(candidate_id)
 
     _record(checks, failures, "single_candidate_identity",
             isinstance(candidate_id, str) and bool(candidate_id) and
             inventory_document.get("candidate_id") == candidate_id and
             freeze_path.parent.name == candidate_id,
             "freeze, inventory, and candidate directory identities differ")
+    _record(checks, failures, "candidate_contract_admitted",
+            candidate_contract is not None and
+            inventory_document.get("profile", {}).get("path") ==
+            candidate_contract.get("profile"),
+            "candidate or profile is not admitted by the exact readiness contract")
+    inventory_artifacts = _inventory_artifacts(inventory_document)
+    frozen_artifacts = freeze_document.get("artifacts", [])
+    inventory_bindings = {
+        (item.get("path"), item.get("role"), item.get("sha256"))
+        for item in inventory_artifacts}
+    frozen_bindings = {
+        (item.get("path"), item.get("role"), item.get("sha256"))
+        for item in frozen_artifacts if isinstance(item, dict)}
+    _record(checks, failures, "complete_inventory_bound",
+            len(inventory_bindings) == len(inventory_artifacts) and
+            inventory_bindings == frozen_bindings,
+            "freeze does not bind the exact pre-freeze inventory")
     build_hashes = freeze_document.get("clean_build_sha256", [])
     profile_hashes = freeze_document.get("clean_profile_sha256", [])
     _record(checks, failures, "reproducible_clean_build",
@@ -136,6 +185,9 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
         item.get("package_id"): item
         for item in inventory_package_rows if isinstance(item, dict)}
     package_keys = set(inventory_packages)
+    expected_packages = (
+        candidate_contract.get("packages", set())
+        if candidate_contract is not None else set())
     fit_rows = _spent_fit_inputs(root)
     _record(checks, failures, "fit_inputs_are_spent_only",
             bool(fit_rows) and
@@ -146,6 +198,7 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
 
     _record(checks, failures, "confirmation_packages_preregistered",
             len(inventory_package_rows) == 2 and len(package_keys) == 2 and
+            package_keys == expected_packages and
             None not in package_keys and all(
                 isinstance(item, dict) and
                 item.get("partition") == "confirmation" and
@@ -189,14 +242,17 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
         len(package_state) == 2 and
         all(item.get("ready") for item in package_state.values()))
 
+    proof_sha256 = None
     if contract_proof is not None:
         proof_failures = validate_contract_proof(
             contract_proof, freeze_document.get("executable_sha256"))
         checks["confirmation_contract_real_path"] = not proof_failures
         failures.extend(proof_failures)
+        if not isinstance(contract_proof, (dict, bytes)):
+            proof_sha256 = _sha256(contract_proof)
 
     failures = sorted(set(failures))
-    return {
+    document = {
         "candidate_id": candidate_id,
         "checks": checks,
         "confirmation_packages": package_state,
@@ -210,6 +266,9 @@ def build_readiness(root, freeze, inventory, full_game, contract_proof=None):
         "source_revision": freeze_document.get("source_revision"),
         "status": "READY" if not failures else "BLOCKED",
     }
+    if proof_sha256 is not None:
+        document["confirmation_contract_proof_sha256"] = proof_sha256
+    return document
 
 
 def build_rejection(root, freeze, readiness):
