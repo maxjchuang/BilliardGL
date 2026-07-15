@@ -41,7 +41,7 @@ PhysicsProfileValidation invalid(const std::string& error)
 PhysicsProfile defaultChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile;
-#include "generated/phase3_v4_profile.inc"
+#include "generated/phase3_v5_profile.inc"
     return profile;
 }
 

@@ -135,7 +135,7 @@ def freeze_phase3_candidate(repository_root, source_revision, inventory_path,
     inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
     if inventory.get("candidate_id") not in {
             "phase3_integrated_v2", "phase3_integrated_v3",
-            "phase3_integrated_v4"}:
+            "phase3_integrated_v4", "phase3_integrated_v5"}:
         raise ValueError("unexpected phase 3 inventory candidate")
     for artifact in _inventory_artifacts(inventory):
         path = repository_root / artifact["path"]

@@ -114,7 +114,7 @@ int main()
         "reset clears and disables tracing");
 
     billiardgl::GameRuntime profiled;
-    expect(profiled.physicsProfile().id == "chinese_pool_full_game_v4",
+    expect(profiled.physicsProfile().id == "chinese_pool_full_game_v5",
         "runtime should own the production profile by default");
     billiardgl::PhysicsProfile experiment =
         billiardgl::defaultChinesePoolPhysicsProfile();
@@ -202,7 +202,7 @@ int main()
             billiardgl::PhysicsStepStatus::Failed,
         "failed runtime ticks restore state while retaining diagnostics");
     billiardgl::GameRuntime productionRuntime;
-    expect(productionRuntime.physicsProfile().id == "chinese_pool_full_game_v4",
+    expect(productionRuntime.physicsProfile().id == "chinese_pool_full_game_v5",
         "a fresh runtime retains the registered production profile");
 
     billiardgl::GameState frozenState;

@@ -1,18 +1,17 @@
 import hashlib
 import json
-import subprocess
 import unittest
 from pathlib import Path
 
 from tools.physics_validation.build_v4_profile import (
     build_v4_profile,
+    canonical_runtime_text,
     physics_values,
     write_v4_candidate,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
-EXECUTABLE = ROOT / "build/Billiards"
 V3_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v3.json"
 V4_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v4.json"
 INVENTORY = ROOT / "physics_models/promotion/phase3_candidates_v4.json"
@@ -33,15 +32,16 @@ class Phase3V4CandidateTests(unittest.TestCase):
                          v3["runtime_profile"]["formula_version"])
         self.assertEqual(physics_values(v4), physics_values(v3))
 
-    def test_runtime_default_is_exact_v4_profile(self):
-        emitted = json.loads(subprocess.run(
-            [str(EXECUTABLE), "--print-physics-profile"], check=True,
-            capture_output=True, text=True).stdout)
-        query = json.loads(V4_PROFILE.read_text(encoding="utf-8"))["runtime_query"]
-        self.assertEqual(emitted["id"], query["id"])
-        self.assertEqual(emitted["formula_version"], query["formula_version"])
+    def test_committed_v4_runtime_query_is_exact_profile_snapshot(self):
+        document = json.loads(V4_PROFILE.read_text(encoding="utf-8"))
+        profile = document["runtime_profile"]
+        query = document["runtime_query"]
+        self.assertEqual(profile["id"], query["id"])
+        self.assertEqual(profile["formula_version"], query["formula_version"])
         self.assertEqual(
-            hashlib.sha256(emitted["canonical_text"].encode("utf-8")).hexdigest(),
+            hashlib.sha256(
+                canonical_runtime_text(profile).encode("utf-8")
+            ).hexdigest(),
             query["canonical_text_sha256"],
         )
 

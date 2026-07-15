@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "path": "physics_models/regression/phase3_v4_ordinary_shot_baseline.json",
+    "sha256": "e3a95ba137c5851aefe135ae861b2cc15c1e7309857f8db2ddc4151504df2af6"
+  },
+  "candidate_id": "phase3_integrated_v5",
+  "formula_version": "phase3_integrated_v5_coupled_cue_contact_v1",
+  "ordinary_physics_identical": true,
+  "schema_version": 1,
+  "sections": {
+    "ball": {
+      "matches": true,
+      "v4_sha256": "77b52ea9fc920b11a343cda23f18be6b63fe663505bc9de9ead41cd0d7a136d1",
+      "v5_sha256": "77b52ea9fc920b11a343cda23f18be6b63fe663505bc9de9ead41cd0d7a136d1"
+    },
+    "cue": {
+      "matches": true,
+      "v4_sha256": "101b3223ea890a16a35e5d93311ecb2a242e2b3844c9443fae5c1307059bc7c3",
+      "v5_sha256": "101b3223ea890a16a35e5d93311ecb2a242e2b3844c9443fae5c1307059bc7c3"
+    },
+    "cushion": {
+      "matches": true,
+      "v4_sha256": "4f41c95a2b980dc786b45df669749e9e3a16f98f2ef38a7e1d683691b9b76555",
+      "v5_sha256": "4f41c95a2b980dc786b45df669749e9e3a16f98f2ef38a7e1d683691b9b76555"
+    },
+    "solver": {
+      "matches": true,
+      "v4_sha256": "25f5a46b60a6dfdd7de75ca39bd88524f66b26f6dc34599934be19bc96c19912",
+      "v5_sha256": "25f5a46b60a6dfdd7de75ca39bd88524f66b26f6dc34599934be19bc96c19912"
+    },
+    "surface": {
+      "matches": true,
+      "v4_sha256": "b4243044204e569ff3b6fb7d05959a0a132d5c3bcd77d225d0c77ec41958cda4",
+      "v5_sha256": "b4243044204e569ff3b6fb7d05959a0a132d5c3bcd77d225d0c77ec41958cda4"
+    },
+    "table_boundary": {
+      "matches": true,
+      "v4_sha256": "6f04324f70465112d3c1537d087bd8e56619238033f47f115cec0721253b2039",
+      "v5_sha256": "6f04324f70465112d3c1537d087bd8e56619238033f47f115cec0721253b2039"
+    }
+  },
+  "v4_profile": {
+    "id": "chinese_pool_full_game_v4",
+    "path": "physics_models/profiles/chinese_pool_full_game_v4.json",
+    "sha256": "cb9cb4c3315d60cba6178389c38fa346a608152d7ac6248c673a0dfbd1ad7bb2"
+  },
+  "v5_profile": {
+    "id": "chinese_pool_full_game_v5",
+    "path": "physics_models/profiles/chinese_pool_full_game_v5.json",
+    "sha256": "e626dfcccb5c85475bb6886bbb6a8842192ce54f8280f12f71978638454f5803"
+  }
+}

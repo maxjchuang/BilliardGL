@@ -1,0 +1,179 @@
+{
+  "artifact_root": "physics_models/candidates/phase3_integrated_v5/full_game",
+  "cases": [
+    {
+      "coverage": [
+        "cue_contact",
+        "center_hit",
+        "user_action"
+      ],
+      "expected": {
+        "cue_contact_applied": true,
+        "cue_contact_miscue": false
+      },
+      "id": "cue_center_hit",
+      "replay": "full-game-stress --case cue_center_hit --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "cue_contact",
+        "near_miscue",
+        "automation_action"
+      ],
+      "expected": {
+        "cue_contact_applied": true,
+        "cue_contact_miscue": false
+      },
+      "id": "cue_near_miscue",
+      "replay": "full-game-stress --case cue_near_miscue --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "surface_motion",
+        "sliding_to_rolling",
+        "user_action"
+      ],
+      "expected": {
+        "minimum_surface_transitions": 1
+      },
+      "id": "sliding_to_rolling",
+      "replay": "full-game-stress --case sliding_to_rolling --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "ball_contact",
+        "oblique_collision",
+        "user_action"
+      ],
+      "expected": {
+        "ball_collisions": 1
+      },
+      "id": "oblique_ball_collision",
+      "replay": "full-game-stress --case oblique_ball_collision --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "rail_contact",
+        "straight_rail",
+        "user_action"
+      ],
+      "expected": {
+        "minimum_rail_collisions": 1
+      },
+      "id": "rail_rebound",
+      "replay": "full-game-stress --case rail_rebound --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "pocket_topology",
+        "side_pocket",
+        "user_action"
+      ],
+      "expected": {
+        "object_ball_captures": 1
+      },
+      "id": "side_pocket_capture",
+      "replay": "full-game-stress --case side_pocket_capture --seed 7",
+      "seed": 7
+    },
+    {
+      "coverage": [
+        "rack",
+        "break",
+        "fixed_seed",
+        "user_action"
+      ],
+      "expected": {
+        "completed_shots": 1,
+        "minimum_ball_collisions": 1
+      },
+      "id": "seeded_break",
+      "replay": "full-game-stress --case seeded_break --seed 101",
+      "seed": 101
+    },
+    {
+      "coverage": [
+        "scoring",
+        "multiple_shots",
+        "turn_retention",
+        "user_action"
+      ],
+      "expected": {
+        "cue_ball_captures": 0,
+        "foul_events": 0,
+        "minimum_object_ball_captures": 3,
+        "minimum_score_events": 3,
+        "turn_transfers": 0
+      },
+      "id": "continuous_scoring",
+      "replay": "full-game-stress --case continuous_scoring --seed 211",
+      "seed": 211
+    },
+    {
+      "coverage": [
+        "scratch",
+        "foul",
+        "turn_transfer",
+        "user_action"
+      ],
+      "expected": {
+        "cue_ball_captures": 1,
+        "foul_events": 1,
+        "turn_transfers": 1
+      },
+      "id": "cue_ball_scratch",
+      "replay": "full-game-stress --case cue_ball_scratch --seed 307",
+      "seed": 307
+    },
+    {
+      "coverage": [
+        "fixed_seed",
+        "legal_action_generation",
+        "multiple_shots",
+        "user_action"
+      ],
+      "expected": {
+        "completed_shots": 3,
+        "illegal_action_attempts": 0
+      },
+      "id": "randomized_legal_sequence",
+      "replay": "full-game-stress --case randomized_legal_sequence --seed 305419896",
+      "seed": 305419896
+    },
+    {
+      "coverage": [
+        "fixed_tick",
+        "step_batching",
+        "common_tick_comparison"
+      ],
+      "expected": {
+        "event_mismatches": 0,
+        "state_mismatches": 0
+      },
+      "id": "cadence_equivalence",
+      "replay": "full-game-stress --case cadence_equivalence --seed 401",
+      "seed": 401
+    },
+    {
+      "coverage": [
+        "fixed_tick",
+        "host_load",
+        "common_tick_comparison"
+      ],
+      "expected": {
+        "event_mismatches": 0,
+        "state_mismatches": 0
+      },
+      "id": "host_load_equivalence",
+      "replay": "full-game-stress --case host_load_equivalence --seed 503",
+      "seed": 503
+    }
+  ],
+  "physics_profile_id": "chinese_pool_full_game_v5",
+  "schema_version": 2
+}

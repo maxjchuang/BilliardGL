@@ -6,6 +6,7 @@ import subprocess
 from pathlib import Path
 
 from .build_v3_profile import canonical_runtime_text
+from .build_v5_profile import canonical_v5_runtime_text
 from .confirmation_adapters import base_scenario, scenario_ball
 from .run import _execute_once_with_evidence
 
@@ -33,10 +34,15 @@ def _runtime_profile(root, executable):
     for path in sorted((root / "physics_models/profiles").glob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         profile = document.get("runtime_profile", {})
+        canonicalizer = (
+            canonical_v5_runtime_text
+            if "frozen_cue_contact" in profile
+            else canonical_runtime_text
+        )
         if profile.get("id") == reported.get("id") and \
                 profile.get("formula_version") == reported.get(
                     "formula_version") and \
-                canonical_runtime_text(profile) == reported.get(
+                canonicalizer(profile) == reported.get(
                     "canonical_text"):
             matches.append(profile)
     if len(matches) != 1:
