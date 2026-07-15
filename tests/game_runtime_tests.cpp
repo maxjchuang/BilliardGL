@@ -2,6 +2,7 @@
 #include "shot.h"
 
 #include <cmath>
+#include <cstring>
 #include <cstdlib>
 #include <iostream>
 
@@ -203,5 +204,59 @@ int main()
     billiardgl::GameRuntime productionRuntime;
     expect(productionRuntime.physicsProfile().id == "chinese_pool_full_game_v4",
         "a fresh runtime retains the registered production profile");
+
+    billiardgl::GameState frozenState;
+    billiardgl::initializeBalls(frozenState);
+    for (billiardgl::BallState& ball : frozenState.balls) {
+        ball.pocketed = true;
+        ball.position = billiardgl::Point3{};
+        ball.velocity = billiardgl::Point3{};
+        ball.angularVelocity = billiardgl::Point3{};
+    }
+    frozenState.balls[0].pocketed = false;
+    frozenState.balls[1].pocketed = false;
+    billiardgl::PhysicsProfile frozenProfile =
+        billiardgl::defaultChinesePoolPhysicsProfile();
+    frozenProfile.id = "frozen_runtime_fixture";
+    frozenProfile.frozenCueContact.enabled = true;
+    frozenState.balls[1].position.x =
+        2.0f * frozenProfile.ball.radiusCm;
+    billiardgl::CueImpactInput frozenInput;
+    frozenInput.cueBallIndex = 0;
+    frozenInput.cueSpeedCmS = 200.0;
+    frozenInput.cueMassKg = 0.5;
+    frozenInput.direction = {{1.0, 0.0, 0.0}};
+    frozenInput.chalkState = "CHALKED";
+    billiardgl::GameRuntime frozenRuntime;
+    expect(frozenRuntime.replaceStateForScenario(frozenState, frozenProfile).ok,
+        "frozen runtime fixture installs");
+    expect(frozenRuntime.applyCueImpact(frozenInput).ok &&
+        frozenRuntime.hasCueContactResult() &&
+        !frozenRuntime.cueContactResult().microsteps.empty() &&
+        frozenRuntime.state().balls[1].velocity.x > 0.0f,
+        "enabled frozen topology routes through the coupled solver");
+
+    billiardgl::PhysicsProfile failureProfile = frozenProfile;
+    failureProfile.id = "frozen_runtime_rollback";
+    failureProfile.frozenCueContact.maximumContactSeconds =
+        2.0 * failureProfile.frozenCueContact.microstepSeconds;
+    billiardgl::GameRuntime rollbackRuntime;
+    expect(rollbackRuntime.replaceStateForScenario(
+        frozenState, failureProfile).ok,
+        "rollback fixture installs with a valid bounded duration");
+    const billiardgl::GameState rollbackBefore = rollbackRuntime.state();
+    const std::size_t eventsBefore = rollbackRuntime.events().size();
+    const billiardgl::ActionResult rollback =
+        rollbackRuntime.applyCueImpact(frozenInput);
+    expect(!rollback.ok && std::string(rollback.errorCode) ==
+        "cue_contact_no_release",
+        "duration exhaustion exposes the stable frozen-contact error");
+    expect(std::memcmp(&rollbackRuntime.state(), &rollbackBefore,
+               sizeof(billiardgl::GameState)) == 0 &&
+        rollbackRuntime.events().size() == eventsBefore,
+        "failed frozen contact rolls back the complete game state and events");
+    expect(rollbackRuntime.hasCueContactResult() &&
+        !rollbackRuntime.cueContactResult().microsteps.empty(),
+        "failed frozen contact retains its diagnostic microtrace");
     return 0;
 }

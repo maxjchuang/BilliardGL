@@ -1,5 +1,7 @@
 #include "game_runtime.h"
 
+#include "coupled_cue_contact.h"
+#include "frozen_cue_topology.h"
 #include "input.h"
 #include "physics.h"
 #include "rules.h"
@@ -24,13 +26,20 @@ const char* stableContactError(const std::string& error)
         return "cue_not_approaching_contact_normal";
     if (error == "vertical_ball_impulse_requires_3d")
         return "vertical_ball_impulse_requires_3d";
+    if (error == "nonfinite_state") return "nonfinite_state";
+    if (error == "passive_energy_gain") return "passive_energy_gain";
+    if (error == "compression_limit") return "compression_limit";
+    if (error == "contact_island_limit") return "contact_island_limit";
+    if (error == "cue_contact_no_release") return "cue_contact_no_release";
+    if (error == "cue_contact_nonconvergence")
+        return "cue_contact_nonconvergence";
     return "cue_contact_failed";
 }
 
 }  // namespace
 
 CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
-    const PhysicsProfile& profile)
+    const PhysicsProfile& profile, PhysicsBoundaryMode boundaryMode)
 {
     CueShotApplication application;
     if (input.cueBallIndex != 0) {
@@ -44,8 +53,40 @@ CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
         return application;
     }
 
-    application.contact = resolveCueContact(
-        state.balls[0], input, profile.ball, profile.cue);
+    bool coupled = false;
+    if (profile.frozenCueContact.enabled) {
+        const FrozenCueTopology topology = detectFrozenCueTopology(
+            state, input.cueBallIndex, profile, boundaryMode);
+        if (topology.status == FrozenCueTopologyStatus::IslandLimit) {
+            application.contact.error = "contact_island_limit";
+            application.action = ActionResult{false, "contact_island_limit"};
+            return application;
+        }
+        if (topology.status ==
+            FrozenCueTopologyStatus::ContradictoryTopology) {
+            application.contact.error = "cue_contact_nonconvergence";
+            application.action = ActionResult{
+                false, "cue_contact_nonconvergence"};
+            return application;
+        }
+        if (topology.frozen) {
+            coupled = true;
+            const CoupledCueContactResult solved = solveCoupledCueContact(
+                state, topology, input, profile);
+            application.contact = solved.contact;
+            if (solved.status == CoupledCueContactStatus::Released) {
+                state = solved.state;
+            } else {
+                application.action = ActionResult{
+                    false, stableContactError(solved.error)};
+                return application;
+            }
+        }
+    }
+    if (!coupled) {
+        application.contact = resolveCueContact(
+            state.balls[0], input, profile.ball, profile.cue);
+    }
     const bool modeledMiscue =
         application.contact.regime == CueContactRegime::Miscue;
     if (!application.contact.applied && !modeledMiscue) {
@@ -294,7 +335,8 @@ ActionResult GameRuntime::applyCueImpact(const CueImpactInput& input)
 {
     if (state_.ballsMoving) return ActionResult{false, "invalid_state"};
     GameState candidate = state_;
-    const CueShotApplication application = applyCueShot(candidate, input, physicsProfile_);
+    const CueShotApplication application = applyCueShot(
+        candidate, input, physicsProfile_, boundaryMode_);
     hasCueImpactInput_ = true;
     cueImpactInput_ = input;
     hasCueContactResult_ = true;
@@ -329,7 +371,8 @@ ActionResult GameRuntime::replaceStateForScenario(
     GameState candidate = state;
     CueShotApplication application;
     if (cueImpact && executeCueImpact) {
-        application = applyCueShot(candidate, *cueImpact, profile);
+        application = applyCueShot(
+            candidate, *cueImpact, profile, boundaryMode);
         if (!application.action.ok) return application.action;
     }
     replaceState(candidate);

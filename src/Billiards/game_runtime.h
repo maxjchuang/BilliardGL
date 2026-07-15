@@ -29,7 +29,8 @@ struct CueShotApplication {
 };
 
 CueShotApplication applyCueShot(GameState& state, const CueImpactInput& input,
-    const PhysicsProfile& profile);
+    const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode = PhysicsBoundaryMode::ProductionTable);
 
 class GameRuntime {
 public:
