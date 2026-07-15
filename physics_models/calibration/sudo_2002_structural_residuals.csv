@@ -1,0 +1,2 @@
+point_id,dataset_id,dataset_version,lifecycle,metric,expected,unit,observed,status,source_locator,rationale
+cushion_contact_time_plateau,sudo_2002,1.0.0,spent,cushion_contact_time_seconds,0.008,s,,OUT_OF_MODEL_SPENT,"PDF p.3 / article p.155, Fig. 4 plateau statement",The production rigid impulse solver has no finite-duration contact state; no telemetry-only duration is fabricated.

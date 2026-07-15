@@ -19,6 +19,8 @@ _SURFACE_SLIDING_FRICTION = 0.002
 _GRAVITY_M_S2 = 9.80665
 _V2_DATASETS = {"domenech_2023_ball_collision", "mathavan_2009_high_speed"}
 _V2_SERIES = {"billiard_alpha1", "billiard_delta2", "mathavan_velocity"}
+_V3_DATASETS = _V2_DATASETS | {"sudo_2002"}
+_V3_SERIES = _V2_SERIES | {"sudo_ball_collision"}
 _V2_INPUT_FIELDS = (
     "point_id", "dataset_id", "dataset_version", "lifecycle", "series_id",
     "case_id", "metric", "sample_phase", "impact_angle_degrees",
@@ -118,11 +120,11 @@ def _read_v2_impact_inputs(path):
             if not point_id or point_id in seen:
                 raise ValueError(f"line {line_number}: point_id must be nonempty and unique")
             seen.add(point_id)
-            if row["dataset_id"] not in _V2_DATASETS:
+            if row["dataset_id"] not in _V3_DATASETS:
                 raise ValueError(f"line {line_number}: confirmation or unknown dataset")
             if row["lifecycle"] != "spent":
                 raise ValueError(f"line {line_number}: collision fit input must be spent")
-            if row["series_id"] not in _V2_SERIES:
+            if row["series_id"] not in _V3_SERIES:
                 raise ValueError(f"line {line_number}: unsupported collision series")
             impact = _finite(row, "impact_angle_degrees", line_number)
             speed = _finite(row, "incident_speed_m_s", line_number)
@@ -137,7 +139,10 @@ def _read_v2_impact_inputs(path):
                     "object_normal_deflection_angle_degrees",
                     "separation_angle_degrees",
                     "post_collision_cue_speed_cm_s",
-                    "post_collision_object_speed_cm_s"}:
+                    "post_collision_object_speed_cm_s",
+                    "ball_ball_normal_restitution",
+                    "post_collision_separation_angle_degrees",
+                    "transverse_momentum_deficit_fraction"}:
                 raise ValueError(f"line {line_number}: unsupported collision metric")
             if row["sample_phase"] not in {
                     "immediate_post_impact", "first_pure_roll_after_event"}:
@@ -172,8 +177,13 @@ def _read_v2_impact_inputs(path):
             ))
     if not rows or [row.point_id for row in rows] != sorted(seen):
         raise ValueError("ball collision v2 inputs must be nonempty and sorted")
-    if {row.series_id for row in rows} != _V2_SERIES:
-        raise ValueError("ball collision v2 inputs do not cover every physical series")
+    series = frozenset(row.series_id for row in rows)
+    datasets = frozenset(row.dataset_id for row in rows)
+    if (series, datasets) not in {
+            (frozenset(_V2_SERIES), frozenset(_V2_DATASETS)),
+            (frozenset(_V3_SERIES), frozenset(_V3_DATASETS))}:
+        raise ValueError(
+            "ball collision inputs do not cover one complete versioned series set")
     return tuple(rows)
 
 
@@ -512,6 +522,22 @@ def _v2_prediction(point, restitution, friction):
         prediction = 100.0 * math.hypot(first_velocity[0], first_velocity[2])
     elif point.metric == "post_collision_object_speed_cm_s":
         prediction = 100.0 * math.hypot(second_velocity[0], second_velocity[2])
+    elif point.metric == "ball_ball_normal_restitution":
+        prediction = restitution
+    elif point.metric == "post_collision_separation_angle_degrees":
+        first_planar = (first_velocity[0], first_velocity[2])
+        second_planar = (second_velocity[0], second_velocity[2])
+        denominator = math.hypot(*first_planar) * math.hypot(*second_planar)
+        if denominator <= 1e-15:
+            prediction = 0.0
+        else:
+            cosine = max(-1.0, min(1.0,
+                (first_planar[0] * second_planar[0]
+                 + first_planar[1] * second_planar[1]) / denominator))
+            prediction = math.degrees(math.acos(cosine))
+    elif point.metric == "transverse_momentum_deficit_fraction":
+        prediction = abs(first_velocity[2] + second_velocity[2]) / \
+            point.incident_speed_m_s
     else:
         raise ValueError(f"unsupported collision metric {point.metric}")
     return prediction, diagnostics
@@ -561,8 +587,15 @@ def _v2_residuals(points, restitution, friction):
 
 def fit_ball_collision_parameters(points):
     points = tuple(sorted(points, key=lambda point: point.point_id))
-    if not points or {point.series_id for point in points} != _V2_SERIES:
-        raise ValueError("collision v2 fit requires all preregistered series")
+    required_series = (
+        _V3_SERIES if any(point.dataset_id == "sudo_2002" for point in points)
+        else _V2_SERIES
+    )
+    required_datasets = (
+        _V3_DATASETS if required_series == _V3_SERIES else _V2_DATASETS)
+    if not points or {point.series_id for point in points} != required_series \
+            or {point.dataset_id for point in points} != required_datasets:
+        raise ValueError("collision fit requires one complete preregistered series set")
     coarse = []
     for restitution in _grid(0.0, 1.0, 0.05):
         for friction in _grid(0.0, 1.0, 0.05):
@@ -591,7 +624,7 @@ def fit_ball_collision_parameters(points):
         "objective_by_series": by_series,
         "point_count_by_series": {
             series_id: sum(point.series_id == series_id for point in points)
-            for series_id in sorted(_V2_SERIES)
+            for series_id in sorted(required_series)
         },
         "residuals": residuals,
         "selected_regimes": regimes,
@@ -630,8 +663,74 @@ def build_v2_fit_report(points):
     }, fit["residuals"]
 
 
+def build_v3_fit_report(points):
+    fit = fit_ball_collision_v3(points)
+    if set(fit["objective_by_series"]) != _V3_SERIES:
+        raise ValueError("collision v3 fit requires Sudo spent evidence")
+    return {
+        "algorithm": {
+            "coarse_grid_step": 0.05,
+            "fine_grid_step": 0.01,
+            "objective": (
+                "mean_across_series_of_mean_squared_uncertainty_normalized_residual"
+            ),
+            "stable_tie_break": [
+                "objective", "normal_restitution", "friction_coefficient"],
+            "sudo_adapters": {
+                "ball_ball_normal_restitution": "selected normal restitution",
+                "post_collision_separation_angle_degrees": (
+                    "physical 30-degree, 0.98 m/s post-contact velocity angle"
+                ),
+                "transverse_momentum_deficit_fraction": (
+                    "absolute post-contact transverse momentum over incident momentum"
+                ),
+            },
+        },
+        "dataset_lifecycle": "spent",
+        "fit": {key: value for key, value in fit.items() if key != "residuals"},
+        "model": {
+            "contact_velocity": "translational_plus_angular",
+            "energy_constraint": "non_increasing_total_kinetic_energy",
+            "friction": "Coulomb_with_explicit_stick_slip",
+            "inertia_factor": 0.4,
+            "shape": "uniform_solid_sphere",
+        },
+        "parameter_bounds": {
+            "friction_coefficient": [0.0, 1.0],
+            "normal_restitution": [0.0, 1.0],
+        },
+        "schema_version": 3,
+    }, fit["residuals"]
+
+
+def fit_ball_collision_v3(points):
+    fit = fit_ball_collision_parameters(points)
+    if set(fit["objective_by_series"]) != _V3_SERIES:
+        raise ValueError("collision v3 fit requires Sudo spent evidence")
+    return fit
+
+
 def write_v2_fit_artifacts(points, output_path, residuals_path):
     report, residuals = build_v2_fit_report(points)
+    output = Path(output_path)
+    residual_output = Path(residuals_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    residual_output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(_canonical(report), encoding="utf-8")
+    fields = tuple(residuals[0])
+    with residual_output.open("w", encoding="utf-8", newline="") as target:
+        writer = csv.DictWriter(target, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(residuals)
+    return report
+
+
+def write_fit_artifacts(points, output_path, residuals_path):
+    points = tuple(points)
+    if any(point.dataset_id == "sudo_2002" for point in points):
+        report, residuals = build_v3_fit_report(points)
+    else:
+        report, residuals = build_v2_fit_report(points)
     output = Path(output_path)
     residual_output = Path(residuals_path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -656,7 +755,7 @@ def main(argv=None):
     if arguments.inputs:
         if not arguments.residuals:
             parser.error("--residuals is required with --inputs")
-        write_v2_fit_artifacts(
+        write_fit_artifacts(
             read_impact_inputs(arguments.inputs),
             arguments.output,
             arguments.residuals,

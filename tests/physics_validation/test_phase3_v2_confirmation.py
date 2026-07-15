@@ -47,11 +47,12 @@ class Phase3V2ConfirmationTests(unittest.TestCase):
             validate_confirmation_access(ROOT, FREEZE, DERBY, self.ledger), [])
         self.assertFalse(self.ledger.exists())
 
-    def test_fitters_do_not_import_confirmation_packages(self):
+    def test_fitters_do_not_read_confirmation_packages(self):
         for path in (FIT_SURFACE, FIT_BALL, FIT_CUSHION):
             text = path.read_text(encoding="utf-8")
-            self.assertNotIn("sudo_2002", text)
+            self.assertNotIn("reference_data/sudo_2002", text)
             self.assertNotIn("derby_fuller_1999", text)
+            self.assertNotIn("han_2005", text)
 
     def test_committed_sudo_attempt_is_rejected_fail_closed(self):
         receipt = json.loads(

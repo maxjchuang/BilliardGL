@@ -11,10 +11,19 @@ _SOURCE_REPORTED_RESTITUTION = 0.98
 _NOSE_HEIGHT_RATIO = 1.4
 _MAXIMUM_RIGID_INCIDENT_SPEED_CM_S = 250.0
 _V2_DATASETS = {"mathavan_2009_high_speed", "mathavan_2010_cushion"}
+_V3_DATASETS = _V2_DATASETS | {"sudo_2002"}
+_V3_SERIES = {"mathavan_2009", "mathavan_2010", "sudo_cushion_restitution"}
 _V2_INPUT_FIELDS = (
     "point_id", "dataset_id", "dataset_version", "lifecycle", "series_id",
     "incident_speed_m_s", "expected_rebound_cm_s",
     "standard_uncertainty_cm_s", "rigid_cushion_domain", "source_locator",
+    "normalized_path", "normalized_sha256", "raw_extracted_path",
+    "raw_extracted_sha256",
+)
+_V3_INPUT_FIELDS = (
+    "point_id", "dataset_id", "dataset_version", "lifecycle", "series_id",
+    "metric", "incident_speed_m_s", "expected", "unit",
+    "standard_uncertainty", "rigid_cushion_domain", "source_locator",
     "normalized_path", "normalized_sha256", "raw_extracted_path",
     "raw_extracted_sha256",
 )
@@ -36,6 +45,8 @@ class CushionFitPoint:
     normalized_sha256: str
     raw_extracted_path: str
     raw_extracted_sha256: str
+    metric: str = "rebound_speed_cm_s"
+    unit: str = "cm/s"
 
 
 @dataclass(frozen=True)
@@ -46,6 +57,7 @@ class CushionFit:
     e_min: float
     e_max: float
     residuals: tuple
+    objective_by_series: dict = None
 
     def restitution(self, speed_m_s):
         return restitution(
@@ -130,11 +142,75 @@ def _read_v2_incident_inputs(path):
     return tuple(rows)
 
 
+def _read_v3_incident_inputs(path):
+    rows = []
+    seen = set()
+    with Path(path).open("r", encoding="utf-8", newline="") as source:
+        reader = csv.DictReader(source)
+        if tuple(reader.fieldnames or ()) != _V3_INPUT_FIELDS:
+            raise ValueError("cushion v3 input header does not match schema version 1")
+        for line_number, row in enumerate(reader, start=2):
+            point_id = row["point_id"]
+            if not point_id or point_id in seen:
+                raise ValueError(
+                    f"line {line_number}: point_id must be nonempty and unique")
+            seen.add(point_id)
+            if row["dataset_id"] not in _V3_DATASETS:
+                raise ValueError(f"line {line_number}: confirmation or unknown dataset")
+            if row["lifecycle"] != "spent":
+                raise ValueError(f"line {line_number}: cushion fit input must be spent")
+            if row["series_id"] not in _V3_SERIES:
+                raise ValueError(f"line {line_number}: unsupported cushion series")
+            speed = _finite(row, "incident_speed_m_s", line_number)
+            expected = _finite(row, "expected", line_number)
+            uncertainty = _finite(row, "standard_uncertainty", line_number)
+            if speed <= 0.0 or expected < 0.0 or uncertainty <= 0.0:
+                raise ValueError(f"line {line_number}: cushion numeric domain is invalid")
+            metric = row["metric"]
+            unit = row["unit"]
+            if (metric, unit) not in {
+                    ("rebound_speed_cm_s", "cm/s"),
+                    ("cushion_normal_restitution", "dimensionless")}:
+                raise ValueError(f"line {line_number}: cushion metric/unit is invalid")
+            if row["rigid_cushion_domain"] not in {"true", "false"}:
+                raise ValueError(f"line {line_number}: rigid domain flag is invalid")
+            digests = (row["normalized_sha256"], row["raw_extracted_sha256"])
+            if any(not digest.startswith("sha256:") or len(digest) != 71
+                   for digest in digests):
+                raise ValueError(f"line {line_number}: evidence digest is invalid")
+            rows.append(CushionFitPoint(
+                point_id=point_id,
+                dataset_id=row["dataset_id"],
+                dataset_version=row["dataset_version"],
+                lifecycle=row["lifecycle"],
+                series_id=row["series_id"],
+                incident_speed_m_s=speed,
+                expected_rebound_cm_s=expected,
+                standard_uncertainty_cm_s=uncertainty,
+                rigid_cushion_domain=row["rigid_cushion_domain"] == "true",
+                source_locator=row["source_locator"],
+                normalized_path=row["normalized_path"],
+                normalized_sha256=row["normalized_sha256"],
+                raw_extracted_path=row["raw_extracted_path"],
+                raw_extracted_sha256=row["raw_extracted_sha256"],
+                metric=metric,
+                unit=unit,
+            ))
+    if not rows or [row.point_id for row in rows] != sorted(seen):
+        raise ValueError("cushion v3 inputs must be nonempty and sorted")
+    if {row.dataset_id for row in rows} != _V3_DATASETS \
+            or {row.series_id for row in rows} != _V3_SERIES:
+        raise ValueError("cushion v3 inputs do not cover every spent series")
+    return tuple(rows)
+
+
 def read_incident_inputs(path):
     with Path(path).open("r", encoding="utf-8", newline="") as source:
         fieldnames = tuple(csv.DictReader(source).fieldnames or ())
     if fieldnames == _V2_INPUT_FIELDS:
         return _read_v2_incident_inputs(path)
+    if fieldnames == _V3_INPUT_FIELDS:
+        return _read_v3_incident_inputs(path)
     required = {"point_id", "incident_speed_m_s", "fit_subset",
                 "rigid_cushion_domain", "status"}
     rows = {}
@@ -261,6 +337,60 @@ def _v2_fit(points, intercept, slope, minimum, maximum):
         objective, intercept, slope, minimum, maximum, tuple(residuals))
 
 
+def _v3_fit(points, intercept, slope, minimum, maximum):
+    residuals = []
+    squared_by_series = {}
+    for point in points:
+        selected_e = restitution(
+            point.incident_speed_m_s, intercept, slope, minimum, maximum)
+        if point.metric == "rebound_speed_cm_s":
+            predicted = selected_e * point.incident_speed_m_s * 100.0
+        elif point.metric == "cushion_normal_restitution":
+            predicted = selected_e
+        else:
+            raise ValueError(f"unsupported cushion v3 metric {point.metric}")
+        normalized = (
+            predicted - point.expected_rebound_cm_s
+        ) / point.standard_uncertainty_cm_s
+        squared_by_series.setdefault(point.series_id, []).append(normalized ** 2)
+        residuals.append({
+            "dataset_id": point.dataset_id,
+            "dataset_version": point.dataset_version,
+            "e_intercept": intercept,
+            "e_max": maximum,
+            "e_min": minimum,
+            "e_slope": slope,
+            "expected": point.expected_rebound_cm_s,
+            "incident_speed_m_s": point.incident_speed_m_s,
+            "lifecycle": point.lifecycle,
+            "metric": point.metric,
+            "normalized_path": point.normalized_path,
+            "normalized_sha256": point.normalized_sha256,
+            "normalized_residual": normalized,
+            "point_id": point.point_id,
+            "predicted": predicted,
+            "raw_extracted_path": point.raw_extracted_path,
+            "raw_extracted_sha256": point.raw_extracted_sha256,
+            "restitution": selected_e,
+            "rigid_cushion_domain": point.rigid_cushion_domain,
+            "series_id": point.series_id,
+            "source_locator": point.source_locator,
+            "standard_uncertainty": point.standard_uncertainty_cm_s,
+            "unit": point.unit,
+        })
+    by_series = {
+        series_id: sum(values) / len(values)
+        for series_id, values in sorted(squared_by_series.items())
+    }
+    objective = sum(by_series.values()) / len(by_series)
+    for row in residuals:
+        row["series_mean_squared_normalized_residual"] = \
+            by_series[row["series_id"]]
+    return CushionFit(
+        objective, intercept, slope, minimum, maximum, tuple(residuals),
+        by_series)
+
+
 def _fit_cushion_parameters_v2(points):
     points = tuple(sorted(points, key=lambda point: point.point_id))
     if not points or {point.dataset_id for point in points} != _V2_DATASETS:
@@ -291,9 +421,42 @@ def _fit_cushion_parameters_v2(points):
     return min(tuple(coarse) + tuple(fine), key=fit_key)
 
 
+def _fit_cushion_parameters_v3(points):
+    points = tuple(sorted(points, key=lambda point: point.point_id))
+    if not points or {point.dataset_id for point in points} != _V3_DATASETS \
+            or {point.series_id for point in points} != _V3_SERIES:
+        raise ValueError("cushion v3 fit requires every preregistered spent series")
+    coarse = []
+    for intercept in _grid(0.7, 1.0, 0.05):
+        for slope in _grid(0.0, 0.1, 0.01):
+            for minimum in _grid(0.0, 1.0, 0.1):
+                for maximum in _grid(minimum, 1.0, 0.1):
+                    coarse.append(_v3_fit(
+                        points, intercept, slope, minimum, maximum))
+    coarse_best = min(coarse, key=fit_key)
+    fine = []
+    for intercept in _grid(
+            max(0.0, coarse_best.e_intercept - 0.05),
+            min(1.0, coarse_best.e_intercept + 0.05), 0.01):
+        for slope in _grid(
+                max(0.0, coarse_best.e_slope - 0.01),
+                coarse_best.e_slope + 0.01, 0.002):
+            for minimum in _grid(
+                    0.0, min(1.0, coarse_best.e_min + 0.1), 0.01):
+                for maximum in _grid(
+                        max(minimum, coarse_best.e_max - 0.1),
+                        min(1.0, coarse_best.e_max + 0.1), 0.01):
+                    fine.append(_v3_fit(
+                        points, intercept, slope, minimum, maximum))
+    return min(tuple(coarse) + tuple(fine), key=fit_key)
+
+
 def fit_cushion_parameters(*arguments):
     if len(arguments) == 1:
-        return _fit_cushion_parameters_v2(arguments[0])
+        points = tuple(arguments[0])
+        if any(point.dataset_id == "sudo_2002" for point in points):
+            return _fit_cushion_parameters_v3(points)
+        return _fit_cushion_parameters_v2(points)
     if len(arguments) == 3:
         return _fit_cushion_parameters_v1(*arguments)
     raise TypeError("fit_cushion_parameters expects v2 points or v1 points/split/inputs")
@@ -374,8 +537,93 @@ def build_v2_fit_report(points):
     }, fit.residuals
 
 
+def build_v3_fit_report(points):
+    fit = fit_cushion_v3(points)
+    return {
+        "algorithm": {
+            "coarse_grid": {
+                "e_intercept": [0.7, 1.0, 0.05],
+                "e_max": [0.0, 1.0, 0.1],
+                "e_min": [0.0, 1.0, 0.1],
+                "e_slope_per_mps": [0.0, 0.1, 0.01],
+            },
+            "fine_grid_steps": {
+                "e_intercept": 0.01,
+                "e_max": 0.01,
+                "e_min": 0.01,
+                "e_slope_per_mps": 0.002,
+            },
+            "objective": (
+                "mean_across_series_of_mean_squared_uncertainty_normalized_residual"
+            ),
+            "stable_tie_break": [
+                "objective", "e_intercept", "e_slope", "e_min", "e_max"],
+            "sudo_query_speeds_m_s": {
+                "cushion_e_all_speed": 2.5,
+                "cushion_e_low_speed": 1.8,
+            },
+        },
+        "dataset_lifecycle": "spent",
+        "fit": {
+            "e_intercept": fit.e_intercept,
+            "e_max": fit.e_max,
+            "e_min": fit.e_min,
+            "e_slope_per_mps": fit.e_slope,
+            "objective": fit.objective,
+            "objective_by_series": fit.objective_by_series,
+            "point_count_by_series": {
+                series_id: sum(point.series_id == series_id for point in points)
+                for series_id in sorted(_V3_SERIES)
+            },
+            "residual_count": len(fit.residuals),
+        },
+        "formula": (
+            "clamp(e_intercept - e_slope_per_mps * incident_speed_m_s, "
+            "e_min, e_max)"
+        ),
+        "limitations": [{
+            "code": "INSTANTANEOUS_CONTACT_DURATION",
+            "description": (
+                "The rigid impulse law does not predict finite cushion contact "
+                "time; the spent approximately 8 ms fact is preserved in a "
+                "separate structural residual."
+            ),
+        }],
+        "physical_constants": {
+            "friction_coefficient": _SOURCE_REPORTED_FRICTION,
+            "maximum_rigid_incident_speed_cm_s": _MAXIMUM_RIGID_INCIDENT_SPEED_CM_S,
+            "nose_height_ratio": _NOSE_HEIGHT_RATIO,
+            "outside_domain_behavior": "execute_with_rigid_domain_exceeded_warning",
+        },
+        "schema_version": 3,
+    }, fit.residuals
+
+
+def fit_cushion_v3(points):
+    return _fit_cushion_parameters_v3(points)
+
+
 def write_v2_fit_artifacts(points, output_path, residuals_path):
     report, residuals = build_v2_fit_report(points)
+    output = Path(output_path)
+    residual_output = Path(residuals_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    residual_output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(_canonical(report), encoding="utf-8")
+    fields = tuple(residuals[0])
+    with residual_output.open("w", encoding="utf-8", newline="") as target:
+        writer = csv.DictWriter(target, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(residuals)
+    return report
+
+
+def write_fit_artifacts(points, output_path, residuals_path):
+    points = tuple(points)
+    if any(point.dataset_id == "sudo_2002" for point in points):
+        report, residuals = build_v3_fit_report(points)
+    else:
+        report, residuals = build_v2_fit_report(points)
     output = Path(output_path)
     residual_output = Path(residuals_path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -400,7 +648,7 @@ def main(argv=None):
     if arguments.inputs:
         if not arguments.residuals:
             parser.error("--residuals is required with --inputs")
-        write_v2_fit_artifacts(
+        write_fit_artifacts(
             read_incident_inputs(arguments.inputs),
             arguments.output,
             arguments.residuals,

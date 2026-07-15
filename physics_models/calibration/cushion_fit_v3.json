@@ -1,0 +1,77 @@
+{
+  "algorithm": {
+    "coarse_grid": {
+      "e_intercept": [
+        0.7,
+        1.0,
+        0.05
+      ],
+      "e_max": [
+        0.0,
+        1.0,
+        0.1
+      ],
+      "e_min": [
+        0.0,
+        1.0,
+        0.1
+      ],
+      "e_slope_per_mps": [
+        0.0,
+        0.1,
+        0.01
+      ]
+    },
+    "fine_grid_steps": {
+      "e_intercept": 0.01,
+      "e_max": 0.01,
+      "e_min": 0.01,
+      "e_slope_per_mps": 0.002
+    },
+    "objective": "mean_across_series_of_mean_squared_uncertainty_normalized_residual",
+    "stable_tie_break": [
+      "objective",
+      "e_intercept",
+      "e_slope",
+      "e_min",
+      "e_max"
+    ],
+    "sudo_query_speeds_m_s": {
+      "cushion_e_all_speed": 2.5,
+      "cushion_e_low_speed": 1.8
+    }
+  },
+  "dataset_lifecycle": "spent",
+  "fit": {
+    "e_intercept": 1.0,
+    "e_max": 0.93,
+    "e_min": 0.0,
+    "e_slope_per_mps": 0.056,
+    "objective": 31.243581778851134,
+    "objective_by_series": {
+      "mathavan_2009": 0.07427237144517466,
+      "mathavan_2010": 72.97802296510822,
+      "sudo_cushion_restitution": 20.678449999999998
+    },
+    "point_count_by_series": {
+      "mathavan_2009": 8,
+      "mathavan_2010": 19,
+      "sudo_cushion_restitution": 2
+    },
+    "residual_count": 29
+  },
+  "formula": "clamp(e_intercept - e_slope_per_mps * incident_speed_m_s, e_min, e_max)",
+  "limitations": [
+    {
+      "code": "INSTANTANEOUS_CONTACT_DURATION",
+      "description": "The rigid impulse law does not predict finite cushion contact time; the spent approximately 8 ms fact is preserved in a separate structural residual."
+    }
+  ],
+  "physical_constants": {
+    "friction_coefficient": 0.14,
+    "maximum_rigid_incident_speed_cm_s": 250.0,
+    "nose_height_ratio": 1.4,
+    "outside_domain_behavior": "execute_with_rigid_domain_exceeded_warning"
+  },
+  "schema_version": 3
+}
