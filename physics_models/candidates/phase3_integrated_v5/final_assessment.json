@@ -1,5 +1,4 @@
 {
-  "assessment_sha256": "4024452d3f6d1e2c3d5e5e7e97716c6866516a9e3ead94950661e331cdbf9f8a",
   "candidate_id": "phase3_integrated_v5",
   "confirmations": {
     "cross_2016_newtons_cradle": {
@@ -30,17 +29,6 @@
       "receipt_sha256": "29534ed47cdf8921a962e6d53b9281747f500b8d0a33ebbd174e546ce4a1b761",
       "tree_sha256": "c592a409f865499019f15a8f3062680b1c19f7118ddbf71116b24e9dc2cbf40f"
     }
-  },
-  "cross_2016": {
-    "attempt_id": "87849a0361083701d471e79528c282dcd3626c8d3fead35f77545c3ddb88dab9",
-    "derived_final_back_to_front_speed_ratio": 0.9999981407287482,
-    "derived_final_ratio_residual": -1.859271251847261e-06,
-    "equal_speed_limit": 0.0522185764993973,
-    "output_tree_sha256": "c592a409f865499019f15a8f3062680b1c19f7118ddbf71116b24e9dc2cbf40f",
-    "receipt_sha256": "29534ed47cdf8921a962e6d53b9281747f500b8d0a33ebbd174e546ce4a1b761",
-    "report_sha256": "a866e72ff1dabbee0373fe169d471bf06869f34e910ac5d8783aa54bd5c11c43",
-    "result": "FAILED",
-    "trace_sha256": "a141a4408f876e8bf9d43bc100cb860cf424592c2e2f0f9f8db5d9200f8cd766"
   },
   "disposition": "REJECTED",
   "engineering_evidence": {
@@ -115,11 +103,8 @@
       "sha256": "a4ae4feb1b7a8397279b6a1a1505fa2d0681f9e723c618c0fe41b45cbdda39d7"
     }
   },
-  "freeze_sha256": "8c483182747fe5cc9a51968321670b8c6c70ff27650b7ff6bbec13ca8be62438",
   "han_2005": "NOT_EXECUTED",
-  "ledger_sha256": "ad63223b6bbefb3355ff3c9f1bbf3c320150fa2586e5fcbbc10147e07a39b3f8",
   "policy": "two_independent_one_time_confirmations_required",
-  "readiness_sha256": "a4ae4feb1b7a8397279b6a1a1505fa2d0681f9e723c618c0fe41b45cbdda39d7",
   "root_cause": {
     "category": "CONFIRMATION_EVALUATION_CONTRACT_INTEGRATION_FAILURE",
     "condition": "two consecutive absolute speeds must change by no more than 0.001",
