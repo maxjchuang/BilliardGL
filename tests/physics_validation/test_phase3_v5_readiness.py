@@ -106,15 +106,22 @@ class Phase3V5ReadinessTests(unittest.TestCase):
         self.assertEqual(self.readiness["full_game_case_count"], 12)
         self.assertTrue(all(self.readiness["checks"].values()))
 
-    def test_cross_and_han_are_preregistered_ready_and_unopened(self):
+    def test_readiness_checkpoint_preregistered_cross_and_han_as_unopened(self):
         packages = self.readiness["confirmation_packages"]
         self.assertEqual(
             set(packages), {"cross_2016_newtons_cradle", "han_2005"})
         self.assertTrue(all(
             item["attempt"] == "UNOPENED" and item["ready"]
             for item in packages.values()))
-        self.assertFalse((CANDIDATE / "confirmation_consumption.json").exists())
-        self.assertFalse((CANDIDATE / "confirmation").exists())
+        for relative in (
+            "physics_models/candidates/phase3_integrated_v5/"
+            "confirmation_consumption.json",
+            "physics_models/candidates/phase3_integrated_v5/confirmation",
+        ):
+            result = subprocess.run(
+                ["git", "cat-file", "-e", f"{SELECTED_REVISION}:{relative}"],
+                cwd=ROOT, capture_output=True)
+            self.assertNotEqual(result.returncode, 0, relative)
 
 
 if __name__ == "__main__":

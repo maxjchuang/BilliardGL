@@ -1,0 +1,66 @@
+{
+  "apparatus": [],
+  "candidate_id": "phase3_integrated_v5",
+  "dataset_id": "cross_2016_newtons_cradle",
+  "dataset_version": "1.0.0",
+  "diagnostics": [],
+  "evaluation_diagnostics": [
+    {
+      "applied_cue_contact_count": 1,
+      "source_observed_ratio": 0.987432580352645,
+      "source_ratio_standard_uncertainty": 0.02610928824969865
+    }
+  ],
+  "execution": {
+    "fixture_executor": false,
+    "scenario_count": 1,
+    "two_runs_per_scenario": true
+  },
+  "partition": "CONFIRMATION",
+  "points": [
+    {
+      "evaluation_contract": "abs(back/front - 1) <= max(0.05, 2 * ratio_uncertainty) after finite passive stable release",
+      "expected": 1.0,
+      "lower": 0.9477814235006027,
+      "metric": "back_to_front_speed_ratio",
+      "normalized_error": null,
+      "observed": null,
+      "point_id": "cross_equal_speed_ratio",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "cross_cue_frozen_pair",
+      "source_locator": "Supplementary video 4582, frames 80-95",
+      "status": "FAILED",
+      "unit": "dimensionless",
+      "upper": 1.0522185764993972
+    }
+  ],
+  "result": "FAILED",
+  "schema_version": 2,
+  "summary": {
+    "failed": 1,
+    "known_model_mismatches": 0,
+    "passed": 0,
+    "points": 1
+  },
+  "summary_metrics": {
+    "back_speed_cm_s": null,
+    "back_speed_normalized": null,
+    "back_to_front_speed_ratio": null,
+    "complete_frames_passed": true,
+    "contact_passed": true,
+    "deterministic_repeated_execution_passed": true,
+    "equal_speed_limit": 0.0522185764993973,
+    "finite_microtrace_passed": true,
+    "finite_state_passed": true,
+    "front_speed_cm_s": null,
+    "front_speed_normalized": null,
+    "microtrace_complete_passed": true,
+    "no_recontact_passed": true,
+    "nonincreasing_total_energy_passed": true,
+    "passive_microtrace_passed": true,
+    "release_passed": true,
+    "signed_ratio_residual": null,
+    "stable_release_passed": false,
+    "uncertainty_aware_equal_speed_passed": false
+  }
+}

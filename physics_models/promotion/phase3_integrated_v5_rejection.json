@@ -1,0 +1,44 @@
+{
+  "candidate_id": "phase3_integrated_v5",
+  "cross_2016": {
+    "attempt_id": "87849a0361083701d471e79528c282dcd3626c8d3fead35f77545c3ddb88dab9",
+    "derived_final_back_to_front_speed_ratio": 0.9999981407287482,
+    "derived_final_ratio_residual": -1.859271251847261e-06,
+    "equal_speed_limit": 0.0522185764993973,
+    "output_tree_sha256": "aa15ee88ef4f95c9c27a47866ad12e50285f904a799c8b3148d0e25bad13aecd",
+    "receipt_sha256": "29534ed47cdf8921a962e6d53b9281747f500b8d0a33ebbd174e546ce4a1b761",
+    "report_sha256": "a866e72ff1dabbee0373fe169d471bf06869f34e910ac5d8783aa54bd5c11c43",
+    "result": "FAILED",
+    "trace_sha256": "a141a4408f876e8bf9d43bc100cb860cf424592c2e2f0f9f8db5d9200f8cd766"
+  },
+  "disposition": "REJECTED",
+  "freeze_sha256": "8c483182747fe5cc9a51968321670b8c6c70ff27650b7ff6bbec13ca8be62438",
+  "han_2005": "NOT_EXECUTED",
+  "ledger_sha256": "ad63223b6bbefb3355ff3c9f1bbf3c320150fa2586e5fcbbc10147e07a39b3f8",
+  "policy": "failed_confirmation_is_consumed_and_never_replayed",
+  "readiness_sha256": "a4ae4feb1b7a8397279b6a1a1505fa2d0681f9e723c618c0fe41b45cbdda39d7",
+  "root_cause": {
+    "category": "CONFIRMATION_EVALUATION_CONTRACT_INTEGRATION_FAILURE",
+    "condition": "two consecutive absolute speeds must change by no more than 0.001",
+    "derived_final_frame_relative_speed_change": 0.013657418039445297,
+    "evaluator": "tools/physics_validation/cross_2016_confirmation.py::_stable_release_speeds",
+    "explanation": "Production rolling resistance changes both absolute speeds between 0.1 second frames even though their ratio satisfies the Cross equal-speed limit.",
+    "failed_gates": [
+      "stable_release_passed",
+      "uncertainty_aware_equal_speed_passed"
+    ],
+    "physical_integrity_gates": {
+      "complete_frames_passed": true,
+      "contact_passed": true,
+      "deterministic_repeated_execution_passed": true,
+      "finite_microtrace_passed": true,
+      "finite_state_passed": true,
+      "microtrace_complete_passed": true,
+      "no_recontact_passed": true,
+      "nonincreasing_total_energy_passed": true,
+      "passive_microtrace_passed": true,
+      "release_passed": true
+    }
+  },
+  "schema_version": 1
+}
