@@ -24,6 +24,7 @@ jobs:
       - name: Configure, build, and test
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+          BILLIARDGL_BUILD_JOBS: 3
         run: ./scripts/check.sh
 
       - name: Verify Mathavan 2009 offline reference
