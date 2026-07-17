@@ -17,14 +17,14 @@ CUSHION_FIT = REPO_ROOT / "physics_models/calibration/cushion_fit_v2.json"
 
 
 class CandidateWorkflowContractTests(unittest.TestCase):
-    def test_successor_profile_is_the_runtime_default(self):
+    def test_rejected_successor_is_not_the_runtime_default(self):
         completed = subprocess.run(
             [str(EXECUTABLE), "--print-physics-profile"],
             check=True, capture_output=True, text=True,
         )
         self.assertEqual(
             json.loads(completed.stdout)["id"],
-            "chinese_pool_full_game_v5",
+            "chinese_pool_legacy_v1",
         )
 
     def test_integrated_profile_uses_committed_fit_outputs(self):

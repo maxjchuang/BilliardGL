@@ -1,4 +1,5 @@
 #include "full_game_case_registry.h"
+#include "full_game_test_profile.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -14,7 +15,7 @@ fullgame::FullGameCaseResult run(const std::string& id, std::uint32_t seed)
 {
     const fullgame::FullGameCase* selected = fullgame::findFullGameCase(id);
     expect(selected != nullptr && selected->run != nullptr, id + " is registered");
-    billiardgl::GameRuntime runtime;
+    billiardgl::GameRuntime runtime = fullgame::phase3V5CandidateRuntime();
     fullgame::FullGameRunOptions options;
     options.repeats = 1;
     options.ticksPerRepeat = 240;

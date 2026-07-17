@@ -24,10 +24,19 @@ bool close(float first, float second)
 
 int main()
 {
-    const billiardgl::PhysicsProfile profile =
+    const billiardgl::PhysicsProfile production =
         billiardgl::defaultChinesePoolPhysicsProfile();
+    expect(production.id == "chinese_pool_legacy_v1",
+        "production default must remain on the authorized legacy baseline");
+    expect(production.formulaVersion == "legacy_v1",
+        "production default formula must remain on the authorized legacy baseline");
+    expect(!production.frozenCueContact.enabled,
+        "production default must not enable rejected v5 cue contact");
+
+    const billiardgl::PhysicsProfile profile =
+        billiardgl::phase3V5CandidatePhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,
-        "default profile is valid");
+        "preserved v5 candidate profile is valid");
     expect(profile.id == "chinese_pool_full_game_v5",
         "candidate ID");
     expect(profile.formulaVersion == "phase3_integrated_v5_coupled_cue_contact_v1",

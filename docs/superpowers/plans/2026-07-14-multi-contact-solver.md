@@ -1,5 +1,7 @@
 # Multi-Contact Solver Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:executing-plans`, `superpowers:test-driven-development`, and `superpowers:systematic-debugging`. Execute inline, in order, with one commit per task.
 
 **Goal:** Replace per-ball, traversal-ordered collision handling with a fixed-tick, event-driven solver that groups simultaneous contacts into deterministic islands, prevents high-speed tunneling, and reports hard numerical failures instead of silently dropping work.

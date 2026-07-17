@@ -143,10 +143,12 @@ work must create a new candidate/version and a newly preregistered split.
 第三阶段的八个主题通过一个只读发布门禁闭环。门禁复核候选清单、输入哈希、证据标签、完整游戏矩阵、确定性压力结果、性能预算、零未解释回归和可逐字重建的最终报告：
 
 ```bash
-python3 scripts/check_phase3_physics_release.py --root .
+python3 scripts/check_phase3_physics_release.py \
+  --root . \
+  --executable build/check/Billiards
 ```
 
-本机构建产物还可以选择性核对冻结时的可执行文件哈希：
+发布门禁必须读取本机构建产物，核对实际生产默认 profile 是否仍为获授权基线：
 
 ```bash
 python3 scripts/check_phase3_physics_release.py \

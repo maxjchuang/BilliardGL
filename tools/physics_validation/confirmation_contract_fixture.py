@@ -5,8 +5,6 @@ import json
 import subprocess
 from pathlib import Path
 
-from .build_v3_profile import canonical_runtime_text
-from .build_v5_profile import canonical_v5_runtime_text
 from .confirmation_adapters import base_scenario, scenario_ball
 from .run import _execute_once_with_evidence
 
@@ -25,30 +23,15 @@ def _sha256_file(path):
     return _sha256_bytes(Path(path).read_bytes())
 
 
-def _runtime_profile(root, executable):
-    result = subprocess.run(
-        [str(executable), "--print-physics-profile"],
-        check=True, capture_output=True, text=True)
-    reported = json.loads(result.stdout)
-    matches = []
-    for path in sorted((root / "physics_models/profiles").glob("*.json")):
-        document = json.loads(path.read_text(encoding="utf-8"))
-        profile = document.get("runtime_profile", {})
-        canonicalizer = (
-            canonical_v5_runtime_text
-            if "frozen_cue_contact" in profile
-            else canonical_runtime_text
-        )
-        if profile.get("id") == reported.get("id") and \
-                profile.get("formula_version") == reported.get(
-                    "formula_version") and \
-                canonicalizer(profile) == reported.get(
-                    "canonical_text"):
-            matches.append(profile)
-    if len(matches) != 1:
-        raise RuntimeError(
-            "executable profile does not match one canonical repository profile")
-    return matches[0]
+def _candidate_profile(root):
+    profile_path = root / (
+        "physics_models/profiles/chinese_pool_full_game_v5.json")
+    profile = json.loads(
+        profile_path.read_text(encoding="utf-8"))["runtime_profile"]
+    if profile.get("id") != "chinese_pool_full_game_v5" or \
+            "frozen_cue_contact" not in profile:
+        raise RuntimeError("preserved v5 candidate profile is invalid")
+    return profile
 
 
 def _scenario(profile):
@@ -72,7 +55,7 @@ def build_contract_proof(root, executable, fixture, mutate=None):
     executable = Path(executable).resolve()
     fixture = Path(fixture).resolve()
     fixture.relative_to(root)
-    scenario = _scenario(_runtime_profile(root, executable))
+    scenario = _scenario(_candidate_profile(root))
     if mutate is not None:
         mutate(scenario)
     first = _execute_once_with_evidence(executable, copy.deepcopy(scenario))

@@ -45,7 +45,7 @@ int main()
         -20.0f / billiardgl::kBallRadius;
     profiledMotion.balls[0].motionState = billiardgl::BallMotionState::Rolling;
     billiardgl::PhysicsProfile motionProfile =
-        billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::phase3V5CandidatePhysicsProfile();
     motionProfile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
     billiardgl::BallState expectedMotion = profiledMotion.balls[0];
     billiardgl::advanceSurfaceMotion(
@@ -71,7 +71,7 @@ int main()
     }
 
     billiardgl::PhysicsProfile cushionProfile =
-        billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::phase3V5CandidatePhysicsProfile();
     cushionProfile.cushion.normalRestitution = 0.5f;
     cushionProfile.cushion.restitutionIntercept = 0.5f;
     cushionProfile.cushion.minimumRestitution = 0.5f;
@@ -170,7 +170,7 @@ int main()
     }
 
     billiardgl::PhysicsProfile contactProfile =
-        billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::phase3V5CandidatePhysicsProfile();
     contactProfile.ball.normalRestitution = 0.5f;
     contactProfile.ball.frictionCoefficient = 0.2f;
     billiardgl::GameState contactState;
@@ -253,7 +253,7 @@ int main()
     }
 
     const billiardgl::PhysicsProfile pocketProfile =
-        billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::phase3V5CandidatePhysicsProfile();
     const std::array<billiardgl::PocketBoundaryFrame, 6> pocketFrames =
         billiardgl::buildPocketBoundaryFrames(pocketProfile.tableBoundary);
     state.balls[3].position.x = pocketFrames[0].mouthCenter.x -
@@ -388,7 +388,7 @@ int main()
     }
 
     billiardgl::PhysicsProfile eventProfile =
-        billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::phase3V5CandidatePhysicsProfile();
     eventProfile.ball.normalRestitution = 1.0f;
     eventProfile.ball.frictionCoefficient = 0.0f;
     eventProfile.surface.slidingFrictionCoefficient = 0.0f;

@@ -4,6 +4,7 @@
 #include "automation_protocol.h"
 #include "full_game_invariants.h"
 #include "full_game_prng.h"
+#include "full_game_test_profile.h"
 
 #include <algorithm>
 #include <string>
@@ -32,7 +33,7 @@ billiardgl::ActionResult control(billiardgl::GameRuntime& runtime,
 Replay replay(std::uint32_t seed, int cadence, bool hostLoad, int ticks)
 {
     Replay replayResult;
-    billiardgl::GameRuntime runtime;
+    billiardgl::GameRuntime runtime = fullgame::phase3V5CandidateRuntime();
     if (!runtime.step(3).ok) {
         replayResult.failure = "rack_settle_failed";
         return replayResult;

@@ -2,6 +2,7 @@
 #include "full_game_cli.h"
 #include "full_game_artifacts.h"
 #include "full_game_invariants.h"
+#include "full_game_test_profile.h"
 #include "automation_json.h"
 
 #include <chrono>
@@ -54,7 +55,7 @@ void atomicWrite(const std::filesystem::path& path, const std::string& bytes)
 fullgame::FullGameCaseResult runCase(const fullgame::FullGameCase& selected,
     const std::string& caseId, std::uint32_t seed)
 {
-    billiardgl::GameRuntime runtime;
+    billiardgl::GameRuntime runtime = fullgame::phase3V5CandidateRuntime();
     const auto started = std::chrono::steady_clock::now();
     fullgame::FullGameCaseResult result = selected.run(
         runtime, seed, fullgame::FullGameRunOptions{});

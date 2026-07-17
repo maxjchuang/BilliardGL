@@ -147,6 +147,7 @@ CueImpactSupport evaluateCueImpactSupport(
 }
 
 GameRuntime::GameRuntime()
+    : physicsProfile_(defaultChinesePoolPhysicsProfile())
 {
     reset();
 }
@@ -165,7 +166,6 @@ void GameRuntime::reset()
     hasCueContactResult_ = false;
     cueContactResult_ = CueContactResult{};
     cueContactPending_ = false;
-    physicsProfile_ = defaultChinesePoolPhysicsProfile();
     boundaryMode_ = PhysicsBoundaryMode::ProductionTable;
     updateCameraFromCueBall(state_);
 }

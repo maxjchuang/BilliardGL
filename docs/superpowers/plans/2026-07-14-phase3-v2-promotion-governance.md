@@ -1,5 +1,7 @@
 # Phase 3 v2 Promotion Governance Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Reject the historical v1 release without changing its evidence and make every v2 promotion, artifact, source, and release check fail closed.

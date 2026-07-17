@@ -1,6 +1,7 @@
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -36,6 +37,41 @@ def ledger(attempts, records):
 
 
 class Phase3V5AssessmentTests(unittest.TestCase):
+    def test_current_status_disambiguates_historical_reports_and_plans(self):
+        status_path = ROOT / "docs/phase3-physics-current-status.md"
+        self.assertTrue(status_path.is_file(), "current Phase 3 status is missing")
+        status = status_path.read_text(encoding="utf-8")
+        for required in (
+            "NO_PROMOTED_PHASE3_CANDIDATE",
+            "chinese_pool_legacy_v1",
+            "phase3-physics-promotion-report.md",
+            "immutable historical v1 evidence",
+        ):
+            self.assertIn(required, status)
+
+        plans = [
+            "2026-07-14-physics-calibration-governance.md",
+            "2026-07-14-surface-motion-and-spin.md",
+            "2026-07-14-cue-ball-impact.md",
+            "2026-07-14-ball-ball-collision.md",
+            "2026-07-14-cushion-collision.md",
+            "2026-07-14-pocket-and-table-boundary.md",
+            "2026-07-14-multi-contact-solver.md",
+            "2026-07-14-full-game-physics-acceptance.md",
+            "2026-07-14-phase3-v2-apparatus-and-data.md",
+            "2026-07-14-phase3-v2-fit-freeze-validation-release.md",
+            "2026-07-14-phase3-v2-full-game-acceptance.md",
+            "2026-07-14-phase3-v2-joint-contact-solver.md",
+            "2026-07-14-phase3-v2-promotion-governance.md",
+            "2026-07-15-phase3-v3-successor-release.md",
+            "2026-07-15-phase3-v4-confirmation-recovery.md",
+            "2026-07-15-phase3-v5-coupled-cue-contact.md",
+        ]
+        for name in plans:
+            text = (ROOT / "docs/superpowers/plans" / name).read_text(
+                encoding="utf-8")
+            self.assertIn("Execution status: Completed and archived", text, name)
+
     def test_live_cross_failure_is_the_canonical_final_rejection(self):
         generated = build_final_assessment(ROOT)
         committed = json.loads(FINAL.read_text(encoding="utf-8"))
@@ -95,11 +131,37 @@ class Phase3V5AssessmentTests(unittest.TestCase):
 
     def test_release_gate_accepts_only_the_canonical_safe_rejection(self):
         script = ROOT / "scripts/check_phase3_physics_release.py"
-        rejected = subprocess.run(
+        missing_executable = subprocess.run(
             [sys.executable, str(script), "--root", str(ROOT)],
             capture_output=True, text=True)
-        self.assertEqual(rejected.returncode, 0, rejected.stderr)
-        self.assertIn("REJECTED (not promoted)", rejected.stdout)
+        self.assertNotEqual(missing_executable.returncode, 0)
+        self.assertIn("production executable is required", missing_executable.stderr)
+
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / "Billiards"
+            fake.write_text(
+                "#!/bin/sh\nprintf '%s\\n' "
+                "'{\"id\":\"chinese_pool_full_game_v5\"}'\n",
+                encoding="utf-8")
+            fake.chmod(0o755)
+            rejected_default = subprocess.run(
+                [sys.executable, str(script), "--root", str(ROOT),
+                 "--executable", str(fake)], capture_output=True, text=True)
+            self.assertNotEqual(rejected_default.returncode, 0)
+            self.assertIn(
+                "production default profile is not authorized",
+                rejected_default.stderr)
+
+            fake.write_text(
+                "#!/bin/sh\nprintf '%s\\n' "
+                "'{\"id\":\"chinese_pool_legacy_v1\"}'\n",
+                encoding="utf-8")
+            accepted_rejection = subprocess.run(
+                [sys.executable, str(script), "--root", str(ROOT),
+                 "--executable", str(fake)], capture_output=True, text=True)
+            self.assertEqual(
+                accepted_rejection.returncode, 0, accepted_rejection.stderr)
+            self.assertIn("REJECTED (not promoted)", accepted_rejection.stdout)
         legacy = subprocess.run(
             [sys.executable, str(script), "--root", str(ROOT),
              "--release", str(ROOT /

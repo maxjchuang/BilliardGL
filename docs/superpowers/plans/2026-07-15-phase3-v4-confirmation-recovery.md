@@ -1,5 +1,7 @@
 # Phase 3 v4 Confirmation Recovery Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a physics-identical Phase 3 v4 candidate whose confirmation scenarios traverse the real automation path, replace spent Derby evidence with Alciatore TP A.15, and accept the candidate only after separately authorized Alciatore and Han confirmations pass.

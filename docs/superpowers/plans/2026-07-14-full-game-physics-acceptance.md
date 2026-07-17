@@ -1,5 +1,7 @@
 # Full-Game Physics Acceptance Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 Date: 2026-07-14
 
 ## Goal

@@ -1,5 +1,7 @@
 # Surface Motion and Spin Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace legacy constant translational deceleration with event-aware sliding, pure-rolling, stopping, and three-dimensional angular-velocity dynamics, then freeze and validate the first production physics candidate.

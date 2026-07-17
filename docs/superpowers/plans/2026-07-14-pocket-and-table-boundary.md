@@ -1,5 +1,7 @@
 # Pocket and Table Boundary Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:executing-plans` and `superpowers:test-driven-development`. Execute inline, in order, with one commit per task.
 
 **Goal:** Replace rectangular pocket-mouth exemptions and fixed-depth pocket tests with one authoritative, ball-radius-offset pocket boundary that resolves straight rails and curved jaws continuously, classifies throat crossing/capture/rejection, and emits exactly one auditable pocket event.

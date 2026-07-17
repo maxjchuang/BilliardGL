@@ -63,7 +63,9 @@ jobs:
           python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/physics-reference-cross-2023"
 
       - name: Verify frozen Phase 3 release evidence
-        run: python3 scripts/check_phase3_physics_release.py --root .
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: python3 scripts/check_phase3_physics_release.py --root . --executable "${BILLIARDGL_BUILD_DIR}/Billiards"
 
       - name: Upload physics validation report
         if: always()

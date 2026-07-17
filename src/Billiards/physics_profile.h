@@ -104,6 +104,9 @@ struct PhysicsProfileValidation {
 };
 
 PhysicsProfile defaultChinesePoolPhysicsProfile();
+// Preserved rejected candidate for explicit evidence replay and successor work.
+// It must never be selected as the production default.
+PhysicsProfile phase3V5CandidatePhysicsProfile();
 PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile);
 std::string canonicalPhysicsProfileText(const PhysicsProfile& profile);
 std::string canonicalPhysicsProfileJson(const PhysicsProfile& profile);

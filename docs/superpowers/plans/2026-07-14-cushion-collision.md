@@ -1,5 +1,7 @@
 # Cushion Collision Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:executing-plans` and `superpowers:test-driven-development`. Execute inline, in order, with one commit per task.
 
 **Goal:** Replace the lossless axis reflection with one versioned rigid-cushion contact model that accounts for restitution, friction, cushion-nose height, spin coupling, source equipment, speed-domain limits, authoritative telemetry, calibration-only fitting, and governed validation.

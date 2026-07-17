@@ -153,6 +153,7 @@ Visual Studio 工程文件和 `src/Billiards/dependencies/` 暂时保留，用�
 接口覆盖键鼠、瞄准、力度、击球、摄像机、场景注入、固定步进、事件等待、状态查询和 rendered 截图。完整协议与 Python 示例见 [自动化协议](docs/automation-protocol.md)。
 
 物理真实性验证通过共享场景驱动同一生产 runtime，记录逐 tick 状态并严格追踪当前已知缺陷。运行方法、单位、错误分类和 known-failure 规则见 [物理验证文档](docs/physics-validation.md)。
+第三阶段的工程完成度、候选拒绝结论和当前生产默认策略见 [第三阶段物理状态](docs/phase3-physics-current-status.md)。
 
 
 可以使用游戏内 framebuffer 截图模式生成一张 PPM 图片，避免 macOS `screencapture` 无法稳定捕获 GLUT/OpenGL 窗口内容的问题：

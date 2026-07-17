@@ -1,5 +1,7 @@
 # Ball–Ball Collision Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:executing-plans` and `superpowers:test-driven-development`. Execute inline, in order, with one commit per task.
 
 **Goal:** Replace the equal-mass velocity-swap collision with one SI-unit rigid-sphere contact model that supports versioned mass, radius, inertia, restitution, friction, spin transfer, source-apparatus scenarios, authoritative telemetry, calibration-only fitting, and frozen multi-dataset validation.

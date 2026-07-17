@@ -153,7 +153,7 @@ std::string corpus(bool enableFrozenRouting)
         state.balls[1].position.x = 2.0f * billiardgl::kBallRadius + 10.0f;
         const billiardgl::GameState pre = state;
         billiardgl::PhysicsProfile profile =
-            billiardgl::defaultChinesePoolPhysicsProfile();
+            billiardgl::phase3V5CandidatePhysicsProfile();
         profile.frozenCueContact.enabled = enableFrozenRouting;
         billiardgl::GameRuntime runtime;
         if (!runtime.replaceStateForScenario(state, profile).ok) return {};

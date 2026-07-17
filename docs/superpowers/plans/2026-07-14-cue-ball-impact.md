@@ -1,5 +1,7 @@
 # Cue–Ball Impact Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace direct shot-power-to-ball-velocity assignment with one governed cue-contact model that produces linear velocity, three-dimensional spin, stick/slip/miscue classification, and complete telemetry for both player and automation inputs.

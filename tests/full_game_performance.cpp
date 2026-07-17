@@ -1,4 +1,5 @@
 #include "game_runtime.h"
+#include "full_game_test_profile.h"
 
 #include <algorithm>
 #include <chrono>
@@ -26,7 +27,7 @@ struct Metrics {
 
 Metrics measure()
 {
-    billiardgl::GameRuntime runtime;
+    billiardgl::GameRuntime runtime = fullgame::phase3V5CandidateRuntime();
     runtime.step(3);
     runtime.setPhysicsTraceEnabled(true);
     billiardgl::CueImpactInput input;

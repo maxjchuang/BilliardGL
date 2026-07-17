@@ -1,5 +1,7 @@
 # Phase 3 v2 Candidate Fit, Freeze, Validation, and Release Implementation Plan
 
+**Execution status: Completed and archived.** Unchecked boxes below preserve the original execution script; current disposition and evidence are indexed in [Phase 3 current status](../../phase3-physics-current-status.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Fit and select one integrated v2 candidate, freeze it reproducibly, execute independent confirmation exactly once, compare all v1/v2 evidence, and publish only if every gate passes.

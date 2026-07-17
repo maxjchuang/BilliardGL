@@ -45,17 +45,18 @@ class BuildV5ProfileTests(unittest.TestCase):
             fit["winner"]["dissipation_s_per_m"])
         self.assertEqual(frozen["microstep_seconds"], 0.0000025)
 
-    def test_runtime_default_is_exact_generated_v5_profile(self):
+    def test_rejected_v5_is_preserved_but_not_the_runtime_default(self):
         emitted = json.loads(subprocess.run(
             [str(ROOT / "build/Billiards"), "--print-physics-profile"],
             check=True, capture_output=True, text=True).stdout)
-        query = json.loads(V5_PROFILE.read_text(
-            encoding="utf-8"))["runtime_query"]
-        self.assertEqual((emitted["id"], emitted["formula_version"]),
-                         (PROFILE_ID, FORMULA_VERSION))
         self.assertEqual(
-            hashlib.sha256(emitted["canonical_text"].encode()).hexdigest(),
-            query["canonical_text_sha256"])
+            (emitted["id"], emitted["formula_version"]),
+            ("chinese_pool_legacy_v1", "legacy_v1"))
+        policy = json.loads((ROOT /
+            "physics_models/promotion/phase3_production_default.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(policy["authorized_profile_id"], emitted["id"])
+        self.assertTrue(V5_PROFILE.is_file())
 
     def test_inventory_binds_every_v5_input_and_confirmation_manifest(self):
         inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
