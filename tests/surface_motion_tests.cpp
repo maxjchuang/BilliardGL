@@ -136,6 +136,18 @@ int main()
         close(oneStep.angularVelocity.z, splitSteps.angularVelocity.z, 0.00001f),
         "rolling integration is invariant to an exact split of the time step");
 
+    billiardgl::BallState legacySliding;
+    legacySliding.velocity.x = 5.0f;
+    legacySliding.speed = 5.0f;
+    legacySliding.motionState = billiardgl::BallMotionState::Sliding;
+    const billiardgl::SurfaceMotionStep legacyStop =
+        billiardgl::advanceSurfaceMotion(
+            legacySliding, 2.0f, profile.ball, profile.surface);
+    expect(close(legacySliding.position.x, 3.125f, 0.00001f) &&
+        legacySliding.velocity.x == 0.0f && legacySliding.speed == 0.0f &&
+        legacyStop.after == billiardgl::BallMotionState::Stationary,
+        "legacy zero-spin motion consumes configured deceleration and stops");
+
     billiardgl::SurfaceProperties slidingSurface = rollingSurface;
     slidingSurface.slidingFrictionCoefficient = 0.20f;
     ball = billiardgl::BallState{};

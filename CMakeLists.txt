@@ -361,6 +361,9 @@ set_tests_properties(BilliardsPhase3PhysicsReleaseGate PROPERTIES
 add_test(NAME BilliardsRenderedAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_rendered_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsRenderedAutomationE2E PROPERTIES TIMEOUT 30 LABELS "rendered;e2e")
+add_test(NAME BilliardsBreakCameraE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_break_camera.py $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsBreakCameraE2E PROPERTIES TIMEOUT 30 LABELS "physics-validation;rendered;e2e")
 
 target_include_directories(Billiards PRIVATE
     src/Billiards

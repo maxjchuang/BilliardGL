@@ -20,12 +20,30 @@ int main()
     PocketInteractionState state;
 
     PocketTransitionResult result = advancePocketInteraction(
+        state, 2, PocketBoundaryEventKind::Mouth,
+        PocketBoundaryRegion::Outside, 0);
+    if (!result.changed || state.phase != PocketInteractionPhase::Approaching ||
+        state.pocketId != 2) {
+        return fail("crossing a passable mouth must bind the pocket interaction");
+    }
+    state = PocketInteractionState{};
+
+    result = advancePocketInteraction(
         state, 2, PocketBoundaryEventKind::None,
         PocketBoundaryRegion::Approaching, 0);
     if (!result.changed || state.phase != PocketInteractionPhase::Approaching ||
         state.pocketId != 2) {
         return fail("mouth approach should bind the interaction to one pocket");
     }
+
+    result = advancePocketInteraction(state, 2, PocketBoundaryEventKind::Mouth,
+        PocketBoundaryRegion::Solid, 0);
+    if (!result.changed || state.phase != PocketInteractionPhase::Rejected) {
+        return fail("leaving the mouth channel through solid geometry must reject the attempt");
+    }
+    state = PocketInteractionState{};
+    advancePocketInteraction(state, 2, PocketBoundaryEventKind::None,
+        PocketBoundaryRegion::Approaching, 0);
 
     result = advancePocketInteraction(state, 3, PocketBoundaryEventKind::Throat,
         PocketBoundaryRegion::Throat, 0);

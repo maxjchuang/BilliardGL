@@ -50,6 +50,43 @@ float advanceRollingSegment(
     return segment;
 }
 
+void advanceLegacySlidingSegment(BallState& ball, float deltaSeconds,
+    const SurfaceProperties& surface, SurfaceMotionStep& step)
+{
+    const float speed = horizontalLength(ball.velocity);
+    const float deceleration = surface.legacyFrictionAccelerationCmS2;
+    if (speed <= 0.0f || deceleration <= 0.0f) {
+        ball.position.x += ball.velocity.x * deltaSeconds;
+        ball.position.z += ball.velocity.z * deltaSeconds;
+        ball.motionState = BallMotionState::Sliding;
+        return;
+    }
+    const Point3 direction{
+        ball.velocity.x / speed, 0.0f, ball.velocity.z / speed};
+    const float segment = std::min(deltaSeconds, speed / deceleration);
+    const float distance = speed * segment -
+        0.5f * deceleration * segment * segment;
+    ball.position.x += direction.x * distance;
+    ball.position.z += direction.z * distance;
+    const float finalSpeed = std::max(
+        0.0f, speed - deceleration * segment);
+    ball.velocity.x = direction.x * finalSpeed;
+    ball.velocity.z = direction.z * finalSpeed;
+    ball.speed = finalSpeed;
+    step.frictionAccelerationCmS2 = Point3{
+        -direction.x * deceleration, 0.0f, -direction.z * deceleration};
+    if (segment < deltaSeconds ||
+        finalSpeed <= surface.slipSpeedEpsilonCmS) {
+        ball.velocity.x = 0.0f;
+        ball.velocity.z = 0.0f;
+        ball.speed = 0.0f;
+        ball.motionState = BallMotionState::Stationary;
+        step.transitionTimeSeconds = segment;
+    } else {
+        ball.motionState = BallMotionState::Sliding;
+    }
+}
+
 }  // namespace
 
 const char* ballMotionStateName(BallMotionState state)
@@ -136,9 +173,7 @@ SurfaceMotionStep advanceSurfaceMotion(
     } else if (step.before == BallMotionState::Sliding && deltaSeconds > 0.0f) {
         const float coefficient = surface.slidingFrictionCoefficient;
         if (coefficient <= 0.0f || step.initialSlipSpeedCmS <= 0.0f) {
-            ball.position.x += ball.velocity.x * deltaSeconds;
-            ball.position.z += ball.velocity.z * deltaSeconds;
-            ball.motionState = BallMotionState::Sliding;
+            advanceLegacySlidingSegment(ball, deltaSeconds, surface, step);
         } else {
             const Point3 slip = surfaceContactSlipVelocity(
                 ball, ballProperties.radiusCm);

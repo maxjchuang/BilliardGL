@@ -32,10 +32,11 @@ int kindOrder(ContinuousContactKind kind)
     case ContinuousContactKind::BallBall: return 0;
     case ContinuousContactKind::StraightRail: return 1;
     case ContinuousContactKind::Jaw: return 2;
-    case ContinuousContactKind::Throat: return 3;
-    case ContinuousContactKind::Capture: return 4;
+    case ContinuousContactKind::Mouth: return 3;
+    case ContinuousContactKind::Throat: return 4;
+    case ContinuousContactKind::Capture: return 5;
     }
-    return 5;
+    return 6;
 }
 
 }  // namespace
@@ -142,14 +143,28 @@ ContinuousContactCandidate boundaryContactCandidate(
     result.timeOfImpactSeconds = timeOfImpactSeconds;
     result.normal = normal;
     result.pocketEvent = event;
-    result.kind = event == PocketBoundaryEventKind::StraightRail
-        ? ContinuousContactKind::StraightRail
-        : (event == PocketBoundaryEventKind::LeftJaw ||
-                  event == PocketBoundaryEventKind::RightJaw
-              ? ContinuousContactKind::Jaw
-              : (event == PocketBoundaryEventKind::Throat
-                    ? ContinuousContactKind::Throat
-                    : ContinuousContactKind::Capture));
+    switch (event) {
+    case PocketBoundaryEventKind::StraightRail:
+        result.kind = ContinuousContactKind::StraightRail;
+        break;
+    case PocketBoundaryEventKind::LeftJaw:
+    case PocketBoundaryEventKind::RightJaw:
+        result.kind = ContinuousContactKind::Jaw;
+        break;
+    case PocketBoundaryEventKind::Mouth:
+        result.kind = ContinuousContactKind::Mouth;
+        break;
+    case PocketBoundaryEventKind::Throat:
+        result.kind = ContinuousContactKind::Throat;
+        break;
+    case PocketBoundaryEventKind::Capture:
+        result.kind = ContinuousContactKind::Capture;
+        break;
+    case PocketBoundaryEventKind::None:
+    case PocketBoundaryEventKind::Ambiguous:
+        result.valid = false;
+        break;
+    }
     return result;
 }
 

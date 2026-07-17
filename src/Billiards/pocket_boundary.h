@@ -24,6 +24,7 @@ enum class PocketBoundaryEventKind {
     RightJaw,
     Throat,
     Capture,
+    Mouth,
     Ambiguous
 };
 

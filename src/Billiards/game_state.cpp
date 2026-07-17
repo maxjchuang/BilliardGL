@@ -48,14 +48,19 @@ void resetPocketInteraction(BallState& ball)
     ball.pocketInteraction = PocketInteractionState{};
 }
 
+void updateCameraEye(GameState& state)
+{
+    state.camera.eye[0] = state.camera.zoom * std::cos(state.camera.angleX) + state.camera.target[0];
+    state.camera.eye[1] = state.camera.zoom * std::cos(state.camera.angleY) + state.camera.target[1];
+    state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
+}
+
 void updateCameraFromCueBall(GameState& state)
 {
     state.camera.target[0] = state.balls[0].position.x;
     state.camera.target[1] = state.balls[0].position.y;
     state.camera.target[2] = state.balls[0].position.z;
-    state.camera.eye[0] = state.camera.zoom * std::cos(state.camera.angleX) + state.camera.target[0];
-    state.camera.eye[1] = state.camera.zoom * std::cos(state.camera.angleY) + state.camera.target[1];
-    state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
+    updateCameraEye(state);
 }
 
 void resetBallMotion(BallState& ball)

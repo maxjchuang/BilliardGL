@@ -64,6 +64,7 @@ static billiardgl::RenderResources Render;
 static double LastIdleTimeSeconds = 0.0;
 static float PhysicsTimeAccumulatorSeconds = 0.0f;
 static const int kMaxPhysicsStepsPerIdle = 5;
+static const unsigned int kFrameIntervalMilliseconds = 16;
 static const billiardgl::PhysicsProfile ProductionPhysicsProfile =
 	billiardgl::defaultChinesePoolPhysicsProfile();
 
@@ -90,6 +91,7 @@ void initWindows(void);
 void myReshape(int w, int h);
 void myDisplay(void);
 void myIdle(void);
+static void onFrameTimer(int value);
 void updatePlayer();
 // 光源
 // 鼠标键盘操作
@@ -176,7 +178,7 @@ int main(int argc, char* argv[])
 	prepareScreenshotScene();
 
 	glutDisplayFunc(&myDisplay);
-	glutIdleFunc(&myIdle); //设置窗口刷新的回调函数
+	glutTimerFunc(0, onFrameTimer, 0);
 	glutKeyboardFunc(myKeyboard); //设置键盘回调函数
 	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); // mouse button callback
@@ -322,9 +324,7 @@ void myIdle(void)
 		Game.camera.target[1] = Game.balls[0].position.y;
 		Game.camera.target[2] = Game.balls[0].position.z;
 	}
-	Game.camera.eye[0] = Game.camera.zoom * (cos(Game.camera.angleX)) + Game.camera.target[0];
-	Game.camera.eye[1] = Game.camera.zoom * (cos(Game.camera.angleY)) + Game.camera.target[1];
-	Game.camera.eye[2] = Game.camera.zoom * (sin(Game.camera.angleX) * sin(Game.camera.angleY)) + Game.camera.target[2];
+	billiardgl::updateCameraEye(Game);
 
 
 	if (Game.input.hitRequested == 1)
@@ -355,9 +355,15 @@ void myIdle(void)
 		kMaxPhysicsStepsPerIdle);
 	for (int step = 0; step < frameSteps.steps; ++step)
 	{
-		billiardgl::updatePhysics(
+		const billiardgl::PhysicsStepTelemetry telemetry = billiardgl::updatePhysics(
 			Game, ProductionPhysicsProfile.solver.timeStepSeconds,
 			ProductionPhysicsProfile);
+		if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed)
+		{
+			std::fprintf(stderr, "Fatal physics step failure: %s\n",
+				billiardgl::physicsFailureCodeName(telemetry.failureCode));
+			std::exit(EXIT_FAILURE);
+		}
 		if (Game.events.ballCollision || Game.events.railCollision)
 			billiardgl::playHit();
 		if (Game.events.ballPocketed || Game.events.cueBallPocketed)
@@ -411,6 +417,12 @@ void myIdle(void)
 
 	glutPostRedisplay();
 }
+
+static void onFrameTimer(int)
+{
+	myIdle();
+	glutTimerFunc(kFrameIntervalMilliseconds, onFrameTimer, 0);
+}
 // 球与球碰撞检测
 static void myKeyboard(unsigned char key, int x, int y)
 {
@@ -451,11 +463,13 @@ static void myKeyboard(unsigned char key, int x, int y)
 	case 'W':
 		Game.camera.zoom -= 10;
 		if (Game.camera.zoom<10) Game.camera.zoom = 10;
+		billiardgl::updateCameraEye(Game);
 		break;
 	case 's':
 	case 'S':
 		Game.camera.zoom += 10;
 		if (Game.camera.zoom>500) Game.camera.zoom = 500;
+		billiardgl::updateCameraEye(Game);
 		break;
 	case '+':
 		if (Game.aim.mode == billiardgl::AimMode::Aim)
@@ -521,10 +535,6 @@ static void myKeyboard(unsigned char key, int x, int y)
 }
 static void myMouse(int mbutton, int mstate, int x, int y)
 {
-	if (Game.ballsMoving)
-	{
-		return;
-	}
 	if (mbutton == 3 || mbutton == 4)
 	{
 		billiardgl::handleMouseWheel(Game, mbutton == 3 ? 1 : -1, 10.0f, 20.0f, 200.0f);
@@ -564,16 +574,10 @@ static void myMouse(int mbutton, int mstate, int x, int y)
 }
 static void platformScroll(int direction)
 {
-	if (Game.ballsMoving)
-		return;
-
 	billiardgl::handleMouseWheel(Game, direction, 10.0f, 20.0f, 200.0f);
 }
 static void mouseMove(int x, int y)
 {
-	if (Game.ballsMoving)
-		return;
-
 	billiardgl::handleMouseMove(Game, x, y);
 }
 // Background music

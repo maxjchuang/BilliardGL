@@ -181,8 +181,8 @@ ActionResult GameRuntime::dispatch(const GameAction& action)
         else if (key == '\t') handleAimToggleKey(state_);
         else if (key == 'c' || key == 'C') handleCameraAnchorToggleKey(state_);
         else if (key == ' ') handleCameraReturnToCueBallKey(state_);
-        else if (key == 'w' || key == 'W') state_.camera.zoom = std::fmax(10.0f, state_.camera.zoom - 10.0f);
-        else if (key == 's' || key == 'S') state_.camera.zoom = std::fmin(500.0f, state_.camera.zoom + 10.0f);
+        else if (key == 'w' || key == 'W') { state_.camera.zoom = std::fmax(10.0f, state_.camera.zoom - 10.0f); updateCameraEye(state_); }
+        else if (key == 's' || key == 'S') { state_.camera.zoom = std::fmin(500.0f, state_.camera.zoom + 10.0f); updateCameraEye(state_); }
         else if (key == 'a' || key == 'A') state_.camera.panX = std::fmin(490.0f, state_.camera.panX + 10.0f);
         else if (key == 'd' || key == 'D') state_.camera.panX = std::fmax(-490.0f, state_.camera.panX - 10.0f);
         else if ((key == '+' || key == '-') && state_.aim.mode == AimMode::Aim) handleMouseWheel(state_, key == '+' ? 1 : -1, 10.0f, 20.0f, 200.0f);
@@ -192,11 +192,10 @@ ActionResult GameRuntime::dispatch(const GameAction& action)
     case ActionType::SpecialKey:
         handleSpecialKey(state_, 0, 1, 2, 3, action.firstInt); return ActionResult{};
     case ActionType::MouseMove:
-        if (!state_.ballsMoving) handleMouseMove(state_, action.firstInt, action.secondInt); return ActionResult{};
+        handleMouseMove(state_, action.firstInt, action.secondInt); return ActionResult{};
     case ActionType::MouseWheel:
-        if (!state_.ballsMoving) handleMouseWheel(state_, action.firstInt, 10.0f, 20.0f, 200.0f); return ActionResult{};
+        handleMouseWheel(state_, action.firstInt, 10.0f, 20.0f, 200.0f); return ActionResult{};
     case ActionType::MouseButton: {
-        if (state_.ballsMoving) return ActionResult{false, "invalid_state"};
         const MouseButton button = action.firstInt == 0 ? MouseButton::Left : action.firstInt == 1 ? MouseButton::Right : MouseButton::Other;
         handleMouseButton(state_, button, action.secondInt == 0 ? ButtonState::Down : ButtonState::Up, action.thirdInt, static_cast<int>(action.first));
         if (state_.input.hitRequested) return applyShot();
@@ -206,11 +205,11 @@ ActionResult GameRuntime::dispatch(const GameAction& action)
         if (action.firstInt <= 0 || action.secondInt <= 0) return ActionResult{false, "invalid_argument"};
         state_.config.width = action.firstInt; state_.config.height = action.secondInt; return ActionResult{};
     case ActionType::OrbitCamera:
-        state_.camera.angleX += action.first; state_.camera.angleY += action.second; clampCameraAngles(state_); return ActionResult{};
+        state_.camera.angleX += action.first; state_.camera.angleY += action.second; clampCameraAngles(state_); updateCameraEye(state_); return ActionResult{};
     case ActionType::PanCamera:
-        state_.camera.anchorMode = CameraAnchorMode::FreeLook; state_.camera.target[0] += action.first; state_.camera.target[2] += action.second; return ActionResult{};
+        state_.camera.anchorMode = CameraAnchorMode::FreeLook; state_.camera.target[0] += action.first; state_.camera.target[2] += action.second; updateCameraEye(state_); return ActionResult{};
     case ActionType::ZoomCamera:
-        state_.camera.zoom = std::fmax(10.0f, std::fmin(500.0f, state_.camera.zoom + action.first)); return ActionResult{};
+        state_.camera.zoom = std::fmax(10.0f, std::fmin(500.0f, state_.camera.zoom + action.first)); updateCameraEye(state_); return ActionResult{};
     case ActionType::SetAimYaw:
         if (!std::isfinite(action.first)) return ActionResult{false, "invalid_argument"};
         state_.aim.yaw = action.first;

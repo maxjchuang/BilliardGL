@@ -172,6 +172,7 @@ struct GameState {
 };
 
 void initializeBalls(GameState& state);
+void updateCameraEye(GameState& state);
 void updateCameraFromCueBall(GameState& state);
 void resetBallMotion(BallState& ball);
 void resetPocketInteraction(BallState& ball);

@@ -71,6 +71,10 @@ int main()
     assertNotContains(billiards, "#define BALL_RADIUS 5.715");
     assertContains(billiards, "glutMotionFunc(mouseMove)");
     assertContains(billiards, "glutPassiveMotionFunc(mouseMove)");
+    assertContains(billiards, "glutTimerFunc");
+    assertNotContains(billiards, "glutIdleFunc");
+    assertContains(billiards, "telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed");
+    assertContains(billiards, "billiardgl::physicsFailureCodeName(telemetry.failureCode)");
     assertContains(billiards, "billiardgl::handleMouseMove(Game, x, y)");
     assertContains(billiards, "billiardgl::handleMouseWheel(Game");
     assertContains(billiards, "if (mbutton == 3 || mbutton == 4)");

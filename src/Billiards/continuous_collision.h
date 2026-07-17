@@ -12,6 +12,7 @@ enum class ContinuousContactKind {
     BallBall,
     StraightRail,
     Jaw,
+    Mouth,
     Throat,
     Capture
 };

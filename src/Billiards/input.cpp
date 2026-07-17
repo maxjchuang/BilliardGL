@@ -64,6 +64,7 @@ void handleCameraReturnToCueBallKey(GameState& state)
     state.camera.target[0] = state.balls[0].position.x;
     state.camera.target[1] = state.balls[0].position.y;
     state.camera.target[2] = state.balls[0].position.z;
+    updateCameraEye(state);
 }
 
 void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, int keyDown, int key)
@@ -79,6 +80,7 @@ void handleSpecialKey(GameState& state, int keyLeft, int keyRight, int keyUp, in
         state.camera.angleY += orbitStep;
     }
     clampCameraAngles(state);
+    updateCameraEye(state);
 }
 
 void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonState, int x, int y)
@@ -100,7 +102,7 @@ void handleMouseButton(GameState& state, MouseButton button, ButtonState buttonS
     if (button == MouseButton::Left) {
         state.input.leftMouseDown = isDown;
         state.input.waitingForHit = false;
-        if (state.aim.mode == AimMode::Aim && !isDown) {
+        if (state.aim.mode == AimMode::Aim && !state.ballsMoving && !isDown) {
             state.input.hitRequested = true;
         }
     } else if (button == MouseButton::Right) {
@@ -114,7 +116,7 @@ void handleMouseWheel(GameState& state, int direction, float zoomStep, float pow
         return;
     }
 
-    if (state.aim.mode == AimMode::Aim) {
+    if (state.aim.mode == AimMode::Aim && !state.ballsMoving) {
         state.input.shotPower += static_cast<float>(direction) * powerStep;
         if (state.input.shotPower < 0.0f) {
             state.input.shotPower = 0.0f;
@@ -132,6 +134,7 @@ void handleMouseWheel(GameState& state, int direction, float zoomStep, float pow
     if (state.camera.zoom > 500.0f) {
         state.camera.zoom = 500.0f;
     }
+    updateCameraEye(state);
 }
 
 void beginCameraPan(GameState& state, int x, int y)
@@ -200,7 +203,7 @@ void handleMouseMove(GameState& state, int x, int y)
     state.input.mouseX = x;
     state.input.mouseY = y;
 
-    if (state.aim.mode == AimMode::Aim) {
+    if (state.aim.mode == AimMode::Aim && !state.ballsMoving) {
         state.aim.yaw += static_cast<float>(dx) * state.aim.sensitivity;
         return;
     }
@@ -213,6 +216,7 @@ void handleMouseMove(GameState& state, int x, int y)
         const float rightZ = -forwardX;
         state.camera.target[0] += (forwardX * static_cast<float>(dy) + rightX * static_cast<float>(dx)) * panScale;
         state.camera.target[2] += (forwardZ * static_cast<float>(dy) + rightZ * static_cast<float>(dx)) * panScale;
+        updateCameraEye(state);
         return;
     }
 
@@ -220,6 +224,7 @@ void handleMouseMove(GameState& state, int x, int y)
         state.camera.angleX += static_cast<float>(dx) * 0.01f;
         state.camera.angleY += static_cast<float>(dy) * 0.01f;
         clampCameraAngles(state);
+        updateCameraEye(state);
     }
 }
 

@@ -54,14 +54,22 @@ void testSpecialKeysOrbitCamera()
 void testObserveModeLeftDragOrbitsCamera()
 {
     billiardgl::GameState state;
+    billiardgl::updateCameraFromCueBall(state);
     const float startX = state.camera.angleX;
     const float startY = state.camera.angleY;
+    const float startEyeX = state.camera.eye[0];
+    const float startEyeY = state.camera.eye[1];
+    const float startEyeZ = state.camera.eye[2];
 
     billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left, billiardgl::ButtonState::Down, 100, 100);
     billiardgl::handleMouseMove(state, 120, 130);
 
     expect(closeEnough(state.camera.angleX, startX + 0.2f));
     expect(closeEnough(state.camera.angleY, startY + 0.3f));
+    expect(!closeEnough(state.camera.eye[0], startEyeX)
+        || !closeEnough(state.camera.eye[1], startEyeY)
+        || !closeEnough(state.camera.eye[2], startEyeZ),
+        "dragging must immediately update the rendered camera eye");
     expect(!state.input.waitingForHit, "!state.input.waitingForHit");
     expect(!state.input.hitRequested, "!state.input.hitRequested");
     expect(state.input.leftMouseDown, "state.input.leftMouseDown");
@@ -82,6 +90,28 @@ void testObserveModeRightDragDoesNotOrbitCamera()
     expect(closeEnough(state.camera.angleX, startX));
     expect(closeEnough(state.camera.angleY, startY));
     expect(!state.input.waitingForHit, "!state.input.waitingForHit");
+    expect(!state.input.hitRequested, "!state.input.hitRequested");
+}
+
+void testMovingBallsStillAllowCameraOrbitWithoutRequestingShot()
+{
+    billiardgl::GameState state;
+    billiardgl::updateCameraFromCueBall(state);
+    state.ballsMoving = true;
+    const float startX = state.camera.angleX;
+    const float startY = state.camera.angleY;
+    const float startEyeX = state.camera.eye[0];
+
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left,
+        billiardgl::ButtonState::Down, 100, 100);
+    billiardgl::handleMouseMove(state, 130, 120);
+    billiardgl::handleMouseButton(state, billiardgl::MouseButton::Left,
+        billiardgl::ButtonState::Up, 130, 120);
+
+    expect(closeEnough(state.camera.angleX, startX + 0.3f));
+    expect(closeEnough(state.camera.angleY, startY + 0.2f));
+    expect(!closeEnough(state.camera.eye[0], startEyeX));
+    expect(!state.input.leftMouseDown, "!state.input.leftMouseDown");
     expect(!state.input.hitRequested, "!state.input.hitRequested");
 }
 
@@ -292,6 +322,7 @@ int main()
     testSpecialKeysOrbitCamera();
     testObserveModeLeftDragOrbitsCamera();
     testObserveModeRightDragDoesNotOrbitCamera();
+    testMovingBallsStillAllowCameraOrbitWithoutRequestingShot();
     testObserveModeMouseWheelZoomsCamera();
     testCameraAnchorToggleAndReturnToCueBall();
     testFreeLookPanMovesCameraTarget();

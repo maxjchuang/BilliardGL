@@ -299,6 +299,7 @@ const char* pocketBoundaryEventKindName(PocketBoundaryEventKind kind)
     case PocketBoundaryEventKind::RightJaw: return "right_jaw";
     case PocketBoundaryEventKind::Throat: return "throat";
     case PocketBoundaryEventKind::Capture: return "capture";
+    case PocketBoundaryEventKind::Mouth: return "mouth";
     case PocketBoundaryEventKind::Ambiguous: return "ambiguous";
     }
     return "none";
@@ -326,6 +327,7 @@ PocketTransitionResult advancePocketInteraction(
     switch (state.phase) {
     case PocketInteractionPhase::Outside:
         if (hasPocket && (region == PocketBoundaryRegion::Approaching ||
+                event == PocketBoundaryEventKind::Mouth ||
                 event == PocketBoundaryEventKind::LeftJaw ||
                 event == PocketBoundaryEventKind::RightJaw ||
                 event == PocketBoundaryEventKind::Throat)) {
@@ -344,8 +346,11 @@ PocketTransitionResult advancePocketInteraction(
         } else if (event == PocketBoundaryEventKind::Throat ||
                    region == PocketBoundaryRegion::Throat) {
             next = PocketInteractionPhase::ThroatCrossed;
-        } else if (region == PocketBoundaryRegion::Outside) {
+        } else if (region == PocketBoundaryRegion::Outside &&
+                   event != PocketBoundaryEventKind::Mouth) {
             next = PocketInteractionPhase::Outside;
+        } else if (region == PocketBoundaryRegion::Solid) {
+            next = PocketInteractionPhase::Rejected;
         }
         break;
     case PocketInteractionPhase::JawContact:

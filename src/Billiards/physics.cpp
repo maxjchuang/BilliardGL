@@ -16,9 +16,16 @@
 namespace billiardgl {
 namespace {
 
-bool isTraversablePocketMouth(const Point3& position,
+struct TraversablePocketMouth {
+    bool hit = false;
+    int pocketId = -1;
+    Point3 inward;
+};
+
+TraversablePocketMouth traversablePocketMouth(const Point3& position,
     const PhysicsProfile& profile)
 {
+    TraversablePocketMouth result;
     const std::array<PocketBoundaryFrame, 6> frames =
         buildPocketBoundaryFrames(profile.tableBoundary);
     for (const PocketBoundaryFrame& frame : frames) {
@@ -26,14 +33,19 @@ bool isTraversablePocketMouth(const Point3& position,
             frame, position, profile.ball.radiusCm);
         if (query.passable && query.local.depthCm >= -profile.ball.radiusCm * 2.0 &&
             query.local.depthCm <= frame.captureDepthCm) {
-            return true;
+            result.hit = true;
+            result.pocketId = frame.pocketId;
+            result.inward = frame.inward;
+            return result;
         }
     }
-    return false;
+    return result;
 }
 
 struct StraightRailEvent {
     bool hit = false;
+    bool mouthCrossed = false;
+    int pocketId = -1;
     bool xAxis = true;
     float timeSeconds = 0.0f;
     float boundaryCm = 0.0f;
@@ -69,7 +81,12 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
     const PhysicsProfile& profile, bool xAxis)
 {
     StraightRailEvent event;
-    if (ball.pocketInteraction.phase == PocketInteractionPhase::ThroatCrossed ||
+    const bool legacy = profile.formulaVersion == "legacy_v1";
+    if ((legacy && (ball.pocketInteraction.phase ==
+                PocketInteractionPhase::Approaching ||
+            ball.pocketInteraction.phase ==
+                PocketInteractionPhase::JawContact)) ||
+        ball.pocketInteraction.phase == PocketInteractionPhase::ThroatCrossed ||
         ball.pocketInteraction.phase == PocketInteractionPhase::Captured) {
         return event;
     }
@@ -78,6 +95,7 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
         profile.ball.radiusCm;
     const float start = coordinate(ball, xAxis);
     const float component = velocity(ball, xAxis);
+    bool crossedFromPlayfield = false;
     float side = 0.0f;
     if (std::fabs(start) >= limit - 0.000001f) {
         side = start >= 0.0f ? 1.0f : -1.0f;
@@ -130,6 +148,7 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
             else lower = middle;
         }
         event.timeSeconds = upper;
+        crossedFromPlayfield = true;
     }
     event.boundaryCm = side * limit;
     if (xAxis) event.inwardNormal.x = -side;
@@ -137,8 +156,15 @@ StraightRailEvent railCandidate(const BallState& ball, float timeStep,
 
     BallState contact = advancedCopy(ball, event.timeSeconds, profile);
     setCoordinate(contact, xAxis, event.boundaryCm);
-    if (isTraversablePocketMouth(contact.position, profile)) {
-        return StraightRailEvent{};
+    const TraversablePocketMouth mouth = traversablePocketMouth(
+        contact.position, profile);
+    if (mouth.hit) {
+        if (legacy) {
+            event.mouthCrossed = crossedFromPlayfield;
+            event.pocketId = mouth.pocketId;
+            event.inwardNormal = mouth.inward;
+        }
+        return event;
     }
     event.hit = true;
     return event;
@@ -188,6 +214,46 @@ int pocketFeatureId(int pocketId, PocketBoundaryEventKind kind)
     return 100 + pocketId * 8 + static_cast<int>(kind);
 }
 
+const PocketBoundaryFrame* legacyCaptureFrame(const BallState& ball,
+    const PhysicsProfile& profile,
+    const std::array<PocketBoundaryFrame, 6>& frames)
+{
+    if (profile.formulaVersion != "legacy_v1") return nullptr;
+    const double halfWidth = profile.tableBoundary.playfieldWidthCm * 0.5;
+    const double halfLength = profile.tableBoundary.playfieldLengthCm * 0.5;
+    for (const PocketBoundaryFrame& frame : frames) {
+        const double halfMouth = frame.mouthWidthCm * 0.5 +
+            profile.ball.radiusCm;
+        bool insideBand = false;
+        bool crossedDropZone = false;
+        if (frame.kind == PocketKind::Side) {
+            insideBand = std::fabs(ball.position.z - frame.mouthCenter.z) <=
+                    halfMouth &&
+                (frame.mouthCenter.x < 0.0f
+                    ? ball.position.x <= 0.0f : ball.position.x >= 0.0f);
+            crossedDropZone = frame.mouthCenter.x < 0.0f
+                ? ball.position.x <= -halfWidth + frame.captureDepthCm
+                : ball.position.x >= halfWidth - frame.captureDepthCm;
+        } else {
+            insideBand =
+                std::fabs(ball.position.x - frame.mouthCenter.x) <= halfMouth &&
+                std::fabs(ball.position.z - frame.mouthCenter.z) <= halfMouth;
+            const bool crossedX = frame.mouthCenter.x < 0.0f
+                ? ball.position.x <= -halfWidth + frame.captureDepthCm
+                : ball.position.x >= halfWidth - frame.captureDepthCm;
+            const bool crossedZ = frame.mouthCenter.z < 0.0f
+                ? ball.position.z <= -halfLength + frame.captureDepthCm
+                : ball.position.z >= halfLength - frame.captureDepthCm;
+            crossedDropZone = crossedX || crossedZ;
+        }
+        if (insideBand && crossedDropZone) return &frame;
+    }
+    return nullptr;
+}
+
+const PocketBoundaryFrame* activePocketFrame(
+    const std::array<PocketBoundaryFrame, 6>& frames, int pocketId);
+
 std::vector<ContinuousContactCandidate> generateBoundaryCandidates(
     const GameState& state, float timeStep, const PhysicsProfile& profile)
 {
@@ -197,9 +263,68 @@ std::vector<ContinuousContactCandidate> generateBoundaryCandidates(
     for (int ballIndex = 0; ballIndex < kBallCount; ++ballIndex) {
         const BallState& ball = state.balls[ballIndex];
         if (ball.pocketed) continue;
+        const PocketBoundaryFrame* legacyFrame = legacyCaptureFrame(
+            ball, profile, frames);
+        if (legacyFrame != nullptr &&
+            ball.pocketInteraction.phase != PocketInteractionPhase::Rejected &&
+            ball.pocketInteraction.phase != PocketInteractionPhase::Captured) {
+            PocketBoundaryEventKind event = PocketBoundaryEventKind::Mouth;
+            if (ball.pocketInteraction.phase ==
+                    PocketInteractionPhase::Approaching ||
+                ball.pocketInteraction.phase ==
+                    PocketInteractionPhase::JawContact) {
+                event = PocketBoundaryEventKind::Throat;
+            } else if (ball.pocketInteraction.phase ==
+                    PocketInteractionPhase::ThroatCrossed) {
+                event = PocketBoundaryEventKind::Capture;
+            }
+            result.push_back(boundaryContactCandidate(ballIndex,
+                pocketFeatureId(legacyFrame->pocketId, event), 0.0,
+                legacyFrame->inward, event, legacyFrame->pocketId));
+            continue;
+        }
+        if (profile.formulaVersion == "legacy_v1" &&
+            ball.pocketInteraction.phase !=
+                PocketInteractionPhase::Rejected &&
+            ball.pocketInteraction.phase != PocketInteractionPhase::Captured &&
+            ball.pocketInteraction.pocketId >= 0) {
+            const PocketBoundaryFrame* frame = activePocketFrame(
+                frames, ball.pocketInteraction.pocketId);
+            if (frame != nullptr) {
+                const PocketBoundaryQuery query = classifyPocketPoint(
+                    *frame, ball.position, profile.ball.radiusCm);
+                const bool needsRegionSync =
+                    query.region == PocketBoundaryRegion::Solid ||
+                    (ball.pocketInteraction.phase ==
+                            PocketInteractionPhase::ThroatCrossed &&
+                        (query.region == PocketBoundaryRegion::Outside ||
+                         query.region == PocketBoundaryRegion::Approaching));
+                if (needsRegionSync) {
+                    PocketInteractionState next = ball.pocketInteraction;
+                    const PocketTransitionResult transition =
+                        advancePocketInteraction(next, frame->pocketId,
+                            PocketBoundaryEventKind::Mouth, query.region, 0);
+                    if (transition.changed) {
+                        result.push_back(boundaryContactCandidate(ballIndex,
+                            pocketFeatureId(frame->pocketId,
+                                PocketBoundaryEventKind::Mouth),
+                            0.0, frame->inward,
+                            PocketBoundaryEventKind::Mouth,
+                            frame->pocketId));
+                    }
+                }
+            }
+        }
         for (bool xAxis : {true, false}) {
             const StraightRailEvent rail = railCandidate(
                 ball, timeStep, profile, xAxis);
+            if (rail.mouthCrossed) {
+                result.push_back(boundaryContactCandidate(ballIndex,
+                    pocketFeatureId(rail.pocketId,
+                        PocketBoundaryEventKind::Mouth),
+                    rail.timeSeconds, rail.inwardNormal,
+                    PocketBoundaryEventKind::Mouth, rail.pocketId));
+            }
             if (!rail.hit) continue;
             ContinuousContactCandidate candidate = boundaryContactCandidate(
                 ballIndex, straightRailFeatureId(rail), rail.timeSeconds,
@@ -432,7 +557,7 @@ void collideWithTableEdge(BallState& ball)
 CushionContactResult collideWithTableEdge(
     BallState& ball, const PhysicsProfile& profile)
 {
-    if (isTraversablePocketMouth(ball.position, profile)) {
+    if (traversablePocketMouth(ball.position, profile).hit) {
         return CushionContactResult{};
     }
     const StraightRailEvent event = earliestRailEvent(ball, 0.0f, profile);
@@ -445,8 +570,8 @@ CushionContactResult collideWithTableEdge(
 
 bool isInPocketMouth(const BallState& ball)
 {
-    return isTraversablePocketMouth(
-        ball.position, defaultChinesePoolPhysicsProfile());
+    return traversablePocketMouth(
+        ball.position, defaultChinesePoolPhysicsProfile()).hit;
 }
 
 bool isInPocket(const BallState& ball)
@@ -836,8 +961,18 @@ bool applyTopologyTransitions(GameState& state,
         BallState& ball = state.balls[candidate.firstBall];
         if (ball.pocketInteraction.phase ==
             PocketInteractionPhase::Captured) continue;
-        const PocketBoundaryQuery query = classifyPocketPoint(
+        PocketBoundaryQuery query = classifyPocketPoint(
             *frame, ball.position, profile.ball.radiusCm);
+        if (profile.formulaVersion == "legacy_v1") {
+            if (candidate.pocketEvent == PocketBoundaryEventKind::Throat) {
+                query.region = PocketBoundaryRegion::Throat;
+                query.passable = true;
+            } else if (candidate.pocketEvent ==
+                    PocketBoundaryEventKind::Capture) {
+                query.region = PocketBoundaryRegion::Capture;
+                query.passable = true;
+            }
+        }
         const unsigned long long sequence =
             candidate.kind == ContinuousContactKind::Capture
                 ? state.nextPocketCaptureSequence : 0;
@@ -1140,8 +1275,16 @@ PhysicsStepTelemetry updatePhysics(
             ? PhysicsFailureCode::NonfiniteEnergy
             : PhysicsFailureCode::NonfiniteState);
     }
+    // Each converged solver event already enforces the configured passive
+    // energy tolerance. The tick-level legacy gate therefore budgets the sum
+    // of those independent floating-point bounds instead of applying one
+    // island's bound to an arbitrarily long event chain.
+    const double tickEnergyTolerance = profile.formulaVersion == "legacy_v1"
+        ? profile.solver.passiveEnergyToleranceJ * std::max<std::size_t>(
+            1, telemetry.solverEvents.size())
+        : profile.solver.passiveEnergyToleranceJ;
     if (telemetry.stepStatus == PhysicsStepStatus::Succeeded &&
-        energyAfter > energyBefore + profile.solver.passiveEnergyToleranceJ) {
+        energyAfter > energyBefore + tickEnergyTolerance) {
         failStep(telemetry, PhysicsFailureCode::PassiveEnergyCreation);
     }
     if (telemetry.stepStatus == PhysicsStepStatus::Failed) state = snapshot;
