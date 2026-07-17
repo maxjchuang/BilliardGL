@@ -36,7 +36,9 @@ def digest(path):
 
 class Phase3V2ConfirmationTests(unittest.TestCase):
     def setUp(self):
-        self.temporary = tempfile.TemporaryDirectory(dir=ROOT / "build")
+        build_directory = ROOT / "build"
+        build_directory.mkdir(parents=True, exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(dir=build_directory)
         self.addCleanup(self.temporary.cleanup)
         self.scratch = Path(self.temporary.name)
         self.package = self.scratch / "fixture_confirmation"

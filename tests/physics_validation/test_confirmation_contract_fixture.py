@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 import unittest
 from pathlib import Path
 
@@ -12,7 +13,8 @@ from tools.physics_validation.confirmation_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
-EXECUTABLE = ROOT / "build/Billiards"
+BUILD_DIR = Path(os.environ.get("BILLIARDGL_BUILD_DIR", ROOT / "build"))
+EXECUTABLE = BUILD_DIR / "Billiards"
 FIXTURE = ROOT / "tests/physics_validation/fixtures/confirmation_transaction_v1"
 
 

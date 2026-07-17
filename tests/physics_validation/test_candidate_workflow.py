@@ -1,14 +1,16 @@
 import json
 import hashlib
+import os
 import subprocess
 import unittest
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+BUILD_DIR = Path(os.environ.get("BILLIARDGL_BUILD_DIR", REPO_ROOT / "build"))
 DOCUMENTATION = REPO_ROOT / "docs/reference-data-packages.md"
 WORKFLOW = REPO_ROOT / ".github/workflows/physics-reference-full.yml"
-EXECUTABLE = REPO_ROOT / "build/Billiards"
+EXECUTABLE = BUILD_DIR / "Billiards"
 PROFILE = REPO_ROOT / "physics_models/profiles/chinese_pool_full_game_v2.json"
 INVENTORY = REPO_ROOT / "physics_models/promotion/phase3_candidates_v2.json"
 SURFACE_FIT = REPO_ROOT / "physics_models/calibration/surface_fit_v2.json"

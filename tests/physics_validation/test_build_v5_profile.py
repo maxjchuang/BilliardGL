@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 import subprocess
 import unittest
 from pathlib import Path
@@ -13,6 +14,7 @@ from tools.physics_validation.build_v5_profile import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
+BUILD_DIR = Path(os.environ.get("BILLIARDGL_BUILD_DIR", ROOT / "build"))
 V4_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v4.json"
 V5_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v5.json"
 FIT = ROOT / "physics_models/calibration/frozen_cue_contact_v1_fit.json"
@@ -47,7 +49,7 @@ class BuildV5ProfileTests(unittest.TestCase):
 
     def test_rejected_v5_is_preserved_but_not_the_runtime_default(self):
         emitted = json.loads(subprocess.run(
-            [str(ROOT / "build/Billiards"), "--print-physics-profile"],
+            [str(BUILD_DIR / "Billiards"), "--print-physics-profile"],
             check=True, capture_output=True, text=True).stdout)
         self.assertEqual(
             (emitted["id"], emitted["formula_version"]),
