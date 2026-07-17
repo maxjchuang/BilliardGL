@@ -33,6 +33,21 @@ int main()
     expect(!production.frozenCueContact.enabled,
         "production default must not enable rejected v5 cue contact");
 
+    const billiardgl::PhysicsProfile interactive =
+        billiardgl::interactiveChinesePoolPhysicsProfile();
+    expect(billiardgl::validatePhysicsProfile(interactive).ok,
+        "interactive profile must be valid");
+    expect(interactive.id == "chinese_pool_interactive_120hz_v1",
+        "interactive profile has a distinct traceable ID");
+    expect(close(interactive.solver.timeStepSeconds, 1.0f / 120.0f),
+        "interactive profile runs physics at 120 Hz");
+    expect(close(production.solver.timeStepSeconds, 0.1f),
+        "evidence replay baseline keeps its explicit 100 ms step");
+    expect(interactive.formulaVersion == production.formulaVersion &&
+        interactive.surface.material == production.surface.material &&
+        interactive.cushion.material == production.cushion.material,
+        "interactive timing must not silently change the physical model");
+
     const billiardgl::PhysicsProfile profile =
         billiardgl::phase3V5CandidatePhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(profile).ok,

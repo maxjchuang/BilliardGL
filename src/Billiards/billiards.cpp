@@ -19,12 +19,14 @@
 #include "hud.h"
 #include "input.h"
 #include "particle_resources.h"
+#include "platform_display_timing.h"
 #include "platform_scroll.h"
 #include "physics.h"
 #include "rules.h"
 #include "platform_audio.h"
 #include "platform_time.h"
 #include "resource_path.h"
+#include "render_state.h"
 #include "renderer.h"
 #include "render_resources.h"
 #include "screenshot.h"
@@ -60,13 +62,15 @@
 #define L1 GL_LIGHT1
 
 static billiardgl::GameState Game;
+static billiardgl::GameState PreviousPhysicsGame;
 static billiardgl::RenderResources Render;
 static double LastIdleTimeSeconds = 0.0;
-static float PhysicsTimeAccumulatorSeconds = 0.0f;
-static const int kMaxPhysicsStepsPerIdle = 5;
-static const unsigned int kFrameIntervalMilliseconds = 16;
-static const billiardgl::PhysicsProfile ProductionPhysicsProfile =
-	billiardgl::defaultChinesePoolPhysicsProfile();
+static double PhysicsTimeAccumulatorSeconds = 0.0;
+static double DroppedSimulationSeconds = 0.0;
+static double PerspectiveResetAtSeconds = 0.0;
+static const int kMaxPhysicsStepsPerIdle = 12;
+static const billiardgl::PhysicsProfile InteractivePhysicsProfile =
+	billiardgl::interactiveChinesePoolPhysicsProfile();
 
 //变量申明
 int& width = Game.config.width;
@@ -91,7 +95,6 @@ void initWindows(void);
 void myReshape(int w, int h);
 void myDisplay(void);
 void myIdle(void);
-static void onFrameTimer(int value);
 void updatePlayer();
 // 光源
 // 鼠标键盘操作
@@ -165,20 +168,22 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
+	billiardgl::enablePlatformVSync();
 	billiardgl::installPlatformScrollHandler(platformScroll);
 	initBall();//初始化球的位置
+	PreviousPhysicsGame = Game;
 	if (!billiardgl::initializeRenderResources(Render, Game))
 	{
 		std::fprintf(stderr, "Failed to initialize render resources\n");
 		return 1;
 	}
 	billiardgl::initializeParticleEmitters(Render, Game);
-	LastIdleTimeSeconds = billiardgl::monotonicSeconds();
 
 	prepareScreenshotScene();
+	PreviousPhysicsGame = Game;
 
 	glutDisplayFunc(&myDisplay);
-	glutTimerFunc(0, onFrameTimer, 0);
+	glutIdleFunc(&myIdle);
 	glutKeyboardFunc(myKeyboard); //设置键盘回调函数
 	glutSpecialFunc(mySpecialKeyboard);
 	glutMouseFunc(myMouse); // mouse button callback
@@ -187,6 +192,7 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(myReshape);
 
 	billiardgl::setupLights();
+	LastIdleTimeSeconds = billiardgl::monotonicSeconds();
 	glutMainLoop();
 	return 0;
 }
@@ -218,8 +224,8 @@ void prepareScreenshotScene()
 		Game.ballsMoving = true;
 		for (int step = 0; step < 30; ++step)
 			billiardgl::updatePhysics(
-				Game, ProductionPhysicsProfile.solver.timeStepSeconds,
-				ProductionPhysicsProfile);
+				Game, InteractivePhysicsProfile.solver.timeStepSeconds,
+				InteractivePhysicsProfile);
 		billiardgl::updateCameraFromCueBall(Game);
 		Game.camera.target[0] = Game.camera.target[0];
 		Game.camera.target[1] = Game.camera.target[1];
@@ -283,24 +289,30 @@ void initBall()
 // display
 void myDisplay(void)
 {
+	const double interpolationAlpha = billiardgl::frameInterpolationAlpha(
+		PhysicsTimeAccumulatorSeconds,
+		InteractivePhysicsProfile.solver.timeStepSeconds);
+	const billiardgl::GameState renderedGame =
+		billiardgl::interpolateRenderState(
+			PreviousPhysicsGame, Game, interpolationAlpha);
 	if (!Game.config.screenshotPath.empty())
 	{
 		billiardgl::updateCameraFromCueBall(Game);
 	}
-	billiardgl::setupCameraFromGameState(Game);
-	Render.cameraEye[0] = Game.camera.eye[0];
-	Render.cameraEye[1] = Game.camera.eye[1];
-	Render.cameraEye[2] = Game.camera.eye[2];
-	Render.cameraTarget[0] = Game.camera.target[0];
-	Render.cameraTarget[1] = Game.camera.target[1];
-	Render.cameraTarget[2] = Game.camera.target[2];
+	billiardgl::setupCameraFromGameState(renderedGame);
+	Render.cameraEye[0] = renderedGame.camera.eye[0];
+	Render.cameraEye[1] = renderedGame.camera.eye[1];
+	Render.cameraEye[2] = renderedGame.camera.eye[2];
+	Render.cameraTarget[0] = renderedGame.camera.target[0];
+	Render.cameraTarget[1] = renderedGame.camera.target[1];
+	Render.cameraTarget[2] = renderedGame.camera.target[2];
 	Render.shotPower = Game.input.shotPower;
 	Render.showCue = Game.players.aimingAtCueBall == 1;
 	Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim;
 	Render.viewportWidth = width;
 	Render.viewportHeight = height;
-	billiardgl::setupCameraFromGameState(Game);
-	billiardgl::renderScene(Game, Render);
+	billiardgl::setupCameraFromGameState(renderedGame);
+	billiardgl::renderScene(renderedGame, Render);
 
 	updatePlayer();
 	Game.config.width = width;
@@ -330,9 +342,9 @@ void myIdle(void)
 	if (Game.input.hitRequested == 1)
 	{
 		const billiardgl::CueImpactInput input = billiardgl::cueImpactFromShotControls(
-			Game.aim.yaw, Game.input.shotPower, ProductionPhysicsProfile);
+			Game.aim.yaw, Game.input.shotPower, InteractivePhysicsProfile);
 		const billiardgl::CueShotApplication application = billiardgl::applyCueShot(
-			Game, input, ProductionPhysicsProfile);
+			Game, input, InteractivePhysicsProfile);
 		if (application.action.ok)
 			billiardgl::playHit();
 		else
@@ -348,16 +360,33 @@ void myIdle(void)
 	const double currentIdleTimeSeconds = billiardgl::monotonicSeconds();
 	const float elapsedSeconds = static_cast<float>(currentIdleTimeSeconds - LastIdleTimeSeconds);
 	LastIdleTimeSeconds = currentIdleTimeSeconds;
-	const billiardgl::FrameStepResult frameSteps = billiardgl::advanceFixedStepAccumulator(
-		PhysicsTimeAccumulatorSeconds,
-		elapsedSeconds,
-		ProductionPhysicsProfile.solver.timeStepSeconds,
-		kMaxPhysicsStepsPerIdle);
+	billiardgl::FrameStepResult frameSteps;
+	if (Game.ballsMoving)
+	{
+		frameSteps = billiardgl::advanceFixedStepAccumulator(
+			PhysicsTimeAccumulatorSeconds,
+			elapsedSeconds,
+			InteractivePhysicsProfile.solver.timeStepSeconds,
+			kMaxPhysicsStepsPerIdle);
+	}
+	else
+	{
+		PhysicsTimeAccumulatorSeconds = 0.0;
+		PreviousPhysicsGame = Game;
+	}
+	if (frameSteps.clamped)
+	{
+		DroppedSimulationSeconds += frameSteps.droppedSeconds;
+		std::fprintf(stderr,
+			"Interactive timing dropped %.6f s (total %.6f s)\n",
+			frameSteps.droppedSeconds, DroppedSimulationSeconds);
+	}
 	for (int step = 0; step < frameSteps.steps; ++step)
 	{
+		PreviousPhysicsGame = Game;
 		const billiardgl::PhysicsStepTelemetry telemetry = billiardgl::updatePhysics(
-			Game, ProductionPhysicsProfile.solver.timeStepSeconds,
-			ProductionPhysicsProfile);
+			Game, InteractivePhysicsProfile.solver.timeStepSeconds,
+			InteractivePhysicsProfile);
 		if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed)
 		{
 			std::fprintf(stderr, "Fatal physics step failure: %s\n",
@@ -391,10 +420,15 @@ void myIdle(void)
 				Game.camera.zoom += 1;
 			else if (!Game.ballsMoving)
 			{
-				billiardgl::sleepMilliseconds(1000);
-				Game.camera.zoom = Game.camera.recordedZoom;
-				Game.transitionPerspective = false;
-				Game.perspectiveRecorded = false;
+				if (PerspectiveResetAtSeconds == 0.0)
+					PerspectiveResetAtSeconds = currentIdleTimeSeconds + 1.0;
+				else if (currentIdleTimeSeconds >= PerspectiveResetAtSeconds)
+				{
+					Game.camera.zoom = Game.camera.recordedZoom;
+					Game.transitionPerspective = false;
+					Game.perspectiveRecorded = false;
+					PerspectiveResetAtSeconds = 0.0;
+				}
 			}
 		}
 	}
@@ -418,11 +452,6 @@ void myIdle(void)
 	glutPostRedisplay();
 }
 
-static void onFrameTimer(int)
-{
-	myIdle();
-	glutTimerFunc(kFrameIntervalMilliseconds, onFrameTimer, 0);
-}
 // 球与球碰撞检测
 static void myKeyboard(unsigned char key, int x, int y)
 {

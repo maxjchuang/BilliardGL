@@ -46,6 +46,14 @@ PhysicsProfile defaultChinesePoolPhysicsProfile()
     return profile;
 }
 
+PhysicsProfile interactiveChinesePoolPhysicsProfile()
+{
+    PhysicsProfile profile = defaultChinesePoolPhysicsProfile();
+    profile.id = "chinese_pool_interactive_120hz_v1";
+    profile.solver.timeStepSeconds = 1.0f / 120.0f;
+    return profile;
+}
+
 PhysicsProfile phase3V5CandidatePhysicsProfile()
 {
     PhysicsProfile profile;

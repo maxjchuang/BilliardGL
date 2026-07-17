@@ -53,10 +53,12 @@ set(BILLIARDGL_CORE_SOURCES
 
 if(APPLE)
     set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_display_timing_mac.mm
         src/Billiards/platform_scroll_mac.mm
     )
 else()
     set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_display_timing.cpp
         src/Billiards/platform_scroll.cpp
     )
 endif()
@@ -108,6 +110,7 @@ add_executable(Billiards
     src/Billiards/screenshot_gl.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
+    src/Billiards/render_state.cpp
     src/Billiards/platform_audio.cpp
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
@@ -264,6 +267,17 @@ add_executable(BilliardsFrameTimingTests
     src/Billiards/frame_timing.cpp
 )
 billiardgl_add_test(BilliardsFrameTimingTests)
+
+add_executable(BilliardsRenderStateTests
+    tests/render_state_tests.cpp
+    src/Billiards/frame_timing.cpp
+    src/Billiards/render_state.cpp
+    src/Billiards/game_state.cpp
+)
+billiardgl_add_test(BilliardsRenderStateTests)
+
+billiardgl_add_core_test(BilliardsInteractivePhysicsTests
+    tests/interactive_physics_tests.cpp)
 
 add_executable(BilliardsObjLoaderTests
     tests/obj_loader_tests.cpp

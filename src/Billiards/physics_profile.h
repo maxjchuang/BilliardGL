@@ -104,6 +104,10 @@ struct PhysicsProfileValidation {
 };
 
 PhysicsProfile defaultChinesePoolPhysicsProfile();
+// Real-time desktop gameplay uses a smaller fixed step than evidence replay.
+// Validation scenarios remain authoritative for their explicitly declared
+// simulation step and continue to use defaultChinesePoolPhysicsProfile().
+PhysicsProfile interactiveChinesePoolPhysicsProfile();
 // Preserved rejected candidate for explicit evidence replay and successor work.
 // It must never be selected as the production default.
 PhysicsProfile phase3V5CandidatePhysicsProfile();
