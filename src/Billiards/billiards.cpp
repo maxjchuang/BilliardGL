@@ -168,7 +168,11 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
-	billiardgl::enablePlatformVSync();
+	// Screenshot runs may execute without an attached display (for example on CI).
+	// Enabling swap-interval synchronization there can block glutSwapBuffers()
+	// indefinitely, so reserve VSync for the interactive game loop.
+	if (Game.config.screenshotPath.empty())
+		billiardgl::enablePlatformVSync();
 	billiardgl::installPlatformScrollHandler(platformScroll);
 	initBall();//初始化球的位置
 	PreviousPhysicsGame = Game;

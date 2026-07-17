@@ -402,6 +402,7 @@ function(billiardgl_add_screenshot_test test_name scene_name)
     )
     set_tests_properties(${test_name} PROPERTIES
         WORKING_DIRECTORY "${test_output_dir}"
+        TIMEOUT 30
     )
 endfunction()
 
