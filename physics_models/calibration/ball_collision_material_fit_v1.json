@@ -1,0 +1,381 @@
+{
+  "algorithm": {
+    "coarse_grid_step": 0.05,
+    "fine_grid_step": 0.01,
+    "objective": "unweighted_mean_squared_angular_residual_degrees",
+    "stable_tie_break": [
+      "objective",
+      "normal_restitution",
+      "friction_coefficient"
+    ],
+    "surface_sliding_friction_hypothesis": 0.002
+  },
+  "dataset_id": "domenech_2023_ball_collision",
+  "fit_partition": "CALIBRATION",
+  "materials": {
+    "billiard": {
+      "calibration_point_ids": [
+        "billiard_alpha1_001",
+        "billiard_alpha1_002",
+        "billiard_alpha1_003",
+        "billiard_alpha1_004",
+        "billiard_alpha1_005",
+        "billiard_alpha1_006",
+        "billiard_alpha1_007",
+        "billiard_alpha1_008",
+        "billiard_alpha1_009",
+        "billiard_alpha1_010",
+        "billiard_alpha1_011",
+        "billiard_alpha1_012",
+        "billiard_alpha1_013",
+        "billiard_alpha1_014",
+        "billiard_alpha1_015",
+        "billiard_alpha1_016",
+        "billiard_delta2_001",
+        "billiard_delta2_002",
+        "billiard_delta2_003",
+        "billiard_delta2_004",
+        "billiard_delta2_005",
+        "billiard_delta2_006",
+        "billiard_delta2_007",
+        "billiard_delta2_008",
+        "billiard_delta2_009",
+        "billiard_delta2_010",
+        "billiard_delta2_011",
+        "billiard_delta2_012",
+        "billiard_delta2_013",
+        "billiard_delta2_014",
+        "billiard_delta2_015",
+        "billiard_delta2_016",
+        "billiard_delta2_017",
+        "billiard_delta2_018"
+      ],
+      "excluded_holdout_point_ids": [
+        "billiard_alpha1_017",
+        "billiard_alpha1_018",
+        "billiard_alpha1_019",
+        "billiard_alpha1_020",
+        "billiard_alpha1_021",
+        "billiard_alpha1_022",
+        "billiard_alpha1_023",
+        "billiard_alpha1_024",
+        "billiard_alpha1_025",
+        "billiard_alpha1_026",
+        "billiard_alpha1_027",
+        "billiard_alpha1_028",
+        "billiard_alpha1_029",
+        "billiard_alpha1_030",
+        "billiard_alpha1_031",
+        "billiard_alpha1_032",
+        "billiard_alpha1_033",
+        "billiard_alpha1_034",
+        "billiard_alpha1_035",
+        "billiard_alpha1_036",
+        "billiard_alpha1_037",
+        "billiard_alpha1_038",
+        "billiard_alpha1_039",
+        "billiard_alpha1_040",
+        "billiard_alpha1_041",
+        "billiard_alpha1_042",
+        "billiard_alpha1_043",
+        "billiard_alpha1_044",
+        "billiard_alpha1_045",
+        "billiard_alpha1_046",
+        "billiard_alpha1_047",
+        "billiard_delta2_019",
+        "billiard_delta2_020",
+        "billiard_delta2_021",
+        "billiard_delta2_022",
+        "billiard_delta2_023",
+        "billiard_delta2_024",
+        "billiard_delta2_025",
+        "billiard_delta2_026",
+        "billiard_delta2_027",
+        "billiard_delta2_028",
+        "billiard_delta2_029",
+        "billiard_delta2_030",
+        "billiard_delta2_031",
+        "billiard_delta2_032",
+        "billiard_delta2_033",
+        "billiard_delta2_034",
+        "billiard_delta2_035",
+        "billiard_delta2_036",
+        "billiard_delta2_037",
+        "billiard_delta2_038",
+        "billiard_delta2_039",
+        "billiard_delta2_040",
+        "billiard_delta2_041",
+        "billiard_delta2_042",
+        "billiard_delta2_043",
+        "billiard_delta2_044",
+        "billiard_delta2_045",
+        "billiard_delta2_046",
+        "billiard_delta2_047",
+        "billiard_delta2_048",
+        "billiard_delta2_049",
+        "billiard_delta2_050",
+        "billiard_delta2_051",
+        "billiard_delta2_052"
+      ],
+      "friction_coefficient": 0.25,
+      "normal_restitution": 0.36,
+      "objective_by_series_mean_squared_degrees": {
+        "billiard_alpha1": 2175.6714165886688,
+        "billiard_delta2": 1381.30907708086
+      },
+      "objective_mean_squared_degrees": 1755.1266486139464,
+      "sensitivity": [
+        {
+          "friction_coefficient": 0.25,
+          "normal_restitution": 0.35,
+          "objective_mean_squared_degrees": 1755.325145122345
+        },
+        {
+          "friction_coefficient": 0.25,
+          "normal_restitution": 0.37,
+          "objective_mean_squared_degrees": 1755.2028560303386
+        },
+        {
+          "friction_coefficient": 0.24,
+          "normal_restitution": 0.36,
+          "objective_mean_squared_degrees": 1755.4282949585738
+        },
+        {
+          "friction_coefficient": 0.26,
+          "normal_restitution": 0.36,
+          "objective_mean_squared_degrees": 1755.1266486139464
+        }
+      ]
+    },
+    "brass": {
+      "calibration_point_ids": [
+        "brass_alpha1_001",
+        "brass_alpha1_002",
+        "brass_alpha1_003",
+        "brass_alpha1_004",
+        "brass_alpha1_005",
+        "brass_alpha1_006"
+      ],
+      "excluded_holdout_point_ids": [
+        "brass_alpha1_007",
+        "brass_alpha1_008",
+        "brass_alpha1_009",
+        "brass_alpha1_010",
+        "brass_alpha1_011",
+        "brass_alpha1_012",
+        "brass_alpha1_013",
+        "brass_alpha1_014",
+        "brass_alpha1_015",
+        "brass_alpha1_016",
+        "brass_alpha1_017",
+        "brass_alpha1_018",
+        "brass_alpha1_019"
+      ],
+      "friction_coefficient": 0.1,
+      "normal_restitution": 0.71,
+      "objective_by_series_mean_squared_degrees": {
+        "brass_alpha1": 33.62744241492734
+      },
+      "objective_mean_squared_degrees": 33.62744241492734,
+      "sensitivity": [
+        {
+          "friction_coefficient": 0.1,
+          "normal_restitution": 0.7,
+          "objective_mean_squared_degrees": 34.347200960015975
+        },
+        {
+          "friction_coefficient": 0.1,
+          "normal_restitution": 0.72,
+          "objective_mean_squared_degrees": 34.56767200027442
+        },
+        {
+          "friction_coefficient": 0.09000000000000001,
+          "normal_restitution": 0.71,
+          "objective_mean_squared_degrees": 33.74444569453545
+        },
+        {
+          "friction_coefficient": 0.11,
+          "normal_restitution": 0.71,
+          "objective_mean_squared_degrees": 33.6302534326824
+        }
+      ]
+    },
+    "rubber": {
+      "calibration_point_ids": [
+        "rubber_delta2_001",
+        "rubber_delta2_002",
+        "rubber_delta2_003",
+        "rubber_delta2_004",
+        "rubber_delta2_005",
+        "rubber_delta2_006",
+        "rubber_delta2_007",
+        "rubber_delta2_008",
+        "rubber_delta2_009",
+        "rubber_delta2_010",
+        "rubber_lambda2_001",
+        "rubber_lambda2_002",
+        "rubber_lambda2_003",
+        "rubber_lambda2_004",
+        "rubber_lambda2_005"
+      ],
+      "excluded_holdout_point_ids": [
+        "rubber_delta2_011",
+        "rubber_delta2_012",
+        "rubber_delta2_013",
+        "rubber_delta2_014",
+        "rubber_delta2_015",
+        "rubber_delta2_016",
+        "rubber_delta2_017",
+        "rubber_delta2_018",
+        "rubber_delta2_019",
+        "rubber_delta2_020",
+        "rubber_delta2_021",
+        "rubber_delta2_022",
+        "rubber_delta2_023",
+        "rubber_delta2_024",
+        "rubber_delta2_025",
+        "rubber_delta2_026",
+        "rubber_delta2_027",
+        "rubber_delta2_028",
+        "rubber_delta2_029",
+        "rubber_delta2_030",
+        "rubber_lambda2_006",
+        "rubber_lambda2_007",
+        "rubber_lambda2_008",
+        "rubber_lambda2_009",
+        "rubber_lambda2_010",
+        "rubber_lambda2_011",
+        "rubber_lambda2_012",
+        "rubber_lambda2_013",
+        "rubber_lambda2_014",
+        "rubber_lambda2_015",
+        "rubber_lambda2_016",
+        "rubber_lambda2_017",
+        "rubber_lambda2_018",
+        "rubber_lambda2_019",
+        "rubber_lambda2_020",
+        "rubber_lambda2_021",
+        "rubber_lambda2_022",
+        "rubber_lambda2_023"
+      ],
+      "friction_coefficient": 0.33,
+      "normal_restitution": 0.0,
+      "objective_by_series_mean_squared_degrees": {
+        "rubber_delta2": 392.856714442523,
+        "rubber_lambda2": 6.928679636975032
+      },
+      "objective_mean_squared_degrees": 264.214036174007,
+      "sensitivity": [
+        {
+          "friction_coefficient": 0.33,
+          "normal_restitution": 0.0,
+          "objective_mean_squared_degrees": 264.214036174007
+        },
+        {
+          "friction_coefficient": 0.33,
+          "normal_restitution": 0.01,
+          "objective_mean_squared_degrees": 271.9997501661641
+        },
+        {
+          "friction_coefficient": 0.32,
+          "normal_restitution": 0.0,
+          "objective_mean_squared_degrees": 265.039276817266
+        },
+        {
+          "friction_coefficient": 0.34,
+          "normal_restitution": 0.0,
+          "objective_mean_squared_degrees": 264.214036174007
+        }
+      ]
+    },
+    "steel": {
+      "calibration_point_ids": [
+        "steel_alpha1_001",
+        "steel_alpha1_002",
+        "steel_alpha1_003",
+        "steel_alpha1_004",
+        "steel_alpha1_005",
+        "steel_alpha1_006",
+        "steel_alpha1_007",
+        "steel_alpha1_008",
+        "steel_alpha1_009",
+        "steel_alpha1_010",
+        "steel_alpha1_011",
+        "steel_alpha1_012",
+        "steel_alpha1_013",
+        "steel_beta1_001",
+        "steel_beta1_002",
+        "steel_beta1_003",
+        "steel_beta1_004",
+        "steel_beta1_005",
+        "steel_beta1_006",
+        "steel_beta1_007"
+      ],
+      "excluded_holdout_point_ids": [
+        "steel_alpha1_014",
+        "steel_alpha1_015",
+        "steel_alpha1_016",
+        "steel_alpha1_017",
+        "steel_alpha1_018",
+        "steel_alpha1_019",
+        "steel_alpha1_020",
+        "steel_alpha1_021",
+        "steel_alpha1_022",
+        "steel_alpha1_023",
+        "steel_alpha1_024",
+        "steel_alpha1_025",
+        "steel_alpha1_026",
+        "steel_alpha1_027",
+        "steel_alpha1_028",
+        "steel_alpha1_029",
+        "steel_alpha1_030",
+        "steel_alpha1_031",
+        "steel_alpha1_032",
+        "steel_alpha1_033",
+        "steel_beta1_008",
+        "steel_beta1_009",
+        "steel_beta1_010"
+      ],
+      "friction_coefficient": 0.04,
+      "normal_restitution": 0.97,
+      "objective_by_series_mean_squared_degrees": {
+        "steel_alpha1": 5.820707978083817,
+        "steel_beta1": 8.792471459973855
+      },
+      "objective_mean_squared_degrees": 6.8608251967453295,
+      "sensitivity": [
+        {
+          "friction_coefficient": 0.04,
+          "normal_restitution": 0.96,
+          "objective_mean_squared_degrees": 7.5433030213914165
+        },
+        {
+          "friction_coefficient": 0.04,
+          "normal_restitution": 0.98,
+          "objective_mean_squared_degrees": 8.952002778281106
+        },
+        {
+          "friction_coefficient": 0.03,
+          "normal_restitution": 0.97,
+          "objective_mean_squared_degrees": 6.996212910333
+        },
+        {
+          "friction_coefficient": 0.05,
+          "normal_restitution": 0.97,
+          "objective_mean_squared_degrees": 6.871182890252338
+        }
+      ]
+    }
+  },
+  "parameter_bounds": {
+    "friction_coefficient": [
+      0.0,
+      1.0
+    ],
+    "normal_restitution": [
+      0.0,
+      1.0
+    ]
+  },
+  "schema_version": 1
+}

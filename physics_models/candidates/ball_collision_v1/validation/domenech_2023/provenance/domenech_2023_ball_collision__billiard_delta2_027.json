@@ -1,0 +1,64 @@
+{
+  "adapter_id": "domenech_2023_v1",
+  "case_id": "billiard_delta2_027",
+  "dataset_id": "domenech_2023_ball_collision",
+  "dataset_version": "1.0.0",
+  "fit_calibration_point_ids": [
+    "billiard_alpha1_001",
+    "billiard_alpha1_002",
+    "billiard_alpha1_003",
+    "billiard_alpha1_004",
+    "billiard_alpha1_005",
+    "billiard_alpha1_006",
+    "billiard_alpha1_007",
+    "billiard_alpha1_008",
+    "billiard_alpha1_009",
+    "billiard_alpha1_010",
+    "billiard_alpha1_011",
+    "billiard_alpha1_012",
+    "billiard_alpha1_013",
+    "billiard_alpha1_014",
+    "billiard_alpha1_015",
+    "billiard_alpha1_016",
+    "billiard_delta2_001",
+    "billiard_delta2_002",
+    "billiard_delta2_003",
+    "billiard_delta2_004",
+    "billiard_delta2_005",
+    "billiard_delta2_006",
+    "billiard_delta2_007",
+    "billiard_delta2_008",
+    "billiard_delta2_009",
+    "billiard_delta2_010",
+    "billiard_delta2_011",
+    "billiard_delta2_012",
+    "billiard_delta2_013",
+    "billiard_delta2_014",
+    "billiard_delta2_015",
+    "billiard_delta2_016",
+    "billiard_delta2_017",
+    "billiard_delta2_018"
+  ],
+  "fit_parameters": {
+    "friction_coefficient": 0.25,
+    "normal_restitution": 0.36
+  },
+  "impact_angle_degrees": 39.676912,
+  "package_hashes": {
+    "digitization": "sha256:90c5bc0267c8b41d130510492a6f897d0418bc92b2762414f53b13e9c2afa458",
+    "expected_model_mismatches": "sha256:c76e426de65f7105dfa9f166c1e53fb72bca0139e3d4bb37d2f7d9d6513a285d",
+    "expected_reference_limitations": "sha256:f94ccb717e1244c117b9878633aedb911f011b80a516735235a0b359db353867",
+    "extraction": "sha256:30a0a477a51b02d917273ae086742f4c3f97e12204543220c2711e8eb2b68ab8",
+    "normalized": "sha256:d04396a53ab1010429fc67405e63bd92759fec7abc0ad1a86e9b395736f1a5ec",
+    "raw_extracted": "sha256:fd26a8d030d12feee2f0829d1b005af7af523966d568c09d977b106b79a9d74d",
+    "scenario_template": "sha256:d26935b5efaff34030564d113380adfca7b1b9f8aa56f65580ca70b33503a6a7",
+    "split": "sha256:4ba90e5d4f009790a3f649bfacda6a6193d3785c25a5c9febde5ae4120912505"
+  },
+  "point_ids": [
+    "billiard_delta2_027"
+  ],
+  "source_locators": [
+    "Fig. 5 experimental markers"
+  ],
+  "source_material": "billiard"
+}

@@ -1,0 +1,93 @@
+{
+  "acquisition": {
+    "acquired_copy_url": "https://web.archive.org/web/20201116230905id_/https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1002&context=physicsfuller",
+    "license_status": "publication-expression-not-redistributed",
+    "repository_url": "https://digitalcommons.unl.edu/physicsfuller/3/",
+    "retrieved_on": "2026-07-14",
+    "source_media_committed": false,
+    "source_sha256": "sha256:fc1d77f9d98aeac587a4ad03c4b160bac68093d530c88f851a7ff5be7d6d1930"
+  },
+  "adapter_id": "derby_fuller_1999_confirmation_v1",
+  "apparatus": {
+    "ball_mass_kg": 0.1703,
+    "ball_diameter_cm": 5.24,
+    "camera_frame_rate_hz": 3000,
+    "incident_speed_cm_s": 98
+  },
+  "dataset_id": "derby_fuller_1999",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "grade": "B",
+    "method": "published high-speed-camera scalar confirmation targets",
+    "candidate_selection_input": false,
+    "confirmation_only": true,
+    "target_count": 8,
+    "diagnostic_only": [
+      "cue_sliding_acceleration",
+      "target_sliding_acceleration"
+    ]
+  },
+  "extraction_review": {
+    "date": "2026-07-14",
+    "method": "page-and-paragraph second-pass comparison",
+    "reviewed_by": "Codex independent transcription review"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:fb57290e666b5a78efef7458891489c3bad9edf6ab26f997efe5c8c831868c39"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:7128d07bc487bbfe809e5f042de6295a04862471ec6916e58112429abd196780"
+    },
+    {
+      "id": "scalars",
+      "path": "scalars.csv",
+      "sha256": "sha256:fb57290e666b5a78efef7458891489c3bad9edf6ab26f997efe5c8c831868c39"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:9c90e588d23fb43f294177059eaff6828c480665da1ec0eae1fd005610107ae2"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:7de76d5c4301a06256652dd20d283a19ed2ee3f8c7b6b970b07bfd9e6a7dfff5"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:c57ace770916d69c616e5e04998108576f6d66580107d6ed851d2d484b78fe8a"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "source_access_audit",
+      "path": "source_access_audit.json",
+      "sha256": "sha256:e1fb93fad4703a2128bca8d3435306ca72da2b77ac807ebd4feb0162f3e8066a"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "N. Derby",
+      "R. G. Fuller"
+    ],
+    "journal": "American Journal of Physics",
+    "pages": "67(1):60-63",
+    "title": "Predicting the motion of billiard balls",
+    "year": 1999
+  }
+}

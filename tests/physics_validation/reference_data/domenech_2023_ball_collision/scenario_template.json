@@ -1,0 +1,18 @@
+{
+  "base_scenario": {
+    "balls": [],
+    "description": "Doménech-Carbó 2023 experimental ball-collision reference",
+    "evidence": {
+      "equipment": "SOURCE_LABORATORY_APPARATUS",
+      "grade": "B",
+      "pool_applicability": "CONVERTED_OR_TREND_ONLY",
+      "source": "doi:10.1016/j.mechrescom.2023.104149",
+      "source_surface": "PVC laboratory bench"
+    },
+    "expectations": [],
+    "schema_version": 5,
+    "simulation": {"ticks": 40, "time_step_seconds": 0.1}
+  },
+  "cases": {},
+  "schema_version": 1
+}

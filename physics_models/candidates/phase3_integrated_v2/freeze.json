@@ -1,0 +1,152 @@
+{
+  "artifacts": [
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/normalized.csv",
+      "role": "acceptance_metrics",
+      "sha256": "7128d07bc487bbfe809e5f042de6295a04862471ec6916e58112429abd196780"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/normalized.csv",
+      "role": "acceptance_metrics",
+      "sha256": "d520f588ece441234044cf98198eb0807eda1a5b17a0435a57693ba3376bd424"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v2_inputs.csv",
+      "role": "ball_fit_inputs",
+      "sha256": "4b4a9c4cdb644b0032d58f69da7a83279504356eb786cffc21cfdd24c95ec359"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v2.json",
+      "role": "ball_fit_report",
+      "sha256": "99ff40a6a49f9b41cd3e7899e34f338198dbec5eb88775ea187b250d12ebbd0d"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v2_residuals.csv",
+      "role": "ball_fit_residuals",
+      "sha256": "c3cac122f15c6223058e3347e9a018b8abeb3509b57d1f12005d960859e877c1"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/manifest.json",
+      "role": "confirmation_package_manifest",
+      "sha256": "3e8c979e48e207317384dc63e47d4d5f28bae9b21cc8486183cd35ea9fe2b3d1"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/manifest.json",
+      "role": "confirmation_package_manifest",
+      "sha256": "8cf1dcff355b26827afc50e3974576cdcf14b859bceb3990a6f74d37e2b67441"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/split.json",
+      "role": "confirmation_split",
+      "sha256": "9c90e588d23fb43f294177059eaff6828c480665da1ec0eae1fd005610107ae2"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/split.json",
+      "role": "confirmation_split",
+      "sha256": "3186f713f92b7a07f0f2fdf7a0da21fdd84164bf418d61a5f2eb0b1117998bcb"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v2_inputs.csv",
+      "role": "cushion_fit_inputs",
+      "sha256": "cfd53ca8cf6d5d5b51b5395024bdc97b54991f0764d306a0ce36746c787e5b68"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v2.json",
+      "role": "cushion_fit_report",
+      "sha256": "9f93dc847b63bf98ec298776ab8c9b923c8bd14ea5c4212167b3a116c41fc3fd"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v2_residuals.csv",
+      "role": "cushion_fit_residuals",
+      "sha256": "a11e4b1e0d2587001bd2af4cebed0148485dac6545a205499d9297bc6a3ba603"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/expected_model_mismatches.json",
+      "role": "expected_model_mismatches",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/expected_model_mismatches.json",
+      "role": "expected_model_mismatches",
+      "sha256": "b4fdc6e991467e640c96a84b365401e95fa66babc143cad27d45263c67c609e4"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/expected_reference_limitations.json",
+      "role": "expected_reference_limitations",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/expected_reference_limitations.json",
+      "role": "expected_reference_limitations",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "path": "physics_models/promotion/full_game_matrix_v2.json",
+      "role": "full_game_matrix",
+      "sha256": "74837302b68e5bde78444afb8a8bf6cf17038c21fe67caf6b37049673cae7d02"
+    },
+    {
+      "path": "physics_models/promotion/full_game_performance_budget_v2.json",
+      "role": "performance_budget",
+      "sha256": "9d2d0980f661f82b3a2430a55034d22e2bce242b6ba3ef3475fd8066d94faa65"
+    },
+    {
+      "path": "physics_models/profiles/chinese_pool_full_game_v2.json",
+      "role": "profile",
+      "sha256": "0178d794e53f180b496c87c9180b1d1d6a1c5a051a0c4dfa8acdbabf4c05540b"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/scenario_template.json",
+      "role": "scenario_template",
+      "sha256": "c57ace770916d69c616e5e04998108576f6d66580107d6ed851d2d484b78fe8a"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/scenario_template.json",
+      "role": "scenario_template",
+      "sha256": "180a3db820f739964cc19a5b620d1a25abb32613f4516326a468bf9356bc2d6b"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/scalars.csv",
+      "role": "supplemental_scalars",
+      "sha256": "fb57290e666b5a78efef7458891489c3bad9edf6ab26f997efe5c8c831868c39"
+    },
+    {
+      "path": "tests/physics_validation/reference_data/sudo_2002/scalars.csv",
+      "role": "supplemental_scalars",
+      "sha256": "ad55353fd502273384ee53d498d465e05c0921c37885351cd0e221c00f979bcf"
+    },
+    {
+      "path": "physics_models/calibration/surface_fit_v2_inputs.csv",
+      "role": "surface_fit_inputs",
+      "sha256": "d94c619c5bc12607dfcfaa57c5c520839efe3ea7c00e522afae73f024df50344"
+    },
+    {
+      "path": "physics_models/calibration/surface_fit_v2.json",
+      "role": "surface_fit_report",
+      "sha256": "ee6bb9278ade15d3f86feea1e9f72d3db12bc119a6f37ae4bbd24390cca6e9e2"
+    },
+    {
+      "path": "physics_models/calibration/surface_fit_v2_residuals.csv",
+      "role": "surface_fit_residuals",
+      "sha256": "c3928bac21cd130fe6c7ecd71edd6a458f2d5b21c6d8d0dd55fa8498e4ae0ec5"
+    }
+  ],
+  "candidate_id": "phase3_integrated_v2",
+  "canonical_profile_sha256": "c6229fadc95fc6d6238171b5cb38354a6b45bb034a71115d90684cc59299d3d3",
+  "clean_build_sha256": [
+    "2168024768c348b8e473eb49c735978cd2640a896e964704f74c231aab7a1ad4",
+    "2168024768c348b8e473eb49c735978cd2640a896e964704f74c231aab7a1ad4"
+  ],
+  "clean_profile_sha256": [
+    "c6229fadc95fc6d6238171b5cb38354a6b45bb034a71115d90684cc59299d3d3",
+    "c6229fadc95fc6d6238171b5cb38354a6b45bb034a71115d90684cc59299d3d3"
+  ],
+  "executable_sha256": "2168024768c348b8e473eb49c735978cd2640a896e964704f74c231aab7a1ad4",
+  "profile": {
+    "path": "physics_models/profiles/chinese_pool_full_game_v2.json",
+    "role": "profile",
+    "sha256": "0178d794e53f180b496c87c9180b1d1d6a1c5a051a0c4dfa8acdbabf4c05540b"
+  },
+  "schema_version": 2,
+  "source_revision": "8f1efecbd216e7aef7a118ec1edca29634d8b98e"
+}

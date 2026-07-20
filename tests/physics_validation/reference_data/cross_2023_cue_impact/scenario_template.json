@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "admission_status": "BLOCKED_PENDING_FULL_TEXT",
+  "base_scenario": {
+    "schema_version": 2,
+    "id": "cross_2023_unadmitted",
+    "description": "Template only; no Cross numeric point is admitted.",
+    "evidence": {"grade": "B", "source": "Cross 2023", "equipment": "WPA_POOL"},
+    "simulation": {"ticks": 2, "time_step_seconds": 0.1},
+    "balls": [{"index": 0, "position_cm": [0.0, 92.715, 50.0], "velocity_cm_s": [0.0, 0.0, 0.0], "angular_velocity_rad_s": [0.0, 0.0, 0.0]}],
+    "expectations": [{"metric": "cue_impact_input_round_trip", "operator": "eq", "value": true}]
+  },
+  "cases": {}
+}

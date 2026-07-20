@@ -1,0 +1,32 @@
+{
+  "authorized_profile_id": "chinese_pool_legacy_v1",
+  "phase3_rejections": [
+    {
+      "candidate_id": "phase3_release_v1",
+      "path": "physics_models/promotion/phase3_release_v1_rejection.json",
+      "sha256": "1f975675203059d0eb59c047521e1d6fb3f6617c4ca94ce20de20406a753d1d8"
+    },
+    {
+      "candidate_id": "phase3_integrated_v2",
+      "path": "physics_models/promotion/phase3_integrated_v2_rejection.json",
+      "sha256": "8633430334dffe55d4cd927cca5089ef1fcdec617a86ce28ea41e7c434b54f94"
+    },
+    {
+      "candidate_id": "phase3_integrated_v3",
+      "path": "physics_models/promotion/phase3_integrated_v3_rejection.json",
+      "sha256": "0c8a179288fe712f292f1f61047be2ba4ac8f2f8b3f3bc828c55b5eb247062b5"
+    },
+    {
+      "candidate_id": "phase3_integrated_v4",
+      "path": "physics_models/promotion/phase3_integrated_v4_rejection.json",
+      "sha256": "88b970e24f3f878191b912929e9c38fb7c36ea3a4e214d628fd978893921fcc4"
+    },
+    {
+      "candidate_id": "phase3_integrated_v5",
+      "path": "physics_models/promotion/phase3_integrated_v5_rejection.json",
+      "sha256": "e9153071c8ae313c6b11d4bf3975ffbbb247aa5b60f2ebebbb62b6509cd65261"
+    }
+  ],
+  "schema_version": 1,
+  "status": "NO_PROMOTED_PHASE3_CANDIDATE"
+}

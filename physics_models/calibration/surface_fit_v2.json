@@ -1,0 +1,73 @@
+{
+  "algorithm": {
+    "equations": "rigid-sphere Coulomb sliding plus constant rolling resistance",
+    "objective": "mean_squared_uncertainty_normalized_residual",
+    "phase_estimator": "inverse_variance_weighted_mean",
+    "selection": "maximal_contiguous_telemetry_phase"
+  },
+  "dataset_lifecycle": "spent",
+  "fit": {
+    "covariance": {
+      "rolling_resistance_acceleration_cm_s2": 0.010000000000000002,
+      "sliding_acceleration_cm_s2": 1056.25,
+      "sliding_friction_coefficient": 0.0010983110949793627
+    },
+    "objective": 0.0,
+    "parameter_bounds": {
+      "rolling_resistance_acceleration_cm_s2": [
+        12.4,
+        12.6
+      ],
+      "sliding_acceleration_cm_s2": [
+        175.0,
+        240.0
+      ],
+      "sliding_friction_coefficient": [
+        0.17845033727113746,
+        0.24473189111470278
+      ]
+    },
+    "rolling_resistance_acceleration_cm_s2": 12.499999813735489,
+    "sliding_acceleration_cm_s2": 196.13296508789062,
+    "sliding_friction_coefficient": 0.19999996439955606
+  },
+  "gravity_cm_s2": 980.665,
+  "input_rows": [
+    {
+      "contiguous_sample_count": 5,
+      "dataset_id": "mathavan_2009_high_speed",
+      "dataset_version": "1.0.0",
+      "evidence_path": "physics_models/candidates/surface_motion_v1/calibration/reference_points.csv",
+      "evidence_sha256": "sha256:5b6199e17f8478f844d790f16d01c47668ecf1714b1fde4d0e491306d3cde5e3",
+      "lifecycle": "spent",
+      "observed_acceleration_cm_s2": 12.499999813735489,
+      "phase": "rolling",
+      "point_id": "mathavan_2009_rolling_deceleration",
+      "selection": "maximal_contiguous_phase",
+      "source_expected_cm_s2": 12.5,
+      "source_locator": "Fig. 6 and p. 790",
+      "source_lower_cm_s2": 12.4,
+      "source_upper_cm_s2": 12.6,
+      "standard_uncertainty_cm_s2": 0.1
+    },
+    {
+      "contiguous_sample_count": 1,
+      "dataset_id": "mathavan_2009_high_speed",
+      "dataset_version": "1.0.0",
+      "evidence_path": "physics_models/candidates/surface_motion_v1/validation/traces/mathavan_2009_high_speed__sliding_deceleration.json",
+      "evidence_sha256": "sha256:ed23d4ed8116e77da1eb81e97e5b46d599fb81e1dddf2092a99d9c3337770ec4",
+      "lifecycle": "spent",
+      "observed_acceleration_cm_s2": 196.13296508789062,
+      "phase": "sliding",
+      "point_id": "mathavan_2009_sliding_deceleration",
+      "selection": "maximal_contiguous_phase",
+      "source_expected_cm_s2": 207.5,
+      "source_locator": "Fig. 6 and p. 790",
+      "source_lower_cm_s2": 175.0,
+      "source_upper_cm_s2": 240.0,
+      "standard_uncertainty_cm_s2": 32.5
+    }
+  ],
+  "residual_count": 2,
+  "schema_version": 1
+}

@@ -1,0 +1,199 @@
+{
+  "acquisition": {
+    "author_data_request_status": "NOT_SENT_USER_AUTHORIZATION_REQUIRED",
+    "figure_bundle_sha256": "sha256:0a216010cf12f84dc2594ab22c7ae9dc96490a958ce8b959b9a13e2160fca1e7",
+    "figure_sha256": {
+      "Fig. 5": "sha256:4ecec084ef74af2f071f8ce1760dee5803fa11e9126a3eed378f42574b42d7e7",
+      "Fig. 6": "sha256:8251c54289e053ea6d5ca6745b0aedce862e2907e3b30576eb85d9a8900d03df",
+      "Fig. 7": "sha256:3ec7258f127567470250153765a4a4e06d0a3d6affbab6291bcbba02ab5d058e",
+      "Fig. 8": "sha256:55905721c94a0ed68a78cd9c37fe394e5f99009450be63688f71f3c9ff84de8e",
+      "Fig. 9": "sha256:369234e62e4af9ca2e5004115340a500634123af97e9665d9c20d1c83f81883c"
+    },
+    "license_uri": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    "retrieved_on": "2026-07-13",
+    "source_media_committed": false,
+    "url": "https://www.sciencedirect.com/science/article/pii/S0093641323001076",
+    "version_record_pdf_status": "BLOCKED_BY_PUBLISHER_AUTOMATION_CHALLENGE"
+  },
+  "adapter_id": "domenech_2023_v1",
+  "apparatus": {
+    "camera_height_cm": 75.0,
+    "launch_speed_bound_m_s": 0.05,
+    "launch_speed_m_s": 0.8,
+    "materials": {
+      "billiard": {
+        "diameter_cm": 6.1,
+        "mass_g": 205.0
+      },
+      "brass": {
+        "diameter_cm": 2.5,
+        "mass_g": 68.2
+      },
+      "rubber": {
+        "diameter_cm": 4.6,
+        "mass_g": 46.4
+      },
+      "steel": {
+        "diameter_cm": 2.5,
+        "mass_g": 70.3
+      }
+    },
+    "support_surface": "PVC laboratory bench",
+    "track_end_before_contact_cm": 50.0
+  },
+  "dataset_id": "domenech_2023_ball_collision",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "excluded_evidence": [
+      "IFR theoretical curves",
+      "fitted restitution/friction coefficients"
+    ],
+    "grade": "B",
+    "inventory": [
+      {
+        "admitted_marker_count": 52,
+        "axis_definitions": "psi 0..90 deg; delta2 0..25 deg",
+        "figure": "Fig. 5",
+        "journal_page": "article 104149 Fig. 5",
+        "marker_legend": "open circles: billiard delta2 experiment",
+        "material": "billiard",
+        "section_locator": "Experimental results, Fig. 5",
+        "series_id": "billiard_delta2",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 47,
+        "axis_definitions": "psi 0..90 deg; alpha1 0..90 deg",
+        "figure": "Fig. 6",
+        "journal_page": "article 104149 Fig. 6",
+        "marker_legend": "open circles: billiard alpha1 experiment",
+        "material": "billiard",
+        "section_locator": "Experimental results, Fig. 6",
+        "series_id": "billiard_alpha1",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 19,
+        "axis_definitions": "psi 0..90 deg; alpha1 0..90 deg",
+        "figure": "Fig. 6",
+        "journal_page": "article 104149 Fig. 6",
+        "marker_legend": "solid circles: brass alpha1 experiment",
+        "material": "brass",
+        "section_locator": "Experimental results, Fig. 6",
+        "series_id": "brass_alpha1",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 33,
+        "axis_definitions": "psi 0..80 deg; alpha1/beta1 0..90 deg",
+        "figure": "Fig. 7",
+        "journal_page": "article 104149 Fig. 7",
+        "marker_legend": "open circles: steel alpha1 immediately after collision",
+        "material": "steel",
+        "section_locator": "Experimental results, Fig. 7",
+        "series_id": "steel_alpha1",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 10,
+        "axis_definitions": "psi 0..80 deg; alpha1/beta1 0..90 deg",
+        "figure": "Fig. 7",
+        "journal_page": "article 104149 Fig. 7",
+        "marker_legend": "solid circles: steel beta1 after transition",
+        "material": "steel",
+        "section_locator": "Experimental results, Fig. 7",
+        "series_id": "steel_beta1",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 30,
+        "axis_definitions": "psi 0..80 deg; delta2 0..45 deg",
+        "figure": "Fig. 8",
+        "journal_page": "article 104149 Fig. 8",
+        "marker_legend": "open circles: rubber delta2 experiment",
+        "material": "rubber",
+        "section_locator": "Experimental results, Fig. 8",
+        "series_id": "rubber_delta2",
+        "value_origin": "dual_digitization"
+      },
+      {
+        "admitted_marker_count": 23,
+        "axis_definitions": "psi 0..80 deg; lambda2 0..80 deg",
+        "figure": "Fig. 9",
+        "journal_page": "article 104149 Fig. 9",
+        "marker_legend": "solid circles: rubber lambda2 after transition",
+        "material": "rubber",
+        "section_locator": "Experimental results, Fig. 9",
+        "series_id": "rubber_lambda2",
+        "value_origin": "dual_digitization"
+      }
+    ],
+    "method": "zenith-camera collision experiment with experimental-marker dual digitization",
+    "source_phase_definitions": {
+      "alpha1": "cue sphere scattering angle immediately after impact",
+      "beta1": "cue sphere angle after the sliding-to-rolling transition",
+      "delta2": "angle between the outgoing sphere directions immediately after impact",
+      "lambda2": "object sphere direction after the sliding-to-rolling transition",
+      "psi": "source impact angle"
+    }
+  },
+  "extraction_review": {
+    "date": "2026-07-13",
+    "method": "open interiors: centroid versus bounding-box center; solid markers: template peak versus eroded-core centroid",
+    "operator": "Codex native-resolution marker audit",
+    "reviewed_by": "method-disjoint second coordinate pass"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:fd26a8d030d12feee2f0829d1b005af7af523966d568c09d977b106b79a9d74d"
+    },
+    {
+      "id": "digitization",
+      "path": "digitization.csv",
+      "sha256": "sha256:90c5bc0267c8b41d130510492a6f897d0418bc92b2762414f53b13e9c2afa458"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:d04396a53ab1010429fc67405e63bd92759fec7abc0ad1a86e9b395736f1a5ec"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:4ba90e5d4f009790a3f649bfacda6a6193d3785c25a5c9febde5ae4120912505"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:30a0a477a51b02d917273ae086742f4c3f97e12204543220c2711e8eb2b68ab8"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:d26935b5efaff34030564d113380adfca7b1b9f8aa56f65580ca70b33503a6a7"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:656cde083ab2e9d771986d2b8082fa6efa48348340b30308f5e2b419fa9c663b"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:f94ccb717e1244c117b9878633aedb911f011b80a516735235a0b359db353867"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "Antonio Doménech-Carbó"
+    ],
+    "doi": "10.1016/j.mechrescom.2023.104149",
+    "journal": "Mechanics Research Communications",
+    "journal_pages": "131:104149",
+    "title": "Independent friction-restitution description of billiard ball collisions",
+    "year": 2023
+  }
+}

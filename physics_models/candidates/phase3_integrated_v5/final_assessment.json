@@ -1,0 +1,135 @@
+{
+  "candidate_id": "phase3_integrated_v5",
+  "confirmations": {
+    "cross_2016_newtons_cradle": {
+      "attempt_id": "87849a0361083701d471e79528c282dcd3626c8d3fead35f77545c3ddb88dab9",
+      "receipt": {
+        "attempt_id": "87849a0361083701d471e79528c282dcd3626c8d3fead35f77545c3ddb88dab9",
+        "candidate_id": "phase3_integrated_v5",
+        "dataset_id": "cross_2016_newtons_cradle",
+        "dataset_version": "1.0.0",
+        "files": {
+          "diagnostics.csv": "83d6c16f57c9d28c03fc8a3bcbfa6f6c843370c85e1c602501225744d7f87ccf",
+          "execution/cross_cue_frozen_pair-first.json": "1761a720a166dfdd21f897d554637b55505afd780aa88fe3ef41903ca60a4f8c",
+          "execution/cross_cue_frozen_pair-second.json": "1761a720a166dfdd21f897d554637b55505afd780aa88fe3ef41903ca60a4f8c",
+          "metrics.csv": "ba9443dfd66a3f22b144dfc8de914cc449fc70e9adc7f0d39f07777014296780",
+          "provenance/cross_cue_frozen_pair.json": "eb36c6375b29c031b6c03b10bf80473c7c68f5b90532f80ba216444c243d611a",
+          "reference_report.json": "a866e72ff1dabbee0373fe169d471bf06869f34e910ac5d8783aa54bd5c11c43",
+          "scenarios/cross_cue_frozen_pair.json": "2a0d0292b8b4bcdc20d36c8f86deea96dc40d3133d204f5a3e257670d3806f1e",
+          "source_scalars.csv": "a5ed0d8e5e5cb03a46dfe14f70e6b979a918d3dcb3e8c85a71f40ae084a82c73",
+          "traces/cross_cue_frozen_pair.json": "a141a4408f876e8bf9d43bc100cb860cf424592c2e2f0f9f8db5d9200f8cd766"
+        },
+        "freeze_sha256": "8c483182747fe5cc9a51968321670b8c6c70ff27650b7ff6bbec13ca8be62438",
+        "package_key": "cross_2016_newtons_cradle",
+        "package_manifest_sha256": "f1f9397a4f3bdf936434c628fb74c320c15bdea1ae25c5faf6a313ed9d016086",
+        "partition": "CONFIRMATION",
+        "result": "FAILED",
+        "schema_version": 3
+      },
+      "receipt_sha256": "29534ed47cdf8921a962e6d53b9281747f500b8d0a33ebbd174e546ce4a1b761",
+      "tree_sha256": "c592a409f865499019f15a8f3062680b1c19f7118ddbf71116b24e9dc2cbf40f"
+    }
+  },
+  "disposition": "REJECTED",
+  "engineering_evidence": {
+    "alciatore_regression": {
+      "inputs": {
+        "path": "physics_models/calibration/alciatore_frozen_contact_v5_inputs.csv",
+        "sha256": "8941b362d45c4dad02d0e88d251e8c160542b64895b3248d84362885409445b0"
+      },
+      "report": {
+        "path": "physics_models/calibration/alciatore_frozen_contact_v5_report.json",
+        "sha256": "6c4860835e3b73ab50cfb7374a9681b8ec14cfe08c6bee928286b8909c76ac63"
+      },
+      "residuals": {
+        "path": "physics_models/calibration/alciatore_frozen_contact_v5_residuals.csv",
+        "sha256": "c58de9211b45a91c460ee913aabb611f5b455e6880e600c6b958c1e2d3466df8"
+      },
+      "sensitivity": {
+        "path": "physics_models/calibration/alciatore_frozen_contact_v5_sensitivity.csv",
+        "sha256": "c542b2f1a249a7e256516a775b50bef202a4e6563c44e0a472b56f68db1e36c2"
+      }
+    },
+    "clean_build": {
+      "canonical_profile_sha256": [
+        "3b347bd3d7e505b2e7156d6197f5c754db077165e2b55b262d06f8bf72acc2ee",
+        "3b347bd3d7e505b2e7156d6197f5c754db077165e2b55b262d06f8bf72acc2ee"
+      ],
+      "executable_sha256": [
+        "b86fd2460ddecc8f9ba4eec500dedfdc8047e6badc29da314acab295b4390b9e",
+        "b86fd2460ddecc8f9ba4eec500dedfdc8047e6badc29da314acab295b4390b9e"
+      ],
+      "source_revision": "0245f115850e94a94917e65c49556c354eba20f3"
+    },
+    "convergence_contract": {
+      "path": "tests/coupled_cue_contact_tests.cpp",
+      "sha256": "b439f5a698ac7ee665f16cc1ab0c35df96fe577882d8c57fbb17adc1ffbfd777"
+    },
+    "freeze": {
+      "path": "physics_models/candidates/phase3_integrated_v5/freeze.json",
+      "sha256": "8c483182747fe5cc9a51968321670b8c6c70ff27650b7ff6bbec13ca8be62438"
+    },
+    "full_game": {
+      "case_count": 12,
+      "matrix_summary_sha256": "bdce39d41f41d37517be7936d0e3fb7fed0f931c0156d2b9637ea10f090d1c0b",
+      "passed": true,
+      "tree_sha256": "6fc8965e6b40358a811161d6acbe562f9757543b8eb2c99af8207536ea5ec2d2"
+    },
+    "inventory": {
+      "path": "physics_models/promotion/phase3_candidates_v5.json",
+      "sha256": "87bfe894bb31cf2edba73c3d97f46eb3899e1c9b3d0ab2497be506989110caf4"
+    },
+    "ordinary_equivalence": {
+      "baseline": {
+        "path": "physics_models/regression/phase3_v4_ordinary_shot_baseline.json",
+        "sha256": "e3a95ba137c5851aefe135ae861b2cc15c1e7309857f8db2ddc4151504df2af6"
+      },
+      "evidence": {
+        "path": "physics_models/promotion/phase3_v5_ordinary_equivalence.json",
+        "sha256": "9b2944179339abe36a8e3f16d699d80b1696e7b1280d1a2ad0d68aa3bae6eadd"
+      },
+      "physics_identical": true
+    },
+    "performance_budget": {
+      "path": "physics_models/promotion/full_game_performance_budget_v5.json",
+      "sha256": "791044f10fa0bd0f4f0df7618692007f648057e99136d173647d1d85b893c651"
+    },
+    "profile": {
+      "path": "physics_models/profiles/chinese_pool_full_game_v5.json",
+      "sha256": "e626dfcccb5c85475bb6886bbb6a8842192ce54f8280f12f71978638454f5803"
+    },
+    "readiness": {
+      "path": "physics_models/candidates/phase3_integrated_v5/confirmation_readiness.json",
+      "sha256": "a4ae4feb1b7a8397279b6a1a1505fa2d0681f9e723c618c0fe41b45cbdda39d7"
+    }
+  },
+  "han_2005": "NOT_EXECUTED",
+  "policy": "two_independent_one_time_confirmations_required",
+  "root_cause": {
+    "category": "CONFIRMATION_EVALUATION_CONTRACT_INTEGRATION_FAILURE",
+    "condition": "two consecutive absolute speeds must change by no more than 0.001",
+    "derived_final_back_to_front_speed_ratio": 0.9999981407287482,
+    "derived_final_frame_relative_speed_change": 0.013657418039445297,
+    "equal_speed_limit": 0.0522185764993973,
+    "evaluator": "tools/physics_validation/cross_2016_confirmation.py::_stable_release_speeds",
+    "explanation": "Production rolling resistance changes both absolute speeds between 0.1 second frames even though their ratio satisfies the Cross equal-speed limit.",
+    "failed_gates": [
+      "stable_release_passed",
+      "uncertainty_aware_equal_speed_passed"
+    ],
+    "physical_integrity_gates": {
+      "complete_frames_passed": true,
+      "contact_passed": true,
+      "deterministic_repeated_execution_passed": true,
+      "finite_microtrace_passed": true,
+      "finite_state_passed": true,
+      "microtrace_complete_passed": true,
+      "no_recontact_passed": true,
+      "nonincreasing_total_energy_passed": true,
+      "passive_microtrace_passed": true,
+      "release_passed": true
+    },
+    "trace_sha256": "a141a4408f876e8bf9d43bc100cb860cf424592c2e2f0f9f8db5d9200f8cd766"
+  },
+  "schema_version": 1
+}

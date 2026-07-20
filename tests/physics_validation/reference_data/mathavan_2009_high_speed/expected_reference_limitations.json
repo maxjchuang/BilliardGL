@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "failures": [
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "case_id": "fig9_unresolved_markers",
+      "code": "REFERENCE_LIMITATION",
+      "metric": "cushion_rebound_speed_cm_s",
+      "missing_evidence": "The paper reports 31 shots, but 23 individual coordinates cannot be recovered independently because Fig. 9 markers overlap.",
+      "resolution_condition": "Obtain the authors' per-shot numerical table or another author-verified machine-readable source."
+    },
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "case_id": "snooker_to_pool_material_conversion_missing",
+      "code": "REFERENCE_LIMITATION",
+      "metric": "equipment_conversion",
+      "missing_evidence": "The source used 52.4 mm snooker balls and a Riley snooker table, not WPA Pool equipment.",
+      "resolution_condition": "Measure or publish a validated material and geometry conversion to WPA Pool."
+    },
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "case_id": "unmeasured_initial_spin",
+      "code": "REFERENCE_LIMITATION",
+      "metric": "initial_spin_rad_s",
+      "missing_evidence": "The experiment did not measure initial ball spin for the collision series.",
+      "resolution_condition": "Acquire synchronized translational and rotational measurements for each shot."
+    }
+  ]
+}

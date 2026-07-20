@@ -1,0 +1,293 @@
+{
+  "applicability": {
+    "analytic_gates_passed": true,
+    "equipment": "WPA_POOL_GEOMETRY",
+    "experimental_validation_pending": true,
+    "notes": "Full-game v1 integrates the frozen phase-3 component models with dense-rack contact-graph expansion, boundary-event recursion, and a 64-iteration full-rack solver budget. Public-experiment mismatches and all declared evidence limitations remain preserved.",
+    "real_world_validation_claimed": false
+  },
+  "parameter_sources": {
+    "ball.friction_coefficient": {
+      "dataset_id": "domenech_2023_ball_collision",
+      "evidence": "Full-precision deterministic billiard-material fit from committed low-angle CALIBRATION groups only",
+      "fit_artifact": "physics_models/calibration/ball_collision_material_fit_v1.json",
+      "kind": "calibration_transfer",
+      "limitation": "The source used a PVC laboratory bench and nominal 57.2 mm billiard balls; transfer to Chinese Pool cloth and 57.15 mm balls is not yet confirmed",
+      "partition": "CALIBRATION",
+      "unit": "1"
+    },
+    "ball.inertia_factor": {
+      "evidence": "Uniform solid-sphere rigid-body model I = 2/5 mR^2 used by the independently tested contact solver",
+      "kind": "physical_model",
+      "unit": "1"
+    },
+    "ball.mass_kg": {
+      "evidence": "Chinese Pool production compatibility value retained from the frozen surface-motion profile",
+      "kind": "compatibility_default",
+      "unit": "kg"
+    },
+    "ball.normal_restitution": {
+      "dataset_id": "domenech_2023_ball_collision",
+      "evidence": "Full-precision deterministic billiard-material fit from committed low-angle CALIBRATION groups only",
+      "fit_artifact": "physics_models/calibration/ball_collision_material_fit_v1.json",
+      "kind": "calibration_transfer",
+      "limitation": "The source used a PVC laboratory bench and nominal 57.2 mm billiard balls; transfer to Chinese Pool cloth and 57.15 mm balls is not yet confirmed",
+      "partition": "CALIBRATION",
+      "unit": "1"
+    },
+    "ball.radius_cm": {
+      "evidence": "Chinese Pool production ball diameter of 5.715 cm",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "cue.chalked_friction_coefficient": {
+      "evidence": "Preregistered Coulomb-cone hypothesis used by the analytic contract; not fitted to Cross 2023 experimental markers",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false
+    },
+    "cue.cue_speed_per_power_unit_cm_s": {
+      "evidence": "Compatibility mapping chosen to preserve the center-hit production speed scale after introducing cue effective mass",
+      "experimental_validation": false,
+      "kind": "compatibility_mapping",
+      "unit": "cm/s"
+    },
+    "cue.effective_mass_kg": {
+      "evidence": "Versioned legacy cue-mass compatibility value; independent mechanical measurement remains unavailable",
+      "kind": "compatibility_default",
+      "unit": "kg"
+    },
+    "cue.maximum_reliable_offset_radius": {
+      "evidence": "Preregistered operational miscue boundary for the analytic candidate; not experimentally validated",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false
+    },
+    "cue.normal_restitution": {
+      "evidence": "Inelastic compatibility hypothesis for the single rigid cue impulse; analytic energy nonincrease is checked independently",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false
+    },
+    "cue.unchalked_friction_coefficient": {
+      "evidence": "Preregistered lower-friction hypothesis used to distinguish unchalked slip; not fitted to experimental markers",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false
+    },
+    "cushion.friction_coefficient": {
+      "dataset_id": "mathavan_2010_cushion",
+      "evidence": "Source-reported sensitivity center retained because perpendicular zero-sidespin experimental markers cannot identify horizontal rail friction",
+      "fit_artifact": "physics_models/calibration/cushion_fit_v1.json",
+      "kind": "source_reported_hypothesis",
+      "limitation": "Requires oblique synchronized translation/spin experiments and Chinese Pool equipment confirmation",
+      "partition": "CALIBRATION",
+      "unit": "1"
+    },
+    "cushion.maximum_rigid_incident_speed_cm_s": {
+      "dataset_id": "mathavan_2010_cushion",
+      "evidence": "Authors' stated rigid-cushion applicability boundary",
+      "kind": "source_domain_boundary",
+      "unit": "cm/s"
+    },
+    "cushion.normal_restitution": {
+      "dataset_id": "mathavan_2010_cushion",
+      "evidence": "Full-precision bounded least-squares fit from incident_low CALIBRATION markers only",
+      "fit_artifact": "physics_models/calibration/cushion_fit_v1.json",
+      "kind": "calibration_transfer",
+      "limitation": "Constant restitution cannot represent speed-dependent cushion deformation and is transferred from snooker equipment",
+      "partition": "CALIBRATION",
+      "unit": "1"
+    },
+    "cushion.nose_height_ratio": {
+      "dataset_id": "mathavan_2010_cushion",
+      "evidence": "Source apparatus/model geometry h/R = 7/5",
+      "kind": "source_geometry",
+      "unit": "1"
+    },
+    "solver.maximum_events_per_tick": {
+      "evidence": "Deterministic solver safety bound retained from the governed surface-motion profile",
+      "kind": "engineering_limit",
+      "unit": "count"
+    },
+    "solver.maximum_island_size": {
+      "evidence": "All 16 production balls can occupy one island",
+      "kind": "bounded_runtime_control",
+      "unit": "count"
+    },
+    "solver.maximum_penetration_cm": {
+      "evidence": "Explicit hard-failure boundary",
+      "kind": "safety_limit",
+      "unit": "cm"
+    },
+    "solver.penetration_slop_cm": {
+      "evidence": "Deterministic contact persistence tolerance",
+      "kind": "numerical_control",
+      "unit": "cm"
+    },
+    "solver.position_iterations": {
+      "evidence": "Bounded separated position projection",
+      "kind": "numerical_control",
+      "unit": "count"
+    },
+    "solver.residual_tolerance_cm_s": {
+      "evidence": "Grade-C symmetric residual contract",
+      "kind": "calibration_control",
+      "unit": "cm/s"
+    },
+    "solver.time_step_seconds": {
+      "evidence": "Existing deterministic automation and reference trace cadence",
+      "kind": "engineering_default",
+      "unit": "s"
+    },
+    "solver.toi_tolerance_seconds": {
+      "evidence": "Preregistered continuous-collision grouping tolerance",
+      "kind": "numerical_control",
+      "unit": "s"
+    },
+    "solver.velocity_iterations": {
+      "evidence": "Grade-C symmetric residual contract",
+      "kind": "calibration_control",
+      "unit": "count"
+    },
+    "surface.legacy_friction_acceleration_cm_s2": {
+      "evidence": "Compatibility-only value retained from the frozen surface-motion profile",
+      "kind": "compatibility_default",
+      "unit": "cm/s^2"
+    },
+    "surface.rolling_resistance_acceleration_cm_s2": {
+      "dataset_id": "mathavan_2009_high_speed",
+      "evidence": "Unchanged midpoint of the admitted Mathavan rolling-deceleration calibration interval from surface-motion v1",
+      "kind": "calibration",
+      "point_id": "rolling_deceleration_range",
+      "unit": "cm/s^2"
+    },
+    "surface.sliding_friction_coefficient": {
+      "evidence": "Unchanged preregistered physical prior from the frozen surface-motion candidate",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false
+    },
+    "surface.slip_speed_epsilon_cm_s": {
+      "evidence": "Numerical classification epsilon retained from the governed surface-motion profile",
+      "kind": "engineering_default",
+      "unit": "cm/s"
+    },
+    "surface.stop_energy_threshold_j": {
+      "evidence": "Numerical stopping threshold retained from the governed surface-motion profile",
+      "kind": "engineering_default",
+      "unit": "J"
+    },
+    "surface.torsional_spin_deceleration_rad_s2": {
+      "kind": "unmodeled",
+      "limitation": "No admitted sidespin-decay experiment is available",
+      "unit": "rad/s^2"
+    },
+    "table_boundary.capture_depth_cm": {
+      "evidence": "Grade-C irreversible capture plane; direct measurement remains unavailable",
+      "kind": "analytic_geometry_hypothesis",
+      "unit": "cm"
+    },
+    "table_boundary.corner_mouth_width_cm": {
+      "evidence": "Chinese Pool nominal corner pocket mouth width",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "table_boundary.corner_throat_width_cm": {
+      "evidence": "Grade-C analytic candidate throat width; direct measurement remains unavailable",
+      "kind": "analytic_geometry_hypothesis",
+      "unit": "cm"
+    },
+    "table_boundary.jaw_radius_cm": {
+      "evidence": "Grade-C analytic candidate jaw radius; direct measurement remains unavailable",
+      "kind": "analytic_geometry_hypothesis",
+      "unit": "cm"
+    },
+    "table_boundary.playfield_length_cm": {
+      "evidence": "Chinese Pool nominal playfield length",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "table_boundary.playfield_width_cm": {
+      "evidence": "Chinese Pool nominal playfield width",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "table_boundary.side_mouth_width_cm": {
+      "evidence": "Chinese Pool nominal side pocket mouth width",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "table_boundary.side_throat_width_cm": {
+      "evidence": "Grade-C analytic candidate throat width; direct measurement remains unavailable",
+      "kind": "analytic_geometry_hypothesis",
+      "unit": "cm"
+    },
+    "table_boundary.throat_depth_cm": {
+      "evidence": "Grade-C analytic event-order boundary; direct measurement remains unavailable",
+      "kind": "analytic_geometry_hypothesis",
+      "unit": "cm"
+    }
+  },
+  "runtime_profile": {
+    "ball": {
+      "friction_coefficient": 0.25,
+      "inertia_factor": 0.4,
+      "mass_kg": 0.17,
+      "material": "phenolic_resin",
+      "normal_restitution": 0.36,
+      "radius_cm": 2.8575
+    },
+    "cue": {
+      "chalked_friction_coefficient": 0.6,
+      "cue_speed_per_power_unit_cm_s": 1.34,
+      "effective_mass_kg": 0.5,
+      "maximum_reliable_offset_radius": 0.8,
+      "normal_restitution": 0.0,
+      "unchalked_friction_coefficient": 0.1
+    },
+    "cushion": {
+      "friction_coefficient": 0.14,
+      "material": "riley_renaissance_snooker_cushion",
+      "maximum_rigid_incident_speed_cm_s": 250.0,
+      "normal_restitution": 0.9248723120650503,
+      "nose_height_ratio": 1.4
+    },
+    "formula_version": "full_game_integration_v1",
+    "id": "chinese_pool_full_game_v1",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "maximum_island_size": 16,
+      "maximum_penetration_cm": 0.5,
+      "penetration_slop_cm": 0.001,
+      "position_iterations": 4,
+      "residual_tolerance_cm_s": 0.001,
+      "time_step_seconds": 0.1,
+      "toi_tolerance_seconds": 1e-07,
+      "velocity_iterations": 64
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "production_cloth_legacy",
+      "rolling_resistance_acceleration_cm_s2": 12.5,
+      "sliding_friction_coefficient": 0.2,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    },
+    "table_boundary": {
+      "capture_depth_cm": 6.0,
+      "corner_mouth_width_cm": 13.2,
+      "corner_throat_width_cm": 11.0,
+      "geometry_id": "wpa_pool_analytic_v1",
+      "jaw_radius_cm": 1.2,
+      "material": "profiled_table_boundary",
+      "playfield_length_cm": 254.0,
+      "playfield_width_cm": 127.0,
+      "side_mouth_width_cm": 8.6,
+      "side_throat_width_cm": 7.0,
+      "throat_depth_cm": 4.0
+    }
+  },
+  "schema_version": 6
+}

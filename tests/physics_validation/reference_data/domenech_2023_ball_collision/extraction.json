@@ -1,0 +1,34 @@
+{
+  "date": "2026-07-13",
+  "axis_calibration": {
+    "billiard_alpha1": {"x_min_pixel": 278, "x_max_pixel": 1466, "x_min_degrees": 0, "x_max_degrees": 90, "y_min_pixel": 957, "y_max_pixel": 85, "y_min_degrees": 0, "y_max_degrees": 90},
+    "billiard_delta2": {"x_min_pixel": 277, "x_max_pixel": 1518, "x_min_degrees": 0, "x_max_degrees": 90, "y_min_pixel": 997, "y_max_pixel": 92, "y_min_degrees": 0, "y_max_degrees": 25},
+    "brass_alpha1": {"x_min_pixel": 278, "x_max_pixel": 1466, "x_min_degrees": 0, "x_max_degrees": 90, "y_min_pixel": 957, "y_max_pixel": 85, "y_min_degrees": 0, "y_max_degrees": 90},
+    "rubber_delta2": {"x_min_pixel": 292, "x_max_pixel": 1532, "x_min_degrees": 0, "x_max_degrees": 80, "y_min_pixel": 996, "y_max_pixel": 91, "y_min_degrees": 0, "y_max_degrees": 45},
+    "rubber_lambda2": {"x_min_pixel": 283, "x_max_pixel": 1490, "x_min_degrees": 0, "x_max_degrees": 80, "y_min_pixel": 1002, "y_max_pixel": 94, "y_min_degrees": 0, "y_max_degrees": 80},
+    "steel_alpha1": {"x_min_pixel": 307, "x_max_pixel": 1670, "x_min_degrees": 0, "x_max_degrees": 80, "y_min_pixel": 1099, "y_max_pixel": 101, "y_min_degrees": 0, "y_max_degrees": 90},
+    "steel_beta1": {"x_min_pixel": 307, "x_max_pixel": 1670, "x_min_degrees": 0, "x_max_degrees": 80, "y_min_pixel": 1099, "y_max_pixel": 101, "y_min_degrees": 0, "y_max_degrees": 90}
+  },
+  "inputs": [
+    {"file_id": "raw_extracted", "sha256": "sha256:fd26a8d030d12feee2f0829d1b005af7af523966d568c09d977b106b79a9d74d"},
+    {"file_id": "digitization", "sha256": "sha256:90c5bc0267c8b41d130510492a6f897d0418bc92b2762414f53b13e9c2afa458"}
+  ],
+  "method": "Two independent native-pixel marker-center methods per admitted experimental marker",
+  "operator": "Codex source admission pass",
+  "output_sha256": "sha256:d04396a53ab1010429fc67405e63bd92759fec7abc0ad1a86e9b395736f1a5ec",
+  "review": {
+    "date": "2026-07-13",
+    "method": "method-disjoint center comparison with twelve-pixel solid-marker admission bound",
+    "reviewed_by": "second algorithmic digitization pass"
+  },
+  "rounding_policy": "Pixel and converted observations retain six decimal places; normalized decimal text removes only trailing zeroes.",
+  "schema_version": 2,
+  "script": {"module": "tools.physics_validation.extract_domenech_2023", "version": "1.0.0"},
+  "source_sha256": "sha256:0a216010cf12f84dc2594ab22c7ae9dc96490a958ce8b959b9a13e2160fca1e7",
+  "tool": {"name": "Pillow/NumPy native-pixel audit plus offline standard-library normalizer", "version": "2026-07-13"},
+  "transformations": [
+    {"formula": "x=x_min+(pixel_x-anchor_x_min)*(x_max-x_min)/(anchor_x_max-anchor_x_min)", "id": "horizontal_axis", "input_unit": "pixel", "output_unit": "degrees"},
+    {"formula": "y=y_min+(anchor_y_min-pixel_y)*(y_max-y_min)/(anchor_y_min-anchor_y_max)", "id": "vertical_axis", "input_unit": "pixel", "output_unit": "degrees"}
+  ],
+  "uncertainty_interpretation": "independent_bounded_components"
+}

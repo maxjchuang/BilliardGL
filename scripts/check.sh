@@ -4,10 +4,34 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 BUILD_DIR="${BILLIARDGL_BUILD_DIR:-${REPO_ROOT}/build/check}"
+BUILD_JOBS="${BILLIARDGL_BUILD_JOBS:-}"
+
+BUILD_PARALLEL_ARGS=(--parallel)
+if [[ -n "${BUILD_JOBS}" ]]; then
+    if [[ ! "${BUILD_JOBS}" =~ ^[1-9][0-9]*$ ]]; then
+        echo "BILLIARDGL_BUILD_JOBS must be a positive integer" >&2
+        exit 2
+    fi
+    BUILD_PARALLEL_ARGS+=("${BUILD_JOBS}")
+fi
 
 python3 "${REPO_ROOT}/tests/check_text_encoding_tests.py" -v
 python3 "${REPO_ROOT}/scripts/check_text_encoding.py" --root "${REPO_ROOT}"
 
 cmake -S "${REPO_ROOT}" -B "${BUILD_DIR}"
-cmake --build "${BUILD_DIR}" --parallel
+cmake --build "${BUILD_DIR}" "${BUILD_PARALLEL_ARGS[@]}"
 ctest --test-dir "${BUILD_DIR}" --output-on-failure --label-exclude rendered
+
+PYTHONPATH="${REPO_ROOT}" python3 -m unittest discover \
+    -s "${REPO_ROOT}/tests/physics_validation" \
+    -p 'test_*.py' -v
+
+python3 "${REPO_ROOT}/scripts/check_phase3_physics_release.py" \
+    --root "${REPO_ROOT}" \
+    --executable "${BUILD_DIR}/Billiards"
+
+PYTHONPATH="${REPO_ROOT}" python3 -m tools.physics_validation.run \
+    --executable "${BUILD_DIR}/Billiards" \
+    --scenarios "${REPO_ROOT}/tests/physics_validation/scenarios" \
+    --known-failures "${REPO_ROOT}/tests/physics_validation/known_failures.json" \
+    --output "${BUILD_DIR}/physics-validation-report"

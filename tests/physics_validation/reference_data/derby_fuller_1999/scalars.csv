@@ -1,0 +1,14 @@
+point_id,role,series_id,group_id,case_id,metric,source_value,source_unit,normalized_value,normalized_unit,measurement_uncertainty,digitization_uncertainty,conversion_uncertainty,coverage_factor,engineering_absolute_tolerance,engineering_relative_tolerance,source_locator,pool_applicability
+ball_mass,apparatus,published_scalars,apparatus,ball_mass,ball_mass_kg,170.3,g,0.1703,kg,0,0,0,2,0,0,"PDF p.3, apparatus paragraph",NOT_APPLICABLE
+ball_diameter,apparatus,published_scalars,apparatus,ball_diameter,ball_diameter_cm,5.24,cm,5.24,cm,0,0,0,2,0,0,"PDF p.3, apparatus paragraph",NOT_APPLICABLE
+camera_frame_rate,apparatus,published_scalars,apparatus,camera_frame_rate,camera_frame_rate_hz,3000,frame/s,3000,1/s,0,0,0,2,0,0,"PDF p.3, high-speed camera paragraph",NOT_APPLICABLE
+initial_speed,confirmation_target,published_scalars,sliding_collision,initial_speed,incident_speed_cm_s,0.98,m/s,98,cm/s,0,0,0.5,2,2,0,"PDF p.3, incident speed paragraph",DIRECT
+cue_sliding_acceleration,diagnostic,published_scalars,apparatus,cue_sliding_acceleration,cue_sliding_acceleration_cm_s2,3.13,m/s^2,313,cm/s^2,31.3,0,0,2,0,0,"PDF p.4, acceleration paragraph; approximately 10 percent standard error",NOT_APPLICABLE
+target_sliding_acceleration,diagnostic,published_scalars,apparatus,target_sliding_acceleration,target_sliding_acceleration_cm_s2,-1.83,m/s^2,-183,cm/s^2,9.15,0,0,2,0,0,"PDF p.4, acceleration paragraph; approximately 5 percent standard error",NOT_APPLICABLE
+cue_sliding_time,confirmation_target,published_scalars,sliding_collision,cue_sliding_time,cue_sliding_time_seconds,90,ms,0.09,s,0,0,0.0005,2,0.015,0,"PDF p.4, sliding-duration paragraph",DIRECT
+target_sliding_time,confirmation_target,published_scalars,sliding_collision,target_sliding_time,target_sliding_time_seconds,150,ms,0.15,s,0,0,0.0005,2,0.02,0,"PDF p.4, sliding-duration paragraph",DIRECT
+cue_final_speed,confirmation_target,published_scalars,sliding_collision,cue_final_speed,cue_final_speed_cm_s,0.251,m/s,25.1,cm/s,0,0,0.05,2,2,0,"PDF p.4, final-speed paragraph",DIRECT
+target_final_speed,confirmation_target,published_scalars,sliding_collision,target_final_speed,target_final_speed_cm_s,0.583,m/s,58.3,cm/s,0,0,0.05,2,2,0,"PDF p.4, final-speed paragraph",DIRECT
+momentum_before,confirmation_target,published_scalars,sliding_collision,momentum_before,linear_momentum_before_n_s,0.167,kg*m/s,0.167,N*s,0,0,0.0005,2,0.01,0,"PDF p.4, momentum paragraph",DIRECT
+momentum_after,confirmation_target,published_scalars,sliding_collision,momentum_after,linear_momentum_after_n_s,0.151,kg*m/s,0.151,N*s,0,0,0.0005,2,0.01,0,"PDF p.4, momentum paragraph",DIRECT
+kinetic_energy_loss,confirmation_target,published_scalars,sliding_collision,kinetic_energy_loss,kinetic_energy_loss_fraction,0.17,dimensionless,0.17,dimensionless,0,0,0.005,2,0.03,0,"PDF p.4, kinetic-energy paragraph",DIRECT

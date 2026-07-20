@@ -1,0 +1,937 @@
+{
+  "accounting": {
+    "known_limitations": [],
+    "known_model_mismatches": [
+      {
+        "case_id": "fig7_experimental_08",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_09",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_10",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_11",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_12",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_13",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_14",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_15",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_16",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      }
+    ],
+    "missing_limitations": [],
+    "missing_model_mismatches": [
+      {
+        "case_id": "fig7_experimental_07",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_17",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_18",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_19",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      }
+    ],
+    "new_limitations": [],
+    "new_model_mismatches": [],
+    "unallowlistable_failures": [
+      {
+        "case_id": "fig7_experimental_17",
+        "code": "INTEGRATION_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_18",
+        "code": "INTEGRATION_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      },
+      {
+        "case_id": "fig7_experimental_19",
+        "code": "INTEGRATION_MISMATCH",
+        "dataset_id": "mathavan_2010_cushion",
+        "metric": "cushion_rebound_speed_cm_s"
+      }
+    ]
+  },
+  "metadata": {
+    "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+    "candidate_id": "chinese_pool_cushion_collision_v1",
+    "dataset_id": "mathavan_2010_cushion",
+    "dataset_version": "1.0.0",
+    "executable": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards",
+    "freeze_sha256": "805d7d0de87b8a89863d81635ad6574848ac5abfc89c9c8e611c244a879fb5c6",
+    "package": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion",
+    "package_hashes": {
+      "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+      "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+      "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+      "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+      "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+      "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+      "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+      "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+    },
+    "scenarios": {
+      "mathavan_2010_cushion__fig7_experimental_07": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_07.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_07",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_07.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_08": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_08.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_08",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_08.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_09": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_09.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_09",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_09.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_10": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_10.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_10",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_10.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_11": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_11.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_11",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_11.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_12": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_12.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_12",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_12.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_13": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_13.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_13",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_13.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_14": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_14.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_14",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_14.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_15": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_15.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_15",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_15.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_16": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_16.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_16",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_16.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_17": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_17.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_17",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_17.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_18": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_18.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_18",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_18.json"
+      },
+      "mathavan_2010_cushion__fig7_experimental_19": {
+        "provenance_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/provenance/mathavan_2010_cushion__fig7_experimental_19.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_19",
+        "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_19.json"
+      }
+    }
+  },
+  "partitions": {
+    "CALIBRATION": {
+      "groups": [],
+      "points": [],
+      "series": [],
+      "summary": {
+        "passed": 0,
+        "points": 0,
+        "statuses": {}
+      }
+    },
+    "HOLDOUT": {
+      "groups": [
+        {
+          "count": 7,
+          "group_id": "incident_extreme",
+          "maximum_absolute_error": 29.838174462890635,
+          "pass_rate": 0.0,
+          "rmse": 24.10655074184234
+        },
+        {
+          "count": 1,
+          "group_id": "incident_high",
+          "maximum_absolute_error": 7.424927636718763,
+          "pass_rate": 0.0,
+          "rmse": 7.424927636718763
+        },
+        {
+          "count": 5,
+          "group_id": "incident_middle",
+          "maximum_absolute_error": 4.384792562758918,
+          "pass_rate": 0.2,
+          "rmse": 2.8087254623193005
+        }
+      ],
+      "points": [
+        {
+          "acceptance_interval": [
+            106.3800860071922,
+            107.38061399280781
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_07",
+          "combined_standard_uncertainty": 0.5002639928077974,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.01625,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 106.88035,
+          "fit_subset": true,
+          "group_id": "incident_middle",
+          "group_maximum_absolute_error": 4.384792562758918,
+          "group_rmse": 2.8087254623193005,
+          "incident_speed_cm_s": 115.3559,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_07",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 106.68949183076619,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_07",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_07",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": -0.19085816923382026,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "PASSED",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_07.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            123.16895320338661,
+            124.19364679661338
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_08",
+          "combined_standard_uncertainty": 0.5123467966133877,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.1118,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 123.6813,
+          "fit_subset": true,
+          "group_id": "incident_middle",
+          "group_maximum_absolute_error": 4.384792562758918,
+          "group_rmse": 2.8087254623193005,
+          "incident_speed_cm_s": 129.918,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_08",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 120.15757788717747,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_08",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_08",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": -3.523722112822526,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_08.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            145.06303692780298,
+            146.067663072197
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_09",
+          "combined_standard_uncertainty": 0.5023130721970114,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.04815,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 145.56535,
+          "fit_subset": false,
+          "group_id": "incident_middle",
+          "group_maximum_absolute_error": 4.384792562758918,
+          "group_rmse": 2.8087254623193005,
+          "incident_speed_cm_s": 152.6487,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_09",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 141.18055743724108,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_09",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_09",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": -4.384792562758918,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_09.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            164.02216772754065,
+            165.02553227245937
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_10",
+          "combined_standard_uncertainty": 0.5016822724593725,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.04105,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 164.52385,
+          "fit_subset": false,
+          "group_id": "incident_middle",
+          "group_maximum_absolute_error": 4.384792562758918,
+          "group_rmse": 2.8087254623193005,
+          "incident_speed_cm_s": 175.5444,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_10",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 162.35617111995816,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_10",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_10",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": -2.167678880041848,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_10.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            181.9138,
+            182.9138
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_11",
+          "combined_standard_uncertainty": 0.5,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 182.4138,
+          "fit_subset": false,
+          "group_id": "incident_middle",
+          "group_maximum_absolute_error": 4.384792562758918,
+          "group_rmse": 2.8087254623193005,
+          "incident_speed_cm_s": 199.1247,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_11",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 184.16491727158427,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_11",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_11",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 1.7511172715842633,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_11.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            202.6108437531637,
+            203.61095624683628
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_12",
+          "combined_standard_uncertainty": 0.5000562468362933,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0075,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 203.1109,
+          "fit_subset": false,
+          "group_id": "incident_high",
+          "group_maximum_absolute_error": 7.424927636718763,
+          "group_rmse": 7.424927636718763,
+          "incident_speed_cm_s": 227.6377,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_12",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 210.53582763671875,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_12",
+          "resolution_condition": null,
+          "rigid_cushion_domain": true,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_12",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 7.424927636718763,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_12.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            227.4670957219967,
+            228.4699042780033
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_13",
+          "combined_standard_uncertainty": 0.5014042780032895,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0375,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 227.9685,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 252.95399999999998,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_13",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 233.95019568502903,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_13",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_13",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 5.981695685029024,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_13.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            226.01777203949882,
+            227.01992796050115
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_14",
+          "combined_standard_uncertainty": 0.5010779605011579,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.03285,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 226.51885,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 270.0844,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_14",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 249.79364060238004,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_14",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_14",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 23.27479060238005,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_14.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            237.7759,
+            238.7759
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_15",
+          "combined_standard_uncertainty": 0.5,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 238.2759,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 289.2779,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_15",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 267.54516610875726,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_15",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_15",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 29.26926610875725,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_15.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            245.7069,
+            246.7069
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_16",
+          "combined_standard_uncertainty": 0.5,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 246.2069,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 298.4683,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_16",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 276.0450744628906,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_16",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_16",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": 29.838174462890635,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_16.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            261.5148547473615,
+            262.5201452526385
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_17",
+          "combined_standard_uncertainty": 0.5026452526384786,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0515,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 262.0175,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 310.6437,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_17",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": null,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_17",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_17",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": null,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "INTEGRATION_MISMATCH",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_17.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            256.3473411764017,
+            257.35175882359835
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_18",
+          "combined_standard_uncertainty": 0.5022088235983115,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.04705,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 256.84955,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 318.51,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_18",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": null,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_18",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_18",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": null,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "INTEGRATION_MISMATCH",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_18.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            272.7162895247456,
+            273.7492104752544
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "fig7_experimental_19",
+          "combined_standard_uncertainty": 0.5164604752543993,
+          "conversion_uncertainty": 0.5,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2010_cushion",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.12935,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 273.23275,
+          "fit_subset": false,
+          "group_id": "incident_extreme",
+          "group_maximum_absolute_error": 29.838174462890635,
+          "group_rmse": 24.10655074184234,
+          "incident_speed_cm_s": 340.454,
+          "measurement_uncertainty": 0.0,
+          "metric": "cushion_rebound_speed_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+            "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+            "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+            "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+            "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+            "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+            "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+            "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+          },
+          "partition": "HOLDOUT",
+          "point_id": "fig7_experimental_19",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": null,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/build/check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2010_cushion --output /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010 --case fig7_experimental_19",
+          "resolution_condition": null,
+          "rigid_cushion_domain": false,
+          "scenario_id": "mathavan_2010_cushion__fig7_experimental_19",
+          "series_id": "perpendicular_rolling_rebound",
+          "signed_error": null,
+          "source_locator": "journal p. 1870 Fig. 7(a)",
+          "status": "INTEGRATION_MISMATCH",
+          "trace_path": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/traces/mathavan_2010_cushion__fig7_experimental_19.json",
+          "unit": "cm/s"
+        }
+      ],
+      "series": [
+        {
+          "count": 13,
+          "maximum_absolute_error": 29.838174462890635,
+          "pass_rate": 0.07692307692307693,
+          "rmse": 15.55338355053328,
+          "series_id": "perpendicular_rolling_rebound"
+        }
+      ],
+      "summary": {
+        "passed": 1,
+        "points": 13,
+        "statuses": {
+          "INTEGRATION_MISMATCH": 3,
+          "MODEL_MISMATCH_KNOWN": 9,
+          "PASSED": 1
+        }
+      }
+    }
+  },
+  "reference_limitations": [
+    {
+      "case_id": "experimental_spin_change_unavailable",
+      "dataset_id": "mathavan_2010_cushion",
+      "metric": "post_collision_angular_velocity_rad_s",
+      "missing_evidence": "The source experiment did not measure spin change through cushion impact.",
+      "point_ids": [],
+      "resolution_condition": "Acquire synchronized pre/post-impact angular-velocity measurements."
+    },
+    {
+      "case_id": "oblique_experimental_rebound_angle_unavailable",
+      "dataset_id": "mathavan_2010_cushion",
+      "metric": "cushion_rebound_angle_degrees",
+      "missing_evidence": "The source reports no experimental oblique-incidence rebound-angle series.",
+      "point_ids": [],
+      "resolution_condition": "Acquire synchronized experimental incident/rebound angles for oblique cushion impacts."
+    },
+    {
+      "case_id": "rigid_cushion_domain_warning",
+      "dataset_id": "mathavan_2010_cushion",
+      "metric": "rigid_cushion_domain",
+      "missing_evidence": "The authors identify incident speeds above 2.5 m/s as outside the reliable rigid-cushion model domain.",
+      "point_ids": [],
+      "resolution_condition": "Measure cushion deformation and contact response above 2.5 m/s."
+    },
+    {
+      "case_id": "snooker_cushion_to_pool_material_conversion_missing",
+      "dataset_id": "mathavan_2010_cushion",
+      "metric": "equipment_conversion",
+      "missing_evidence": "Riley Renaissance snooker cushion, cloth, and 52.5 mm balls are not the production Chinese Pool apparatus.",
+      "point_ids": [],
+      "resolution_condition": "Publish a validated cushion/cloth/ball material conversion to production equipment."
+    }
+  ]
+}

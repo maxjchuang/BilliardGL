@@ -1,0 +1,28 @@
+{
+  "axis_calibration": {
+    "figure": "Figure 5",
+    "strain_axis": {
+      "pixel_y_at_0": 1913.3,
+      "pixel_y_at_minus_0_01": 1883.3
+    },
+    "time_axis": {
+      "pixel_x_at_0": 198.0,
+      "pixel_x_at_10": 657.0,
+      "scale": "s/10000"
+    }
+  },
+  "contact_duration_definition": "last sampled time before/at return to the registered zero-strain band",
+  "dataset_id": "shimamura_2006_cue_contact",
+  "dataset_version": "1.0.0",
+  "digitization_residual_strain": 0.0005,
+  "impact": "centered",
+  "method": "reviewed pixel-to-printed-axis digitization of experimental open circles",
+  "point_count": 21,
+  "rounding_policy": "time to 1e-6 s; strain to 1e-4 strain fraction",
+  "schema_version": 1,
+  "script": {
+    "module": "tools.physics_validation.extract_shimamura_2006_cue_contact",
+    "version": "1.0.0"
+  },
+  "timing_uncertainty_s": 2.5e-05
+}

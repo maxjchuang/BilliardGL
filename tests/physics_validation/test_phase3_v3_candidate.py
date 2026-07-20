@@ -1,0 +1,86 @@
+import hashlib
+import json
+import subprocess
+import unittest
+from pathlib import Path
+
+from tools.physics_validation.build_v3_profile import (
+    build_v3_profile,
+    canonical_runtime_text,
+)
+
+
+ROOT = Path(__file__).resolve().parents[2]
+PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v3.json"
+INVENTORY = ROOT / "physics_models/promotion/phase3_candidates_v3.json"
+V2_PROFILE = ROOT / "physics_models/profiles/chinese_pool_full_game_v2.json"
+BALL_FIT = ROOT / "physics_models/calibration/ball_collision_fit_v3.json"
+CUSHION_FIT = ROOT / "physics_models/calibration/cushion_fit_v3.json"
+SELECTED_REVISION = "db1c24b2b7d4d1c1145f4ebc7998fcd89109bc7a"
+
+
+def revision_bytes(path):
+    return subprocess.run(
+        ["git", "show", f"{SELECTED_REVISION}:{path}"],
+        cwd=ROOT, check=True, capture_output=True).stdout
+
+
+class Phase3V3CandidateTests(unittest.TestCase):
+    def test_selected_revision_is_exact_v3_profile(self):
+        committed = json.loads(revision_bytes(
+            "physics_models/profiles/chinese_pool_full_game_v3.json"))
+        query = committed["runtime_query"]
+        runtime = committed["runtime_profile"]
+        self.assertEqual(runtime["id"], query["id"])
+        self.assertEqual(runtime["formula_version"], query["formula_version"])
+        self.assertEqual(
+            hashlib.sha256(canonical_runtime_text(runtime).encode("utf-8")).hexdigest(),
+            query["canonical_text_sha256"],
+        )
+
+    def test_profile_is_reproducible_from_v2_and_v3_fits(self):
+        expected = build_v3_profile(
+            json.loads(V2_PROFILE.read_text(encoding="utf-8")),
+            json.loads(BALL_FIT.read_text(encoding="utf-8")),
+            json.loads(CUSHION_FIT.read_text(encoding="utf-8")),
+        )
+        self.assertEqual(
+            json.loads(PROFILE.read_text(encoding="utf-8")), expected)
+        self.assertEqual(expected["runtime_profile"]["id"],
+                         "chinese_pool_full_game_v3")
+
+    def test_inventory_contains_every_pre_freeze_artifact(self):
+        inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
+        self.assertEqual(inventory["candidate_id"], "phase3_integrated_v3")
+        self.assertEqual(
+            {package["package_id"]
+             for package in inventory["confirmation_packages"]},
+            {"derby_fuller_1999", "han_2005"},
+        )
+        serialized = json.dumps(inventory, sort_keys=True)
+        self.assertNotIn("confirmation_consumption", serialized)
+        self.assertNotIn("validation_receipt", serialized)
+        artifacts = [
+            inventory["profile"], inventory["full_game_matrix"],
+            inventory["performance_budget"],
+            *inventory["calibration_reports"],
+            *inventory["confirmation_packages"],
+            *inventory["metric_contracts"],
+        ]
+        for artifact in artifacts:
+            self.assertEqual(
+                hashlib.sha256(revision_bytes(artifact["path"])).hexdigest(),
+                artifact["sha256"], artifact["path"])
+
+    def test_v3_matrix_preserves_all_v2_acceptance_semantics(self):
+        v2 = json.loads((ROOT / "physics_models/promotion/full_game_matrix_v2.json")
+                        .read_text(encoding="utf-8"))
+        v3 = json.loads((ROOT / "physics_models/promotion/full_game_matrix_v3.json")
+                        .read_text(encoding="utf-8"))
+        self.assertEqual(v3["cases"], v2["cases"])
+        self.assertEqual(len(v3["cases"]), 12)
+        self.assertNotEqual(v3["artifact_root"], v2["artifact_root"])
+
+
+if __name__ == "__main__":
+    unittest.main()

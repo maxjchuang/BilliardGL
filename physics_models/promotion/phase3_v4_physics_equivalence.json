@@ -1,0 +1,48 @@
+{
+  "candidate_id": "phase3_integrated_v4",
+  "formula_version": "full_game_integration_v3",
+  "physics_identical": true,
+  "schema_version": 1,
+  "sections": {
+    "ball": {
+      "matches": true,
+      "v3_sha256": "77b52ea9fc920b11a343cda23f18be6b63fe663505bc9de9ead41cd0d7a136d1",
+      "v4_sha256": "77b52ea9fc920b11a343cda23f18be6b63fe663505bc9de9ead41cd0d7a136d1"
+    },
+    "cue": {
+      "matches": true,
+      "v3_sha256": "101b3223ea890a16a35e5d93311ecb2a242e2b3844c9443fae5c1307059bc7c3",
+      "v4_sha256": "101b3223ea890a16a35e5d93311ecb2a242e2b3844c9443fae5c1307059bc7c3"
+    },
+    "cushion": {
+      "matches": true,
+      "v3_sha256": "4f41c95a2b980dc786b45df669749e9e3a16f98f2ef38a7e1d683691b9b76555",
+      "v4_sha256": "4f41c95a2b980dc786b45df669749e9e3a16f98f2ef38a7e1d683691b9b76555"
+    },
+    "solver": {
+      "matches": true,
+      "v3_sha256": "25f5a46b60a6dfdd7de75ca39bd88524f66b26f6dc34599934be19bc96c19912",
+      "v4_sha256": "25f5a46b60a6dfdd7de75ca39bd88524f66b26f6dc34599934be19bc96c19912"
+    },
+    "surface": {
+      "matches": true,
+      "v3_sha256": "b4243044204e569ff3b6fb7d05959a0a132d5c3bcd77d225d0c77ec41958cda4",
+      "v4_sha256": "b4243044204e569ff3b6fb7d05959a0a132d5c3bcd77d225d0c77ec41958cda4"
+    },
+    "table_boundary": {
+      "matches": true,
+      "v3_sha256": "6f04324f70465112d3c1537d087bd8e56619238033f47f115cec0721253b2039",
+      "v4_sha256": "6f04324f70465112d3c1537d087bd8e56619238033f47f115cec0721253b2039"
+    }
+  },
+  "v3_profile": {
+    "id": "chinese_pool_full_game_v3",
+    "path": "physics_models/profiles/chinese_pool_full_game_v3.json",
+    "sha256": "126c29b67d0a41f746ead9acf99905a65222c1970f26f92c69064bb29cae9df2"
+  },
+  "v4_profile": {
+    "id": "chinese_pool_full_game_v4",
+    "path": "physics_models/profiles/chinese_pool_full_game_v4.json",
+    "sha256": "cb9cb4c3315d60cba6178389c38fa346a608152d7ac6248c673a0dfbd1ad7bb2"
+  }
+}

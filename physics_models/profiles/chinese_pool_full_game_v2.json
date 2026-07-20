@@ -1,0 +1,107 @@
+{
+  "schema_version": 7,
+  "applicability": {
+    "equipment": "WPA_POOL_GEOMETRY",
+    "real_world_validation_claimed": false,
+    "confirmation_pending": true,
+    "notes": "Pre-freeze integrated Phase 3 v2 candidate. Surface, ball, cushion, and solver v2 are selected before independent confirmation; cue contact and pocket boundary remain bounded v1 components."
+  },
+  "limitations": [
+    "Cue v1 elevated-cue, jump, masse, and measured miscue boundaries remain unavailable.",
+    "Pocket v1 real trajectory and pot-success measurements remain unavailable.",
+    "The instantaneous rigid cushion law does not predict finite cushion contact duration.",
+    "The cushion law is supported only through 250 cm/s incident speed; higher speeds execute with an explicit domain warning.",
+    "Sudo 2002 and Derby/Fuller 1999 confirmation partitions have not been executed at candidate-selection time."
+  ],
+  "parameter_sources": {
+    "surface": {
+      "fit_artifact": "physics_models/calibration/surface_fit_v2.json",
+      "partition": "spent"
+    },
+    "ball": {
+      "fit_artifact": "physics_models/calibration/ball_collision_fit_v2.json",
+      "partition": "spent"
+    },
+    "cushion": {
+      "fit_artifact": "physics_models/calibration/cushion_fit_v2.json",
+      "partition": "spent"
+    },
+    "cue": {
+      "profile_artifact": "physics_models/profiles/chinese_pool_cue_contact_v1.json",
+      "claim": "bounded_v1"
+    },
+    "table_boundary": {
+      "profile_artifact": "physics_models/profiles/chinese_pool_pocket_boundary_v1.json",
+      "claim": "bounded_v1"
+    },
+    "solver": {
+      "profile_artifact": "physics_models/profiles/chinese_pool_multi_contact_solver_v1.json",
+      "runtime_revision": "phase3_solver_v2"
+    }
+  },
+  "runtime_profile": {
+    "id": "chinese_pool_full_game_v2",
+    "formula_version": "full_game_integration_v2",
+    "ball": {
+      "radius_cm": 2.8575,
+      "mass_kg": 0.17,
+      "inertia_factor": 0.4,
+      "normal_restitution": 0.97,
+      "friction_coefficient": 0.1,
+      "material": "phenolic_resin"
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "sliding_friction_coefficient": 0.19999996439955606,
+      "rolling_resistance_acceleration_cm_s2": 12.499999813735489,
+      "torsional_spin_deceleration_rad_s2": 0.0,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "material": "mathavan_phase_correct_surface_v2"
+    },
+    "cue": {
+      "effective_mass_kg": 0.5,
+      "normal_restitution": 0.0,
+      "chalked_friction_coefficient": 0.6,
+      "unchalked_friction_coefficient": 0.1,
+      "maximum_reliable_offset_radius": 0.8,
+      "cue_speed_per_power_unit_cm_s": 1.34
+    },
+    "cushion": {
+      "normal_restitution": 0.93,
+      "restitution_intercept": 1.0,
+      "restitution_slope_per_mps": 0.056,
+      "minimum_restitution": 0.0,
+      "maximum_restitution": 0.93,
+      "friction_coefficient": 0.14,
+      "nose_height_ratio": 1.4,
+      "maximum_rigid_incident_speed_cm_s": 250.0,
+      "material": "mathavan_speed_dependent_cushion_v2"
+    },
+    "table_boundary": {
+      "playfield_width_cm": 127.0,
+      "playfield_length_cm": 254.0,
+      "corner_mouth_width_cm": 13.2,
+      "side_mouth_width_cm": 8.6,
+      "corner_throat_width_cm": 11.0,
+      "side_throat_width_cm": 7.0,
+      "jaw_radius_cm": 1.2,
+      "throat_depth_cm": 4.0,
+      "capture_depth_cm": 6.0,
+      "geometry_id": "wpa_pool_analytic_v1",
+      "material": "profiled_table_boundary"
+    },
+    "solver": {
+      "time_step_seconds": 0.1,
+      "maximum_events_per_tick": 64,
+      "toi_tolerance_seconds": 1e-07,
+      "maximum_island_size": 16,
+      "velocity_iterations": 64,
+      "position_iterations": 4,
+      "penetration_slop_cm": 0.001,
+      "maximum_penetration_cm": 0.5,
+      "residual_tolerance_cm_s": 0.001,
+      "passive_energy_tolerance_j": 1e-10
+    }
+  }
+}

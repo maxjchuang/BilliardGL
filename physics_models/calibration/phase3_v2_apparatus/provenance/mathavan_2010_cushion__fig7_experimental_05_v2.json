@@ -1,0 +1,27 @@
+{
+  "adapter_id": "mathavan_2010_v1",
+  "case_id": "fig7_experimental_05",
+  "dataset_id": "mathavan_2010_cushion",
+  "dataset_version": "1.0.0",
+  "fit_subset": true,
+  "incident_speed_cm_s": 70.4133,
+  "package_hashes": {
+    "digitization": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12",
+    "expected_model_mismatches": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d",
+    "expected_reference_limitations": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124",
+    "extraction": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df",
+    "normalized": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5",
+    "raw_extracted": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d",
+    "scenario_template": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85",
+    "split": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+  },
+  "point_ids": [
+    "fig7_experimental_05"
+  ],
+  "preimpact_samples": 411,
+  "rigid_cushion_domain": true,
+  "source_ball_mass_kg": 0.1406,
+  "source_ball_radius_cm": 2.625,
+  "source_locator": "journal p. 1870 Fig. 7(a)",
+  "time_step_seconds": 0.001
+}

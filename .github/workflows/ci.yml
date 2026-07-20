@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
@@ -24,4 +26,94 @@ jobs:
       - name: Configure, build, and test
         env:
           BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+          BILLIARDGL_BUILD_JOBS: 3
         run: ./scripts/check.sh
+
+      - name: Verify Mathavan 2009 offline reference
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/mathavan_2009_high_speed
+          python3 -m tools.physics_validation.extract_mathavan_2009 --package tests/physics_validation/reference_data/mathavan_2009_high_speed --check
+          python3 -m unittest tests.physics_validation.test_mathavan_2009_extraction tests.physics_validation.test_mathavan_2009_metrics tests.physics_validation.test_mathavan_2009_adapter -v
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2009_high_speed --output "${BILLIARDGL_BUILD_DIR}/physics-reference-mathavan-2009"
+
+      - name: Verify Doménech 2023 offline reference
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/domenech_2023_ball_collision
+          python3 -m tools.physics_validation.extract_domenech_2023 --package tests/physics_validation/reference_data/domenech_2023_ball_collision --check
+          python3 -m unittest tests.physics_validation.test_domenech_2023_extraction tests.physics_validation.test_domenech_2023_metrics tests.physics_validation.test_domenech_2023_adapter -v
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/domenech_2023_ball_collision --output "${BILLIARDGL_BUILD_DIR}/physics-reference-domenech-2023"
+
+      - name: Verify Mathavan 2010 offline reference
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/mathavan_2010_cushion
+          python3 -m tools.physics_validation.extract_mathavan_2010 --package tests/physics_validation/reference_data/mathavan_2010_cushion --check
+          python3 -m unittest tests.physics_validation.test_mathavan_2010_extraction tests.physics_validation.test_mathavan_2010_metrics tests.physics_validation.test_mathavan_2010_adapter -v
+          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/mathavan_2010_cushion --output "${BILLIARDGL_BUILD_DIR}/physics-reference-mathavan-2010"
+
+      - name: Verify Cross 2023 admission-gated reference
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: |
+          python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/cross_2023_cue_impact
+          python3 -m tools.physics_validation.extract_cross_2023 --package tests/physics_validation/reference_data/cross_2023_cue_impact --check
+          python3 -m unittest tests.physics_validation.test_cross_2023_extraction tests.physics_validation.test_cross_2023_metrics tests.physics_validation.test_cross_2023_adapter -v
+          python3 -m tools.physics_validation.admission_report --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/physics-reference-cross-2023"
+
+      - name: Verify frozen Phase 3 release evidence
+        env:
+          BILLIARDGL_BUILD_DIR: ${{ runner.temp }}/billiardgl-build
+        run: python3 scripts/check_phase3_physics_release.py --root . --executable "${BILLIARDGL_BUILD_DIR}/Billiards"
+
+      - name: Upload physics validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: physics-validation-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-validation-report
+          if-no-files-found: error
+
+      - name: Upload reference validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reference-validation-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-validation
+          if-no-files-found: error
+
+      - name: Upload Mathavan 2009 reference report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathavan-2009-reference-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-mathavan-2009
+          if-no-files-found: error
+
+      - name: Upload Doménech 2023 reference report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: domenech-2023-reference-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-domenech-2023
+          if-no-files-found: error
+
+      - name: Upload Mathavan 2010 reference report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathavan-2010-reference-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-mathavan-2010
+          if-no-files-found: error
+
+      - name: Upload Cross 2023 admission report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-2023-reference-report
+          path: ${{ runner.temp }}/billiardgl-build/physics-reference-cross-2023
+          if-no-files-found: error

@@ -1,0 +1,81 @@
+{
+  "algorithm": {
+    "friction_tie_break": "source_reported_value_due_to_experimental_nonidentifiability",
+    "model": "constant rigid-cushion response at h/R=7/5",
+    "normal_restitution_solution": "bounded least-squares closed form",
+    "objective": "unweighted_mean_squared_rebound_speed_residual_cm_s2"
+  },
+  "dataset_id": "mathavan_2010_cushion",
+  "fit": {
+    "calibration_point_ids": [
+      "fig7_experimental_01",
+      "fig7_experimental_02",
+      "fig7_experimental_03",
+      "fig7_experimental_04",
+      "fig7_experimental_05",
+      "fig7_experimental_06"
+    ],
+    "excluded_holdout_point_ids": [
+      "fig7_experimental_07",
+      "fig7_experimental_08",
+      "fig7_experimental_09",
+      "fig7_experimental_10",
+      "fig7_experimental_11",
+      "fig7_experimental_12",
+      "fig7_experimental_13",
+      "fig7_experimental_14",
+      "fig7_experimental_15",
+      "fig7_experimental_16",
+      "fig7_experimental_17",
+      "fig7_experimental_18",
+      "fig7_experimental_19"
+    ],
+    "friction_coefficient": 0.14,
+    "friction_identifiability": "not identifiable from perpendicular zero-sidespin markers; source-reported value retained",
+    "normal_restitution": 0.9248723120650503,
+    "objective_mean_squared_cm_s2": 1.2481350321188784,
+    "sensitivity": [
+      {
+        "friction_coefficient": 0.14,
+        "normal_restitution": 0.9148723120650503,
+        "objective_mean_squared_cm_s2": 1.5819920667202299
+      },
+      {
+        "friction_coefficient": 0.14,
+        "normal_restitution": 0.9348723120650503,
+        "objective_mean_squared_cm_s2": 1.5819920667202085
+      },
+      {
+        "friction_coefficient": 0.13,
+        "normal_restitution": 0.9248723120650503,
+        "objective_mean_squared_cm_s2": 1.2481350321188784
+      },
+      {
+        "friction_coefficient": 0.15000000000000002,
+        "normal_restitution": 0.9248723120650503,
+        "objective_mean_squared_cm_s2": 1.2481350321188784
+      }
+    ]
+  },
+  "fit_partition": "CALIBRATION",
+  "parameter_bounds": {
+    "friction_coefficient": [
+      0.0,
+      1.0
+    ],
+    "normal_restitution": [
+      0.0,
+      1.0
+    ]
+  },
+  "physical_constants": {
+    "maximum_rigid_incident_speed_cm_s": 250.0,
+    "nose_height_ratio": 1.4
+  },
+  "schema_version": 1,
+  "source_reported_sensitivity_center": {
+    "friction_coefficient": 0.14,
+    "normal_restitution": 0.98,
+    "used_as_experimental_expected_values": false
+  }
+}

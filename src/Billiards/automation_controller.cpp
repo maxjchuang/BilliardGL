@@ -1,4 +1,5 @@
 #include "automation_controller.h"
+#include "physics_scenario.h"
 
 #include <algorithm>
 #include <cmath>
@@ -19,6 +20,21 @@ int intParam(const json::Value& params, const char* name)
 {
     if (!params.has(name)) throw std::runtime_error(std::string(name) + " is required");
     return params.at(name).asInt();
+}
+
+std::uint64_t tickParam(const json::Value& params, const char* name, std::uint64_t fallback)
+{
+    if (!params.has(name)) return fallback;
+    if (!params.at(name).isNumber()) {
+        throw std::runtime_error(std::string(name) + " must be a number");
+    }
+    const double value = params.at(name).asNumber();
+    constexpr double kMaximumExactJsonInteger = 9007199254740991.0;
+    if (!std::isfinite(value) || value < 0.0 || value > kMaximumExactJsonInteger ||
+        std::floor(value) != value) {
+        throw std::runtime_error(std::string(name) + " must be a nonnegative exact integer");
+    }
+    return static_cast<std::uint64_t>(value);
 }
 
 std::string stringParam(const json::Value& params, const char* name)
@@ -54,9 +70,9 @@ std::vector<std::string> AutomationController::capabilities() const
 {
     std::vector<std::string> values = {
         "clear_events", "get_capabilities", "get_events", "get_state", "key_down", "key_up",
-        "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
-        "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
-        "set_player_state", "set_shot_power", "shoot", "special_key", "step", "toggle_aim",
+        "clear_physics_trace", "get_physics_trace", "load_scenario", "mouse_button", "mouse_move", "mouse_wheel", "orbit_camera", "pan_camera",
+        "physics_scenario_v1", "physics_scenario_v2_cue_input", "ping", "quit", "reset_game", "resize", "run_until", "set_aim_yaw", "set_ball",
+        "set_player_state", "set_shot_power", "shoot", "special_key", "start_physics_trace", "step", "stop_physics_trace", "toggle_aim",
         "toggle_help", "zoom_camera"
     };
     if (mode_ == AutomationMode::Rendered) values.push_back("screenshot");
@@ -93,6 +109,31 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         }
         if (command == "reset_game") { runtime_.reset(); return success(request.id); }
         if (command == "clear_events") { runtime_.clearEvents(); return success(request.id); }
+        if (command == "start_physics_trace") { runtime_.setPhysicsTraceEnabled(true); return success(request.id); }
+        if (command == "stop_physics_trace") { runtime_.setPhysicsTraceEnabled(false); return success(request.id); }
+        if (command == "clear_physics_trace") { runtime_.clearPhysicsTrace(); return success(request.id); }
+        if (command == "get_physics_trace") {
+            const std::uint64_t afterTick = tickParam(params, "after_tick", 0);
+            const int limit = params.has("limit") ? params.at("limit").asInt() : 1000;
+            if (limit < 1 || limit > 1000) return failure(request.id, "invalid_argument", "limit must be between 1 and 1000");
+
+            json::Value frames = json::Value::array();
+            bool hasMore = false;
+            for (const PhysicsFrame& frame : runtime_.physicsTrace().frames()) {
+                if (frame.tick <= afterTick) continue;
+                if (static_cast<int>(frames.asArray().size()) == limit) {
+                    hasMore = true;
+                    break;
+                }
+                frames.asArray().push_back(serializePhysicsFrame(frame));
+            }
+            json::Value value = json::Value::object();
+            value["dropped_frames"] = json::Value(
+                static_cast<double>(runtime_.physicsTrace().droppedFrames()));
+            value["frames"] = frames;
+            value["has_more"] = json::Value(hasMore);
+            return success(request.id, value);
+        }
         if (command == "quit") { ControllerResult value = success(request.id); value.quitRequested = true; return value; }
 
         if (command == "set_ball") {
@@ -101,6 +142,7 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
             BallState ball = runtime_.state().balls[index];
             if (params.has("position")) ball.position = pointParam(params, "position");
             if (params.has("velocity")) ball.velocity = pointParam(params, "velocity");
+            if (params.has("angular_velocity")) ball.angularVelocity = pointParam(params, "angular_velocity");
             if (params.has("rotation_axis")) ball.rotationAxis = pointParam(params, "rotation_axis");
             if (params.has("rotation_angle")) ball.rotationAngle = static_cast<float>(numberParam(params, "rotation_angle"));
             if (params.has("pocketed")) { if (!params.at("pocketed").isBool()) throw std::runtime_error("pocketed must be boolean"); ball.pocketed = params.at("pocketed").asBool(); }
@@ -116,6 +158,13 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
             runtime_.replaceState(state); return success(request.id);
         }
         if (command == "load_scenario") {
+            if (params.has("scenario")) {
+                const PhysicsScenarioResult parsed = parsePhysicsScenario(params.at("scenario"));
+                if (!parsed.ok) return failure(request.id, parsed.errorCode, parsed.errorMessage);
+                const ActionResult applied = applyPhysicsScenario(runtime_, parsed.scenario);
+                if (!applied.ok) return failure(request.id, applied.errorCode, "scenario was rejected");
+                return success(request.id);
+            }
             if (!params.has("balls") || !params.at("balls").isArray() || params.at("balls").asArray().size() != kBallCount) throw std::runtime_error("balls must contain exactly 16 entries");
             GameState state = runtime_.state();
             for (int index=0; index<kBallCount; ++index) {
@@ -153,13 +202,21 @@ ControllerResult AutomationController::handle(const AutomationRequest& request)
         if (command == "step") {
             const int ticks = intParam(params, "ticks");
             if (ticks < 0 || ticks > 100000) return failure(request.id, "invalid_argument", "ticks must be between 0 and 100000");
-            runtime_.step(ticks); json::Value value = json::Value::object(); value["tick"] = json::Value(static_cast<double>(runtime_.tick())); return success(request.id, value);
+            const ActionResult result = runtime_.step(ticks);
+            if (!result.ok) return failure(request.id, result.errorCode,
+                "physics step failed and was rolled back");
+            json::Value value = json::Value::object(); value["tick"] = json::Value(static_cast<double>(runtime_.tick())); return success(request.id, value);
         }
         if (command == "run_until") {
             const std::string condition=stringParam(params,"condition"); const int maxSteps=params.has("max_steps") ? params.at("max_steps").asInt() : 10000;
             if (maxSteps < 0 || maxSteps > 1000000) return failure(request.id,"invalid_argument","max_steps must be between 0 and 1000000");
             const std::uint64_t sequence = runtime_.events().empty() ? 0 : runtime_.events().back().sequence;
-            int steps=0; while (steps<maxSteps && !eventConditionMet(runtime_,condition,sequence)) { runtime_.step(1); ++steps; }
+            int steps=0; while (steps<maxSteps && !eventConditionMet(runtime_,condition,sequence)) {
+                const ActionResult result = runtime_.step(1);
+                if (!result.ok) return failure(request.id, result.errorCode,
+                    "physics step failed and was rolled back");
+                ++steps;
+            }
             json::Value value=json::Value::object(); value["tick"]=json::Value(static_cast<double>(runtime_.tick())); value["steps"]=json::Value(steps); value["balls_moving"]=json::Value(runtime_.state().ballsMoving);
             if (!eventConditionMet(runtime_,condition,sequence)) { ControllerResult result=failure(request.id,"condition_not_met","condition was not met before max_steps"); result.response["result"]=value; return result; }
             return success(request.id,value);

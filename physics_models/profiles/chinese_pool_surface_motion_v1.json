@@ -1,0 +1,108 @@
+{
+  "applicability": {
+    "equipment": "WPA_POOL",
+    "notes": "Surface-motion candidate v1; cushion, cue, and torsional-spin parameters retain explicit pre-theme limitations"
+  },
+  "parameter_sources": {
+    "ball.mass_kg": {
+      "evidence": "Chinese Pool production compatibility value retained from the versioned legacy profile",
+      "kind": "compatibility_default",
+      "unit": "kg"
+    },
+    "ball.radius_cm": {
+      "evidence": "Chinese Pool production ball diameter of 5.715 cm",
+      "kind": "equipment_specification",
+      "unit": "cm"
+    },
+    "cue.effective_mass_kg": {
+      "kind": "unmodeled",
+      "limitation": "No admitted cue effective-mass calibration is used by surface-motion candidate v1",
+      "unit": "kg"
+    },
+    "cushion.friction_coefficient": {
+      "kind": "unmodeled",
+      "limitation": "Cushion friction is deferred to the cushion-response optimization theme",
+      "unit": "1"
+    },
+    "cushion.normal_restitution": {
+      "kind": "compatibility_default",
+      "limitation": "Lossless legacy cushion restitution is retained pending cushion-response calibration",
+      "unit": "1"
+    },
+    "solver.maximum_events_per_tick": {
+      "evidence": "Deterministic solver safety bound retained from the governed legacy profile",
+      "kind": "engineering_limit",
+      "unit": "count"
+    },
+    "solver.time_step_seconds": {
+      "evidence": "Existing deterministic automation and reference trace cadence",
+      "kind": "engineering_default",
+      "unit": "s"
+    },
+    "surface.legacy_friction_acceleration_cm_s2": {
+      "evidence": "Compatibility-only value retained for legacy interfaces; surface_motion_v1 does not use it for motion integration",
+      "kind": "compatibility_default",
+      "unit": "cm/s^2"
+    },
+    "surface.rolling_resistance_acceleration_cm_s2": {
+      "dataset_id": "mathavan_2009_high_speed",
+      "evidence": "Midpoint of the admitted Mathavan rolling-deceleration calibration interval",
+      "kind": "calibration",
+      "point_id": "rolling_deceleration_range",
+      "unit": "cm/s^2"
+    },
+    "surface.sliding_friction_coefficient": {
+      "evidence": "Independent physical prior preregistered before executing the committed sliding holdout",
+      "kind": "preregistered_physical_hypothesis",
+      "unit": "1",
+      "validation_data_used": false,
+      "value": 0.2
+    },
+    "surface.slip_speed_epsilon_cm_s": {
+      "evidence": "Numerical classification epsilon retained from the governed runtime profile",
+      "kind": "engineering_default",
+      "unit": "cm/s"
+    },
+    "surface.stop_energy_threshold_j": {
+      "evidence": "Numerical stopping threshold retained from the governed runtime profile",
+      "kind": "engineering_default",
+      "unit": "J"
+    },
+    "surface.torsional_spin_deceleration_rad_s2": {
+      "kind": "unmodeled",
+      "limitation": "no admitted sidespin-decay experiment",
+      "unit": "rad/s^2",
+      "value": 0.0
+    }
+  },
+  "runtime_profile": {
+    "ball": {
+      "mass_kg": 0.17,
+      "material": "phenolic_resin",
+      "radius_cm": 2.8575
+    },
+    "cue": {
+      "effective_mass_kg": 0.5
+    },
+    "cushion": {
+      "friction_coefficient": 0.0,
+      "normal_restitution": 1.0
+    },
+    "formula_version": "surface_motion_v1",
+    "id": "chinese_pool_surface_motion_v1",
+    "solver": {
+      "maximum_events_per_tick": 64,
+      "time_step_seconds": 0.1
+    },
+    "surface": {
+      "legacy_friction_acceleration_cm_s2": 4.0,
+      "material": "production_cloth_legacy",
+      "rolling_resistance_acceleration_cm_s2": 12.5,
+      "sliding_friction_coefficient": 0.2,
+      "slip_speed_epsilon_cm_s": 0.0001,
+      "stop_energy_threshold_j": 1e-09,
+      "torsional_spin_deceleration_rad_s2": 0.0
+    }
+  },
+  "schema_version": 1
+}

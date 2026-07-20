@@ -1,0 +1,50 @@
+{
+  "bounds": {
+    "dissipation_s_per_m": [
+      0.0,
+      0.025,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "refinement_iterations": 80,
+    "stiffness_grid_points": 161,
+    "stiffness_max_n_per_m32": 1000000000.0,
+    "stiffness_min_n_per_m32": 100000.0
+  },
+  "cpp_formula_cross_check": {
+    "compression_m": 0.001,
+    "compression_rate_m_s": 0.2,
+    "force_n": 399.2375545962579,
+    "formula": "max(0,k*delta^1.5*(1+alpha*delta_dot))"
+  },
+  "dataset_id": "shimamura_2006_cue_contact",
+  "dataset_version": "1.0.0",
+  "fit_version": "frozen_cue_contact_v1",
+  "fixed": {
+    "ball_mass_kg": 0.17,
+    "chalked_friction_coefficient": 0.62,
+    "cue_mass_kg": 0.5,
+    "cue_speed_m_s": 3.0,
+    "normal_exponent": 1.5,
+    "simulation_step_s": 5e-07,
+    "tangential_damping_n_s_per_m": 25.0,
+    "tangential_stiffness_n_per_m": 400000.0,
+    "target_duration_s": 0.001,
+    "timing_uncertainty_s": 2.5e-05
+  },
+  "identifiability": {
+    "normal_dissipation": "sensitivity-only; selected grid boundary does not establish an interior estimate",
+    "normal_stiffness": "identified from registered contact duration and trace shape"
+  },
+  "winner": {
+    "dissipation_s_per_m": 0.0,
+    "duration_residual_s": 2.168404344971009e-19,
+    "duration_s": 0.0010000000000000002,
+    "objective": 0.08149640214860852,
+    "passive": true,
+    "stage": "refined",
+    "stiffness_n_per_m32": 43029920.28076117,
+    "trace_rmse": 0.08149640214859985
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "algorithm": {
+    "coarse_grid_step": 0.05,
+    "fine_grid_step": 0.01,
+    "objective": "mean_across_series_of_mean_squared_uncertainty_normalized_residual",
+    "stable_tie_break": [
+      "objective",
+      "normal_restitution",
+      "friction_coefficient"
+    ],
+    "sudo_adapters": {
+      "ball_ball_normal_restitution": "selected normal restitution",
+      "post_collision_separation_angle_degrees": "physical 30-degree, 0.98 m/s post-contact velocity angle",
+      "transverse_momentum_deficit_fraction": "absolute post-contact transverse momentum over incident momentum"
+    }
+  },
+  "dataset_lifecycle": "spent",
+  "fit": {
+    "friction_coefficient": 0.1,
+    "normal_restitution": 0.97,
+    "objective": 75.50109601674338,
+    "objective_by_series": {
+      "billiard_alpha1": 234.08979248066544,
+      "billiard_delta2": 44.48217111408977,
+      "mathavan_velocity": 0.265030132760088,
+      "sudo_ball_collision": 23.16739033945821
+    },
+    "point_count_by_series": {
+      "billiard_alpha1": 47,
+      "billiard_delta2": 52,
+      "mathavan_velocity": 10,
+      "sudo_ball_collision": 3
+    },
+    "selected_regimes": [
+      "sliding"
+    ]
+  },
+  "model": {
+    "contact_velocity": "translational_plus_angular",
+    "energy_constraint": "non_increasing_total_kinetic_energy",
+    "friction": "Coulomb_with_explicit_stick_slip",
+    "inertia_factor": 0.4,
+    "shape": "uniform_solid_sphere"
+  },
+  "parameter_bounds": {
+    "friction_coefficient": [
+      0.0,
+      1.0
+    ],
+    "normal_restitution": [
+      0.0,
+      1.0
+    ]
+  },
+  "schema_version": 3
+}

@@ -1,0 +1,9 @@
+dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,measurement_uncertainty,digitization_uncertainty,conversion_uncertainty,coverage_factor,engineering_absolute_tolerance,engineering_relative_tolerance,source_locator,pool_applicability
+multi_contact_solver_analytic_contract,solver_v1,line_toi_left,line_toi_left,line_toi_left,CALIBRATION,solver_first_toi_seconds,0.04285,s,0,0,0,2,0.000001,0,analytic:solver:line:left:toi,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,symmetric_left,symmetric_left,symmetric_residual_left,CALIBRATION,solver_max_residual_cm_s,0,cm/s,0,0,0,2,0.001,0,analytic:solver:symmetric:left:residual,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,chain_left,chain_left,chain_passivity_left,CALIBRATION,solver_energy_growth_j,0,J,0,0,0,2,0.000000001,0,analytic:solver:chain:left:passivity,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,overlap_left,overlap_left,overlap_limit_left,CALIBRATION,solver_penetration_limit_count,2,dimensionless,0,0,0,2,0,0,analytic:solver:overlap:left:limit,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,line_toi_right,line_toi_right,line_toi_right,HOLDOUT,solver_first_toi_seconds,0.04285,s,0,0,0,2,0.000001,0,analytic:solver:line:right:toi,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,symmetric_right,symmetric_right,symmetric_residual_right,HOLDOUT,solver_max_residual_cm_s,0,cm/s,0,0,0,2,0.001,0,analytic:solver:symmetric:right:residual,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,chain_right,chain_right,chain_passivity_right,HOLDOUT,solver_energy_growth_j,0,J,0,0,0,2,0.000000001,0,analytic:solver:chain:right:passivity,NOT_APPLICABLE
+multi_contact_solver_analytic_contract,solver_v1,overlap_right,overlap_right,overlap_limit_right,HOLDOUT,solver_penetration_limit_count,2,dimensionless,0,0,0,2,0,0,analytic:solver:overlap:right:limit,NOT_APPLICABLE

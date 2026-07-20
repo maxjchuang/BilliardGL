@@ -32,6 +32,15 @@ stdin/stdout 使用 JSON Lines，每行一个 UTF-8 JSON 对象，单行上限 1
 
 生命周期与查询：`ping`、`get_capabilities`、`get_state`、`get_events`、`reset_game`、`clear_events`、`quit`。
 
+物理 trace：
+
+- `start_physics_trace`：从后续物理 tick 开始记录；每个 tick 恰好对应一帧。
+- `stop_physics_trace`：停止追加但保留已经记录的帧。
+- `clear_physics_trace`：清空记录和丢帧计数，不改变游戏 tick 或状态。
+- `get_physics_trace {after_tick?,limit?}`：返回 tick 大于 `after_tick` 的帧；`limit` 为 1–1000，默认 1000。结果包含 `frames`、`dropped_frames` 和 `has_more`。
+
+runtime 最多保留 10000 帧，超出时淘汰最旧帧并增加 `dropped_frames`。每帧包含球的位置、线速度、线加速度、三维角速度、控制输入、接触事件、线动量、平动动能和最大穿透深度。位置单位为 cm，线速度为 cm/s，线加速度为 cm/s²，角速度为 rad/s，冲量为 N·s，能量为 J。当前物理模型尚未计算真实旋转动力学，因此 `angular_velocity` 默认保持为零；该字段不能由视觉旋转角反推。
+
 原始输入：
 
 - `key_down/key_up {key}`：单个字符；支持游戏现有的帮助、瞄准、摄像机和力度按键。
@@ -58,8 +67,9 @@ stdin/stdout 使用 JSON Lines，每行一个 UTF-8 JSON 对象，单行上限 1
 
 测试专用场景：
 
-- `set_ball {index,position?,velocity?,rotation_axis?,rotation_angle?,pocketed?}`。
-- `load_scenario {balls}`：`balls` 必须有 16 项，每项包含 position 和 velocity；完整校验后原子替换。
+- `set_ball {index,position?,velocity?,angular_velocity?,rotation_axis?,rotation_angle?,pocketed?}`。
+- `load_scenario {scenario}`：加载 canonical physics scenario v1 或 v2；能力列表分别通过 `physics_scenario_v1` 与 `physics_scenario_v2_cue_input` 声明支持。成功加载会原子替换状态、把仿真 tick 和事件序号重置到零并清空旧 trace。
+- `load_scenario {balls}`：兼容旧格式；`balls` 必须有 16 项，每项包含 position 和 velocity，完整校验后原子替换。
 - `set_player_state {current_player?,next_player?,illegal_shot?}`。
 
 rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 PPM，再返回相同 tick；headless 返回 `unsupported_in_mode`。
@@ -67,6 +77,12 @@ rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 P
 ## 状态和事件
 
 `get_state` 返回 tick、16 个球的位置/速度/速度标量/旋转/落袋状态、balls_moving、aim、input、players、camera、hud、game_over 和事件历史。浮点断言应由客户端提供容差。
+
+schema v2 额外要求 `cue_impact`，包含 cue ball、物理 cue 速度/质量、单位方向、仰角、以 cm 和球半径比例表示且相互一致的二维 tip offset，以及 chalk 状态。runtime 和每个后续 trace frame 会原样返回这组请求输入；state 中的 `cue_impact_support` 逐项列出 `exactly_consumable_fields`、`unsupported_codes` 和 `shot_executed`。该 capability 只表示“可解析和追踪”，不表示引擎已经支持竖直偏杆、cue 质量或从 cue 速度到游戏力度的物理映射；当前加载 v2 不会自动击球。
+
+`cue_contact` 始终包含 `microtrace_schema_version: 1` 和 `microsteps`。普通 v4 击球的 `microsteps` 是空数组；启用冻结接触模型的 v5 击球会按求解顺序返回完整微迹。冻结求解失败时，游戏状态与规则事件会回滚，但 `get_state.cue_contact.error_code` 和已经产生的 `microsteps` 仍会保留，便于定位失败。
+
+每个微步包含带单位后缀的球杆位置、速度、加速度、压缩量与压缩率、法向/切向力和累计冲量、动能/弹性能/耗散能/能量残差、最大穿透、刚性求解残差与迭代数，以及该步的 16 球状态和接触约束数组。位置分别使用 `m`（球杆瞬态量）或 `cm`（游戏球状态），速度使用 `m_s` 或 `cm_s`，力使用 `n`，冲量使用 `n_s`，能量使用 `j`。JSON 不会输出 NaN 或 Infinity；非有限状态会先转化为稳定失败码。
 
 事件包含 `event`、单调递增 `sequence` 和产生它的 `tick`。`get_events {after_sequence}` 只返回更大的序号。历史最多保留 10000 条。
 
@@ -99,4 +115,4 @@ with AutomationClient("build/check/Billiards") as game:
 
 ## 扩展传输
 
-新传输实现 `AutomationTransport::readMessage/writeMessage`，只负责连接、分帧和 I/O。TCP、Unix Socket 或 WebSocket 适配器必须把相同 JSON 文本交给 `runAutomation` 和 `AutomationController`，不得实现游戏规则或改变协议语义。
+新传输实现 `AutomationTransport::readMessage/writeMessage`，只负责连接、分帧和 I/O。TCP、Unix Socket、WebSocket 或其他 socket 适配器必须把完全相同的命令、状态和 trace JSON 对象交给 `runAutomation` 和 `AutomationController`，包括 `cue_contact` 的版本化微迹；不得删减字段、实现游戏规则或改变协议语义。

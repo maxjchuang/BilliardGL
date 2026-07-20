@@ -1,0 +1,18 @@
+{
+  "acquisition_method": "Direct read-only download of the public primary PDF followed by text extraction and 160-DPI visual page review",
+  "audited_on": "2026-07-15",
+  "author": "David G. Alciatore",
+  "canonical_extracted_rows_sha256": "sha256:92b79d5f6ca4dff5d781cbfe4128bc94c75a6a5d9b49117c59b48ae2a038e985",
+  "copyright_policy": "Commit extracted numerical facts and provenance only; do not redistribute the PDF or HSV A.97 video.",
+  "document_title": "TP A.15: Controlling the cue ball direction in a frozen cue ball shot",
+  "independent_mapping_review": {
+    "reviewed_by": "project owner",
+    "reviewed_extraction_sha256": "sha256:92b79d5f6ca4dff5d781cbfe4128bc94c75a6a5d9b49117c59b48ae2a038e985",
+    "reviewed_on": "2026-07-15",
+    "status": "APPROVED"
+  },
+  "method": "High-speed-camera super-slow-motion video HSV A.97 with gradually increased cut angle",
+  "official_source_url": "https://drdavepoolinfo.com/technical_proofs/new/TP_A-15.pdf",
+  "source_hash_scope": "canonical extracted phi_exper/theta_exper rows; the third-party source media is intentionally uncommitted",
+  "source_media_committed": false
+}

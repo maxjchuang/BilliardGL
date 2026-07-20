@@ -1,0 +1,91 @@
+{
+  "acquisition": {
+    "license_status": "publisher-supplement-no-redistribution-grant-recorded",
+    "retrieved_on": "2026-07-16",
+    "source_media_committed": false,
+    "source_sha256": "sha256:e6d00c57364dff30c4047ac3ca9443dfde740b4d6719e416b49bec78a2dc4226",
+    "source_url": "https://iopscience.iop.org/article/10.1088/0031-9120/51/6/065020/data"
+  },
+  "adapter_id": "cross_2016_newtons_cradle_confirmation_v1",
+  "apparatus": {
+    "ball_mass_g": 115,
+    "balls_initially_in_contact": true,
+    "camera": "Casio EX-F1 at 600 frames/s",
+    "cloth": "felt stretched over a small table",
+    "cue_contact": "centered horizontal repository transfer contract"
+  },
+  "dataset_id": "cross_2016_newtons_cradle",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "candidate_selection_input": false,
+    "confirmation_only": true,
+    "grade": "B",
+    "hard_contract": "uncertainty-aware equal release speed plus frozen-contact invariants",
+    "method": "complete OLS track of supplementary video 4582 stable window",
+    "observed_speed_ratio": 0.987432580352645,
+    "target_count": 1
+  },
+  "extraction_review": {
+    "date": "2026-07-16",
+    "method": "visual frame-window and OLS residual cross-check",
+    "reviewed_by": "Codex primary-source video review"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_frame_tracks.csv",
+      "sha256": "sha256:bac4f1fc76eadf62e57276d0dc268d2ff68f85ab78848a6c1a4e8c8d02623e49"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:e0a7f1f11b97fc38d8ec9ac02c0c40b7c052d53fd6b83cb87550b4ac3e04bc25"
+    },
+    {
+      "id": "scalars",
+      "path": "scalars.csv",
+      "sha256": "sha256:a5ed0d8e5e5cb03a46dfe14f70e6b979a918d3dcb3e8c85a71f40ae084a82c73"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:3bd7fe73f9ac93f3befb98a02458dab9407ae06e4c535ffb7d696de452df106f"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:69cb294a8733909e4e27968849677a34912005424ecdbdd9808114958d3d6dcf"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:4ac7465d3fbdee2d1069c6f1a0482e58f7c504236ea9de7be2920cc2f7d7632e"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:35ccdde84b4ab69e9788702e9d0f691341d51d23cca6f1c6fca3813cd699596a"
+    },
+    {
+      "id": "source_access_audit",
+      "path": "source_access_audit.json",
+      "sha256": "sha256:db0a75893a093c60b34749209826fa897a013f88e80c53a2fdef2a3f355e52a8"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "Rod Cross"
+    ],
+    "doi": "10.1088/0031-9120/51/6/065020",
+    "journal": "Physics Education",
+    "pages": "51(6):065020",
+    "title": "Newton's cradle in billiards and croquet",
+    "year": 2016
+  }
+}

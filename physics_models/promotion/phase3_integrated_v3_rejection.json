@@ -1,0 +1,21 @@
+{
+  "candidate_id": "phase3_integrated_v3",
+  "derby_attempt_id": "d5adba44d8a44a4462ee3bbf4342c14970c7e5e3366e68d9bc7b9e7fd8528e00",
+  "derby_failure_code": "FAILED_EVALUATOR_EXCEPTION",
+  "derby_failure_sha256": "07a3d014cdcfa2fb35ea4398769ca7848f6e0e30844735fe29e50538fee25c7b",
+  "derby_receipt_sha256": "c001f4693ab24cb50ef84b1434ab693355499b374cd388480064764a5b1d9ce7",
+  "disposition": "REJECTED",
+  "freeze_sha256": "cc7cd5f2b583fc13550de1677fc5ea13c5460786794ef0bc7ff1364b834c9c08",
+  "han_2005": "NOT_EXECUTED",
+  "ledger_sha256": "27239d6285f0cbf26593d5b9f49733882c4e627e0c675db00428a0b37cea3aa3",
+  "policy": "failed_confirmation_is_consumed_and_never_replayed",
+  "readiness_sha256": "c6588dc4fc9645af43bfd833e8db5a4a6fb992ea131b9186ec83b56b8c2e6891",
+  "root_cause": {
+    "category": "SCENARIO_CONTRACT_INTEGRATION_FAILURE",
+    "generator": "tools/physics_validation/confirmation_run.py::_scenario",
+    "invalid_value": "expectations=[]",
+    "message": "invalid_scenario: expectations must be a nonempty array",
+    "parser_contract": "src/Billiards/physics_scenario.cpp"
+  },
+  "schema_version": 1
+}

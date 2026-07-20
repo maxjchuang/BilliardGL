@@ -1,0 +1,17 @@
+{
+  "failures": [
+    {
+      "code": "EQUIPMENT_TRANSFER_LIMITATION",
+      "dataset_id": "han_2005",
+      "rationale": "Han used 65.5 mm, 230 g carom balls and a pocketless three-cushion table; absolute restitution values cannot directly validate Chinese-pool cushion parameters.",
+      "scope": "absolute_cushion_restitution"
+    },
+    {
+      "code": "SOURCE_DOMAIN_NOT_PRINTED",
+      "dataset_id": "han_2005",
+      "rationale": "The paper prints Eq. (26) and a 0.6-0.95 measured range but no explicit velocity endpoints; 0.5-2.5 m/s is the preregistered evaluation domain, not a claimed apparatus sampling range.",
+      "scope": "velocity_domain"
+    }
+  ],
+  "schema_version": 1
+}

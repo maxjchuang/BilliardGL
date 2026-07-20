@@ -1,0 +1,9 @@
+dataset_id,series_id,group_id,case_id,point_id,partition,metric,expected,unit,measurement_uncertainty,digitization_uncertainty,conversion_uncertainty,coverage_factor,engineering_absolute_tolerance,engineering_relative_tolerance,source_locator,pool_applicability
+derby_fuller_1999,published_scalars,sliding_collision,initial_speed,initial_speed,HOLDOUT,incident_speed_cm_s,98,cm/s,0,0,0.5,2,2,0,"PDF p.3, incident speed paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,cue_sliding_time,cue_sliding_time,HOLDOUT,cue_sliding_time_seconds,0.09,s,0,0,0.0005,2,0.015,0,"PDF p.4, sliding-duration paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,target_sliding_time,target_sliding_time,HOLDOUT,target_sliding_time_seconds,0.15,s,0,0,0.0005,2,0.02,0,"PDF p.4, sliding-duration paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,cue_final_speed,cue_final_speed,HOLDOUT,cue_final_speed_cm_s,25.1,cm/s,0,0,0.05,2,2,0,"PDF p.4, final-speed paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,target_final_speed,target_final_speed,HOLDOUT,target_final_speed_cm_s,58.3,cm/s,0,0,0.05,2,2,0,"PDF p.4, final-speed paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,momentum_before,momentum_before,HOLDOUT,linear_momentum_before_n_s,0.167,N*s,0,0,0.0005,2,0.01,0,"PDF p.4, momentum paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,momentum_after,momentum_after,HOLDOUT,linear_momentum_after_n_s,0.151,N*s,0,0,0.0005,2,0.01,0,"PDF p.4, momentum paragraph",DIRECT
+derby_fuller_1999,published_scalars,sliding_collision,kinetic_energy_loss,kinetic_energy_loss,HOLDOUT,kinetic_energy_loss_fraction,0.17,dimensionless,0,0,0.005,2,0.03,0,"PDF p.4, kinetic-energy paragraph",DIRECT

@@ -12,6 +12,7 @@
 *.mm text eol=lf working-tree-encoding=UTF-8
 
 *.cmake text eol=lf working-tree-encoding=UTF-8
+*.csv text eol=lf working-tree-encoding=UTF-8
 *.json text eol=lf working-tree-encoding=UTF-8
 *.md text eol=lf working-tree-encoding=UTF-8
 *.py text eol=lf working-tree-encoding=UTF-8
@@ -23,3 +24,7 @@ CMakeLists.txt text eol=lf working-tree-encoding=UTF-8
 
 *.mtl text eol=lf working-tree-encoding=UTF-8
 *.obj text eol=lf working-tree-encoding=UTF-8
+
+# These frozen evidence files were originally hashed from their CRLF bytes.
+physics_models/candidates/surface_motion_v1/calibration/reference_points.csv text eol=crlf working-tree-encoding=UTF-8
+physics_models/candidates/surface_motion_v1/validation/reference_points.csv text eol=crlf working-tree-encoding=UTF-8

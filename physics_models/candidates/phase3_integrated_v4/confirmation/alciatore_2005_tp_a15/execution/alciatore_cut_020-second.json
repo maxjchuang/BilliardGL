@@ -1,0 +1,4908 @@
+{
+  "fixture_executor": false,
+  "frame_count": 8,
+  "protocol_transcript": [
+    {
+      "direction": "stdout",
+      "message": {
+        "capabilities": [
+          "clear_events",
+          "clear_physics_trace",
+          "get_capabilities",
+          "get_events",
+          "get_physics_trace",
+          "get_state",
+          "key_down",
+          "key_up",
+          "load_scenario",
+          "mouse_button",
+          "mouse_move",
+          "mouse_wheel",
+          "orbit_camera",
+          "pan_camera",
+          "physics_scenario_v1",
+          "physics_scenario_v2_cue_input",
+          "ping",
+          "quit",
+          "reset_game",
+          "resize",
+          "run_until",
+          "set_aim_yaw",
+          "set_ball",
+          "set_player_state",
+          "set_shot_power",
+          "shoot",
+          "special_key",
+          "start_physics_trace",
+          "step",
+          "stop_physics_trace",
+          "toggle_aim",
+          "toggle_help",
+          "zoom_camera"
+        ],
+        "event": "ready",
+        "mode": "headless",
+        "protocol_version": 1,
+        "sequence": 0,
+        "tick": 0,
+        "transport": "stdio"
+      }
+    },
+    {
+      "direction": "stdin",
+      "message": {
+        "command": "load_scenario",
+        "id": 1,
+        "params": {
+          "scenario": {
+            "balls": [
+              {
+                "angular_velocity_rad_s": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "index": 0,
+                "pocketed": false,
+                "position_cm": [
+                  -2.8575,
+                  89.34147644042969,
+                  0.0
+                ],
+                "velocity_cm_s": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "angular_velocity_rad_s": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "index": 1,
+                "pocketed": false,
+                "position_cm": [
+                  2.8575,
+                  89.34147644042969,
+                  0.0
+                ],
+                "velocity_cm_s": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "boundary_mode": "unbounded",
+            "cue_impact": {
+              "chalk_state": "CHALKED",
+              "cue_ball_index": 0,
+              "cue_mass_kg": 0.5,
+              "cue_speed_cm_s": 100.0,
+              "direction": [
+                0.9396926207859084,
+                0.0,
+                0.3420201433256687
+              ],
+              "elevation_degrees": 0,
+              "tip_offset_cm": [
+                0,
+                0
+              ],
+              "tip_offset_radius": [
+                0,
+                0
+              ]
+            },
+            "description": "Alciatore frozen cue-ball shot at phi=20 degrees",
+            "evidence": {
+              "equipment": "WPA_POOL",
+              "grade": "B",
+              "pool_applicability": "DIRECT",
+              "source": "alciatore_2005_tp_a15"
+            },
+            "expectations": [
+              {
+                "metric": "finite_state",
+                "operator": "eq",
+                "value": true
+              },
+              {
+                "metric": "nonincreasing_translational_energy",
+                "operator": "eq",
+                "value": true
+              }
+            ],
+            "id": "alciatore_2005_tp_a15__alciatore_cut_020",
+            "initial_contact_epsilon_cm": 1e-06,
+            "physics_profile": {
+              "ball": {
+                "friction_coefficient": 0.1,
+                "inertia_factor": 0.4,
+                "mass_kg": 0.17,
+                "material": "phenolic_resin",
+                "normal_restitution": 0.97,
+                "radius_cm": 2.8575
+              },
+              "cue": {
+                "chalked_friction_coefficient": 0.6,
+                "cue_speed_per_power_unit_cm_s": 1.34,
+                "effective_mass_kg": 0.5,
+                "maximum_reliable_offset_radius": 0.8,
+                "normal_restitution": 0.0,
+                "unchalked_friction_coefficient": 0.1
+              },
+              "cushion": {
+                "friction_coefficient": 0.14,
+                "material": "mathavan_speed_dependent_cushion_v2",
+                "maximum_restitution": 0.93,
+                "maximum_rigid_incident_speed_cm_s": 250.0,
+                "minimum_restitution": 0.0,
+                "normal_restitution": 0.93,
+                "nose_height_ratio": 1.4,
+                "restitution_intercept": 1.0,
+                "restitution_slope_per_mps": 0.056
+              },
+              "formula_version": "full_game_integration_v3",
+              "id": "chinese_pool_full_game_v4",
+              "solver": {
+                "maximum_events_per_tick": 64,
+                "maximum_island_size": 16,
+                "maximum_penetration_cm": 0.5,
+                "passive_energy_tolerance_j": 1e-10,
+                "penetration_slop_cm": 0.001,
+                "position_iterations": 4,
+                "residual_tolerance_cm_s": 0.001,
+                "time_step_seconds": 0.1,
+                "toi_tolerance_seconds": 1e-07,
+                "velocity_iterations": 64
+              },
+              "surface": {
+                "legacy_friction_acceleration_cm_s2": 4.0,
+                "material": "mathavan_phase_correct_surface_v2",
+                "rolling_resistance_acceleration_cm_s2": 12.499999813735489,
+                "sliding_friction_coefficient": 0.19999996439955606,
+                "slip_speed_epsilon_cm_s": 0.0001,
+                "stop_energy_threshold_j": 1e-09,
+                "torsional_spin_deceleration_rad_s2": 0.0
+              },
+              "table_boundary": {
+                "capture_depth_cm": 6.0,
+                "corner_mouth_width_cm": 13.2,
+                "corner_throat_width_cm": 11.0,
+                "geometry_id": "wpa_pool_analytic_v1",
+                "jaw_radius_cm": 1.2,
+                "material": "profiled_table_boundary",
+                "playfield_length_cm": 254.0,
+                "playfield_width_cm": 127.0,
+                "side_mouth_width_cm": 8.6,
+                "side_throat_width_cm": 7.0,
+                "throat_depth_cm": 4.0
+              }
+            },
+            "schema_version": 11,
+            "simulation": {
+              "ticks": 8,
+              "time_step_seconds": 0.1
+            }
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "direction": "stdout",
+      "message": {
+        "id": 1,
+        "ok": true,
+        "result": {}
+      }
+    },
+    {
+      "direction": "stdin",
+      "message": {
+        "command": "start_physics_trace",
+        "id": 2,
+        "params": {},
+        "version": 1
+      }
+    },
+    {
+      "direction": "stdout",
+      "message": {
+        "id": 2,
+        "ok": true,
+        "result": {}
+      }
+    },
+    {
+      "direction": "stdin",
+      "message": {
+        "command": "step",
+        "id": 3,
+        "params": {
+          "ticks": 8
+        },
+        "version": 1
+      }
+    },
+    {
+      "direction": "stdout",
+      "message": {
+        "id": 3,
+        "ok": true,
+        "result": {
+          "tick": 8
+        }
+      }
+    },
+    {
+      "direction": "stdin",
+      "message": {
+        "command": "get_physics_trace",
+        "id": 4,
+        "params": {
+          "after_tick": 0,
+          "limit": 1000
+        },
+        "version": 1
+      }
+    },
+    {
+      "direction": "stdout",
+      "message": {
+        "id": 4,
+        "ok": true,
+        "result": {
+          "dropped_frames": 0,
+          "frames": [
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -694.1583862304688,
+                    "y": 1.1791274800998508e-06,
+                    "z": -107.47203826904297
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 5.171194076538086,
+                    "y": 3.1900875568389893,
+                    "z": -0.24863465130329132
+                  },
+                  "contact_slip_speed_cm_s": 1.5385029428216512e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.7789618968963623,
+                    "y": 89.34147644042969,
+                    "z": 1.6334619522094727
+                  },
+                  "rotational_kinetic_energy_j": 0.0010266328191678195,
+                  "speed_cm_s": 14.793758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.7104735374450684,
+                    "y": 1.1791275511541244e-07,
+                    "z": 14.776687622070312
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 494.8838806152344,
+                    "y": -1.1791274800998508e-06,
+                    "z": 26.12371253967285
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.9045481085777283,
+                    "y": 3.1900875568389893,
+                    "z": -17.135631561279297
+                  },
+                  "contact_slip_speed_cm_s": 0.5240481495857239,
+                  "index": 1,
+                  "motion_state": "sliding",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 8.785640716552734,
+                    "y": 89.34147644042969,
+                    "z": 0.3129320442676544
+                  },
+                  "rotational_kinetic_energy_j": 0.008457004731259914,
+                  "speed_cm_s": 49.557289123535156,
+                  "velocity_cm_s": {
+                    "x": 49.48838806152344,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.6123712062835693
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [
+                {
+                  "contact_arm_cm": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_height_cm": 0,
+                  "contact_tangent": {
+                    "x": 0,
+                    "y": 3.2337911903823624e-08,
+                    "z": -1
+                  },
+                  "contact_velocity_after_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_velocity_before_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "first_ball": 0,
+                  "first_contact_arm_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 0,
+                    "z": -2.286121514316619e-08
+                  },
+                  "first_position_correction_cm": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "friction_coefficient": 0.10000000149011612,
+                  "impulse_on_ball_ns": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "impulse_on_second_ns": {
+                    "x": 0.11742651462554932,
+                    "y": -2.0045169690785514e-10,
+                    "z": 0.006198658142238855
+                  },
+                  "incident_speed_cm_s": 0,
+                  "kind": "ball_ball",
+                  "kinetic_energy_after_j": 0.04531166024181808,
+                  "kinetic_energy_before_j": 0.04733793653307875,
+                  "maximum_rigid_incident_speed_cm_s": 0,
+                  "normal": {
+                    "x": 1,
+                    "y": 0,
+                    "z": -8.000425211207585e-09
+                  },
+                  "normal_impulse_ns": 0.11742651529654245,
+                  "normal_relative_speed_after_cm_s": 68.02252960205078,
+                  "normal_relative_speed_before_cm_s": -70.12631225585938,
+                  "nose_height_ratio": 0,
+                  "penetration_cm": 0,
+                  "pocket_boundary_event": "none",
+                  "pocket_capture_sequence": 0,
+                  "pocket_capture_signed_distance_cm": 0,
+                  "pocket_id": -1,
+                  "pocket_jaw_center_cm": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "pocket_jaw_radius_cm": 0,
+                  "pocket_kind": "corner",
+                  "pocket_local_depth_cm": 0,
+                  "pocket_local_offset_cm": 0,
+                  "pocket_passable": false,
+                  "pocket_phase_after": "outside",
+                  "pocket_phase_before": "outside",
+                  "pocket_throat_signed_distance_cm": 0,
+                  "position_corrected": false,
+                  "position_correction_cm": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "position_slop_cm": 0.0010000000474974513,
+                  "regime": "stick",
+                  "relative_contact_velocity_after_cm_s": {
+                    "x": 68.02252960205078,
+                    "y": 5.684341886080802e-14,
+                    "z": 9.5367431640625e-07
+                  },
+                  "relative_contact_velocity_before_cm_s": {
+                    "x": -70.12631225585938,
+                    "y": 8.253893497567333e-07,
+                    "z": -25.52389144897461
+                  },
+                  "restitution": 0.9700000286102295,
+                  "rigid_domain_exceeded": false,
+                  "second_ball": 1,
+                  "second_contact_arm_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 0,
+                    "z": 2.286121514316619e-08
+                  },
+                  "second_position_correction_cm": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "solver_event_id": 0,
+                  "solver_island_id": 0,
+                  "solver_projection_cm": 0,
+                  "solver_residual_cm_s": 0,
+                  "tangential_impulse_ns": 0.0061986590864133925,
+                  "time_of_impact_seconds": 1.7913582746403135e-09,
+                  "velocity_impulse_applied": true
+                }
+              ],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_contact": {
+                "applied": true,
+                "ball_angular_velocity_after_rad_s": {
+                  "x": 0,
+                  "y": -9.222041434721225e-16,
+                  "z": 0
+                },
+                "ball_angular_velocity_before_rad_s": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "ball_velocity_after_cm_s": {
+                  "x": 70.12631479686536,
+                  "y": 0,
+                  "z": 25.52389122484054
+                },
+                "ball_velocity_before_cm_s": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "contact_arm_cm": {
+                  "x": -2.685171735588591,
+                  "y": 0,
+                  "z": -0.9773225856471646
+                },
+                "contact_normal": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "cue_velocity_after_cm_s": {
+                  "x": 70.12631479686537,
+                  "y": 0,
+                  "z": 25.52389122484054
+                },
+                "cue_velocity_before_cm_s": {
+                  "x": 93.96926207859084,
+                  "y": 0,
+                  "z": 34.20201433256687
+                },
+                "error_code": "",
+                "friction_coefficient": 0.6000000238418579,
+                "impulse_ns": {
+                  "x": 0.11921473640862734,
+                  "y": 0,
+                  "z": 0.043390615538631654
+                },
+                "input_kinetic_energy_j": 0.25,
+                "normal_impulse_ns": 0.12686567263763607,
+                "normal_relative_speed_before_cm_s": 100,
+                "output_kinetic_energy_j": 0.18656716368118198,
+                "regime": "stick",
+                "tangential_impulse_ns": 0,
+                "tangential_relative_speed_before_cm_s": 0,
+                "tangential_relative_velocity_before_cm_s": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                }
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.0853380635380745,
+                "y": 0,
+                "z": 0.029561400413513184
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.009483637550427734,
+              "solver_events": [
+                {
+                  "candidate_count": 1,
+                  "contact_count": 1,
+                  "duplicate_candidates_removed": 1,
+                  "event_id": 0,
+                  "failure_code": "converged",
+                  "island_id": 0,
+                  "island_limit_exceeded": false,
+                  "kinetic_energy_after_j": 0.04531166024181808,
+                  "kinetic_energy_before_j": 0.04733793653307875,
+                  "maximum_penetration_cm": 0,
+                  "maximum_residual_cm_s": 0,
+                  "position_iterations": 4,
+                  "velocity_iterations": 1
+                }
+              ],
+              "step_status": "succeeded",
+              "surface_transitions": [
+                {
+                  "after": "rolling",
+                  "angular_acceleration_rad_s2": {
+                    "x": 171.39688110351562,
+                    "y": 0,
+                    "z": -8.240877151489258
+                  },
+                  "ball_index": 0,
+                  "before": "sliding",
+                  "final_slip_speed_cm_s": 1.5385029428216512e-07,
+                  "friction_acceleration_cm_s2": {
+                    "x": -9.419322967529297,
+                    "y": 0,
+                    "z": -195.90664672851562
+                  },
+                  "initial_slip_speed_cm_s": 21.90289306640625,
+                  "transition_time_seconds": 0.031906772404909134
+                }
+              ],
+              "tick": 1,
+              "time_seconds": 0.10000000149011612,
+              "total_kinetic_energy_j": 0.03221927039035932,
+              "translational_kinetic_energy_j": 0.022735632839931585
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003153324127197,
+                    "y": 0,
+                    "z": -12.485570907592773
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 4.734253883361816,
+                    "y": 3.1900875568389893,
+                    "z": -0.2276262491941452
+                  },
+                  "contact_slip_speed_cm_s": 3.022683188191877e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.710916042327881,
+                    "y": 89.34147644042969,
+                    "z": 3.0487029552459717
+                  },
+                  "rotational_kinetic_energy_j": 0.000906198394196434,
+                  "speed_cm_s": 13.543757438659668,
+                  "velocity_cm_s": {
+                    "x": 0.6504420042037964,
+                    "y": 1.1791275511541244e-07,
+                    "z": 13.528130531311035
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -13.882522583007812,
+                    "y": 0,
+                    "z": -0.7328248023986816
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.8885699510574341,
+                    "y": 3.1900875568389893,
+                    "z": -16.832942962646484
+                  },
+                  "contact_slip_speed_cm_s": 2.33263204307832e-08,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 13.658121109008789,
+                    "y": 89.34147644042969,
+                    "z": 0.5701383948326111
+                  },
+                  "rotational_kinetic_energy_j": 0.008170762885310228,
+                  "speed_cm_s": 48.16710662841797,
+                  "velocity_cm_s": {
+                    "x": 48.100135803222656,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.539088726043701
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.08287597447633743,
+                "y": 0,
+                "z": 0.02731427364051342
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.009076961279506662,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [
+                {
+                  "after": "rolling",
+                  "angular_acceleration_rad_s2": {
+                    "x": 9.045531272888184,
+                    "y": 0,
+                    "z": -171.35629272460938
+                  },
+                  "ball_index": 1,
+                  "before": "sliding",
+                  "final_slip_speed_cm_s": 2.33263204307832e-08,
+                  "friction_acceleration_cm_s2": {
+                    "x": -195.86026000976562,
+                    "y": 0,
+                    "z": -10.339042663574219
+                  },
+                  "initial_slip_speed_cm_s": 0.5240481495857239,
+                  "transition_time_seconds": 0.0007634007488377392
+                }
+              ],
+              "tick": 2,
+              "time_seconds": 0.20000000298023224,
+              "total_kinetic_energy_j": 0.030356740627059068,
+              "translational_kinetic_energy_j": 0.021279779347552406
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003153324127197,
+                    "y": 0,
+                    "z": -12.485580444335938
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 4.297313213348389,
+                    "y": 3.1900875568389893,
+                    "z": -0.2066178321838379
+                  },
+                  "contact_slip_speed_cm_s": 3.481246437786467e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.6488733291625977,
+                    "y": 89.34147644042969,
+                    "z": 4.339087963104248
+                  },
+                  "rotational_kinetic_energy_j": 0.000796388925773723,
+                  "speed_cm_s": 12.293758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.5904104709625244,
+                    "y": 1.1791275511541244e-07,
+                    "z": 12.279572486877441
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.482643127441406,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.8655104041099548,
+                    "y": 3.1900875568389893,
+                    "z": -16.39610481262207
+                  },
+                  "contact_slip_speed_cm_s": 7.376634698630369e-07,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 18.40572166442871,
+                    "y": 89.34147644042969,
+                    "z": 0.8207526206970215
+                  },
+                  "rotational_kinetic_energy_j": 0.007766654357672129,
+                  "speed_cm_s": 46.91710662841797,
+                  "velocity_cm_s": {
+                    "x": 46.851871490478516,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.473196029663086
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.08065187931060791,
+                "y": 0,
+                "z": 0.02507970668375492
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.008563043283445853,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 3,
+              "time_seconds": 0.30000000447034836,
+              "total_kinetic_energy_j": 0.02855802738260474,
+              "translational_kinetic_energy_j": 0.019994984099158886
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003153324127197,
+                    "y": 0,
+                    "z": -12.485570907592773
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 3.86037278175354,
+                    "y": 3.1900875568389893,
+                    "z": -0.18560941517353058
+                  },
+                  "contact_slip_speed_cm_s": 1.2384288083922002e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.5928337574005127,
+                    "y": 89.34147644042969,
+                    "z": 5.504617214202881
+                  },
+                  "rotational_kinetic_energy_j": 0.000697204466851581,
+                  "speed_cm_s": 11.043758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.5303789377212524,
+                    "y": 1.1791275511541244e-07,
+                    "z": 11.031015396118164
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.48260498046875,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.8424508571624756,
+                    "y": 3.1900875568389893,
+                    "z": -15.959268569946289
+                  },
+                  "contact_slip_speed_cm_s": 1.728798366684714e-07,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 23.02849578857422,
+                    "y": 89.34147644042969,
+                    "z": 1.0647776126861572
+                  },
+                  "rotational_kinetic_energy_j": 0.007373171792668705,
+                  "speed_cm_s": 45.6671028137207,
+                  "velocity_cm_s": {
+                    "x": 45.60361099243164,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.4073033332824707
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.07842778414487839,
+                "y": 0,
+                "z": 0.02284514158964157
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.008070376259520286,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 4,
+              "time_seconds": 0.4000000059604645,
+              "total_kinetic_energy_j": 0.026833693359564342,
+              "translational_kinetic_energy_j": 0.018763317100044058
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003153324127197,
+                    "y": 0,
+                    "z": -12.485580444335938
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 3.4234321117401123,
+                    "y": 3.1900875568389893,
+                    "z": -0.16460101306438446
+                  },
+                  "contact_slip_speed_cm_s": 1.6882501086001866e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.542797327041626,
+                    "y": 89.34147644042969,
+                    "z": 6.545290946960449
+                  },
+                  "rotational_kinetic_energy_j": 0.0006086450174300082,
+                  "speed_cm_s": 9.793758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.47034740447998047,
+                    "y": 1.1791275511541244e-07,
+                    "z": 9.78245735168457
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.482643127441406,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.8193912506103516,
+                    "y": 3.1900875568389893,
+                    "z": -15.522430419921875
+                  },
+                  "contact_slip_speed_cm_s": 5.755027245868405e-07,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 27.526443481445312,
+                    "y": 89.34147644042969,
+                    "z": 1.3022133111953735
+                  },
+                  "rotational_kinetic_energy_j": 0.006990313072224166,
+                  "speed_cm_s": 44.4171028137207,
+                  "velocity_cm_s": {
+                    "x": 44.3553466796875,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.3414106369018555
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.07620368152856827,
+                "y": 0,
+                "z": 0.02061057649552822
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.007598958089654174,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 5,
+              "time_seconds": 0.5000000074505806,
+              "total_kinetic_energy_j": 0.02518373006621548,
+              "translational_kinetic_energy_j": 0.017584771976561307
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003153324127197,
+                    "y": 0,
+                    "z": -12.485570907592773
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 2.9864916801452637,
+                    "y": 3.1900875568389893,
+                    "z": -0.14359259605407715
+                  },
+                  "contact_slip_speed_cm_s": 5.955445558925021e-08,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.4987642765045166,
+                    "y": 89.34147644042969,
+                    "z": 7.461108684539795
+                  },
+                  "rotational_kinetic_energy_j": 0.0005307105775090044,
+                  "speed_cm_s": 8.543758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.4103158712387085,
+                    "y": 1.1791275511541244e-07,
+                    "z": 8.533900260925293
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.482643127441406,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.7963317036628723,
+                    "y": 3.1900875568389893,
+                    "z": -15.085592269897461
+                  },
+                  "contact_slip_speed_cm_s": 1.3052838312432868e-06,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 31.899564743041992,
+                    "y": 89.34147644042969,
+                    "z": 1.5330597162246704
+                  },
+                  "rotational_kinetic_energy_j": 0.006618079467183984,
+                  "speed_cm_s": 43.1671028137207,
+                  "velocity_cm_s": {
+                    "x": 43.10708236694336,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.2755179405212402
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.07397957891225815,
+                "y": 0,
+                "z": 0.01837601140141487
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.007148790044692988,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 6,
+              "time_seconds": 0.6000000089406967,
+              "total_kinetic_energy_j": 0.023608142149178453,
+              "translational_kinetic_energy_j": 0.016459352104485465
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003150343894958,
+                    "y": 0,
+                    "z": -12.485575675964355
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 2.549551248550415,
+                    "y": 3.1900875568389893,
+                    "z": -0.12258420139551163
+                  },
+                  "contact_slip_speed_cm_s": 1.9394185812871e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.4607343673706055,
+                    "y": 89.34147644042969,
+                    "z": 8.252070426940918
+                  },
+                  "rotational_kinetic_energy_j": 0.0004634011470885697,
+                  "speed_cm_s": 7.293758392333984,
+                  "velocity_cm_s": {
+                    "x": 0.3502843677997589,
+                    "y": 1.1791275511541244e-07,
+                    "z": 7.285342693328857
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.48260498046875,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.7732721567153931,
+                    "y": 3.1900875568389893,
+                    "z": -14.64875602722168
+                  },
+                  "contact_slip_speed_cm_s": 4.035079541608866e-07,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 36.14786148071289,
+                    "y": 89.34147644042969,
+                    "z": 1.7573168277740479
+                  },
+                  "rotational_kinetic_energy_j": 0.006256472248393637,
+                  "speed_cm_s": 41.91709899902344,
+                  "velocity_cm_s": {
+                    "x": 41.858821868896484,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.209625244140625
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.07175547629594803,
+                "y": 0,
+                "z": 0.01614144630730152
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.006719873395482207,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 7,
+              "time_seconds": 0.7000000104308128,
+              "total_kinetic_energy_j": 0.022106933356117964,
+              "translational_kinetic_energy_j": 0.015387059960635755
+            },
+            {
+              "balls": [
+                {
+                  "acceleration_cm_s2": {
+                    "x": -0.6003150343894958,
+                    "y": 0,
+                    "z": -12.485575675964355
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 2.1126105785369873,
+                    "y": 3.1900875568389893,
+                    "z": -0.10157579928636551
+                  },
+                  "contact_slip_speed_cm_s": 2.366014086874202e-07,
+                  "index": 0,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": -2.4287075996398926,
+                    "y": 89.34147644042969,
+                    "z": 8.918176651000977
+                  },
+                  "rotational_kinetic_energy_j": 0.0004067166996927567,
+                  "speed_cm_s": 6.043758869171143,
+                  "velocity_cm_s": {
+                    "x": 0.2902528643608093,
+                    "y": 1.1791275511541244e-07,
+                    "z": 6.036785125732422
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": -12.482643127441406,
+                    "y": 0,
+                    "z": -0.6589269638061523
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0.7502126097679138,
+                    "y": 3.1900875568389893,
+                    "z": -14.211917877197266
+                  },
+                  "contact_slip_speed_cm_s": 1.1385486686776858e-06,
+                  "index": 1,
+                  "motion_state": "rolling",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": false,
+                  "position_cm": {
+                    "x": 40.271331787109375,
+                    "y": 89.34147644042969,
+                    "z": 1.9749847650527954
+                  },
+                  "rotational_kinetic_energy_j": 0.005905488874162173,
+                  "speed_cm_s": 40.6671028137207,
+                  "velocity_cm_s": {
+                    "x": 40.610557556152344,
+                    "y": -1.1791275511541244e-07,
+                    "z": 2.1437325477600098
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 2,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 3,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 68.44933319091797
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 4,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 5,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 6,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 7,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 8,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 73.39866638183594
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 9,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 2.8575000762939453,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 10,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 8.572500228881836,
+                    "y": 89.34147644042969,
+                    "z": 78.34800720214844
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 11,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 12,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": -5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 13,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 0,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 14,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 5.715000152587891,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                },
+                {
+                  "acceleration_cm_s2": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "angular_velocity_rad_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "contact_slip_speed_cm_s": 0,
+                  "index": 15,
+                  "motion_state": "stationary",
+                  "pocket_capture_sequence": 0,
+                  "pocket_id": -1,
+                  "pocket_phase": "outside",
+                  "pocketed": true,
+                  "position_cm": {
+                    "x": 11.430000305175781,
+                    "y": 89.34147644042969,
+                    "z": 83.2973403930664
+                  },
+                  "rotational_kinetic_energy_j": 0,
+                  "speed_cm_s": 0,
+                  "velocity_cm_s": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  }
+                }
+              ],
+              "boundary_mode": "unbounded",
+              "contacts": [],
+              "control": {
+                "aim_yaw_rad": 1.570796251296997,
+                "shot_power": 60,
+                "shot_taken": true
+              },
+              "cue_impact": {
+                "chalk_state": "CHALKED",
+                "cue_ball_index": 0,
+                "cue_mass_kg": 0.5,
+                "cue_speed_cm_s": 100,
+                "direction": {
+                  "x": 0.9396926207859084,
+                  "y": 0,
+                  "z": 0.3420201433256687
+                },
+                "elevation_degrees": 0,
+                "tip_offset_cm": [
+                  0,
+                  0
+                ],
+                "tip_offset_radius": [
+                  0,
+                  0
+                ]
+              },
+              "delta_seconds": 0.10000000149011612,
+              "failing_event_id": -1,
+              "failing_island_id": -1,
+              "failure_code": "none",
+              "linear_momentum_kg_mps": {
+                "x": 0.06953137367963791,
+                "y": 0,
+                "z": 0.013906880281865597
+              },
+              "maximum_penetration_cm": 0,
+              "physics_profile_id": "chinese_pool_full_game_v4",
+              "rotational_kinetic_energy_j": 0.006312205573854929,
+              "solver_events": [],
+              "step_status": "succeeded",
+              "surface_transitions": [],
+              "tick": 8,
+              "time_seconds": 0.800000011920929,
+              "total_kinetic_energy_j": 0.020680095687901186,
+              "translational_kinetic_energy_j": 0.014367890114046256
+            }
+          ],
+          "has_more": false
+        }
+      }
+    },
+    {
+      "direction": "stdin",
+      "message": {
+        "command": "quit",
+        "id": 5,
+        "params": {},
+        "version": 1
+      }
+    },
+    {
+      "direction": "stdout",
+      "message": {
+        "id": 5,
+        "ok": true,
+        "result": {}
+      }
+    }
+  ],
+  "return_code": 0,
+  "schema_version": 1,
+  "stderr": "",
+  "trace_sha256": "0bd55e1f66aaf38bf92093878db8542f4c66108f8243da043833f807e71a1132"
+}

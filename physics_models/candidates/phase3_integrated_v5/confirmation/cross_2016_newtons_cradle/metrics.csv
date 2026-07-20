@@ -1,0 +1,2 @@
+point_id,metric,expected,observed,unit,lower,upper,normalized_error,status,source_locator,pool_applicability,scenario_id,evaluation_contract
+cross_equal_speed_ratio,back_to_front_speed_ratio,1.0,,dimensionless,0.9477814235006027,1.0522185764993972,,FAILED,"Supplementary video 4582, frames 80-95",DIRECT,cross_cue_frozen_pair,"abs(back/front - 1) <= max(0.05, 2 * ratio_uncertainty) after finite passive stable release"

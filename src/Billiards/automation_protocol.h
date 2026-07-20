@@ -32,5 +32,7 @@ json::Value automationReadyEvent(const std::string& mode, const std::string& tra
     const std::vector<std::string>& capabilities);
 json::Value serializeAutomationState(const GameRuntime& runtime);
 json::Value serializeRuntimeEvent(const RuntimeEvent& event);
+json::Value serializePhysicsContact(const PhysicsContactRecord& contact);
+json::Value serializePhysicsFrame(const PhysicsFrame& frame);
 
 }  // namespace billiardgl

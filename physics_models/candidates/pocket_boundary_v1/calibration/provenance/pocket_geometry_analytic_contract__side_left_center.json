@@ -1,0 +1,23 @@
+{
+  "adapter_id": "pocket_geometry_analytic_v1",
+  "case_id": "side_left_center",
+  "dataset_id": "pocket_geometry_analytic_contract",
+  "dataset_version": "1.0.0",
+  "evidence_grade": "C",
+  "experimental_validation": false,
+  "package_hashes": {
+    "expected_model_mismatches": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+    "expected_reference_limitations": "sha256:0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+    "extraction": "sha256:d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+    "normalized": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+    "raw_extracted": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+    "scenario_template": "sha256:29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+    "split": "sha256:e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+  },
+  "point_ids": [
+    "side_left_capture"
+  ],
+  "source_locators": [
+    "analytic:pocket:side_left_center:capture"
+  ]
+}

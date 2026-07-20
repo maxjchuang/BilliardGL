@@ -1,0 +1,21 @@
+{
+  "failures": [
+    {
+      "case_id": "author_data_request_pending",
+      "code": "REFERENCE_LIMITATION",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "source_table_availability",
+      "missing_evidence": "The article states that data are available on request, but no author request has been sent without user authorization.",
+      "resolution_condition": "Send and archive an authorized author-data request outside the repository, then version any received table separately."
+    },
+    {
+      "case_id": "version_record_pdf_audit_pending",
+      "code": "REFERENCE_LIMITATION",
+      "dataset_id": "domenech_2023_ball_collision",
+      "metric": "source_version_audit",
+      "missing_evidence": "Publisher automation challenge prevented a complete version-of-record PDF audit; official high-resolution figures and article metadata were audited instead.",
+      "resolution_condition": "Lawfully obtain and manually inspect the version-of-record PDF, retaining its digest without redistributing it."
+    }
+  ],
+  "schema_version": 1
+}

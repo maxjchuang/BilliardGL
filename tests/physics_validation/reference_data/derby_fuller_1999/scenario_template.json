@@ -1,0 +1,48 @@
+{
+  "base_scenario": {
+    "balls": [],
+    "description": "derby_fuller_1999 published scalar confirmation evidence",
+    "evidence": {
+      "grade": "B",
+      "pool_applicability": "CONVERTED",
+      "source": "derby_fuller_1999"
+    },
+    "expectations": [],
+    "schema_version": 6
+  },
+  "cases": {
+    "initial_speed": {
+      "reference_point_id": "initial_speed",
+      "status": "confirmation_only"
+    },
+    "cue_sliding_time": {
+      "reference_point_id": "cue_sliding_time",
+      "status": "confirmation_only"
+    },
+    "target_sliding_time": {
+      "reference_point_id": "target_sliding_time",
+      "status": "confirmation_only"
+    },
+    "cue_final_speed": {
+      "reference_point_id": "cue_final_speed",
+      "status": "confirmation_only"
+    },
+    "target_final_speed": {
+      "reference_point_id": "target_final_speed",
+      "status": "confirmation_only"
+    },
+    "momentum_before": {
+      "reference_point_id": "momentum_before",
+      "status": "confirmation_only"
+    },
+    "momentum_after": {
+      "reference_point_id": "momentum_after",
+      "status": "confirmation_only"
+    },
+    "kinetic_energy_loss": {
+      "reference_point_id": "kinetic_energy_loss",
+      "status": "confirmation_only"
+    }
+  },
+  "schema_version": 1
+}

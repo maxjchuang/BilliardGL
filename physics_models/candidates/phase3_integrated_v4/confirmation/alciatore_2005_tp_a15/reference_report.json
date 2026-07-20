@@ -1,0 +1,252 @@
+{
+  "apparatus": [],
+  "candidate_id": "phase3_integrated_v4",
+  "dataset_id": "alciatore_2005_tp_a15",
+  "dataset_version": "1.0.0",
+  "diagnostics": [],
+  "evaluation_diagnostics": [
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 0,
+      "incident_speed_cm_s": 74.62686547247279,
+      "point_id": "alciatore_cut_000",
+      "signed_error_degrees": null
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 8,
+      "incident_speed_cm_s": 74.6268654724728,
+      "point_id": "alciatore_cut_008",
+      "signed_error_degrees": 69.90211689066608
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 20,
+      "incident_speed_cm_s": 74.62686547247277,
+      "point_id": "alciatore_cut_020",
+      "signed_error_degrees": 53.2472984924313
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 34,
+      "incident_speed_cm_s": 74.6268654724728,
+      "point_id": "alciatore_cut_034",
+      "signed_error_degrees": 38.51380788850166
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 46,
+      "incident_speed_cm_s": 74.62686547247282,
+      "point_id": "alciatore_cut_046",
+      "signed_error_degrees": 28.08288603273256
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 57,
+      "incident_speed_cm_s": 74.62686547247277,
+      "point_id": "alciatore_cut_057",
+      "signed_error_degrees": 19.40375421292265
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 67,
+      "incident_speed_cm_s": 74.62686547247279,
+      "point_id": "alciatore_cut_067",
+      "signed_error_degrees": 11.619275082113177
+    },
+    {
+      "contact_required": true,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 77,
+      "incident_speed_cm_s": 74.62686547247279,
+      "point_id": "alciatore_cut_077",
+      "signed_error_degrees": 2.7969619468257605
+    },
+    {
+      "contact_required": false,
+      "contact_valid": true,
+      "cut_angle_phi_degrees": 90,
+      "incident_speed_cm_s": 74.62686547247279,
+      "point_id": "alciatore_cut_090",
+      "signed_error_degrees": 0.0
+    }
+  ],
+  "execution": {
+    "fixture_executor": false,
+    "scenario_count": 9,
+    "two_runs_per_scenario": true
+  },
+  "partition": "CONFIRMATION",
+  "points": [
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 0.0,
+      "lower": -3.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": null,
+      "observed": null,
+      "point_id": "alciatore_cut_000",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_000",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 3.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 13.0,
+      "lower": 10.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 23.300705630222026,
+      "observed": 82.90211689066608,
+      "point_id": "alciatore_cut_008",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_008",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 16.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 34.0,
+      "lower": 31.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 17.7490994974771,
+      "observed": 87.2472984924313,
+      "point_id": "alciatore_cut_020",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_020",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 37.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 50.0,
+      "lower": 47.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 12.837935962833887,
+      "observed": 88.51380788850166,
+      "point_id": "alciatore_cut_034",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_034",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 53.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 61.0,
+      "lower": 58.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 9.360962010910853,
+      "observed": 89.08288603273256,
+      "point_id": "alciatore_cut_046",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_046",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 64.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 70.0,
+      "lower": 67.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 6.467918070974217,
+      "observed": 89.40375421292265,
+      "point_id": "alciatore_cut_057",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_057",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 73.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 78.0,
+      "lower": 75.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 3.8730916940377256,
+      "observed": 89.61927508211318,
+      "point_id": "alciatore_cut_067",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_067",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "FAILED",
+      "unit": "degree",
+      "upper": 81.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 87.0,
+      "lower": 84.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 0.9323206489419201,
+      "observed": 89.79696194682576,
+      "point_id": "alciatore_cut_077",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_077",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "PASSED",
+      "unit": "degree",
+      "upper": 90.0
+    },
+    {
+      "evaluation_contract": "earliest two-frame-stable separating cue-ball direction; endpoint speed ratios use post-step ball velocities",
+      "expected": 90.0,
+      "lower": 87.0,
+      "metric": "cue_ball_target_line_angle",
+      "normalized_error": 0.0,
+      "observed": 90.0,
+      "point_id": "alciatore_cut_090",
+      "pool_applicability": "DIRECT",
+      "scenario_id": "alciatore_cut_090",
+      "source_locator": "PDF p.2, M_exper: column <0> theta_exper; column <1> phi_exper",
+      "status": "PASSED",
+      "unit": "degree",
+      "upper": 93.0
+    }
+  ],
+  "result": "FAILED",
+  "schema_version": 2,
+  "summary": {
+    "failed": 7,
+    "known_model_mismatches": 0,
+    "passed": 2,
+    "points": 9
+  },
+  "summary_metrics": {
+    "contact_complete_passed": true,
+    "finite_state_passed": true,
+    "grazing_object_speed_ratio": 0.0,
+    "grazing_object_speed_ratio_maximum": 0.001,
+    "grazing_object_speed_ratio_passed": true,
+    "head_on_direction_error_degrees": null,
+    "head_on_direction_error_degrees_maximum": 1,
+    "head_on_direction_passed": false,
+    "head_on_lateral_ratio": null,
+    "head_on_lateral_ratio_maximum": 0.001,
+    "head_on_lateral_ratio_passed": false,
+    "interior_maximum_absolute_error_degrees": 69.90211689066608,
+    "interior_maximum_absolute_error_degrees_maximum": 5,
+    "interior_maximum_passed": false,
+    "interior_rmse_degrees": 38.753578370555665,
+    "interior_rmse_degrees_maximum": 3,
+    "interior_rmse_passed": false,
+    "nonincreasing_total_energy_passed": true
+  }
+}

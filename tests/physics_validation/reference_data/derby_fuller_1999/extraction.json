@@ -1,0 +1,49 @@
+{
+  "date": "2026-07-14",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:fb57290e666b5a78efef7458891489c3bad9edf6ab26f997efe5c8c831868c39"
+    }
+  ],
+  "method": "Manual transcription of explicitly printed scalar values from the archived official UNL bitstream, followed by deterministic unit normalization",
+  "operator": "Codex source-evidence audit",
+  "output_sha256": "sha256:7128d07bc487bbfe809e5f042de6295a04862471ec6916e58112429abd196780",
+  "review": {
+    "date": "2026-07-14",
+    "method": "Second-pass comparison of every committed scalar against the cited page and paragraph",
+    "reviewed_by": "Codex independent transcription review"
+  },
+  "rounding_policy": "Preserve every digit printed by the source; unit conversions are exact decimal shifts; explicit conversion uncertainty covers source rounding.",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.extract_derby_fuller_1999",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:fc1d77f9d98aeac587a4ad03c4b160bac68093d530c88f851a7ff5be7d6d1930",
+  "tool": {
+    "name": "Python standard-library deterministic scalar normalizer",
+    "version": "2026-07-14"
+  },
+  "transformations": [
+    {
+      "id": "speed_m_s_to_cm_s",
+      "formula": "speed_cm_s=speed_m_s*100",
+      "input_unit": "m/s",
+      "output_unit": "cm/s"
+    },
+    {
+      "id": "time_ms_to_s",
+      "formula": "time_s=time_ms/1000",
+      "input_unit": "ms",
+      "output_unit": "s"
+    },
+    {
+      "id": "momentum_identity",
+      "formula": "momentum_N_s=momentum_kg_m_s",
+      "input_unit": "kg*m/s",
+      "output_unit": "N*s"
+    }
+  ],
+  "uncertainty_interpretation": "Independent standard uncertainty components; engineering tolerance is preregistered separately and never used to fit the candidate."
+}

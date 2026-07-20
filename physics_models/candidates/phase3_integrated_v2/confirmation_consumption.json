@@ -1,0 +1,31 @@
+{
+  "attempts": [
+    {
+      "candidate_id": "phase3_integrated_v2",
+      "dataset_id": "sudo_2002",
+      "dataset_version": "1.0.0",
+      "freeze_sha256": "6e297a8c56eadc66d1f00f73fbede4c809e293f71d205c3d0c68769fbd79667b",
+      "package_manifest_sha256": "8cf1dcff355b26827afc50e3974576cdcf14b859bceb3990a6f74d37e2b67441",
+      "partition": "CONFIRMATION",
+      "recording_mode": "RECOVERED_FAIL_CLOSED",
+      "schema_version": 1,
+      "state": "STARTED"
+    }
+  ],
+  "records": [
+    {
+      "candidate_id": "phase3_integrated_v2",
+      "dataset_id": "sudo_2002",
+      "dataset_version": "1.0.0",
+      "files": {
+        "failure.json": "334dddb90c9d6523e21d8d684bb787313ccdea779a993b90a0c36ea6d3d0bdad"
+      },
+      "freeze_sha256": "6e297a8c56eadc66d1f00f73fbede4c809e293f71d205c3d0c68769fbd79667b",
+      "package_manifest_sha256": "8cf1dcff355b26827afc50e3974576cdcf14b859bceb3990a6f74d37e2b67441",
+      "partition": "CONFIRMATION",
+      "result": "FAILED",
+      "schema_version": 2
+    }
+  ],
+  "schema_version": 1
+}

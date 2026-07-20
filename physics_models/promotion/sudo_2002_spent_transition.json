@@ -1,0 +1,12 @@
+{
+  "dataset_id": "sudo_2002",
+  "dataset_version": "1.0.0",
+  "from": "confirmation",
+  "ledger_sha256": "f0aa4080079567fd7f0b5b963fd9beb25bb89e23b7a8613a1af2ebfd8309e770",
+  "package_manifest_sha256": "8cf1dcff355b26827afc50e3974576cdcf14b859bceb3990a6f74d37e2b67441",
+  "reason": "the sole confirmation attempt is immutable and may inform successors",
+  "receipt_sha256": "0ce34e3343c9707c2c9f17beeddcac983c1133cf8f13187fc2fcbe77300e9766",
+  "rejected_candidate": "phase3_integrated_v2",
+  "schema_version": 1,
+  "to": "spent"
+}

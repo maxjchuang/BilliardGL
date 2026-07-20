@@ -1,0 +1,390 @@
+{
+  "accounting": {
+    "known_limitations": [],
+    "known_model_mismatches": [
+      {
+        "case_id": "table1_shot_01",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2009_high_speed",
+        "metric": "post_collision_linear_velocity_cm_s"
+      },
+      {
+        "case_id": "table1_shot_02",
+        "code": "MODEL_MISMATCH",
+        "dataset_id": "mathavan_2009_high_speed",
+        "metric": "post_collision_linear_velocity_cm_s"
+      }
+    ],
+    "missing_limitations": [],
+    "missing_model_mismatches": [],
+    "new_limitations": [],
+    "new_model_mismatches": [],
+    "unallowlistable_failures": []
+  },
+  "metadata": {
+    "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+    "dataset_id": "mathavan_2009_high_speed",
+    "dataset_version": "1.0.0",
+    "executable": "/private/tmp/billiardgl-phase3-check/Billiards",
+    "package": "/Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed",
+    "package_hashes": {
+      "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+      "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+      "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+      "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+      "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+      "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+      "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+      "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+    },
+    "scenarios": {
+      "mathavan_2009_high_speed__rolling_deceleration": {
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__rolling_deceleration.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case rolling_deceleration",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json"
+      },
+      "mathavan_2009_high_speed__table1_shot_01": {
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__table1_shot_01.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json"
+      },
+      "mathavan_2009_high_speed__table1_shot_02": {
+        "provenance_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/provenance/mathavan_2009_high_speed__table1_shot_02.json",
+        "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
+        "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json"
+      }
+    }
+  },
+  "partitions": {
+    "CALIBRATION": {
+      "groups": [
+        {
+          "count": 1,
+          "group_id": "rolling_summary",
+          "maximum_absolute_error": 1.8626451137038202e-07,
+          "pass_rate": 1.0,
+          "rmse": 1.8626451137038202e-07
+        },
+        {
+          "count": 4,
+          "group_id": "table1_mid",
+          "maximum_absolute_error": 34.157163238525385,
+          "pass_rate": 0.25,
+          "rmse": 22.84983251300874
+        }
+      ],
+      "points": [
+        {
+          "acceptance_interval": [
+            12.4,
+            12.6
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "rolling_deceleration",
+          "combined_standard_uncertainty": 0.1,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2009_high_speed",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 12.5,
+          "fit_subset": null,
+          "group_id": "rolling_summary",
+          "group_maximum_absolute_error": 1.8626451137038202e-07,
+          "group_rmse": 1.8626451137038202e-07,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 0.1,
+          "metric": "rolling_deceleration_cm_s2",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+            "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+            "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+            "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+            "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+            "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+            "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+            "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "rolling_deceleration_range",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 12.499999813735489,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case rolling_deceleration",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "mathavan_2009_high_speed__rolling_deceleration",
+          "series_id": "surface_friction",
+          "signed_error": -1.8626451137038202e-07,
+          "source_locator": "Fig. 6 and p. 790",
+          "status": "PASSED",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__rolling_deceleration.json",
+          "unit": "cm/s^2"
+        },
+        {
+          "acceptance_interval": [
+            75.23603899999999,
+            87.963961
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "table1_shot_01",
+          "combined_standard_uncertainty": 6.363961,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2009_high_speed",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 81.6,
+          "fit_subset": null,
+          "group_id": "table1_mid",
+          "group_maximum_absolute_error": 34.157163238525385,
+          "group_rmse": 22.84983251300874,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 6.363961,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+            "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+            "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+            "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+            "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+            "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+            "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+            "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "table1_shot_01_cue_speed",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 92.20242309570312,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "mathavan_2009_high_speed__table1_shot_01",
+          "series_id": "oblique_ball_collision",
+          "signed_error": 10.60242309570313,
+          "source_locator": "Table I row 1",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            77.23603899999999,
+            89.963961
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "table1_shot_01",
+          "combined_standard_uncertainty": 6.363961,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2009_high_speed",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 83.6,
+          "fit_subset": null,
+          "group_id": "table1_mid",
+          "group_maximum_absolute_error": 34.157163238525385,
+          "group_rmse": 22.84983251300874,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 6.363961,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+            "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+            "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+            "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+            "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+            "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+            "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+            "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "table1_shot_01_object_speed",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 49.44283676147461,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_01",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "mathavan_2009_high_speed__table1_shot_01",
+          "series_id": "oblique_ball_collision",
+          "signed_error": -34.157163238525385,
+          "source_locator": "Table I row 1",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_01.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            45.636039,
+            58.363961
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "table1_shot_02",
+          "combined_standard_uncertainty": 6.363961,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2009_high_speed",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 52.0,
+          "fit_subset": null,
+          "group_id": "table1_mid",
+          "group_maximum_absolute_error": 34.157163238525385,
+          "group_rmse": 22.84983251300874,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 6.363961,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+            "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+            "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+            "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+            "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+            "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+            "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+            "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "table1_shot_02_cue_speed",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 54.71088790893555,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "mathavan_2009_high_speed__table1_shot_02",
+          "series_id": "oblique_ball_collision",
+          "signed_error": 2.710887908935547,
+          "source_locator": "Table I row 2",
+          "status": "PASSED",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
+          "unit": "cm/s"
+        },
+        {
+          "acceptance_interval": [
+            56.536039,
+            69.263961
+          ],
+          "build_id": "sha256:bc2b49719309247eb63061c9a5581019fb898483d9c3c542b22085be47962e52",
+          "case_id": "table1_shot_02",
+          "combined_standard_uncertainty": 6.363961,
+          "conversion_uncertainty": 0.0,
+          "coverage_factor": 1.0,
+          "dataset_id": "mathavan_2009_high_speed",
+          "dataset_version": "1.0.0",
+          "digitization_uncertainty": 0.0,
+          "engineering_absolute_tolerance": 0.0,
+          "engineering_relative_tolerance": 0.0,
+          "experimental_value": 62.9,
+          "fit_subset": null,
+          "group_id": "table1_mid",
+          "group_maximum_absolute_error": 34.157163238525385,
+          "group_rmse": 22.84983251300874,
+          "incident_speed_cm_s": null,
+          "measurement_uncertainty": 6.363961,
+          "metric": "post_collision_linear_velocity_cm_s",
+          "missing_evidence": null,
+          "package_hashes": {
+            "digitization": "sha256:e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+            "expected_model_mismatches": "sha256:89561fd6635dc72c50e5c64c168539333904dc6a70f13b33ca65ecae6c61f4e3",
+            "expected_reference_limitations": "sha256:e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+            "extraction": "sha256:80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+            "normalized": "sha256:c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+            "raw_extracted": "sha256:e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+            "scenario_template": "sha256:1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+            "split": "sha256:8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+          },
+          "partition": "CALIBRATION",
+          "point_id": "table1_shot_02_object_speed",
+          "pool_applicability": "TREND_ONLY",
+          "prediction": 34.58061981201172,
+          "prediction_nonfinite": null,
+          "replay_command": "python3 -m tools.physics_validation.reference_run --executable /private/tmp/billiardgl-phase3-check/Billiards --package /Users/bytedance/Projects/github/BilliardGL/.worktrees/physics-validation-foundation/tests/physics_validation/reference_data/mathavan_2009_high_speed --output /private/tmp/billiardgl-cushion-freeze-cal-2009 --case table1_shot_02",
+          "resolution_condition": null,
+          "rigid_cushion_domain": null,
+          "scenario_id": "mathavan_2009_high_speed__table1_shot_02",
+          "series_id": "oblique_ball_collision",
+          "signed_error": -28.31938018798828,
+          "source_locator": "Table I row 2",
+          "status": "MODEL_MISMATCH_KNOWN",
+          "trace_path": "/private/tmp/billiardgl-cushion-freeze-cal-2009/traces/mathavan_2009_high_speed__table1_shot_02.json",
+          "unit": "cm/s"
+        }
+      ],
+      "series": [
+        {
+          "count": 4,
+          "maximum_absolute_error": 34.157163238525385,
+          "pass_rate": 0.25,
+          "rmse": 22.84983251300874,
+          "series_id": "oblique_ball_collision"
+        },
+        {
+          "count": 1,
+          "maximum_absolute_error": 1.8626451137038202e-07,
+          "pass_rate": 1.0,
+          "rmse": 1.8626451137038202e-07,
+          "series_id": "surface_friction"
+        }
+      ],
+      "summary": {
+        "passed": 2,
+        "points": 5,
+        "statuses": {
+          "MODEL_MISMATCH_KNOWN": 3,
+          "PASSED": 2
+        }
+      }
+    },
+    "HOLDOUT": {
+      "groups": [],
+      "points": [],
+      "series": [],
+      "summary": {
+        "passed": 0,
+        "points": 0,
+        "statuses": {}
+      }
+    }
+  },
+  "reference_limitations": [
+    {
+      "case_id": "fig9_unresolved_markers",
+      "dataset_id": "mathavan_2009_high_speed",
+      "metric": "cushion_rebound_speed_cm_s",
+      "missing_evidence": "Twenty-three reported Fig. 9 shots overlap and lack independent coordinates.",
+      "point_ids": [],
+      "resolution_condition": "Obtain an author-verified per-shot numerical table."
+    },
+    {
+      "case_id": "snooker_to_pool_material_conversion_missing",
+      "dataset_id": "mathavan_2009_high_speed",
+      "metric": "equipment_conversion",
+      "missing_evidence": "The source used 52.4 mm snooker balls and a Riley snooker table, not WPA Pool equipment.",
+      "point_ids": [],
+      "resolution_condition": "Measure or publish a validated material and geometry conversion to WPA Pool."
+    },
+    {
+      "case_id": "unmeasured_initial_spin",
+      "dataset_id": "mathavan_2009_high_speed",
+      "metric": "initial_spin_rad_s",
+      "missing_evidence": "The experiment did not measure initial ball spin for the collision series.",
+      "point_ids": [],
+      "resolution_condition": "Acquire synchronized translational and rotational measurements for each shot."
+    }
+  ]
+}

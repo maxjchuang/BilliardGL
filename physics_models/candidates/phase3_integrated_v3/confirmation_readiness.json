@@ -1,0 +1,37 @@
+{
+  "candidate_id": "phase3_integrated_v3",
+  "checks": {
+    "confirmation_access_ready": true,
+    "confirmation_packages_preregistered": true,
+    "confirmation_state_absent": true,
+    "fit_inputs_are_spent_only": true,
+    "frozen_source_is_ancestor": true,
+    "full_game_matrix_passed": true,
+    "reproducible_clean_build": true,
+    "reproducible_runtime_profile": true,
+    "single_candidate_identity": true
+  },
+  "confirmation_packages": {
+    "derby_fuller_1999": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/derby_fuller_1999/manifest.json",
+      "manifest_sha256": "3e8c979e48e207317384dc63e47d4d5f28bae9b21cc8486183cd35ea9fe2b3d1",
+      "ready": true
+    },
+    "han_2005": {
+      "attempt": "UNOPENED",
+      "manifest_path": "tests/physics_validation/reference_data/han_2005/manifest.json",
+      "manifest_sha256": "e1ed50bd1a9ce1456e622be3fc57edbd3e7e71c738ffa51a8b5ae5f0d96da365",
+      "ready": true
+    }
+  },
+  "failures": [],
+  "freeze_sha256": "cc7cd5f2b583fc13550de1677fc5ea13c5460786794ef0bc7ff1364b834c9c08",
+  "full_game_case_count": 12,
+  "full_game_matrix_summary_sha256": "41bffc9ec0f1ccbcf3f9b14384ef1474a8166acbc2dfcd875ebbb8338dfaa67c",
+  "full_game_tree_sha256": "b121e758c19bf09b11c739888cd33be5835c47a3e97e777acef4110524d73759",
+  "inventory_sha256": "dc7eeeed3c320947536c5c05850ba6aba74a5b7a9d79f6b56391258faa75669d",
+  "schema_version": 1,
+  "source_revision": "db1c24b2b7d4d1c1145f4ebc7998fcd89109bc7a",
+  "status": "READY"
+}

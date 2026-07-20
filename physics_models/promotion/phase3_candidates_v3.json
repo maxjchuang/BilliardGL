@@ -1,0 +1,180 @@
+{
+  "calibration_reports": [
+    {
+      "path": "physics_models/calibration/surface_fit_v2_inputs.csv",
+      "role": "surface_fit_inputs",
+      "sha256": "d94c619c5bc12607dfcfaa57c5c520839efe3ea7c00e522afae73f024df50344"
+    },
+    {
+      "path": "physics_models/calibration/surface_fit_v2.json",
+      "role": "surface_fit_report",
+      "sha256": "ee6bb9278ade15d3f86feea1e9f72d3db12bc119a6f37ae4bbd24390cca6e9e2"
+    },
+    {
+      "path": "physics_models/calibration/surface_fit_v2_residuals.csv",
+      "role": "surface_fit_residuals",
+      "sha256": "c3928bac21cd130fe6c7ecd71edd6a458f2d5b21c6d8d0dd55fa8498e4ae0ec5"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v3_inputs.csv",
+      "role": "ball_fit_inputs",
+      "sha256": "727f9f6a6f6e8dd2cda67e5975a94e0966498957879b80a3c40caebed04bb5c1"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v3.json",
+      "role": "ball_fit_report",
+      "sha256": "7f4a23d64ccf32b48cb2ac402f0743cec831e194ef0935cfb36513ae4e59311e"
+    },
+    {
+      "path": "physics_models/calibration/ball_collision_fit_v3_residuals.csv",
+      "role": "ball_fit_residuals",
+      "sha256": "34596593f51bb958b71a5a36082d3f1c6a2002126afae42a8d771f1d9709196a"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v3_inputs.csv",
+      "role": "cushion_fit_inputs",
+      "sha256": "209efedf5c9f195944698164b009689538ccaeffbb138752d51313db826205ef"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v3.json",
+      "role": "cushion_fit_report",
+      "sha256": "10a4050c6d598738670fe4a9865a918a65b65c473c1ce1a6fbe1bb1ec34b3172"
+    },
+    {
+      "path": "physics_models/calibration/cushion_fit_v3_residuals.csv",
+      "role": "cushion_fit_residuals",
+      "sha256": "f17f47baa81fa1463f2760bb336be10e2b5b11ec5861e4864d2a0b5f3e171244"
+    },
+    {
+      "path": "physics_models/calibration/sudo_2002_structural_residuals.csv",
+      "role": "structural_residuals",
+      "sha256": "c3deae5fc6e11b7fa423c14b43ea33aefbcb84b2a8fc459f8489903e8b5472a0"
+    },
+    {
+      "path": "src/Billiards/generated/phase3_v3_profile.inc",
+      "role": "runtime_profile_source",
+      "sha256": "6d0ea6e99fd4489bdd8f8732ab3b5e70dccabd14dc2713f1165a098720dac370"
+    }
+  ],
+  "candidate_id": "phase3_integrated_v3",
+  "confirmation_packages": [
+    {
+      "package_id": "derby_fuller_1999",
+      "partition": "confirmation",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/manifest.json",
+      "role": "confirmation_package_manifest",
+      "sha256": "3e8c979e48e207317384dc63e47d4d5f28bae9b21cc8486183cd35ea9fe2b3d1"
+    },
+    {
+      "package_id": "han_2005",
+      "partition": "confirmation",
+      "path": "tests/physics_validation/reference_data/han_2005/manifest.json",
+      "role": "confirmation_package_manifest",
+      "sha256": "e1ed50bd1a9ce1456e622be3fc57edbd3e7e71c738ffa51a8b5ae5f0d96da365"
+    }
+  ],
+  "full_game_matrix": {
+    "path": "physics_models/promotion/full_game_matrix_v3.json",
+    "role": "full_game_matrix",
+    "sha256": "24bc470f82649ae8691f12903d7805f54c65ac4510c36058af4f53ccf18aa171"
+  },
+  "metric_contracts": [
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/normalized.csv",
+      "role": "acceptance_metrics",
+      "sha256": "7128d07bc487bbfe809e5f042de6295a04862471ec6916e58112429abd196780"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/split.json",
+      "role": "confirmation_split",
+      "sha256": "9c90e588d23fb43f294177059eaff6828c480665da1ec0eae1fd005610107ae2"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/scalars.csv",
+      "role": "supplemental_scalars",
+      "sha256": "fb57290e666b5a78efef7458891489c3bad9edf6ab26f997efe5c8c831868c39"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/scenario_template.json",
+      "role": "scenario_template",
+      "sha256": "c57ace770916d69c616e5e04998108576f6d66580107d6ed851d2d484b78fe8a"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/expected_model_mismatches.json",
+      "role": "expected_model_mismatches",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/expected_reference_limitations.json",
+      "role": "expected_reference_limitations",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "package_id": "derby_fuller_1999",
+      "path": "tests/physics_validation/reference_data/derby_fuller_1999/source_access_audit.json",
+      "role": "source_access_audit",
+      "sha256": "e1fb93fad4703a2128bca8d3435306ca72da2b77ac807ebd4feb0162f3e8066a"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/normalized.csv",
+      "role": "acceptance_metrics",
+      "sha256": "b20ab42b5ae7a2fa3548ca1efc0cf7cd38cb51a30e77cb2f9cb2e91883e88317"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/split.json",
+      "role": "confirmation_split",
+      "sha256": "7896f8497b3040ae07a8947415b6ea3adfa43d6b8b467c191c06d1711760afff"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/scalars.csv",
+      "role": "supplemental_scalars",
+      "sha256": "394d7d67515e2374225c7f5f065556d193b6c8abfd16c8455b6a6d74d12b9535"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/scenario_template.json",
+      "role": "scenario_template",
+      "sha256": "a9b463be5001eaf94aeb78a9a2b3dbbdcc0e7bbd950e8d634443f74a32e07240"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/expected_model_mismatches.json",
+      "role": "expected_model_mismatches",
+      "sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/expected_reference_limitations.json",
+      "role": "expected_reference_limitations",
+      "sha256": "c33f5b9f766763b8616682f2a375a55a730fa530713f0295092e18f91dbd1c6d"
+    },
+    {
+      "package_id": "han_2005",
+      "path": "tests/physics_validation/reference_data/han_2005/source_access_audit.json",
+      "role": "source_access_audit",
+      "sha256": "3e70d76d1c9a96269cf36038ee656e3ec5c27cd7378472b924c604a2adffaacf"
+    }
+  ],
+  "performance_budget": {
+    "path": "physics_models/promotion/full_game_performance_budget_v3.json",
+    "role": "performance_budget",
+    "sha256": "791044f10fa0bd0f4f0df7618692007f648057e99136d173647d1d85b893c651"
+  },
+  "profile": {
+    "path": "physics_models/profiles/chinese_pool_full_game_v3.json",
+    "role": "profile",
+    "sha256": "126c29b67d0a41f746ead9acf99905a65222c1970f26f92c69064bb29cae9df2"
+  },
+  "result_policy": "No confirmation or full-game result artifact is admitted before the source revision is frozen.",
+  "schema_version": 3,
+  "status": "pre_freeze"
+}

@@ -9,7 +9,7 @@ endif()
 
 enable_testing()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -25,25 +25,40 @@ pkg_check_modules(SDL2_AUDIO REQUIRED IMPORTED_TARGET sdl2 SDL2_mixer)
 
 set(BILLIARDGL_CORE_SOURCES
     src/Billiards/assets.cpp
+    src/Billiards/ball_ball_contact.cpp
+    src/Billiards/cushion_contact.cpp
+    src/Billiards/continuous_collision.cpp
+    src/Billiards/contact_island.cpp
+    src/Billiards/contact_solver.cpp
+    src/Billiards/coupled_cue_contact.cpp
+    src/Billiards/cue_contact.cpp
     src/Billiards/frame_timing.cpp
+    src/Billiards/frozen_cue_topology.cpp
     src/Billiards/game_state.cpp
     src/Billiards/game_runtime.cpp
     src/Billiards/image_loader.cpp
     src/Billiards/physics.cpp
+    src/Billiards/physics_profile.cpp
+    src/Billiards/physics_telemetry.cpp
+    src/Billiards/pocket_boundary.cpp
     src/Billiards/resource_path.cpp
     src/Billiards/rules.cpp
+    src/Billiards/scenario_geometry.cpp
     src/Billiards/input.cpp
     src/Billiards/shot.cpp
+    src/Billiards/surface_motion.cpp
     src/Billiards/table_specs.cpp
     src/Billiards/vec.cpp
 )
 
 if(APPLE)
     set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_display_timing_mac.mm
         src/Billiards/platform_scroll_mac.mm
     )
 else()
     set(BILLIARDGL_PLATFORM_SOURCES
+        src/Billiards/platform_display_timing.cpp
         src/Billiards/platform_scroll.cpp
     )
 endif()
@@ -95,10 +110,12 @@ add_executable(Billiards
     src/Billiards/screenshot_gl.cpp
     src/Billiards/ObjLoader.cpp
     src/Billiards/particle.cpp
+    src/Billiards/render_state.cpp
     src/Billiards/platform_audio.cpp
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     src/Billiards/automation_runner.cpp
     src/Billiards/stdio_transport.cpp
     src/Billiards/launch_options.cpp
@@ -107,7 +124,29 @@ add_executable(Billiards
 )
 
 billiardgl_add_core_test(BilliardsPhysicsTests tests/physics_tests.cpp)
+billiardgl_add_core_test(BilliardsBallBallContactTests tests/ball_ball_contact_tests.cpp)
+billiardgl_add_core_test(BilliardsCushionContactTests tests/cushion_contact_tests.cpp)
+billiardgl_add_core_test(BilliardsPocketBoundaryTests tests/pocket_boundary_tests.cpp)
+billiardgl_add_core_test(BilliardsPocketStateMachineTests tests/pocket_state_machine_tests.cpp)
+billiardgl_add_core_test(BilliardsContinuousCollisionTests tests/continuous_collision_tests.cpp)
+billiardgl_add_core_test(BilliardsContactIslandTests tests/contact_island_tests.cpp)
+billiardgl_add_core_test(BilliardsFrozenCueTopologyTests tests/frozen_cue_topology_tests.cpp)
+billiardgl_add_core_test(BilliardsCoupledCueContactTests tests/coupled_cue_contact_tests.cpp)
+billiardgl_add_core_test(BilliardsContactSolverTests tests/contact_solver_tests.cpp)
+billiardgl_add_core_test(BilliardsPhysicsProfileTests tests/physics_profile_tests.cpp)
+billiardgl_add_core_test(BilliardsPhysicsTelemetryTests tests/physics_telemetry_tests.cpp)
+billiardgl_add_core_test(BilliardsSurfaceMotionTests tests/surface_motion_tests.cpp)
+billiardgl_add_core_test(BilliardsPhysicsInstrumentationTests tests/physics_instrumentation_tests.cpp)
+billiardgl_add_core_test(BilliardsScenarioGeometryTests tests/scenario_geometry_tests.cpp)
 billiardgl_add_core_test(BilliardsRulesTests tests/rules_tests.cpp)
+
+add_executable(BilliardsPhysicsScenarioTests
+    tests/physics_scenario_tests.cpp
+    src/Billiards/physics_scenario.cpp
+    src/Billiards/automation_json.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsPhysicsScenarioTests)
 
 add_executable(BilliardsScreenshotTests
     tests/screenshot_tests.cpp
@@ -120,8 +159,102 @@ billiardgl_add_core_test(BilliardsGameStateTests tests/game_state_tests.cpp)
 billiardgl_add_core_test(BilliardsAssetsTests tests/assets_tests.cpp)
 billiardgl_add_core_test(BilliardsInputTests tests/input_tests.cpp)
 billiardgl_add_core_test(BilliardsShotTests tests/shot_tests.cpp)
+billiardgl_add_core_test(BilliardsCueContactTests tests/cue_contact_tests.cpp)
 billiardgl_add_core_test(BilliardsTableSpecsTests tests/table_specs_tests.cpp)
 billiardgl_add_core_test(BilliardsGameRuntimeTests tests/game_runtime_tests.cpp)
+billiardgl_add_core_test(BilliardsOrdinaryShotEquivalenceTests tests/ordinary_shot_equivalence_tests.cpp)
+
+add_executable(BilliardsFullGameStress
+    tests/full_game_stress.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_cli.cpp
+    tests/full_game_artifacts.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+target_include_directories(BilliardsFullGameStress PRIVATE
+    ${BILLIARDGL_COMMON_INCLUDE_DIRS}
+)
+target_compile_definitions(BilliardsFullGameStress PRIVATE
+    BILLIARDGL_ASSET_ROOT="${BILLIARDGL_ASSET_ROOT}"
+    BILLIARDGL_SOURCE_ROOT="${BILLIARDGL_SOURCE_ROOT}"
+)
+add_test(NAME BilliardsFullGameStress COMMAND BilliardsFullGameStress
+    --case legacy_break_stress --seed 101)
+
+add_executable(BilliardsFullGameArtifactTests
+    tests/full_game_artifact_tests.cpp
+    tests/full_game_artifacts.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameArtifactTests)
+
+add_executable(BilliardsFullGameCliTests
+    tests/full_game_cli_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_cli.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameCliTests)
+
+add_executable(BilliardsFullGamePerformance
+    tests/full_game_performance.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGamePerformance)
+
+add_executable(BilliardsFullGameComponentCasesTests
+    tests/full_game_component_cases_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameComponentCasesTests)
+
+add_executable(BilliardsFullGameGameplayCasesTests
+    tests/full_game_gameplay_cases_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameGameplayCasesTests)
+
+add_executable(BilliardsFullGameEquivalenceTests
+    tests/full_game_equivalence_tests.cpp
+    tests/full_game_case_registry.cpp
+    tests/full_game_component_cases.cpp
+    tests/full_game_gameplay_cases.cpp
+    tests/full_game_equivalence_cases.cpp
+    tests/full_game_invariants.cpp
+    src/Billiards/automation_json.cpp
+    src/Billiards/automation_protocol.cpp
+    ${BILLIARDGL_CORE_SOURCES}
+)
+billiardgl_configure_core_test(BilliardsFullGameEquivalenceTests)
 
 add_executable(BilliardsVecTests
     tests/vec_tests.cpp
@@ -134,6 +267,17 @@ add_executable(BilliardsFrameTimingTests
     src/Billiards/frame_timing.cpp
 )
 billiardgl_add_test(BilliardsFrameTimingTests)
+
+add_executable(BilliardsRenderStateTests
+    tests/render_state_tests.cpp
+    src/Billiards/frame_timing.cpp
+    src/Billiards/render_state.cpp
+    src/Billiards/game_state.cpp
+)
+billiardgl_add_test(BilliardsRenderStateTests)
+
+billiardgl_add_core_test(BilliardsInteractivePhysicsTests
+    tests/interactive_physics_tests.cpp)
 
 add_executable(BilliardsObjLoaderTests
     tests/obj_loader_tests.cpp
@@ -190,6 +334,7 @@ add_executable(BilliardsAutomationControllerTests
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsAutomationControllerTests)
@@ -199,6 +344,7 @@ add_executable(BilliardsAutomationPhysicsScenarioTests
     src/Billiards/automation_json.cpp
     src/Billiards/automation_protocol.cpp
     src/Billiards/automation_controller.cpp
+    src/Billiards/physics_scenario.cpp
     ${BILLIARDGL_CORE_SOURCES}
 )
 billiardgl_configure_core_test(BilliardsAutomationPhysicsScenarioTests)
@@ -213,9 +359,25 @@ billiardgl_add_test(BilliardsLaunchOptionsTests)
 add_test(NAME BilliardsHeadlessAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_headless_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsHeadlessAutomationE2E PROPERTIES TIMEOUT 30)
+add_test(NAME BilliardsPhysicsValidationE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_physics_validation.py $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsPhysicsValidationE2E PROPERTIES TIMEOUT 60 LABELS "physics-validation;e2e")
+add_test(NAME BilliardsReferenceValidationE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_reference_validation.py
+        $<TARGET_FILE:Billiards> ${CMAKE_CURRENT_BINARY_DIR}/physics-reference-validation)
+set_tests_properties(BilliardsReferenceValidationE2E PROPERTIES TIMEOUT 60 LABELS "physics-validation;reference-validation;e2e")
+add_test(NAME BilliardsPhase3PhysicsReleaseGate
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/check_phase3_physics_release.py
+        --root ${CMAKE_CURRENT_SOURCE_DIR}
+        --executable $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsPhase3PhysicsReleaseGate PROPERTIES
+    TIMEOUT 30 LABELS "physics-validation;release")
 add_test(NAME BilliardsRenderedAutomationE2E
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_rendered_automation.py $<TARGET_FILE:Billiards>)
 set_tests_properties(BilliardsRenderedAutomationE2E PROPERTIES TIMEOUT 30 LABELS "rendered;e2e")
+add_test(NAME BilliardsBreakCameraE2E
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/e2e/test_break_camera.py $<TARGET_FILE:Billiards>)
+set_tests_properties(BilliardsBreakCameraE2E PROPERTIES TIMEOUT 30 LABELS "physics-validation;rendered;e2e")
 
 target_include_directories(Billiards PRIVATE
     src/Billiards
@@ -240,6 +402,7 @@ function(billiardgl_add_screenshot_test test_name scene_name)
     )
     set_tests_properties(${test_name} PROPERTIES
         WORKING_DIRECTORY "${test_output_dir}"
+        TIMEOUT 30
     )
 endfunction()
 

@@ -1,0 +1,59 @@
+{
+  "calibration_report_sha256": "73372ba6d7265c9255641521194bed07aff06a9181872d04a062d645f531cdde",
+  "candidate_id": "chinese_pool_surface_motion_v1",
+  "created_at": "2026-07-14T00:00:00Z",
+  "datasets": [
+    {
+      "dataset_id": "mathavan_2009_high_speed",
+      "dataset_version": "1.0.0",
+      "manifest_sha256": "ae4ca4c120b7c452a43fc8b7a843e349c5e9340ed472d88b5cce5d5e5cc6f6b5",
+      "package_hashes": {
+        "digitization": "e56296055723a362d6c76eedf78575fdd4aa5256bbe991dcbf97f899c1803a38",
+        "expected_model_mismatches": "6cd1d7a4b9945d20ea84f0fe7a90baa470439c93dc23582321c06b47f34e0ec2",
+        "expected_reference_limitations": "e30de04907d415da9546a5047c852567fba0f7fe93d1bf9bc8e7a61b09eb690c",
+        "extraction": "80783aa8cda71d51809fc944a73589e00ae0d419a3a5f987ab8c8b37270905d3",
+        "normalized": "c429fc9f3996e194462abfd6e053046b28f87791662df3d09c24f2c19ffb7713",
+        "raw_extracted": "e7825cfb753c8872ae6006fec49d55dad9ded354de42447c29f26b756d22d595",
+        "scenario_template": "1eb0b98c09fac87fc5da5d4eae9d5afaa53c4651d81d9ab21a949e189322002f",
+        "split": "8de458316b0adc94bd717d3f8239c8af89c4c9d7cd0e79ddbb0e90ee56f272ba"
+      }
+    }
+  ],
+  "executable_sha256": "c57f09dd3902e8bc0f0249b8cf3477a7e244ce8803ba2d651eba818c2c10b347",
+  "formula_version": "surface_motion_v1",
+  "metric_targets": [
+    {
+      "lower": 12.4,
+      "metric": "rolling_deceleration_cm_s2",
+      "point_id": "rolling_deceleration_range",
+      "upper": 12.6
+    },
+    {
+      "lower": 75.23603899999999,
+      "metric": "post_collision_linear_velocity_cm_s",
+      "point_id": "table1_shot_01_cue_speed",
+      "upper": 87.963961
+    },
+    {
+      "lower": 77.23603899999999,
+      "metric": "post_collision_linear_velocity_cm_s",
+      "point_id": "table1_shot_01_object_speed",
+      "upper": 89.963961
+    },
+    {
+      "lower": 45.636039,
+      "metric": "post_collision_linear_velocity_cm_s",
+      "point_id": "table1_shot_02_cue_speed",
+      "upper": 58.363961
+    },
+    {
+      "lower": 56.536039,
+      "metric": "post_collision_linear_velocity_cm_s",
+      "point_id": "table1_shot_02_object_speed",
+      "upper": 69.263961
+    }
+  ],
+  "profile_sha256": "644649da8137dc9dd87e4ab4c898e01fc559f026d9b1a9fd3d86854cd13c042e",
+  "schema_version": 1,
+  "source_revision": "deca7e31f36f30f0e5884a6b68c7566c2991a059"
+}

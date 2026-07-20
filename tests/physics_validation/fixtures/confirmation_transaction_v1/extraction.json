@@ -1,0 +1,30 @@
+{
+  "date": "2026-07-15",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:262ac62aebb2311bc18b82f5c1b4b2aee1d7d9fdb84657879399cf3771a40d4e"
+    }
+  ],
+  "method": "synthetic transaction fixture",
+  "operator": "BilliardGL test suite",
+  "review": {
+    "date": "2026-07-15",
+    "method": "schema review",
+    "reviewed_by": "BilliardGL test suite"
+  },
+  "rounding_policy": "No rounding.",
+  "schema_version": 1,
+  "tool": {
+    "name": "synthetic fixture",
+    "version": "1"
+  },
+  "transformations": [
+    {
+      "formula": "normalized=value",
+      "id": "identity",
+      "input_unit": "cm",
+      "output_unit": "cm"
+    }
+  ]
+}

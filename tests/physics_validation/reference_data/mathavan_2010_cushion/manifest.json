@@ -1,0 +1,126 @@
+{
+  "acquisition": {
+    "acquired_copy_url": "https://drdavepoolinfo.com/physics_articles/Mathavan_IMechE_2010.pdf",
+    "license_status": "publisher-copyright-author-manuscript-record-no-redistribution-grant",
+    "repository_url": "https://dspace.lboro.ac.uk/2134/15087",
+    "retrieved_on": "2026-07-13",
+    "source_media_committed": false,
+    "source_sha256": "sha256:8c4ad418408b1e1728577632a99ba4789320a91b4b13d95ddd0a231c5fb2f093",
+    "version_status": "publisher-layout copy audited; institutional record identifies submitted-for-publication author version"
+  },
+  "adapter_id": "mathavan_2010_v1",
+  "apparatus": {
+    "ball_mass_kg": 0.1406,
+    "ball_radius_cm": 2.625,
+    "camera": "stationary high-speed camera",
+    "cushion_contact_height_ratio": "7R/5",
+    "incident_angle_degrees": 90.0,
+    "initial_motion": "pure rolling",
+    "initial_sidespin_rad_s": 0.0,
+    "table": "Riley Renaissance snooker table"
+  },
+  "dataset_id": "mathavan_2010_cushion",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "excluded_model_output": [
+      "Fig. 7 numerical squares",
+      "Figs. 8-10 numerical curves"
+    ],
+    "experimental_marker_count": 19,
+    "grade": "B",
+    "inventory": [
+      {
+        "admission": "Fig. 7(a) experimental diamonds admitted once; Fig. 7(b) duplicate experimental diamonds provenance-only; numerical squares excluded",
+        "classification": "EXPERIMENT_PLUS_THEORY",
+        "figure": "Fig. 7",
+        "journal_pages": "1869-1870",
+        "legend": "experimental diamonds versus numerical squares"
+      },
+      {
+        "admission": "excluded",
+        "classification": "THEORY_ONLY",
+        "figure": "Fig. 8",
+        "journal_pages": "1870-1871",
+        "legend": "numerical speed/angle curves"
+      },
+      {
+        "admission": "excluded",
+        "classification": "THEORY_ONLY",
+        "figure": "Fig. 9",
+        "journal_pages": "1871",
+        "legend": "numerical topspin curves"
+      },
+      {
+        "admission": "excluded",
+        "classification": "THEORY_ONLY",
+        "figure": "Fig. 10",
+        "journal_pages": "1871-1872",
+        "legend": "numerical sidespin curves"
+      }
+    ],
+    "method": "stationary high-speed-camera rebound experiment",
+    "parameter_fit_subset": "experimental incident speed below 1.5 m/s",
+    "rigid_cushion_boundary": "experimental incident speed above 2.5 m/s retained as extreme holdout with limitation"
+  },
+  "extraction_review": {
+    "date": "2026-07-13",
+    "method": "native embedded 1100x530 figure audit and two component-center methods",
+    "operator": "Codex grayscale marker pass",
+    "reviewed_by": "bounding-box center pass"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:74db890277673ce6bc11665f7b23e69a1c5beb6cf6d6a8daee844f71eb0bf50d"
+    },
+    {
+      "id": "digitization",
+      "path": "digitization.csv",
+      "sha256": "sha256:4388a3eaf2e5869e3213a803d95b28256c8e2093b6ba5c7be0cf8e604b751e12"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:25a120d35fc010e7730e450d287fc5119cf07787c89cdf1f330a8f66b7d265a5"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:44260204800a7fa83af793727e6effdeb0eba37ac43f658abefff81fdc6962a2"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:749629ef3fd854c43b0a662f306056bd8587fe0c579e4ee83d0852370c7b10df"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:f336fa0d08b900381f09c70478fd0f5663df45a56615351deae98055d728fb85"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:4cd90ac76737f6360a0be124f3e8f868292e35e8d00d96dcbf173792e271a25d"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:885153f7abb785bc23be5660853db245dfdc5ea18d28bf9049b5ade56a5bf124"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "S. Mathavan",
+      "M. R. Jackson",
+      "R. M. Parkin"
+    ],
+    "doi": "10.1243/09544062JMES1964",
+    "journal": "Proceedings of the Institution of Mechanical Engineers, Part C",
+    "journal_pages": "224(9):1863-1873",
+    "title": "A theoretical analysis of billiard ball dynamics under cushion impacts",
+    "year": 2010
+  }
+}

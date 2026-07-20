@@ -1,0 +1,49 @@
+{
+  "date": "2026-07-14",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:ad55353fd502273384ee53d498d465e05c0921c37885351cd0e221c00f979bcf"
+    }
+  ],
+  "method": "Manual transcription of explicitly printed scalar values from the official J-STAGE publication, followed by deterministic unit normalization",
+  "operator": "Codex source-evidence audit",
+  "output_sha256": "sha256:d520f588ece441234044cf98198eb0807eda1a5b17a0435a57693ba3376bd424",
+  "review": {
+    "date": "2026-07-14",
+    "method": "Second-pass comparison of every committed scalar against the cited page and paragraph",
+    "reviewed_by": "Codex independent transcription review"
+  },
+  "rounding_policy": "Preserve every digit printed by the source; unit conversions are exact decimal shifts; explicit conversion uncertainty covers source rounding.",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.extract_sudo_2002",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:a727998333226e703d387a353f95ff882a071bccd9d16508fcf01fa447b22ff2",
+  "tool": {
+    "name": "Python standard-library deterministic scalar normalizer",
+    "version": "2026-07-14"
+  },
+  "transformations": [
+    {
+      "id": "mass_g_to_kg",
+      "formula": "mass_kg=mass_g/1000",
+      "input_unit": "g",
+      "output_unit": "kg"
+    },
+    {
+      "id": "diameter_mm_to_cm",
+      "formula": "diameter_cm=diameter_mm/10",
+      "input_unit": "mm",
+      "output_unit": "cm"
+    },
+    {
+      "id": "identity_published_targets",
+      "formula": "normalized_value=source_value for restitution, seconds, degrees, and fractions",
+      "input_unit": "published unit",
+      "output_unit": "validation unit"
+    }
+  ],
+  "uncertainty_interpretation": "Independent standard uncertainty components; engineering tolerance is preregistered separately and never used to fit the candidate."
+}

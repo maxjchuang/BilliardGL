@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-14",
+  "inputs": [
+    {
+      "file_id": "raw_extracted",
+      "sha256": "sha256:19eb80735c7a0a94b6fc5957f04c7edc13c3996cfc30d303498ae71e40fa888c"
+    }
+  ],
+  "method": "independent Decimal evaluation of printed rigid-impulse equations",
+  "operator": "Codex",
+  "output_sha256": "sha256:03e9db7710f091f7a326ee0cc3be76cff258913eb5bd3422b9fd40f70988698c",
+  "review": {
+    "date": "2026-07-14",
+    "method": "byte reproduction plus production-free import audit",
+    "reviewed_by": "machine-verifiable independent equation generator"
+  },
+  "rounding_policy": "Decimal precision 60; canonical decimal strings retain all generated digits; float conversion occurs only in scenario JSON.",
+  "schema_version": 2,
+  "script": {
+    "module": "tools.physics_validation.generate_cue_contact_analytic",
+    "version": "1.0.0"
+  },
+  "source_sha256": "sha256:19eb80735c7a0a94b6fc5957f04c7edc13c3996cfc30d303498ae71e40fa888c",
+  "tool": {
+    "name": "cue contact analytic generator",
+    "version": "1.0.0"
+  },
+  "transformations": [
+    {
+      "formula": "r=-n*sqrt(R^2-|o|^2)+o; P=(1+e)*u/(1/mc+1/mb+|r cross n|^2/I); Coulomb cone clamp; dv=J/mb; dw=(r cross J)/I",
+      "id": "rigid_impulse_decimal",
+      "input_unit": "SI Decimal inputs",
+      "output_unit": "SI analytic expectations"
+    }
+  ],
+  "uncertainty_interpretation": "Grade-C deterministic contract tolerances cover binary float transport only; they are not experimental uncertainty."
+}

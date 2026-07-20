@@ -1,0 +1,17 @@
+{
+  "cases": [
+    {"id":"cue_center_hit","coverage":["cue_offset"],"evidence_label":"analytic_golden","driver":"user_operations","replay":"tests/e2e/test_headless_automation.py","seed":0},
+    {"id":"cue_near_miscue","coverage":["cue_offset"],"evidence_label":"behavior_snapshot","driver":"user_operations","replay":"tests/physics_validation/scenarios/cue_impact_v2_contract.json","seed":1},
+    {"id":"sliding_to_rolling","coverage":["surface_transition"],"evidence_label":"behavior_snapshot","driver":"exact_scenario","replay":"physics_models/candidates/surface_motion_v1/validation/reference_report.json","seed":0},
+    {"id":"oblique_ball_collision","coverage":["ball_contact"],"evidence_label":"reality_golden","driver":"exact_scenario","replay":"physics_models/candidates/ball_collision_v1/validation/mathavan_2009/reference_report.json","seed":0},
+    {"id":"rail_rebound","coverage":["rail_contact"],"evidence_label":"reality_golden","driver":"exact_scenario","replay":"physics_models/candidates/cushion_collision_v1/validation/mathavan_2010/reference_report.json","seed":0},
+    {"id":"side_pocket_capture","coverage":["pocket_contact"],"evidence_label":"analytic_golden","driver":"exact_scenario","replay":"physics_models/candidates/pocket_boundary_v1/validation/traces/pocket_geometry_analytic_contract__side_right_center.json","seed":0},
+    {"id":"seeded_break","coverage":["break","fixed_seed"],"evidence_label":"behavior_snapshot","driver":"user_operations","replay":"full-game-stress --case seeded_break --seed 101","seed":101},
+    {"id":"continuous_scoring","coverage":["scoring_sequence","fixed_seed"],"evidence_label":"behavior_snapshot","driver":"user_operations","replay":"full-game-stress --case continuous_scoring --seed 211","seed":211},
+    {"id":"cue_ball_scratch","coverage":["foul"],"evidence_label":"behavior_snapshot","driver":"user_operations","replay":"full-game-stress --case cue_ball_scratch --seed 307","seed":307},
+    {"id":"cadence_equivalence","coverage":["frame_cadence","fixed_seed"],"evidence_label":"analytic_golden","driver":"dual_path","replay":"full-game-stress --case cadence_equivalence --seed 401","seed":401},
+    {"id":"host_load_equivalence","coverage":["host_load","fixed_seed"],"evidence_label":"analytic_golden","driver":"dual_path","replay":"full-game-stress --case host_load_equivalence --seed 503","seed":503}
+  ],
+  "required_coverage":["cue_offset","surface_transition","ball_contact","rail_contact","pocket_contact","break","scoring_sequence","foul","frame_cadence","host_load","fixed_seed"],
+  "schema_version":1
+}

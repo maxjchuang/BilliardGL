@@ -1,0 +1,17 @@
+{
+  "failures": [
+    {
+      "code": "SOURCE_CUE_INPUT_UNDERSPECIFIED",
+      "dataset_id": "cross_2016_newtons_cradle",
+      "rationale": "Video 4582 and the manuscript do not publish cue speed, cue effective mass, tip stiffness, or tip friction; the confirmation therefore tests the normalized two-ball release-speed relation rather than absolute launch speed.",
+      "scope": "absolute_cue_contact_parameters"
+    },
+    {
+      "code": "POOL_DIMENSION_TRANSFER",
+      "dataset_id": "cross_2016_newtons_cradle",
+      "rationale": "Cross publishes 115 g ball mass but not diameter; WPA pool diameter is used only to report absolute extracted speeds and cancels from the primary speed ratio.",
+      "scope": "absolute_video_scale"
+    }
+  ],
+  "schema_version": 1
+}

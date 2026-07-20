@@ -1,11 +1,14 @@
 #include "game_state.h"
 
+#include "surface_motion.h"
+
 #include <cmath>
 
 namespace billiardgl {
 
 void initializeBalls(GameState& state)
 {
+    state.nextPocketCaptureSequence = 1;
     const Point3 cueBallStart{0.0f, kTableHeight + kBallRadius, -kTableInLength / 4.0f};
     const Point3 rackApex{0.0f, kTableHeight + kBallRadius, kTableInLength / 4.0f};
     const float xDis = kBallRadius;
@@ -30,11 +33,26 @@ void initializeBalls(GameState& state)
 
     for (BallState& ball : state.balls) {
         ball.velocity = Point3{};
+        ball.angularVelocity = Point3{};
         ball.rotationAxis = Point3{};
         ball.speed = 0.0f;
         ball.rotationAngle = 0.0f;
         ball.pocketed = false;
+        ball.motionState = BallMotionState::Stationary;
+        resetPocketInteraction(ball);
     }
+}
+
+void resetPocketInteraction(BallState& ball)
+{
+    ball.pocketInteraction = PocketInteractionState{};
+}
+
+void updateCameraEye(GameState& state)
+{
+    state.camera.eye[0] = state.camera.zoom * std::cos(state.camera.angleX) + state.camera.target[0];
+    state.camera.eye[1] = state.camera.zoom * std::cos(state.camera.angleY) + state.camera.target[1];
+    state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
 }
 
 void updateCameraFromCueBall(GameState& state)
@@ -42,17 +60,17 @@ void updateCameraFromCueBall(GameState& state)
     state.camera.target[0] = state.balls[0].position.x;
     state.camera.target[1] = state.balls[0].position.y;
     state.camera.target[2] = state.balls[0].position.z;
-    state.camera.eye[0] = state.camera.zoom * std::cos(state.camera.angleX) + state.camera.target[0];
-    state.camera.eye[1] = state.camera.zoom * std::cos(state.camera.angleY) + state.camera.target[1];
-    state.camera.eye[2] = state.camera.zoom * std::sin(state.camera.angleX) * std::sin(state.camera.angleY) + state.camera.target[2];
+    updateCameraEye(state);
 }
 
 void resetBallMotion(BallState& ball)
 {
     ball.velocity = Point3{};
+    ball.angularVelocity = Point3{};
     ball.rotationAxis = Point3{};
     ball.speed = 0.0f;
     ball.rotationAngle = 0.0f;
+    ball.motionState = BallMotionState::Stationary;
 }
 
 void setBallVelocity(BallState& ball, float x, float y, float z)
@@ -60,6 +78,9 @@ void setBallVelocity(BallState& ball, float x, float y, float z)
     ball.velocity.x = x;
     ball.velocity.y = y;
     ball.velocity.z = z;
+    ball.motionState = (x == 0.0f && y == 0.0f && z == 0.0f)
+        ? BallMotionState::Stationary
+        : BallMotionState::Sliding;
 }
 
 bool anyBallMoving(const GameState& state)

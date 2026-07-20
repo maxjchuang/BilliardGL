@@ -1,0 +1,17 @@
+{
+  "failures": [
+    {
+      "code": "SOURCE_APPARATUS_UNDERSPECIFIED",
+      "dataset_id": "alciatore_2005_tp_a15",
+      "rationale": "TP A.15 does not publish ball dimensions, masses, cloth, cue speed, or cue-tip properties for HSV A.97; the comparison validates the angular relation, not those absolute apparatus parameters.",
+      "scope": "absolute_contact_parameters"
+    },
+    {
+      "code": "NO_PUBLISHED_CONFIDENCE_INTERVAL",
+      "dataset_id": "alciatore_2005_tp_a15",
+      "rationale": "The report prints integer-degree pairs but no repeat count, dispersion, or confidence interval.",
+      "scope": "experimental_uncertainty"
+    }
+  ],
+  "schema_version": 1
+}

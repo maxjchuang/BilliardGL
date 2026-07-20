@@ -1,0 +1,60 @@
+{
+  "calibration_reports": [
+    {
+      "dataset_id": "multi_contact_solver_analytic_contract",
+      "dataset_version": "1.0.0",
+      "manifest_path": "tests/physics_validation/reference_data/multi_contact_solver_analytic_contract/manifest.json",
+      "manifest_sha256": "020ef6572a3d5e6e21b0b9d248a412edab2b783ce21333860707796346604f08",
+      "metric_targets": [
+        {
+          "lower": -1e-09,
+          "metric": "solver_energy_growth_j",
+          "point_id": "chain_passivity_left",
+          "upper": 1e-09
+        },
+        {
+          "lower": 0.042849,
+          "metric": "solver_first_toi_seconds",
+          "point_id": "line_toi_left",
+          "upper": 0.042851
+        },
+        {
+          "lower": 2.0,
+          "metric": "solver_penetration_limit_count",
+          "point_id": "overlap_limit_left",
+          "upper": 2.0
+        },
+        {
+          "lower": -0.001,
+          "metric": "solver_max_residual_cm_s",
+          "point_id": "symmetric_residual_left",
+          "upper": 0.001
+        }
+      ],
+      "package_hashes": {
+        "expected_model_mismatches": "4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+        "expected_reference_limitations": "4f86796bf5ef4344fb6c2a5222bde9faad35ab0a30bdd3baea07f3445c381a3b",
+        "extraction": "dc012bdb345e2d022de20efa5d61c1c387dba860a08a29e7144d3cbbe0e0e80c",
+        "normalized": "e0d741678b7e630d7285872f4c15a5099d4524b581b6a234f94b690871c62123",
+        "raw_extracted": "9fdf7941131c519443c8bf1b349513954abd26b2400d055b527e026ac1dc7312",
+        "scenario_template": "f2bb1c116b6c19e79747604cd5b01505b30e4ab87c55950b2437c6f06ee26704",
+        "split": "fd883cff42abef8d40598ffe999df4eda5c28edc8b0d0a68245e375e0fca7168"
+      },
+      "path": "physics_models/candidates/multi_contact_solver_v1/calibration/reference_report.json",
+      "report_sha256": "df61ccc6bf4c545a7a0a02842001f7535c39cd12b66a4f9254cbfed959c29b08"
+    }
+  ],
+  "candidate_id": "chinese_pool_multi_contact_solver_v1",
+  "created_at": "2026-07-14T20:00:00Z",
+  "executable_sha256": "6ff041120e032ee8ea18c03c92ca82352e98bdff6e9569f883f4d70d1e558fbc",
+  "formula_version": "multi_contact_solver_v1",
+  "profile_sha256": "e7975d8cef5f24f4e9cf76f132d490592628fb6d38a82e85f8f6cfb8260391fd",
+  "schema_version": 2,
+  "source_revision": "02bf03d6d3ad99658329197541568df962dbe543",
+  "supplemental_artifacts": [
+    {
+      "path": "physics_models/scans/multi_contact_solver_v1.csv",
+      "sha256": "3f6f1a7feac91a487322d9e50089080a5387ed35cf623219949df992a92ccbb1"
+    }
+  ]
+}

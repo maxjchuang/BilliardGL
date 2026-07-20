@@ -13,6 +13,9 @@ class AutomationError(RuntimeError):
 
 class AutomationClient:
     def __init__(self, executable, mode="headless"):
+        self.transcript = []
+        self.stderr_text = ""
+        self.return_code = None
         self.process = subprocess.Popen(
             [executable, "--automation", "--transport", "stdio", "--" + mode],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -29,12 +32,15 @@ class AutomationClient:
         selector.close()
         if not line:
             raise RuntimeError("automation process exited: " + self.process.stderr.read())
-        return json.loads(line)
+        value = json.loads(line)
+        self.transcript.append({"direction": "stdout", "message": value})
+        return value
 
     def request(self, command, params=None, timeout=5, raise_errors=False):
         request_id = self.next_id
         self.next_id += 1
         message = {"id": request_id, "version": 1, "command": command, "params": params or {}}
+        self.transcript.append({"direction": "stdin", "message": message})
         self.process.stdin.write(json.dumps(message, separators=(",", ":")) + "\n")
         self.process.stdin.flush()
         while True:
@@ -45,6 +51,7 @@ class AutomationClient:
                 return value
 
     def raw(self, line):
+        self.transcript.append({"direction": "stdin", "line": line})
         self.process.stdin.write(line + "\n")
         self.process.stdin.flush()
         return self._read(5)
@@ -60,8 +67,15 @@ class AutomationClient:
     def run_until(self, condition, max_steps=10000): return self.command("run_until", {"condition": condition, "max_steps": max_steps})
     def set_ball(self, **params): return self.command("set_ball", params)
     def load_scenario(self, balls): return self.command("load_scenario", {"balls": balls})
+    def load_physics_scenario(self, scenario):
+        return self.command("load_scenario", {"scenario": scenario})
     def set_player_state(self, **params): return self.command("set_player_state", params)
     def clear_events(self): return self.command("clear_events")
+    def start_physics_trace(self): return self.command("start_physics_trace")
+    def stop_physics_trace(self): return self.command("stop_physics_trace")
+    def clear_physics_trace(self): return self.command("clear_physics_trace")
+    def physics_trace(self, after_tick=0, limit=1000):
+        return self.command("get_physics_trace", {"after_tick": after_tick, "limit": limit})
     def toggle_aim(self): return self.command("toggle_aim")
     def set_aim_yaw(self, yaw): return self.command("set_aim_yaw", {"yaw": yaw})
     def set_shot_power(self, power): return self.command("set_shot_power", {"power": power})
@@ -88,6 +102,13 @@ class AutomationClient:
                 self.process.terminate()
                 try: self.process.wait(timeout=2)
                 except subprocess.TimeoutExpired: self.process.kill()
+        if self.process.poll() is None:
+            self.process.wait(timeout=2)
+        self.return_code = self.process.returncode
+        self.stderr_text = self.process.stderr.read()
+        self.process.stdin.close()
+        self.process.stdout.close()
+        self.process.stderr.close()
 
     def __enter__(self):
         return self

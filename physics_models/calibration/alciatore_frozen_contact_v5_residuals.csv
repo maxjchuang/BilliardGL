@@ -1,0 +1,10 @@
+point_id,evaluation_role,expected_angle_degrees,observed_angle_degrees,signed_error_degrees,normalized_error,head_on_cue_residual_speed_ratio,head_on_cue_lateral_speed_ratio,grazing_target_speed_ratio,status
+alciatore_cut_000,endpoint_invariant,0.0,,,,0.8351475781977681,0.0,,PASSED
+alciatore_cut_008,interior_angle,13.0,15.704608988014824,2.704608988014824,0.9015363293382747,,,,PASSED
+alciatore_cut_020,interior_angle,34.0,35.50188377476197,1.5018837747619713,0.5006279249206571,,,,PASSED
+alciatore_cut_034,interior_angle,50.0,53.99511989452666,3.9951198945266597,1.3317066315088866,,,,PASSED
+alciatore_cut_046,interior_angle,61.0,65.27322722444073,4.273227224440731,1.4244090748135771,,,,PASSED
+alciatore_cut_057,interior_angle,70.0,73.19629247785839,3.1962924778583925,1.0654308259527976,,,,PASSED
+alciatore_cut_067,interior_angle,78.0,79.1590698038007,1.1590698038007048,0.3863566012669016,,,,PASSED
+alciatore_cut_077,interior_angle,87.0,84.35977427938374,-2.6402257206162574,-0.8800752402054192,,,,PASSED
+alciatore_cut_090,endpoint_invariant,90.0,,,,,,0.0,PASSED

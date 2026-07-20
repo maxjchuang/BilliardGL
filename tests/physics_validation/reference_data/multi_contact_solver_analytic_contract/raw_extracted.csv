@@ -1,0 +1,9 @@
+case_id,partition,metric,exact_decimal_value,unit,source_locator
+line_toi_left,CALIBRATION,solver_first_toi_seconds,0.04285,s,analytic:solver:line:left:toi
+symmetric_left,CALIBRATION,solver_max_residual_cm_s,0,cm/s,analytic:solver:symmetric:left:residual
+chain_left,CALIBRATION,solver_energy_growth_j,0,J,analytic:solver:chain:left:passivity
+overlap_left,CALIBRATION,solver_penetration_limit_count,2,count,analytic:solver:overlap:left:limit
+line_toi_right,HOLDOUT,solver_first_toi_seconds,0.04285,s,analytic:solver:line:right:toi
+symmetric_right,HOLDOUT,solver_max_residual_cm_s,0,cm/s,analytic:solver:symmetric:right:residual
+chain_right,HOLDOUT,solver_energy_growth_j,0,J,analytic:solver:chain:right:passivity
+overlap_right,HOLDOUT,solver_penetration_limit_count,2,count,analytic:solver:overlap:right:limit

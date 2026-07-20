@@ -1,0 +1,51 @@
+{
+  "acquisition": {
+    "license_status": "free-access-no-redistribution-grant-recorded",
+    "pdf_sha256": "sha256:e308884f67a98f58d1067aba1000064a804b7f8c1b017c2371b8d7e06342e07b",
+    "retrieved_on": "2026-07-15",
+    "source_media_committed": false,
+    "url": "https://www.jstage.jst.go.jp/article/jsmekanto/2006.12/0/2006.12_495/_pdf/-char/en"
+  },
+  "dataset_id": "shimamura_2006_cue_contact",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "centered_impact": true,
+    "cue_speed_m_s": 3.0,
+    "experimental_trace_point_count": 21,
+    "grade": "B",
+    "numerical_step_s": 5e-05
+  },
+  "files": [
+    {
+      "path": "extraction.json",
+      "sha256": "sha256:559bcc1bea8bbf758b692e20fc5cd1d35e6fa68a1a624ef62e22b04329c5132b"
+    },
+    {
+      "path": "normalized.csv",
+      "sha256": "sha256:7a6ea4eacfa44aabf540f141d6556419e05c2535d6c1e852e1a6895985cc3e3d"
+    },
+    {
+      "path": "raw_digitized.csv",
+      "sha256": "sha256:49bad4dcf96dd1c9f81d0444255ed57b345fd657e2a8f4138032e45f4df4bf7b"
+    },
+    {
+      "path": "scalars.csv",
+      "sha256": "sha256:16cff24ba4a6cf2652f07600d2e8a97d2203724990ec2a5cf5da5d699943f328"
+    },
+    {
+      "path": "source_access_audit.json",
+      "sha256": "sha256:585ea35d12632bdde2540ea88712e2db3b05f80d489d07418627e72216ad3cc0"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "Shinsuke Shimamura",
+      "Shigeru Aoki"
+    ],
+    "doi": "10.1299/jsmekanto.2006.12.495",
+    "pages": "495-496",
+    "title": "Numerical Analysis of Impact between Cue and Billiard Ball (Effect of Tip Structure)",
+    "year": 2006
+  }
+}

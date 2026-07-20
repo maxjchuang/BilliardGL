@@ -1,0 +1,15 @@
+{
+  "schema_version": 2,
+  "date": "2026-07-14",
+  "method": "independent closed-form pocket frame, radius-offset channel, circle and plane invariants",
+  "operator": "Codex",
+  "tool": {"name": "pocket geometry analytic derivation", "version": "1.0.0"},
+  "review": {"reviewed_by": "deterministic adapter tests", "date": "2026-07-14", "method": "hash and mirror-pair review"},
+  "inputs": [{"file_id": "raw_extracted", "sha256": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466"}],
+  "transformations": [{"id": "radius_offset_geometry", "formula": "available_width = nominal_width - 2 * ball_radius; analytic circle and depth-plane sweeps", "input_unit": "cm", "output_unit": "event count"}],
+  "rounding_policy": "Exact decimal equipment values; binary conversion only at scenario boundary",
+  "uncertainty_interpretation": "Grade-C engineering tolerances are not experimental uncertainty.",
+  "source_sha256": "sha256:e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+  "output_sha256": "sha256:79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+  "script": {"module": "tools.physics_validation.adapters.pocket_geometry_analytic", "version": "1.0.0"}
+}

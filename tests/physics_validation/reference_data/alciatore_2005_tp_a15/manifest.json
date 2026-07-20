@@ -1,0 +1,95 @@
+{
+  "acquisition": {
+    "license_status": "author-publication-no-redistribution-grant-recorded",
+    "retrieved_on": "2026-07-15",
+    "source_hash_scope": "canonical_extracted_rows",
+    "source_media_committed": false,
+    "source_sha256": "sha256:92b79d5f6ca4dff5d781cbfe4128bc94c75a6a5d9b49117c59b48ae2a038e985",
+    "source_url": "https://drdavepoolinfo.com/technical_proofs/new/TP_A-15.pdf"
+  },
+  "adapter_id": "alciatore_2005_tp_a15_confirmation_v1",
+  "apparatus": {
+    "balls_initially_frozen": true,
+    "camera_method": "high_speed_video_HSV_A.97",
+    "cue_contact": "centered_horizontal_repository_contract",
+    "unpublished_properties": [
+      "ball_diameter",
+      "ball_mass",
+      "cloth",
+      "cue_speed",
+      "cue_tip_properties"
+    ]
+  },
+  "dataset_id": "alciatore_2005_tp_a15",
+  "dataset_version": "1.0.0",
+  "evidence": {
+    "candidate_selection_input": false,
+    "confirmation_only": true,
+    "grade": "B",
+    "hard_contract": "seven-point angular RMSE/maximum error plus two endpoint invariant cases",
+    "method": "published high-speed-video integer-degree pairs",
+    "target_count": 9
+  },
+  "extraction_review": {
+    "date": "2026-07-15",
+    "method": "rendered primary-PDF diagram/table/axis cross-check",
+    "reviewed_by": "Codex primary-source visual cross-check"
+  },
+  "files": [
+    {
+      "id": "raw_extracted",
+      "path": "raw_extracted.csv",
+      "sha256": "sha256:8f527a6f6600edcf0e34ba696ff1d1dc445a37b0d88aa732cdf2c8cc2e96dc70"
+    },
+    {
+      "id": "normalized",
+      "path": "normalized.csv",
+      "sha256": "sha256:17e888b524053994ea3124972aad4351c5df65598c797422752369c3ee05bf8a"
+    },
+    {
+      "id": "scalars",
+      "path": "scalars.csv",
+      "sha256": "sha256:7ca0daa6f524c6fc80a218a10970d0a8442f3fcbb515529a53bdb5f2baaf812e"
+    },
+    {
+      "id": "split",
+      "path": "split.json",
+      "sha256": "sha256:b26b61e823dfab8bd9f445da03c64b1d4e1bc525a6fff95d8398957b6d72bd7d"
+    },
+    {
+      "id": "extraction",
+      "path": "extraction.json",
+      "sha256": "sha256:93129c54efdc8f0b017a475343142136ea99c3a59bc757ab040390f3bfe0ce84"
+    },
+    {
+      "id": "scenario_template",
+      "path": "scenario_template.json",
+      "sha256": "sha256:38054db90b9b31afa709d011f07fcccc07ccc46d16890d42743447cb232d136b"
+    },
+    {
+      "id": "expected_model_mismatches",
+      "path": "expected_model_mismatches.json",
+      "sha256": "sha256:ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    {
+      "id": "expected_reference_limitations",
+      "path": "expected_reference_limitations.json",
+      "sha256": "sha256:a59e443d3c13e7e2b508764e73685d8b8da617f9527fb74679d7e87e983423fa"
+    },
+    {
+      "id": "source_access_audit",
+      "path": "source_access_audit.json",
+      "sha256": "sha256:9c14c9eda13412246cb673059be283853537a749946b6823f66bdd64c5a9e963"
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "authors": [
+      "David G. Alciatore"
+    ],
+    "document_id": "TP_A-15",
+    "originally_posted": "2005-07-29",
+    "title": "TP A.15: Controlling the cue ball direction in a frozen cue ball shot",
+    "year": 2005
+  }
+}

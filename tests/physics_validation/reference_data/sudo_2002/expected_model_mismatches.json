@@ -1,0 +1,12 @@
+{
+  "failures": [
+    {
+      "dataset_id": "sudo_2002",
+      "case_id": "cushion_contact_time_plateau",
+      "code": "MODEL_MISMATCH",
+      "metric": "cushion_contact_time_seconds",
+      "rationale": "The current rigid instantaneous-contact solver does not model the published approximately 8 ms cushion contact duration; this is preregistered before confirmation evidence is consumed."
+    }
+  ],
+  "schema_version": 1
+}

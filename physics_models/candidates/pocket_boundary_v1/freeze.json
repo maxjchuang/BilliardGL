@@ -1,0 +1,60 @@
+{
+  "calibration_reports": [
+    {
+      "dataset_id": "pocket_geometry_analytic_contract",
+      "dataset_version": "1.0.0",
+      "manifest_path": "tests/physics_validation/reference_data/pocket_geometry_analytic_contract/manifest.json",
+      "manifest_sha256": "390c14f037c28e33e6f25efd31ba183e2265cdd40765b8dbd8731c0ecce40362",
+      "metric_targets": [
+        {
+          "lower": 1.0,
+          "metric": "pocket_capture_event_count",
+          "point_id": "corner_left_bottom_capture",
+          "upper": 1.0
+        },
+        {
+          "lower": 1.0,
+          "metric": "pocket_capture_event_count",
+          "point_id": "side_left_capture",
+          "upper": 1.0
+        },
+        {
+          "lower": 1.0,
+          "metric": "pocket_jaw_event_count",
+          "point_id": "side_left_jaw_event",
+          "upper": 1.0
+        },
+        {
+          "lower": 0.0,
+          "metric": "pocket_capture_event_count",
+          "point_id": "side_left_narrow_capture",
+          "upper": 0.0
+        }
+      ],
+      "package_hashes": {
+        "expected_model_mismatches": "0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+        "expected_reference_limitations": "0d5699014dfca9180604a66a2e6ccae0f6b98d67a131f628cc6936334de6820b",
+        "extraction": "d1a7d040036115a452f1bb9adea08f857a7ad5eaa0a653c2042baff2cfb882d6",
+        "normalized": "79eaee1fb1a0f76b0e6f2771defae41f97e00c52a2423c706cb55a0b3704d8b0",
+        "raw_extracted": "e54ffc7924a42f87b53e4fcab9972fd10de44fd971992d872563de250bdc7466",
+        "scenario_template": "29a29db5d0a56ca25bce7e512cfcb1c892057216116190e94cf888d60373e186",
+        "split": "e21a0d79931ddd221dc86dfde0a60aab55a9ca95c5fa1614ea1e7b298dce472b"
+      },
+      "path": "physics_models/candidates/pocket_boundary_v1/calibration/reference_report.json",
+      "report_sha256": "bb2cffbf515276d145bb1e3dd4ef6e6e518c34d801b892f94c16347df2ecee53"
+    }
+  ],
+  "candidate_id": "chinese_pool_pocket_boundary_v1",
+  "created_at": "2026-07-14T15:00:00Z",
+  "executable_sha256": "4b21760ee380f5d4d39ec55a2c26b216f8b409bee120f71a64a42ee0954f1123",
+  "formula_version": "pocket_boundary_v1",
+  "profile_sha256": "8d6d445a0335001caa28e32cb99e6e3dcbd17eae8b9bb46174806022b262d58f",
+  "schema_version": 2,
+  "source_revision": "2051364212390f19be029c8865e236117bf0561e",
+  "supplemental_artifacts": [
+    {
+      "path": "physics_models/scans/pocket_boundary_v1.csv",
+      "sha256": "1e19a19566b0e007ba9b19a22efced1a4f287853c5bf74a9b1e7fb0a87f655f2"
+    }
+  ]
+}
