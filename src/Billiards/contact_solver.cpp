@@ -200,8 +200,18 @@ SolverConstraint makeConstraint(const GameState& state,
     }
     const Point3 tangential = subtracted(
         relative, scaled(constraint.normal, normalSpeed));
-    constraint.tangent = length(tangential) > 1e-9
-        ? normalized(tangential) : deterministicTangent(constraint.normal);
+    // The frozen cushion_collision_v1 contract defines cushion friction along
+    // the table plane.  Preserve later candidate formulas byte-for-byte while
+    // preventing the v1 elevated nose velocity from becoming a vertical
+    // friction impulse.
+    if (candidate.secondBall < 0 &&
+        profile.formulaVersion == "cushion_collision_v1") {
+        constraint.tangent = normalized(cross(
+            Point3{0.0f, 1.0f, 0.0f}, constraint.normal));
+    } else {
+        constraint.tangent = length(tangential) > 1e-9
+            ? normalized(tangential) : deterministicTangent(constraint.normal);
+    }
     constraint.targetNormalSpeedCmS = normalSpeed < 0.0
         ? -constraint.restitution * normalSpeed : 0.0;
     constraint.inverseNormalEffectiveMass = inverseEffectiveMass(

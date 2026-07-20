@@ -36,6 +36,14 @@ float advanceRollingSegment(
         : speed * segment;
     ball.position.x += direction.x * distance;
     ball.position.z += direction.z * distance;
+    if (resistance <= 0.0f) {
+        // A zero-resistance step is exact free rolling.  Re-normalizing the
+        // velocity and re-projecting angular velocity through v/r can add
+        // float-rounding energy even though no force acted on the ball.
+        ball.speed = speed;
+        ball.motionState = BallMotionState::Rolling;
+        return segment;
+    }
     const float finalSpeed = resistance > 0.0f
         ? std::max(0.0f, speed - resistance * segment)
         : speed;

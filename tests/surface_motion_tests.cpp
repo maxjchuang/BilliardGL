@@ -93,6 +93,23 @@ int main()
     expect(rollingStep.after == billiardgl::BallMotionState::Rolling,
         "a moving pure-roll segment remains rolling");
 
+    billiardgl::SurfaceProperties zeroResistance = rollingSurface;
+    zeroResistance.rollingResistanceAccelerationCmS2 = 0.0f;
+    billiardgl::BallProperties freeRollingBallProperties = profile.ball;
+    freeRollingBallProperties.radiusCm = 3.05f;
+    ball = pureRollingBall(80.0f, freeRollingBallProperties.radiusCm);
+    const float initialVelocity = ball.velocity.x;
+    const float initialAngularVelocity = ball.angularVelocity.z;
+    const double initialFreeRollingEnergy = totalEnergy(
+        ball, freeRollingBallProperties);
+    billiardgl::advanceSurfaceMotion(
+        ball, 0.1f, freeRollingBallProperties, zeroResistance);
+    expect(ball.velocity.x == initialVelocity &&
+        ball.angularVelocity.z == initialAngularVelocity &&
+        totalEnergy(ball, freeRollingBallProperties) ==
+            initialFreeRollingEnergy,
+        "zero rolling resistance preserves velocity and energy exactly");
+
     ball = pureRollingBall(0.5f, profile.ball.radiusCm);
     ball.angularVelocity.y = 3.0f;
     const billiardgl::SurfaceMotionStep stopStep =

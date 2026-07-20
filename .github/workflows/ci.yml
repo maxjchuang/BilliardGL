@@ -63,7 +63,7 @@ jobs:
           python3 -m tools.physics_validation.reference_package tests/physics_validation/reference_data/cross_2023_cue_impact
           python3 -m tools.physics_validation.extract_cross_2023 --package tests/physics_validation/reference_data/cross_2023_cue_impact --check
           python3 -m unittest tests.physics_validation.test_cross_2023_extraction tests.physics_validation.test_cross_2023_metrics tests.physics_validation.test_cross_2023_adapter -v
-          python3 -m tools.physics_validation.calibration_run --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/physics-reference-cross-2023"
+          python3 -m tools.physics_validation.admission_report --executable "${BILLIARDGL_BUILD_DIR}/Billiards" --package tests/physics_validation/reference_data/cross_2023_cue_impact --output "${BILLIARDGL_BUILD_DIR}/physics-reference-cross-2023"
 
       - name: Verify frozen Phase 3 release evidence
         env:

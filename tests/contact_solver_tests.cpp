@@ -100,6 +100,7 @@ int main()
         "solver diagnostics should expose contact arms and effective mass");
 
     PhysicsProfile cushion = elastic;
+    cushion.formulaVersion = "cushion_collision_v1";
     cushion.cushion.normalRestitution = 0.7f;
     cushion.cushion.restitutionIntercept = 0.7f;
     cushion.cushion.minimumRestitution = 0.7f;
@@ -123,6 +124,9 @@ int main()
             cushion.ball.radiusCm / 100.0f * 0.4f) < 1e-6f &&
         std::fabs(railState.balls[0].angularVelocity.y) > 0.0f,
         "rail constraints should apply friction at the configured cushion nose height");
+    expect(std::fabs(railSolved.contacts[0].tangent.y) < 1e-12f &&
+        std::fabs(railState.balls[0].velocity.y) < 1e-6f,
+        "rigid cushion friction must remain tangent to the table plane");
     expect(std::fabs(railSolved.contacts[0].accumulatedTangentialImpulseNs) <=
             cushion.cushion.frictionCoefficient *
                 railSolved.contacts[0].accumulatedNormalImpulseNs + 1e-12 &&

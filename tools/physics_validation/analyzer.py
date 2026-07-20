@@ -333,11 +333,13 @@ def maximal_phase_segment(frames, ball_index, phase):
     return max(segments, key=len, default=[])
 
 
-def contacts_for_solver_event(frames, event_id):
-    """Return contacts belonging to one solver event in trace order."""
+def contacts_for_solver_event(frames, event_id, frame_index=None):
+    """Return contacts for an event ID, optionally scoped to one frame."""
+    selected_frames = frames if frame_index is None else \
+        frames[frame_index:frame_index + 1]
     return [
         contact
-        for frame in frames
+        for frame in selected_frames
         for contact in frame.get("contacts", [])
         if contact.get("solver_event_id") == event_id
     ]
@@ -666,38 +668,35 @@ def _event_observation(metric, reference, frames):
         if scope not in {None, "single"}:
             return None, REFERENCE_LIMITATION, "solver event scope is invalid"
         matching = [
-            item for frame in frames for item in frame.get("contacts", [])
+            (index, item)
+            for index, frame in enumerate(frames)
+            for item in frame.get("contacts", [])
             if item.get("kind") == "ball_ball" and
             selection["ball_index"] in
             (item.get("first_ball"), item.get("second_ball"))
         ]
         if scope == "single":
-            event_ids = {
-                item.get("solver_event_id") for item in matching
+            event_keys = {
+                (index, item.get("solver_event_id")) for index, item in matching
                 if isinstance(item.get("solver_event_id"), int)
                 and not isinstance(item.get("solver_event_id"), bool)
                 and item.get("solver_event_id") >= 0
             }
-            if len(event_ids) != 1 or len(event_ids) != len({
-                    item.get("solver_event_id") for item in matching}):
+            all_event_keys = {
+                (index, item.get("solver_event_id")) for index, item in matching
+            }
+            if len(event_keys) != 1 or len(event_keys) != len(all_event_keys):
                 return None, INTEGRATION_MISMATCH, \
                     "ball collision metric is not bound to one solver event"
-            event_id = next(iter(event_ids))
-            event_contacts = contacts_for_solver_event(frames, event_id)
-            event_frames = {
-                index for index, frame in enumerate(frames)
-                if any(item.get("solver_event_id") == event_id
-                       for item in frame.get("contacts", []))
-            }
-            if len(event_frames) != 1:
-                return None, INTEGRATION_MISMATCH, \
-                    "solver event identity repeats across trace frames"
+            solver_frame_index, event_id = next(iter(event_keys))
+            event_contacts = contacts_for_solver_event(
+                frames, event_id, solver_frame_index)
             selected = [item for item in event_contacts if item is contact]
             if not selected:
                 return None, INTEGRATION_MISMATCH, \
                     "selected contact is absent from its solver event"
         else:
-            event_contacts = matching
+            event_contacts = [item for _, item in matching]
         code, message = _validate_ball_contact(event_contacts, contact)
         if code:
             return None, code, message

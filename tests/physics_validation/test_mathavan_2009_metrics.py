@@ -117,6 +117,41 @@ class Mathavan2009MetricTests(unittest.TestCase):
         self.assertTrue(result.passed)
         self.assertEqual(result.metrics["post_collision_linear_velocity_cm_s"], 5.0)
 
+    def test_solver_event_identity_is_scoped_to_trace_frame(self):
+        contact = _ball_contact()
+        reused_event_id = {
+            "kind": "rail",
+            "first_ball": 1,
+            "solver_event_id": contact["solver_event_id"],
+        }
+        frames = [
+            _frame(1, 0.0, [
+                _ball(0, 6.0, angular=[0.0, 0.0, 0.0]),
+                _ball(1, 1.0),
+            ], [contact]),
+            _frame(2, 0.1, [
+                _ball(0, 5.0), _ball(1, 1.0),
+            ], [reused_event_id]),
+            _frame(3, 0.2, [_ball(0, 5.0), _ball(1, 1.0)]),
+            _frame(4, 0.3, [_ball(0, 5.0), _ball(1, 1.0)]),
+        ]
+        selection = {
+            "event_kind": "ball_ball",
+            "sample_phase": "first_pure_roll_after_event",
+            "ball_index": 0,
+            "minimum_window_ticks": 3,
+            "ball_radius_cm": 2.0,
+            "pure_roll_tolerance_cm_s": 0.001,
+        }
+
+        result = analyze_scenario(
+            _scenario("post_collision_linear_velocity_cm_s", selection, 5.0),
+            frames,
+        )
+
+        self.assertTrue(result.passed)
+        self.assertEqual(result.metrics["post_collision_linear_velocity_cm_s"], 5.0)
+
     def test_separation_angle_uses_two_post_collision_velocity_vectors(self):
         contact = _ball_contact()
         rolling_x = _ball(0, 4.0, [4.0, 0.0, 0.0], [0.0, 0.0, -2.0])
