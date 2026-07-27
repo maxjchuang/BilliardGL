@@ -14,7 +14,10 @@ with tempfile.TemporaryDirectory() as directory:
         game.start_physics_trace()
         game.toggle_aim()
         game.set_aim_yaw(math.pi / 2.0)
-        game.set_shot_power(80.0)
+        # Exercise the real interactive break-speed path. This also guards
+        # against high-energy rack and subsequent rail contacts exceeding the
+        # recoverable penetration budget.
+        game.set_shot_power(200.0)
         game.shoot()
         game.run_until("ball_collision", 5000)
 
@@ -36,6 +39,9 @@ with tempfile.TemporaryDirectory() as directory:
         assert not final["balls_moving"]
         trace = game.physics_trace(limit=1000)
         assert all(frame["step_status"] == "succeeded" for frame in trace["frames"])
+        assert all(frame["physics_profile_id"] ==
+                   "chinese_pool_interactive_120hz_v5" for frame in trace["frames"])
+        assert max(frame["maximum_penetration_cm"] for frame in trace["frames"]) < 2.75
 
     with open(before_path, "rb") as before_image, open(after_path, "rb") as after_image:
         assert before_image.read() != after_image.read()

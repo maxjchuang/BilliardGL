@@ -1,7 +1,11 @@
 #include "physics.h"
 #include "physics_profile.h"
 #include "game_runtime.h"
+#include "cue_contact.h"
+#include "shot.h"
 #include "surface_motion.h"
+#include "ball_ball_contact.h"
+#include "cushion_contact.h"
 
 #include <chrono>
 #include <cmath>
@@ -21,6 +25,17 @@ void expect(bool condition, const char* message)
 bool close(float first, float second, float tolerance = 0.001f)
 {
     return std::fabs(first - second) <= tolerance;
+}
+
+billiardgl::BallState interactiveShot(float power,
+    const billiardgl::PhysicsProfile& profile)
+{
+    billiardgl::BallState ball;
+    const billiardgl::CueContactResult result = billiardgl::resolveCueContact(
+        ball, billiardgl::cueImpactFromShotControls(0.0f, power, profile),
+        profile.ball, profile.cue);
+    expect(result.applied, "centered interactive shot must apply");
+    return ball;
 }
 
 billiardgl::GameState isolatedCueBall()
@@ -62,6 +77,69 @@ billiardgl::GameState simulate(float stepSeconds, float durationSeconds,
 
 int main()
 {
+    const billiardgl::PhysicsProfile interactive =
+        billiardgl::interactiveChinesePoolPhysicsProfile();
+    billiardgl::BallState defaultShot = interactiveShot(60.0f, interactive);
+    expect(close(defaultShot.speed, 75.0f, 0.001f),
+        "default power must launch the cue ball at 75 cm/s");
+    const billiardgl::BallState maximumShot = interactiveShot(200.0f, interactive);
+    expect(close(maximumShot.speed, 1000.0f, 0.01f),
+        "maximum power must reach the measured break-speed range");
+    expect(close(maximumShot.angularVelocity.z,
+        -maximumShot.speed / interactive.ball.radiusCm, 0.01f),
+        "maximum break must launch with roll-matched forward spin");
+
+    int freeRunTicks = 0;
+    while (billiardgl::classifySurfaceMotion(defaultShot,
+               interactive.ball, interactive.surface) !=
+            billiardgl::BallMotionState::Stationary &&
+        freeRunTicks < 1200) {
+        billiardgl::advanceSurfaceMotion(defaultShot,
+            interactive.solver.timeStepSeconds,
+            interactive.ball, interactive.surface);
+        ++freeRunTicks;
+    }
+    expect(freeRunTicks < 1200,
+        "default shot must settle within ten seconds");
+    expect(close(defaultShot.position.x, 121.8f, 0.2f),
+        "default power free run must reach the rack-facing playable gap");
+    expect(freeRunTicks >= 525 && freeRunTicks <= 530,
+        "default power must settle in about 4.4 seconds");
+
+    billiardgl::BallState striker;
+    striker.position.x = 0.0f;
+    striker.velocity.x = 100.0f;
+    striker.speed = 100.0f;
+    billiardgl::BallState objectBall;
+    objectBall.position.x = 2.0f * interactive.ball.radiusCm;
+    const billiardgl::BallBallContactResult ballContact =
+        billiardgl::resolveBallBallContact(striker, objectBall,
+            interactive.ball, interactive.ball);
+    expect(ballContact.velocityImpulseApplied &&
+        close(striker.velocity.x, 1.5f, 0.001f) &&
+        close(objectBall.velocity.x, 98.5f, 0.001f),
+        "head-on ball contact must obey the calibrated restitution");
+    expect(ballContact.kineticEnergyAfterJ < ballContact.kineticEnergyBeforeJ,
+        "interactive ball contact must dissipate energy");
+
+    billiardgl::BallState railBall;
+    railBall.velocity.x = 100.0f;
+    railBall.speed = 100.0f;
+    railBall.angularVelocity.z = -100.0f / interactive.ball.radiusCm;
+    const billiardgl::CushionContactResult railContact =
+        billiardgl::resolveCushionContact(railBall,
+            billiardgl::Point3{-1.0f, 0.0f, 0.0f}, 0.0,
+            interactive.ball, interactive.cushion);
+    expect(railContact.velocityImpulseApplied,
+        "one metre-per-second rail impact must apply an impulse");
+    expect(close(railContact.restitution, 0.9216f, 0.001f),
+        "rolling contact speed must drive the calibrated cushion restitution");
+    expect(railBall.velocity.x < 0.0f &&
+        std::fabs(railBall.velocity.x) < 100.0f,
+        "one metre-per-second rail impact must rebound below incident speed");
+    expect(railContact.kineticEnergyAfterJ < railContact.kineticEnergyBeforeJ,
+        "interactive cushion contact must dissipate energy");
+
     const billiardgl::Point3 tableCenter{
         0.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 30.0f};
     const billiardgl::GameState free60 = simulate(
@@ -98,6 +176,18 @@ int main()
             billiardgl::BallMotionState::Stationary &&
         close(stopped.balls[0].speed, 0.0f) && !stopped.ballsMoving,
         "low-speed interactive motion must settle completely");
+
+    billiardgl::GameState spinOnly = isolatedCueBall();
+    spinOnly.balls[0].angularVelocity.y = 1.2f;
+    spinOnly.ballsMoving = true;
+    billiardgl::updatePhysics(spinOnly, 0.05f, interactive);
+    expect(close(spinOnly.balls[0].angularVelocity.y, 0.6f) &&
+        spinOnly.ballsMoving,
+        "residual sidespin keeps interactive physics active while it decays");
+    billiardgl::updatePhysics(spinOnly, 0.05f, interactive);
+    expect(spinOnly.balls[0].angularVelocity.y == 0.0f &&
+        !spinOnly.ballsMoving,
+        "interactive physics stops only after residual sidespin reaches zero");
 
     billiardgl::GameRuntime breakRuntime;
     const billiardgl::GameState initialRack = breakRuntime.state();

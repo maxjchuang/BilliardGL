@@ -1,13 +1,70 @@
 #include "shot.h"
 
+#include <algorithm>
 #include <cmath>
 
 namespace billiardgl {
 namespace {
 
-constexpr float kCueTipGap = 1.0f;
-constexpr float kCuePowerBackoffScale = 0.1f;
-constexpr float kCueBaseBackoff = kBallRadius * 3.0f;
+constexpr double kInteractiveReferencePower = 60.0;
+constexpr double kInteractiveMaximumPower = 200.0;
+constexpr double kInteractiveMaximumBallSpeedCmS = 1000.0;
+constexpr double kInteractiveBreakSpinStartPower = 100.0;
+constexpr double kInteractiveMaximumTopOffsetRadius = 0.40;
+
+bool usesInteractiveBreakMapping(const PhysicsProfile& profile)
+{
+    return profile.id == "chinese_pool_interactive_120hz_v5";
+}
+
+double interactiveTopOffsetRadius(double shotPower)
+{
+    if (shotPower <= kInteractiveBreakSpinStartPower) return 0.0;
+    const double fraction = (shotPower - kInteractiveBreakSpinStartPower) /
+        (kInteractiveMaximumPower - kInteractiveBreakSpinStartPower);
+    return kInteractiveMaximumTopOffsetRadius *
+        std::max(0.0, std::min(1.0, fraction));
+}
+
+double cueSpeedForTargetBallSpeed(double ballSpeedCmS, double offsetRadius,
+    const PhysicsProfile& profile)
+{
+    const double inverseEffectiveMass =
+        1.0 / profile.cue.effectiveMassKg +
+        1.0 / profile.ball.massKg +
+        offsetRadius * offsetRadius /
+            (profile.ball.inertiaFactor * profile.ball.massKg);
+    const double ballToCueSpeedRatio =
+        (1.0 + profile.cue.normalRestitution) /
+        (profile.ball.massKg * inverseEffectiveMass);
+    return ballSpeedCmS / ballToCueSpeedRatio;
+}
+
+double interactiveCueSpeedCmS(double shotPower,
+    const PhysicsProfile& profile)
+{
+    const double linearSpeed =
+        shotPower * profile.cue.cueSpeedPerPowerUnitCmS;
+    if (shotPower <= kInteractiveReferencePower) return linearSpeed;
+
+    // Continue from the ordinary-shot linear curve with the same first
+    // derivative, then accelerate quadratically toward a 10 m/s maximum
+    // cue-ball launch. This preserves low-speed finesse without making the
+    // break range artificially weak.
+    const double referenceSpeed = kInteractiveReferencePower *
+        profile.cue.cueSpeedPerPowerUnitCmS;
+    const double maximumCueSpeed = cueSpeedForTargetBallSpeed(
+        kInteractiveMaximumBallSpeedCmS,
+        kInteractiveMaximumTopOffsetRadius, profile);
+    const double range =
+        kInteractiveMaximumPower - kInteractiveReferencePower;
+    const double delta = std::min(shotPower, kInteractiveMaximumPower) -
+        kInteractiveReferencePower;
+    const double curvature = (maximumCueSpeed - referenceSpeed -
+        profile.cue.cueSpeedPerPowerUnitCmS * range) / (range * range);
+    return referenceSpeed + profile.cue.cueSpeedPerPowerUnitCmS * delta +
+        curvature * delta * delta;
+}
 
 }  // namespace
 
@@ -27,12 +84,18 @@ CueImpactInput cueImpactFromShotControls(float yaw, float shotPower, const Physi
     const Point3 direction = aimDirectionOnTable(yaw);
     CueImpactInput input;
     input.cueBallIndex = 0;
-    input.cueSpeedCmS = static_cast<double>(shotPower) * profile.cue.cueSpeedPerPowerUnitCmS;
+    input.cueSpeedCmS = usesInteractiveBreakMapping(profile)
+        ? interactiveCueSpeedCmS(shotPower, profile)
+        : static_cast<double>(shotPower) *
+            profile.cue.cueSpeedPerPowerUnitCmS;
     input.cueMassKg = profile.cue.effectiveMassKg;
     input.direction = {direction.x, 0.0, direction.z};
     input.elevationDegrees = 0.0;
-    input.tipOffsetCm = {0.0, 0.0};
-    input.tipOffsetRadius = {0.0, 0.0};
+    const double topOffset = usesInteractiveBreakMapping(profile)
+        ? interactiveTopOffsetRadius(shotPower) : 0.0;
+    input.tipOffsetCm = {0.0,
+        topOffset * static_cast<double>(profile.ball.radiusCm)};
+    input.tipOffsetRadius = {0.0, topOffset};
     input.chalkState = "CHALKED";
     return input;
 }
@@ -46,18 +109,24 @@ Point3 cueLineEndFromAim(float yaw, float length)
 Point3 cueLineStartFromAim(float yaw)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
-    const float start = kBallRadius + kCueTipGap;
+    const float start = kBallRadius + kCueTipRestGapCm;
     return Point3{direction.x * start, 0.0f, direction.z * start};
 }
 
-Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw, float shotPower)
+Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw,
+    float shotPower, float cueModelTipOffsetCm)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
-    const float backoff = kCueBaseBackoff + kCueTipGap + shotPower * kCuePowerBackoffScale;
+    // cue.obj's origin lies in front of its physical tip. Position the asset
+    // from the measured tip endpoint so the visible clearance, rather than the
+    // arbitrary model origin, remains stable as ball dimensions change.
+    const float tipBackoff = kBallRadius + kCueTipRestGapCm +
+        shotPower * kCuePowerBackoffCmPerUnit;
+    const float modelOriginBackoff = tipBackoff - cueModelTipOffsetCm;
     return Point3{
-        cueBallPosition.x - direction.x * backoff,
+        cueBallPosition.x - direction.x * modelOriginBackoff,
         cueBallPosition.y,
-        cueBallPosition.z - direction.z * backoff};
+        cueBallPosition.z - direction.z * modelOriginBackoff};
 }
 
 float cueStickRotationDegreesFromAim(float yaw)

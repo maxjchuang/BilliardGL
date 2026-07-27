@@ -11,6 +11,97 @@ float horizontalLength(const Point3& value)
     return std::sqrt(value.x * value.x + value.z * value.z);
 }
 
+struct Quaternion {
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
+    float w = 1.0f;
+};
+
+Quaternion multiplied(const Quaternion& first, const Quaternion& second)
+{
+    return Quaternion{
+        first.w * second.x + first.x * second.w +
+            first.y * second.z - first.z * second.y,
+        first.w * second.y - first.x * second.z +
+            first.y * second.w + first.z * second.x,
+        first.w * second.z + first.x * second.y -
+            first.y * second.x + first.z * second.w,
+        first.w * second.w - first.x * second.x -
+            first.y * second.y - first.z * second.z};
+}
+
+Quaternion orientation(const BallState& ball)
+{
+    const float axisLength = std::sqrt(
+        ball.rotationAxis.x * ball.rotationAxis.x +
+        ball.rotationAxis.y * ball.rotationAxis.y +
+        ball.rotationAxis.z * ball.rotationAxis.z);
+    if (axisLength <= 0.0f || ball.rotationAngle == 0.0f) {
+        return Quaternion{};
+    }
+    const float halfAngle = ball.rotationAngle * kPi / 360.0f;
+    const float scale = std::sin(halfAngle) / axisLength;
+    return Quaternion{ball.rotationAxis.x * scale,
+        ball.rotationAxis.y * scale, ball.rotationAxis.z * scale,
+        std::cos(halfAngle)};
+}
+
+void advanceOrientation(BallState& ball, const Point3& rotationVectorRad)
+{
+    const float angle = std::sqrt(
+        rotationVectorRad.x * rotationVectorRad.x +
+        rotationVectorRad.y * rotationVectorRad.y +
+        rotationVectorRad.z * rotationVectorRad.z);
+    if (angle <= 0.0f) return;
+    const float halfAngle = 0.5f * angle;
+    const float scale = std::sin(halfAngle) / angle;
+    const Quaternion delta{rotationVectorRad.x * scale,
+        rotationVectorRad.y * scale, rotationVectorRad.z * scale,
+        std::cos(halfAngle)};
+    Quaternion updated = multiplied(delta, orientation(ball));
+    const float length = std::sqrt(updated.x * updated.x +
+        updated.y * updated.y + updated.z * updated.z +
+        updated.w * updated.w);
+    if (length <= 0.0f) return;
+    updated.x /= length;
+    updated.y /= length;
+    updated.z /= length;
+    updated.w /= length;
+    const float vectorLength = std::sqrt(updated.x * updated.x +
+        updated.y * updated.y + updated.z * updated.z);
+    if (vectorLength <= 0.000001f) {
+        ball.rotationAxis = Point3{};
+        ball.rotationAngle = 0.0f;
+        return;
+    }
+    ball.rotationAxis = Point3{updated.x / vectorLength,
+        updated.y / vectorLength, updated.z / vectorLength};
+    ball.rotationAngle = 2.0f * std::atan2(vectorLength, updated.w) *
+        180.0f / kPi;
+}
+
+float advanceTorsionalSpin(BallState& ball, float deltaSeconds,
+    const SurfaceProperties& surface, SurfaceMotionStep& step)
+{
+    const float initial = ball.angularVelocity.y;
+    if (deltaSeconds <= 0.0f || initial == 0.0f) return 0.0f;
+    const float deceleration = surface.torsionalSpinDecelerationRadS2;
+    if (deceleration <= 0.0f) return initial * deltaSeconds;
+    const float direction = initial < 0.0f ? -1.0f : 1.0f;
+    const float magnitude = std::fabs(initial);
+    const float duration = std::min(deltaSeconds, magnitude / deceleration);
+    const float integratedAngle = direction *
+        (magnitude * duration - 0.5f * deceleration * duration * duration);
+    const float availableDecay = deceleration * deltaSeconds;
+    const float finalMagnitude = magnitude <= availableDecay + 0.000001f
+        ? 0.0f : magnitude - availableDecay;
+    ball.angularVelocity.y = direction * finalMagnitude;
+    step.angularAccelerationRadS2.y =
+        (ball.angularVelocity.y - initial) / deltaSeconds;
+    return integratedAngle;
+}
+
 float advanceRollingSegment(
     BallState& ball, float deltaSeconds, const BallProperties& ballProperties,
     const SurfaceProperties& surface)
@@ -238,20 +329,15 @@ SurfaceMotionStep advanceSurfaceMotion(
             ball.speed = horizontalLength(ball.velocity);
         }
     }
+    const float torsionalRotation = advanceTorsionalSpin(
+        ball, deltaSeconds, surface, step);
     step.after = ball.motionState;
     step.finalSlipSpeedCmS = horizontalLength(
         surfaceContactSlipVelocity(ball, ballProperties.radiusCm));
-    const float angularSpeed = std::sqrt(
-        ball.angularVelocity.x * ball.angularVelocity.x +
-        ball.angularVelocity.y * ball.angularVelocity.y +
-        ball.angularVelocity.z * ball.angularVelocity.z);
-    if (angularSpeed > 0.0f) {
-        ball.rotationAxis.x = ball.angularVelocity.x / angularSpeed;
-        ball.rotationAxis.y = ball.angularVelocity.y / angularSpeed;
-        ball.rotationAxis.z = ball.angularVelocity.z / angularSpeed;
-        ball.rotationAngle +=
-            angularSpeed * deltaSeconds * 180.0f / kPi;
-    }
+    advanceOrientation(ball, Point3{
+        ball.angularVelocity.x * deltaSeconds,
+        torsionalRotation,
+        ball.angularVelocity.z * deltaSeconds});
     return step;
 }
 

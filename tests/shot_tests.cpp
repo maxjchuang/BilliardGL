@@ -78,19 +78,32 @@ void testCueLinePointsInShotVelocityDirection()
     expect(closeEnough(lineEnd.y, 0.0f));
 }
 
-void testCueStickStaysBehindCueBallOutsideBallRadius()
+void testCueStickTipUsesVisibleSurfaceClearance()
 {
     const billiardgl::Point3 cueBall{10.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
     const float yaw = 0.0f;
-    const billiardgl::Point3 cuePosition = billiardgl::cueStickPositionFromAim(cueBall, yaw, 0.0f);
-    const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(yaw, 20.0f);
-    const float offsetX = cuePosition.x - cueBall.x;
-    const float offsetZ = cuePosition.z - cueBall.z;
-    const float dot = offsetX * velocity.x + offsetZ * velocity.z;
-    const float distance = std::sqrt(offsetX * offsetX + offsetZ * offsetZ);
+    const float modelTipOffset = 5.236411f;
+    const billiardgl::Point3 cuePosition = billiardgl::cueStickPositionFromAim(
+        cueBall, yaw, 0.0f, modelTipOffset);
+    const billiardgl::Point3 direction = billiardgl::aimDirectionOnTable(yaw);
+    const billiardgl::Point3 tip{
+        cuePosition.x - direction.x * modelTipOffset,
+        cuePosition.y,
+        cuePosition.z - direction.z * modelTipOffset};
+    const float tipDistance = std::hypot(
+        tip.x - cueBall.x, tip.z - cueBall.z);
 
-    expect(dot < 0.0f, "dot < 0.0f");
-    expect(distance >= billiardgl::kBallRadius * 3.0f, "distance >= billiardgl::kBallRadius * 3.0f");
+    expect(closeEnough(tipDistance,
+        billiardgl::kBallRadius + billiardgl::kCueTipRestGapCm));
+
+    const billiardgl::Point3 poweredPosition =
+        billiardgl::cueStickPositionFromAim(
+            cueBall, yaw, 60.0f, modelTipOffset);
+    const float poweredTipDistance = std::fabs(
+        poweredPosition.x - modelTipOffset - cueBall.x);
+    expect(closeEnough(poweredTipDistance,
+        billiardgl::kBallRadius + billiardgl::kCueTipRestGapCm +
+            60.0f * billiardgl::kCuePowerBackoffCmPerUnit));
 }
 
 void testCueStickModelTailPointsAwayFromShotDirection()
@@ -137,6 +150,31 @@ void testShotPowerMapsToPhysicalCueInput()
         "mapping is zero-based and monotonic");
 }
 
+void testInteractiveBreakPowerUsesNonlinearSpeedAndTopspin()
+{
+    const billiardgl::PhysicsProfile profile =
+        billiardgl::interactiveChinesePoolPhysicsProfile();
+    const billiardgl::CueImpactInput reference =
+        billiardgl::cueImpactFromShotControls(0.0f, 60.0f, profile);
+    const billiardgl::CueImpactInput medium =
+        billiardgl::cueImpactFromShotControls(0.0f, 100.0f, profile);
+    const billiardgl::CueImpactInput maximum =
+        billiardgl::cueImpactFromShotControls(0.0f, 200.0f, profile);
+
+    expect(std::fabs(reference.cueSpeedCmS - 100.5) < 0.0001,
+        "ordinary reference power remains unchanged");
+    expect(reference.tipOffsetRadius[1] == 0.0 &&
+        medium.tipOffsetRadius[1] == 0.0,
+        "ordinary and medium shots remain centered");
+    expect(maximum.cueSpeedCmS > medium.cueSpeedCmS &&
+        maximum.cueSpeedCmS > 1700.0,
+        "high-power curve reaches the break-speed input range");
+    expect(std::fabs(maximum.tipOffsetRadius[1] - 0.40) < 0.0001 &&
+        std::fabs(maximum.tipOffsetCm[1] -
+            0.40 * profile.ball.radiusCm) < 0.0001,
+        "maximum break adds a consistent roll-matched top offset");
+}
+
 }  // namespace
 
 int main()
@@ -146,8 +184,9 @@ int main()
     testAimDirectionIsHorizontalAndNormalized();
     testShotVelocityUsesAimYawAndPower();
     testCueLinePointsInShotVelocityDirection();
-    testCueStickStaysBehindCueBallOutsideBallRadius();
+    testCueStickTipUsesVisibleSurfaceClearance();
     testCueStickModelTailPointsAwayFromShotDirection();
     testShotPowerMapsToPhysicalCueInput();
+    testInteractiveBreakPowerUsesNonlinearSpeedAndTopspin();
     return EXIT_SUCCESS;
 }

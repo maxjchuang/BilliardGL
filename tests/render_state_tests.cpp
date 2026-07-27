@@ -42,6 +42,20 @@ int main()
     expect(close(halfway.camera.target[0], 6.0f),
         "follow camera tracks the interpolated cue ball");
 
+    current.events.railCollision = true;
+    halfway = billiardgl::interpolateRenderState(previous, current, 0.5);
+    expect(close(halfway.balls[0].position.x, 12.0f),
+        "a rail collision tick presents the solved endpoint instead of a chord through geometry");
+    expect(close(halfway.camera.target[0], 12.0f),
+        "the follow camera uses the collision-safe cue-ball position");
+    current.events.railCollision = false;
+
+    current.events.ballCollision = true;
+    halfway = billiardgl::interpolateRenderState(previous, current, 0.25);
+    expect(close(halfway.balls[0].position.x, 12.0f),
+        "a ball collision tick cannot visually interpolate through another ball");
+    current.events.ballCollision = false;
+
     current.balls[1].pocketed = true;
     current.balls[1].position = billiardgl::Point3{100.0f, 0.0f, 100.0f};
     halfway = billiardgl::interpolateRenderState(previous, current, 0.5);

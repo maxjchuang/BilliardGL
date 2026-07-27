@@ -140,6 +140,8 @@ int main(int argc, char* argv[])
 		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 		initWindows();
 		billiardgl::GameRuntime runtime;
+		if (!runtime.replaceStateForScenario(
+			runtime.state(), InteractivePhysicsProfile).ok) return 1;
 		if (!billiardgl::initializeRenderResources(Render, runtime.mutableState())) return 1;
 		billiardgl::initializeParticleEmitters(Render, runtime.mutableState());
 		billiardgl::setupLights();

@@ -40,6 +40,16 @@ int main()
     if (!nearlyEqual(table.heightCm, 85.0f)) {
         return fail("table height should use the selected centimeter target");
     }
+    if (!nearlyEqual(
+            billiardgl::kTableModelBallClearanceWidthCm *
+                billiardgl::kTableModelWidthScale,
+            table.playfieldWidthCm) ||
+        !nearlyEqual(
+            billiardgl::kTableModelBallClearanceLengthCm *
+                billiardgl::kTableModelLengthScale,
+            table.playfieldLengthCm)) {
+        return fail("table model scale should align its legacy cushion geometry with physics");
+    }
 
     const billiardgl::PocketSpec pockets = billiardgl::defaultPocketSpec();
     if (!nearlyEqual(pockets.cornerMouthWidthCm, 13.2f)) {

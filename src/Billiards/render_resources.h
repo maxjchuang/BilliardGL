@@ -37,6 +37,7 @@ struct RenderResources {
 
     float cameraEye[3] = {0.0f, 0.0f, 0.0f};
     float cameraTarget[3] = {0.0f, 0.0f, 0.0f};
+    float cueTipOffsetCm = 0.0f;
     float shotPower = 0.0f;
     bool showCue = false;
     bool showPowerMeter = false;

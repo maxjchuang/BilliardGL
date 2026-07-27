@@ -127,6 +127,26 @@ int main()
     expect(stopStep.after == billiardgl::BallMotionState::Stationary,
         "the completed rolling stop is stationary");
 
+    billiardgl::SurfaceProperties torsionalSurface = rollingSurface;
+    torsionalSurface.torsionalSpinDecelerationRadS2 = 12.0f;
+    billiardgl::BallState spinning;
+    spinning.angularVelocity.y = 3.0f;
+    spinning.rotationAxis = billiardgl::Point3{1.0f, 0.0f, 0.0f};
+    spinning.rotationAngle = 90.0f;
+    const billiardgl::SurfaceMotionStep spinningStep =
+        billiardgl::advanceSurfaceMotion(
+            spinning, 0.1f, profile.ball, torsionalSurface);
+    expect(close(spinning.angularVelocity.y, 1.8f) &&
+        close(spinningStep.angularAccelerationRadS2.y, -12.0f),
+        "interaction torsional friction decays vertical-axis spin");
+    expect(std::fabs(spinning.rotationAxis.x) > 0.1f &&
+        std::fabs(spinning.rotationAxis.y) > 0.1f,
+        "orientation composition preserves history when the spin axis changes");
+    billiardgl::advanceSurfaceMotion(
+        spinning, 0.2f, profile.ball, torsionalSurface);
+    expect(spinning.angularVelocity.y == 0.0f,
+        "torsional spin reaches exact zero without reversing");
+
     billiardgl::BallState residual = pureRollingBall(
         profile.surface.slipSpeedEpsilonCmS * 0.25f,
         profile.ball.radiusCm);

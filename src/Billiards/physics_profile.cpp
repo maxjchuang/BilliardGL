@@ -49,8 +49,44 @@ PhysicsProfile defaultChinesePoolPhysicsProfile()
 PhysicsProfile interactiveChinesePoolPhysicsProfile()
 {
     PhysicsProfile profile = defaultChinesePoolPhysicsProfile();
-    profile.id = "chinese_pool_interactive_120hz_v1";
+    profile.id = "chinese_pool_interactive_120hz_v5";
     profile.solver.timeStepSeconds = 1.0f / 120.0f;
+    // At real break speeds a ball can travel more than 0.5 cm during the
+    // residual part of one 120 Hz tick after another contact. Keep the guard
+    // below one radius, but allow the position solver to recover those valid
+    // high-speed rail contacts instead of rolling the entire tick back.
+    profile.solver.maximumPenetrationCm = 2.75f;
+    // Mathavan et al.'s high-speed measurements place rolling deceleration at
+    // 12.4--12.6 cm/s^2. Their measured sliding deceleration is also
+    // consistent with the commonly modelled mu=0.20 cloth contact. Keep these
+    // interaction-only so evidence replays retain their frozen profile.
+    profile.surface.slidingFrictionCoefficient = 0.20f;
+    profile.surface.rollingResistanceAccelerationCmS2 = 12.5f;
+    // A finite interaction-tuned torsional decay prevents collision-generated
+    // vertical-axis spin from persisting after translation has stopped.
+    profile.surface.torsionalSpinDecelerationRadS2 = 12.0f;
+    profile.surface.material = "mathavan_interactive_surface_v2";
+
+    // Replace the legacy perfectly elastic, frictionless contacts with the
+    // spent-data Phase 3 calibration. Ball friction produces collision throw;
+    // the cushion law loses more energy as incident speed rises and couples
+    // rail-height contact into spin.
+    profile.ball.normalRestitution = 0.97f;
+    profile.ball.frictionCoefficient = 0.10f;
+    profile.cushion.normalRestitution = 0.93f;
+    profile.cushion.restitutionIntercept = 1.0f;
+    profile.cushion.restitutionSlopePerMps = 0.056f;
+    profile.cushion.minimumRestitution = 0.0f;
+    profile.cushion.maximumRestitution = 0.93f;
+    profile.cushion.frictionCoefficient = 0.14f;
+    profile.cushion.noseHeightRatio = 1.4f;
+    profile.cushion.maximumRigidIncidentSpeedCmS = 250.0f;
+    profile.cushion.material = "mathavan_speed_dependent_cushion_v2";
+
+    // Power 60 remains the reference point for ordinary-shot control. The
+    // interaction layer applies a smooth high-power curve above that point;
+    // evidence scenarios retain the linear mapping in their frozen profiles.
+    profile.cue.cueSpeedPerPowerUnitCmS = 1.675f;
     return profile;
 }
 

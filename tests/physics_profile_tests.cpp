@@ -37,16 +37,39 @@ int main()
         billiardgl::interactiveChinesePoolPhysicsProfile();
     expect(billiardgl::validatePhysicsProfile(interactive).ok,
         "interactive profile must be valid");
-    expect(interactive.id == "chinese_pool_interactive_120hz_v1",
+    expect(interactive.id == "chinese_pool_interactive_120hz_v5",
         "interactive profile has a distinct traceable ID");
     expect(close(interactive.solver.timeStepSeconds, 1.0f / 120.0f),
         "interactive profile runs physics at 120 Hz");
+    expect(close(interactive.solver.maximumPenetrationCm, 2.75f),
+        "interactive high-speed contacts retain a sub-radius recovery budget");
     expect(close(production.solver.timeStepSeconds, 0.1f),
         "evidence replay baseline keeps its explicit 100 ms step");
-    expect(interactive.formulaVersion == production.formulaVersion &&
-        interactive.surface.material == production.surface.material &&
-        interactive.cushion.material == production.cushion.material,
-        "interactive timing must not silently change the physical model");
+    expect(interactive.formulaVersion == production.formulaVersion,
+        "interactive calibration must not change collision formulas");
+    expect(close(interactive.surface.slidingFrictionCoefficient, 0.20f) &&
+        close(interactive.surface.rollingResistanceAccelerationCmS2, 12.5f) &&
+        close(interactive.surface.torsionalSpinDecelerationRadS2, 12.0f) &&
+        interactive.surface.material == "mathavan_interactive_surface_v2",
+        "interactive cloth uses the public sliding and rolling calibration");
+    expect(close(interactive.cue.cueSpeedPerPowerUnitCmS, 1.675f),
+        "interactive shot power is calibrated to the playable table distance");
+    expect(close(interactive.ball.normalRestitution, 0.97f) &&
+        close(interactive.ball.frictionCoefficient, 0.10f),
+        "interactive ball contacts lose energy and transfer tangent impulse");
+    expect(close(interactive.cushion.normalRestitution, 0.93f) &&
+        close(interactive.cushion.restitutionIntercept, 1.0f) &&
+        close(interactive.cushion.restitutionSlopePerMps, 0.056f) &&
+        close(interactive.cushion.maximumRestitution, 0.93f) &&
+        close(interactive.cushion.frictionCoefficient, 0.14f) &&
+        close(interactive.cushion.noseHeightRatio, 1.4f) &&
+        close(interactive.cushion.maximumRigidIncidentSpeedCmS, 250.0f) &&
+        interactive.cushion.material == "mathavan_speed_dependent_cushion_v2",
+        "interactive rail response uses the speed-dependent cushion calibration");
+    expect(close(production.surface.slidingFrictionCoefficient, 0.0f) &&
+        close(production.surface.rollingResistanceAccelerationCmS2, 4.0f) &&
+        close(production.cue.cueSpeedPerPowerUnitCmS, 1.34f),
+        "evidence replay baseline remains unchanged");
 
     const billiardgl::PhysicsProfile profile =
         billiardgl::phase3V5CandidatePhysicsProfile();
