@@ -800,7 +800,9 @@ PhysicsStepTelemetry updatePhysicsDiscrete(
         }
         surface.ballIndex = i;
         telemetry.surfaceMotion.push_back(surface);
-        if (ball.speed > 0.0f) {
+        if (ball.speed > 0.0f ||
+            (profile.surface.torsionalSpinDecelerationRadS2 > 0.0f &&
+                ball.angularVelocity.y != 0.0f)) {
             anyMoving = true;
         }
     }

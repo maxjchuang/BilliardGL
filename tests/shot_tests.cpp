@@ -150,6 +150,31 @@ void testShotPowerMapsToPhysicalCueInput()
         "mapping is zero-based and monotonic");
 }
 
+void testInteractiveBreakPowerUsesNonlinearSpeedAndTopspin()
+{
+    const billiardgl::PhysicsProfile profile =
+        billiardgl::interactiveChinesePoolPhysicsProfile();
+    const billiardgl::CueImpactInput reference =
+        billiardgl::cueImpactFromShotControls(0.0f, 60.0f, profile);
+    const billiardgl::CueImpactInput medium =
+        billiardgl::cueImpactFromShotControls(0.0f, 100.0f, profile);
+    const billiardgl::CueImpactInput maximum =
+        billiardgl::cueImpactFromShotControls(0.0f, 200.0f, profile);
+
+    expect(std::fabs(reference.cueSpeedCmS - 100.5) < 0.0001,
+        "ordinary reference power remains unchanged");
+    expect(reference.tipOffsetRadius[1] == 0.0 &&
+        medium.tipOffsetRadius[1] == 0.0,
+        "ordinary and medium shots remain centered");
+    expect(maximum.cueSpeedCmS > medium.cueSpeedCmS &&
+        maximum.cueSpeedCmS > 1700.0,
+        "high-power curve reaches the break-speed input range");
+    expect(std::fabs(maximum.tipOffsetRadius[1] - 0.40) < 0.0001 &&
+        std::fabs(maximum.tipOffsetCm[1] -
+            0.40 * profile.ball.radiusCm) < 0.0001,
+        "maximum break adds a consistent roll-matched top offset");
+}
+
 }  // namespace
 
 int main()
@@ -162,5 +187,6 @@ int main()
     testCueStickTipUsesVisibleSurfaceClearance();
     testCueStickModelTailPointsAwayFromShotDirection();
     testShotPowerMapsToPhysicalCueInput();
+    testInteractiveBreakPowerUsesNonlinearSpeedAndTopspin();
     return EXIT_SUCCESS;
 }
