@@ -93,6 +93,13 @@ void renderTable(const RenderResources& resources)
     }
 
     ObjLoader& tableObj = *resources.tableObj;
+    glPushMatrix();
+    // Keep the legacy OBJ's visible cushion nose aligned with the physical
+    // 127 x 254 cm playfield. The model already has the calibrated surface
+    // height, so only its table-plane axes are scaled.
+    glScalef(kTableModelWidthScale, 1.0f, kTableModelLengthScale);
+    glPushAttrib(GL_ENABLE_BIT);
+    glEnable(GL_NORMALIZE);
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, resources.tableVertexVBO);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -110,6 +117,8 @@ void renderTable(const RenderResources& resources)
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+    glPopAttrib();
+    glPopMatrix();
 }
 
 void renderDecoration(const RenderResources& resources)

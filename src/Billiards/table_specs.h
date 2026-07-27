@@ -14,6 +14,17 @@ constexpr float kChineseCornerPocketMouthWidthCm = 13.2f;
 constexpr float kChineseSidePocketMouthWidthCm = 8.6f;
 constexpr float kChinesePocketDropZoneDepthCm = 6.0f;
 
+// table.obj was authored for both the legacy playfield and the legacy ball,
+// whose diameter was incorrectly used as its radius. These measured effective
+// no-overlap envelopes account for the cushion profile at the corrected ball
+// center height; they are intentionally not the OBJ's outer bounding box.
+constexpr float kTableModelBallClearanceWidthCm = 121.5311f;
+constexpr float kTableModelBallClearanceLengthCm = 249.0196f;
+constexpr float kTableModelWidthScale =
+    kChinesePlayfieldWidthCm / kTableModelBallClearanceWidthCm;
+constexpr float kTableModelLengthScale =
+    kChinesePlayfieldLengthCm / kTableModelBallClearanceLengthCm;
+
 struct BallSpec {
     float radiusCm;
 
