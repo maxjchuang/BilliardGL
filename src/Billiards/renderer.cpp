@@ -212,7 +212,9 @@ void renderCue(const GameState& state, const RenderResources& resources)
     }
 
     const BallState& cueBall = state.balls[0];
-    const Point3 cuePosition = cueStickPositionFromAim(cueBall.position, state.aim.yaw, resources.shotPower);
+    const Point3 cuePosition = cueStickPositionFromAim(
+        cueBall.position, state.aim.yaw, resources.shotPower,
+        resources.cueTipOffsetCm);
 
     if (state.aim.showGuideLine) {
         const Point3 lineStart = cueLineStartFromAim(state.aim.yaw);

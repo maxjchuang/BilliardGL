@@ -6,7 +6,9 @@
 #include "assets.h"
 #include "image_loader.h"
 
+#include <algorithm>
 #include <cstdio>
+#include <limits>
 #include <vector>
 
 namespace billiardgl {
@@ -155,6 +157,12 @@ bool initializeRenderResources(RenderResources& resources, GameState& state)
         return false;
     }
 
+    resources.cueTipOffsetCm = std::numeric_limits<float>::max();
+    for (const Vertex& vertex : resources.cueObj->vertices) {
+        resources.cueTipOffsetCm = std::min(
+            resources.cueTipOffsetCm, vertex.position.z);
+    }
+
     resources.tableTextures[0] = uploadTexture(getTexturePath(resources.tableObj->materials[0]->texture));
     resources.tableTextures[1] = uploadTexture(getTexturePath(resources.tableObj->materials[1]->texture));
     resources.cueTextures[0] = uploadTexture(getTexturePath(resources.cueObj->materials[0]->texture));
@@ -210,6 +218,7 @@ void destroyRenderResources(RenderResources& resources)
     resources.cueObj.reset();
     resources.benchObj.reset();
     resources.wardObj.reset();
+    resources.cueTipOffsetCm = 0.0f;
 }
 
 void applyBallTexturesToState(const RenderResources& resources, GameState& state)

@@ -78,19 +78,32 @@ void testCueLinePointsInShotVelocityDirection()
     expect(closeEnough(lineEnd.y, 0.0f));
 }
 
-void testCueStickStaysBehindCueBallOutsideBallRadius()
+void testCueStickTipUsesVisibleSurfaceClearance()
 {
     const billiardgl::Point3 cueBall{10.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
     const float yaw = 0.0f;
-    const billiardgl::Point3 cuePosition = billiardgl::cueStickPositionFromAim(cueBall, yaw, 0.0f);
-    const billiardgl::Point3 velocity = billiardgl::shotVelocityFromAim(yaw, 20.0f);
-    const float offsetX = cuePosition.x - cueBall.x;
-    const float offsetZ = cuePosition.z - cueBall.z;
-    const float dot = offsetX * velocity.x + offsetZ * velocity.z;
-    const float distance = std::sqrt(offsetX * offsetX + offsetZ * offsetZ);
+    const float modelTipOffset = 5.236411f;
+    const billiardgl::Point3 cuePosition = billiardgl::cueStickPositionFromAim(
+        cueBall, yaw, 0.0f, modelTipOffset);
+    const billiardgl::Point3 direction = billiardgl::aimDirectionOnTable(yaw);
+    const billiardgl::Point3 tip{
+        cuePosition.x - direction.x * modelTipOffset,
+        cuePosition.y,
+        cuePosition.z - direction.z * modelTipOffset};
+    const float tipDistance = std::hypot(
+        tip.x - cueBall.x, tip.z - cueBall.z);
 
-    expect(dot < 0.0f, "dot < 0.0f");
-    expect(distance >= billiardgl::kBallRadius * 3.0f, "distance >= billiardgl::kBallRadius * 3.0f");
+    expect(closeEnough(tipDistance,
+        billiardgl::kBallRadius + billiardgl::kCueTipRestGapCm));
+
+    const billiardgl::Point3 poweredPosition =
+        billiardgl::cueStickPositionFromAim(
+            cueBall, yaw, 60.0f, modelTipOffset);
+    const float poweredTipDistance = std::fabs(
+        poweredPosition.x - modelTipOffset - cueBall.x);
+    expect(closeEnough(poweredTipDistance,
+        billiardgl::kBallRadius + billiardgl::kCueTipRestGapCm +
+            60.0f * billiardgl::kCuePowerBackoffCmPerUnit));
 }
 
 void testCueStickModelTailPointsAwayFromShotDirection()
@@ -146,7 +159,7 @@ int main()
     testAimDirectionIsHorizontalAndNormalized();
     testShotVelocityUsesAimYawAndPower();
     testCueLinePointsInShotVelocityDirection();
-    testCueStickStaysBehindCueBallOutsideBallRadius();
+    testCueStickTipUsesVisibleSurfaceClearance();
     testCueStickModelTailPointsAwayFromShotDirection();
     testShotPowerMapsToPhysicalCueInput();
     return EXIT_SUCCESS;

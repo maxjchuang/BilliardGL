@@ -3,13 +3,6 @@
 #include <cmath>
 
 namespace billiardgl {
-namespace {
-
-constexpr float kCueTipGap = 1.0f;
-constexpr float kCuePowerBackoffScale = 0.1f;
-constexpr float kCueBaseBackoff = kBallRadius * 3.0f;
-
-}  // namespace
 
 Point3 aimDirectionOnTable(float yaw)
 {
@@ -46,18 +39,24 @@ Point3 cueLineEndFromAim(float yaw, float length)
 Point3 cueLineStartFromAim(float yaw)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
-    const float start = kBallRadius + kCueTipGap;
+    const float start = kBallRadius + kCueTipRestGapCm;
     return Point3{direction.x * start, 0.0f, direction.z * start};
 }
 
-Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw, float shotPower)
+Point3 cueStickPositionFromAim(const Point3& cueBallPosition, float yaw,
+    float shotPower, float cueModelTipOffsetCm)
 {
     const Point3 direction = aimDirectionOnTable(yaw);
-    const float backoff = kCueBaseBackoff + kCueTipGap + shotPower * kCuePowerBackoffScale;
+    // cue.obj's origin lies in front of its physical tip. Position the asset
+    // from the measured tip endpoint so the visible clearance, rather than the
+    // arbitrary model origin, remains stable as ball dimensions change.
+    const float tipBackoff = kBallRadius + kCueTipRestGapCm +
+        shotPower * kCuePowerBackoffCmPerUnit;
+    const float modelOriginBackoff = tipBackoff - cueModelTipOffsetCm;
     return Point3{
-        cueBallPosition.x - direction.x * backoff,
+        cueBallPosition.x - direction.x * modelOriginBackoff,
         cueBallPosition.y,
-        cueBallPosition.z - direction.z * backoff};
+        cueBallPosition.z - direction.z * modelOriginBackoff};
 }
 
 float cueStickRotationDegreesFromAim(float yaw)
