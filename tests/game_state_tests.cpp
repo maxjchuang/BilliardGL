@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 
@@ -32,7 +33,46 @@ int main()
         if (ball.motionState != billiardgl::BallMotionState::Stationary) {
             return fail("initialized balls should have authoritative stationary state");
         }
+        if (ball.trajectoryGeneration != 0) {
+            return fail("initialized balls should start at trajectory generation zero");
+        }
     }
+
+    std::uint64_t parsedGeneration = 99;
+    if (!billiardgl::parseCanonicalTrajectoryGeneration("0", parsedGeneration) ||
+        parsedGeneration != 0 ||
+        !billiardgl::parseCanonicalTrajectoryGeneration(
+            "18446744073709551615", parsedGeneration) ||
+        parsedGeneration != std::numeric_limits<std::uint64_t>::max() ||
+        billiardgl::canonicalTrajectoryGeneration(parsedGeneration) !=
+            "18446744073709551615") {
+        return fail("trajectory generation codec should round-trip the full uint64 range");
+    }
+    const std::array<const char*, 8> invalidGenerations = {{
+        "", "-1", "+1", "01", "1.0", " 1", "1 ",
+        "18446744073709551616"}};
+    for (const char* text : invalidGenerations) {
+        parsedGeneration = 73;
+        if (billiardgl::parseCanonicalTrajectoryGeneration(text, parsedGeneration) ||
+            parsedGeneration != 73) {
+            return fail("trajectory generation codec should reject noncanonical or overflowing values atomically");
+        }
+    }
+
+    state.balls[0].trajectoryGeneration =
+        std::numeric_limits<std::uint64_t>::max();
+    const billiardgl::GameState copied = state;
+    if (copied.balls[0].trajectoryGeneration !=
+            std::numeric_limits<std::uint64_t>::max()) {
+        return fail("GameState copies should preserve nonzero trajectory generations");
+    }
+    state.balls[0].trajectoryGeneration = 9;
+    state.balls[1].outOfPlay = true;
+    billiardgl::initializeBalls(state);
+    if (state.balls[0].trajectoryGeneration != 0) {
+        return fail("initializeBalls should clear stale trajectory generations");
+    }
+    if (state.balls[1].outOfPlay) return fail("rerack initialization clears prior off-table removal");
     if (!nearlyEqual(billiardgl::kBallRadius, 2.8575f)) {
         return fail("ball radius should use real Chinese billiards radius");
     }
@@ -70,9 +110,13 @@ int main()
     state.balls[0].pocketed = true;
     state.balls[0].texture = 42;
     state.balls[0].motionState = billiardgl::BallMotionState::Sliding;
+    state.balls[0].trajectoryGeneration = 23;
     billiardgl::resetBallMotion(state.balls[0]);
     if (state.balls[0].motionState != billiardgl::BallMotionState::Stationary) {
         return fail("resetBallMotion should reset authoritative motion state");
+    }
+    if (state.balls[0].trajectoryGeneration != 23) {
+        return fail("motion-only reset should preserve trajectory generation");
     }
     state.balls[0].velocity = billiardgl::Point3{4.0f, 0.0f, 5.0f};
     state.balls[0].speed = 6.0f;

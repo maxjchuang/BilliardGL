@@ -36,36 +36,36 @@ void drawScreenRect(float left, float bottom, float right, float top, float r, f
     glEnd();
 }
 
-const char* aimModeText(const GameState& state)
+const char* aimModeText(const HudViewModel& hud)
 {
-    return state.aim.mode == AimMode::Aim ? "Mode: Aim | Tab Observe" : "Mode: Observe | Tab Aim";
+    return hud.aimMode ? "Mode: Aim | Tab Observe" : "Mode: Observe | Tab Aim";
 }
 
-const char* cameraModeText(const GameState& state)
+const char* cameraModeText(const HudViewModel& hud)
 {
-    return state.camera.anchorMode == CameraAnchorMode::FollowCueBall
+    return hud.followCamera
         ? "Camera: Follow | C Free"
         : "Camera: Free | Space Cue";
 }
 
 }  // namespace
 
-void drawHelpPrompt(const GameState& state)
+void drawHelpPrompt(const HudViewModel& hud)
 {
-    const char* prompt = state.hud.showHelp ? "Press H to close help" : "Press H for help";
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 146.0f, GLUT_BITMAP_HELVETICA_18, prompt);
+    const char* prompt = hud.showHelp ? "Press H to close help" : "Press H for help";
+    drawStringAt(18.0f, static_cast<float>(hud.viewportHeight) - 146.0f, GLUT_BITMAP_HELVETICA_18, prompt);
 }
 
-void drawHelpOverlay(const GameState& state)
+void drawHelpOverlay(const HudViewModel& hud)
 {
-    if (!state.hud.showHelp) {
+    if (!hud.showHelp) {
         return;
     }
 
     const float panelWidth = 520.0f;
     const float panelHeight = 480.0f;
-    const float left = (static_cast<float>(state.config.width) - panelWidth) * 0.5f;
-    const float bottom = (static_cast<float>(state.config.height) - panelHeight) * 0.5f;
+    const float left = (static_cast<float>(hud.viewportWidth) - panelWidth) * 0.5f;
+    const float bottom = (static_cast<float>(hud.viewportHeight) - panelHeight) * 0.5f;
     const float top = bottom + panelHeight;
     const float textLeft = left + 34.0f;
     float y = top - 44.0f;
@@ -107,12 +107,12 @@ void drawHelpOverlay(const GameState& state)
     drawStringAt(textLeft, y, GLUT_BITMAP_HELVETICA_18, "Esc                   Quit");
 }
 
-void drawHud(const GameState& state)
+void drawHud(const HudViewModel& hud)
 {
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0.0, state.config.width, 0.0, state.config.height);
+    gluOrtho2D(0.0, hud.viewportWidth, 0.0, hud.viewportHeight);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
@@ -126,12 +126,13 @@ void drawHud(const GameState& state)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-    const std::string playerText = "Current Player: Player " + std::to_string(state.players.currentPlayer + 1);
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 68.0f, GLUT_BITMAP_TIMES_ROMAN_24, playerText.c_str());
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 94.0f, GLUT_BITMAP_HELVETICA_18, aimModeText(state));
-    drawStringAt(18.0f, static_cast<float>(state.config.height) - 120.0f, GLUT_BITMAP_HELVETICA_18, cameraModeText(state));
-    drawHelpPrompt(state);
-    drawHelpOverlay(state);
+    const std::string playerText = "Current Player: Player " +
+        std::to_string(hud.currentPlayerNumber);
+    drawStringAt(18.0f, static_cast<float>(hud.viewportHeight) - 68.0f, GLUT_BITMAP_TIMES_ROMAN_24, playerText.c_str());
+    drawStringAt(18.0f, static_cast<float>(hud.viewportHeight) - 94.0f, GLUT_BITMAP_HELVETICA_18, aimModeText(hud));
+    drawStringAt(18.0f, static_cast<float>(hud.viewportHeight) - 120.0f, GLUT_BITMAP_HELVETICA_18, cameraModeText(hud));
+    drawHelpPrompt(hud);
+    drawHelpOverlay(hud);
 
     glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);

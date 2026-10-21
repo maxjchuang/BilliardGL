@@ -1,0 +1,265 @@
+{
+  "schema": "billiardgl.phase4.overlay_v4_targeted_ordinal1_root_cause_diagnostic_gate.v1",
+  "schema_version": 1,
+  "package_id": "phase4_overlay_v4_targeted_ordinal1_root_cause_diagnostic_v1",
+  "status": "DIAGNOSTIC_REQUIRED_NOT_IMPLEMENTATION_APPROVED",
+  "scope": "Root-cause and diagnostic design gate for the frozen Phase 4 v4 targeted ordinal-1 machine failure only.",
+  "authorization_boundary": {
+    "diagnostic_design_authorized": true,
+    "pure_offline_read_only_diagnostic_execution_authorized": true,
+    "implementation_authorized": false,
+    "asset_change_authorized": false,
+    "renderer_change_authorized": false,
+    "gpu_capture_authorized": false,
+    "targeted_rerun_or_resume_authorized": false,
+    "technical_art_review_authorized": false,
+    "formal68_authorized": false,
+    "m3_authorized_or_claimed": false,
+    "golden_authorized_or_claimed": false
+  },
+  "frozen_input_bindings": [
+    {
+      "role": "v4_targeted_ordinal1_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-targeted-failure-receipt-v1.json",
+      "sha256": "sha256:2dbd499249df1e44631669165a891f94d232f4fa436c9fd0910716de35d2717f"
+    },
+    {
+      "role": "v4_targeted_ordinal1_original_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/camera_player_low_1080.ppm",
+      "sha256": "sha256:f3626f44ead6cfe4729e6ff3b76168747154b2452d0ca2afd70e1520b0e09744"
+    },
+    {
+      "role": "v4_compound_visibility_correction_design_gate",
+      "path": "docs/art/phase4-overlay-v4-compound-visibility-correction-design-gate-v1.json",
+      "sha256": "sha256:1901a825b092c08ce79425ec936ec150fada9ff4e3b4f9817e818d481013a39f"
+    },
+    {
+      "role": "v4_ready_source_aggregate",
+      "kind": "digest_value",
+      "sha256": "sha256:1f96d521c696410656ae08134b9f493a28ad38dc35342101d161d963f7c43973"
+    },
+    {
+      "role": "v4_ready_source_binding_manifest",
+      "path": "docs/art/phase4-training-replay-overlay-v4-ready-v3/source-bindings-v3.json",
+      "sha256": "sha256:7e2d69c3ac5c556cf055c859fa18d4205e967885b9d70d521eeaeb92fe65e6f6"
+    },
+    {
+      "role": "v4_targeted_ready_manifest",
+      "path": "docs/art/phase4-training-replay-overlay-v4-ready-v3/targeted-preflight-ready.json",
+      "sha256": "sha256:e413e8c17e1489124af0aafdf5c18140a1509e3ba5f22f04272ec84c401b3e91"
+    },
+    {
+      "role": "v4_offline_preparation_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-ready-v3/offline-preparation-receipt.json",
+      "sha256": "sha256:b0e1428974264d9b3cb17b5013ba168a77788a91be071263634d65d516586901"
+    },
+    {
+      "role": "v4_generated_gpu_runner_source",
+      "path": "build-phase4-overlay-v4-ready-v3/generated/phase4_overlay_v4_gpu_capture_runner.mm",
+      "sha256": "sha256:35fa98ad44e438f11a6a5b50a80c06de00adb518de4d345d51e741283b195d43"
+    },
+    {
+      "role": "v4_semantic_attachment_support_source",
+      "path": "spikes/render_core_profile/phase4_overlay_v4_gpu_capture_support.inc",
+      "sha256": "sha256:faf64793ec6a7dccc59edf10e745d5b02d892b97336dfc77cf1b80bdfa06cba4"
+    },
+    {
+      "role": "compound_visibility_ownership_source",
+      "path": "src/Billiards/training/trajectory_compound_visibility.cpp",
+      "sha256": "sha256:b2149fad4bf11151ba8779132ccc5fc377906fd8fa81e835ccd98186074b673a"
+    },
+    {
+      "role": "compound_visibility_ownership_header",
+      "path": "src/Billiards/training/trajectory_compound_visibility.h",
+      "sha256": "sha256:5d8af530e49fa08f8dca8ca08db304db9aee4c3e959203e1251a43b76d820360"
+    },
+    {
+      "role": "v3_frozen_formal_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-v3/failure-receipt.json",
+      "sha256": "sha256:a6c900f7e96e523a4f45bfd153430857b3114997648a31dd8c8aa145bf6615ed"
+    }
+  ],
+  "frozen_actual_outcome": {
+    "capture_id": "camera_player_low_1080",
+    "plan_ordinal_one_based": 1,
+    "status": "TARGETED_ACTUAL_GPU_FAIL_FROZEN_AT_ORDINAL_1",
+    "source_probe_count": 95,
+    "visible_probe_count": 46,
+    "hidden_probe_count": 49,
+    "aggregate_visible_probe_coverage": 0.484211,
+    "minimum_required_coverage": 0.9,
+    "machine_passed_cases": 0,
+    "unrun_cases": 10,
+    "targeted_rerun_or_resume_allowed": false,
+    "diagnostic_detail_missing_from_frozen_failure": [
+      "predicted source/visible/hidden counts and coverage",
+      "actual source/visible/hidden counts and coverage",
+      "per-component source and visible counts",
+      "per-component hidden reason counts",
+      "hidden probe IDs, roles and physical coordinates",
+      "ownership candidate pixels and arbitration results"
+    ]
+  },
+  "independent_original_frame_review": {
+    "reviewed": true,
+    "review_input": "Original SHA-bound 1920x1080 PPM; a temporary lossless PNG decoding copy was used only because the image viewer could not decode PPM directly.",
+    "observations": [
+      "The predicted yellow dashed trajectory and replay-actual dark-core/white-halo trajectory are both visibly present on the table centerline.",
+      "The two routes are nearly coincident for most of the visible vertical run; predicted dashes are composited over the continuous actual route while actual ticks and dash-gap exposure remain visible.",
+      "The right product inspector is spatially separate from the centerline trajectory in this frame; no trajectory-inspector intersection is visually present.",
+      "The trajectory is rendered over the table, balls and rails, so the frozen image does not support scene geometry as the dominant cause of 49 hidden probes.",
+      "The frame alone cannot prove semantic ownership for any final pixel and cannot reconstruct the missing per-probe reason telemetry."
+    ],
+    "visual_decision": "TRUE_CROSS_TRACK_CORE_OVERLAP_IS_PRESENT; PANEL_OR_SCENE_OCCLUSION_IS_NOT_VISUALLY_SUPPORTED_AS_THE_DOMINANT_CAUSE; EXACT_49_PROBE_CAUSE_DISTRIBUTION_REMAINS_UNRESOLVED"
+  },
+  "read_only_source_audit": {
+    "production_compositing_order": [
+      "hdr_opaque scene",
+      "trajectory overlay into scene framebuffer",
+      "MSAA resolve when enabled",
+      "ACES tone map to LDR",
+      "product UI into LDR"
+    ],
+    "trajectory_internal_order": [
+      "actual halo",
+      "actual core and ticks",
+      "predicted halo",
+      "predicted dashed core"
+    ],
+    "confirmed_implementation_gaps": [
+      {
+        "id": "DETACHED_SEMANTIC_REPLAY_IS_NOT_FINAL_COMPOSITE_ATTACHMENT",
+        "evidence": "v4RenderSemanticAttachment creates a separate single-sample RGBA32UI framebuffer, disables blend/depth/sRGB, and replays trajectory semantic batches only. It does not carry semantic samples through the production scene framebuffer, MSAA resolve, tone map or later product UI pass.",
+        "impact": "fromFinalCompositeAttachment cannot be established by this attachment. Product-panel, clip, blend, resolve and final draw ownership are inferred rather than measured."
+      },
+      {
+        "id": "FINAL_CORRESPONDENCE_IS_ASSERTED_FROM_COLOR_PROXIMITY",
+        "evidence": "A candidate is marked fromFinalCompositeAttachment=true and correspondsToFinalColor=true when a detached semantic pixel has the expected ID and the frozen PPM pixel falls inside a palette color tolerance.",
+        "impact": "Color similarity is not a sample-accurate ownership proof and can produce false negatives or false positives after blending and tone mapping."
+      },
+      {
+        "id": "COMPOUND_CROSS_COMPONENT_EVIDENCE_IS_REJECTED",
+        "evidence": "eligibleComponent requires source component role and primitive ID to exactly equal the candidate role and primitive. Candidate generation also searches only that exact semantic key.",
+        "impact": "An actual core probe covered by a predicted dash cannot be rescued by a same-track exposed halo edge, solid dash-gap segment, perpendicular tick or endpoint, despite the approved v4 compound-glyph contract explicitly allowing those components."
+      },
+      {
+        "id": "PROBE_LOCAL_COORDINATES_AND_SAMPLE_AREA_ARE_APPROXIMATED",
+        "evidence": "Candidate normalDistancePx is populated with Euclidean distance, longitudinalDistancePx is forced to zero, and ownedPixelEquivalentArea is a 3x3 same-semantic neighbor count rather than resolved MSAA sample coverage.",
+        "impact": "The approved tangent/normal bounds, exclusive pixel-equivalent area and exact final-sample semantics are not demonstrated."
+      },
+      {
+        "id": "FAILURE_TELEMETRY_IS_SERIALIZED_AFTER_FAIL_CLOSED",
+        "evidence": "The runner calls require(machinePass, ...) before constructing and writing the JSON row that contains per-track coverage, component reasons and hidden probe coordinates.",
+        "impact": "The only actual frame is frozen correctly, but the diagnostic fields needed to distinguish the 49 hidden probes were discarded."
+      },
+      {
+        "id": "OFFLINE_SELF_TEST_IS_NON_REPRESENTATIVE",
+        "evidence": "The 159/159 self-test synthesizes one unique, exact-role, fully owned black-versus-white candidate for every source probe. It does not use a product frame, overlapping trajectories, blended/tone-mapped colors, UI composition or missing candidate cases.",
+        "impact": "159/159 proves isolated audit bookkeeping only; it does not predict ordinal-1 compound visibility."
+      }
+    ]
+  },
+  "root_cause_decision": {
+    "classification": "CONFIRMED_ATTRIBUTION_IMPLEMENTATION_GAPS_WITH_REAL_CROSS_TRACK_OVERLAP; EXACT_HIDDEN_PROBE_DISTRIBUTION_NOT_YET_ISOLATED",
+    "implementation_approval": false,
+    "reason": "The code cannot implement the approved final-composite compound ownership semantics, but the frozen failure omitted the per-probe data required to prove how many of the 49 hidden probes arise from exact-role cross-track covering, palette/tone-map mismatch, detached attachment ownership, pixel arbitration, bounds or other causes. A specific implementation patch would therefore be premature."
+  },
+  "falsifiable_hypotheses": [
+    {
+      "id": "H1_PANEL_OCCLUSION",
+      "current_likelihood": "LOW_FOR_ORDINAL_1",
+      "prediction": "If panel occlusion is material, hidden probe coordinates or their approved compound neighborhoods intersect the final product inspector rectangle and otherwise qualifying same-track pixels terminate at its edge.",
+      "falsifier": "Zero hidden-probe neighborhood intersections with the frozen inspector rectangle."
+    },
+    {
+      "id": "H2_SCENE_GEOMETRY_OCCLUSION",
+      "current_likelihood": "LOW",
+      "prediction": "If balls, rails or table geometry hide probes, production pass order or final pixels show scene ownership after the trajectory pass at the hidden coordinates.",
+      "falsifier": "The audited production order remains hdr_opaque before trajectory overlay and hidden coordinates retain trajectory-colored pixels after composition."
+    },
+    {
+      "id": "H3_TRUE_CROSS_TRACK_CORE_COVERING",
+      "current_likelihood": "HIGH_AND_VISUALLY_CONFIRMED_FOR_SOME_PROBES",
+      "prediction": "Hidden actual-core coordinates fall inside predicted dash-on triangles because predicted is composited last, while exposed actual pixels remain in predicted dash gaps and ticks.",
+      "falsifier": "No hidden actual-core probe lies inside a predicted final-order triangle in the frozen CPU draw package."
+    },
+    {
+      "id": "H4_CROSS_COMPONENT_COMPOUND_ASSIGNMENT_GAP",
+      "current_likelihood": "HIGH_AND_CODE_CONFIRMED",
+      "prediction": "For hidden exact-role probes, an eligible same-track halo/gap/tick/endpoint pixel exists inside the approved tangent/normal and arc bounds, but current exact role/primitive matching refuses it.",
+      "falsifier": "A gate-compliant cross-component offline assignment finds no additional qualifying same-track candidates."
+    },
+    {
+      "id": "H5_DETACHED_ATTACHMENT_OR_FINAL_COLOR_CORRESPONDENCE_GAP",
+      "current_likelihood": "HIGH_AND_CODE_CONFIRMED_AS_A_CAPABILITY_GAP",
+      "prediction": "Detached semantic ownership and PPM palette matching disagree around blended, antialiased or tone-mapped trajectory edges, or cannot represent later product UI ownership.",
+      "falsifier": "A sample-by-sample comparison against a truly integrated final-composite attachment shows identical owners and resolved coverage for every ordinal-1 probe. This falsifier cannot be produced from the existing frozen files alone."
+    },
+    {
+      "id": "H6_EXCLUSIVE_ASSIGNMENT_COLLISION_OR_BAD_DISTANCE_FRAME",
+      "current_likelihood": "UNRESOLVED",
+      "prediction": "Multiple probes choose the same best pixel or Euclidean-as-normal/zero-longitudinal approximation changes eligibility versus a true tangent/normal decomposition.",
+      "falsifier": "Offline arbitration using all candidates and true tangent/normal coordinates reports zero collisions and identical eligibility."
+    }
+  ],
+  "required_next_pure_offline_read_only_diagnostics": [
+    {
+      "id": "D1_FROZEN_CPU_PACKAGE_PROBE_DUMP",
+      "requirement": "Without Cocoa or OpenGL, deterministically reconstruct the ordinal-1 TrajectoryOverlayDrawPackage from the SHA-bound fixture, camera/profile and source. Emit every immutable source probe ID, track, component, primitive, arc interval, physical coordinate, local tangent/normal, and all semantic triangle bounds in production draw order.",
+      "acceptance": "Exactly 95 unique source probes; ordered digest recorded; no source probe is deleted, merged or renumbered."
+    },
+    {
+      "id": "D2_FROZEN_PPM_PIXEL_CLASSIFICATION_MATRIX",
+      "requirement": "Read the original frozen PPM only. For each of the 95 probes, record final RGB neighborhoods, palette distances, edge contrast, panel-rectangle intersection, predicted/actual analytic triangle intersections and all eligible same-track component pixels inside the approved tangent/normal and longitudinal bounds.",
+      "acceptance": "One row per source probe with no PASS claim and an explicit limitation that PPM color cannot prove semantic ownership."
+    },
+    {
+      "id": "D3_EXACT_ROLE_VERSUS_COMPOUND_COUNTERFACTUAL",
+      "requirement": "Run two pure-CPU diagnostic classifications over the same frozen package and PPM: current exact role/primitive policy and gate-intended same-track compound policy. Preserve exclusive assignment and denominator. Emit the visible-ID delta grouped by track, source role, substitute component and reason.",
+      "acceptance": "Aggregate, predicted and actual counts reconcile to the same 95-probe denominator; no threshold is changed and no candidate outside the approved bounds is counted."
+    },
+    {
+      "id": "D4_FAILURE_SERIALIZATION_CAPABILITY_AUDIT",
+      "requirement": "Produce a static control-flow report proving which diagnostic fields are computed before require(machinePass) and which are lost because result-row serialization occurs afterward. This is a diagnostic report only and may not modify the runner.",
+      "acceptance": "The report accounts for every diagnostic field missing from the frozen receipt and names its in-memory source."
+    },
+    {
+      "id": "D5_GATE_TO_IMPLEMENTATION_CONFORMANCE_MATRIX",
+      "requirement": "Map every v4 final-composite ownership requirement to exact source lines and classify IMPLEMENTED, APPROXIMATED or MISSING, including MSAA samples, blend, clip, tone map, product UI, component substitution, tangent/normal bounds, exclusive assignment and failure preservation.",
+      "acceptance": "No implementation proposal is admitted until all MISSING items relevant to the 49 hidden probes have a falsifiable test and the probe-distribution ambiguity is closed."
+    }
+  ],
+  "invariants_that_may_not_change": {
+    "aggregate_visible_probe_coverage_min": 0.9,
+    "predicted_visible_probe_coverage_min": 0.9,
+    "actual_visible_probe_coverage_min": 0.9,
+    "minimum_local_contrast_ratio": 4.0,
+    "contrast_4_5_target_coverage_min": 0.99,
+    "predicted_actual_luma_delta_srgb8_standard_min": 32.0,
+    "predicted_actual_luma_delta_srgb8_cvd_min": 36.0,
+    "predicted_lateral_offset_px": 0.0,
+    "actual_lateral_offset_px": 0.0,
+    "maximum_screen_space_offset_px": 0.0,
+    "ordinal1_source_probe_denominator": 95,
+    "exact_frozen_v3_failure_source_probe_denominator_min": 159,
+    "probe_deletion_allowed": false,
+    "probe_merge_allowed": false,
+    "denominator_change_allowed": false,
+    "threshold_relaxation_allowed": false,
+    "visual_offset_or_route_change_allowed": false,
+    "endpoint_or_world_sample_change_allowed": false,
+    "z_order_change_allowed": false
+  },
+  "exit_condition_for_a_future_implementation_gate": {
+    "required": [
+      "D1 through D5 complete with exact SHA bindings and zero GPU use",
+      "all 95 ordinal-1 probes reconciled by track/component/reason",
+      "a unique or explicitly bounded root-cause distribution supported by falsifiable evidence",
+      "negative fixtures covering true panel occlusion, true cross-track coverage, cross-component rescue, final-color mismatch, shared-pixel arbitration and tangent/normal bounds",
+      "a proposed fix that preserves every invariant in this gate"
+    ],
+    "current_state": "NOT_MET",
+    "implementation_status": "NOT_APPROVED"
+  },
+  "decision": "FREEZE ORDINAL-1 FAILURE; RUN PURE OFFLINE READ-ONLY DIAGNOSTICS ONLY; DO NOT IMPLEMENT, RERUN, REVIEW OR PROMOTE"
+}

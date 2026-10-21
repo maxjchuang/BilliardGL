@@ -1,0 +1,71 @@
+{
+  "schema": "wpa_ii_08_all_behind_respot_product_subflow_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_NARROW_PRODUCT_SUBFLOW_NO_AUTO_M4_COMPLETION",
+  "authority": {
+    "implementation_design_gate": {"path": "docs/rules/wpa-ii-08-all-behind-respot-product-subflow-implementation-design-gate-v1.json", "sha256": "e998d1e9110982ef17a011d1f667b1062b63a2d58f4ce36b7f5df1ad19e1139c", "root_independently_validated": true, "root_authorized_exact_7_plus_3_allowlist": true},
+    "telemetry_receipt": {"path": "docs/rules/wpa-ii-08-exact-continuous-crossing-telemetry-implementation-receipt-v1.json", "sha256": "86379eecd2437a6e17643d0964f4460b857615f0eddbc50ab7dbeaefe3afa878"}
+  },
+  "implementation_contract": {
+    "authority": "current live Core-G BehindHeadString actor only",
+    "candidate_predicate": "shared ChineseEightBallRules legal first-contact predicate",
+    "all_behind": "nonempty complete legal set and every finite active center strictly behind; exact on-line suppresses",
+    "unique": "maximum world_z closest candidate atomically re-spotted by rebuilt Core-E Section-7 plan",
+    "tie": "exact maximum world_z tie staged in ascending ball ID order and selected only by entitled actor",
+    "replacement_child": "same actor one fresh BehindHeadString Core-G decision",
+    "frozen_revalidation": "revision plus state hash plus candidate set plus Core-E plan exact revalidation",
+    "idempotency": "exact retry original ACK zero delta; conflict fail closed",
+    "telemetry_successor": "restriction arms only after replacement Core-G placement ACK and exact crossing strictly precedes first contact",
+    "foundation_direct_product_access": false,
+    "global_rules_ui_exposed": false
+  },
+  "fixture_matrix": {
+    "positive": ["OPEN_TABLE_ALL_BEHIND_UNIQUE_CLOSEST", "ASSIGNED_GROUP_ALL_BEHIND_UNIQUE_CLOSEST", "GROUP_CLEARED_EIGHT_ONLY_CLOSEST", "EXACT_TIE_STAGES_ASCENDING_PLAYER_CHOICE", "SELECTED_TIE_BALL_RESPOTS_AT_FOOT_SPOT", "OBSTRUCTED_FOOT_SPOT_USES_SECTION7_SEARCH", "SUCCESS_PRESERVES_ACTOR_AND_REPLACES_ONE_CORE_G_CHILD", "EXACT_RETRY_RETURNS_ORIGINAL_ACK_ZERO_DELTA"],
+    "negative": ["NO_LEGAL_OBJECT_REJECTS", "LEGAL_OBJECT_ON_LINE_SUPPRESSES_OFFER", "LEGAL_OBJECT_FOOT_SIDE_SUPPRESSES_OFFER", "OPPONENT_GROUP_AND_EIGHT_EXCLUDED_UNTIL_GROUP_CLEARED", "WRONG_ACTOR_ACTION_FLOW_DECISION_REVISION_OR_HASH_ROLLS_BACK", "NONFINITE_OBJECT_GEOMETRY_ROLLS_BACK", "STALE_LAYOUT_BETWEEN_STAGE_AND_COMMIT_ROLLS_BACK", "FOUNDATION_NO_SOLUTION_PRESERVES_OLD_CORE_G_CHILD", "FOUNDATION_OR_SIBLING_ACTION_CANNOT_ENTER_PRODUCT_SEAM", "CONFLICTING_RETRY_ROLLS_BACK", "RESET_INVALIDATES_PARENT_TIE_AND_PRODUCT_RETRY"],
+    "telemetry_positive_regression": 8,
+    "telemetry_negative_regression": 9
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "f33ab1695bfc4d13836c43f831f42ee9389e2f48fd2be1c78cb7deab72d321ca"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "82ed617905a8718189aed1b41a37672160af2e690a7bfe2bb71fa75bb9cc71f7"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "060175a664ceaedd016509506bf84cd104fe34e8bbebce431eb2f0df1bde4059"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "08bf282555ad21e235de18099a77bc1c9b6a30f9e647c43d9eabc59ffc823dac"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "c0c6ae35340c98d92436b786beaedd2bc1694a74959821d21ec64920fba1927d"},
+    {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "c5b4fe029722d080dfc0fb7bc5d238b8d77470aebdfb40775eea5f6fd110efe1"},
+    {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "80e4a030a209789b55c84fc33d1138269bd14af1a54dd91711bb8dd6759bcf20"}
+  ],
+  "implementation_aggregate_sha256": "dcf866ee544b8f882cfae96d077fc160d3a43153bf5cd29fcab685747080b154",
+  "test_bindings": [
+    {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "83c1abac7c6360ab41b726f691a86054b7e2fd39d737e60038dac671f75c7d5e"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "b0a2565181f57701b713e6e80a35b6bef42d97d688f60d2820b62ce44936e346"},
+    {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "127fb9d3a44adb359860ae7294aef62ff467bc837ca3906d66edad748c97911d"}
+  ],
+  "cpu_verification": {
+    "required": [
+      {"path": "build-product-session/BilliardsChineseEightBallRulesTests", "sha256": "9aa82f0c2983932e04abcd9a8d451afbe087f535fb6190d80eff4d13e12679ba", "exit_code": 0},
+      {"path": "build-product-session/BilliardsRulesRuntimeIntegrationTests", "sha256": "3ffde79b35a3cb14b8f9e9c4491340b0f073c1c5a67aff8d7d76b921b1366bef", "exit_code": 0},
+      {"path": "build-product-session/BilliardsRulesDecisionSessionIntegrationTests", "sha256": "b59b80db3e868b49ba3d61cab3be46345fca89157f5f591cffdbb15bcc76286c", "exit_code": 0}
+    ],
+    "telemetry_regression_targets": ["BilliardsSurfaceMotionTests", "BilliardsPhysicsTests", "BilliardsPhysicsTelemetryTests", "BilliardsShotFactCollectorTests"],
+    "wide_regression_targets": ["BilliardsRulesTests", "BilliardsPhysicsScenarioTests", "BilliardsAutomationControllerTests", "BilliardsRulesDecisionProductRuntimeTests", "BilliardsProductShellTests"],
+    "all_exit_code": 0,
+    "collector_cmake_link_gap_unchanged_and_workaround_reused": true,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "cmake_binding": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41", "modified": false},
+  "claims": {
+    "all_behind_parent_respot_product_subflow_implemented": true,
+    "telemetry_8_positive_9_negative_regressed": true,
+    "narrow_product_reachable": true,
+    "wpa_ii_08_row_auto_closed": false,
+    "m4_complete": false,
+    "audit_modified": false,
+    "foundation_product_exposed": false,
+    "global_rules_ui_exposed": false,
+    "new_production_file": false,
+    "rack_executor_modified": false,
+    "cmake_modified": false,
+    "visual_ui_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

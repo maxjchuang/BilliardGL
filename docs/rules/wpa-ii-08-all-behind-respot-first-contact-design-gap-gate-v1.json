@@ -1,0 +1,228 @@
+{
+  "schema": "wpa_ii_08_all_behind_respot_first_contact_design_gap_gate_v1",
+  "status": "POLICY_AND_TELEMETRY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-08"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [8],
+    "head_string_definition": {
+      "chapter": "II",
+      "clause": "3(e)",
+      "pdf_page": 6,
+      "controlled_paraphrase": "The Head String is parallel to the bottom cushion, 635 mm from that cushion, and intersects both side cushions."
+    },
+    "respot_foundation": {
+      "chapter": "II",
+      "clause": "7",
+      "pdf_page": 8,
+      "controlled_paraphrase": "A referee re-spots a required ball at its original position where possible; obstruction uses the longitudinal-axis search prescribed from the foot spot."
+    },
+    "section_8": {
+      "chapter": "II",
+      "clause": "8",
+      "pdf_page": 8,
+      "locator": "Ball in Hand Behind the Head String",
+      "controlled_paraphrase": "The cue-ball center must be behind the Head String. A player may not directly contact a legal object ball behind the line, but may first send the cue ball past the line and return. If every legal object ball is behind the line, the player may request the closest legal object ball be re-spotted at the foot spot; an equal-distance tie is selected by that player. An object ball exactly on the line may be contacted directly."
+    },
+    "text_uniquely_determines": [
+      "the re-spot request belongs to the player holding the BehindHeadString entitlement",
+      "at least one current legal object ball must exist and every such ball must be strictly behind the Head String",
+      "a ball exactly on the Head String is not behind it and prevents the all-behind predicate when legal",
+      "the candidate is the legal object ball with the smallest center-to-line distance",
+      "the entitled player chooses only when two or more eligible candidates are exactly equidistant",
+      "the selected object ball is re-spotted at the foot spot under the Section 7 obstruction procedure"
+    ],
+    "text_does_not_specify": [
+      "whether cue-ball passage past the Head String is measured by center, leading edge, or the entire ball",
+      "the numerical tolerance or quantization policy for a crossing event",
+      "how to order a continuous crossing against first contact when both occur within one physics step"
+    ]
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "row_id": "WPA-II-08",
+    "row_status": "PARTIAL",
+    "product_reachable": false,
+    "product_placement_subflow_reachable": true
+  },
+  "source_bindings": {
+    "placement_authority": {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"},
+    "rack_foundation_header": {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+    "rack_foundation": {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17", "relevant_lines": [[275, 355]]},
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "86b6bf332fe5ca182580c57f82c74ddda075fda28b659019c709bc459e785793"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "b984639bdf239814e0a1e0a14a64d6b73de56841273f71d7671c20e86bf475a4", "relevant_lines": [[302, 319]]},
+    "shot_collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "88dfc28370b4b56936ac88ac560623a8600d89a295b1f98efff65471de17d615"},
+    "shot_collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "c901ba8591ebd301ccbd4a2ee4fe2ab02f390436cf80aed0596074f65e0ec4c4", "relevant_lines": [[102, 173]]},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4", "relevant_lines": [[908, 936], [1449, 1649], [2060, 2155]]},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"},
+    "product_session": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9", "relevant_lines": [[334, 465]]},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "aab289bcb7e01d037e6022d41676145e09027d2d90317b9cf9e2e017335f0698"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "4a5a4fee924cf62c29551844af718a4b73e6b5917d1b1323dcac29b20d43683c"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "4c4079159e1db19545a82c1ad43b1cdfbee8ea4462b9c66c92a8be13322f3b8e"},
+    "product_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "71e7fe78f078c2287814f9b836ff9588275ee532da32fb274611f1d2fde970f2"}
+  },
+  "resolved_respot_contract": {
+    "authority_context": "current live ball_in_hand_behind_head_string Core-G offer only",
+    "actor": "exact actor_player_id from that offer",
+    "request_is_optional": true,
+    "sample_time": {
+      "status": "RESOLVED_IMPLEMENTATION_BOUNDARY",
+      "selected": "request_stage_with_atomic_commit_revalidation",
+      "reason": "The official request is the authority event; object-ball layout is frozen by revision/state hash and must be re-sampled immediately before commit. Preview samples are non-authoritative."
+    },
+    "legal_object_predicate": {
+      "open_table": "active balls 1-7 and 9-15; the 8-ball is not a legal first contact",
+      "assigned_group_not_cleared": "active balls in the entitled actor's group",
+      "assigned_group_cleared": "the active 8-ball only",
+      "must_match_existing_first_contact_predicate": true
+    },
+    "behind_predicate": "finite active object-ball center world_z_cm < head_string_world_z_cm",
+    "on_line_predicate": "object-ball center world_z_cm == head_string_world_z_cm; this is directly playable and not behind",
+    "trigger": "eligible set is non-empty and every eligible ball satisfies behind_predicate",
+    "candidate": "eligible ball with maximum world_z_cm, equivalently minimum positive center distance behind the Head String",
+    "tie": "exact equal authoritative center distance stages a player choice containing exactly the tied candidate IDs in ascending canonical order",
+    "nominal_destination": "official foot spot",
+    "obstruction_policy": "existing Section-7 longitudinal-axis foundation re-spot search",
+    "foundation_direct_product_access": false,
+    "preview_mutates_authority": false
+  },
+  "first_contact_classification": {
+    "status": "POLICY_AND_TELEMETRY_PENDING",
+    "resolved_logic_after_policy": "For the first shot following a BehindHeadString placement, contact with a legal object-ball center strictly behind the line is permitted only if authoritative cue-ball crossing-before-contact evidence satisfies the selected crossing predicate; a legal ball on or beyond the line may be contacted directly.",
+    "entitlement_lifetime": "stage on successful BehindHeadString placement commit and consume exactly once at the next accepted shot adjudication or reset",
+    "policy_decisions": {
+      "cue_ball_past_line_geometry": {
+        "status": "POLICY_PENDING",
+        "selected": null,
+        "allowed_candidates": ["center_crosses_line", "leading_edge_crosses_line", "entire_ball_crosses_line"],
+        "forbidden_guess": true
+      },
+      "crossing_numeric_policy": {
+        "status": "POLICY_PENDING",
+        "selected": null,
+        "allowed_candidates": ["exact_continuous_event", "documented_deterministic_quantization"],
+        "forbidden_guess": true
+      }
+    },
+    "missing_shot_facts": [
+      "behind_head_string_first_contact_restriction_active",
+      "head_string_world_z_cm",
+      "cue_ball_crossed_head_string_before_first_contact",
+      "crossing_event_physics_tick_and_time_of_impact",
+      "crossing_evidence_origin_and_completeness"
+    ],
+    "current_collector_gap": "The collector records the first cue/object contact set but does not record a continuous cue-ball Head-String crossing or total ordering between crossing and contact.",
+    "physics_solver_may_not_decide_rule_legality": true,
+    "production_implementation_authorized": false
+  },
+  "future_parent_child_transaction": {
+    "unique_candidate_path": [
+      "validate current BehindHeadString offer, local actor, request action, revision and frozen state hash",
+      "sample the complete legal-object set and require the all-behind trigger",
+      "select the unique closest candidate and stage a Section-7 foundation plan at the foot spot",
+      "atomically commit the foundation re-spot, preserve the same BIH actor, invalidate the old child and stage one replacement Core-G placement child",
+      "record one parent ACK/revision/action/event/receipt and refresh product authority"
+    ],
+    "tie_path": [
+      "stage an exact tied-candidate choice parent without moving any ball",
+      "accept only one offered tied ball ID from the same actor/revision/state hash",
+      "atomically commit that re-spot and one replacement Core-G placement child"
+    ],
+    "allowed_product_actions": [
+      "rules.ball_in_hand.request_nearest_legal_respot",
+      "rules.ball_in_hand.choose_equidistant_respot_ball"
+    ],
+    "foundation_action_product_exposed": false,
+    "other_rules_actions_product_exposed": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "idempotent_retry": "exact retry returns the original ACK and child identity with zero additional mutation",
+    "conflicting_retry": "same key with changed actor/action/ball/revision/hash fails closed",
+    "failure_rollback": "candidate selection, foundation planning/commit, replacement child staging, match state, object layout, revision, events/actions and receipts all return to the exact pre-call state",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "respot_positive": [
+      "OPEN_TABLE_ALL_NON_EIGHT_BEHIND_UNIQUE_CLOSEST",
+      "ASSIGNED_GROUP_ALL_BEHIND_UNIQUE_CLOSEST",
+      "GROUP_CLEARED_EIGHT_ONLY_CLOSEST",
+      "EXACT_TIE_STAGES_CANONICAL_PLAYER_CHOICE",
+      "SELECTED_TIE_BALL_RESPOTS_AT_FOOT_SPOT",
+      "OBSTRUCTED_FOOT_SPOT_USES_SECTION7_SEARCH",
+      "SUCCESS_PRESERVES_ACTOR_AND_RESTAGES_ONE_CORE_G_CHILD",
+      "EXACT_RETRY_RETURNS_ORIGINAL_PARENT_AND_CHILD_ACK"
+    ],
+    "respot_negative": [
+      "NO_LEGAL_OBJECT_BALL_REJECTS",
+      "ONE_LEGAL_BALL_ON_LINE_PREVENTS_ALL_BEHIND",
+      "ONE_LEGAL_BALL_FOOT_SIDE_PREVENTS_ALL_BEHIND",
+      "OPPONENT_GROUP_BALL_DOES_NOT_ENTER_CANDIDATES",
+      "EIGHT_EXCLUDED_WHILE_GROUP_NOT_CLEARED",
+      "WRONG_ACTOR_ACTION_FLOW_DECISION_REVISION_OR_HASH_ROLLS_BACK",
+      "NONFINITE_OBJECT_GEOMETRY_ROLLS_BACK",
+      "STALE_LAYOUT_BETWEEN_STAGE_AND_COMMIT_ROLLS_BACK",
+      "FOUNDATION_NO_SOLUTION_ROLLS_BACK_AND_PRESERVES_OLD_CORE_G_CHILD",
+      "FOUNDATION_ACTION_CANNOT_ENTER_PRODUCT_SEAM",
+      "CONFLICTING_RETRY_ROLLS_BACK"
+    ],
+    "first_contact_after_policy": [
+      "LEGAL_BALL_ON_LINE_DIRECT_CONTACT_ALLOWED",
+      "LEGAL_BALL_FOOT_SIDE_DIRECT_CONTACT_ALLOWED",
+      "BEHIND_BALL_DIRECT_CONTACT_IS_WRONG_FIRST_CONTACT",
+      "SELECTED_CROSSING_EVENT_BEFORE_CONTACT_ALLOWS_RETURN_CONTACT",
+      "CROSSING_AFTER_OR_SAME_UNORDERED_CONTACT_REJECTS",
+      "CROSSING_EVIDENCE_INCOMPLETE_FAILS_CLOSED",
+      "RESTRICTION_CONSUMED_ONCE_AT_NEXT_ACCEPTED_ADJUDICATION",
+      "RESET_CLEARS_RESTRICTION"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/behind_head_string_respot_authority.h",
+      "src/Billiards/rules/behind_head_string_respot_authority.cpp",
+      "src/Billiards/rules/ball_in_hand_authority.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/render/modern/modern_product_session.h",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "test_files": [
+      "tests/behind_head_string_respot_authority_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp",
+      "tests/rules_decision_session_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_crossing_policy_resolved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gate task",
+    "implementation of an unselected cue-ball crossing geometry or tolerance",
+    "direct product exposure of rules.foundation.respot",
+    "promotion of WPA-II-08 above PARTIAL",
+    "changes to WPA-II-09 tip-touch or until-legal-shot semantics",
+    "global rulesDecisionUiProductExposed enablement",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "respot_candidate_and_actor_resolved": true,
+    "respot_sample_time_resolved": true,
+    "first_contact_crossing_policy_resolved": false,
+    "first_contact_telemetry_complete": false,
+    "production_implementation_complete": false,
+    "product_behavior_changed": false,
+    "audit_row_promoted": false,
+    "gpu_executed": false
+  }
+}

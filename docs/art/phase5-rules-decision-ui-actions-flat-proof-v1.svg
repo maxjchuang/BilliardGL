@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Phase 5 pending rules decision UI and action flat proof</title>
+<desc id="desc">Seven bilingual flow cards. This is not GPU or runtime evidence and every capability is pending and not product exposed.</desc>
+<style>
+.bg{fill:#0b1014}.panel{fill:#111b21;stroke:#61717a;stroke-width:2}.eyebrow{fill:#f2bc55;font:600 13px system-ui,sans-serif}.title{fill:#f4f7f8;font:650 23px system-ui,sans-serif}.zh{fill:#f4f7f8;font:600 20px system-ui,sans-serif}.body{fill:#c1cbd0;font:15px system-ui,sans-serif}.zhbody{fill:#c1cbd0;font:15px system-ui,sans-serif}.button{fill:#16252c;stroke:#7b8b94;stroke-width:1.5}.focus{stroke:#31b7c8;stroke-width:3}.buttontext{fill:#f4f7f8;font:13px system-ui,sans-serif}.buttonsmall{fill:#f4f7f8;font:10.5px system-ui,sans-serif}.foot{fill:#f06b5d;font:600 11px system-ui,sans-serif}.header{fill:#f4f7f8;font:700 30px system-ui,sans-serif}.sub{fill:#f2bc55;font:600 17px system-ui,sans-serif}
+</style>
+<rect width="1920" height="1080" class="bg"/>
+<text id="titleText" x="40" y="52" class="header">PHASE 5 RULE DECISION UI/ACTION · FLAT TEXT/INTERACTION PROOF</text>
+<text x="40" y="84" class="sub">NOT GPU · NOT RUNTIME · PENDING · PRODUCT_EXPOSED=FALSE · PROFILE INCOMPLETE</text>
+<rect x="40" y="120" width="430" height="390" rx="18" class="panel"/>
+<text x="64" y="162" class="eyebrow">PENDING · break_foul_opponent_choices</text>
+<text x="64" y="202" class="title">Break decision</text>
+<text x="64" y="234" class="zh">开球犯规选择</text>
+<text x="64" y="270" class="body">Choose the authority-offered result. The rack and turn</text>
+<text x="64" y="296" class="body">do not change until confirmed.</text>
+<text x="64" y="328" class="zhbody">请选择裁判系统提供的处理方式；确认前球局与回合均</text>
+<text x="64" y="354" class="zhbody">不改变。</text>
+<rect x="64" y="380" width="382" height="30" rx="7" class="button focus"/>
+<text x="76" y="401" class="buttontext">Accept table / 接受台面</text>
+<rect x="64" y="416" width="382" height="30" rx="7" class="button"/>
+<text x="76" y="437" class="buttontext">Rerack - I break / 重摆 - 由我开球</text>
+<rect x="64" y="452" width="382" height="30" rx="7" class="button"/>
+<text x="76" y="473" class="buttontext">Rerack - original breaker / 重摆 - 原开球方开球</text>
+<text x="64" y="494" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="510" y="120" width="430" height="390" rx="18" class="panel"/>
+<text x="534" y="162" class="eyebrow">PENDING · eight_on_break_spot_or_rerack</text>
+<text x="534" y="202" class="title">8-ball on the break</text>
+<text x="534" y="234" class="zh">开球时8号球入袋</text>
+<text x="534" y="270" class="body">This is not a win. Only actions offered for this exact</text>
+<text x="534" y="296" class="body">foul/no-foul branch are enabled.</text>
+<text x="534" y="328" class="zhbody">这不算获胜；只启用裁判系统为当前有犯规或无犯规分</text>
+<text x="534" y="354" class="zhbody">支提供的操作。</text>
+<rect x="534" y="380" width="382" height="30" rx="7" class="button focus"/>
+<text x="546" y="401" class="buttontext">Spot 8-ball and continue / 重置8号球并继续</text>
+<rect x="534" y="416" width="382" height="30" rx="7" class="button"/>
+<text x="546" y="437" class="buttonsmall">Spot 8-ball; ball in hand behind head string / 重置8号球；开球线后自由球</text>
+<rect x="534" y="452" width="382" height="30" rx="7" class="button"/>
+<text x="546" y="473" class="buttontext">Rerack - original breaker / 重摆 - 原开球方开球</text>
+<text x="534" y="494" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="980" y="120" width="430" height="390" rx="18" class="panel"/>
+<text x="1004" y="162" class="eyebrow">PENDING · free_ball_placement</text>
+<text x="1004" y="202" class="title">Ball in hand - full table</text>
+<text x="1004" y="234" class="zh">自由球 - 全台</text>
+<text x="1004" y="270" class="body">Move the preview anywhere inside the legal playing</text>
+<text x="1004" y="296" class="body">surface, then confirm.</text>
+<text x="1004" y="328" class="zhbody">在合法台面范围内移动母球预览，然后确认。</text>
+<text x="1004" y="354" class="zhbody"></text>
+<rect x="1004" y="380" width="382" height="30" rx="7" class="button focus"/>
+<text x="1016" y="401" class="buttontext">Move cue-ball preview / 移动母球预览</text>
+<rect x="1004" y="416" width="382" height="30" rx="7" class="button"/>
+<text x="1016" y="437" class="buttontext">Confirm placement / 确认放置</text>
+<rect x="1004" y="452" width="382" height="30" rx="7" class="button"/>
+<text x="1016" y="473" class="buttontext">Reset preview / 重置预览</text>
+<text x="1004" y="494" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="1450" y="120" width="430" height="390" rx="18" class="panel"/>
+<text x="1474" y="162" class="eyebrow">PENDING · free_ball_placement</text>
+<text x="1474" y="202" class="title">Ball in hand - behind head string</text>
+<text x="1474" y="234" class="zh">自由球 - 开球线后</text>
+<text x="1474" y="270" class="body">Keep the cue-ball center behind the line. The</text>
+<text x="1474" y="296" class="body">authority validates placement and any legal-ball…</text>
+<text x="1474" y="328" class="zhbody">母球球心必须位于开球线后；放置及合法目标球重置均</text>
+<text x="1474" y="354" class="zhbody">由裁判系统验证。</text>
+<rect x="1474" y="380" width="382" height="30" rx="7" class="button focus"/>
+<text x="1486" y="401" class="buttontext">Move cue-ball preview / 移动母球预览</text>
+<rect x="1474" y="416" width="382" height="30" rx="7" class="button"/>
+<text x="1486" y="437" class="buttontext">Confirm behind head string / 确认放置在开球线后</text>
+<rect x="1474" y="452" width="382" height="30" rx="7" class="button"/>
+<text x="1486" y="473" class="buttontext">Request legal ball re-spot / 请求重置最近合法目标球</text>
+<text x="1474" y="494" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="40" y="560" width="430" height="390" rx="18" class="panel"/>
+<text x="64" y="602" class="eyebrow">PENDING · simultaneous_contact_and_group_choice</text>
+<text x="64" y="642" class="title">Choose your group</text>
+<text x="64" y="674" class="zh">选择球组</text>
+<text x="64" y="710" class="body">Both groups qualified on the same legal shot. Choose</text>
+<text x="64" y="736" class="body">one; the other group is assigned by the authority.</text>
+<text x="64" y="768" class="zhbody">同一合法击球使两组均满足条件；请选择一组，另一组</text>
+<text x="64" y="794" class="zhbody">由裁判系统分配。</text>
+<rect x="64" y="820" width="382" height="30" rx="7" class="button focus"/>
+<text x="76" y="841" class="buttontext">Choose solids / 选择全色球</text>
+<rect x="64" y="856" width="382" height="30" rx="7" class="button"/>
+<text x="76" y="877" class="buttontext">Choose stripes / 选择花色球</text>
+<text x="64" y="934" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="510" y="560" width="430" height="390" rx="18" class="panel"/>
+<text x="534" y="602" class="eyebrow">PENDING · ball_respot_and_rerack_executor</text>
+<text x="534" y="642" class="title">Updating the table</text>
+<text x="534" y="674" class="zh">正在更新球台</text>
+<text x="534" y="710" class="body">Wait for the authoritative re-spot or rerack</text>
+<text x="534" y="736" class="body">transaction. Do not shoot or leave the screen.</text>
+<text x="534" y="768" class="zhbody">请等待权威重置或重摆事务完成；期间不能击球或离开</text>
+<text x="534" y="794" class="zhbody">此界面。</text>
+<rect x="534" y="820" width="382" height="30" rx="7" class="button focus"/>
+<text x="546" y="841" class="buttontext">Retry status check / 重试状态检查</text>
+<rect x="534" y="856" width="382" height="30" rx="7" class="button"/>
+<text x="546" y="877" class="buttontext">Return to decision / 返回规则选择</text>
+<text x="534" y="934" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text><rect x="980" y="560" width="430" height="390" rx="18" class="panel"/>
+<text x="1004" y="602" class="eyebrow">PENDING · stalemate_decision</text>
+<text x="1004" y="642" class="title">Stalemate proposal</text>
+<text x="1004" y="674" class="zh">僵局处理建议</text>
+<text x="1004" y="710" class="body">Respond to the authority proposal. No shot count,</text>
+<text x="1004" y="736" class="body">automatic rerack, or final declaration is assumed…</text>
+<text x="1004" y="768" class="zhbody">请回应裁判系统的处理建议；本地不预设追加击球次数</text>
+<text x="1004" y="794" class="zhbody">、自动重摆或最终宣告。</text>
+<rect x="1004" y="820" width="382" height="30" rx="7" class="button focus"/>
+<text x="1016" y="841" class="buttontext">Accept rerack / 接受重摆</text>
+<rect x="1004" y="856" width="382" height="30" rx="7" class="button"/>
+<text x="1016" y="877" class="buttontext">Continue play / 继续比赛</text>
+<text x="1004" y="934" class="foot">AUTHORITY ACK REQUIRED · NO OPTIMISTIC COMMIT</text>
+<rect x="1450" y="560" width="430" height="390" rx="18" class="panel"/>
+<text x="1474" y="604" class="title">Fail-closed authority contract</text>
+<text x="1474" y="638" class="zh">权威确认与失败关闭</text>
+<text x="1474" y="684" class="body">No turn, group, ball position, or rack mutation</text>
+<text x="1474" y="710" class="body">before an exact ACK and state revision.</text>
+<text x="1474" y="748" class="zhbody">收到精确 ACK 与状态版本前，不改变回合、球组、</text>
+<text x="1474" y="774" class="zhbody">球位或球局。</text>
+<rect x="1474" y="814" width="382" height="38" rx="7" class="button focus"/>
+<text x="1490" y="839" class="buttontext">Retry status / 重试状态检查</text>
+<rect x="1474" y="864" width="382" height="38" rx="7" class="button"/>
+<text x="1490" y="889" class="buttontext">Restore exact offer / 恢复权威选择</text>
+<text x="40" y="1036" class="sub">ESSENTIAL RULES TEXT IGNORES SUBTITLE VISIBILITY · SHAPE + TEXT · STANDARD + CVD PALETTES</text>
+</svg>

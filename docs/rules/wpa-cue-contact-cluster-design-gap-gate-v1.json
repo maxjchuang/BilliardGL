@@ -1,0 +1,281 @@
+{
+  "schema": "wpa_cue_contact_cluster_design_gap_gate_v1",
+  "status": "POLICY_REFEREE_INPUT_AND_TELEMETRY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-12-5-6", "WPA-II-12-7", "WPA-II-15-1", "WPA-II-15-2"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [3, 9, 10],
+    "sections": [
+      {
+        "chapter": "I",
+        "clause": "5",
+        "pdf_page": 3,
+        "locator": "Declaration of Frozen Balls",
+        "controlled_paraphrase": "The referee observes and announces whether an object ball is frozen to a cushion or the cue ball. Without an announcement, the ball is treated as not frozen."
+      },
+      {
+        "chapter": "II",
+        "clause": "12.5-12.6",
+        "pdf_page": 9,
+        "locator": "Multiple cue-tip contacts and Double Hit",
+        "controlled_paraphrase": "The cue tip may contact the cue ball only once in one stroke. More than one contact is a foul. For a very close cue/object arrangement, object contact before tip separation is a foul, subject to a stated light-graze presumption."
+      },
+      {
+        "chapter": "II",
+        "clause": "12.7",
+        "pdf_page": 10,
+        "locator": "Pushing",
+        "controlled_paraphrase": "An obvious push that extends tip contact distance or duration beyond an instantaneous strike is a foul."
+      },
+      {
+        "chapter": "II",
+        "clause": "15.1",
+        "pdf_page": 10,
+        "locator": "Cue ball frozen to legal object ball",
+        "controlled_paraphrase": "When the cue ball is declared frozen to a legal object ball, direction is unrestricted. Direct object-ball movement is not presumed a double hit when the stroke action is obvious, but an obvious push remains a foul."
+      },
+      {
+        "chapter": "II",
+        "clause": "15.2",
+        "pdf_page": 10,
+        "locator": "Object ball frozen to cushion",
+        "controlled_paraphrase": "When an object ball is declared frozen to a cushion and the prerequisite legal cushion condition has not already been met, legality requires the frozen object to leave and re-contact a cushion, another ball to contact a cushion, or a ball to be pocketed."
+      }
+    ],
+    "uniquely_determined_rules": [
+      "more than one cue-tip contact with the cue ball during one stroke is a foul",
+      "cue-ball contact with a close object ball before the cue tip leaves the cue ball is within the double-hit rule",
+      "a push is distinct from an instantaneous strike and remains prohibited for a declared frozen cue/object arrangement",
+      "frozen-ball rule treatment requires a referee announcement and absence of an announcement means not frozen",
+      "a declared frozen cue/object arrangement changes the double-hit presumption but does not legalize an obvious push",
+      "a declared frozen object/cushion arrangement has leave-and-recontact, other-ball-cushion, or pocket alternatives"
+    ],
+    "not_numerically_or_operationally_defined": [
+      "the separation threshold for very close",
+      "the trajectory, angle, speed, impulse, or duration threshold for lightly grazes",
+      "the contact-distance or contact-duration threshold separating an instantaneous strike from an obvious push",
+      "the kinematic threshold for an obvious stroke action or obvious push",
+      "the geometric tolerance and authoritative sample time used by a referee to declare a ball frozen",
+      "whether pocket jaws satisfy the cushion alternatives in clause 15.2",
+      "the exact machine predicate represented by the prerequisite phrase about a completed legal cushion contact"
+    ]
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "rows": [
+      {"id": "WPA-II-12-5-6", "status": "MISSING", "product_reachable": true},
+      {"id": "WPA-II-12-7", "status": "MISSING", "product_reachable": true},
+      {"id": "WPA-II-15-1", "status": "MISSING", "product_reachable": true},
+      {"id": "WPA-II-15-2", "status": "MISSING", "product_reachable": true}
+    ],
+    "promotion_authorized": false
+  },
+  "source_bindings": {
+    "cue_impact": {"path": "src/Billiards/cue_impact.h", "sha256": "b8d34ee8204596366eb55ade70bb2db1177212adeff6d5aa25ba77b1b52c0000"},
+    "cue_contact_header": {"path": "src/Billiards/cue_contact.h", "sha256": "8a04660ae3927f76544a46a2676fe30e17c88856f4b2f9f53c274dd849be9a9c"},
+    "cue_contact": {"path": "src/Billiards/cue_contact.cpp", "sha256": "371eeea9353fe2759c0edf25101cdaa2a1298d6688b537690a65957c47565d27"},
+    "coupled_contact_header": {"path": "src/Billiards/coupled_cue_contact.h", "sha256": "c4e24dbfcf3b5f3a3eb4ab4ef4d639bc31a56fb194ae046b44aea5ea2c408664"},
+    "coupled_contact": {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "e5034d0697ba86e3ed2341d2555d9da6fefbd6f084b0fb74bdf45b386b75d278"},
+    "frozen_topology_header": {"path": "src/Billiards/frozen_cue_topology.h", "sha256": "4c1be21a868120275e7bc12f4fa95dcf99447fc833932a831183faf3c37547cf"},
+    "frozen_topology": {"path": "src/Billiards/frozen_cue_topology.cpp", "sha256": "031271b5984ad354b5d4c41256aba3083ec80243a663ffbb1ec3cb00d2cf021d"},
+    "physics_telemetry_header": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "86b6bf332fe5ca182580c57f82c74ddda075fda28b659019c709bc459e785793"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "b984639bdf239814e0a1e0a14a64d6b73de56841273f71d7671c20e86bf475a4"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "88dfc28370b4b56936ac88ac560623a8600d89a295b1f98efff65471de17d615"},
+    "collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "c901ba8591ebd301ccbd4a2ee4fe2ab02f390436cf80aed0596074f65e0ec4c4"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4"},
+    "cue_contact_tests": {"path": "tests/cue_contact_tests.cpp", "sha256": "93a6d368f985d6c990537d12eef5ea89ea9166e0029b6836b425a0328139755d"},
+    "coupled_contact_tests": {"path": "tests/coupled_cue_contact_tests.cpp", "sha256": "b439f5a698ac7ee665f16cc1ab0c35df96fe577882d8c57fbb17adc1ffbfd777"},
+    "physics_telemetry_tests": {"path": "tests/physics_telemetry_tests.cpp", "sha256": "cbbb2eb4e5f1c1eb22c5525d0c1859e19aebf2a0d975b94321f6daf741ced0c8"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "4a5a4fee924cf62c29551844af718a4b73e6b5917d1b1323dcac29b20d43683c"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "4c4079159e1db19545a82c1ad43b1cdfbee8ea4462b9c66c92a8be13322f3b8e"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "aab289bcb7e01d037e6022d41676145e09027d2d90317b9cf9e2e017335f0698"}
+  },
+  "current_system_mapping": {
+    "regular_cue_contact_is_single_analytic_resolution": true,
+    "regular_cue_contact_reports_contact_duration": false,
+    "coupled_contact_reports_contiguous_microsteps_until_release_or_failure": true,
+    "coupled_contact_reports_microstep_time_force_impulse_and_constraint_contacts": true,
+    "coupled_contact_simulates_cue_tip_after_initial_release": false,
+    "full_shot_second_tip_contact_observable": false,
+    "full_shot_tip_contact_count_complete": false,
+    "frozen_topology_is_geometry_detected_with_solver_slop": true,
+    "frozen_topology_is_referee_declared": false,
+    "shot_fact_collector_consumes_cue_contact_result": false,
+    "shot_fact_collector_tracks_declared_frozen_ball_identity": false,
+    "shot_fact_collector_tracks_frozen_object_departure_and_recontact": false,
+    "shot_fact_collector_tracks_other_ball_cushion_and_pocket_raw_events": true,
+    "rules_model_has_double_hit_push_or_frozen_foul_reasons": false
+  },
+  "policy_independent_observations": {
+    "safe_existing_raw_observations": [
+      "one accepted or rejected CueImpactInput and CueContactResult pair at launch",
+      "regular-contact impulse, pre/post velocity, contact arm and normal without a duration claim",
+      "coupled-contact microstep ordinal, time, cue position, cue velocity, cue acceleration, compression, force, cumulative impulse, constraint contacts and release/failure status",
+      "physics ball-ball, rail and pocket contacts with solver provenance after launch",
+      "initial geometry candidates within the configured solver penetration slop"
+    ],
+    "forbidden_inferences_from_existing_data": [
+      "one modeled initial contact means the cue tip touched only once during the whole stroke",
+      "coupled microtrace duration is a complete full-shot push duration",
+      "geometry within solver slop is a referee frozen-ball declaration",
+      "positive impulse or long contact alone is an obvious push",
+      "object movement directly from the coupled island is automatically a legal frozen-ball stroke",
+      "any rail or pocket-jaw record satisfies the clause 15.2 cushion alternative"
+    ],
+    "production_extension_safe_now": false,
+    "reason": "The input and solver model one launch transaction and stop simulating the cue tip after release. A complete stroke-level contact count, re-contact absence, referee declaration, obviousness classification, and clause 15.2 lifecycle therefore cannot be attested without new authoritative inputs and sampling contracts."
+  },
+  "required_future_telemetry_contract": {
+    "status": "TELEMETRY_PENDING",
+    "stroke_identity": ["shot_id", "actor", "rules_revision", "start_tick", "end_tick", "origin"],
+    "cue_tip_intervals": ["canonical_interval_ordinal", "start_time", "end_time", "contact_point", "contact_normal", "cue_motion", "cue_ball_motion", "impulse", "solver_or_sensor_provenance"],
+    "completeness": ["cue_tip_observation_started_before_first_contact", "cue_tip_observation_ended_after_stroke_or_authoritative_release", "no_dropped_intervals", "sampling_rate_or_continuous_solver_attestation", "full_stroke_complete"],
+    "cue_object_overlap": ["object_ball_id", "initial_signed_separation", "cue_object_contact_time", "tip_separation_time", "measurement_origin", "sample_time", "completeness"],
+    "frozen_declaration": ["declaration_id", "referee_actor", "declared_relation", "cue_or_object_ball_id", "cushion_feature_id_if_any", "rules_revision", "sample_time", "state_hash", "explicit_not_frozen_or_frozen"],
+    "frozen_cushion_lifecycle": ["declared_object_ball_id", "declared_cushion_feature_id", "initial_relation", "departure_time", "recontact_time_and_feature", "other_ball_cushion_contacts", "pocket_events", "origin", "completeness"],
+    "facts_are_measurements_not_fouls": true
+  },
+  "pending_classification_contract": {
+    "status": "POLICY_AND_REFEREE_INPUT_PENDING",
+    "double_hit": {
+      "resolved_machine_predicate": "complete full-stroke cue-tip interval count greater than one",
+      "close_ball_presumption": "POLICY_PENDING",
+      "required_policy_dimensions": ["very_close_threshold", "light_graze_predicate", "tip_separation_order_tolerance"],
+      "forbidden_guess": true
+    },
+    "push": {
+      "resolved_machine_predicate": null,
+      "status": "POLICY_OR_REFEREE_INPUT_PENDING",
+      "required_policy_dimensions": ["normal_contact_duration_reference", "contact_distance_reference", "obviousness_authority", "measurement_tolerance"],
+      "forbidden_guess": true
+    },
+    "frozen_cue_object": {
+      "geometry_is_not_declaration": true,
+      "referee_declaration_required": true,
+      "obvious_stroke_and_push_classification": "POLICY_OR_REFEREE_INPUT_PENDING",
+      "forbidden_guess": true
+    },
+    "frozen_object_cushion": {
+      "referee_declaration_required": true,
+      "leave_and_recontact_measurement_possible_after_telemetry": true,
+      "jaw_and_prerequisite_legal_cushion_policy": "POLICY_PENDING",
+      "forbidden_guess": true
+    }
+  },
+  "future_atomic_contract": {
+    "declaration_commit": [
+      "validate referee capability, actor, relation, ball and cushion identity, live rules revision and state hash",
+      "atomically persist one frozen or explicitly-not-frozen declaration before shot acceptance",
+      "bind the declaration to one exact pre-shot state and expire it on shot completion, reset, rerack or state conflict"
+    ],
+    "shot_telemetry_commit": [
+      "begin one stroke observation before the first possible cue-tip contact",
+      "append canonical non-overlapping cue-tip intervals and cue/object/cushion lifecycle records",
+      "finish only after the authoritative stroke observation boundary and mark incomplete on any gap",
+      "publish ShotFacts only after validation of identity, ordering, finiteness, provenance and completeness"
+    ],
+    "adjudication_commit": [
+      "require the exact current declaration when a frozen-ball exception or obligation is evaluated",
+      "require complete stroke telemetry before machine double-hit evaluation",
+      "require a selected policy or explicit referee decision for close-ball presumption, push obviousness and unresolved cushion semantics",
+      "apply foul, turn transfer, ball in hand, revision, journal and declaration expiry atomically"
+    ],
+    "failure_rollback": "state, declaration, facts, revision, actor, turn, ball-in-hand, journals and receipts remain byte-equivalent to the pre-call state",
+    "exact_retry": "returns the original ACK without duplicating declaration, intervals, facts, foul or revision",
+    "conflicting_retry": "fails closed with zero mutation",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "telemetry_positive": [
+      "ONE_COMPLETE_TIP_INTERVAL",
+      "TWO_CANONICAL_TIP_INTERVALS",
+      "CUE_OBJECT_CONTACT_BEFORE_TIP_SEPARATION",
+      "COUPLED_INTERVAL_RELEASE_PROVENANCE",
+      "DECLARED_FROZEN_CUE_OBJECT",
+      "DECLARED_FROZEN_OBJECT_LEAVES_AND_RECONTACTS_SAME_CUSHION",
+      "DECLARED_FROZEN_OBJECT_WITH_OTHER_BALL_CUSHION_CONTACT",
+      "DECLARED_FROZEN_OBJECT_WITH_POCKET"
+    ],
+    "telemetry_negative": [
+      "MISSING_STROKE_START_OR_END",
+      "DROPPED_OR_OVERLAPPING_TIP_INTERVAL",
+      "NONCANONICAL_INTERVAL_ORDER",
+      "NONFINITE_TIME_FORCE_IMPULSE_OR_SEPARATION",
+      "GEOMETRY_ONLY_FROZEN_WITHOUT_DECLARATION",
+      "STALE_DECLARATION_REVISION_OR_STATE_HASH",
+      "WRONG_REFEREE_ACTOR_OR_RELATION",
+      "FROZEN_OBJECT_NEVER_LEAVES",
+      "FROZEN_OBJECT_LEAVES_WITHOUT_ALLOWED_FOLLOWUP",
+      "FAILED_SOLVER_STEP_MARKS_FACTS_INCOMPLETE",
+      "RESET_RERACK_OR_STATE_CONFLICT_EXPIRES_DECLARATION",
+      "RETRY_AND_CONFLICT_ZERO_DELTA"
+    ],
+    "classification_after_policy": [
+      "SECOND_TIP_INTERVAL_IS_DOUBLE_HIT",
+      "CLOSE_BALL_OVERLAP_WITHOUT_LIGHT_GRAZE_EXCEPTION",
+      "LIGHT_GRAZE_PRESUMPTION_BOUNDARY",
+      "NORMAL_STRIKE_DURATION_BOUNDARY",
+      "OBVIOUS_PUSH_REFEREE_DECISION",
+      "DECLARED_FROZEN_DIRECT_MOVEMENT_NOT_AUTO_DOUBLE_HIT",
+      "DECLARED_FROZEN_OBVIOUS_PUSH_REMAINS_FOUL",
+      "FROZEN_CUSHION_JAW_POLICY_BOUNDARY"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/coupled_cue_contact.h",
+      "src/Billiards/coupled_cue_contact.cpp",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/rules/frozen_ball_declaration.h",
+      "src/Billiards/rules/frozen_ball_declaration.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/cue_contact_tests.cpp",
+      "tests/coupled_cue_contact_tests.cpp",
+      "tests/physics_telemetry_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_policy_referee_input_and_telemetry_design_is_approved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gate task",
+    "treating coupled microsteps as a complete full-stroke tip-contact trace",
+    "treating geometry-detected contact as a referee frozen-ball declaration",
+    "guessing very-close, light-graze, obvious-push, duration, distance, jaw or sampling tolerances",
+    "adjudicating from incomplete cue-tip or frozen-cushion telemetry",
+    "promoting any scoped audit row above MISSING",
+    "enabling global rulesDecisionUiProductExposed",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_pages_visually_reviewed": true,
+    "existing_solver_provenance_mapped": true,
+    "complete_full_stroke_tip_telemetry_available": false,
+    "referee_frozen_declaration_available": false,
+    "double_hit_adjudication_implemented": false,
+    "push_adjudication_implemented": false,
+    "frozen_ball_adjudication_implemented": false,
+    "production_implementation_complete": false,
+    "audit_rows_promoted": false,
+    "gpu_executed": false
+  }
+}

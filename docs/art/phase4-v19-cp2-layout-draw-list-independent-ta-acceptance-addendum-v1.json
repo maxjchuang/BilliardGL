@@ -1,0 +1,53 @@
+{
+  "schema": "billiardgl.phase4.v19.cp2_layout_draw_list_independent_ta_acceptance_addendum.v1",
+  "status": "CP2_INDEPENDENT_TA_ACCEPTED_CPU_STATIC_ONLY_CP3_GPU_READINESS_FALSE",
+  "scope": "Independent Technical Art acceptance of V19 CP2 only: authoritative four-profile layout, transparent cutout, exact surrounding-chrome subtraction and identity, exclusions, bilingual UI, focus, default state, and CP1 non-regression. It does not start or accept CP3 and grants no GPU, readiness, capture, machine, product, M3, golden, beta, or human-comprehension authority.",
+  "frozen_bindings": [
+    {"path":"docs/evidence/phase4-v19-cp2-layout-draw-list-implementation-v1/receipt.json","sha256":"2524223aa320ff5aecb70a164bfeac471d9fc36f09a67b30a1bb7486333bbbc5"},
+    {"path":"docs/evidence/phase4-v19-cp2-layout-draw-list-implementation-v1/cpu-test.stdout","sha256":"3907f5f56f6a20787f40b16f9e2e9218bc93e1a08b7c85d953da91927063d7e6"},
+    {"path":"scripts/validate_phase4_v19_cp2_layout_draw_list_implementation.py","sha256":"55208e8897c12c9091e92061029ea67dc7b878804d9aa88f9fd1e59a3fbfa2f3"},
+    {"path":"tests/test_phase4_v19_cp2_layout_draw_list_implementation.py","sha256":"b9b133c85e09b601494bc05909ed430180a559615d48b4642c801d3d5d68c245"},
+    {"path":"docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json","sha256":"e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"}
+  ],
+  "accepted_source_bindings": {
+    "src/Billiards/render/ui/product_shell_layout.h":"8d70d3355bf40ac78bc212988a4205fa08c2c2caac95f816dfbdf5d6140dc5ec",
+    "src/Billiards/render/ui/product_shell_layout.cpp":"50d99d388dfa72c81cbec516e6661349b5238fc5aea5b832db9af4e87eb02189",
+    "src/Billiards/render/ui/product_shell_draw_list.h":"57fbd8ce714274ef4957debe462aa36d91c48e4297486fb9609eec61a061eac2",
+    "src/Billiards/render/ui/product_shell_draw_list.cpp":"f6b705a100d18cc0218b69e36a74a403fb65987fd9060a047722ca78d391b45c",
+    "tests/phase4_v19_trajectory_inset_layout_draw_list_cpu_tests.cpp":"810e129aedfef913d4947ebdb0de65944ef0df82029d9bd27e6d26016bac07af"
+  },
+  "independent_reproduction": {
+    "receipt_validator_fresh_o2_and_product_shell_replay":"PASS_ERRORS_EMPTY",
+    "receipt_fail_closed_mutations_minimum":27,
+    "receipt_mutation_unittest":"PASS",
+    "independent_o0_replay":"PASS",
+    "independent_o2_replay":"PASS",
+    "existing_product_shell_replay":"PASS",
+    "gpu_or_window_context_created":false,
+    "post_freeze_permissions":{"artifact_directory":"0555","receipt_stdout_validator_tests":"0444"}
+  },
+  "accepted_cp2_axes": {
+    "exact_four_profiles_and_minimum_dimensions":true,
+    "transparent_cutout_has_zero_opaque_or_ui_coverage":true,
+    "surrounding_panel_footer_split_shape_area_and_source_identity":true,
+    "exact_generated_panel_border_text_toggle_focus_multiplicity":true,
+    "five_exact_exclusions_and_no_relocation":true,
+    "bilingual_title_orientation_legend_and_toggle_label":true,
+    "default_inset_on_world_overlay_off_and_no_fallback":true,
+    "ui_semantic_probe_and_denominator_contribution_zero":true,
+    "cp1_inventory_sources_cmake_and_modern_renderer_byte_exact":true
+  },
+  "acceptance_boundary": {
+    "cp1_accepted":true,
+    "cp2_accepted":true,
+    "cp3_started":false,
+    "cp3_accepted":false,
+    "gpu_authorized":false,
+    "readiness_authorized":false,
+    "capture_authorized":false,
+    "machine_pass_claimed":false,
+    "ta_visual_pass_claimed":false,
+    "human_comprehension_pass_claimed":false,
+    "product_m3_golden_beta_pass_claimed":false
+  }
+}

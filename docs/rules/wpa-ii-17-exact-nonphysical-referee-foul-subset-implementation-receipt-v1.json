@@ -1,0 +1,219 @@
+{
+  "schema": "wpa_ii_17_exact_nonphysical_referee_foul_subset_implementation_receipt_v1",
+  "status": "PARTIAL_EXACT_NONPHYSICAL_SUBSET_CPU_VERIFIED_D5_D6_FULL_ROW_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/wpa-ii-17-exact-nonphysical-referee-foul-subset-implementation-design-gate-v1.json",
+      "sha256": "69b04abc73dddc2d9b3b84022ab689842c0028f181dd3bb9b3258792ce0503da"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-17",
+      "selected_option_id": "EVIDENCE_BACKED_SUBSET_PLUS_SIGNED_REFEREE_EVENTS"
+    },
+    "b2_foundation_receipt": {
+      "path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json",
+      "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"
+    },
+    "cue_scratch_receipt": {
+      "path": "docs/rules/wpa-ii-17-a-cue-scratch-policy-independent-telemetry-implementation-receipt-v1.json",
+      "sha256": "38d4c067d0f3c77603ef5149ea5160e859f8fc8d02c52d04a116761b8106aef5",
+      "modified": false
+    }
+  },
+  "tests_first": {
+    "red_observed": true,
+    "red_exit_code": 1,
+    "red_failure": "no such file or directory: src/Billiards/rules/nonphysical_general_foul_authority.cpp",
+    "green": true
+  },
+  "exact_contract": {
+    "event_kinds": [
+      "BOTH_FEET_OFF_GROUND_DURING_SHOT",
+      "ILLEGAL_BODY_CLOTHING_OR_EQUIPMENT_BALL_TOUCH",
+      "ONE_HAND_SHOT",
+      "AUXILIARY_EQUIPMENT_PLACED_ON_TABLE_TO_SHOOT",
+      "MOBILE_DEVICE_DISTURBANCE_GENERAL_FOUL"
+    ],
+    "proposal_is_foul": false,
+    "final_atomic_ordinary_foul_anywhere_bih": true,
+    "core_g_offer_staged": true,
+    "exact_retry_zero_delta": true,
+    "mobile_repeat_loss_of_rack": false,
+    "physics_or_shotfacts_synthesized": false
+  },
+  "automation": {
+    "capability": "wpa_ii_17_exact_nonphysical_referee_foul_subset_v1",
+    "commands": [
+      "rules.nonphysical_general_foul_propose",
+      "rules.nonphysical_general_foul_final",
+      "rules.nonphysical_general_foul_cancel",
+      "get_nonphysical_general_foul_state"
+    ],
+    "headless": true,
+    "secret_free": true,
+    "full_row_complete_readback": false
+  },
+  "fixtures": {
+    "positive": [
+      "EACH_OF_FIVE_EXACT_KINDS_PROPOSE_THEN_FINAL",
+      "PROPOSAL_DOES_NOT_CREATE_FOUL_OR_BIH",
+      "FINAL_ATOMICALLY_CREATES_ORDINARY_FOUL_AND_ANYWHERE_BIH",
+      "OPPONENT_RECEIVES_CURRENT_CORE_G_OFFER",
+      "EXACT_RETRY_RETURNS_ORIGINAL_ACK_ZERO_DELTA",
+      "SAME_REFEREE_CANCEL_BEFORE_FINAL",
+      "SIGNED_FACT_BINDS_SHOT_ACTOR_REVISION_AND_HASH",
+      "AUTOMATION_SECRET_FREE_READBACK",
+      "CUE_SCRATCH_AND_AUTOMATIC_SUBSET_REGRESSION",
+      "GLOBAL_RULES_UI_REMAINS_FALSE"
+    ],
+    "negative": [
+      "PLAYER_OR_UNAUTHENTICATED_EVENT_REJECTED",
+      "WRONG_SHOOTER_OR_REFEREE_REJECTED",
+      "WRONG_SHOT_RACK_REVISION_OR_HASH_REJECTED",
+      "STALE_EXPIRED_OR_FUTURE_REQUEST_REJECTED",
+      "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED",
+      "UNSUPPORTED_EVENT_KIND_REJECTED",
+      "DOUBLE_HIT_PUSH_OR_OBVIOUS_CONTACT_KIND_REJECTED_D5",
+      "CUE_OR_OBJECT_OFF_TABLE_KIND_REJECTED_D6",
+      "BAD_HEAD_STRING_KIND_REJECTED_SEPARATE_LIFECYCLE",
+      "MOBILE_REPEAT_LOSS_OF_RACK_ACTION_REJECTED",
+      "SHOOT_WHILE_BALLS_MOVING_PREVENTION_NOT_ACCEPTED_AS_EVENT",
+      "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED",
+      "CANCEL_AFTER_FINAL_REJECTED",
+      "BREAK_OR_EIGHT_PARENT_CONFLICT_REJECTED",
+      "RESET_RERACK_TURN_OR_SHOT_DRIFT_INVALIDATES",
+      "FAILED_CORE_G_STAGE_ROLLS_BACK_ALL_STATE",
+      "IDEMPOTENCY_NONCE_CONFLICT_ZERO_DELTA",
+      "SECOND_FINAL_CANNOT_DUPLICATE_ENTITLEMENT",
+      "SIGNED_EVENT_NEVER_SYNTHESIZES_PHYSICS_OR_SHOTFACTS",
+      "NO_VISIBLE_OR_GLOBAL_RULES_UI"
+    ]
+  },
+  "source_bindings": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801"
+    },
+    {
+      "path": "src/Billiards/rules/nonphysical_general_foul_authority.h",
+      "sha256": "3137dd1c4d52afafc6e6eadeafcbc91de2741dd0d3449ca9b3a3a1cdb5d1d73b"
+    },
+    {
+      "path": "src/Billiards/rules/nonphysical_general_foul_authority.cpp",
+      "sha256": "407436aa78c654a718fe3cb239e0a4ef69b8461d01d98de4175e2795cd79d598"
+    },
+    {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "86ab2c88200f4336f1c54ca39ea3977f2c825d795b24da0e976f24d957fcfc7f"
+    },
+    {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "f8d44f1b86b20c22c5aa9c0aeec8c3760a1527157ee4fbd6dc0061f33d57ecf0"
+    },
+    {
+      "path": "src/Billiards/automation_controller.cpp",
+      "sha256": "4e6c48d8fd243981e826272e312b1bea5fde1c57a0507b7423391dbbc4675fba"
+    }
+  ],
+  "test_bindings": [
+    {
+      "path": "tests/nonphysical_general_foul_authority_tests.cpp",
+      "sha256": "94b38237835c13dae41bb9a70dcdbd43ab1805fa4ca6c20ff61f871160ab5094"
+    },
+    {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "5f35f6bf915678d140deb215aedcdad47db4d9e629cc3f257d1d35a798b28541"
+    },
+    {
+      "path": "tests/automation_controller_tests.cpp",
+      "sha256": "1219312dff4a1e338245966ec590996b32beb16593f7719f3fa63808de188858"
+    }
+  ],
+  "cpu": {
+    "build_root": "build-wpa-ii-17-subset-green-v1",
+    "passed_count": 13,
+    "binaries": [
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsNonphysicalGeneralFoulAuthorityTests",
+        "sha256": "f2598198f33cea9d75a6f4b76baa0c131cc9721baa32916f243b866987540934",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsRulesRuntimeIntegrationTests",
+        "sha256": "6c2391760c980da5b443be46c98285a37f203f3d8fbbb7a3f97603ccfc15997a",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsAutomationControllerTests",
+        "sha256": "12d647ed415d513ce95c504e2c2700bc14bbcc33b5a3d6494f08d4600daa2002",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsRefereeAuthorityProtocolTests",
+        "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsPushReviewDeclarationTests",
+        "sha256": "57ee63adfe5e5d411daafd2a3718a65737a59071ae45d55a7e318b856ba2dc35",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsDoubleHitCloseCaseDeclarationTests",
+        "sha256": "0f66d01a07bc1cb3b567fefb867af0a82bd5ef11fc8c92d60f29d79c293b9cea",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsFrozenBallDeclarationTests",
+        "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsFrozenCushionDeclarationTests",
+        "sha256": "0a258f6c5a08d8520c530f801f73d35dfdf78d1c5375ce9b370a3181e19a7cc7",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsGroupConfusionAuthorityTests",
+        "sha256": "067058e5de66cf434a60185a1208ee3f630a46930b59a9aa1af2050936935ee9",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsStalemateAuthorityTests",
+        "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsChineseEightBallRulesTests",
+        "sha256": "9aa82f0c2983932e04abcd9a8d451afbe087f535fb6190d80eff4d13e12679ba",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsRulesTests",
+        "sha256": "c47d5a769ed0f6dd4d22b78aa06a936bc0c85042980e6027bfafb6378aac2bdf",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-17-subset-green-v1/BilliardsAutomationProtocolTests",
+        "sha256": "e45b4d948e59abe95ea179881b9b2b66e6803b4ed30f5b9cbb874f603c5c09e5",
+        "exit_code": 0
+      }
+    ],
+    "gpu": false
+  },
+  "completion": {
+    "exact_nonphysical_subset_implemented": true,
+    "d5_complete": false,
+    "d6_complete": false,
+    "off_table_policy_resolved": false,
+    "full_wpa_ii_17_implemented": false,
+    "audit_promoted": false,
+    "m4_complete": false,
+    "forbidden_sources_modified": false,
+    "mobile_repeat_loss_of_rack_implemented": false,
+    "visible_or_global_ui": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

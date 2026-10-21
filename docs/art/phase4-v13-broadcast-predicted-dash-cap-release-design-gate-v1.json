@@ -1,0 +1,168 @@
+{
+  "schema": "billiardgl.phase4.v13.broadcast_predicted_dash_cap_release_design_gate.v1",
+  "schema_version": 1,
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED_NO_GPU_NO_AUTHORIZATION",
+  "scope": "Minimal successor to the exhausted v12 actual-only repair space. It may release exactly the predicted dash-cap coverage that still hides a second actual solid-core pixel at frozen broadcast coordinate [940,525], while retaining the authoritative dash center rhythm, 2px core-to-inner annulus, predicted-yellow dominance, source identities, thresholds, z-order, and v9/v11 controls.",
+  "frozen_bindings": [
+    {
+      "role": "v12_visual_repair_design_gate",
+      "path": "docs/art/phase4-v12-broadcast-projected-trajectory-visual-repair-design-gate-v1.json",
+      "sha256": "0fe6d893cd8fa1130e93c975be8e297802749b6515eb4f4e65b7d9af2006b8d2"
+    },
+    {
+      "role": "v12_actual_only_cpu_exhaustion_receipt",
+      "path": "docs/art/phase4-v12-visual-local-alternatives-exhaustion-v1/exhaustion-evidence-receipt-v1.json",
+      "sha256": "62b9120252f9a224e965cb3815ebbcce4a4854019e75a5e4b0d80b7f0b563f97"
+    },
+    {
+      "role": "v11_connectivity_algorithm_implementation_receipt",
+      "path": "docs/art/phase4-v11-raster-support-connectivity-implementation-v1/algorithm-implementation-receipt-v1.json",
+      "sha256": "abc181f48adb8e94db31965c2d0111c7641c0ac20242dd4a93189a237c8d01f2"
+    },
+    {
+      "role": "v9_compositing_style_gate",
+      "path": "docs/art/phase4-final-ownership-v9-ordinal1-offline-diagnostic-v1/minimal-compositing-style-correction-design-gate-v1.json",
+      "sha256": "e80baf05f0240872ba24b9ca9a6c7daa0d5a51496dde99902014d8ea3391a4f6"
+    },
+    {
+      "role": "v11_broadcast_failure_evidence",
+      "path": "docs/art/phase4-final-ownership-v11-ordinal4-offline-diagnostic-v1/failure-evidence-receipt-v1.json",
+      "sha256": "07f251d466b0dcad550b4951e8242403bcaaaeb97dd800cbde99cdf23c2f3f85"
+    },
+    {
+      "role": "v11_authoritative_final_ownership_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    }
+  ],
+  "bound_exhaustion_facts": {
+    "blocking_coordinate": [940, 525],
+    "standard_actual_core_pixels_and_largest8": [1, 1],
+    "cvd_actual_core_pixels_and_largest8": [1, 1],
+    "exhausted_actual_internal_overlap_px": [0.75, 1.0, 1.25, 1.5],
+    "exhausted_actual_route_body_width_px": [5.0, 5.5, 6.0],
+    "exhausted_join_fills": ["20_slice_disc_vertex_budget_failure", "two_triangle_inscribed_square_no_effect"],
+    "restored_actual_width_px": 4.5,
+    "restored_actual_internal_overlap_px": 0.75,
+    "actual_halo_pixels_may_not_substitute_for_actual_core": true,
+    "current_machine_pass": false,
+    "current_ta_pass": false
+  },
+  "exact_repair_ids": {
+    "algorithm_replay_inherited_visible_count": 78,
+    "predicted_contrast_repair_probe_ids": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a"
+    ],
+    "actual_connectivity_repair_probe_id": "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9",
+    "required_union_count": 81,
+    "required_predicted_visible_count": 69,
+    "required_actual_visible_count": 12
+  },
+  "primary_equal_cap_contraction_sweep": {
+    "selection_rule": "Start from the frozen 1.5px baseline, test 1.25px, then 1.0px, and freeze the first candidate that satisfies every CPU/static predicate. Never skip directly to the largest contraction and never interpolate an untested value.",
+    "baseline": {
+      "predicted_core_cap_extension_px": 1.5,
+      "predicted_inner_cap_extension_px": 3.5,
+      "predicted_outer_cap_extension_px": 3.5,
+      "core_to_inner_annulus_px": 2.0,
+      "result": "FAIL_ACTUAL_CORE_1_PIXEL_AT_940_525"
+    },
+    "ordered_candidates": [
+      {
+        "predicted_core_cap_extension_px": 1.25,
+        "predicted_inner_cap_extension_px": 3.25,
+        "predicted_outer_cap_extension_px": 3.25,
+        "core_to_inner_annulus_px": 2.0
+      },
+      {
+        "predicted_core_cap_extension_px": 1.0,
+        "predicted_inner_cap_extension_px": 3.0,
+        "predicted_outer_cap_extension_px": 3.0,
+        "core_to_inner_annulus_px": 2.0
+      }
+    ],
+    "unchanged_center_pattern": {
+      "dash_on_px": 18.0,
+      "dash_off_px": 12.0,
+      "period_px": 30.0,
+      "dash_phase_and_center_positions_unchanged": true
+    },
+    "outer_rim_side_only": true,
+    "candidate_must_be_minimal": true
+  },
+  "fallback_equivalent_cap_policy": {
+    "status": "DISALLOWED_UNLESS_BOTH_EQUAL_CONTRACTION_CANDIDATES_FAIL",
+    "allowed_behavior": "Suppress only predicted cap-fragment writes that would replace a previously rasterized actual-core sample; retain predicted core and inner side bands, 2px lateral inner annulus, dash centers, side-only outer rim, semantic ownership, and actual-before-predicted submission order.",
+    "must_be_cap_only": true,
+    "must_not_change_draw_order": true,
+    "must_not_use_color_only_detection": true,
+    "requires_renderer_tagged_prior_actual_core_coverage": true,
+    "cannot_be_combined_with_equal_cap_contraction": true,
+    "requires_separate_cpu_receipt_and_root_approval": true
+  },
+  "allowed_production_files": [
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "allowed_symbols_or_regions": "Predicted dash core/inner/outer cap-extension calculation and cap-only non-overwrite primitive emission; no route, phase, ownership, camera, threshold, or draw-order code."
+    },
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "allowed_symbols_or_regions": "Renderer-only cap diagnostics strictly required to prove selected cap extensions, 2px annulus, side-only outer band, and prior-actual cap suppression."
+    }
+  ],
+  "forbidden_changes": [
+    "No minimum area, minimum connected pixels, local contrast 4.0, coverage 0.9, luma, probe count, denominator, coordinate, or acceptance-threshold relaxation.",
+    "No predicted dash on/off length, period, phase, center position, route point, centerline, lateral offset, endpoint, tick, marker, camera, viewport, scene, asset, UI, or layout change.",
+    "No actual core width, actual halo/rim width, actual internal overlap, actual join fill, or other exhausted v12 actual-only repair retry.",
+    "No actual-before-predicted z-order change, pass reorder, depth override, post-process repaint, alpha fade, or evidence crop/omission.",
+    "No source probe ID/count/order/coordinates, ownership token, association, arbitration, connectivity, reason code, final-LDR pairing, MSAA resolve, blend, or tone-map algorithm change.",
+    "No reduction of the 2px predicted core-to-inner annulus, no outer cap extension beyond inner cap extension, and no cap change that repaints or closes a predicted gap.",
+    "No regression of predicted yellow dominance, the two repaired silhouette probes, standard/CVD non-color separation, endpoint/tick readability, or v9/v11 control visible-ID sets.",
+    "No product exposure, readiness, authorization, GPU execution, capture retry, targeted5/targeted11/formal68 claim, golden, M2, or Beta promotion from this design gate."
+  ],
+  "required_cpu_and_static_preflight": {
+    "status": "NOT_RUN",
+    "required_checks": [
+      "Validate all six frozen bindings and exact restored renderer/test/binary hashes transitively bound by the exhaustion receipt before editing.",
+      "Static diff allowlist is exactly the two renderer files and only the predicted cap calculation/emission regions; the six algorithm receipt post-SHAs remain exact.",
+      "Run the ordered 1.5 baseline, 1.25 candidate, then 1.0 candidate sweep in isolated CPU builds and select the first complete PASS; preserve per-candidate source and binary SHAs plus deterministic rerun hashes.",
+      "For every candidate, dashOn=18, dashOff=12, period=30, phase and dash center positions are byte-identical; predicted innerCap-coreCap is exactly 2px and outerCap equals innerCap so the outer band remains side-only/non-overwriting.",
+      "At [783,413], [892,491], and [940,525], standard and CVD pixel masks each retain an open predicted-core gap and a distinct actual-core component with minimum area >=1.5 and largest eight-connected support >=2; halo pixels cannot substitute.",
+      "Bind the algorithm replay's exact ordered 78 visible source IDs, prove every inherited ID is monotonic non-regressing, then union the exact two contrast repair IDs and one connectivity repair ID to exact 81 unique IDs with predicted 69 and actual 12.",
+      "The two frozen predicted silhouette probes [855,469] and [879,486] remain >=4.0 final-LDR contrast and predicted yellow remains the last-drawn primary core without a broad cyan/white three-line artifact.",
+      "V11 controls preserve exact source digests and ordered visible-ID supersets: player 95 source/at least 89 visible, elevated 83/at least 80, overhead 87/at least 84; actual coverage remains 1.0 and foreign-track/double/unowned remain zero.",
+      "The v9 compositing constraints remain PASS: outer rim does not overwrite the inner halo, same-axis/cross-track identities do not alias, and fixed-rim contrast regressions do not return.",
+      "Existing renderer, compound visibility, semantic ownership, telemetry, algorithm receipt, v12 gate, and cap-gate fail-closed tests all PASS; total per-track vertices remain <=8192.",
+      "No readiness, authorization, PPM, PNG, GPU artifact, product exposure, or acceptance claim is generated by CPU/static completion."
+    ],
+    "implementation_exit": "A separately frozen CPU/static implementation receipt may report the selected minimal cap strategy and exact hashes, but does not authorize GPU capture or establish machine/TA acceptance."
+  },
+  "future_targeted_acceptance": {
+    "status": "NOT_AUTHORIZED_NOT_RUN",
+    "minimum_cases": ["camera_player_low_1080", "camera_elevated_1080", "camera_overhead_1080", "camera_broadcast_1080", "actual_retina_ui135_cvd"],
+    "machine_prerequisite": "Fresh-process targeted5 must be separately authorized only after the algorithm, v12 color repair, and this cap implementation each have frozen PASS receipts; machine must be 5/5 with broadcast 81/81/0 and exact 69 predicted plus 12 actual.",
+    "ta_prerequisite": "Only after machine 5/5, independent original-resolution TA reviews 5x7=35 axes, including all three visible actual-in-predicted-gap regions, predicted yellow/dash dominance, two silhouette contrasts, endpoints/ticks, and the three controls without inherited conclusions.",
+    "targeted5_is_not_targeted11_or_formal68": true,
+    "product_or_beta_acceptance": false
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "production_modified_by_this_gate": false,
+    "cap_repair_implemented": false,
+    "cpu_static_preflight_run": false,
+    "readiness_created": false,
+    "authorization_created_or_issued": false,
+    "gpu_authorized_or_executed": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "threshold_changed": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

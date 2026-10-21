@@ -1,0 +1,213 @@
+{
+  "schema": "wpa_ii_12_5_6_signed_close_case_declaration_lifecycle_implementation_receipt_v1",
+  "status": "PARTIAL_REVIEW_LIFECYCLE_CPU_VERIFIED_D5_AND_AUDIT_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/wpa-ii-12-5-6-signed-close-case-declaration-lifecycle-implementation-design-gate-v1.json",
+      "sha256": "4262993a3a1b0ab585874801754a2f5629d47cff5f7372c01962fb87b811795d",
+      "root_revalidation": "PASS_20_OF_20_EXACT_5_PRODUCTION_3_TESTS_SINGLE_CMAKE_TARGET"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-12-5-6",
+      "selected_option_id": "AUTO_ONLY_COMPLETE_MULTI_INTERVAL_REFEREE_CLOSE_CASES",
+      "row_implementation_allowed": false
+    },
+    "b2_foundation_receipt": {
+      "path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json",
+      "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"
+    }
+  },
+  "tests_first_record": {
+    "red_observed": true,
+    "red_exit_code": 1,
+    "red_failure": "clang++: no such file or directory: src/Billiards/rules/double_hit_close_case_declaration.cpp",
+    "green_after_minimal_patch": true
+  },
+  "implemented_contract": {
+    "states": [
+      "INACTIVE",
+      "PROPOSAL_OPEN",
+      "CLOSE_CASE_ACTIVE",
+      "CLOSE_CASE_CONSUMED",
+      "CANCELLED",
+      "INVALIDATED"
+    ],
+    "review_needed_only": true,
+    "double_hit_classified": false,
+    "foul_classified": false,
+    "geometry_or_microtrace_attests": false,
+    "thresholds_selected": false,
+    "positive_accepted_impulse_consumes_once": true,
+    "exact_retry_zero_delta": true,
+    "second_shot_reuses": false
+  },
+  "automation_headless": {
+    "capability": "wpa_ii_12_5_6_signed_close_case_declaration_v1",
+    "commands": [
+      "rules.double_hit_close_case_propose",
+      "rules.double_hit_close_case_final",
+      "rules.double_hit_close_case_cancel",
+      "get_double_hit_close_case_state"
+    ],
+    "request_exact_field_count": 17,
+    "readback_review_needed_only": true,
+    "readback_omits": [
+      "credential_id",
+      "authentication_proof",
+      "payload_canonical"
+    ],
+    "headless_only": true
+  },
+  "fixture_matrix": {
+    "positive": [
+      "REFEREE_PROPOSE_CLOSE_CASE_DOES_NOT_ATTEST",
+      "SAME_REFEREE_FINAL_ATTESTS_REVIEW_NEEDED_ONLY",
+      "LIVE_LEGAL_OBJECT_OPEN_OR_ASSIGNED_TABLE",
+      "AIM_POWER_CAMERA_PREVIEW_KEEP_ACTIVE",
+      "POSITIVE_ACCEPTED_SHOT_CONSUMES_EXACTLY_ONCE",
+      "CONSUMED_RECORD_BINDS_SHOT_PAIR_AND_DECLARATION",
+      "SAME_REFEREE_CANCEL_BEFORE_FINAL",
+      "EXACT_RETRY_ZERO_DELTA",
+      "AUTOMATION_SECRET_FREE_READBACK",
+      "READBACK_REVIEW_NEEDED_TRUE_RESULT_FALSE"
+    ],
+    "negative": [
+      "PLAYER_OR_UNAUTHENTICATED_DECLARATION_REJECTED",
+      "GEOMETRY_MICROTRACE_OR_SINGLE_LAUNCH_CONTACT_CANNOT_ATTEST",
+      "PAYLOAD_DOUBLE_HIT_OR_FOUL_FIELD_REJECTED",
+      "PAYLOAD_TIP_INTERVAL_OR_ORDER_FIELD_REJECTED",
+      "PAYLOAD_DISTANCE_OR_GRAZE_THRESHOLD_REJECTED",
+      "WRONG_CUE_OBJECT_OR_RELATION_REJECTED",
+      "POCKETED_OR_ILLEGAL_OBJECT_REJECTED",
+      "WRONG_RACK_REVISION_STATE_HASH_OR_EXPIRY_REJECTED",
+      "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED",
+      "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED",
+      "CANCEL_AFTER_FINAL_REJECTED",
+      "PLACEMENT_BALL_MOVE_GROUP_CHANGE_TURN_RESET_INVALIDATES",
+      "REJECTED_ZERO_UNSUPPORTED_MISCUE_OR_FAILED_LAUNCH_NOT_CONSUMED",
+      "LATER_PHYSICS_FAILURE_DOES_NOT_REACTIVATE",
+      "SECOND_SHOT_CANNOT_REUSE",
+      "RESET_RERACK_OR_MATCH_COMPLETE_INVALIDATES",
+      "IDEMPOTENCY_NONCE_OR_SHOT_CONFLICT_ZERO_DELTA",
+      "DECLARATION_DOES_NOT_SYNTHESIZE_CONTACT_INTERVAL_ORDER_SHOTFACT_OR_FOUL",
+      "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REFEREE_SURFACE"
+    ]
+  },
+  "source_bindings": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "3fa981c3437656fd03d14096e6dae3c25783083dfbd204ce6dba74c56e63a680"
+    },
+    {
+      "path": "src/Billiards/rules/double_hit_close_case_declaration.h",
+      "sha256": "a44f2d49bb9fcb8d5fdf6306840d5da56d9465ca9b25bc70a1e89ebf4c763cf9"
+    },
+    {
+      "path": "src/Billiards/rules/double_hit_close_case_declaration.cpp",
+      "sha256": "358d65a33b61fa6dfb7218821771c26a43a4d9680bb3be19f5214ee2b0b16b04"
+    },
+    {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "38fdc0065b477e3193f5360bdd3ac491cef79b1b507ae9fa04c181c6f721dbc3"
+    },
+    {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "61571315e300cbd03207f81f8add6ecf0bbdbb589444e94b3d8b8bfbbd274601"
+    },
+    {
+      "path": "src/Billiards/automation_controller.cpp",
+      "sha256": "e94e881d03b21894b2cc9e1262fdc0af8efe5d8619ef6bc31a3fefdaace03b16"
+    }
+  ],
+  "test_bindings": [
+    {
+      "path": "tests/double_hit_close_case_declaration_tests.cpp",
+      "sha256": "af2041eb9a2b7f48ea871f315816fe2d8fca390f764d68b16938b101797a3a2b"
+    },
+    {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "177739db643bd5b43918db427be2ef9cd51e13c0f41f36674d01e3dea1abc9cf"
+    },
+    {
+      "path": "tests/automation_controller_tests.cpp",
+      "sha256": "4d112902251aba11c4fa73a1e758ad650395be359d2b7dbd9b153e97f319cee5"
+    }
+  ],
+  "cpu_verification": {
+    "build_root": "build-wpa-ii-12-5-6-green-v1",
+    "passed_count": 11,
+    "all_exit_code": 0,
+    "gpu_cocoa_opengl_executed": false,
+    "binary_bindings": [
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsDoubleHitCloseCaseDeclarationTests",
+        "sha256": "0f66d01a07bc1cb3b567fefb867af0a82bd5ef11fc8c92d60f29d79c293b9cea",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsRulesRuntimeIntegrationTests",
+        "sha256": "bfa1eea020088c62f5072a3906a0104c2a8591e217cd09d3fef8a146fc20995f",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsAutomationControllerTests",
+        "sha256": "5aad3ab63c15dd08421bb3ef31fbb372c0f69fde78e17cfd6f99ceb3261e3c61",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsRefereeAuthorityProtocolTests",
+        "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsFrozenBallDeclarationTests",
+        "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsFrozenCushionDeclarationTests",
+        "sha256": "0a258f6c5a08d8520c530f801f73d35dfdf78d1c5375ce9b370a3181e19a7cc7",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsGroupConfusionAuthorityTests",
+        "sha256": "067058e5de66cf434a60185a1208ee3f630a46930b59a9aa1af2050936935ee9",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsStalemateAuthorityTests",
+        "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsChineseEightBallRulesTests",
+        "sha256": "9aa82f0c2983932e04abcd9a8d451afbe087f535fb6190d80eff4d13e12679ba",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsRulesTests",
+        "sha256": "ff6575d02cdeacebf7483235faf99c8facc5e79d9c0bf15bff2c0ec3458fa48e",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-5-6-green-v1/BilliardsAutomationProtocolTests",
+        "sha256": "e98b287e3cabbb743a435eac0792e04eb6d09799786f9f35f2c8e05a560b2519",
+        "exit_code": 0
+      }
+    ]
+  },
+  "completion_boundary": {
+    "signed_close_case_partial_lifecycle_implemented": true,
+    "d5_complete": false,
+    "wpa_ii_12_5_6_audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "physics_telemetry_shotfacts_rules_topology_or_cue_contact_modified": false,
+    "visible_product_ui_implemented": false,
+    "global_rules_ui_exposed": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

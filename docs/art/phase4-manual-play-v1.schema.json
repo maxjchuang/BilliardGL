@@ -1,0 +1,69 @@
+{
+  "$id": "billiardgl://schemas/phase4-manual-play-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "aggregate": {
+      "type": "object"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "manual_check_contract": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "matrix_id": {
+      "const": "phase4_launch12_human_manual_play_v1"
+    },
+    "pack_contract": {
+      "type": "object"
+    },
+    "protocol_path": {
+      "type": "string"
+    },
+    "records": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "replay_rejection_contract": {
+      "type": "object"
+    },
+    "scenario_contract": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "schema": {
+      "const": "phase4_manual_play_v1"
+    },
+    "status": {
+      "enum": [
+        "NOT_RUN",
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "trajectory_contract": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "status",
+    "matrix_id",
+    "protocol_path",
+    "pack_contract",
+    "scenario_contract",
+    "manual_check_contract",
+    "replay_rejection_contract",
+    "trajectory_contract",
+    "evidence_boundary",
+    "records",
+    "aggregate"
+  ],
+  "title": "Phase 4 launch-12 human manual-play acceptance",
+  "type": "object"
+}

@@ -1,0 +1,42 @@
+{
+  "alignment_id": "focused_practice_hall_m1_alignment_v1",
+  "approval_source": "project_manager_decision_2026_07_27",
+  "asset_id": "focused_practice_hall_m1_graybox",
+  "asset_path": "assets/modern/graybox/focused_practice_hall_m1_graybox.gltf",
+  "asset_sha256": "sha256:67740c2800120a26313192ef433678030f1dbc36332669c7772e5a72876c41ec",
+  "binding": {
+    "ball_diameter_cm": 5.715,
+    "ball_radius_cm": 2.8575,
+    "corner_mouth_width_cm": 13.2,
+    "cushion_nose_height_above_surface_cm": 4.0005,
+    "cushion_nose_height_ratio": 1.4,
+    "formula_version": "legacy_v1",
+    "geometry_id": "legacy_opening_band",
+    "length_unit": "centimetre",
+    "marker_position_tolerance_cm": 0.05,
+    "no_visual_solid_clearance_cm": 0.1,
+    "playfield_length_cm": 254.0,
+    "playfield_width_cm": 127.0,
+    "pocket_marker_scope": "mouth_only",
+    "runtime_profile_id": "chinese_pool_interactive_120hz_v5",
+    "side_mouth_width_cm": 8.6,
+    "surface_y_cm": 86.483976
+  },
+  "capture_presentation": {
+    "future_detach_requires_snapshot_fields": [
+      "pocket_id",
+      "capture_sequence"
+    ],
+    "m1_mode": "simulation_driven",
+    "presentation_detach_enabled": false
+  },
+  "decision_status": "approved_for_m1_m2_compatibility",
+  "prohibitions": [
+    "production_throat_marker",
+    "production_jaw_marker",
+    "production_capture_marker",
+    "renderer_physics_offset",
+    "capture_detach_without_snapshot_event"
+  ],
+  "schema_version": 1
+}

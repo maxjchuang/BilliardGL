@@ -1,0 +1,121 @@
+{
+  "schema": "wpa_ii_17_exact_nonphysical_referee_foul_subset_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-17", "selected_option_id": "EVIDENCE_BACKED_SUBSET_PLUS_SIGNED_REFEREE_EVENTS", "row_implementation_allowed": false},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"},
+    "b2_priority_register": {"path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json", "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55", "priority": 7},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01", "row_status": "PARTIAL", "product_reachable": true},
+    "classified_subflow_audit": {"path": "docs/rules/wpa-ii-17-general-foul-product-lifecycle-subflow-audit-successor-v1.json", "sha256": "0bfdfed54a82be8b82d4ad696bb5ae56fa20dc9c8e3c6e122ef95ce6ea576d50"},
+    "cue_scratch_receipt": {"path": "docs/rules/wpa-ii-17-a-cue-scratch-policy-independent-telemetry-implementation-receipt-v1.json", "sha256": "38d4c067d0f3c77603ef5149ea5160e859f8fc8d02c52d04a116761b8106aef5", "unchanged": true},
+    "off_table_gap_gate": {"path": "docs/rules/wpa-ii-17-a-e-off-table-physical-telemetry-design-gap-gate-v1.json", "sha256": "3fc468502ab09e7ba0122d84b6c20386b0646d1f0db76a3f8ab3e8a1d30a9dbe", "d6_deferred": true}
+  },
+  "exact_subset": {
+    "signed_referee_event_kinds": [
+      "BOTH_FEET_OFF_GROUND_DURING_SHOT",
+      "ILLEGAL_BODY_CLOTHING_OR_EQUIPMENT_BALL_TOUCH",
+      "ONE_HAND_SHOT",
+      "AUXILIARY_EQUIPMENT_PLACED_ON_TABLE_TO_SHOOT",
+      "MOBILE_DEVICE_DISTURBANCE_GENERAL_FOUL"
+    ],
+    "actor": "authenticated referee only",
+    "offending_player": "exact current shooter at frozen accepted-shot context",
+    "result": "opponent ball in hand Anywhere through existing ordinary-foul Core-G lifecycle",
+    "proposal_is_not_foul": true,
+    "final_is_signed_referee_fact_and_parent_commit_request": true,
+    "automatic_reclassification_forbidden": true
+  },
+  "excluded_and_deferred": {
+    "already_implemented_automatic_subset": ["CUE_BALL_POCKET_SCRATCH", "WRONG_FIRST_CONTACT", "NO_CONTACT_OR_NO_RAIL"],
+    "d5_deferred": ["DOUBLE_HIT", "PUSH_SHOT", "OBVIOUS_CONTACT_FOUL"],
+    "d6_deferred": ["CUE_BALL_OFF_TABLE", "OBJECT_BALL_OFF_TABLE"],
+    "separate_selected_lifecycle": ["BAD_PLAY_BEHIND_HEAD_STRING"],
+    "mobile_repeat_loss_of_rack": "DEFERRED_SEPARATE_PARENT_TRANSACTION_GATE",
+    "shoot_while_balls_moving": "PRODUCT_PREVENTION_IS_NOT_A_FOUL_EVENT",
+    "full_row_closed": false
+  },
+  "exact_payload_and_snapshot": {
+    "declaration_kind": "WPA_II_17_NONPHYSICAL_GENERAL_FOUL_REFEREE_EVENT",
+    "operations": ["PROPOSE", "FINAL_DECLARE", "CANCEL_PROPOSAL"],
+    "request_field_count": 17,
+    "proposal_fields": ["event_kind", "offending_player", "shot_identity"],
+    "final_fields": ["event_kind", "offending_player", "proposal_decision_id", "shot_identity"],
+    "cancel_fields": ["proposal_decision_id"],
+    "snapshot": ["rack_identity", "shot_identity", "offending_player", "opponent", "rules_revision", "rules_state_hash", "event_kind", "referee_subject", "payload_digests"],
+    "unknown_extra_missing_noncanonical_wrong_type_or_unsupported_kind": "REJECT_BEFORE_MUTATION"
+  },
+  "atomic_lifecycle": {
+    "eligible": "Match active, exact current shooter and accepted-shot identity, no game-over, no break/eight decision parent and no pending conflicting authority",
+    "final_commit": "atomically append signed fact, classify only the exact allowed kind as ordinary general foul, transfer turn, grant Anywhere BIH, stage one current Core-G offer, advance one revision, journal and ACK",
+    "exact_retry": "return original ACK with zero duplicate fact, entitlement, offer, revision or journal",
+    "conflicting_retry": "fail closed with byte-equivalent runtime and authority state",
+    "reset_rerack_turn_or_shot_drift": "invalidate proposal/final before commit",
+    "failed_child_offer_or_commit": "roll back fact, foul verdict, turn, BIH, offer, revision, journal and ACK",
+    "global_rules_ui_exposed": false,
+    "headless_automation_only": true
+  },
+  "required_fixtures": {
+    "positive": [
+      "EACH_OF_FIVE_EXACT_KINDS_PROPOSE_THEN_FINAL",
+      "PROPOSAL_DOES_NOT_CREATE_FOUL_OR_BIH",
+      "FINAL_ATOMICALLY_CREATES_ORDINARY_FOUL_AND_ANYWHERE_BIH",
+      "OPPONENT_RECEIVES_CURRENT_CORE_G_OFFER",
+      "EXACT_RETRY_RETURNS_ORIGINAL_ACK_ZERO_DELTA",
+      "SAME_REFEREE_CANCEL_BEFORE_FINAL",
+      "SIGNED_FACT_BINDS_SHOT_ACTOR_REVISION_AND_HASH",
+      "AUTOMATION_SECRET_FREE_READBACK",
+      "CUE_SCRATCH_AND_AUTOMATIC_SUBSET_REGRESSION",
+      "GLOBAL_RULES_UI_REMAINS_FALSE"
+    ],
+    "negative": [
+      "PLAYER_OR_UNAUTHENTICATED_EVENT_REJECTED",
+      "WRONG_SHOOTER_OR_REFEREE_REJECTED",
+      "WRONG_SHOT_RACK_REVISION_OR_HASH_REJECTED",
+      "STALE_EXPIRED_OR_FUTURE_REQUEST_REJECTED",
+      "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED",
+      "UNSUPPORTED_EVENT_KIND_REJECTED",
+      "DOUBLE_HIT_PUSH_OR_OBVIOUS_CONTACT_KIND_REJECTED_D5",
+      "CUE_OR_OBJECT_OFF_TABLE_KIND_REJECTED_D6",
+      "BAD_HEAD_STRING_KIND_REJECTED_SEPARATE_LIFECYCLE",
+      "MOBILE_REPEAT_LOSS_OF_RACK_ACTION_REJECTED",
+      "SHOOT_WHILE_BALLS_MOVING_PREVENTION_NOT_ACCEPTED_AS_EVENT",
+      "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED",
+      "CANCEL_AFTER_FINAL_REJECTED",
+      "BREAK_OR_EIGHT_PARENT_CONFLICT_REJECTED",
+      "RESET_RERACK_TURN_OR_SHOT_DRIFT_INVALIDATES",
+      "FAILED_CORE_G_STAGE_ROLLS_BACK_ALL_STATE",
+      "IDEMPOTENCY_NONCE_CONFLICT_ZERO_DELTA",
+      "SECOND_FINAL_CANNOT_DUPLICATE_ENTITLEMENT",
+      "SIGNED_EVENT_NEVER_SYNTHESIZES_PHYSICS_OR_SHOTFACTS",
+      "NO_VISIBLE_OR_GLOBAL_RULES_UI"
+    ]
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/nonphysical_general_foul_authority.h", "src/Billiards/rules/nonphysical_general_foul_authority.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/automation_controller.cpp"],
+    "test_files": ["tests/nonphysical_general_foul_authority_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/automation_controller_tests.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "add one authority source and one headless BilliardsNonphysicalGeneralFoulAuthorityTests target",
+    "physics_telemetry_shotfacts_rules_or_modern_ui_edit_allowed": false
+  },
+  "live_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "be551dbe182bac4610fcd2c94cebf95d9d96ced4088aa16042da2f880b0a11f2"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "3604748833a92993f55b3c668d97c49d9e9d544814859db308f5347148697ed0"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "1309727b7cc03675fc9603ec238d50f3fce3a99dca2aabaeb52d626c4ffd1452"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "864b5be506b5aff2f4e1b7bbd5f1cbdc18965e8137634cd1f9c04e9befa74987"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required": true,
+    "nonphysical_subset_implemented": false,
+    "cue_scratch_modified": false,
+    "d5_complete": false,
+    "d6_complete": false,
+    "off_table_policy_resolved": false,
+    "wpa_ii_17_full_row_implemented": false,
+    "audit_row_promoted": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "visible_or_global_ui_exposed": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

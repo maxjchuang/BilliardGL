@@ -1,0 +1,20 @@
+import copy,importlib.util,json,pathlib,unittest
+ROOT=pathlib.Path(__file__).resolve().parents[2];V=ROOT/'scripts/validate_m4_d5_d6_exact_dependency_implementation_feasibility_register.py';G=ROOT/'docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json';S=importlib.util.spec_from_file_location('m',V);M=importlib.util.module_from_spec(S);S.loader.exec_module(M)
+class T(unittest.TestCase):
+ @classmethod
+ def setUpClass(c):c.v=json.loads(G.read_text())
+ def bad(self,f):v=copy.deepcopy(self.v);f(v);self.assertTrue(M.validate(v,False))
+ def test_valid(self):self.assertEqual(M.validate(self.v,True),[])
+ def test_status(self):self.bad(lambda v:v.update(status='IMPLEMENTED'))
+ def test_policy(self):self.bad(lambda v:v['bindings']['root_policy'].update(sha256='0'*64))
+ def test_order(self):self.bad(lambda v:v['batches'][0].update(order=7))
+ def test_id(self):self.bad(lambda v:v['batches'][0].update(id='X'))
+ def test_cpu(self):self.bad(lambda v:v['batches'][0].update(cpu_first=False))
+ def test_root(self):self.bad(lambda v:v['batches'][0].update(new_root_decision_required=False))
+ def test_gpu(self):self.bad(lambda v:v['batches'][0].update(gpu_required=True))
+ def test_stable(self):self.bad(lambda v:v['execution_constraints']['stable_order'].pop())
+ def test_gate(self):self.bad(lambda v:v['execution_constraints'].update(every_batch_requires_independent_implementation_design_gate=False))
+ def test_d5(self):self.bad(lambda v:v['claims'].update(d5_implemented=True))
+ def test_d6(self):self.bad(lambda v:v['claims'].update(d6_implemented=True))
+ def test_m4(self):self.bad(lambda v:v['claims'].update(m4_complete=True))
+if __name__=='__main__':unittest.main()

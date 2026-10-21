@@ -4,10 +4,12 @@
 
 ```bash
 ./build/check/Billiards --automation --transport stdio --headless
-./build/check/Billiards --automation --transport stdio --rendered
+./build/check/Billiards --automation --transport stdio --rendered --renderer legacy
 ```
 
 `headless` 不初始化窗口、OpenGL 或音频，适合快速物理测试。`rendered` 创建真实 OpenGL 上下文并支持截图。两种模式都只在收到时间控制命令时推进物理。
+
+`--renderer` 接受 `legacy` 或 `modern`，迁移期默认为 `legacy`。macOS 图形模式会在任何 GLUT 初始化前进入 OpenGL 4.1 Core modern application；当前非 macOS 构建选择 `modern` 会明确失败，不会静默回退。headless 接受该启动配置，但始终不创建图形 backend。
 
 ## 消息格式
 
@@ -26,7 +28,7 @@ stdin/stdout 使用 JSON Lines，每行一个 UTF-8 JSON 对象，单行上限 1
 {"id":1,"ok":false,"error":{"code":"invalid_argument","message":"ticks must be between 0 and 100000"}}
 ```
 
-进程首先输出 `ready`，其中包含 `protocol_version`、`mode`、`transport` 和已排序的 `capabilities`。客户端应以能力列表为准，不应根据模式猜测命令。
+进程首先输出 `ready`，其中包含 `protocol_version`、`mode`、`transport`、`renderer_backend` 和已排序的 `capabilities`。rendered 模式的 `renderer_backend` 为实际选择的 backend；headless 固定为 `none`。客户端应以能力列表为准，不应根据模式猜测命令。
 
 ## 命令
 
@@ -77,6 +79,19 @@ rendered 专用：`screenshot {path}`。它渲染当前 tick、保存二进制 P
 ## 状态和事件
 
 `get_state` 返回 tick、16 个球的位置/速度/速度标量/旋转/落袋状态、balls_moving、aim、input、players、camera、hud、game_over 和事件历史。浮点断言应由客户端提供容差。
+
+### 轨迹与离台诊断字段
+
+当前序列化器还输出以下只读诊断字段；它们不构成新的控制命令，也不改变 `step` 的推进语义。读取旧记录时不得把缺失的诊断值当作已观测的零值。
+
+- `get_state.balls[].trajectory_generation` 为十进制字符串，保留完整 uint64 精度；不得先转为 JavaScript Number。它标识轨迹代次，不是 tick 或事件序号。
+- 状态与 trace 的球对象仅在离台时输出 `out_of_play: true`。它与 `pocketed` 分开，不能把离台球解释成正常进袋。
+- trace 接触的 `kind` 可为 `ball_ball`、`rail`、`pocket` 或 `support`；`support` 是支撑接触，不能计作球球碰撞或碰库。消费者遇到未知类别应保留原值，而非默认映射为球球接触。
+- 接触记录包含 `whole_tick_time_of_impact_seconds`、`first_position_at_contact_cm`、`second_position_at_contact_cm`，以及字符串类型的 `trajectory_generation_before/after`。局部 `time_of_impact_seconds` 与整 tick 时间不可混用。
+- `administrative_reset_after_capture` 表示捕获后的管理性复位；仅为真时输出 `administrative_reset_position_cm`。绘制轨迹时应分段，不把复位位置变化画成物理飞行。
+- `pocket_vertical_shaft` 描述袋口竖直通道接触。solver event 的 `position_projections` 则按记录顺序保留 `ordinal`、`iteration`、`contact_index`、`ball_index`、字符串 `trajectory_generation` 及 `before_cm/after_cm`；这些是求解器位置校正，不是额外运动 tick。
+
+这些字段的序列化与完整整数精度由 `tests/automation_protocol_tests.cpp` 检查；命令兼容性须另运行 headless 客户端测试，不能仅凭字段增加或源码哈希变化判定通过。
 
 schema v2 额外要求 `cue_impact`，包含 cue ball、物理 cue 速度/质量、单位方向、仰角、以 cm 和球半径比例表示且相互一致的二维 tip offset，以及 chalk 状态。runtime 和每个后续 trace frame 会原样返回这组请求输入；state 中的 `cue_impact_support` 逐项列出 `exactly_consumable_fields`、`unsupported_codes` 和 `shot_executed`。该 capability 只表示“可解析和追踪”，不表示引擎已经支持竖直偏杆、cue 质量或从 cue 速度到游戏力度的物理映射；当前加载 v2 不会自动击球。
 

@@ -9,7 +9,10 @@ BallSpec defaultBallSpec()
 
 TableSpec defaultTableSpec()
 {
-    return TableSpec{kChinesePlayfieldWidthCm, kChinesePlayfieldLengthCm, kChineseTableHeightCm};
+    return TableSpec{kChinesePlayfieldWidthCm, kChinesePlayfieldLengthCm,
+        kChineseTableHeightCm, kTableModelPlaySurfaceHeightCm,
+        kTableModelRailTopSurfaceHeightCm, kTableModelOuterHalfWidthCm,
+        kTableModelOuterHalfLengthCm, kOutsideLandingSurfaceHeightCm};
 }
 
 PocketSpec defaultPocketSpec()

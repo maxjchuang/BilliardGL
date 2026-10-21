@@ -1,0 +1,628 @@
+{
+  "schema": "phase5_rules_decision_ui_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase5_rules_decision_ui_core_c_d_f_g_h_design_gate_v1",
+  "ruleset_id": "wpa_heyball_2025_08_16_v1",
+  "gate_status": "IMPLEMENTATION_ONLY_NOT_PRODUCT_PASS",
+  "profile_complete": false,
+  "product_exposed": false,
+  "evidence_boundary": {
+    "design_contract_only": true,
+    "runtime_implementation_claimed": false,
+    "actual_gpu_evidence_claimed": false,
+    "human_evidence_claimed": false,
+    "rules_owner_signature_claimed": false,
+    "product_pass_claimed": false,
+    "foundation_actions_product_exposed": false,
+    "implementation_authorized": true,
+    "product_exposure_authorized": false
+  },
+  "read_only_bindings": [
+    {
+      "role": "pending_ui_contract_reference",
+      "path": "docs/art/phase5-rules-decision-ui-actions-v1.pending.json",
+      "sha256": "sha256:7b3de569f57d1a8e589a6d053bf3959f04a5b68bbfb204046bfe8b63428383f1",
+      "must_remain_profile_complete": false,
+      "must_remain_product_exposed": false
+    },
+    {
+      "role": "core_c_simultaneous_group_authority",
+      "path": "src/Billiards/rules/group_choice_authority.h",
+      "sha256": "sha256:95f6f76bdaddc5627723fe47fd22fa13bc17254a576af63073cba1496dabdf36"
+    },
+    {
+      "role": "core_d_g_ball_in_hand_authority",
+      "path": "src/Billiards/rules/ball_in_hand_authority.h",
+      "sha256": "sha256:026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"
+    },
+    {
+      "role": "core_f_eight_on_break_authority",
+      "path": "src/Billiards/rules/eight_on_break_authority.h",
+      "sha256": "sha256:dacb83140b687b285f1dc67bcbb38d571349a60caa01a45664f0bbdcc2981b2e"
+    },
+    {
+      "role": "core_h_break_foul_authority",
+      "path": "src/Billiards/rules/break_foul_authority.h",
+      "sha256": "sha256:5b4bf09f9950fd61d3d4add4fd70a9304d5c82ab05254f5878c208a6dd92ad9e"
+    },
+    {
+      "role": "core_e_internal_foundation_negative_inventory",
+      "path": "src/Billiards/rules/rack_executor.h",
+      "sha256": "sha256:d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"
+    },
+    {
+      "role": "shipping_hud_tokens",
+      "path": "assets/modern/hud/focused_practice_hud_shipping_tokens_v1.json",
+      "sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860"
+    },
+    {
+      "role": "shipping_shell_tokens",
+      "path": "assets/modern/hud/focused_practice_shell_shipping_tokens_v1.json",
+      "sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+    }
+  ],
+  "authority_source_policy": {
+    "executable_action_inventory_source": "exact offeredActionIds from the current stable authority offer",
+    "pending_manifest_is_not_runtime_authority": true,
+    "unknown_or_unoffered_action": "hide_and_reject_without_mutation",
+    "offer_identity_fields": [
+      "decision_id",
+      "authority_state_revision",
+      "actor_player_id",
+      "offered_action_ids"
+    ],
+    "request_identity_fields": [
+      "ruleset_id",
+      "capability_id",
+      "flow_id",
+      "decision_id",
+      "expected_authority_state_revision",
+      "actor_player_id",
+      "action_id",
+      "idempotency_key",
+      "payload_canonical"
+    ],
+    "ack_identity_fields": [
+      "accepted",
+      "decision_id",
+      "action_id",
+      "idempotency_key",
+      "actor_player_id",
+      "previous_state_revision",
+      "authoritative_state_revision",
+      "effects",
+      "authoritative_state_hash"
+    ],
+    "commit_gate": "Do not visually or locally commit groups, turn, ball-in-hand entitlement, cue-ball position, 8-ball position, rack, breaker, or score until an accepted ACK exactly echoes identity, increments revision as contracted, and supplies a valid authoritative hash.",
+    "idempotency": "A retry reuses the same key only for byte-identical canonical request data; a changed request requires a new key and never inherits a prior ACK."
+  },
+  "flows": [
+    {
+      "core": "C",
+      "flow_id": "simultaneous_group_choice",
+      "capability_id": "simultaneous_contact_and_group_choice",
+      "surface": "blocking_rules_decision_modal",
+      "actor_rule": "actor_player_id from the exact offer must equal the local interactive player; otherwise render ai_or_remote_pending with no actions",
+      "branch": "two_group_simultaneous_first_contact_and_pocket",
+      "authority_actions": [
+        {
+          "action_id": "rules.group_choice.choose_solids",
+          "label": {"en": "Choose solids", "zh_cn": "选择全色球"},
+          "destructive_or_match_changing": true
+        },
+        {
+          "action_id": "rules.group_choice.choose_stripes",
+          "label": {"en": "Choose stripes", "zh_cn": "选择花色球"},
+          "destructive_or_match_changing": true
+        }
+      ],
+      "required_context": ["decision_id", "authority_state_revision", "actor_player_id", "continue_turn", "next_player"],
+      "forbidden_default": "Neither group may be selected, armed, submitted, or visually checked when the modal opens."
+    },
+    {
+      "core": "D",
+      "flow_id": "ball_in_hand_full_table",
+      "capability_id": "free_ball_placement",
+      "surface": "blocking_ball_in_hand_placement_overlay",
+      "actor_rule": "actor_player_id from the exact offer must equal the local interactive player",
+      "branch": "full_table",
+      "local_controls": [
+        {"control_id": "rules.ball_in_hand.preview_position", "authority_mutation": false},
+        {"control_id": "rules.ball_in_hand.reset_preview", "authority_mutation": false}
+      ],
+      "authority_actions": [
+        {
+          "action_id": "rules.ball_in_hand.confirm_full_table_placement",
+          "label": {"en": "Confirm placement", "zh_cn": "确认放置"},
+          "destructive_or_match_changing": true
+        }
+      ],
+      "required_context": ["decision_id", "authority_state_revision", "actor_player_id", "scope_full_table"],
+      "preview_contract": "Preview is visibly ghosted, labelled Preview, and remains local. Confirm stays disabled until fresh authority validation for the exact candidate returns legal.",
+      "cancel_contract": "Escape clears only the local preview and keeps the entitlement and blocking overlay."
+    },
+    {
+      "core": "G",
+      "flow_id": "ball_in_hand_behind_head_string",
+      "capability_id": "free_ball_placement",
+      "surface": "blocking_ball_in_hand_placement_overlay",
+      "actor_rule": "actor_player_id from the exact offer must equal the local interactive player",
+      "branch": "behind_head_string",
+      "local_controls": [
+        {"control_id": "rules.ball_in_hand.preview_position", "authority_mutation": false},
+        {"control_id": "rules.ball_in_hand.reset_preview", "authority_mutation": false}
+      ],
+      "authority_actions": [
+        {
+          "action_id": "rules.ball_in_hand.confirm_behind_head_string",
+          "label": {"en": "Confirm behind head string", "zh_cn": "确认放置在开球线后"},
+          "destructive_or_match_changing": true
+        }
+      ],
+      "required_context": ["decision_id", "authority_state_revision", "actor_player_id", "scope_behind_head_string", "head_string_world_z_cm", "source_clause", "source_pdf_page"],
+      "geometry_copy": {
+        "en": "Place the cue-ball center behind the head string.",
+        "zh_cn": "请将母球中心放在开球线后。"
+      },
+      "preview_contract": "The head-string plane uses a line plus hatched legal-side fill plus text; legality is never color-only and confirm requires fresh authority validation.",
+      "cancel_contract": "Escape clears only the local preview and keeps the entitlement and blocking overlay."
+    },
+    {
+      "core": "F",
+      "flow_id": "eight_on_break_spot_or_rerack",
+      "capability_id": "eight_on_break_spot_or_rerack",
+      "surface": "blocking_rules_decision_modal",
+      "actor_rule": "actor_player_id from the exact offer must equal the local interactive player",
+      "common_copy": {
+        "title": {"en": "8-ball on the break", "zh_cn": "开球时8号球入袋"},
+        "body": {"en": "This is not a win. Choose only from the authority offer.", "zh_cn": "这不算获胜；只能选择裁判系统当前提供的处理方式。"}
+      },
+      "branches": [
+        {
+          "branch_id": "legal_break",
+          "exact_action_ids_in_offer_order": [
+            "rules.eight_on_break.spot_continue",
+            "rules.eight_on_break.rerack_original_breaker"
+          ]
+        },
+        {
+          "branch_id": "foul_break",
+          "exact_action_ids_in_offer_order": [
+            "rules.eight_on_break.spot_ball_in_hand_head_string",
+            "rules.eight_on_break.rerack_opponent_breaks",
+            "rules.eight_on_break.rerack_original_breaker"
+          ]
+        }
+      ],
+      "authority_actions": [
+        {"action_id": "rules.eight_on_break.spot_continue", "label": {"en": "Spot 8-ball and continue", "zh_cn": "重置8号球并继续"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.eight_on_break.spot_ball_in_hand_head_string", "label": {"en": "Spot 8-ball; ball in hand behind head string", "zh_cn": "重置8号球；开球线后自由球"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.eight_on_break.rerack_original_breaker", "label": {"en": "Rerack - original breaker", "zh_cn": "重摆 - 原开球方开球"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.eight_on_break.rerack_opponent_breaks", "label": {"en": "Rerack - opponent breaks", "zh_cn": "重摆 - 对手开球"}, "destructive_or_match_changing": true}
+      ],
+      "required_context": ["decision_id", "authority_state_revision", "actor_player_id", "branch", "original_breaker_player_id", "frozen_next_player", "frozen_continue_turn"],
+      "forbidden_default": "Spot, ball-in-hand, breaker, and rerack choices all start unselected and unarmed."
+    },
+    {
+      "core": "H",
+      "flow_id": "break_foul_opponent_choice",
+      "capability_id": "break_foul_opponent_choices",
+      "surface": "blocking_rules_decision_modal",
+      "actor_rule": "actor_player_id from the exact offer must equal the local interactive player",
+      "common_copy": {
+        "title": {"en": "Break decision", "zh_cn": "开球犯规选择"},
+        "body": {"en": "Choose an action offered for this exact break ruling.", "zh_cn": "请选择裁判系统为本次开球判定提供的处理方式。"}
+      },
+      "branches": [
+        {
+          "branch_id": "illegal_break_6c",
+          "source_clause": "WPA-II-06-C",
+          "exact_action_ids_in_offer_order": [
+            "rules.break_foul.accept_table",
+            "rules.break_foul.rerack_opponent_breaks",
+            "rules.break_foul.rerack_original_breaker"
+          ]
+        },
+        {
+          "branch_id": "break_shot_foul_6e",
+          "source_clause": "WPA-II-06-E",
+          "exact_action_ids_in_offer_order": [
+            "rules.break_foul.ball_in_hand_behind_head_string",
+            "rules.break_foul.rerack_opponent_breaks",
+            "rules.break_foul.rerack_original_breaker"
+          ]
+        }
+      ],
+      "authority_actions": [
+        {"action_id": "rules.break_foul.accept_table", "label": {"en": "Accept table", "zh_cn": "接受台面"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.break_foul.ball_in_hand_behind_head_string", "label": {"en": "Ball in hand behind head string", "zh_cn": "开球线后自由球"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.break_foul.rerack_opponent_breaks", "label": {"en": "Rerack - I break", "zh_cn": "重摆 - 由我开球"}, "destructive_or_match_changing": true},
+        {"action_id": "rules.break_foul.rerack_original_breaker", "label": {"en": "Rerack - original breaker", "zh_cn": "重摆 - 原开球方开球"}, "destructive_or_match_changing": true}
+      ],
+      "required_context": ["decision_id", "authority_state_revision", "actor_player_id", "branch", "source_clause", "source_pdf_page", "original_breaker_player_id", "frozen_next_player"],
+      "forbidden_default": "Accept-table, ball-in-hand, and both breaker choices all start unselected and unarmed."
+    }
+  ],
+  "pending_reference_reconciliation": {
+    "pending_manifest_is_modified_by_this_gate": false,
+    "runtime_action_added_to_design_relative_to_pending_reference": [
+      "rules.break_foul.ball_in_hand_behind_head_string"
+    ],
+    "pending_only_actions_not_product_design_authorized_without_new_stable_authority": [
+      "rules.ball_in_hand.request_nearest_legal_respot",
+      "rules.ball_in_hand.choose_equidistant_respot_ball",
+      "rules.execution.retry_status",
+      "rules.execution.return_to_decision",
+      "rules.stalemate.accept_rerack",
+      "rules.stalemate.refuse_continue"
+    ],
+    "reason": "The stable Core G offer exposes only exact placement confirmation, and Core H has a branch-specific ball-in-hand action not represented in the older pending reference. Product UI must follow the stable offer, not synthesize actions from the reference."
+  },
+  "forbidden_action_inventory": {
+    "foundation_internal_action_ids": [
+      "rules.foundation.rerack",
+      "rules.foundation.respot"
+    ],
+    "requirements": [
+      "No product label, button, focus target, accessibility node, automation capability, tooltip, error recovery action, or analytics choice may contain either foundation action ID.",
+      "Spot and rerack are exposed only through their parent Core F/H authority action IDs.",
+      "Any foundation action observed in a product draw-list or input map is a hard FAIL."
+    ]
+  },
+  "state_machine": {
+    "states": [
+      "hidden_no_offer",
+      "decision_open_unselected",
+      "action_armed_not_submitted",
+      "placement_preview_local_invalid",
+      "placement_preview_local_valid",
+      "submitting_exact_request",
+      "authority_ack_verifying",
+      "authority_error_blocking",
+      "state_drift_refreshing",
+      "stale_offer_replaced",
+      "ai_or_remote_pending",
+      "classification_pending_blocked",
+      "completed_authoritative"
+    ],
+    "no_default_match_mutation": {
+      "initial_selected_action_id": null,
+      "initial_armed_action_id": null,
+      "focus_is_selection": false,
+      "hover_is_selection": false,
+      "timeout_action_id": null,
+      "escape_action_id": null,
+      "double_click_shortcut_allowed": false,
+      "mutating_action_submission": "First activation arms and opens an explicit confirmation row naming the action and actor; only a distinct Confirm activation submits the exact request. Focus, hover, modal open, timeout, Escape, and resume never submit."
+    },
+    "cancel_fail_closed": {
+      "decision_modal_escape": "announce_decision_required_keep_open_clear_arm_only",
+      "placement_escape": "clear_local_preview_only_keep_entitlement_and_overlay",
+      "submitting_escape": "ignored_announce_waiting",
+      "error_escape": "keep_blocking_error_no_local_recovery_mutation",
+      "window_focus_loss": "clear_hover_and_arm_keep_offer_blocking",
+      "application_resume": "requery_offer_and_require_exact_identity_before_reenable"
+    },
+    "stale_and_drift": {
+      "detect_when": [
+        "decision_id changes",
+        "authority_state_revision changes",
+        "actor_player_id changes",
+        "offered_action_ids change",
+        "authority state hash differs while submitting or verifying",
+        "ruleset, capability, flow, branch, or source clause changes"
+      ],
+      "response": "Disable all old actions immediately, clear armed action and local preview, retain a blocking status, fetch the latest offer, and rebuild from exact latest identity. Never replay, remap, or carry an old selection into the new offer.",
+      "stale_ack": "Reject the ACK visually and locally; do not apply effects; query authoritative state.",
+      "state_drift_copy": {
+        "en": "The ruling changed. Refreshing the authority offer.",
+        "zh_cn": "判定状态已变化，正在刷新裁判系统提供的选项。"
+      }
+    },
+    "ai_pending": {
+      "condition": "offer actor is AI or is not the local interactive player",
+      "copy": {
+        "en": "Waiting for the acting player authority.",
+        "zh_cn": "正在等待当前行动方的裁判系统处理。"
+      },
+      "interactive_actions_visible": false,
+      "local_or_ai_auto_choice_allowed": false,
+      "timeout_fallback_allowed": false,
+      "shot_input_blocked": true
+    }
+  },
+  "input_and_focus": {
+    "focus_order": ["modal_title", "ruling_summary", "authority_offered_actions_in_offer_order", "armed_action_confirmation", "error_detail"],
+    "modal_traps_focus": true,
+    "initial_focus": "modal_title_or_non_action_summary",
+    "visible_focus_token": "focus_chevron",
+    "armed_token": "selected_check_diamond",
+    "error_token": "error_cross_octagon",
+    "keyboard": {
+      "tab_shift_tab": "cycle_visible_enabled_focus_targets",
+      "arrow_keys_in_action_list": "move_focus_without_selection_or_submission",
+      "enter_or_space_on_action": "arm_action_only",
+      "enter_or_space_on_confirm": "submit_exact_armed_action_once",
+      "escape": "apply_cancel_fail_closed_contract",
+      "placement_arrow_keys": "move_local_preview_by_announced step; shift modifies step; no authority mutation",
+      "placement_enter": "arm_confirm_only_when_fresh_validation_is_legal"
+    },
+    "pointer": {
+      "hover": "visual_focus_hint_only_no_selection",
+      "primary_click_action": "arm_action_only",
+      "primary_click_confirm": "submit_exact_armed_action_once",
+      "placement_drag": "move_local_preview_only",
+      "right_click": "same_as_escape_for_current_state",
+      "pointer_capture_loss": "cancel_drag_clear_arm_keep_authority_offer"
+    },
+    "redundancy": [
+      "Every pointer operation has a keyboard path.",
+      "Every focused, armed, disabled, error, and pending state uses text plus shape plus luminance/contrast; color is supplementary.",
+      "Action labels include the result and breaker/placement scope; icons never carry rule meaning alone."
+    ]
+  },
+  "error_contract": {
+    "all_errors_are_blocking_until_fresh_authority_state": true,
+    "never_advance_turn_or_clear_entitlement_on_error": true,
+    "never_apply_partial_effects": true,
+    "exact_runtime_error_codes": [
+      "rules_decision_idempotency_key_invalid",
+      "rules_decision_idempotency_conflict",
+      "rules_decision_context_mismatch",
+      "rules_decision_stale",
+      "rules_decision_stale_revision",
+      "rules_decision_actor_mismatch",
+      "rules_decision_action_not_offered",
+      "rules_decision_invalid_payload",
+      "rules_decision_invalid_state",
+      "rules_group_choice_not_pending",
+      "rules_placement_not_pending",
+      "rules_placement_nonfinite",
+      "rules_placement_out_of_bounds",
+      "rules_placement_outside_head_string_area",
+      "rules_placement_forbidden_geometry",
+      "rules_placement_authority_geometry_invalid",
+      "rules_placement_overlap",
+      "rules_placement_state_changed",
+      "rules_break_foul_not_pending",
+      "rules_break_foul_state_changed",
+      "rules_eight_on_break_not_pending",
+      "rules_eight_on_break_state_changed",
+      "rules_respot_no_legal_position",
+      "rules_rerack_breaker_invalid",
+      "rules_rerack_geometry_invalid",
+      "rules_foundation_state_changed",
+      "rules_foundation_plan_mismatch"
+    ],
+    "display_groups": {
+      "stale_or_drift": ["rules_decision_stale", "rules_decision_stale_revision", "rules_placement_state_changed", "rules_break_foul_state_changed", "rules_eight_on_break_state_changed", "rules_foundation_state_changed"],
+      "wrong_actor_or_offer": ["rules_decision_actor_mismatch", "rules_decision_action_not_offered", "rules_decision_context_mismatch"],
+      "placement_invalid": ["rules_placement_nonfinite", "rules_placement_out_of_bounds", "rules_placement_outside_head_string_area", "rules_placement_forbidden_geometry", "rules_placement_authority_geometry_invalid", "rules_placement_overlap"],
+      "transaction_conflict": ["rules_decision_idempotency_key_invalid", "rules_decision_idempotency_conflict", "rules_foundation_plan_mismatch"],
+      "no_legal_result": ["rules_respot_no_legal_position", "rules_rerack_breaker_invalid", "rules_rerack_geometry_invalid"]
+    },
+    "unknown_error_code": "show_unknown_authority_error_code_and_block_without_local_mutation"
+  },
+  "policy_blockers": {
+    "section_6g_classification_pending": {
+      "machine_code": "rules_break_no_rack_contact_classification_pending",
+      "source_clause": "WPA-II-06-G",
+      "condition": "Current ShotFacts cannot prove unintentional miscue intent/classification.",
+      "surface": "blocking_reason_only",
+      "copy": {
+        "title": {"en": "Break ruling unavailable", "zh_cn": "开球判定暂不可用"},
+        "body": {"en": "The required miscue classification is not available. No foul choice has been created.", "zh_cn": "当前缺少所需的滑杆分类信息，尚未生成任何犯规处理选项。"}
+      },
+      "action_ids_visible": [],
+      "classification_inferred_by_ui": false,
+      "rerack_or_ball_in_hand_assumed": false,
+      "authority_mutation_allowed": false
+    },
+    "sections_12_3_and_17e_conflict": {
+      "policy_id": "off_table_12_3_vs_17_e_interpretation",
+      "status": "UNRESOLVED",
+      "assumed_answer": null,
+      "rules_owner_signature_present": false,
+      "ui_may_adjudicate": false,
+      "product_choice_surface_authorized": false,
+      "required_behavior": "Do not synthesize a winner, foul, ball-in-hand, turn, or action list. Keep dependent product surfaces hidden or show a non-interactive policy-unresolved blocker supplied by authority."
+    },
+    "stalemate_policy": {
+      "status": "UNRESOLVED_OUT_OF_THIS_GATE",
+      "product_choice_surface_authorized": false
+    }
+  },
+  "visual_and_accessibility": {
+    "palettes": ["standard", "color_vision_safe"],
+    "supported_profiles": {
+      "logical_viewports": ["1280x720", "1920x1080", "1280x720_retina_2x"],
+      "physical_viewports": ["1280x720", "1920x1080", "2560x1440"],
+      "ui_scales": [0.85, 1.0, 1.35],
+      "locales": ["en", "zh_cn"]
+    },
+    "safe_area_physical_px": {"minimum_edge_inset": 24, "minimum_bottom_input_clearance": 32},
+    "decision_modal": {
+      "maximum_logical_width_px": 720,
+      "minimum_logical_width_px": 520,
+      "maximum_height_fraction": 0.82,
+      "action_minimum_logical_height_px": 48,
+      "action_vertical_gap_logical_px": 8,
+      "focus_stroke_minimum_physical_px": 2,
+      "critical_shape_minimum_physical_px": 18
+    },
+    "placement_overlay": {
+      "legal_region_pattern": "diagonal_hatch_plus_boundary_line_plus_text",
+      "preview_shape": "ghost_cue_ball_plus_crosshair",
+      "invalid_shape": "error_cross_octagon_plus_dashed_collision_ring",
+      "coordinate_readout": "world coordinates plus human region description",
+      "table_occlusion_limit_fraction": 0.18
+    },
+    "contrast": {
+      "normal_text_minimum": 4.5,
+      "large_text_and_active_shape_minimum": 3.0,
+      "disabled_text_minimum": 3.0,
+      "cvd_semantics_equal_to_standard": true
+    },
+    "typography": {
+      "minimum_base_logical_px": 14,
+      "minimum_rendered_physical_px": "14 * ui_scale * drawable_density",
+      "body_logical_px": 16,
+      "action_logical_px": 16,
+      "title_logical_px": 24,
+      "line_height_multiplier_minimum": 1.25,
+      "no_ellipsis_for_rule_action_or_error_copy": true,
+      "wrap_at_word_or_cjk_grapheme_boundary": true,
+      "maximum_action_lines": 2,
+      "maximum_body_lines": 3,
+      "minimum_descender_clearance_physical_px": 2
+    },
+    "motion": {
+      "reduced_motion_supported": true,
+      "essential_progress_is_text_and_shape_redundant": true,
+      "flashing_or_pulsing_required": false
+    },
+    "screen_reader": {
+      "decision_and_error_live_region": "assertive",
+      "progress_live_region": "polite",
+      "announce_order": ["title", "ruling_and_source", "actor", "revision", "available_actions", "focused_control", "validation_or_error"],
+      "focus_and_arm_announced_as_distinct_states": true
+    }
+  },
+  "localized_copy_limits": {
+    "measurement": "Unicode code points; implementation must additionally measure actual shipping glyph advances.",
+    "button_en_max_codepoints": 48,
+    "button_zh_cn_max_codepoints": 16,
+    "title_en_max_codepoints": 32,
+    "title_zh_cn_max_codepoints": 14,
+    "body_en_max_codepoints": 120,
+    "body_zh_cn_max_codepoints": 56,
+    "requirements": [
+      "Every visible rule title, body, action, error, actor, revision, and scope label has both en and zh_cn text.",
+      "No translation may remove breaker identity, placement scope, spot versus rerack, actor, stale state, or blocking reason.",
+      "Text expansion must wrap within the declared line limits at all supported profiles; shrinking below the minimum font is forbidden.",
+      "Machine checks use actual shaped glyph bounds, not character-count estimation alone."
+    ]
+  },
+  "evidence_gate": {
+    "implementation_entry": "This artifact authorizes implementation only. It is not evidence that any UI exists or is product exposed.",
+    "minimum_machine_matrix": {
+      "method": "Exhaustive draw-list and shaped-text validation across every canonical state, locale, palette, logical viewport/density, and UI scale; actual GPU matrix below may use bounded pairwise coverage but cannot replace this exhaustive machine matrix.",
+      "canonical_states": [
+        "group_choice_open_unselected",
+        "group_choice_armed_confirm",
+        "full_table_preview_valid",
+        "full_table_preview_invalid",
+        "behind_head_string_preview_valid",
+        "behind_head_string_preview_invalid",
+        "eight_legal_open_unselected",
+        "eight_foul_open_unselected",
+        "break_illegal_open_unselected",
+        "break_shot_foul_open_unselected",
+        "submitting_progress",
+        "authority_error",
+        "state_drift_refreshing",
+        "ai_or_remote_pending",
+        "section_6g_classification_pending"
+      ],
+      "cross_product": {
+        "canonical_state_count": 15,
+        "locale_count": 2,
+        "palette_count": 2,
+        "viewport_density_count": 3,
+        "ui_scale_count": 3,
+        "required_case_count": 540
+      },
+      "per_case_hard_checks": [
+        "zero truncated text runs",
+        "zero glyphs below profile minimum",
+        "zero overlapping text/action/focus/error bounds",
+        "zero safe-area violations",
+        "all offered actions exact and ordered",
+        "zero unoffered or foundation internal actions",
+        "no selected or armed action in open/pending/stale states",
+        "one visible focus or zero when focus is intentionally on summary",
+        "standard/CVD semantic inventory equality",
+        "local preview never changes authority hash/revision/events/actions",
+        "unknown/stale/error paths block shot input and mutate nothing"
+      ]
+    },
+    "minimum_actual_gpu_matrix": {
+      "case_count": 60,
+      "construction": "15 canonical states x 4 orthogonal display profiles. Alternate locale assignment by state/profile so every state is captured once in en and once in zh_cn, and every state is captured in both palettes.",
+      "display_profiles": [
+        {"profile_id": "p1", "logical_viewport": "1280x720", "physical_viewport": "1280x720", "density": 1, "ui_scale": 0.85, "palette": "standard"},
+        {"profile_id": "p2", "logical_viewport": "1280x720", "physical_viewport": "1280x720", "density": 1, "ui_scale": 1.35, "palette": "color_vision_safe"},
+        {"profile_id": "p3", "logical_viewport": "1920x1080", "physical_viewport": "1920x1080", "density": 1, "ui_scale": 1.0, "palette": "color_vision_safe"},
+        {"profile_id": "p4", "logical_viewport": "1280x720", "physical_viewport": "2560x1440", "density": 2, "ui_scale": 1.0, "palette": "standard"}
+      ],
+      "supplemental_scale_corners": [
+        "The exhaustive 540-case machine matrix covers Retina ui085/ui135 and 1080p ui085/ui135 even though the 60-image GPU minimum uses pairwise display profiles.",
+        "Any machine anomaly, raster-only difference, or manual doubt at an omitted GPU corner adds a targeted actual-GPU capture before review can pass."
+      ],
+      "actual_gpu_requirements": [
+        "offscreen or onscreen production Core 4.1 path after tone map",
+        "actual shipping font and icon atlas",
+        "actual product draw-list and input hit rectangles",
+        "PNG SHA-256 and physical dimensions recorded",
+        "no flat proof, mockup, CPU raster, or design image substituted"
+      ]
+    },
+    "minimum_manual_matrix": {
+      "review_image_count": 60,
+      "all_images_original_resolution": true,
+      "axes_per_image": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ],
+      "required_interactive_manual_sessions": [
+        "keyboard-only complete traversal and arm-confirm cancellation for each authority flow in en and zh_cn",
+        "pointer-only arm-confirm and placement preview/reset for full-table and behind-head-string",
+        "focus loss, Escape, right-click, double-click, timeout, stale offer, actor drift, and ACK mismatch all preserve fail-closed behavior",
+        "standard and color-vision-safe comparison by an independent reviewer",
+        "screen-reader order and focus/armed distinction in both locales"
+      ],
+      "manual_pass_claimed_by_this_artifact": false,
+      "external_human_evidence_claimed_by_this_artifact": false
+    }
+  },
+  "performance_budget": {
+    "reference_target": "1080p60 production product frame",
+    "total_frame_p95_ms_max": 16.7,
+    "rules_ui_cpu_build_p95_ms_max": 0.35,
+    "rules_ui_gpu_submit_p95_ms_max": 0.65,
+    "rules_ui_total_incremental_p95_ms_max": 1.0,
+    "incremental_draw_calls_max": 3,
+    "complete_scene_draw_calls_max": 100,
+    "incremental_texture_residency_mib_max": 1.0,
+    "glyph_rasterizations_after_warmup_max_per_frame": 0,
+    "per_frame_heap_allocations_after_warmup_max": 0,
+    "authority_poll_or_submit_on_render_thread_blocking_ms_max": 0.0,
+    "performance_sample_contract": {"warmup_frames_min": 120, "sample_frames_min": 300, "gpu_timer_query_required": true, "cpu_frame_timer_required": true}
+  },
+  "acceptance": {
+    "implementation_may_start_when": [
+      "all read-only binding hashes match",
+      "only exact stable authority offer actions are mapped",
+      "pending-only and foundation actions remain absent",
+      "no policy placeholder is inferred or signed by this gate"
+    ],
+    "product_exposure_remains_blocked_until": [
+      "implementation tests prove exact request/ACK/error/cancel behavior",
+      "540/540 exhaustive machine layout/state cases pass",
+      "60/60 actual GPU captures pass machine validation",
+      "60/60 original-resolution independent manual reviews pass all axes",
+      "required keyboard, pointer, CVD, localization, and screen-reader sessions are signed by real reviewers",
+      "runtime capabilities are explicitly promoted without changing unrelated profile completeness",
+      "unresolved policies remain hidden or receive legitimate rules-owner decisions"
+    ],
+    "result": "IMPLEMENTATION_ONLY_NOT_PRODUCT_PASS"
+  }
+}

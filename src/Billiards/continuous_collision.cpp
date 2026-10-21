@@ -30,13 +30,14 @@ int kindOrder(ContinuousContactKind kind)
 {
     switch (kind) {
     case ContinuousContactKind::BallBall: return 0;
-    case ContinuousContactKind::StraightRail: return 1;
-    case ContinuousContactKind::Jaw: return 2;
-    case ContinuousContactKind::Mouth: return 3;
-    case ContinuousContactKind::Throat: return 4;
-    case ContinuousContactKind::Capture: return 5;
+    case ContinuousContactKind::SupportPlane: return 1;
+    case ContinuousContactKind::StraightRail: return 2;
+    case ContinuousContactKind::Jaw: return 3;
+    case ContinuousContactKind::Mouth: return 4;
+    case ContinuousContactKind::Throat: return 5;
+    case ContinuousContactKind::Capture: return 6;
     }
-    return 6;
+    return 7;
 }
 
 }  // namespace

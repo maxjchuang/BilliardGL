@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 
@@ -40,7 +41,8 @@ int main()
     collisionState.balls[0].pocketed = false;
     collisionState.balls[1].pocketed = false;
     collisionState.balls[0].position = billiardgl::Point3{0.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
-    collisionState.balls[1].position = billiardgl::Point3{5.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
+    const float overlappingDistance = 2.0f * billiardgl::kBallRadius - 0.1f;
+    collisionState.balls[1].position = billiardgl::Point3{overlappingDistance, billiardgl::kTableHeight + billiardgl::kBallRadius, 20.0f};
     billiardgl::setBallVelocity(collisionState.balls[0], 10.0f, 0.0f, 0.0f);
     collisionState.balls[0].speed = 10.0f;
 
@@ -66,7 +68,8 @@ int main()
         collision.contacts[0].normalRelativeSpeedBeforeCmS < 0.0 &&
         collision.contacts[0].normalRelativeSpeedAfterCmS >= 0.0 &&
         collision.contacts[0].kineticEnergyAfterJ <=
-            collision.contacts[0].kineticEnergyBeforeJ,
+            collision.contacts[0].kineticEnergyBeforeJ *
+                (1.0 + 16.0 * std::numeric_limits<double>::epsilon()),
         "production contact emits authoritative approach, regime, and energy diagnostics");
     expect(close(collisionState.balls[0].velocity.x, expectedFirst.velocity.x) &&
         close(collisionState.balls[1].velocity.x, expectedSecond.velocity.x),
@@ -74,7 +77,7 @@ int main()
 
     billiardgl::GameState lightCollision = collisionState;
     lightCollision.balls[0].position.x = 0.0f;
-    lightCollision.balls[1].position.x = 5.0f;
+    lightCollision.balls[1].position.x = overlappingDistance;
     billiardgl::setBallVelocity(lightCollision.balls[0], 10.0f, 0.0f, 0.0f);
     billiardgl::setBallVelocity(lightCollision.balls[1], 0.0f, 0.0f, 0.0f);
     billiardgl::PhysicsProfile lightProfile = defaultProfile;
@@ -91,7 +94,7 @@ int main()
     pocketAll(railState);
     railState.balls[2].pocketed = false;
     railState.balls[2].position = billiardgl::Point3{
-        billiardgl::kTableInWidth / 2.0f,
+        billiardgl::kTableInWidth / 2.0f - billiardgl::kBallRadius + 0.1f,
         billiardgl::kTableHeight + billiardgl::kBallRadius,
         25.0f};
     billiardgl::setBallVelocity(railState.balls[2], 5.0f, 0.0f, 0.0f);

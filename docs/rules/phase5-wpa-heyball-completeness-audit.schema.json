@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://billiardgl.local/schema/phase5-wpa-heyball-completeness-audit-v1.json",
+  "title": "Phase 5 WPA Heyball product-rules completeness audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "audit_id",
+    "ruleset_id",
+    "profile_complete",
+    "complete_profile_product_exposed",
+    "normative_source",
+    "audit_scope",
+    "protected_files",
+    "status_summary",
+    "pending_capabilities",
+    "m4_minimum_closure",
+    "matrix"
+  ],
+  "properties": {
+    "schema": {"const": "phase5_wpa_heyball_completeness_audit_v1"},
+    "schema_version": {"const": 1},
+    "audit_id": {"const": "phase5_wpa_heyball_2025_08_16_product_completeness_v1"},
+    "ruleset_id": {"const": "wpa_heyball_2025_08_16_v1"},
+    "profile_complete": {"const": false},
+    "complete_profile_product_exposed": {"const": false},
+    "normative_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "url", "effective_date", "retrieval_status", "retrieved_on", "page_count", "sha256"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "effective_date": {"const": "2025-08-16"},
+        "retrieval_status": {"const": "VERIFIED"},
+        "retrieved_on": {"type": "string", "format": "date"},
+        "page_count": {"const": 21},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "audit_scope": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "protected_files": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "status_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["IMPLEMENTED", "PARTIAL", "MISSING", "PROCEDURAL_ONLY", "total"],
+      "properties": {
+        "IMPLEMENTED": {"type": "integer", "minimum": 0},
+        "PARTIAL": {"type": "integer", "minimum": 0},
+        "MISSING": {"type": "integer", "minimum": 0},
+        "PROCEDURAL_ONLY": {"type": "integer", "minimum": 0},
+        "total": {"type": "integer", "minimum": 1}
+      }
+    },
+    "pending_capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "state", "product_exposed", "source_rows"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+          "state": {"const": "pending"},
+          "product_exposed": {"const": false},
+          "source_rows": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+        }
+      }
+    },
+    "m4_minimum_closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gate", "profile_must_remain_incomplete_until_gate_passes", "required_rows", "acceptance"],
+      "properties": {
+        "gate": {"const": "M4_RULES_PRODUCT_MINIMUM"},
+        "profile_must_remain_incomplete_until_gate_passes": {"const": true},
+        "required_rows": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "matrix": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/row"}
+    }
+  },
+  "$defs": {
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage", "bindings"],
+      "properties": {
+        "coverage": {"enum": ["present", "partial", "absent", "not_applicable", "procedural"]},
+        "bindings": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "reasonText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage", "reason_codes", "text_keys"],
+      "properties": {
+        "coverage": {"enum": ["present", "partial", "absent", "not_applicable", "procedural"]},
+        "reason_codes": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "text_keys": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "uiAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage", "bindings", "interactive_actions_product_exposed", "pending_capabilities"],
+      "properties": {
+        "coverage": {"enum": ["present", "partial", "absent", "not_applicable", "procedural"]},
+        "bindings": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "interactive_actions_product_exposed": {"type": "boolean"},
+        "pending_capabilities": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chapter", "clause", "pages", "locator"],
+      "properties": {
+        "chapter": {"type": "string", "minLength": 1},
+        "clause": {"type": "string", "minLength": 1},
+        "pages": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 1, "maximum": 21}, "uniqueItems": true},
+        "locator": {"type": "string", "minLength": 1}
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "status", "source", "requirement", "shot_facts", "rules_logic",
+        "runtime_action", "reason_text", "ui_action", "tests", "gaps",
+        "policy_decision_required", "m4_required"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^WPA-[A-Z0-9-]+$"},
+        "status": {"enum": ["IMPLEMENTED", "PARTIAL", "MISSING", "PROCEDURAL_ONLY"]},
+        "source": {"$ref": "#/$defs/source"},
+        "requirement": {"type": "string", "minLength": 1},
+        "shot_facts": {"$ref": "#/$defs/coverage"},
+        "rules_logic": {"$ref": "#/$defs/coverage"},
+        "runtime_action": {"$ref": "#/$defs/coverage"},
+        "reason_text": {"$ref": "#/$defs/reasonText"},
+        "ui_action": {"$ref": "#/$defs/uiAction"},
+        "tests": {"$ref": "#/$defs/coverage"},
+        "gaps": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "policy_decision_required": {"type": "boolean"},
+        "m4_required": {"type": "boolean"}
+      }
+    }
+  }
+}

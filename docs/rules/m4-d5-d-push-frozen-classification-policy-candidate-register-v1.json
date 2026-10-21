@@ -1,0 +1,192 @@
+{
+  "schema": "m4_d5_d_push_frozen_classification_policy_candidate_register_v1",
+  "status": "FINAL_DESIGN_ONLY_ALL_BUNDLES_UNSELECTED_ROOT_SELECTION_REQUIRED",
+  "authority_bindings": {
+    "root_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"},
+    "d5_b_receipt": {"path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json", "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"},
+    "d5_c_receipt": {"path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-receipt-v1.json", "sha256": "07b8d9330f8d7d850101a4f16e2e365c84dec8d6c3093624e96edf91a5024a53"},
+    "push_review_receipt": {"path": "docs/rules/wpa-ii-12-7-signed-push-review-declaration-lifecycle-implementation-receipt-v1.json", "sha256": "136048a8bd5e6f26b5160d111f53d6cc5bc297fc7a2da5e6b74dd4d53e6d74eb"},
+    "frozen_cushion_receipt": {"path": "docs/rules/wpa-ii-15-2-signed-frozen-object-straight-cushion-declaration-lifecycle-implementation-receipt-v1.json", "sha256": "b21de04b86f4c988c6f32b6e87667e11dbb55dfed60eeaf55c08e4745b64e6af"},
+    "cue_contact_gap_gate": {"path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json", "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"}
+  },
+  "official_and_existing_boundary": {
+    "official_determined": [
+      "an obvious push extending tip contact distance or duration beyond an instantaneous strike is a foul",
+      "positive impulse or a long local modeled contact alone does not establish obviousness",
+      "a declared frozen cue-object relation does not legalize an obvious push",
+      "when the prerequisite legal cushion condition is unmet, a declared frozen-to-cushion object requires leave then cushion recontact, another ball cushion contact, or a ball pocketed"
+    ],
+    "not_officially_numeric": [
+      "normal instantaneous-strike duration reference",
+      "normal instantaneous-strike contact-distance reference",
+      "duration or distance tolerance and obvious-push threshold",
+      "whether a pocket jaw is a cushion alternative",
+      "the exact machine predicate for prerequisite legal cushion already met"
+    ],
+    "available_policy_independent_facts": [
+      "complete ordered canonical cue-tip intervals with origin and digest",
+      "cue-object contact order",
+      "signed consumed push-review declaration",
+      "signed consumed frozen-cushion declaration",
+      "declared-object departure and named-cushion recontact",
+      "distinct other-object straight-cushion velocity-impulse contacts",
+      "complete object-ball pocket captures"
+    ]
+  },
+  "shared_measurement_contract": {
+    "duration_seconds": "sum of complete canonical cue-tip interval end_time_seconds minus start_time_seconds in authoritative stroke-relative time",
+    "distance_cm": "ordered line integral of finite cue-tip relative-to-cue-ball displacement while canonical contact intervals are active",
+    "reference_domain": "same versioned physics profile, cue geometry, ball geometry, solver profile and measurement schema",
+    "source_identity": ["shot_identity", "actor_player_id", "rack_identity", "rules_revision", "rules_state_hash", "d5_a_digest", "d5_b_digest"],
+    "incomplete_or_profile_mismatch": "NO_CLASSIFICATION",
+    "measurements_never_synthesize_referee_obviousness": true
+  },
+  "bundles": [
+    {
+      "order": 0,
+      "id": "D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY",
+      "selection_status": "UNSELECTED",
+      "recommended": true,
+      "push_obviousness_authority": "AUTHENTICATED_REFEREE_FINAL_BOUND_TO_SAME_SHOT",
+      "duration_distance_policy": {
+        "reference": "REPORT_ONLY_CANONICAL_MEASUREMENTS_NO_NORMAL_STRIKE_NUMERIC_REFERENCE",
+        "duration_threshold_seconds": null,
+        "distance_threshold_cm": null,
+        "comparison_tolerance": 0.0,
+        "automatic_push_classification": false,
+        "signed_final_plus_complete_measurements_required": true
+      },
+      "frozen_cushion_policy": {
+        "pocket_jaw_counts": false,
+        "accepted_cushion_kind": "STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE_APPLIED",
+        "prerequisite_legal_cushion_predicate": "POST_FIRST_LEGAL_OBJECT_CONTACT_ANY_DISTINCT_OBJECT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_OR_COMPLETE_OBJECT_POCKET",
+        "if_prerequisite_met": "SECTION_15_2_EXTRA_LEAVE_OR_ALTERNATIVE_REQUIREMENT_NOT_APPLIED",
+        "if_prerequisite_unmet": "REQUIRE_DECLARED_BALL_LEAVE_THEN_NAMED_STRAIGHT_CUSHION_RECONTACT_OR_OTHER_OBJECT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_OR_COMPLETE_OBJECT_POCKET"
+      },
+      "rationale": "Recommended: preserves the official referee-obviousness boundary, avoids inventing a numeric push rule, and uses only already distinguishable straight-cushion/pocket facts for section 15.2.",
+      "evidence_effect": "CPU authority/classifier/rules evidence and fresh binaries; visible foul evidence only if later surfaced; no physics or GPU required for the classifier itself."
+    },
+    {
+      "order": 1,
+      "id": "D5D-B_VERSIONED_RATIO_MACHINE_PUSH_STRAIGHT_ONLY",
+      "selection_status": "UNSELECTED",
+      "recommended": false,
+      "push_obviousness_authority": "VERSIONED_MACHINE_PROFILE_WITH_SIGNED_REFEREE_OVERRIDE",
+      "duration_distance_policy": {
+        "reference": "FROZEN_CALIBRATION_MANIFEST_MEDIAN_NORMAL_STRIKE_BY_PROFILE",
+        "duration_threshold_ratio": 2.0,
+        "distance_threshold_ratio": 2.0,
+        "predicate": "DURATION_RATIO_GREATER_OR_EQUAL_2_OR_DISTANCE_RATIO_GREATER_OR_EQUAL_2",
+        "duration_comparison_tolerance_seconds": 0.000001,
+        "distance_comparison_tolerance_cm": 0.0001,
+        "automatic_push_classification": true,
+        "calibration_manifest_required_before_implementation": true
+      },
+      "frozen_cushion_policy": {
+        "pocket_jaw_counts": false,
+        "accepted_cushion_kind": "STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE_APPLIED",
+        "prerequisite_legal_cushion_predicate": "POST_FIRST_LEGAL_OBJECT_CONTACT_ANY_DISTINCT_OBJECT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_OR_COMPLETE_OBJECT_POCKET"
+      },
+      "rationale": "Deterministic alternative, but the 2x ratios and tolerances are product policy rather than official text and require a separately frozen calibration dataset plus sensitivity review.",
+      "evidence_effect": "Invalidates cue-contact classifier baselines and requires calibration robustness evidence in addition to CPU/rules and any visible foul evidence."
+    },
+    {
+      "order": 2,
+      "id": "D5D-C_REFEREE_WHOLE_RESULT_JAW_INCLUDED",
+      "selection_status": "UNSELECTED",
+      "recommended": false,
+      "push_obviousness_authority": "AUTHENTICATED_REFEREE_FINAL_WHOLE_RESULT",
+      "duration_distance_policy": {
+        "reference": "SUPPLEMENTARY_CANONICAL_MEASUREMENTS_ONLY",
+        "duration_threshold_seconds": null,
+        "distance_threshold_cm": null,
+        "comparison_tolerance": 0.0,
+        "automatic_push_classification": false
+      },
+      "frozen_cushion_policy": {
+        "pocket_jaw_counts": true,
+        "accepted_cushion_kind": "STRAIGHT_CUSHION_OR_POCKET_JAW",
+        "prerequisite_legal_cushion_predicate": "AUTHENTICATED_REFEREE_FINAL_BOUND_TO_SHOT",
+        "section_15_2_result_authority": "AUTHENTICATED_REFEREE_FINAL"
+      },
+      "rationale": "Maximizes referee discretion, but jaw inclusion is an explicit product policy and whole-result declarations reduce machine-verifiable rule coverage.",
+      "evidence_effect": "Requires expanded referee payload/authority fixtures and jaw policy evidence; machine classification claims remain deliberately narrow."
+    }
+  ],
+  "selection_contract": {
+    "bundle_count": 3,
+    "stable_order": [
+      "D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY",
+      "D5D-B_VERSIONED_RATIO_MACHINE_PUSH_STRAIGHT_ONLY",
+      "D5D-C_REFEREE_WHOLE_RESULT_JAW_INCLUDED"
+    ],
+    "mutually_exclusive": true,
+    "all_unselected": true,
+    "recommended_id": "D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY",
+    "root_selection_required_before_implementation_gate": true,
+    "selection_does_not_close_any_row_or_m4": true
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/push_classifier.h",
+      "src/Billiards/rules/push_classifier.cpp",
+      "src/Billiards/rules/frozen_cushion_classifier.h",
+      "src/Billiards/rules/frozen_cushion_classifier.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/push_classifier_tests.cpp",
+      "tests/frozen_cushion_classifier_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "cmake_scope": "classifier sources and at most two headless classifier targets only after a separate root-revalidated implementation gate",
+    "dormant_until_root_selection_and_implementation_gate": true
+  },
+  "future_fixtures": {
+    "positive": [
+      "COMPLETE_DURATION_AND_DISTANCE_BIND_SAME_SHOT_AND_SOURCE_DIGESTS",
+      "SIGNED_OBVIOUS_PUSH_FINAL_PLUS_COMPLETE_MEASUREMENTS_CLASSIFIES_PUSH_FOUL",
+      "DECLARED_FROZEN_CUE_OBJECT_DOES_NOT_SUPPRESS_SIGNED_PUSH_FOUL",
+      "FROZEN_CUSHION_PREREQUISITE_ALREADY_MET_SKIPS_EXTRA_REQUIREMENT",
+      "UNMET_PREREQUISITE_DECLARED_BALL_LEAVES_THEN_RECONTACTS_NAMED_STRAIGHT_CUSHION",
+      "UNMET_PREREQUISITE_OTHER_OBJECT_STRAIGHT_CUSHION_IMPULSE_ALTERNATIVE",
+      "UNMET_PREREQUISITE_COMPLETE_OBJECT_POCKET_ALTERNATIVE",
+      "EXACT_CLASSIFIER_AND_ADJUDICATION_RETRY_ZERO_DELTA"
+    ],
+    "negative": [
+      "INCOMPLETE_DURATION_OR_DISTANCE_NO_PUSH_CLASSIFICATION",
+      "UNSIGNED_PLAYER_OR_STALE_REFEREE_OBVIOUSNESS_REJECTED",
+      "MEASUREMENT_ALONE_NEVER_PUSH_UNDER_RECOMMENDED_BUNDLE",
+      "LOCAL_MICROTRACE_NEVER_WHOLE_STROKE_REFERENCE",
+      "PROFILE_REFERENCE_OR_SOURCE_DIGEST_MISMATCH_REJECTED",
+      "JAW_EXCLUDED_UNDER_RECOMMENDED_BUNDLE",
+      "POSITION_CORRECTION_WITHOUT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_EXCLUDED",
+      "CUE_BALL_POCKET_NOT_OBJECT_POCKET_ALTERNATIVE",
+      "RECONTACT_BEFORE_DECLARED_OBJECT_DEPARTURE_REJECTED",
+      "WRONG_NAMED_CUSHION_RECONTACT_NOT_DECLARED_BALL_ALTERNATIVE",
+      "PREREQUISITE_EVENT_BEFORE_FIRST_LEGAL_OBJECT_CONTACT_NOT_COUNTED",
+      "FAILED_GAPPED_OR_CONFLICTING_PHYSICS_ROLLS_BACK",
+      "RESET_RERACK_TURN_OR_NEXT_SHOT_INVALIDATES_UNPUBLISHED_RESULT",
+      "FAILED_ADJUDICATION_ZERO_RUNTIME_DELTA",
+      "NO_VISIBLE_GLOBAL_UI_GPU_READINESS_OR_AUDIT_SIDE_EFFECT"
+    ]
+  },
+  "claims": {
+    "candidate_register_complete": true,
+    "root_policy_selected": false,
+    "implementation_authorized": false,
+    "production_or_cmake_modified": false,
+    "audit_rows_promoted": false,
+    "d5_complete": false,
+    "gpu_or_readiness_authorized": false,
+    "m4_complete": false
+  }
+}

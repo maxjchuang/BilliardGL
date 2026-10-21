@@ -1,0 +1,87 @@
+{
+  "asset_binding": "focused_practice_hall_modular_v1",
+  "authorship": "original_procedural_billiardgl",
+  "environment": {
+    "background_relative_ev": -2.5,
+    "intensity": 0.18,
+    "lower_linear_rgb": [
+      0.018,
+      0.015,
+      0.013
+    ],
+    "type": "analytic_constant_plus_ground_bounce_no_external_hdr",
+    "upper_linear_rgb": [
+      0.035,
+      0.043,
+      0.05
+    ]
+  },
+  "exposure": {
+    "adaptation_enabled": false,
+    "ev100": 7.2,
+    "highlight_headroom_stops": 1.5,
+    "middle_gray": 0.18,
+    "mode": "manual",
+    "tone_map_target": "filmic_aces_like_or_documented_equivalent",
+    "white_balance_k": 4100
+  },
+  "fixtures": [
+    {
+      "casts_shadow": true,
+      "color_temperature_k": 3900,
+      "emitter_size_m": [
+        0.61,
+        1.81
+      ],
+      "id": "key_rect_table_lamp",
+      "luminous_flux_lm": 6200,
+      "normalized_intensity_fallback": 1.0,
+      "orientation": {
+        "local_emission_axis": "-Y"
+      },
+      "position_m": [
+        0.0,
+        2.21483976,
+        0.0
+      ],
+      "type": "rect_area_or_renderer_equivalent"
+    }
+  ],
+  "handedness": "right",
+  "lookdev_binding": "focused_practice_hall_v1",
+  "rig_id": "focused_practice_hall_lighting_rig_v1",
+  "schema_version": 1,
+  "shadow_quality_tiers": {
+    "high": {
+      "contact_hardening": true,
+      "filter_taps": 24,
+      "map_resolution": 4096,
+      "softness_world_radius_m": 0.14
+    },
+    "low": {
+      "contact_hardening": false,
+      "filter_taps": 4,
+      "map_resolution": 1024,
+      "softness_world_radius_m": 0.035
+    },
+    "medium": {
+      "contact_hardening": true,
+      "filter_taps": 12,
+      "map_resolution": 2048,
+      "softness_world_radius_m": 0.08
+    }
+  },
+  "unit": "metre",
+  "up_axis": "+Y",
+  "validation": {
+    "background_must_remain_below_table_ev": 2.0,
+    "ball_highlight_shape": "single_stable_rectangular_key",
+    "default_tier": "medium",
+    "deterministic_capture": true,
+    "felt_average_linear_luminance_range": [
+      0.055,
+      0.16
+    ],
+    "lamp_diffuser_clipping_fraction_max": 0.02
+  }
+}

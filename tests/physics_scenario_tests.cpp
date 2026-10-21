@@ -1,10 +1,13 @@
 #include "automation_json.h"
 #include "physics_scenario.h"
 
+#include <array>
 #include <cstdlib>
+#include <cstdint>
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <sstream>
 
 namespace {
@@ -220,6 +223,43 @@ int main()
     expect(parsed.scenario.balls[1].pocketed, "omitted ball should become pocketed");
     expect(parsed.scenario.expectations.size() == 2, "expectations should parse");
     expect(parsed.scenario.expectations[0].comparison == "eq", "operator maps to comparison");
+    expect(parsed.scenario.balls[0].trajectoryGeneration == 0,
+        "legacy physics scenarios missing trajectory generation remain generation zero");
+    billiardgl::json::Value removedScenario = validDocument();
+    removedScenario["balls"].asArray()[0]["out_of_play"] = billiardgl::json::Value(true);
+    const auto removedParsed = billiardgl::parsePhysicsScenario(removedScenario);
+    expect(removedParsed.ok && removedParsed.scenario.balls[0].outOfPlay &&
+        !removedParsed.scenario.balls[0].pocketed,
+        "off-table scenario state is distinct from a pocket capture");
+    removedScenario["balls"].asArray()[0]["out_of_play"] = billiardgl::json::Value("true");
+    expect(!billiardgl::parsePhysicsScenario(removedScenario).ok,
+        "off-table state rejects a non-boolean value");
+    removedScenario["balls"].asArray()[0]["out_of_play"] = billiardgl::json::Value(true);
+    removedScenario["balls"].asArray()[0]["pocketed"] = billiardgl::json::Value(true);
+    expect(!billiardgl::parsePhysicsScenario(removedScenario).ok,
+        "off-table state cannot masquerade as pocketed");
+
+    billiardgl::json::Value generatedScenario = validDocument();
+    generatedScenario["balls"].asArray()[0]["trajectory_generation"] =
+        billiardgl::json::Value("18446744073709551615");
+    const billiardgl::PhysicsScenarioResult generated =
+        billiardgl::parsePhysicsScenario(generatedScenario);
+    expect(generated.ok && generated.scenario.balls[0].trajectoryGeneration ==
+            std::numeric_limits<std::uint64_t>::max(),
+        "physics scenarios preserve full-width trajectory generation exactly");
+    const std::array<billiardgl::json::Value, 6> invalidGenerations = {{
+        billiardgl::json::Value(-1),
+        billiardgl::json::Value(1),
+        billiardgl::json::Value("01"),
+        billiardgl::json::Value("-1"),
+        billiardgl::json::Value("1.0"),
+        billiardgl::json::Value("18446744073709551616")}};
+    for (const billiardgl::json::Value& invalid : invalidGenerations) {
+        billiardgl::json::Value mutation = validDocument();
+        mutation["balls"].asArray()[0]["trajectory_generation"] = invalid;
+        expect(!billiardgl::parsePhysicsScenario(mutation).ok,
+            "physics scenarios reject malformed or overflowing trajectory generation");
+    }
 
     const billiardgl::PhysicsScenarioResult v8 =
         billiardgl::parsePhysicsScenario(validV8Document());

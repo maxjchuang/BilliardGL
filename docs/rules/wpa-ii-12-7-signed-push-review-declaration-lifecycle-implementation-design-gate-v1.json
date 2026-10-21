@@ -1,0 +1,96 @@
+{
+  "schema": "wpa_ii_12_7_signed_push_review_declaration_lifecycle_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-12-7", "selected_option_id": "MEASUREMENTS_PLUS_SIGNED_REFEREE_PUSH_DECLARATION", "row_implementation_allowed": false},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"},
+    "b2_priority_register": {"path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json", "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55", "priority": 6, "protocol_only_advancement": "NO_MEANINGFUL_CLASSIFICATION_UNTIL_D5_MEASUREMENTS; SIGNED_DECLARATION_ALONE_MUST_NOT_FAKE_MEASUREMENTS"},
+    "cue_contact_cluster_gap_gate": {"path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json", "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01", "row_status": "MISSING"}
+  },
+  "official_and_selected_boundary": {
+    "officially_determined": ["an obvious push extending tip contact distance or duration beyond an instantaneous strike is a foul", "positive impulse or long modeled local contact alone is insufficient"],
+    "selected_machine_constants": {"complete_contact_duration_required": true, "complete_contact_distance_required": true, "automatic_numeric_push_threshold_enabled": false, "signed_referee_push_declaration_required": true, "incomplete_measurement_result": "FAIL_CLOSED_NO_CLASSIFICATION"},
+    "this_gate_scope": "authenticated referee push-review pre-shot declaration and one accepted-shot lifecycle only",
+    "not_claimed": ["complete contact duration", "complete contact distance", "numeric push threshold", "obvious push classification", "foul adjudication"]
+  },
+  "declaration_protocol_contract": {
+    "declaration_kind": "WPA_II_12_7_PUSH_REVIEW_REFEREE_DECLARATION",
+    "operations": ["PROPOSE", "FINAL_DECLARE", "CANCEL_PROPOSAL"],
+    "actor": "authenticated referee only and same referee for final/cancel",
+    "proposal_not_attestation": true,
+    "final_attests_review_required_only": true,
+    "final_does_not_attest_measurement_push_or_foul": true,
+    "positive_impulse_local_microtrace_or_modeled_duration_may_attest": false,
+    "states": ["INACTIVE", "PROPOSAL_OPEN", "PUSH_REVIEW_ACTIVE", "PUSH_REVIEW_CONSUMED", "CANCELLED", "INVALIDATED"],
+    "request_field_count": 17,
+    "frozen_snapshot": ["cue_ball_id=0", "rack_identity", "parent_rules_revision", "parent_rules_state_hash", "referee_subject_id", "proposal/final payload digests"]
+  },
+  "exact_payload_schemas": {
+    "proposal_canonical": {"cue_ball_id": "integer exact 0", "push_review_required": "bool exact true", "relation": "POTENTIAL_OBVIOUS_PUSH_REQUIRES_COMPLETE_MEASUREMENTS_AND_REFEREE_REVIEW"},
+    "final_canonical": {"cue_ball_id": "integer exact 0", "proposal_decision_id": "exact live proposal", "push_review_required": "bool exact true", "relation": "POTENTIAL_OBVIOUS_PUSH_REQUIRES_COMPLETE_MEASUREMENTS_AND_REFEREE_REVIEW"},
+    "cancel_canonical": {"proposal_decision_id": "exact live proposal"},
+    "forbidden_payload_fields": ["push", "foul", "contact_duration", "contact_distance", "duration_threshold", "distance_threshold", "obvious"],
+    "unknown_extra_missing_noncanonical_or_wrong_type": "reject before mutation"
+  },
+  "pre_shot_and_one_shot_lifecycle": {
+    "eligible": "pre-shot cue ball in play; no active shot, placement parent, pending rules decision or game over",
+    "active_survives": ["aim", "power", "camera", "preview"],
+    "invalidates": ["ball placement or movement", "group or turn change", "rack/reset/match completion", "parent revision/state hash drift"],
+    "consume_boundary": "only successful accepted shot with finite strictly-positive applied cue-ball impulse",
+    "does_not_consume": ["rejected shoot", "zero impulse", "unsupported or miscue launch", "failed launch validation"],
+    "consumption_effect": "records accepted shot identity and review-needed metadata only; never measurement, push or foul result",
+    "later_physics_failure_reactivates": false,
+    "second_shot_reuses": false
+  },
+  "d5_and_classification_blocker": {
+    "d5_complete": false,
+    "required_before_classification": ["whole-stroke contact provenance", "complete finite contact duration", "complete finite contact distance", "signed referee final bound to exact measurement record"],
+    "automatic_numeric_threshold_enabled": false,
+    "duration_threshold": null,
+    "distance_threshold": null,
+    "local_microtrace_is_complete_measurement": false,
+    "declaration_is_measurement_fact": false,
+    "declaration_is_push_or_foul_result": false,
+    "audit_row_may_be_promoted_by_partial_lifecycle": false
+  },
+  "atomicity_idempotency_and_readback": {
+    "prevalidate": ["ruleset/capability", "declaration kind/operation", "authenticated referee", "rack/revision/state hash", "expiry", "exact payload", "cue ball in play", "idempotency key/nonce"],
+    "atomic_commit": "protocol, push-review snapshot, journal and receipt all commit or remain byte-equivalent",
+    "exact_retry": "returns original ACK with zero state/journal/consume delta",
+    "conflicting_retry": "fails closed with zero delta",
+    "readback": "phase, committed, cue ID, frozen parent/rack digests, referee subject, proposal/final digests, consumed shot identity and review-needed; never credential/proof/canonical payload, measurements, push or foul=true",
+    "headless_only": true
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/push_review_declaration.h", "src/Billiards/rules/push_review_declaration.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/automation_controller.cpp"],
+    "test_files": ["tests/push_review_declaration_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/automation_controller_tests.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "add push_review_declaration.cpp to core sources and one headless BilliardsPushReviewDeclarationTests target only",
+    "physics_telemetry_shotfacts_rules_topology_cue_contact_or_coupled_contact_edit_allowed": false,
+    "modern_product_ui_renderer_or_input_edit_allowed": false
+  },
+  "required_fixtures": {
+    "positive": ["REFEREE_PROPOSE_PUSH_REVIEW_DOES_NOT_ATTEST", "SAME_REFEREE_FINAL_ATTESTS_REVIEW_NEEDED_ONLY", "CUE_BALL_IN_PLAY_PRE_SHOT", "AIM_POWER_CAMERA_PREVIEW_KEEP_ACTIVE", "POSITIVE_ACCEPTED_SHOT_CONSUMES_EXACTLY_ONCE", "CONSUMED_RECORD_BINDS_SHOT_AND_DECLARATION", "SAME_REFEREE_CANCEL_BEFORE_FINAL", "EXACT_RETRY_ZERO_DELTA", "AUTOMATION_SECRET_FREE_READBACK", "READBACK_REVIEW_NEEDED_TRUE_MEASUREMENT_PUSH_FOUL_FALSE"],
+    "negative": ["PLAYER_OR_UNAUTHENTICATED_DECLARATION_REJECTED", "POSITIVE_IMPULSE_OR_LOCAL_MICROTRACE_CANNOT_ATTEST", "PAYLOAD_PUSH_OR_FOUL_FIELD_REJECTED", "PAYLOAD_DURATION_DISTANCE_FIELD_REJECTED", "PAYLOAD_NUMERIC_THRESHOLD_OR_OBVIOUS_FIELD_REJECTED", "WRONG_CUE_OR_RELATION_REJECTED", "POCKETED_CUE_BALL_REJECTED", "WRONG_RACK_REVISION_STATE_HASH_OR_EXPIRY_REJECTED", "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED", "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED", "CANCEL_AFTER_FINAL_REJECTED", "PLACEMENT_BALL_MOVE_GROUP_CHANGE_TURN_RESET_INVALIDATES", "REJECTED_ZERO_UNSUPPORTED_MISCUE_OR_FAILED_LAUNCH_NOT_CONSUMED", "LATER_PHYSICS_FAILURE_DOES_NOT_REACTIVATE", "SECOND_SHOT_CANNOT_REUSE", "RESET_RERACK_OR_MATCH_COMPLETE_INVALIDATES", "IDEMPOTENCY_NONCE_OR_SHOT_CONFLICT_ZERO_DELTA", "DECLARATION_DOES_NOT_SYNTHESIZE_DURATION_DISTANCE_SHOTFACT_PUSH_OR_FOUL", "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REFEREE_SURFACE"]
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "3fa981c3437656fd03d14096e6dae3c25783083dfbd204ce6dba74c56e63a680"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "38fdc0065b477e3193f5360bdd3ac491cef79b1b507ae9fa04c181c6f721dbc3"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "61571315e300cbd03207f81f8add6ecf0bbdbb589444e94b3d8b8bfbbd274601"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "e94e881d03b21894b2cc9e1262fdc0af8efe5d8619ef6bc31a3fefdaace03b16"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required_before_tests_first_patch": true,
+    "signed_push_review_partial_lifecycle_implemented": false,
+    "d5_complete": false,
+    "wpa_ii_12_7_implemented": false,
+    "audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "visible_or_global_ui_exposed": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

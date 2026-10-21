@@ -1,0 +1,143 @@
+{
+  "schema": "wpa_ii_06_f_selected_full_choice_product_consumer_implementation_receipt_v1",
+  "status": "SELECTED_FULL_CORE_F_PRODUCT_CONSUMER_IMPLEMENTED_CPU_VERIFIED_ROW_REMAINS_OPEN",
+  "selection_binding": {
+    "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+    "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+    "row_id": "WPA-II-06-F",
+    "decision_id": "M4-PROD-06F-EIGHT-ON-BREAK-FULL-CHOICES",
+    "selected_option_id": "EXPAND_NARROW_CORE_F_TO_EXACT_RERACK_ACTIONS",
+    "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE",
+    "root_selected": true,
+    "selection_alone_closes_row": false
+  },
+  "predecessor_bindings": {
+    "candidate": {
+      "path": "docs/rules/m4-wpa-policy-bundle-candidate-v1.json",
+      "sha256": "0cc6a5f319eaed7f7b46fb6c5579982592c504e89d57b04183bd749be82f7da9"
+    },
+    "design_gate": {
+      "path": "docs/rules/wpa-ii-06-f-eight-on-break-choice-design-gap-gate-v1.json",
+      "sha256": "f008d99e222289ba8279518a4aa21577d238d793140ae4071598684cc3939ae9",
+      "historical_source_bindings_are_not_rewritten": true
+    },
+    "entitlement_timing_implementation": {
+      "path": "docs/rules/wpa-ii-06-f-entitlement-timing-implementation-receipt-v1.json",
+      "sha256": "c4ca0ff5aa9534cc5bdd0c285344a79470aaea0e51e3c5f677803b049ebec744",
+      "early_bih_defect_remains_fixed": true
+    }
+  },
+  "exact_core_f_product_contract": {
+    "product_entrypoint": "ModernProductSession::submitProductAuthorizedEightOnBreakRespot",
+    "product_screen": "Match",
+    "legal_branch": {
+      "branch": "LegalBreak",
+      "actor_relation": "FROZEN_ORIGINAL_BREAKER",
+      "frozen_next_player_relation": "SAME_AS_DECISION_ACTOR",
+      "frozen_continue_turn": true,
+      "ordered_action_ids": [
+        "rules.eight_on_break.spot_continue",
+        "rules.eight_on_break.rerack_original_breaker"
+      ]
+    },
+    "foul_branch": {
+      "branch": "FoulBreak",
+      "actor_relation": "OPPONENT_OF_FROZEN_ORIGINAL_BREAKER",
+      "frozen_next_player_relation": "SAME_AS_DECISION_ACTOR",
+      "frozen_continue_turn": false,
+      "ordered_action_ids": [
+        "rules.eight_on_break.spot_ball_in_hand_head_string",
+        "rules.eight_on_break.rerack_opponent_breaks",
+        "rules.eight_on_break.rerack_original_breaker"
+      ]
+    },
+    "branch_action_lane_count": 5,
+    "local_actor_must_equal_offer_actor": true,
+    "canonical_payload_text": "{}",
+    "idempotency_key_length": {"minimum": 1, "maximum": 128},
+    "request_binds_current_decision_revision": true,
+    "request_binds_current_authority_state_hash": true,
+    "ack_verified_before_request_retention": true,
+    "authority_sync_and_ai_refresh_only_after_verified_ack": true,
+    "product_reclassifies_break_facts_or_branch": false,
+    "core_h_or_direct_core_e_action_ids_product_reachable": false,
+    "global_rules_decision_ui_exposed": false
+  },
+  "effects_and_atomicity_contract": {
+    "legal_spot_continues_original_breaker_turn_without_bih": true,
+    "legal_rerack_selects_original_breaker_without_bih": true,
+    "foul_parent_stages_without_bih": true,
+    "foul_spot_parent_commit_grants_behind_head_string_bih": true,
+    "foul_spot_parent_commit_stages_exactly_one_core_g_child": true,
+    "foul_spot_child_requires_separate_authoritative_confirm": true,
+    "foul_rerack_opponent_action_selects_decision_actor": true,
+    "foul_rerack_original_action_selects_frozen_original_breaker": true,
+    "any_rerack_grants_or_preserves_bih": false,
+    "exact_retry_returns_original_ack_without_duplicate_effect": true,
+    "same_key_different_action_or_payload_mutates_authority": false,
+    "reset_stale_wrong_actor_wrong_action_wrong_payload_or_hash_drift_mutates_authority": false,
+    "failed_core_e_respot_mutates_parent_bih_child_revision_or_action": false,
+    "rejected_child_preview_weakens_committed_parent_entitlement": false,
+    "partial_parent_child_or_rerack_commit_allowed": false
+  },
+  "source_bindings": {
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "4a5fcf9cfd60e0907944fa05f1a1febec61238820e6b461ee4adfbc3bc552a3c"},
+    "product_session_cpp": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "cdef883d0d77c84839c8c3b5d6c52d2e881dfffcbf4f5dc28c613f3eef095b93"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "e18abf2b7da29ae00b063a8685f322d2dc93b377689eff3b3eabf4df2ff19b17"},
+    "runtime_cpp": {"path": "src/Billiards/game_runtime.cpp", "sha256": "0b96b3bec8d1ef8d333f307f8aba948da5380c847651406f391fbee68e547db2"},
+    "core_f_contract": {"path": "src/Billiards/rules/eight_on_break_authority.h", "sha256": "dacb83140b687b285f1dc67bcbb38d571349a60caa01a45664f0bbdcc2981b2e"},
+    "core_g_contract": {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"},
+    "core_h_sibling_contract": {"path": "src/Billiards/rules/break_foul_authority.h", "sha256": "5b4bf09f9950fd61d3d4add4fd70a9304d5c82ab05254f5878c208a6dd92ad9e"},
+    "core_e_contract": {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+    "core_e_implementation": {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"},
+    "product_integration_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "3dd1468aedc40a0d686128490a6d6c65336d1df30d7cdf501814546d2a1f4ef0"},
+    "cmake_unchanged_in_task": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "cpu_verification": {
+    "build_root": "build-product-session",
+    "ctest_subset": {"passed": 10, "failed": 0},
+    "binaries": [
+      {"target": "BilliardsProductHudTests", "sha256": "4f818208c467860acdacf974f3755531346da61b90e21baaab73c4e551e370db", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionProductRuntimeTests", "sha256": "88ec31c25c5d19ebe5a4ab95fe3c3d12a41498406424da476e56cf89f908f6e3", "exit_code": 0},
+      {"target": "BilliardsProductInputControllerTests", "sha256": "ee5ca526d4be94fdd5a8aa80d4b885d5a569c2cbc454b2c4e3a7ac58a1672bb3", "exit_code": 0},
+      {"target": "BilliardsProductInputAdapterTests", "sha256": "7a39a1d1f64e567a142fbb9443662df75ab0e969216d1f056d97154ec7dd93d7", "exit_code": 0},
+      {"target": "BilliardsModernProductAudioSessionE2E", "sha256": "619c951afeabd30443eda823553b0717b399fdf333fff3649f0e2aa6a1e1ec0a", "exit_code": 0},
+      {"target": "BilliardsModernProductPointerSessionE2E", "sha256": "adf7257664f00826cc998814b617ad317e19b70925118497e0daf8a534537ecc", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionSessionIntegrationTests", "sha256": "1dc769a4e4d90e3bcd894e436569c2ff942c595bf257f69018d78cb1b5186f76", "exit_code": 0},
+      {"target": "BilliardsProductShellTests", "sha256": "abe786e84071a07c00a7c29c0857c6c4d4f2a5639ac98dac087f8639adfb44ea", "exit_code": 0},
+      {"target": "BilliardsAiTurnControllerTests", "sha256": "e363e29c99526824627452f24b34a4651322021992b48572e64477aecd6826af", "exit_code": 0},
+      {"target": "BilliardsRulesRuntimeIntegrationTests", "sha256": "ecaa9ad0f14fbc3159fcebba8e4737e8d04e05bd8219e9030e251a0947cc5f3d", "exit_code": 0}
+    ],
+    "tests_first_old_spot_only_api_failure_reproduced_before_production_patch": true,
+    "gpu_cocoa_or_opengl_executed": false,
+    "cmake_source_modified_in_task": false
+  },
+  "evidence_invalidation": {
+    "prior_spot_only_product_session_evidence": "HISTORICAL_ONLY_AFTER_THIS_SOURCE_CHANGE",
+    "fresh_release_binary_bindings_required_before_future_readiness": true,
+    "fresh_targeted_gpu_ta_required_before_visible_full_choice_claim": true,
+    "audit_v5_is_not_rewritten_or_promoted_here": true,
+    "gpu_or_readiness_authorized_here": false
+  },
+  "claims": {
+    "selected_full_core_f_consumer_cpu_implemented": true,
+    "all_five_branch_action_lanes_cpu_verified": true,
+    "current_frozen_core_f_offer_only": true,
+    "ack_then_sync_and_ai_refresh_cpu_verified": true,
+    "parent_child_and_rerack_atomicity_cpu_verified": true,
+    "wpa_ii_06_f_current_frozen_offer_product_seam_reachable": true,
+    "wpa_ii_06_f_row_closed": false,
+    "upstream_break_foul_classification_complete": false,
+    "audit_v5_modified_or_promoted": false,
+    "global_rules_decision_ui_exposed": false,
+    "core_h_or_direct_core_e_product_reachable": false,
+    "product_visual_evidence_complete": false,
+    "profile_complete": false,
+    "m4_complete": false,
+    "ui_visual_modified": false,
+    "cmake_modified": false,
+    "phase4_or_phase5_renderer_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

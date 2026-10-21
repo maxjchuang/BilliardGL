@@ -1,0 +1,49 @@
+{
+  "$id": "billiardgl://schemas/phase5-beta-qa-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "aggregate": {
+      "type": "object"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "matrix_id": {
+      "const": "phase5_m4_product_beta_human_qa_v1"
+    },
+    "protocol_path": {
+      "type": "string"
+    },
+    "records": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "schema": {
+      "const": "phase5_beta_qa_v1"
+    },
+    "source_contract": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "NOT_RUN",
+        "PASS",
+        "FAIL"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "status",
+    "matrix_id",
+    "protocol_path",
+    "source_contract",
+    "evidence_boundary",
+    "records",
+    "aggregate"
+  ],
+  "title": "Phase 5 M4 product Beta human QA matrix",
+  "type": "object"
+}

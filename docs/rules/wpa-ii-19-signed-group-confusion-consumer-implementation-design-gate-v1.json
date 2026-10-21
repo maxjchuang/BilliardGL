@@ -1,0 +1,140 @@
+{
+  "schema": "wpa_ii_19_signed_group_confusion_consumer_implementation_design_gate_v1",
+  "status": "DESIGN_COMPLETE_AWAITING_ROOT_EXACT_ALLOWLIST_APPROVAL_NO_PRODUCTION_MUTATION",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-19", "selected_option_id": "SIGNED_CONFUSION_DECLARATION_ASSIGNMENT_ERROR_ONLY", "candidate_decision_sha256": "218387e7c0c6a6be2cd7458c6e09a7e7c15e677ac535f9e5502962dfef9a262e"},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"},
+    "b2_priority_register": {"path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json", "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55", "selected_priority": 2},
+    "original_design_gap_gate": {"path": "docs/rules/wpa-ii-19-ball-group-confusion-discovery-rerack-design-gap-gate-v1.json", "sha256": "8bce41f79ba5c690d9846dc0d36c015c5fec1ae580a5ef8c91855029d2f74788"},
+    "wpa_ii_21_d8_predecessor_receipt": {"path": "docs/rules/wpa-ii-21-stalemate-referee-consumer-implementation-receipt-v1.json", "sha256": "0829217fd580d0302ee96d6b4068535f03632420d53f0ae6ca1bb4f2b86644e2"},
+    "audit_v8": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v8.json", "sha256": "ddeabaf87e43647588b321e599fbdf56a3429eb1ad990425cdb9bcf5a9339c94", "row_status": "MISSING"},
+    "root_c2_selection_semantic_sha256": "42b99af76b1a9d3f9e2b4d92237719f0e8221d0b72665d541a2bac62fe4c9d2f"
+  },
+  "consumer_identity_and_selected_policy": {
+    "consumer_id": "WPA-II-19_SIGNED_GROUP_CONFUSION_CONSUMER",
+    "protocol_id": "authenticated_referee_authority_v1",
+    "declaration_kind": "WPA_II_19_GROUP_CONFUSION_DECLARATION",
+    "classification": "ASSIGNMENT_OR_SEQUENCE_CONFUSION_ONLY",
+    "accepted_proposal_actor_roles": ["REFEREE", "PLAYER_0", "PLAYER_1"],
+    "final_actor_role": "SAME_AUTHENTICATED_ROLE_AND_SUBJECT_AS_PROPOSAL",
+    "cancel_supported": false,
+    "ordinary_wrong_first_contact_routes_to": "WPA-II-17",
+    "ordinary_wrong_first_contact_alone_opens_or_commits_section_19": false,
+    "deadline": "BEFORE_NEXT_ACCEPTED_SHOOT",
+    "rerack_breaker": "FROZEN_ORIGINAL_RACK_BREAKER",
+    "shooting_order": "PRESERVE_ORIGINAL_RACK_ORDER",
+    "late_declaration_remedy": "REJECT_SECTION_19_REQUEST_WITH_ZERO_MUTATION",
+    "referee_or_player_payload_may_not_synthesize_physics_or_shotfacts": true
+  },
+  "window_and_snapshot_contract": {
+    "eligibility": "table groups are authoritatively assigned and match/rack is live",
+    "window_open": "after each authoritative completed shot under the closed-table assignment, create or renew one rack-scoped signed-realization window bound to that completed-shot and assignment snapshot",
+    "window_reference": ["rack_identity", "rack_start_revision", "frozen_original_breaker", "frozen_original_order", "assignment_snapshot", "assignment_snapshot_sha256", "completed_shot_identity", "completed_shot_ordinal", "completed_shooter", "completed_revision", "completed_state_hash", "window_generation"],
+    "deadline_close_boundary": "the next runtime Shoot that is successfully accepted as a strictly-positive applied cue impulse closes the preceding window exactly once before the new shot can become its own later completed-shot window",
+    "does_not_close_window": ["aim", "power", "camera", "preview", "placement preview or confirm", "rejected Shoot", "zero impulse", "unsupported or miscue launch", "failed launch validation"],
+    "accepted_launch_later_physics_failure_reopens_previous_window": false,
+    "open_table_window_allowed": false,
+    "automatic_classification_from_first_contact_or_group_assignment": false,
+    "all_snapshot_fields_enter_authority_state_hash": true
+  },
+  "exact_payload_schemas": {
+    "proposal": {
+      "exact_keys_in_canonical_order": ["assignment_snapshot_sha256", "claimed_confusion_kind", "completed_shot_identity", "realization_attested", "window_generation"],
+      "claimed_confusion_kind": "ASSIGNMENT_OR_SEQUENCE_CONFUSION",
+      "realization_attested": true,
+      "ordinary_wrong_first_contact_only_payload_allowed": false
+    },
+    "final": {
+      "exact_keys_in_canonical_order": ["assignment_snapshot_sha256", "claimed_confusion_kind", "completed_shot_identity", "proposal_decision_id", "rack_order_snapshot_sha256", "realization_still_attested", "window_generation"],
+      "claimed_confusion_kind": "ASSIGNMENT_OR_SEQUENCE_CONFUSION",
+      "realization_still_attested": true,
+      "same_authenticated_actor_required": true
+    },
+    "cancel": {"supported": false, "reason": "the root-selected Section 19 policy authorizes a timely signed realization and final rerack, but does not select a cancellation remedy"},
+    "unknown_extra_missing_noncanonical_wrong_type_or_null": "fail closed before protocol/window/rack/BIH/revision/event mutation"
+  },
+  "state_machine_and_stop_contract": {
+    "states": ["INACTIVE", "TIMELY_WINDOW_OPEN", "REALIZATION_PROPOSED_RACK_STOPPED", "RERACK_COMMITTING", "RERACK_COMMITTED", "WINDOW_EXPIRED"],
+    "proposal": "a valid timely signed PROPOSE stages the immutable declaration and changes the parent to REALIZATION_PROPOSED_RACK_STOPPED; it does not rerack or clear ordinary Section 17 entitlement",
+    "rack_stopped_effect": "reject further Shoot and group-choice or placement commits while allowing secret-free readback and exact retry; do not expose a global UI",
+    "final": "the same authenticated role and subject submits FINAL_DECLARE bound to the live proposal, frozen window, assignment, rack/order, revision and state hash; only final can commit Core-E rerack",
+    "cancel": "unsupported and fail closed with zero mutation",
+    "window_expiry": "an accepted next Shoot before a proposal makes the previous window permanently ineligible; later completion may open a distinct generation",
+    "partial_commit_allowed": false
+  },
+  "rack_bih_and_order_contract": {
+    "core_e_binding": {
+      "header": {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+      "source": {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"},
+      "action": "rules.foundation.rerack",
+      "direct_caller_exposure_allowed": false
+    },
+    "prebuild": "before protocol final mutation, build and validate one official Core-E plan using the frozen original rack breaker",
+    "successful_final": "atomically commit protocol final, rack stop, verified official rerack, restored original shooting order, group reset, supersession of any ordinary foul BIH/placement/offers, authority revision/hash, event/action/journal and receipt",
+    "failed_stale_or_conflicting_request": "preserve independently adjudicated Section 17 foul, BIH entitlement, placement scope and offers byte-equivalent",
+    "proposal_before_final": "freeze any Section 17 entitlement without clearing, granting, consuming or widening it",
+    "rerack_uses_current_player": false,
+    "foundation_action_is_consumer_action": false,
+    "numbered_seed_order_is_normative": false
+  },
+  "atomicity_idempotency_and_reset": {
+    "prevalidate": ["ruleset/capability/flow", "declaration kind", "authenticated actor role/subject", "rack and assignment snapshot", "completed-shot/window generation", "deadline", "authority revision/state hash", "expiry", "exact canonical payload", "idempotency key/nonce", "Core-E plan on final"],
+    "atomic_parent_commit": "consumer, protocol, window, rules runtime, rack/balls/groups/order, BIH/offers, revision/hash, event/action/journal and receipt commit together or all remain byte-equivalent",
+    "exact_retry": "return the original ACK with zero stop/rerack/reset/revision/event/action/journal delta",
+    "conflicting_retry": "same idempotency key, nonce, decision, window or final identity with changed authenticated bytes fails closed with zero delta",
+    "failed_core_e_plan_or_parent_commit": "protocol final must not remain committed and every consumer/runtime/rack/BIH/event field rolls back",
+    "reset_on": ["game reset", "rules mode reset", "another successful official rerack", "match completion", "successful Section 19 final rerack"],
+    "plain_turn_change_or_legal_pocket_resets_window": false
+  },
+  "automation_headless_contract": {
+    "commands": ["rules.group_confusion_propose", "rules.group_confusion_final", "get_group_confusion_authority_state"],
+    "capability": "wpa_ii_19_group_confusion_referee_consumer_v1",
+    "readback": "state, declaration/proposal metadata, actor role/subject, frozen rack/original order, assignment and completed-shot references, window generation/deadline state, final Core-E result; never credential, proof or canonical signed bytes",
+    "headless_only": true,
+    "modern_product_session_or_input_adapter_exposed": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "visible_signed_realization_ui_requires_separate_gate": true
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/group_confusion_authority.h", "src/Billiards/rules/group_confusion_authority.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/automation_controller.cpp"],
+    "test_files": ["tests/group_confusion_authority_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/automation_controller_tests.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "new_production_files": ["src/Billiards/rules/group_confusion_authority.h", "src/Billiards/rules/group_confusion_authority.cpp"],
+    "new_test_files": ["tests/group_confusion_authority_tests.cpp"],
+    "referee_protocol_rack_executor_chinese_rules_shotfacts_physics_edit_allowed": false,
+    "modern_product_ui_renderer_input_edit_allowed": false,
+    "cmake_scope": "add group_confusion_authority.cpp to core sources and one headless BilliardsGroupConfusionAuthorityTests target only"
+  },
+  "required_fixtures": {
+    "positive": ["REFEREE_TIMELY_ASSIGNMENT_CONFUSION_PROPOSAL_STOPS_SHOOT", "PLAYER_ZERO_TIMELY_SIGNED_REALIZATION", "PLAYER_ONE_TIMELY_SIGNED_REALIZATION", "CLOSED_TABLE_COMPLETED_SHOT_OPENS_EXACT_WINDOW", "AIM_PREVIEW_REJECTED_ZERO_OR_FAILED_LAUNCH_KEEP_WINDOW", "ACCEPTED_POSITIVE_SHOOT_EXPIRES_PRIOR_WINDOW_ONCE", "SAME_ACTOR_FINAL_RERACKS_FROZEN_ORIGINAL_BREAKER", "ORIGINAL_SHOOTING_ORDER_AND_OFFICIAL_GEOMETRY_PRESERVED", "SECTION_17_BIH_SUPERSEDED_ONLY_AT_SUCCESSFUL_FINAL", "AUTOMATION_SECRET_FREE_STATE_ROUNDTRIP"],
+    "negative": ["WRONG_FIRST_CONTACT_ALONE_NEVER_AUTO_PROPOSES_OR_RERACKS", "OPEN_TABLE_CANNOT_OPEN_WINDOW", "UNAUTHENTICATED_UNKNOWN_OR_WRONG_ACTOR_REJECTED", "ORDINARY_WRONG_FIRST_ONLY_CLASSIFICATION_REJECTED", "WRONG_RACK_ASSIGNMENT_SHOT_OR_WINDOW_REFERENCE_REJECTED", "LATE_DECLARATION_AFTER_ACCEPTED_SHOOT_REJECTED", "STALE_REVISION_STATE_HASH_EXPIRY_OR_NONCE_REJECTED", "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_PAYLOAD_REJECTED", "FINAL_BEFORE_PROPOSAL_OR_BY_CHANGED_ACTOR_REJECTED", "CANCEL_IS_UNSUPPORTED", "PROPOSAL_DOES_NOT_CLEAR_OR_GRANT_BIH", "DIRECT_CORE_E_FOUNDATION_ACTION_NOT_EXPOSED", "CURRENT_PLAYER_CANNOT_REPLACE_ORIGINAL_BREAKER", "CORE_E_PLAN_OR_PARENT_COMMIT_FAILURE_FULL_ROLLBACK", "EXACT_RETRY_ZERO_DELTA_AND_CONFLICT_FAIL_CLOSED", "RESET_OR_OTHER_RERACK_INVALIDATES_STALE_REQUESTS", "NO_PHYSICS_SHOTFACT_OR_ASSIGNMENT_SYNTHESIS_FROM_SIGNED_PAYLOAD", "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REALIZATION_EXPOSURE"],
+    "headless_cpu_only": true
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "5f396126815f2e536cc3ba52a16edf03353648890bbf36b576f22bd3f5424b93"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.h", "sha256": "c6b1c362054fac7e10d5254824685c9a4fa43e4c85e2560a5036567aad9aae69"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.cpp", "sha256": "cccebcee03b82bd42fdefea35b2838e3e5a4de3894b2e2be36594fde8919c1b0"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "c55593406f699ba96f462bfc234d4b8cae24e74dffb9c57836ef98101f4fbcb1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "434da9bd2c34161ab83b21a0261d9d10a5b437a7326728635885d58b502b1672"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "959e79903a6b7b6688ba406a331fdce2e888be38c9d082fa623c244ecd919519"},
+    {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+    {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"}
+  ],
+  "test_source_bindings": [
+    {"path": "tests/referee_authority_protocol_tests.cpp", "sha256": "bd52b6757a9eb87ac3bdc231c15913ed9d51287bcef7d33afa9fc77a77887767"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "33cc85f7d4190afae07af61463a5828cf2b417eae0343708ab98f97e7220739e"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "1f34b2bbb5bf41cf2448d58185cb80f4cc0984e7d6b7dcca9aa4b91b5508d303"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required_before_tests_first_patch": true,
+    "wpa_ii_19_implemented": false,
+    "audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "production_modified": false,
+    "cmake_modified": false,
+    "visible_product_ui_or_global_exposure": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

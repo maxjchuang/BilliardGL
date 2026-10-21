@@ -1,0 +1,129 @@
+{
+  "$id": "billiardgl://schemas/phase5-rules-decision-ui-actions-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accessibility": {
+      "type": "object"
+    },
+    "authority_contract": {
+      "type": "object"
+    },
+    "capabilities": {
+      "items": {
+        "properties": {
+          "product_exposed": {
+            "const": false
+          },
+          "state": {
+            "const": "pending"
+          }
+        },
+        "required": [
+          "capability_id",
+          "state",
+          "product_exposed",
+          "source_rows",
+          "flow_ids"
+        ],
+        "type": "object"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "flat_proof": {
+      "type": "object"
+    },
+    "flows": {
+      "items": {
+        "properties": {
+          "capability_state": {
+            "const": "pending"
+          },
+          "product_exposed": {
+            "const": false
+          }
+        },
+        "required": [
+          "flow_id",
+          "capability_id",
+          "capability_state",
+          "product_exposed",
+          "machine_code",
+          "text_key",
+          "source_rows",
+          "shape_tokens",
+          "copy",
+          "preconditions",
+          "postconditions",
+          "states",
+          "initial_state",
+          "completed_state",
+          "actions",
+          "policy_dependencies",
+          "failure_policy"
+        ],
+        "type": "object"
+      },
+      "maxItems": 7,
+      "minItems": 7,
+      "type": "array"
+    },
+    "interaction_policy": {
+      "type": "object"
+    },
+    "package_id": {
+      "const": "phase5_wpa_heyball_rules_decision_ui_actions_v1"
+    },
+    "policy_decision_placeholders": {
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "product_exposed": {
+      "const": false
+    },
+    "profile_complete": {
+      "const": false
+    },
+    "ruleset_id": {
+      "const": "wpa_heyball_2025_08_16_v1"
+    },
+    "schema": {
+      "const": "phase5_rules_decision_ui_actions_v1"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_bindings": {
+      "type": "object"
+    },
+    "status": {
+      "const": "PENDING"
+    }
+  },
+  "required": [
+    "schema",
+    "schema_version",
+    "package_id",
+    "ruleset_id",
+    "status",
+    "profile_complete",
+    "product_exposed",
+    "source_bindings",
+    "evidence_boundary",
+    "interaction_policy",
+    "authority_contract",
+    "accessibility",
+    "policy_decision_placeholders",
+    "capabilities",
+    "flows",
+    "flat_proof"
+  ],
+  "title": "Phase 5 pending rules decision UI/actions",
+  "type": "object"
+}

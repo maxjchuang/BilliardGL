@@ -1,0 +1,1743 @@
+{
+  "aggregate": {
+    "product_mode_default_switch_authorized": false,
+    "status": "NOT_RUN"
+  },
+  "evidence_boundary": {
+    "agents_or_robots_allowed": false,
+    "aggregate_before_all_records_complete": false,
+    "automation_or_model_tests_may_substitute": false,
+    "pii_collection_allowed": false,
+    "product_default_switch_before_all_gates_pass": false,
+    "project_members_allowed": false,
+    "real_external_human_required": true
+  },
+  "matrix_id": "phase5_m4_product_beta_human_qa_v1",
+  "protocol_path": "docs/art/phase5-beta-qa-protocol.md",
+  "records": [
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "product_entry_reached",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "new_match_started_at_break",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "all_shots_used_product_controls",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "legal_win_reached",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "winner_and_result_readable",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "no_scenario_or_state_shortcut",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "product_entry_reached",
+          "new_match_started_at_break",
+          "all_shots_used_product_controls",
+          "legal_win_reached",
+          "winner_and_result_readable",
+          "no_scenario_or_state_shortcut"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "ended_phase": "PENDING",
+        "match_replay_sha256": "PENDING",
+        "match_trace_sha256": "PENDING",
+        "physical_shot_count": "PENDING",
+        "started_phase": "PENDING",
+        "used_scenario_shortcut": "PENDING",
+        "used_state_injection": "PENDING",
+        "winner": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "full_match_product",
+      "record_type": "full_physical_product_match",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "all_rule_events_observed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "hud_player_readable",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "reason_codes_exact",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "ball_in_hand_readable",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "turn_handoff_readable",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "win_loss_readable",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "all_rule_events_observed",
+          "hud_player_readable",
+          "reason_codes_exact",
+          "ball_in_hand_readable",
+          "turn_handoff_readable",
+          "win_loss_readable"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "events": [
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "legal_break",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "illegal_break",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "group_assignment",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "no_object_ball_contact",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "wrong_first_contact",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "no_rail_after_contact",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "cue_ball_scratch",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "ball_in_hand",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "turn_handoff",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "legal_eight_win",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          },
+          {
+            "ball_in_hand_visible": "PENDING",
+            "event_id": "illegal_eight_loss",
+            "hud_player_readable": "PENDING",
+            "observed": "PENDING",
+            "reason_codes": "PENDING",
+            "screenshot_sha256": "PENDING",
+            "text_keys": "PENDING",
+            "turn_handoff_visible": "PENDING"
+          }
+        ]
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "rules_hud_reason_coverage",
+      "record_type": "rules_and_hud",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "product_entry_reached",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "difficulty_selected",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_started",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_completed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "no_hidden_physics_interface",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "main_thread_responsive",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "product_entry_reached",
+          "difficulty_selected",
+          "challenge_started",
+          "challenge_completed",
+          "no_hidden_physics_interface",
+          "main_thread_responsive"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "automation_trace_sha256": "PENDING",
+        "challenge_completed": "PENDING",
+        "challenge_started": "PENDING",
+        "difficulty_id": "rookie",
+        "hidden_physics_interface_used": "PENDING",
+        "main_thread_max_block_ms": "PENDING",
+        "product_entry": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "ai_rookie_product_challenge",
+      "record_type": "ai_product_challenge",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "product_entry_reached",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "difficulty_selected",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_started",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_completed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "no_hidden_physics_interface",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "main_thread_responsive",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "product_entry_reached",
+          "difficulty_selected",
+          "challenge_started",
+          "challenge_completed",
+          "no_hidden_physics_interface",
+          "main_thread_responsive"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "automation_trace_sha256": "PENDING",
+        "challenge_completed": "PENDING",
+        "challenge_started": "PENDING",
+        "difficulty_id": "club",
+        "hidden_physics_interface_used": "PENDING",
+        "main_thread_max_block_ms": "PENDING",
+        "product_entry": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "ai_club_product_challenge",
+      "record_type": "ai_product_challenge",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "product_entry_reached",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "difficulty_selected",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_started",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "challenge_completed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "no_hidden_physics_interface",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "main_thread_responsive",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "product_entry_reached",
+          "difficulty_selected",
+          "challenge_started",
+          "challenge_completed",
+          "no_hidden_physics_interface",
+          "main_thread_responsive"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "automation_trace_sha256": "PENDING",
+        "challenge_completed": "PENDING",
+        "challenge_started": "PENDING",
+        "difficulty_id": "expert",
+        "hidden_physics_interface_used": "PENDING",
+        "main_thread_max_block_ms": "PENDING",
+        "product_entry": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "ai_expert_product_challenge",
+      "record_type": "ai_product_challenge",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "startup_load",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "bad_file_defaults_warning",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "preview",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "apply",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "cancel",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "atomic_save",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "restart_persistence",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "context_rebind",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "conflict_rollback",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "startup_load",
+          "bad_file_defaults_warning",
+          "preview",
+          "apply",
+          "cancel",
+          "atomic_save",
+          "restart_persistence",
+          "context_rebind",
+          "conflict_rollback"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "apply_committed": "PENDING",
+        "atomic_save_succeeded": "PENDING",
+        "bad_file_fell_back_to_defaults": "PENDING",
+        "bad_file_warning_code": "PENDING",
+        "cancel_restored_live_values": "PENDING",
+        "conflict_error_code": "PENDING",
+        "conflict_rejected": "PENDING",
+        "conflict_rollback_preserved_binding": "PENDING",
+        "context_rebind_succeeded": "PENDING",
+        "preview_visible_before_apply": "PENDING",
+        "restart_loaded_same_sha256": "PENDING",
+        "saved_file_sha256": "PENDING",
+        "startup_loaded": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "settings_lifecycle",
+      "record_type": "settings_transaction",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "ui_scale_85",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "ui_scale_135",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "all_cvd_modes",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "all_subtitle_modes",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "all_assist_modes",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "four_audio_buses",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "dynamic_effect_toggles",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "assist_never_auto_aims_or_shoots",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "ui_scale_85",
+          "ui_scale_135",
+          "all_cvd_modes",
+          "all_subtitle_modes",
+          "all_assist_modes",
+          "four_audio_buses",
+          "dynamic_effect_toggles",
+          "assist_never_auto_aims_or_shoots"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "assist_auto_aimed": "PENDING",
+        "assist_auto_shot": "PENDING",
+        "maximum_ui_scale": "PENDING",
+        "minimum_ui_scale": "PENDING",
+        "reachable_assist_modes": "PENDING",
+        "reachable_audio_buses": "PENDING",
+        "reachable_cvd_modes": "PENDING",
+        "reachable_display_effects": "PENDING",
+        "reachable_subtitle_modes": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "accessibility_and_controls",
+      "record_type": "accessibility_settings",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "alias_disclosed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "shared_asset_not_claimed_distinct",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "pitch_not_claimed_supported",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "content_disposition_recorded",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "alias_disclosed",
+          "shared_asset_not_claimed_distinct",
+          "pitch_not_claimed_supported",
+          "content_disposition_recorded"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "alias_group": "impact_hit_alias",
+        "claimed_distinct_asset": "PENDING",
+        "claimed_pitch_supported": "PENDING",
+        "content_disposition": "PENDING",
+        "disclosed_to_content_review": "PENDING",
+        "file": "hit.wav",
+        "reported_status": "PENDING",
+        "review_notes": "PENDING",
+        "semantic_cues": [
+          "cue_impact",
+          "ball_ball",
+          "rail",
+          "pocket_jaw"
+        ]
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "audio_alias_impact",
+      "record_type": "audio_content_disposition",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "alias_disclosed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "shared_asset_not_claimed_distinct",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "pitch_not_claimed_supported",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "content_disposition_recorded",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "alias_disclosed",
+          "shared_asset_not_claimed_distinct",
+          "pitch_not_claimed_supported",
+          "content_disposition_recorded"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "alias_group": "notification_gameover_alias",
+        "claimed_distinct_asset": "PENDING",
+        "claimed_pitch_supported": "PENDING",
+        "content_disposition": "PENDING",
+        "disclosed_to_content_review": "PENDING",
+        "file": "GameOver.wav",
+        "reported_status": "PENDING",
+        "review_notes": "PENDING",
+        "semantic_cues": [
+          "ui_feedback",
+          "foul",
+          "match_finish"
+        ]
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "audio_alias_notifications",
+      "record_type": "audio_content_disposition",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "alias_disclosed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "shared_asset_not_claimed_distinct",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "pitch_not_claimed_supported",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "content_disposition_recorded",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "alias_disclosed",
+          "shared_asset_not_claimed_distinct",
+          "pitch_not_claimed_supported",
+          "content_disposition_recorded"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "alias_group": "background_loop_alias",
+        "claimed_distinct_asset": "PENDING",
+        "claimed_pitch_supported": "PENDING",
+        "content_disposition": "PENDING",
+        "disclosed_to_content_review": "PENDING",
+        "file": "background.wav",
+        "reported_status": "PENDING",
+        "review_notes": "PENDING",
+        "semantic_cues": [
+          "music_loop"
+        ]
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "audio_alias_music",
+      "record_type": "audio_content_disposition",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "alias_disclosed",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "shared_asset_not_claimed_distinct",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "pitch_not_claimed_supported",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "content_disposition_recorded",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "alias_disclosed",
+          "shared_asset_not_claimed_distinct",
+          "pitch_not_claimed_supported",
+          "content_disposition_recorded"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "alias_group": "background_loop_alias",
+        "claimed_distinct_asset": "PENDING",
+        "claimed_pitch_supported": "PENDING",
+        "content_disposition": "PENDING",
+        "disclosed_to_content_review": "PENDING",
+        "file": "background.wav",
+        "reported_status": "PENDING",
+        "review_notes": "PENDING",
+        "semantic_cues": [
+          "venue_ambience"
+        ]
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "audio_alias_ambience",
+      "record_type": "audio_content_disposition",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    },
+    {
+      "attestations": {
+        "executor": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        },
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase5_beta_qa_attestation_v1"
+        }
+      },
+      "automation_binding": {
+        "artifact_sha256": "PENDING",
+        "attached": "PENDING",
+        "passed": "PENDING",
+        "substitutes_for_human_qa": false
+      },
+      "checks": [
+        {
+          "check_id": "actual_gpu_capture_bound",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "shell_capture_pass",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "hud_capture_pass",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "opaque_icon_zero",
+          "notes": "PENDING",
+          "result": "PENDING"
+        },
+        {
+          "check_id": "debug_node_zero",
+          "notes": "PENDING",
+          "result": "PENDING"
+        }
+      ],
+      "contract": {
+        "check_ids": [
+          "actual_gpu_capture_bound",
+          "shell_capture_pass",
+          "hud_capture_pass",
+          "opaque_icon_zero",
+          "debug_node_zero"
+        ]
+      },
+      "environment": {
+        "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+        "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+        "build_sha256": "PENDING",
+        "content_sha256": "PENDING",
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "gpu_device": "PENDING",
+        "gpu_manual_review_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "input_devices": "PENDING",
+        "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING",
+        "physics_profile_id": "PENDING",
+        "physics_profile_sha256": "PENDING",
+        "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+        "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+        "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+        "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "evidence": {
+        "actual_gpu_capture": "PENDING",
+        "capture_artifact_sha256": "PENDING",
+        "capture_manifest_status": "PENDING",
+        "debug_node_count": "PENDING",
+        "hud_cases_present": "PENDING",
+        "manual_review_status": "PENDING",
+        "opaque_icon_count": "PENDING",
+        "shell_cases_present": "PENDING",
+        "unexpanded_icon_count": "PENDING"
+      },
+      "executor": {
+        "agent_or_robot": "PENDING",
+        "executor_id": "PENDING",
+        "project_member": "PENDING",
+        "real_external_human": "PENDING"
+      },
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "record_id": "actual_gpu_shell_hud",
+      "record_type": "actual_gpu_capture",
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "status": "PENDING"
+    }
+  ],
+  "schema": "phase5_beta_qa_v1",
+  "source_contract": {
+    "ai_levels": {
+      "club": {
+        "maximum_aim_error_radians": 0.031,
+        "maximum_candidates": 24,
+        "maximum_power_error_fraction": 0.04,
+        "maximum_tip_error_radius": 0.025,
+        "maximum_wall_time_ms": 8
+      },
+      "expert": {
+        "maximum_aim_error_radians": 0.024,
+        "maximum_candidates": 64,
+        "maximum_power_error_fraction": 0.012,
+        "maximum_tip_error_radius": 0.008,
+        "maximum_wall_time_ms": 12
+      },
+      "rookie": {
+        "maximum_aim_error_radians": 0.0465,
+        "maximum_candidates": 8,
+        "maximum_power_error_fraction": 0.085,
+        "maximum_tip_error_radius": 0.055,
+        "maximum_wall_time_ms": 4
+      }
+    },
+    "audio_decisions": {
+      "audio_alias_ambience": {
+        "alias_group": "background_loop_alias",
+        "file": "background.wav",
+        "semantic_cues": [
+          "venue_ambience"
+        ]
+      },
+      "audio_alias_impact": {
+        "alias_group": "impact_hit_alias",
+        "file": "hit.wav",
+        "semantic_cues": [
+          "cue_impact",
+          "ball_ball",
+          "rail",
+          "pocket_jaw"
+        ]
+      },
+      "audio_alias_music": {
+        "alias_group": "background_loop_alias",
+        "file": "background.wav",
+        "semantic_cues": [
+          "music_loop"
+        ]
+      },
+      "audio_alias_notifications": {
+        "alias_group": "notification_gameover_alias",
+        "file": "GameOver.wav",
+        "semantic_cues": [
+          "ui_feedback",
+          "foul",
+          "match_finish"
+        ]
+      }
+    },
+    "gpu_capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+    "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+    "reason_codes": [
+      "illegal_break",
+      "no_object_ball_contact",
+      "wrong_first_contact",
+      "no_rail_after_contact",
+      "cue_ball_scratch",
+      "cue_ball_off_table",
+      "object_ball_off_table",
+      "illegal_eight_ball"
+    ],
+    "rule_events": [
+      {
+        "event_id": "legal_break",
+        "reason_codes": [],
+        "text_keys": []
+      },
+      {
+        "event_id": "illegal_break",
+        "reason_codes": [
+          "illegal_break"
+        ],
+        "text_keys": [
+          "rules.chinese8.foul.illegal_break"
+        ]
+      },
+      {
+        "event_id": "group_assignment",
+        "reason_codes": [],
+        "text_keys": [
+          "rules.chinese8.group.solids|rules.chinese8.group.stripes"
+        ]
+      },
+      {
+        "event_id": "no_object_ball_contact",
+        "reason_codes": [
+          "no_object_ball_contact"
+        ],
+        "text_keys": [
+          "rules.chinese8.foul.no_object_contact"
+        ]
+      },
+      {
+        "event_id": "wrong_first_contact",
+        "reason_codes": [
+          "wrong_first_contact"
+        ],
+        "text_keys": [
+          "rules.chinese8.foul.wrong_first_contact"
+        ]
+      },
+      {
+        "event_id": "no_rail_after_contact",
+        "reason_codes": [
+          "no_rail_after_contact"
+        ],
+        "text_keys": [
+          "rules.chinese8.foul.no_rail_after_contact"
+        ]
+      },
+      {
+        "event_id": "cue_ball_scratch",
+        "reason_codes": [
+          "cue_ball_scratch"
+        ],
+        "text_keys": [
+          "rules.chinese8.foul.cue_ball_scratch"
+        ]
+      },
+      {
+        "event_id": "ball_in_hand",
+        "reason_codes": [],
+        "text_keys": []
+      },
+      {
+        "event_id": "turn_handoff",
+        "reason_codes": [],
+        "text_keys": []
+      },
+      {
+        "event_id": "legal_eight_win",
+        "reason_codes": [],
+        "text_keys": [
+          "rules.chinese8.win.legal_eight"
+        ]
+      },
+      {
+        "event_id": "illegal_eight_loss",
+        "reason_codes": [
+          "illegal_eight_ball"
+        ],
+        "text_keys": [
+          "rules.chinese8.loss.illegal_eight"
+        ]
+      }
+    ],
+    "ruleset_id": "wpa_heyball_2025_08_16_v1",
+    "settings": {
+      "assist_modes": [
+        "off",
+        "basic",
+        "guided"
+      ],
+      "audio_buses": [
+        "music",
+        "ambience",
+        "effects",
+        "ui"
+      ],
+      "bad_file_warning_code": "E_SETTINGS_FORMAT",
+      "color_vision_modes": [
+        "default",
+        "deuteranopia",
+        "protanopia",
+        "tritanopia",
+        "high_contrast_patterns"
+      ],
+      "display_effects": [
+        "bloom",
+        "depth_of_field",
+        "dynamic_camera",
+        "camera_shake"
+      ],
+      "rebind_conflict_code": "E_BINDING_CONFLICT",
+      "subtitle_modes": [
+        "off",
+        "essential",
+        "all"
+      ],
+      "ui_scale_range": [
+        0.85,
+        1.35
+      ]
+    },
+    "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3",
+    "source_hashes": {
+      "ai_source_sha256": "sha256:438023f9c4aad80d9006cf1f44236170a3338831888f7ddb19c0b9ad14a850c0",
+      "audio_source_sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0",
+      "input_source_sha256": "sha256:e260b85d16d2cc8261737fadc648eedc4d3edfc1b8008a7917fea7819a0e1ec1",
+      "rules_source_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+      "settings_runtime_source_sha256": "sha256:d6f810e79273067a75583cd49b5e2961dab58f10f54c0ce30fcb5d53194a9ad4",
+      "settings_source_sha256": "sha256:a7d3f30180951dda0c26dbc4499817a67304f6c118aecfbaba1e1f9efe7f6cb3",
+      "shell_source_sha256": "sha256:877740f053c5b3a1a232cb653db6e3d1935b4c0134bfb4c8f734d559e540e783"
+    }
+  },
+  "status": "NOT_RUN"
+}

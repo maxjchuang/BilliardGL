@@ -35,14 +35,7 @@ struct RenderResources {
     std::array<bool, kBallCount> fired = {};
     bool allFired = false;
 
-    float cameraEye[3] = {0.0f, 0.0f, 0.0f};
-    float cameraTarget[3] = {0.0f, 0.0f, 0.0f};
     float cueTipOffsetCm = 0.0f;
-    float shotPower = 0.0f;
-    bool showCue = false;
-    bool showPowerMeter = false;
-    int viewportWidth = 1024;
-    int viewportHeight = 768;
 };
 
 bool initializeRenderResources(RenderResources& resources, GameState& state);

@@ -1,0 +1,276 @@
+{
+  "schema": "wpa_ii_06_d_head_string_half_ball_classification_design_gate_v1",
+  "status": "POLICY_CLASSIFICATION_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": [
+    "WPA-II-06-D"
+  ],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "head_string_definition": {
+      "chapter": "II",
+      "clause": "3(e)",
+      "pdf_page": 6,
+      "locator": "Head String definition",
+      "controlled_paraphrase": "The Head String is parallel to the bottom cushion, 635 mm from that cushion, and intersects both side cushions."
+    },
+    "offense_clause": {
+      "chapter": "II",
+      "clause": "6(d)",
+      "pdf_page": 7,
+      "locator": "Cue-ball placement behind Head String",
+      "controlled_paraphrase": "The cue ball is placed behind the Head String. More than half crossing produces a reminder for the first offense and a foul for a later offense after the break."
+    },
+    "text_does_not_specify": [
+      "whether the authoritative measurement is at placement commit, shot release, or post-break adjudication",
+      "whether preview or rejected placement attempts are offenses",
+      "whether the per-player offense history resets per rack, match, set, or event",
+      "the numerical tolerance or quantization policy at the exact-half boundary"
+    ]
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v3.json",
+    "sha256": "d7ab2104fac9fd85fe8d7336ae658cc9baaaa6b4fa866cd4e7815c51404ad033",
+    "row_id": "WPA-II-06-D",
+    "row_status": "PARTIAL",
+    "product_reachable": true,
+    "gap": "No half-ball crossing measurement or reminder/offense escalation exists."
+  },
+  "source_bindings": {
+    "runtime": {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+      "relevant_lines": [
+        [904, 922],
+        [1419, 1454],
+        [1500, 1614]
+      ]
+    },
+    "runtime_header": {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "deacceaa4ffff8b0e5080963d958f5fc49a77a197c744c2693be6f2d82b96ec3"
+    },
+    "placement_authority": {
+      "path": "src/Billiards/rules/ball_in_hand_authority.h",
+      "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"
+    },
+    "shot_model": {
+      "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b"
+    },
+    "product_session": {
+      "path": "src/Billiards/render/modern/modern_product_session.cpp",
+      "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+      "relevant_lines": [
+        [283, 312],
+        [315, 353]
+      ]
+    },
+    "ui_model": {
+      "path": "src/Billiards/rules/rules_decision_ui_model.cpp",
+      "sha256": "5d4942db12f43069069d68e00e8aecf7f38106bac4f1330f9d41f2c51e830cb8"
+    },
+    "runtime_tests": {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+      "relevant_lines": [
+        [2055, 2105],
+        [2129, 2196]
+      ]
+    },
+    "product_tests": {
+      "path": "tests/rules_decision_session_integration_tests.cpp",
+      "sha256": "6082e1d44054a1adc8b3743c2eb31698472a3842626bf25da17db82dadd3220d"
+    }
+  },
+  "geometry_contract": {
+    "units": "centimetres",
+    "world_axis": "The table longitudinal axis is world Z; -Z is the head/bottom-cushion side and +Z is the foot/top-cushion side.",
+    "production_table_length_cm": 254.0,
+    "head_string_world_z_formula": "-playfield_length_cm / 2 + 63.5",
+    "head_string_world_z_cm": -63.5,
+    "cue_ball_radius_cm": 2.8575,
+    "measurement_object": "the cue-ball circular footprint projected onto the table plane",
+    "signed_crossing_cm_formula": "cue_ball_center_world_z_cm - head_string_world_z_cm",
+    "offense_geometry_predicate": "signed_crossing_cm > 0",
+    "mathematical_equivalence": "For a circle bisected by a zero-width line, more than half of its footprint is on the foot side if and only if its center is on the foot side.",
+    "exact_half_boundary": "signed_crossing_cm == 0 is exactly half and is not an offense under the words more than half",
+    "head_side_example": "signed_crossing_cm < 0 is not an offense",
+    "foot_side_example": "signed_crossing_cm > 0 is a geometric violation candidate",
+    "x_coordinate_changes_result": false,
+    "finite_inputs_required": true,
+    "implementation_tolerance_policy_selected": false
+  },
+  "classification_decisions": {
+    "authoritative_measurement_time": {
+      "status": "POLICY_PENDING",
+      "selected": null,
+      "allowed_candidates": [
+        "successful_break_placement_commit",
+        "accepted_break_shot_release_using_frozen_committed_position",
+        "single_post_break_adjudication_using_frozen_launch_position"
+      ],
+      "forbidden_guess": true,
+      "reason": "Clause 6(d) does not identify the authoritative event at which the cue-ball position is sampled."
+    },
+    "per_player_history_reset_scope": {
+      "status": "POLICY_PENDING",
+      "selected": null,
+      "allowed_candidates": [
+        "rack",
+        "match",
+        "set",
+        "event"
+      ],
+      "forbidden_guess": true,
+      "reason": "Clause 6(d) defines first and later offense consequences but does not define the lifetime of that history."
+    },
+    "exact_boundary_numeric_policy": {
+      "status": "POLICY_PENDING",
+      "selected": null,
+      "allowed_candidates": [
+        "exact_authoritative_double",
+        "documented_deterministic_quantization"
+      ],
+      "forbidden_guess": true
+    },
+    "production_implementation_authorized": false,
+    "audit_row_may_be_promoted": false
+  },
+  "existing_core_g_mapping": {
+    "head_string_plane_available": true,
+    "head_string_world_z_cm": -63.5,
+    "current_authority_clause": "WPA-II-08",
+    "current_flow": "ball_in_hand_behind_head_string",
+    "current_action": "rules.ball_in_hand.confirm_behind_head_string",
+    "current_validation": "A Section 8 placement center must be strictly behind the Head String; the line itself and foot-side centers are rejected.",
+    "preview_is_read_only": true,
+    "submit_requires_exact_context_actor_revision_action_and_state_hash": true,
+    "accepted_submit_is_idempotent_and_increments_one_authority_revision": true,
+    "shot_facts_has_wpa_ii_06_d_signal": false,
+    "section_8_authority_is_not_wpa_ii_06_d_break_authority": true,
+    "reuse_without_distinct_break_context_forbidden": true
+  },
+  "product_submission_contract": {
+    "must_not_count": [
+      "drag preview samples, including repeated samples",
+      "UI previews rejected by geometry validation",
+      "confirm attempts rejected before an authoritative ACK",
+      "wrong actor, action, flow, decision ID, revision, state hash, or idempotency conflicts",
+      "accepted Section 8 ball-in-hand placement outside a distinct Section 6(d) break context",
+      "raw live cue-ball positions after physics has started",
+      "replayed idempotent ACKs"
+    ],
+    "future_count_preconditions": [
+      "the classification gate selects exactly one authoritative measurement time",
+      "the request or frozen launch fact is in a distinct WPA-II-06-D break context",
+      "actor/player identity and authority revision are exact",
+      "the sampled position is finite and comes from committed or frozen authoritative state",
+      "the geometry predicate is true under the selected deterministic numeric policy",
+      "the mutation key has not already been consumed"
+    ],
+    "placement_commit_candidate": "Count only after a successful authoritative Section 6(d) placement ACK; preview and failed submission remain read-only.",
+    "shot_release_candidate": "Count only when the break shot is accepted for launch, using the last committed cue-ball position frozen before motion.",
+    "post_break_candidate": "Count exactly once during break adjudication using the launch position frozen before motion, never the simulated post-shot cue-ball position.",
+    "no_candidate_is_selected_by_this_gate": true
+  },
+  "per_player_history_contract": {
+    "required": true,
+    "key": "actor_player_id",
+    "valid_players": [
+      0,
+      1
+    ],
+    "state_shape": "one offense count per player within the later-selected reset scope",
+    "first_geometric_offense_for_player": "atomically increment that player's count from 0 to 1 and emit one reminder; do not mark a foul",
+    "later_geometric_offense_for_same_player": "atomically increment that player's count and emit one foul classification exactly once",
+    "other_player_history_is_independent": true,
+    "reset_scope_selected": false,
+    "invalid_actor_mutates_history": false
+  },
+  "atomic_mutation_contract": {
+    "transaction_order": [
+      "validate unique authority event and exact break context",
+      "freeze and validate actor, revision, position, and policy scope",
+      "evaluate the strict geometric predicate",
+      "read only the actor's per-player history",
+      "derive reminder or foul without mutating",
+      "commit history, authority revision, event/action, adjudication effect, receipt, and state hash as one transaction"
+    ],
+    "failure_rollback": "Any validation, classification, persistence, or downstream commit failure restores cue state, match state, both players' histories, authority revision, events/actions, and receipts byte-for-byte.",
+    "idempotent_retry": "An exact retry returns the original ACK or adjudication receipt with no second history increment, reminder, foul, event, action, or revision.",
+    "conflicting_retry": "A reused key with different actor, position, context, revision, or action fails closed with no mutation.",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "positive": [
+      "GEO_HEAD_SIDE_NO_OFFENSE",
+      "GEO_EXACT_HALF_NO_OFFENSE",
+      "GEO_FOOT_SIDE_VIOLATION_CANDIDATE",
+      "PLAYER0_FIRST_REMINDER_ONLY",
+      "PLAYER0_LATER_FOUL_ONCE",
+      "PLAYER1_FIRST_INDEPENDENT_REMINDER",
+      "SELECTED_BOUNDARY_COUNTS_ONCE",
+      "ATOMIC_SUCCESS_ONE_REVISION_ONE_RECEIPT"
+    ],
+    "negative": [
+      "DRAG_PREVIEW_NEVER_COUNTS",
+      "REPEATED_PREVIEW_NEVER_COUNTS",
+      "INVALID_PREVIEW_NEVER_COUNTS",
+      "REJECTED_CONFIRM_NEVER_COUNTS",
+      "WRONG_ACTOR_NEVER_COUNTS",
+      "WRONG_ACTION_NEVER_COUNTS",
+      "WRONG_FLOW_NEVER_COUNTS",
+      "STALE_DECISION_OR_REVISION_NEVER_COUNTS",
+      "STATE_HASH_DRIFT_NEVER_COUNTS",
+      "NONFINITE_POSITION_NEVER_COUNTS",
+      "GENERIC_SECTION8_PLACEMENT_NEVER_COUNTS",
+      "LIVE_POST_LAUNCH_POSITION_NEVER_COUNTS",
+      "IDEMPOTENT_RETRY_NEVER_DOUBLE_COUNTS",
+      "CONFLICTING_RETRY_FAILS_WITHOUT_MUTATION",
+      "FAILURE_ROLLS_BACK_BOTH_PLAYER_HISTORIES",
+      "UNSELECTED_RESET_SCOPE_CANNOT_BE_IMPLEMENTED"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/break_head_string_offense.h",
+      "src/Billiards/rules/break_head_string_offense.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "test_files": [
+      "tests/break_head_string_offense_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp",
+      "tests/rules_decision_session_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_policy_resolved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gate task",
+    "CMake changes",
+    "physics solver interpretation of the rule",
+    "counting preview or rejected UI attempts",
+    "global rulesDecisionUiProductExposed enablement",
+    "Phase4 renderer or trajectory changes",
+    "Phase5 exact-shape UI changes",
+    "visual or evidence threshold changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation",
+    "authorization issuance",
+    "promotion of WPA-II-06-D above PARTIAL"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_geometry_interpretation_frozen": true,
+    "measurement_time_resolved": false,
+    "history_reset_scope_resolved": false,
+    "implementation_complete": false,
+    "product_behavior_changed": false,
+    "gpu_executed": false
+  }
+}

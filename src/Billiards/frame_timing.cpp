@@ -44,4 +44,21 @@ double frameInterpolationAlpha(double accumulatorSeconds,
     return std::clamp(accumulatorSeconds / fixedTimeStepSeconds, 0.0, 1.0);
 }
 
+std::optional<PresentedFrameTiming> measurePresentedFrame(
+    double loopStart, double swapStart, double swapEnd,
+    std::optional<double> previousSwapEnd)
+{
+    if (!std::isfinite(loopStart) || !std::isfinite(swapStart) ||
+        !std::isfinite(swapEnd) || swapStart < loopStart || swapEnd < swapStart ||
+        (previousSwapEnd && (!std::isfinite(*previousSwapEnd) ||
+            *previousSwapEnd > loopStart))) {
+        return std::nullopt;
+    }
+    PresentedFrameTiming timing;
+    timing.loopThroughSwapMilliseconds = swapEnd - loopStart;
+    timing.swapMilliseconds = swapEnd - swapStart;
+    if (previousSwapEnd) timing.swapToSwapMilliseconds = swapEnd - *previousSwapEnd;
+    return timing;
+}
+
 }  // namespace billiardgl

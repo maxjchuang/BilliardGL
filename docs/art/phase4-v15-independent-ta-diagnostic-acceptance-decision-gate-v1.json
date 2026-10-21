@@ -1,0 +1,344 @@
+{
+  "schema": "billiardgl.phase4.v15.independent_ta_diagnostic_acceptance_decision_gate.v1",
+  "schema_version": 1,
+  "status": "PASS_DIAGNOSTIC_ACCEPTED_INFEASIBLE_UNDER_FROZEN_SEMANTICS_PRODUCT_DECISION_REQUIRED_NO_AUTH",
+  "scope": "Independent TA CPU/static diagnostic acceptance and product-decision gate only. No production edit, CMake edit, GPU, readiness, authorization, visual implementation, machine pass, or TA visual pass.",
+  "frozen_bindings": [
+    {
+      "role": "v15_corrected_diagnostic_receipt",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/diagnostic-receipt-v1.json",
+      "sha256": "05e0bc2de8fd9c0978bf66547f2ce444b9bee864ca27dab871f2482b4df80dcf"
+    },
+    {
+      "role": "v15_corrected_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    },
+    {
+      "role": "v15_diagnostic_validator",
+      "path": "scripts/validate_phase4_v15_broadcast_overwrite_provenance_diagnostic.py",
+      "sha256": "67d781c8d8d2e93e29e10a7d764fffe7433f251c66e634fafa204d006093d4fa"
+    },
+    {
+      "role": "v15_diagnostic_fail_closed_tests",
+      "path": "tests/test_phase4_v15_broadcast_overwrite_provenance_diagnostic.py",
+      "sha256": "6825aa0a2c13ce919beb7bb5efe14a44262c920fd012db29c71364765a7c919e"
+    },
+    {
+      "role": "v14_independent_ta_addendum",
+      "path": "docs/art/phase4-v14-cap-mask-premise-independent-ta-failure-addendum-v1.json",
+      "sha256": "5ad37167219cc6d06464c9bf4a9a885131bc82d215ca5d6d803e3dad2cdc3aee"
+    },
+    {
+      "role": "v14_reproducible_receipt_v2",
+      "path": "docs/art/phase4-v14-cap-mask-premise-falsification-v2/premise-falsification-receipt-v2.json",
+      "sha256": "bf320f08453a1b55f48235193ecd92ed3a88ccf671b506ee0cea36276e9f97f8"
+    },
+    {
+      "role": "v11_81_source_inventory",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    }
+  ],
+  "corrected_classification_acceptance": {
+    "distinct_provenance_key": "arc_segment_id + normalized_primitive_stem",
+    "same_stem_core_and_halo_is_cross": false,
+    "different_stem_is_cross": true,
+    "different_arc_is_cross": true,
+    "color_selects_classification": false,
+    "standard_cvd_topology_identical": true,
+    "required_negative_fixture": "same normalized dash stem with _core and _halo is not a cross-source overlap",
+    "required_positive_fixtures": [
+      "different normalized primitive stem is cross-source",
+      "same normalized stem on a different arc is cross-source"
+    ]
+  },
+  "source_inventory_contract": {
+    "capture_id": "camera_broadcast_1080",
+    "ordered_source_probe_count": 81,
+    "ordered_source_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "digest_algorithm": "sha256 of each ordered lowercase-hex source ID followed by newline",
+    "v11_broadcast_row_canonical_sha256": "51d8b17d543b98d3603b67d7ea51c73185dff6f8e1b437a7cdac3595337fbb6c",
+    "ordered_source_probe_ids": [
+      "7a6cbcfa5c5867ccc0ad1e89ae722a0a987b15eb0ad384d426705eb8f2e0951a",
+      "a0b05a17a042d5a476db34407da1afe0a6ced6b52af8aded36161a5e016932c4",
+      "51d74cc7cd6ed0e593622ac8c098b001a924ba3908f531a0f782e1fc64ded4f8",
+      "eacfbed702a925aebcbf27a573058dc9cd579d77189e4f7d1578495e65ab33d5",
+      "88385f63c9b0cef5dd31d2586ea5b8d837ad7b3663c0100ded0a31e7833e6d5e",
+      "e66b771ffcccf228523420937038570679dff423bf1851ef8ae8ac2bd4fcecbb",
+      "37f09514b0745ac52f3f786de39d1ae8f4af9d24b1a3cdf90342c16a5a73ea6e",
+      "2c8ca1dfee6b8922e29f1d744ca2b8aea28134e7b76c04b1e8edf499a239082d",
+      "64a8f08d212b568f321e5cf3fdefb1b8ca8599d9b4106f28d476de14168f51ab",
+      "178d55d7d35a18b82b2475308df252db9f7a8486cf403ed78f2a2afd3ffb0177",
+      "539327bd68cf42d7bdef1877d5bca5c582d4f94489f805aa33b24a3012bbed8f",
+      "02ba7f061e6773955a31d23ca41da9a92663acf01e7b43530cc4f7fef281278c",
+      "8aceeb4c8e2b36e834f1b35b5829b32fcb1c8f4b166855a696e253001526cd2e",
+      "d9a1d12b4e659a0c9ee0e2b5cd3e4d3613ad082f05837f10289f2280710937da",
+      "db5062e22564daf531ca5fa8e2862dd6866ffb4e112be1006c539f59799dd798",
+      "79001834b92b813bd6ccceef8c0ab859d036fe130c755002c23e56a1ffa80fa9",
+      "8be39991896b074222276cd45062a10cacb5d390a8d81120189414f362d406f4",
+      "c8f9a08aa3392da57be30f506bde8d4ab51c8f5a06a50c93e33404e57ab85eb3",
+      "0be715e2fc3cc91d69c283d161d10545dd61211ae5368fb35d69bb1ba05f7cf2",
+      "b659cbf3719935500fc55e4f2ba62fac148825ee5e2b4cf18caedd3e5e225cd7",
+      "c781d6c663c0dc4ce5d5d1377849bce318ba784fae972680d2ca17213f63b6cb",
+      "1892f2a01110dee75cbbf0016691a8b0c24f4b0d29d6cae847f811329a9a4ed0",
+      "429fc41ae09c792cb62d04355d1bcb0b3d215df157b2eedc613fe6b549876404",
+      "696f6f4a378c899e7a98d00c12be95bb8a5322b52611ba456e01cb67e3a53e3e",
+      "d2846fe08cca963265a5a70b109bcce359f6e161c863baf46c7fa804257e85a1",
+      "dff90787bac40c84b8a69f4e1e2f31b15788d8814e750a2dae5d49e1328ff7c0",
+      "b7c59494f442a4d134da7bd73b6b1b54851324745d70e12248861cb9cecbccc5",
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "0147443884b538f08ce00cb59fd3f6678c26d9047240f4187255bc92a235062e",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "4241d65737beec103e1840e9153f7a919b5ddae22771a7dfc4960675cc232efc",
+      "ac5fdc5701863075084f22598c8c36f4b56c19c4a6a7be7016cb4b0cd5261c1e",
+      "3d628e4d4187178d5eb9ff8ef1bdc3a47bd9ced45cbc73ef11e9dbcfc549c473",
+      "b3a97a75ac18901d1cc9c34417cab05c9f1690b8c7ac48004be991b25ae4ac96",
+      "1b0d282bd793b63ab85bd867aecfd3aee3f9386a28b8c13233099d8ce090c7d1",
+      "c98169ff042ecfb347bd7d0d80d9b537c2ca08716cad4e90c505b3e2fc074eb4",
+      "28a1416ce0d30cb3bf0d15b7902bef74ae53259b299fad465b891a69febae3f6",
+      "62ec1a7ab0e8a2cd187031ad40c29e472b4eef0b6351b5456e1d3dd64136565f",
+      "4c893c1483c138000a5b9a817b98f9db2d6bd0d62ce4d21e4f21ad6a6ba1fd7f",
+      "e65e77b357f43de890fee710dbd21eed1bf8ab5b1877c4d4ee397c92dcc06149",
+      "9ff995e4ae9999af1b857ec403b52fe6381704df444a735426aa586352ad7e8e",
+      "8025f73f7703f52481db353d26872024f626869defef8b6e7b947ec1e1a62ad9",
+      "cc5f76fd9f8ffd160b7927c20ac9e31d4bb72cf90913568e607029c998f5f9f9",
+      "c868c95f414be2c9486e1f4d7b0b3554588518c223748b8f8fd4cc35b6033478",
+      "2a60dd19f27e9c8c56dd269ca56713fbf3c3e1e94a7940ebb8091114c73726d1",
+      "506d2a472454b11497207fec20befbc59102d0525a2ae0f313551a8d07038d2a",
+      "f5d26cbdeb46610c30709ab6124ec735ae92b88cbd3f377c34410512fac42f7a",
+      "d38abd33d23598582adcde17083714a9e558f0cb8cd559c89e95f683f180830d",
+      "285554100fb1ae3063867e570f7c5c64139fe20d7feafcfafb8fc6bebdeb3846",
+      "63eca63f0d4c151cb31dc29cbd16874aff314b09699f5f35a5ef4953ec07b8a3",
+      "e94ef4361cadc45ff93dd3182c2fbb0143cea35c1eb5fd6cd55f2c74392785fb",
+      "f6ac84856a8ea2fd9cd29f474a6900239877ebcac7b78e3acb8d2dc5f2ab4fd7",
+      "03c0e6a8da654f2d7d1b1b9864080c9c8741497e25d4e89ed56ff32b06a3ea24",
+      "4c35f8937fbff46d36422accb3b0fdbc3926529050c01fd39f00740108ceb565",
+      "e4df8d7849b10d0da2ca385f7b0b9e5bcd76365523c7dd07ceebcb8ac8be2e33",
+      "e5b0c69a2bea02514d810e2d510331e4df42108a9048b6bd29fb9c7239e0873d",
+      "7959fce35a59bd7cdd9fde3bf57f2709e196ad9c451a5db6e91398833fc5143d",
+      "0d158bc8f42cd17ea945b39a4f2ec8b0cbc255d3a17e20a49573722ba82050f4",
+      "a8a37cc2710d2d508123074e2ccf6961c59ee149a71496588e7cd39d898138a3",
+      "b3bba9d234c63985c3fe6e0033028e9779ef293f6e698b017b31e1605c9fb194",
+      "95f2c25e2817bf9c70ee3683ecdd51927f318d1848953ad3ada4c4e3989479fc",
+      "1973294841767c7337fefd4704bf658c94c6c1f36cfca611226cef700bb7b0f7",
+      "450b78100c5a5578f89d77aa9a080d0064b02e53ca1bbf0071882c7fe7c78eba",
+      "4fb6a6c6bca3f8b8b4247f58a2ce1085be74f25b62ce66a42b8733b60f4755a3",
+      "3f3db5dfd8c05ad079c5199630d138dbdc9466a453152f3e83a3115e867282d9",
+      "57f50af80d32bf01865eaa322325613ee953de8fd862f0db8166cf5670ae17a8",
+      "1b1d5df1c0b7268ca570c367ad9df68d2eca96c8bfbb57ffd2148a5a91f23685",
+      "9951b260317a26e6d76f62cba9672d263aabe187ec060f01bac4f48d49baf4d5",
+      "2d00531c86e0807c8cdcaf697906958e732ded6e519ab5a3b5b460a50ac8b889",
+      "608407f3cff3d33c2b0daa6967719f5107f8a148ce2044ecc9f7787048ea3dac",
+      "153895c763f78cdea194b2091eb561a369a92b93b756b829d30e29b88b9ff1b8",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9",
+      "92acdb8b4be0c0d281fe7162fee4801bb8e2ae03a08e390a07d0d19c98516a2f",
+      "58742857e379ac2faaabb16902f7c4fdcffd17debae2fb211f3df7488935082f",
+      "f0a198092df1c5fd81da4f3f1009aeb39fe90de93f7168878220a0895581d23c",
+      "c0952cf6aaa8061c5f41a7140cc052dbe003b5091b7bb4ad195f8a3e2340f21e",
+      "f1af1c6018fde181a6da7eafee463c4cc60a4d09324aaebebefaf9397e516ed1",
+      "99c2b2d0ad68cee80ca06c04fff20e3693e3e771c64c163d188c5621a36ce069",
+      "d57799a8ec2384d531b977cd0fe784cf19c3e677de78d1d2eaeb65a70f78c6d8",
+      "e49e5c90f85cebef60bd8008000d987349d532ed500d980f051339a54088ebd6",
+      "031e86c44b67022793c8f6e3b5fe29cfdb45afdfcb5209e2816341cd305d416d"
+    ],
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "repair_owner_chain_json_pointer_suffixes": [
+      "/repair_probe_owner_chains/0",
+      "/repair_probe_owner_chains/1",
+      "/repair_probe_owner_chains/2"
+    ],
+    "foreign_evidence_count": 0,
+    "double_assignment_count": 0,
+    "unowned_evidence_count": 0
+  },
+  "independent_recomputed_diagnostic": {
+    "fixture": {
+      "physical_dimensions": [
+        1920,
+        1080
+      ],
+      "palettes": [
+        "standard",
+        "color_vision_safe"
+      ],
+      "sample_index": 0,
+      "sample_position": [
+        0.5,
+        0.5
+      ],
+      "neighborhood_radius_px": 8
+    },
+    "per_palette_three_gap_results_in_order": [
+      {
+        "coordinate": [
+          783,
+          413
+        ],
+        "prior_actual_route_body_samples": 84,
+        "eligible_samples": 18,
+        "protected_or_ambiguous_samples": 66,
+        "eligible_largest8": 18,
+        "required_largest8": 2,
+        "meets_requirement": true
+      },
+      {
+        "coordinate": [
+          892,
+          491
+        ],
+        "prior_actual_route_body_samples": 96,
+        "eligible_samples": 1,
+        "protected_or_ambiguous_samples": 95,
+        "eligible_largest8": 1,
+        "required_largest8": 2,
+        "meets_requirement": false
+      },
+      {
+        "coordinate": [
+          940,
+          525
+        ],
+        "prior_actual_route_body_samples": 88,
+        "eligible_samples": 0,
+        "protected_or_ambiguous_samples": 88,
+        "eligible_largest8": 0,
+        "required_largest8": 2,
+        "meets_requirement": false
+      }
+    ],
+    "blocking_940_525_fragment_partition": {
+      "core_base_body": 48,
+      "core_start_cap_extension": 28,
+      "core_end_cap_extension": 5,
+      "inner_central_body": 0,
+      "inner_lateral_annulus": 1,
+      "inner_start_cap_annulus": 4,
+      "inner_end_cap_annulus": 2,
+      "outer_side_band": 0,
+      "endpoint_or_tick_or_marker": 0,
+      "sum": 88
+    },
+    "blocking_940_525_interval_partition": {
+      "dash_on_interior": 5,
+      "dash_gap_intrusion": 0,
+      "route_endpoint_envelope": 0,
+      "cross_segment_or_cross_source_overlap": 83,
+      "sum": 88
+    },
+    "standard_cvd_topology_sha256": "77c42c0d66a566b4a73140e2d8e5f68a766bc6af4a98488a953323b77a52e87f"
+  },
+  "independent_ta_decision": {
+    "classification": "INFEASIBLE_UNDER_FROZEN_SEMANTICS",
+    "accepted_diagnostic": true,
+    "visual_acceptance": false,
+    "reason": "The permitted semantic-gap-only set yields largest8 18, 1, and 0. The latter two cannot reach the frozen minimum 2 without allowing an actual route sample to survive against a currently protected predicted dash-on/core-base/lateral or true cross-provenance owner.",
+    "failed_coordinates": [
+      [
+        892,
+        491
+      ],
+      [
+        940,
+        525
+      ]
+    ],
+    "blocking_axes": [
+      "actual_track_visual_identity",
+      "coaxial_predicted_actual_disambiguation",
+      "cross_track_semantic_priority"
+    ],
+    "automatic_scope_expansion": false,
+    "implementation_or_visual_change_authorized": false,
+    "new_product_or_design_decision_required": true
+  },
+  "product_decision_candidates_in_priority_order": [
+    {
+      "priority": 1,
+      "decision_id": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+      "recommended": true,
+      "mutually_exclusive_with": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+      "decision_required": "At a sample-resolved true crossing, may the minimum topology-derived ActualRouteBodyCore bridge needed for largest8>=2 survive over predicted base-core, central-inner, or lateral-inner ownership?",
+      "why_first": "It changes priority only at proven cross-track intersections and can retain predicted ownership everywhere else.",
+      "allowed_if_selected": [
+        "A new successor gate may allow sample-resolved actual-route survival only at a proven distinct arc+stem cross-track intersection.",
+        "The successor may select the minimum connected crossing component needed to reach ActualRouteBodyCore largest8>=2 at all three frozen gaps."
+      ],
+      "forbidden_if_selected": [
+        "No coordinate whitelist, global actual-over-predicted priority, non-cross dash-on suppression, whole-route offset, threshold change, or evidence-helper reclassification.",
+        "No production/GPU/readiness/auth work before a new allowlist, CPU negative fixtures, and product approval bind this decision ID."
+      ],
+      "required_successor_constraints": [
+        "No coordinate whitelist; eligibility derives from prior actual-route and distinct predicted arc+stem provenance.",
+        "Suppress only the minimum connected crossing component required to restore actual continuity.",
+        "Predicted yellow identity, dash rhythm away from the crossing, endpoint/ticks, 2px lateral annulus away from the crossing, exact 81 IDs, three repair IDs, and standard/CVD parity remain regression controls."
+      ],
+      "authorized_by_this_gate": false
+    },
+    {
+      "priority": 2,
+      "decision_id": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+      "recommended": false,
+      "mutually_exclusive_with": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+      "decision_required": "If neither track may win, may the product add an explicit bridge/underpass crossing micro-glyph that makes both routes traceable without treating protected predicted pixels as a semantic gap?",
+      "why_second": "It preserves both track meanings but introduces a new visual grammar and therefore needs broader product comprehension and TA validation.",
+      "allowed_if_selected": [
+        "A new successor gate may define one source-provenanced, non-color-redundant crossing bridge/underpass micro-glyph.",
+        "The new grammar may visually encode both route identities at true cross-track intersections without calling protected ownership a semantic gap."
+      ],
+      "forbidden_if_selected": [
+        "No reuse of current pass thresholds as proof that the new glyph is understood; it requires new CPU raster and independent TA axes.",
+        "No camera/layout/whole-route offset, color-only distinction, source-ID mutation, or production/GPU/readiness/auth work before a new product-approved gate."
+      ],
+      "required_successor_constraints": [
+        "New primitive must be source-provenanced and non-color redundant in standard/CVD.",
+        "No threshold, camera, whole-route offset, layout, or evidence-helper workaround.",
+        "Exact 81 IDs, three repair IDs, endpoint/ticks, dash rhythm and player/elevated/overhead controls remain unchanged."
+      ],
+      "authorized_by_this_gate": false
+    }
+  ],
+  "required_successor_gate_after_product_decision": {
+    "required": true,
+    "must_bind_selected_decision_id": true,
+    "must_define_new_allowlist_and_negative_fixtures": true,
+    "must_recompute_all_three_gap_topologies_standard_and_cvd": true,
+    "must_preserve_exact_81_source_ids_digest_and_three_repair_ids": true,
+    "must_require_CPU_static_before_any_future_GPU_or_TA": true,
+    "gpu_or_capture_authorized_here": false
+  },
+  "forbidden": [
+    "Do not reinterpret the one legacy tick/helper pixel as ActualRouteBodyCore.",
+    "Do not relax largest8>=2, region, contrast, visible-probe, 95/81, or source-identity thresholds.",
+    "Do not classify same-stem _core/_halo as cross provenance.",
+    "Do not suppress all predicted core, lateral annulus, dash-on interior, or ambiguous samples under this gate.",
+    "Do not use color-only ownership, camera, layout, z-order-only, whole-route offset, or acceptance-helper workarounds.",
+    "Do not edit production, CMake, authority, replay, source IDs, or product exposure under this gate.",
+    "Do not run GPU, create readiness/auth, claim machine/TA/targeted5/targeted11/formal68/M3/golden/beta/product pass."
+  ],
+  "proof_boundary": {
+    "diagnostic_receipt_accepted": true,
+    "infeasible_under_frozen_semantics": true,
+    "product_decision_selected": false,
+    "production_modified": false,
+    "cmake_modified": false,
+    "visual_change_implemented": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}
+

@@ -1,0 +1,274 @@
+{
+  "schema": "m4_remaining_gap_dependency_critical_path_register_v1",
+  "status": "FINAL_DEPENDENCY_REGISTER_ALL_POLICY_SELECTIONS_UNSELECTED",
+  "scope": "Design-only dependency and execution ordering for the 15 frozen M4 WPA remaining-gap rows.",
+  "input_bindings": {
+    "policy_register": {
+      "path": "docs/rules/m4-wpa-policy-referee-input-decision-register-v1.json",
+      "sha256": "66e105e968fc49f46cfe7fd117e42b545c6789a87d401f1d657ee263103a31ce"
+    },
+    "audit_v5": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+      "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a"
+    },
+    "m4_beta_verification_matrix": {
+      "path": "docs/m4-beta-verification-matrix.md",
+      "sha256": "0f1f480ace3356fabc84ea9d70919fbd6dcc9714d3c53fba0861323d04815783"
+    },
+    "program_status": {
+      "path": "docs/visual-gameplay-program-status.md",
+      "sha256": "2f76b1a96681e8b6b0e95bb4fd97e0fcd6d030534bf5961c6df7c9000bfa0c08"
+    }
+  },
+  "classification_contract": {
+    "direct_code_closure_values": [
+      "YES_AFTER_LISTED_PREREQUISITES",
+      "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY"
+    ],
+    "root_policy_selection_values": ["REQUIRED_UNSELECTED"],
+    "external_referee_protocol_values": [
+      "NOT_REQUIRED",
+      "REQUIRED_UNDESIGNED",
+      "CONDITIONAL_ON_UNSELECTED_PROFILE"
+    ],
+    "new_physics_values": ["NOT_REQUIRED", "REQUIRED_UNIMPLEMENTED"],
+    "evidence_gate_values": [
+      "NOT_REQUIRED_FOR_INTERNAL_CLOSURE",
+      "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS",
+      "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS",
+      "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE"
+    ],
+    "policy_selection_made": false,
+    "external_referee_protocol_authorized": false,
+    "new_physics_authorized": false
+  },
+  "dependency_nodes": [
+    {"id": "D0-FROZEN-INPUTS", "kind": "EVIDENCE", "state": "SATISFIED_BY_BINDINGS"},
+    {"id": "D1-ROOT-POLICY-BUNDLE", "kind": "ROOT_POLICY", "state": "BLOCKED_UNSELECTED"},
+    {"id": "D2-REFEREE-AUTHORITY-PROTOCOL", "kind": "EXTERNAL_REFEREE_PROTOCOL", "state": "BLOCKED_UNDESIGNED_UNAUTHORIZED"},
+    {"id": "D3-BREAK-CLASSIFICATION", "kind": "CODE_AND_POLICY", "state": "BLOCKED_BY_D1"},
+    {"id": "D4-PLACEMENT-LIFECYCLE", "kind": "CODE_AND_POLICY", "state": "BLOCKED_BY_D1"},
+    {"id": "D5-CUE-CONTACT-TELEMETRY", "kind": "PHYSICS_TELEMETRY", "state": "BLOCKED_BY_D1"},
+    {"id": "D6-OFF-TABLE-PHYSICS", "kind": "NEW_PHYSICS", "state": "BLOCKED_BY_D1"},
+    {"id": "D7-JUMP-3D-PHYSICS", "kind": "NEW_PHYSICS", "state": "BLOCKED_BY_D1"},
+    {"id": "D8-RACK-REFEREE-AUTHORITY", "kind": "AUTHORITY_AND_RACK", "state": "BLOCKED_BY_D1_D2"},
+    {"id": "D9-CPU-INTEGRATION", "kind": "CPU_VERIFICATION", "state": "WAITING_ON_IMPLEMENTATION"},
+    {"id": "D10-FRESH-SHARED-BUILD", "kind": "BUILD_AND_BINDINGS", "state": "WAITING_ON_SOURCE_STABLE"},
+    {"id": "D11-GPU-TA", "kind": "VISIBLE_EVIDENCE", "state": "WAITING_ON_VISIBLE_SCOPE_AND_AUTHORIZATION"},
+    {"id": "D12-HUMAN-BETA", "kind": "HUMAN_ACCEPTANCE", "state": "NOT_RUN"}
+  ],
+  "minimum_execution_batches": [
+    {
+      "id": "B0-FREEZE-AND-DECIDE",
+      "depends_on": ["D0-FROZEN-INPUTS"],
+      "contains": ["D1-ROOT-POLICY-BUNDLE"],
+      "parallelism": "SERIAL_ROOT_DECISION",
+      "may_start_now": false,
+      "reason": "This register cannot select policy. Root must return one versioned selection or explicit defer per decision ID."
+    },
+    {
+      "id": "B1-FAST-CODE-LANE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE"],
+      "contains": ["D3-BREAK-CLASSIFICATION", "D4-PLACEMENT-LIFECYCLE"],
+      "parallelism": "PARALLEL_AFTER_POLICY",
+      "may_start_now": false,
+      "reason": "No new physics or referee protocol, but policy and exact product-scope choices are prerequisites."
+    },
+    {
+      "id": "B2-REFEREE-PROTOCOL-LANE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE"],
+      "contains": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D8-RACK-REFEREE-AUTHORITY"],
+      "parallelism": "SERIAL_FOUNDATION_THEN_PARALLEL_CONSUMERS",
+      "may_start_now": false,
+      "reason": "One authenticated actor/revision/state-hash/idempotency protocol should precede all referee-dependent rows."
+    },
+    {
+      "id": "B3-PHYSICS-LANES",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE"],
+      "contains": ["D5-CUE-CONTACT-TELEMETRY", "D6-OFF-TABLE-PHYSICS", "D7-JUMP-3D-PHYSICS"],
+      "parallelism": "THREE_INDEPENDENT_SPIKES_WITH_SEPARATE_PROMOTION_GATES",
+      "may_start_now": false,
+      "reason": "Each physics family invalidates different evidence and must fail closed independently."
+    },
+    {
+      "id": "B4-ROW-INTEGRATION-AND-CPU",
+      "depends_on": ["D3-BREAK-CLASSIFICATION", "D4-PLACEMENT-LIFECYCLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D6-OFF-TABLE-PHYSICS", "D7-JUMP-3D-PHYSICS", "D8-RACK-REFEREE-AUTHORITY"],
+      "contains": ["D9-CPU-INTEGRATION"],
+      "parallelism": "PER_ROW_UNTIL_SHARED_RUNTIME_CONVERGENCE",
+      "may_start_now": false,
+      "reason": "Only selected and implemented lanes enter authoritative row integration. Deferred lanes remain explicitly open."
+    },
+    {
+      "id": "B5-SHARED-BUILD-AND-VISIBLE-EVIDENCE",
+      "depends_on": ["D9-CPU-INTEGRATION"],
+      "contains": ["D10-FRESH-SHARED-BUILD", "D11-GPU-TA"],
+      "parallelism": "SERIAL_BUILD_THEN_AUTHORIZED_CAPTURE_AND_INDEPENDENT_TA",
+      "may_start_now": false,
+      "reason": "Only visible changes need targeted GPU/TA, but every linked source or binary change needs fresh bindings."
+    },
+    {
+      "id": "B6-M4-HUMAN-ACCEPTANCE",
+      "depends_on": ["D10-FRESH-SHARED-BUILD", "D11-GPU-TA"],
+      "contains": ["D12-HUMAN-BETA"],
+      "parallelism": "AFTER_MACHINE_AND_TA",
+      "may_start_now": false,
+      "reason": "The beta matrix still records real-input/screen-reader and Beta 0/12 as not run."
+    }
+  ],
+  "entries": [
+    {
+      "row_id": "WPA-II-06-C", "decision_id": "M4-POL-06C-BREAK-THRESHOLD",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D3-BREAK-CLASSIFICATION"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_POLICY_BLOCKED",
+      "closure_note": "Collector telemetry exists; selected cushion/pocket classification and narrow illegal-break product offer remain."
+    },
+    {
+      "row_id": "WPA-II-06-D", "decision_id": "M4-POL-06D-HALF-BALL-HISTORY",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D3-BREAK-CLASSIFICATION"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_POLICY_BLOCKED",
+      "closure_note": "Geometry exists; sample time, exact boundary and per-player reset lifetime must be selected before code."
+    },
+    {
+      "row_id": "WPA-II-06-E", "decision_id": "M4-PROD-06E-BREAK-FOUL-CHOICES",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D3-BREAK-CLASSIFICATION"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_UPSTREAM_CLASSIFICATION_BLOCKED",
+      "closure_note": "Core parent/child/rerack authority exists; upstream foul eligibility and narrow product exposure remain."
+    },
+    {
+      "row_id": "WPA-II-06-F", "decision_id": "M4-PROD-06F-EIGHT-ON-BREAK-FULL-CHOICES",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D3-BREAK-CLASSIFICATION"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_UPSTREAM_CLASSIFICATION_BLOCKED",
+      "closure_note": "Spot entitlement timing is fixed; exact rerack actions and eligible upstream branch remain unexposed."
+    },
+    {
+      "row_id": "WPA-II-08", "decision_id": "M4-POL-08-HEAD-STRING-CROSSING",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D4-PLACEMENT-LIFECYCLE"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_TELEMETRY_POLICY_BLOCKED",
+      "closure_note": "Placement subflow exists; crossing geometry/order telemetry and all-behind respot parent remain."
+    },
+    {
+      "row_id": "WPA-II-09", "decision_id": "M4-POL-09-TIP-TOUCH-SHOT-BOUNDARY",
+      "direct_code_closure": "YES_AFTER_LISTED_PREREQUISITES", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "NOT_REQUIRED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D4-PLACEMENT-LIFECYCLE"],
+      "minimum_execution_batch": "B1-FAST-CODE-LANE", "critical_path_class": "FAST_LANE_INPUT_POLICY_BLOCKED",
+      "closure_note": "Preview/confirm exists; entitlement consumption and physical cue-part classification remain unselected."
+    },
+    {
+      "row_id": "WPA-II-12-3", "decision_id": "M4-POL-12-3-OBJECT-OFF-TABLE-CONFLICT",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "REQUIRED_UNIMPLEMENTED",
+      "gpu": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "ta": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D6-OFF-TABLE-PHYSICS"],
+      "minimum_execution_batch": "B3-PHYSICS-LANES", "critical_path_class": "LONG_PATH_POLICY_CONFLICT_PLUS_PHYSICS",
+      "closure_note": "Official 12.3/17(e) conflict, signed profile ownership and true off-table lifecycle all block closure."
+    },
+    {
+      "row_id": "WPA-II-12-5-6", "decision_id": "M4-POL-12-5-6-DOUBLE-HIT",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "REQUIRED_UNIMPLEMENTED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY"],
+      "minimum_execution_batch": "B3-PHYSICS-LANES", "critical_path_class": "LONG_PATH_CUE_PHYSICS_PLUS_REFEREE",
+      "closure_note": "Full-stroke tip intervals and close-ball adjudication route are missing."
+    },
+    {
+      "row_id": "WPA-II-12-7", "decision_id": "M4-POL-12-7-PUSH",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "REQUIRED_UNIMPLEMENTED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY"],
+      "minimum_execution_batch": "B3-PHYSICS-LANES", "critical_path_class": "LONG_PATH_CUE_PHYSICS_PLUS_REFEREE",
+      "closure_note": "Complete distance/duration telemetry and an obvious-push policy or signed declaration are missing."
+    },
+    {
+      "row_id": "WPA-II-15-1", "decision_id": "M4-POL-15-1-FROZEN-CUE-OBJECT",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY"],
+      "minimum_execution_batch": "B2-REFEREE-PROTOCOL-LANE", "critical_path_class": "REFEREE_PATH_WITH_SHARED_CUE_TELEMETRY",
+      "closure_note": "Signed pre-shot declaration is mandatory; push/double-hit handling shares the cue-contact telemetry lane."
+    },
+    {
+      "row_id": "WPA-II-15-2", "decision_id": "M4-POL-15-2-FROZEN-CUSHION",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY"],
+      "minimum_execution_batch": "B2-REFEREE-PROTOCOL-LANE", "critical_path_class": "REFEREE_PATH_WITH_TELEMETRY",
+      "closure_note": "Signed frozen declaration and leave/recontact facts are missing; jaw policy remains unselected."
+    },
+    {
+      "row_id": "WPA-II-16", "decision_id": "M4-PROD-16-JUMP-CAPABILITY",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "CONDITIONAL_ON_UNSELECTED_PROFILE", "new_physics": "REQUIRED_UNIMPLEMENTED",
+      "gpu": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "ta": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D7-JUMP-3D-PHYSICS"],
+      "minimum_execution_batch": "B3-PHYSICS-LANES", "critical_path_class": "LONGEST_PATH_NEW_3D_PHYSICS",
+      "closure_note": "Current planar solver cannot support jump legality; selecting keep-disabled may close product scope but not claim implementation."
+    },
+    {
+      "row_id": "WPA-II-17", "decision_id": "M4-PROD-17-GENERAL-FOUL-COVERAGE",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "REQUIRED_UNIMPLEMENTED",
+      "gpu": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "ta": "REQUIRED_IF_NEW_VISIBLE_PHYSICS_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D6-OFF-TABLE-PHYSICS"],
+      "minimum_execution_batch": "B4-ROW-INTEGRATION-AND-CPU", "critical_path_class": "CONVERGENCE_CRITICAL_PATH",
+      "closure_note": "Existing scratch/wrong-first/no-rail subset is not full §17; referee facts, contact facts and off-table physics converge here."
+    },
+    {
+      "row_id": "WPA-II-19", "decision_id": "M4-POL-19-GROUP-CONFUSION",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D8-RACK-REFEREE-AUTHORITY"],
+      "minimum_execution_batch": "B2-REFEREE-PROTOCOL-LANE", "critical_path_class": "PROGRAM_PRIORITY_REFEREE_PATH",
+      "closure_note": "Program priority override only; audit v5 remains m4_required=false. Signed discovery window and rerack policy are absent."
+    },
+    {
+      "row_id": "WPA-II-21", "decision_id": "M4-POL-21-STALEMATE",
+      "direct_code_closure": "NO_REQUIRES_NEW_PHYSICS_OR_EXTERNAL_AUTHORITY", "root_policy_selection": "REQUIRED_UNSELECTED",
+      "external_referee_input_protocol": "REQUIRED_UNDESIGNED", "new_physics": "NOT_REQUIRED",
+      "gpu": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "ta": "REQUIRED_IF_VISIBLE_PRODUCT_SURFACE_SHIPS", "human": "REQUIRED_FOR_M4_PRODUCT_ACCEPTANCE",
+      "depends_on": ["D1-ROOT-POLICY-BUNDLE", "D2-REFEREE-AUTHORITY-PROTOCOL", "D8-RACK-REFEREE-AUTHORITY"],
+      "minimum_execution_batch": "B2-REFEREE-PROTOCOL-LANE", "critical_path_class": "REFEREE_RACK_PATH",
+      "closure_note": "Referee proposal/final declaration, refusal handling and generally-three directive require an authenticated protocol."
+    }
+  ],
+  "critical_path_summary": {
+    "fastest_closable_after_policy": ["WPA-II-06-C", "WPA-II-06-D", "WPA-II-06-E", "WPA-II-06-F", "WPA-II-08", "WPA-II-09"],
+    "shared_referee_protocol_consumers": ["WPA-II-12-3", "WPA-II-12-5-6", "WPA-II-12-7", "WPA-II-15-1", "WPA-II-15-2", "WPA-II-17", "WPA-II-19", "WPA-II-21"],
+    "new_physics_long_paths": ["WPA-II-12-3", "WPA-II-12-5-6", "WPA-II-12-7", "WPA-II-16", "WPA-II-17"],
+    "convergence_row": "WPA-II-17",
+    "longest_uncertain_lane": "WPA-II-16 full 3D jump physics if selected; keep-disabled is an explicit product-scope decision, not an implementation claim.",
+    "earliest_legal_next_action": "Root returns a versioned selection or explicit defer for all 15 decision IDs; no implementation batch is authorized by this register."
+  },
+  "claims": {
+    "row_count": 15,
+    "all_policy_selections_unselected": true,
+    "deferred_rows_are_not_closed": true,
+    "production_modified": false,
+    "cmake_modified": false,
+    "readiness_or_authorization_created": false,
+    "gpu_or_cocoa_or_opengl_executed": false,
+    "audit_v5_modified_or_promoted": false,
+    "implementation_authorized": false
+  }
+}

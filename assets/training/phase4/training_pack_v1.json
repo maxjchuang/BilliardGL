@@ -1,0 +1,183 @@
+{
+  "bad_input_fixtures": [
+    {
+      "expected_error_code": "E_REQUIRED_SUCCESS",
+      "file": "bad_inputs/missing_success.training.invalid.json",
+      "sha256": "8bb4f52bc1f853ac8317a228e510e1013cde0e2bc649ae815ae784e4ad714129"
+    },
+    {
+      "expected_error_code": "E_GEOMETRY_OVERLAP",
+      "file": "bad_inputs/overlapping_balls.training.invalid.json",
+      "sha256": "e2903ed2dbb79c22543edd71eb143463487cd5ef0500df91c51fc8f964f231ae"
+    },
+    {
+      "expected_error_code": "E_SPIN_CAPABILITY_GATE",
+      "file": "bad_inputs/ungated_spin.training.invalid.json",
+      "sha256": "6d01f268f883bfc022e9ef51675e9763e24188ec2c1904ba88515c159d4fdadd"
+    },
+    {
+      "expected_error_code": "E_REPLAY_BINDING",
+      "file": "bad_inputs/replay_bound_without_hash.training.invalid.json",
+      "sha256": "232791214ac155a039e73f1a0ac9efd257899e23763584d268f290aa20adb6ac"
+    },
+    {
+      "expected_error_code": "E_SCORING_DETERMINISM",
+      "file": "bad_inputs/nondeterministic_scoring.training.invalid.json",
+      "sha256": "d864b87f16b237120ad6f82f750b81608e577f3ff860975f89b20bc89f60b1d4"
+    }
+  ],
+  "content_policy": "original_billiardgl_content_no_third_party_assets",
+  "coverage_matrix": {
+    "file": "coverage_matrix.json",
+    "sha256": "eb700ff28ee79b12ce6da59ae944d3437e3f8864ec60864cc55daf56c361d2a9"
+  },
+  "determinism_contract": {
+    "canonical_json": "UTF-8_sorted_keys_LF",
+    "forbidden_sources": [
+      "wall_clock",
+      "platform_rng",
+      "unordered_iteration",
+      "visual_frame_rate"
+    ],
+    "initial_state_seed": 0,
+    "static_checks": [
+      "schema",
+      "hashes",
+      "geometry",
+      "predicate_vocabulary",
+      "scoring",
+      "capability_gates",
+      "replay_binding"
+    ]
+  },
+  "id": "billiardgl_phase4_launch12_v1",
+  "reference_generation": {
+    "file": "reference_generation.json",
+    "sha256": "cec08596b45c571b061f33b62df85338fab19ca68818db60fecc0b9a20910dab"
+  },
+  "scenario_schema": "training_scenario_v1",
+  "scenarios": [
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios/launch_stop_shot_center_v1.training.json",
+      "id": "launch_stop_shot_center_v1",
+      "reference_replay": {
+        "file": "replays/launch_stop_shot_center_v1.replay.json",
+        "sha256": "d9e6a61879ae5ae2275bdf12872037eea0a5ef5039ec3042e6328a7fe50f8d2b"
+      },
+      "sha256": "ea90373a63ff83ccd94a9703e838df0eb497284b91ca908354ede8f713402eaf"
+    },
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios/launch_follow_shot_v1.training.json",
+      "id": "launch_follow_shot_v1",
+      "reference_replay": {
+        "file": "replays/launch_follow_shot_v1.replay.json",
+        "sha256": "4a09de73c56fd22b853bad4c570599ce609c0d163e3a2c200e259f8f074b7059"
+      },
+      "sha256": "25a5641aed9864fa55fda4ed4ff796d99e355f3c1a5acc3af659cdbab1a436a2"
+    },
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios/launch_draw_shot_v1.training.json",
+      "id": "launch_draw_shot_v1",
+      "reference_replay": {
+        "file": "replays/launch_draw_shot_v1.replay.json",
+        "sha256": "6b5b2eb642d2570a2cf38e932d0b0edc2c043d78297d16ea8a312c13713ae40d"
+      },
+      "sha256": "09ad651a28b34ae48a7011ccbff742139676123f7c14abc0e679f72bfc3ff59a"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios/launch_left_english_one_rail_v1.training.json",
+      "id": "launch_left_english_one_rail_v1",
+      "reference_replay": {
+        "file": "replays/launch_left_english_one_rail_v1.replay.json",
+        "sha256": "ebf8759e53b0073710ae74fd22d3d36b5504801f12f5b7d974bbca2164948295"
+      },
+      "sha256": "e014315d08a010c993285dcbab1085d0fa9c6d163de93279ba5a4c2fd4c0dcc9"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios/launch_right_english_one_rail_v1.training.json",
+      "id": "launch_right_english_one_rail_v1",
+      "reference_replay": {
+        "file": "replays/launch_right_english_one_rail_v1.replay.json",
+        "sha256": "e05a1b1e8d057b1c1d4536a6264083c9ce585c078e1f0274390cd80ff7f99935"
+      },
+      "sha256": "a2cfb8fb32bce976b34faade7ad93be6bc3f75c5c1b356f16c7c631b021ba679"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios/launch_side_english_two_rail_v1.training.json",
+      "id": "launch_side_english_two_rail_v1",
+      "reference_replay": {
+        "file": "replays/launch_side_english_two_rail_v1.replay.json",
+        "sha256": "aab4c8dcc09b06f147a81f5a4ad1a45a423402d1d3715bbd5bf29de48cb92168"
+      },
+      "sha256": "afe885836628f226012e467cefa135962e5be62df2a896f7f0a0ba18c45ecaf0"
+    },
+    {
+      "category": "pocket_angle",
+      "file": "scenarios/launch_corner_pocket_angle_v1.training.json",
+      "id": "launch_corner_pocket_angle_v1",
+      "reference_replay": {
+        "file": "replays/launch_corner_pocket_angle_v1.replay.json",
+        "sha256": "8157022e84a154961152ff286928e456b46cd17b9d68d1ba31ecfbf6685e7fe7"
+      },
+      "sha256": "30830150a706f08efb574c2dd50dc8e04c88a220c53d60269b81d7fe3ddaece3"
+    },
+    {
+      "category": "pocket_angle",
+      "file": "scenarios/launch_side_pocket_angle_v1.training.json",
+      "id": "launch_side_pocket_angle_v1",
+      "reference_replay": {
+        "file": "replays/launch_side_pocket_angle_v1.replay.json",
+        "sha256": "f5d9154cb564a117dd34eba1cf838ea0704483fd38caf4d120d83a34f65e568c"
+      },
+      "sha256": "ddb52ac221a6049ddc1ba3d760bd870556df80f0faac987134835db72f19475c"
+    },
+    {
+      "category": "continuous_position",
+      "file": "scenarios/launch_two_ball_lane_route_v1.training.json",
+      "id": "launch_two_ball_lane_route_v1",
+      "reference_replay": {
+        "file": "replays/launch_two_ball_lane_route_v1.replay.json",
+        "sha256": "b7d1a85f6b952d6f69eb9a330c17eb10e81288ef0c1b9a9a8d5664eac451ae4a"
+      },
+      "sha256": "b8995d400aca37462414bf5e5088c13efcfaf7974aa8a4be7b3dcc9cecb896bd"
+    },
+    {
+      "category": "continuous_position",
+      "file": "scenarios/launch_three_ball_corner_route_v1.training.json",
+      "id": "launch_three_ball_corner_route_v1",
+      "reference_replay": {
+        "file": "replays/launch_three_ball_corner_route_v1.replay.json",
+        "sha256": "15a6d987d20084e7cad59c835913d4bb74ad39a64f60bbb0bfb9e8b69b779d12"
+      },
+      "sha256": "4751b58ae66aa84efbc8fb796e627530d7a89c6ad8854032d1f10d6bdc7997bf"
+    },
+    {
+      "category": "break_cue_control",
+      "file": "scenarios/launch_head_ball_break_control_v1.training.json",
+      "id": "launch_head_ball_break_control_v1",
+      "reference_replay": {
+        "file": "replays/launch_head_ball_break_control_v1.replay.json",
+        "sha256": "59676cf217020c438f5ff8bec8397bec4bf835efd1fb36838988ec10f2a8779a"
+      },
+      "sha256": "20fecde88a0e5112e5303e80292b7c8f000d91c22ba0104ac6dae007ddf3e58e"
+    },
+    {
+      "category": "break_cue_control",
+      "file": "scenarios/launch_cut_break_control_v1.training.json",
+      "id": "launch_cut_break_control_v1",
+      "reference_replay": {
+        "file": "replays/launch_cut_break_control_v1.replay.json",
+        "sha256": "d52a4feeebae06af1925fdba912c69766a9a47b8f8e918fb6c3b9996331a6b93"
+      },
+      "sha256": "5faf5c942fce9626cb996a458851c3fd50302af275401b4429a098bbe5970b31"
+    }
+  ],
+  "schema": "training_pack_v1",
+  "schema_version": 1
+}

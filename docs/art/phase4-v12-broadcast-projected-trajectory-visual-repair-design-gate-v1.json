@@ -1,0 +1,235 @@
+{
+  "schema": "billiardgl.phase4.v12.broadcast_projected_trajectory_visual_repair_design_gate.v1",
+  "schema_version": 1,
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED_NO_GPU_NO_AUTHORIZATION",
+  "scope": "A separate renderer-visual gate for the frozen Phase4 v11 broadcast failure. It complements, but does not replace or amend, the independently gated raster-support connectivity algorithm correction. Its sole visual outcome is an independently traceable actual solid trajectory across the complete broadcast projection, including visible actual identity in every predicted dash gap, while preserving predicted yellow dominance, predicted gap rhythm, endpoint/ticks, and cross-track integrity.",
+  "frozen_bindings": [
+    {
+      "role": "v11_offline_failure_evidence_receipt",
+      "path": "docs/art/phase4-final-ownership-v11-ordinal4-offline-diagnostic-v1/failure-evidence-receipt-v1.json",
+      "sha256": "07f251d466b0dcad550b4951e8242403bcaaaeb97dd800cbde99cdf23c2f3f85"
+    },
+    {
+      "role": "coexisting_connectivity_algorithm_gate",
+      "path": "docs/art/phase4-final-ownership-v11-ordinal4-offline-diagnostic-v1/minimal-raster-support-connectivity-correction-design-gate-v1.json",
+      "sha256": "59bbabf437e9195392b2a41f4e48eea0513afb222706115a07e9c0965cbad059"
+    },
+    {
+      "role": "v11_dispatch_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/phase4-final-ownership-dispatch-failure-receipt-v1.json",
+      "sha256": "282056928154ce78ad79b8cee0062d460d03f76c9d130f1c9f268f0dfa009a39"
+    },
+    {
+      "role": "v11_machine_results_prefix",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl",
+      "sha256": "0fd67fe71d6115e7fe7bebe874ec7f4280a6a48dacd4432e2a15e1fe1ec57e69"
+    },
+    {
+      "role": "v11_authoritative_final_ownership_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    },
+    {
+      "role": "v11_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v11-ordinal4-independent-ta-failure-acceptance-addendum-v1.json",
+      "sha256": "64936ca990a0077323dcc2d64e9dbdf8bf9b400da72f7a11d450beb0a89b04c4"
+    },
+    {
+      "role": "v11_player_low_control_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_player_low_1080.ppm",
+      "sha256": "82d6f9e5aba1821b3b27c00f2b76977fff035cf8541c768bd5361c1ee4ee744a",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v11_elevated_control_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_elevated_1080.ppm",
+      "sha256": "e6eca69d865f87f8b0d49960567520d81dcd2b5c8f83d217e0cde8c919e2fa46",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v11_overhead_control_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_overhead_1080.ppm",
+      "sha256": "a03a84d5de933106980406d9ddcfdeb2cc2e8a36984eab39db1cfaff79fbba8e",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v11_broadcast_failure_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_broadcast_1080.ppm",
+      "sha256": "0b6c87cb415a2e80ad1f6e061a972be57c683b8104e28d0065ba52b6a0045878",
+      "physical_dimensions": [1920, 1080]
+    }
+  ],
+  "bound_failure_facts": {
+    "broadcast_machine_status": "FAILED",
+    "failed_predicate": "ownership_ok",
+    "broadcast_source_visible_hidden": [81, 68, 13],
+    "broadcast_predicted_source_visible_hidden": [69, 62, 7],
+    "broadcast_actual_source_visible_hidden": [12, 6, 6],
+    "actual_hidden_core_count": 3,
+    "actual_hidden_solid_in_predicted_dash_gap_count": 3,
+    "predicted_outer_silhouette_contrast_failures": [3.9028463506845466, 3.9970607697890235],
+    "actual_visible_endpoint_count": 1,
+    "actual_visible_tick_count": 2,
+    "foreign_track_evidence_count": 0,
+    "double_assignment_count": 0,
+    "unowned_evidence_count": 0,
+    "independent_ta_axis_result": [2, 5],
+    "targeted11_machine_pass": false,
+    "targeted11_ta_pass": false,
+    "formal68_pass": false
+  },
+  "coexistence_with_algorithm_gate": {
+    "algorithm_gate_sha256": "59bbabf437e9195392b2a41f4e48eea0513afb222706115a07e9c0965cbad059",
+    "algorithm_gate_remains_independently_required": true,
+    "algorithm_patch_must_remain_visual_byte_equivalent": true,
+    "visual_patch_must_not_modify_ownership_connectivity_or_reason_code_logic": true,
+    "separate_change_sets_and_separate_validator_receipts_required": true,
+    "combined_successor_source_binding_must_bind_both_implemented_change_sets": true,
+    "algorithm_counterfactual_is_not_visual_acceptance": true,
+    "visual_gate_does_not_amend_algorithm_gate_forbidden_changes": true,
+    "sequencing": [
+      "Implement and validate the algorithm correction under its own gate with no renderer visual change in that change set.",
+      "Only after separate root approval, implement the renderer visual correction under this gate without changing algorithm or ownership semantics.",
+      "A future successor readiness may bind both independently validated artifacts; this design gate itself creates no readiness or authorization."
+    ]
+  },
+  "required_visual_outcomes": [
+    {
+      "outcome_id": "actual_full_path_independent_traceability",
+      "requirement": "At original 1920x1080 broadcast projection, a reviewer can follow the actual solid core from its first visible terminal to its last without relying on the predicted yellow core, isolated ticks, endpoint-only cues, hue-only inference, or magnification."
+    },
+    {
+      "outcome_id": "actual_visible_in_every_predicted_dash_gap",
+      "requirement": "Every frozen actual solid-in-predicted-dash-gap role has a distinct, connected, actual-owned final-LDR pixel component; the predicted gap remains perceptually open and is not repainted as a predicted dash."
+    },
+    {
+      "outcome_id": "predicted_yellow_dominance_and_gap_rhythm_preserved",
+      "requirement": "The predicted trajectory remains visually primary yellow, dashed, and rhythmically open; no actual reinforcement may turn it into a broad white/dark band or erase its gaps."
+    },
+    {
+      "outcome_id": "endpoint_ticks_and_terminals_preserved",
+      "requirement": "Both track terminals and all source ticks remain attached, role-readable, and no less legible than the v11 player/elevated/overhead controls."
+    },
+    {
+      "outcome_id": "outer_silhouette_contrast_repaired",
+      "requirement": "Both frozen broadcast predicted outer-silhouette failures meet the unchanged final-LDR 4.0 contrast requirement, with no threshold waiver or omitted probe."
+    },
+    {
+      "outcome_id": "same_axis_repaired_cross_track_integrity_preserved",
+      "requirement": "Predicted and actual remain independently traceable through same-axis overlap while foreign-track, double-assignment, unowned, detached, and cross-swapped evidence remain zero."
+    }
+  ],
+  "allowed_production_files": [
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "allowed_symbols_or_regions": "Actual-track and adaptive-rim visual primitive emission, renderer-owned palette resolution, renderer-owned physical stroke/rim/cap/marker styling, and final draw-package diagnostics needed to prove this gate."
+    },
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "allowed_symbols_or_regions": "Renderer-only visual style fields or diagnostics strictly required by the cpp change; no model, authority, or trajectory semantics."
+    }
+  ],
+  "allowed_renderer_visual_changes": [
+    "Change standard and color-vision-safe actual-core foreground/luma and its independent non-color outline treatment within the existing actual trajectory centerline.",
+    "Change actual core, inner-halo, outer-rim, cap, tick, or marker physical widths within the existing renderer style contract when CPU raster evidence proves predicted gaps stay open and endpoints/ticks do not regress.",
+    "Change actual solid-core primitive tessellation or cap joins solely to produce connected final-LDR actual pixels on diagonal broadcast rasterization; semantic route samples and actual-solid encoding remain unchanged.",
+    "Change renderer-local adaptive rim polarity, suppression, alpha, or foreground selection for actual and the two failing predicted silhouettes, provided final-LDR contrast is machine-verified at the unchanged threshold.",
+    "Add renderer-only diagnostic tags and CPU raster snapshots that distinguish actual core, predicted core, rims, ticks, endpoints, and predicted-gap regions.",
+    "Add or update non-production unit tests, pure-CPU raster fixtures, static validators, and evidence templates required by this gate."
+  ],
+  "forbidden_changes": [
+    "No coverage, local-contrast, luma-delta, minimum-area, connected-pixel, probe-count, denominator, or acceptance-threshold relaxation.",
+    "No route point, physics/replay sample, centerline offset, lateral separation, trajectory endpoint, camera pose/preset/projection, viewport, scene, asset, table, ball, UI, or layout change.",
+    "No actual-before-predicted z-order change, depth override, render-pass reorder, or later-UI masking workaround.",
+    "No predicted semantic change from yellow dashed, no actual semantic change from solid-with-markers, and no hue-only track distinction.",
+    "No ownership token, source-probe identity/count/order, association, exclusive arbitration, connectivity, hidden-reason, final-LDR pairing, MSAA resolve, blend, or tone-map algorithm change under this visual gate.",
+    "No edits to the coexisting algorithm gate or its frozen evidence; its visual-byte-equivalence constraint applies to its own algorithm patch.",
+    "No post-process repaint, selective crop, evidence omission, enlarged-only judgment, screenshot substitution, or machine-only substitution for original-resolution TA review.",
+    "No product exposure, golden/M2/Beta promotion, readiness, authorization, GPU execution, targeted11/full68 claim, or capture retry from this gate."
+  ],
+  "required_cpu_and_static_preflight": {
+    "status": "NOT_RUN",
+    "required_checks": [
+      "Exact frozen SHA validation for the v11 evidence, four PPMs, independent TA addendum, and connectivity algorithm gate.",
+      "Static diff allowlist proves production changes are confined to the two trajectory overlay renderer files and do not touch the algorithm patch, model, controller, camera, plan, authority, threshold, z-order, offset, or layout surfaces.",
+      "Existing trajectory overlay renderer, compound visibility, semantic ownership, telemetry, and v11 algorithm-gate tests remain PASS.",
+      "Pure-CPU 1920x1080 raster snapshot of the frozen broadcast projection is evaluated for both standard and color-vision-safe palettes against renderer-tagged physical pixels rather than geometry/token presence alone.",
+      "The CPU broadcast snapshot has distinct connected actual-core final-LDR support in every ordered path tranche and in all three frozen actual-in-predicted-gap neighborhoods centered at [783,413], [892,491], and [940,525].",
+      "Every one of the 12 broadcast actual source roles passes the unchanged scalar-area, connected-raster, and contrast predicates; every one of 69 predicted source roles passes the unchanged predicates, yielding 81/81 for the scoped CPU snapshot.",
+      "Pixel masks prove predicted yellow remains the primary predicted core, predicted gaps remain open, actual reinforcement is not hue-only in standard or CVD, and endpoint/tick components remain independently connected.",
+      "The two frozen predicted silhouette neighborhoods centered at [855,469] and [879,486] each meet final-LDR contrast >=4.0 without changing the threshold or probe location.",
+      "CPU snapshots for player-low, elevated, and overhead preserve v11 actual 100% visibility, predicted dash identity, endpoint/ticks, and zero cross-track/double/unowned evidence.",
+      "A deterministic rerun produces byte-identical CPU raster receipts and no generated readiness, authorization, PPM, PNG, or GPU artifact."
+    ],
+    "implementation_exit": "All checks PASS under separately frozen source/binary hashes; implementation completion still does not authorize GPU capture."
+  },
+  "future_targeted_capture_gate": {
+    "status": "NOT_AUTHORIZED_NOT_RUN",
+    "minimum_case_count": 5,
+    "exact_minimum_cases": [
+      {"capture_id": "camera_player_low_1080", "role": "standard_player_control", "physical_dimensions": [1920, 1080]},
+      {"capture_id": "camera_elevated_1080", "role": "standard_elevated_control", "physical_dimensions": [1920, 1080]},
+      {"capture_id": "camera_overhead_1080", "role": "standard_overhead_control", "physical_dimensions": [1920, 1080]},
+      {"capture_id": "camera_broadcast_1080", "role": "standard_primary_repair", "physical_dimensions": [1920, 1080]},
+      {"capture_id": "actual_retina_ui135_cvd", "role": "cvd_actual_track_regression", "physical_dimensions": [1920, 1080]}
+    ],
+    "prerequisites_before_authorization": [
+      "Both the algorithm correction and renderer visual correction have separate PASS implementation receipts and frozen source/binary bindings.",
+      "All required CPU/static checks in this gate pass and a successor NOT_RUN readiness binds the exact five-case plan, runner, executable, source aggregate, assets, thresholds, and both correction receipts.",
+      "Root issues a separate single-use authorization; this gate is not that authorization."
+    ],
+    "machine_acceptance": [
+      "All five cases pass every unchanged machine predicate with complete telemetry and no validation errors.",
+      "Broadcast reports exact source/visible/hidden 81/81/0, predicted 69/69/0, and actual 12/12/0; all three actual solid-in-predicted-gap roles are visible.",
+      "The three standard camera controls retain machine PASS, actual coverage 1.0, and visible counts no lower than v11: player 89/95, elevated 80/83, overhead 84/87.",
+      "All cases retain zero foreign-track, double-assignment, and unowned evidence; the two formerly failing broadcast silhouette probes meet contrast >=4.0.",
+      "Per-case original PPM path/SHA/1920x1080, telemetry row SHA, stable aggregate, fresh-process proof, and single-use authorization consumption are frozen."
+    ],
+    "machine_pass_does_not_equal_ta_pass": true,
+    "targeted5_pass_does_not_equal_targeted11_or_formal68": true
+  },
+  "future_independent_ta_acceptance": {
+    "status": "NOT_RUN",
+    "machine_five_of_five_pass_required_first": true,
+    "review_method": "An independent TA opens each of the five frozen PPMs individually at original 1920x1080. Thumbnails, crops alone, tokens, draw-list geometry, and machine metrics are not substitutes.",
+    "canonical_axes": [
+      "predicted_track_visual_identity",
+      "actual_track_visual_identity",
+      "core_inner_halo_separation",
+      "outer_halo_background_silhouette",
+      "predicted_dash_gap_rhythm",
+      "endpoint_tick_terminal_readability",
+      "coaxial_predicted_actual_disambiguation"
+    ],
+    "image_axis_count": 35,
+    "required_result": "35_PASS_0_FAIL_0_NOT_RUN",
+    "broadcast_specific_requirements": [
+      "Actual solid core is independently traceable across the full oblique route at normal original-resolution viewing.",
+      "Actual identity is visibly present in each of the three predicted dash gaps while the predicted gaps remain open.",
+      "Predicted yellow remains dominant; core/halo/rim do not become a broad three-line artifact.",
+      "Endpoint/ticks remain attached and readable; same-axis separation passes without cross-track swap or detachment.",
+      "Standard and CVD evidence demonstrate independent non-color track distinction."
+    ],
+    "control_requirement": "Player-low, elevated, overhead, and CVD control findings must be newly reviewed and may not inherit v11 conclusions.",
+    "targeted5_visual_repair_acceptance": "Available only after all 35 axes PASS; it remains narrower than targeted11, TA11, formal68, product, golden, M2, or Beta acceptance."
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "production_modified_by_this_gate": false,
+    "algorithm_implemented_by_this_gate": false,
+    "visual_repair_implemented": false,
+    "cpu_static_preflight_run": false,
+    "readiness_created": false,
+    "authorization_created_or_issued": false,
+    "gpu_authorized_or_executed": false,
+    "future_targeted_machine_pass": false,
+    "future_targeted_ta_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "threshold_changed": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

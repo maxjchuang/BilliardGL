@@ -1,0 +1,87 @@
+{
+  "candidate_binding": {
+    "capture_manifest_path": "PENDING_MACHINE_6_OF_6_CANDIDATE",
+    "capture_manifest_sha256": "PENDING",
+    "eligibility": "MACHINE_6_OF_6_REQUIRED_BEFORE_REVIEW"
+  },
+  "reviewer_role": "independent_technical_artist",
+  "schema": "phase2_ta_manual_review_v1",
+  "scenes": {
+    "ball_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    },
+    "break": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    },
+    "low_aim": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    },
+    "pocket_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    },
+    "post_shot_observe": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    },
+    "tactical_overhead": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "composition": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "contact_shadow": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "geometry_alignment": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "material_color": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"},
+        "venue_and_background_focus": {"evidence": "PENDING_NATIVE_RESOLUTION_INSPECTION", "status": "PENDING"}
+      },
+      "screenshot_sha256": "PENDING"
+    }
+  },
+  "template_policy": {
+    "approval_prohibited_while_pending": true,
+    "capture_hash_source": "SHA-256 of each PPM file named by the eligible capture manifest",
+    "instructions": [
+      "Copy this template beside the eligible capture manifest only after the frozen machine validator reports 6/6.",
+      "Bind capture_manifest_sha256 and every screenshot_sha256 to exact candidate bytes before visual judgment.",
+      "Replace every PENDING status with PASS, FAIL, or N/A and replace every evidence placeholder with scene-specific observed evidence.",
+      "Run scripts/validate_phase2_production_visuals.py with --manual-review; do not create or update a golden unless every release gate is independently satisfied."
+    ]
+  }
+}

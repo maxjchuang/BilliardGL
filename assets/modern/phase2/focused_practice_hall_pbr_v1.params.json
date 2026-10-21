@@ -1,0 +1,262 @@
+{
+  "authorship": "original_procedural_billiardgl",
+  "color_frequency_revision": {
+    "evidence_basis": "v4_sha_bound_manual_review_2026_07_27",
+    "felt": {
+      "after_chroma_range_srgb8": 67,
+      "after_target_basecolor_srgb8": [
+        32,
+        92,
+        99
+      ],
+      "after_uv_repeat": [
+        1.0,
+        1.0
+      ],
+      "before_chroma_range_srgb8": 106,
+      "before_target_basecolor_srgb8": [
+        20,
+        111,
+        126
+      ],
+      "before_uv_repeat": [
+        6.0,
+        12.0
+      ],
+      "intent": "reduce cyan saturation while preserving approved low-saturation teal-blue"
+    },
+    "revision_id": "phase2_ta_color_frequency_correction_v2",
+    "walnut": {
+      "after_grain_cycles": 5.0,
+      "after_pore_cells": 24,
+      "after_red_green_ratio": 1.4762,
+      "after_target_basecolor_srgb8": [
+        62,
+        42,
+        30
+      ],
+      "after_uv_repeat": [
+        2.0,
+        1.0
+      ],
+      "before_grain_cycles": 18.0,
+      "before_pore_cells": 72,
+      "before_red_green_ratio": 2.2941,
+      "before_target_basecolor_srgb8": [
+        78,
+        34,
+        19
+      ],
+      "before_uv_repeat": [
+        3.0,
+        2.0
+      ],
+      "intent": "reduce red bias, contrast, and high-frequency procedural grain"
+    }
+  },
+  "color_management": {
+    "basecolor": "srgb_iec61966_2_1",
+    "normal": "linear_opengl_positive_y_rgba8",
+    "orm": "linear_rgba8_r_ao_g_roughness_b_metallic"
+  },
+  "external_source_assets": false,
+  "felt_moire_control": {
+    "goal": "subpixel stochastic micro-surface without screen-space periodic bands",
+    "normal_strength": 0.3,
+    "regular_sine_fibers": false,
+    "runtime_uv_repeat": [
+      1.0,
+      1.0
+    ]
+  },
+  "generator": "scripts/generate_phase2_pbr_package.py",
+  "mip_policy": {
+    "alpha": "opaque",
+    "basecolor": "srgb_filtered",
+    "normal": "linear_filter_then_renormalize",
+    "orm": "linear_filtered_preserve_channels",
+    "runtime": "generate_full_chain_box_or_higher_quality_offline"
+  },
+  "package_id": "focused_practice_hall_pbr_v1",
+  "review_preview": {
+    "file": "focused_practice_hall_pbr_review_v1.png",
+    "layout": {
+      "bottom_row": [
+        "gunmetal",
+        "leather",
+        "cue"
+      ],
+      "top_row": [
+        "felt",
+        "walnut",
+        "rubber"
+      ]
+    },
+    "purpose": "material sphere plus repeated UV inset; review-only, not runtime"
+  },
+  "schema_version": 1,
+  "seam_policy": "all procedural functions and finite differences wrap toroidally",
+  "texture_sets": {
+    "cue": {
+      "files": {
+        "basecolor": "focused_practice_hall_cue_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_cue_normal_gl_v1.png",
+        "orm": "focused_practice_hall_cue_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        512,
+        512
+      ],
+      "roughness_center": 0.32,
+      "seed": 6421,
+      "target_basecolor_srgb8": [
+        184,
+        119,
+        54
+      ],
+      "uv_repeat": [
+        1.0,
+        12.0
+      ]
+    },
+    "felt": {
+      "files": {
+        "basecolor": "focused_practice_hall_felt_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_felt_normal_gl_v1.png",
+        "orm": "focused_practice_hall_felt_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        512,
+        512
+      ],
+      "roughness_center": 0.82,
+      "seed": 1403,
+      "target_basecolor_srgb8": [
+        32,
+        92,
+        99
+      ],
+      "uv_repeat": [
+        1.0,
+        1.0
+      ]
+    },
+    "gunmetal": {
+      "files": {
+        "basecolor": "focused_practice_hall_gunmetal_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_gunmetal_normal_gl_v1.png",
+        "orm": "focused_practice_hall_gunmetal_orm_linear_v1.png"
+      },
+      "metallic": 1.0,
+      "resolution_px": [
+        256,
+        256
+      ],
+      "roughness_center": 0.3,
+      "seed": 4519,
+      "target_basecolor_srgb8": [
+        55,
+        61,
+        67
+      ],
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "leather": {
+      "files": {
+        "basecolor": "focused_practice_hall_leather_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_leather_normal_gl_v1.png",
+        "orm": "focused_practice_hall_leather_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        256,
+        256
+      ],
+      "roughness_center": 0.62,
+      "seed": 5839,
+      "target_basecolor_srgb8": [
+        45,
+        27,
+        20
+      ],
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "pocket_void": {
+      "files": {
+        "basecolor": "focused_practice_hall_pocket_void_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_pocket_void_normal_gl_v1.png",
+        "orm": "focused_practice_hall_pocket_void_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        256,
+        256
+      ],
+      "roughness_center": 0.9,
+      "seed": 7297,
+      "target_basecolor_srgb8": [
+        255,
+        255,
+        255
+      ],
+      "uv_repeat": [
+        1.0,
+        0.5
+      ]
+    },
+    "rubber": {
+      "files": {
+        "basecolor": "focused_practice_hall_rubber_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_rubber_normal_gl_v1.png",
+        "orm": "focused_practice_hall_rubber_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        256,
+        256
+      ],
+      "roughness_center": 0.64,
+      "seed": 3907,
+      "target_basecolor_srgb8": [
+        18,
+        27,
+        29
+      ],
+      "uv_repeat": [
+        4.0,
+        16.0
+      ]
+    },
+    "walnut": {
+      "files": {
+        "basecolor": "focused_practice_hall_walnut_basecolor_srgb_v1.png",
+        "normal": "focused_practice_hall_walnut_normal_gl_v1.png",
+        "orm": "focused_practice_hall_walnut_orm_linear_v1.png"
+      },
+      "metallic": 0.0,
+      "resolution_px": [
+        512,
+        512
+      ],
+      "roughness_center": 0.34,
+      "seed": 2711,
+      "target_basecolor_srgb8": [
+        62,
+        42,
+        30
+      ],
+      "uv_repeat": [
+        2.0,
+        1.0
+      ]
+    }
+  }
+}

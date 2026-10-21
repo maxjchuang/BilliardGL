@@ -1,0 +1,130 @@
+{
+  "schema": "audit_v9_post_partial_receipts_evidence_only_impact_register_v1",
+  "status": "FINAL_READ_ONLY_NO_STATUS_PROMOTION",
+  "bindings": {
+    "audit_v9": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json",
+      "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"
+    },
+    "d5_d6_feasibility": {
+      "path": "docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json",
+      "sha256": "86d4957620d9e2c9033708ef3dbd5329610cc9cc9c44a134369079cffa375f77"
+    },
+    "b2_successor": {
+      "path": "docs/rules/m4-b2-referee-consumer-stage-completion-successor-v1.json",
+      "sha256": "663a2a28faf93bd98de89e60498af1c955c55c36033849a0da12af965a478e69"
+    }
+  },
+  "rows": [
+    {
+      "order": 0,
+      "id": "WPA-II-12-3",
+      "audit_v9_status": "PARTIAL",
+      "post_receipt_status": "PARTIAL",
+      "evidence_addable": [
+        "root-selected profile",
+        "D6 blocked/defer assessment"
+      ],
+      "promotion_forbidden_because": [
+        "no physical off-table evidence",
+        "no profile consumer",
+        "no classification result"
+      ]
+    },
+    {
+      "order": 1,
+      "id": "WPA-II-12-5-6",
+      "audit_v9_status": "MISSING",
+      "post_receipt_status": "MISSING",
+      "evidence_addable": [
+        "signed close-case review lifecycle",
+        "headless readback",
+        "atomic declaration retry"
+      ],
+      "promotion_forbidden_because": [
+        "no complete stroke tip intervals",
+        "no double-hit classification",
+        "D5 policy inputs unresolved"
+      ]
+    },
+    {
+      "order": 2,
+      "id": "WPA-II-12-7",
+      "audit_v9_status": "MISSING",
+      "post_receipt_status": "MISSING",
+      "evidence_addable": [
+        "signed push-review lifecycle",
+        "headless readback",
+        "accepted-shot consumption"
+      ],
+      "promotion_forbidden_because": [
+        "no complete duration/distance",
+        "no push classification",
+        "D5 policy inputs unresolved"
+      ]
+    },
+    {
+      "order": 3,
+      "id": "WPA-II-15-1",
+      "audit_v9_status": "MISSING",
+      "post_receipt_status": "MISSING",
+      "evidence_addable": [
+        "signed frozen cue/object declaration lifecycle",
+        "accepted-shot binding"
+      ],
+      "promotion_forbidden_because": [
+        "no complete stroke telemetry",
+        "no double-hit/push exception classification",
+        "D5 unresolved"
+      ]
+    },
+    {
+      "order": 4,
+      "id": "WPA-II-15-2",
+      "audit_v9_status": "MISSING",
+      "post_receipt_status": "MISSING",
+      "evidence_addable": [
+        "signed frozen object/straight-cushion declaration lifecycle",
+        "accepted-shot binding"
+      ],
+      "promotion_forbidden_because": [
+        "no departure/recontact lifecycle",
+        "jaw/prerequisite policy unresolved",
+        "D5 unresolved"
+      ]
+    },
+    {
+      "order": 5,
+      "id": "WPA-II-17",
+      "audit_v9_status": "PARTIAL",
+      "post_receipt_status": "PARTIAL",
+      "evidence_addable": [
+        "five exact signed nonphysical foul kinds",
+        "atomic Anywhere BIH/Core-G",
+        "cue scratch receipt"
+      ],
+      "promotion_forbidden_because": [
+        "D5 cue-contact fouls incomplete",
+        "D6 cue/object off-table incomplete",
+        "mobile repeat loss-of-rack separate",
+        "full inventory incomplete"
+      ]
+    }
+  ],
+  "summary_effect": {
+    "rows_reviewed": 6,
+    "status_changes": 0,
+    "implemented_count_delta": 0,
+    "partial_count_delta": 0,
+    "missing_count_delta": 0,
+    "audit_v9_bytes_modified": false
+  },
+  "claims": {
+    "evidence_register_complete": true,
+    "status_promotion_authorized": false,
+    "audit_successor_generated": false,
+    "production_or_cmake_modified": false,
+    "gpu_authorized": false,
+    "m4_complete": false
+  }
+}

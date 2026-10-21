@@ -1,0 +1,62 @@
+{
+  "$id": "billiardgl://schemas/phase5-beta-qa-record-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attestations": {
+      "type": "object"
+    },
+    "automation_binding": {
+      "type": "object"
+    },
+    "checks": {
+      "type": "array"
+    },
+    "contract": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "executor": {
+      "type": "object"
+    },
+    "pii_review": {
+      "type": "object"
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "record_type": {
+      "type": "string"
+    },
+    "session": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "COMPLETE"
+      ]
+    }
+  },
+  "required": [
+    "record_id",
+    "record_type",
+    "status",
+    "contract",
+    "executor",
+    "environment",
+    "session",
+    "checks",
+    "evidence",
+    "automation_binding",
+    "attestations",
+    "pii_review"
+  ],
+  "title": "Phase 5 Beta anonymous human QA record",
+  "type": "object"
+}

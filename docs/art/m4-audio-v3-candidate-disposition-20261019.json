@@ -1,0 +1,25 @@
+{
+  "status": "USER_SELECTED_V3_FIVE_CONTACTS_AS_TEST_CANDIDATE",
+  "actual_UTC_recorded": "2026-10-19T12:02:23.466281+00:00",
+  "trusted_user_reply_verbatim": "采用新版 v3 候选",
+  "question_scope": "五类台球声每组旧版在前、新版在后；采用新版作为可测版本声音候选；明确不代表权属或最终发行批准。",
+  "selected_new_contact_semantics": [
+    "cue_impact",
+    "ball_ball",
+    "rail",
+    "pocket_jaw",
+    "pocket_drop"
+  ],
+  "ten_master_manifest": "/Users/bytedance/Projects/github/BilliardGL/assets/audio/phase5-v3-contact-review/phase5-audio-v3-contact-review-manifest.json",
+  "ten_master_manifest_SHA256": "5af543c8754ac95c765bf853db9cf7fb29359cfd5e40f610bf5dd7060d47d92e",
+  "actual_SDL_comparison": "/Users/bytedance/Projects/github/BilliardGL/docs/evidence/20261012-audio-v3-contact-review/old-v2-then-new-v3-five-contacts.wav",
+  "comparison_SHA256": "fd2456409efbcd5272f018a4c86dd7e0f9a05b12bb69b835a2fc54c54a62f70e",
+  "test_candidate_selector": "BILLIARDGL_AUDIO_REVIEW_V3_ROOT may select existing isolated v3 candidate; verify exact frozen masters with final test build.",
+  "remaining_five_unchanged_v2_cues": "No new content acceptance inferred from five-contact audition.",
+  "five_independent_external_semantic_reviewers_completed": 0,
+  "two_playback_classes_and_three_cycle_loops": "NOT_VERIFIED",
+  "rights_certified": false,
+  "final_content_or_shipping_release_approved": false,
+  "shipping_default_promoted": false,
+  "historical_master_and_manifest_modified": false
+}

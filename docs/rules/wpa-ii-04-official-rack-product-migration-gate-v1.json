@@ -1,0 +1,83 @@
+{
+  "schema": "wpa_ii_04_official_rack_product_migration_gate_v1",
+  "status": "APPROVED_NO_GPU_PRODUCT_LAYOUT_MIGRATION_REQUIRED",
+  "approved_scope": [
+    "WPA-II-04",
+    "WPA-II-07"
+  ],
+  "frozen_predecessor": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v2.json",
+    "sha256": "a1e675cc32057880a4805ddafaf93c2192b6f127ae6bc2f28c71f5390d444809"
+  },
+  "source_bindings": {
+    "current_layout": {
+      "path": "src/Billiards/game_state.cpp",
+      "sha256": "a91185ba5fad8c8571aa1b0efd36de967d0fc3c307fef01b2903c2f910de88c3"
+    },
+    "official_contract": {
+      "path": "src/Billiards/rules/rack_executor.cpp",
+      "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"
+    },
+    "official_contract_header": {
+      "path": "src/Billiards/rules/rack_executor.h",
+      "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"
+    }
+  },
+  "comparison": {
+    "profile": "chinese_pool_legacy_v1",
+    "fixed_seed_hex": "0x48455942414c4c25",
+    "ball_count": 16,
+    "exact_position_match_count": 2,
+    "exact_position_mismatch_count": 14,
+    "all_current_balls_active_stationary": true,
+    "cue_ball_exact": true,
+    "current_base_corner_ball_ids": [11, 15],
+    "current_base_corners_are_opposite_groups": false,
+    "official_base_corner_ball_ids": [5, 10],
+    "official_base_corners_are_opposite_groups": true,
+    "eight_ball_current_z": 73.3986664,
+    "eight_ball_official_z": 73.398674,
+    "eight_ball_position_byte_exact": false,
+    "official_same_group_adjacency_count": 7,
+    "official_minimum_possible_same_group_adjacency_count": 7,
+    "numbered_ball_order_is_official": false,
+    "exact_position_match_ball_ids": [0, 9]
+  },
+  "decision": {
+    "preserve_noncompliant_layout": false,
+    "migrate_product_start_to_fixed_official_contract": true,
+    "numbered_ball_order_semantics": "implementation_deterministic_non_normative",
+    "texture_assets_may_change": false,
+    "product_start_commit_before_first_visible_frame": true,
+    "single_atomic_commit_required": true,
+    "failure_rollback_required": true,
+    "foundation_action_product_exposed": false,
+    "rules_decision_ui_product_exposed": false
+  },
+  "historical_visual_evidence": {
+    "phase2_inheritable": false,
+    "phase4_inheritable": false,
+    "phase5_inheritable": false,
+    "classification": "HISTORICAL_ONLY_AFTER_OFFICIAL_RACK_MIGRATION",
+    "reason": "The official fixed-seed rack changes ball-ID/position mapping and a floating-point geometry bit pattern. Any affected visual or probe evidence must be rebuilt from fresh source and binary bindings."
+  },
+  "implementation_boundaries": {
+    "allowed_product_sources": [
+      "src/Billiards/product_shell_controller.cpp",
+      "src/Billiards/render/modern/modern_product_session.h",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "allowed_cpu_tests": [
+      "tests/product_shell_tests.cpp",
+      "tests/rules_decision_session_integration_tests.cpp"
+    ],
+    "forbidden": [
+      "Phase4 renderer changes",
+      "Phase5 exact-shape UI changes",
+      "rulesDecisionUiProductExposed enablement",
+      "GPU execution",
+      "readiness generation",
+      "authorization issuance"
+    ]
+  }
+}

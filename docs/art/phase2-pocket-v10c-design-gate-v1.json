@@ -1,0 +1,340 @@
+{
+  "schema": "phase2_pocket_v10c_design_gate_v1",
+  "status": "TA_DESIGN_GATE_APPROVED_FOR_IMPLEMENTATION_NOT_VISUAL_PASS",
+  "owner_role": "independent_technical_artist",
+  "scope": {
+    "purpose": "Convert the v10b-v3 visual failures into executable geometry, material, render and single-image acceptance gates for v10c.",
+    "design_only": true,
+    "cpp_changed_by_this_artifact": false,
+    "assets_changed_by_this_artifact": false,
+    "gpu_evidence_generated_by_this_artifact": false,
+    "formal_evidence_generated_by_this_artifact": false,
+    "formal_six_scene_evidence_authorized": false,
+    "phase2_formal_pass_claimed": false,
+    "golden_promotion_claimed": false
+  },
+  "source_evidence": {
+    "v10b_v3_manifest": {
+      "path": "docs/art/phase2-pocket-v10b-preflight-v3/phase2-pocket-v10b-preflight-manifest-v1.json",
+      "sha256": "sha256:3aaac7404b1d118e86f9b8072dc6982d7e2b3e7336bec03c136a85496983caa1"
+    },
+    "v10b_v3_capture": {
+      "path": "docs/art/phase2-pocket-v10b-preflight-v3/pocket_closeup.png",
+      "sha256": "sha256:fb00df3de301c929fcc4cde3697f1cc30d41b33eb6cd707b9e0c9d0faff81c1d"
+    },
+    "v10b_v3_manual_review": {
+      "path": "docs/art/phase2-pocket-v10b-preflight-v3/phase2-pocket-v10b-preflight-manual-review-v1.json",
+      "sha256": "sha256:b6399859d62a099c2d8e35d995453e307465ca90acb57c7164ef689fd36d0361",
+      "outcome": "FAIL"
+    },
+    "blocking_root_cause_ids": [
+      "P2-V10B-V3-TA-01",
+      "P2-V10B-V3-TA-02",
+      "P2-V10B-V3-TA-03",
+      "P2-V10B-V3-TA-04"
+    ]
+  },
+  "measurement_frame": {
+    "ball_diameter_d": 1.0,
+    "ball_diameter_m": 0.05715,
+    "ball_diameter_mm": 57.15,
+    "same_camera_projected_ball_diameter_px": 70.74999459829914,
+    "same_camera_scale_equivalent_mm_per_px": 0.8077739132629405,
+    "same_camera_scale_equivalent_px_per_d": 70.74999459829914,
+    "projection_note": "D-to-pixel values below are scale equivalents at the v10b-v3 target distance. Gates explicitly named projected_visible_px must be measured from the rendered object-ID masks and may not be substituted with focal-length arithmetic.",
+    "visual_coordinate_frame": {
+      "x_visual": "physics_tangent",
+      "y_visual": "world_up",
+      "z_visual": "cavity_inward",
+      "z_visual_to_marker": "-z_marker",
+      "handedness": "right"
+    },
+    "same_camera": {
+      "eye_cm": [115.0, 215.0, 175.0],
+      "target_cm": [50.0, 89.0, 95.0],
+      "vertical_fov_degrees": 30.0,
+      "viewport_px": [1920, 1080],
+      "quality": "medium",
+      "msaa_samples": 4,
+      "actual_gpu_required": true
+    }
+  },
+  "v10b_v3_image_baseline": {
+    "pure_black_component": {
+      "threshold_max_srgb8": 4,
+      "bbox_xyxy_inclusive": [744, 851, 904, 937],
+      "width_px": 161,
+      "height_px": 87,
+      "pixel_count": 9577,
+      "failure_read": "One threshold-connected component still presents as an upper rounded decorative hole plus a lower narrow rectangular slot; connectivity alone is therefore not an acceptance metric."
+    },
+    "near_black_component": {
+      "threshold_max_srgb8": 12,
+      "bbox_xyxy_inclusive": [742, 848, 904, 937]
+    },
+    "gold_bar": {
+      "bbox_xyxy_inclusive": [240, 1029, 541, 1043],
+      "width_px": 302,
+      "height_px": 15,
+      "pixel_count": 4530,
+      "interior_srgb8": [200, 160, 80],
+      "root_cause_classification": "legacy_shot_power_quad_from_ui_pass",
+      "source_probe": "src/Billiards/render/modern/modern_renderer.cpp ui pass draws a shot-power quad even though pocketCloseupSnapshot sets cue.visible=false",
+      "required_resolution": "REMOVE_FROM_POCKET_ONLY_EVIDENCE"
+    }
+  },
+  "mesh_and_topology_contract": {
+    "required_cross_section_order": [
+      "cushion_nose",
+      "leather_facing",
+      "liner_rim",
+      "liner_sidewall",
+      "recessed_drop_void"
+    ],
+    "required_asset_roles": [
+      "pocket_facing_visual_only",
+      "pocket_liner_rim_visual_only",
+      "pocket_liner_sidewall_visual_only",
+      "pocket_void_visual_only",
+      "pocket_apron_integrated_wedge"
+    ],
+    "required_material_order": [
+      "MAT_table_cushion_rubber",
+      "MAT_pocket_leather",
+      "MAT_pocket_liner",
+      "MAT_pocket_liner",
+      "MAT_pocket_void"
+    ],
+    "hard_gates": [
+      {
+        "id": "V10C-TOPO-01",
+        "requirement": "For every pocket and LOD, the inner boundary of the rim and upper boundary of the sidewall, and the lower boundary of the sidewall and outer boundary of the drop, must be position-matched within 0.25 mm (0.004375D; 0.3095 same-camera scale-equivalent px).",
+        "machine_measurement": "Transform each role to pocket-local coordinates, pair ordered boundary vertices by normalized arc parameter, and assert maximum Euclidean separation <=0.00025 m."
+      },
+      {
+        "id": "V10C-TOPO-02",
+        "requirement": "The combined rim, sidewall and drop must form exactly one inward U/bowl region per pocket. No independent rectangular black quad, slot, plate or secondary void primitive is permitted.",
+        "machine_measurement": "Reject any pocket-local near-horizontal void primitive with four corners and rectangularity >=0.85; reject role/name tokens matching slot or plate; require one connected adjacency graph across rim-sidewall-drop boundaries."
+      },
+      {
+        "id": "V10C-TOPO-03",
+        "requirement": "The drop width profile must be rounded and tapered, never constant-width like a slot.",
+        "machine_measurement": "At 9 equally spaced z_visual stations from mouth to back, require one x interval per station, adjacent interval overlap >=85%, centroid drift <=0.08D, bottom width / maximum mouth width in [0.55,0.85], and at least 5 distinct interval widths after 0.5 mm quantization."
+      },
+      {
+        "id": "V10C-TOPO-04",
+        "requirement": "No renderable background or walnut gap may be visible between consecutive mouth, rim, sidewall and drop stages.",
+        "machine_measurement": "In the same-camera object-ID masks, at least 95% of columns across the central 0.60 mouth width must contain the ordered leather-or-rim, sidewall, void sequence with inter-stage vertical gap <=1 px; maximum gap anywhere in the central band <=1 px."
+      },
+      {
+        "id": "V10C-TOPO-05",
+        "requirement": "Arc tessellation must preserve a rounded silhouette at Medium 4x.",
+        "machine_measurement": "Require minimum arc segments per half-mouth of LOD0>=24, LOD1>=16 and LOD2>=10; reject any interior silhouette turn >12 degrees at LOD0 in the same-camera projected rim."
+      }
+    ]
+  },
+  "dimensional_contract": {
+    "rim_radial_width": {
+      "authored_range_d": [0.14, 0.18],
+      "authored_range_mm": [8.001, 10.287],
+      "same_camera_scale_equivalent_range_px": [9.905, 12.735],
+      "projected_visible_px_hard_range": [10, 14],
+      "measurement": "Using liner-rim object-ID coverage, measure the shortest outer-to-inner rim distance along 11 normals over the central 60% arc; every sample must be 9..15 px and the median must be 10..14 px."
+    },
+    "sidewall_authored_vertical_drop": {
+      "authored_range_d": [0.40, 0.65],
+      "authored_range_mm": [22.86, 37.1475],
+      "same_camera_scale_equivalent_range_px": [28.30, 45.9875],
+      "measurement": "Pocket-local y extent from rim-sidewall seam to sidewall-drop seam; this is an authored geometry gate, not a substitute for visible height."
+    },
+    "sidewall_projected_visible_height": {
+      "required_range_d_scale_equivalent": [0.20, 0.40],
+      "required_range_mm_scale_equivalent": [11.43, 22.86],
+      "required_range_px": [14, 28],
+      "measurement": "Using the sidewall object-ID mask, measure uninterrupted vertical coverage in 11 columns spanning the central 60% mouth width; median must be 14..28 px, P10>=12 px and no central sample <10 px."
+    },
+    "cavity_continuity": {
+      "void_front_d": 1.0,
+      "void_center_d": 1.6,
+      "void_back_d": 2.2,
+      "void_span_d": 1.2,
+      "void_front_mm": 57.15,
+      "void_center_mm": 91.44,
+      "void_back_mm": 125.73,
+      "void_span_mm": 68.58,
+      "void_span_same_camera_scale_equivalent_px": 84.90,
+      "projected_contiguous_inward_coverage_min_px": 72,
+      "measurement": "Preserve exact front/center/back z stations within 0.001 mm and require the ordered rim-sidewall-void mask to cover at least 72 contiguous inward projected pixels without a >1 px ownership/background break."
+    },
+    "independent_slot_rejection": {
+      "secondary_near_black_component_max_width_d": 0.35,
+      "secondary_near_black_component_max_width_mm": 20.0025,
+      "secondary_near_black_component_max_width_px": 24.7625,
+      "secondary_near_black_component_max_height_d": 0.08,
+      "secondary_near_black_component_max_height_mm": 4.572,
+      "secondary_near_black_component_max_height_px": 5.66,
+      "measurement": "Inside the projected pocket envelope, reject any non-void-owned near-black region exceeding both limits, or any void-owned subregion with rectangularity >=0.85 and aspect ratio >=3.0. Passing one global black connected-component test is insufficient."
+    }
+  },
+  "material_contract": {
+    "color_space": "linear_rgb effective base color after texture median multiplied by baseColorFactor; srgb8 values are authoring references only",
+    "materials": {
+      "MAT_pocket_leather": {
+        "effective_base_color_linear_rgb_min": [0.018, 0.010, 0.007],
+        "effective_base_color_linear_rgb_max": [0.035, 0.022, 0.016],
+        "reference_srgb8_min": [36, 25, 20],
+        "reference_srgb8_max": [53, 41, 34],
+        "roughness_range": [0.54, 0.70],
+        "metalness": 0.0
+      },
+      "MAT_pocket_liner": {
+        "effective_base_color_linear_rgb_min": [0.015, 0.018, 0.020],
+        "effective_base_color_linear_rgb_max": [0.026, 0.032, 0.035],
+        "reference_srgb8_min": [33, 36, 39],
+        "reference_srgb8_max": [45, 50, 53],
+        "roughness_range": [0.68, 0.82],
+        "metalness": 0.0
+      },
+      "MAT_pocket_void": {
+        "effective_base_color_linear_rgb_min": [0.0003, 0.0003, 0.0004],
+        "effective_base_color_linear_rgb_max": [0.0012, 0.0014, 0.0016],
+        "reference_srgb8_min": [1, 1, 1],
+        "reference_srgb8_max": [4, 5, 5],
+        "roughness_range": [0.88, 1.0],
+        "metalness": 0.0
+      },
+      "MAT_table_walnut": {
+        "effective_base_color_linear_rgb_min": [0.040, 0.020, 0.012],
+        "effective_base_color_linear_rgb_max": [0.065, 0.035, 0.022],
+        "reference_srgb8_min": [56, 39, 29],
+        "reference_srgb8_max": [72, 53, 41],
+        "roughness_range": [0.32, 0.48],
+        "metalness": 0.0
+      }
+    },
+    "same_camera_post_tonemap_readability_hard_gates": {
+      "luma_definition": "encoded sRGB8 Y'=0.2126R+0.7152G+0.0722B, sampled only from eroded object-ID masks to exclude 1 px antialiasing boundaries",
+      "rim_median_luma_range": [26, 52],
+      "sidewall_upper_third_median_luma_min": 22,
+      "sidewall_lower_third_median_luma_range": [9, 24],
+      "void_median_luma_max": 6,
+      "void_p95_luma_max": 10,
+      "rim_minus_void_median_luma_min": 18,
+      "sidewall_upper_minus_lower_median_luma_min": 8,
+      "sidewall_lower_minus_void_median_luma_min": 5,
+      "walnut_minus_liner_absolute_median_luma_min": 14,
+      "monotonic_gradient": "For >=75% of the 11 central sampling columns, luma must decrease from rim through upper sidewall to lower sidewall to void, allowing at most 3 luma units local noise.",
+      "failure_rule": "Any one failed luma or gradient requirement is a material-readability FAIL even if base-color, roughness and metalness values are in range."
+    }
+  },
+  "jaw_and_apron_hard_gate": {
+    "walnut_cavity_exclusion": {
+      "maximum_z_visual_m": 0.000001,
+      "requirement": "Walnut apron vertices remain outward of or on the mouth plane; no walnut may enter the +z_visual cavity half-space."
+    },
+    "maximum_visible_walnut_intrusion_per_side": {
+      "max_d": 0.12,
+      "max_mm": 6.858,
+      "same_camera_max_px": 8.49,
+      "measurement": "From each cushion nose toward the liner along the projected mouth boundary, the contiguous walnut-only interruption may not exceed 8 px in any sample and 6 px median."
+    },
+    "walnut_area_inside_mouth_envelope_max_fraction": 0.10,
+    "mouth_envelope_definition": "The projected polygon bounded by the two cushion nose endpoints, the outer rim arc and the back of the visible sidewall; compute ownership from an object-ID render, not RGB classification.",
+    "maximum_straight_exposed_cut_edge": {
+      "max_d": 0.30,
+      "max_mm": 17.145,
+      "same_camera_max_px": 21.225
+    },
+    "boundary_continuity": {
+      "maximum_projected_gap_px": 1,
+      "maximum_tangent_discontinuity_degrees": 20,
+      "left_right_walnut_area_asymmetry_max_fraction": 0.15
+    },
+    "failure_rule": "Any excess walnut exposure, straight cut, gap or tangent discontinuity is a hard FAIL; it may not be waived by a passing cavity-depth measurement."
+  },
+  "gold_bar_root_cause_and_gate": {
+    "classification": "The v10b-v3 gold bar is the legacy shot-power UI quad, not table trim, venue geometry, cue geometry or a pocket material.",
+    "diagnostic_machine_gate": "Render the same frame once through hdr_opaque+tone-map without the ui pass and once normally; the [240,1029]-[541,1043] component must exist only in the ui-pass delta and be attributed to the shot-power draw call.",
+    "required_v10c_action": "Suppress the legacy shot-power draw call for pocket-only evidence. Setting cue.visible=false alone is not sufficient.",
+    "acceptance_machine_gates": {
+      "pocket_only_ui_pass_draw_calls": 0,
+      "full_frame_ui_delta_nonzero_pixels": 0,
+      "gold_component_threshold": "R>=150, G>=95, B<=100, R>1.15G, G>1.20B",
+      "gold_component_max_pixels_in_bottom_band_y_1000_1079": 0,
+      "legacy_exact_component_rgb_200_160_80_max_pixels": 0
+    },
+    "generic_future_trim_rule": "A future intentional gold trim is acceptable only if its draw ownership is a table asset role, its object-ID mask is 8-connected to table_body with <=1 px edge gap, and no background pixels separate it from the table silhouette. This exception cannot be used for the current UI-owned component."
+  },
+  "frozen_constraints": {
+    "physics_marker_binding_sha256": "sha256:1b8f8cdb03c88e81721525aa0a134c4e4efa564975c5e2307835514f03df2b7a",
+    "physics_markers_must_be_byte_unchanged": true,
+    "visual_to_marker_mapping_must_remain_exact": {
+      "x_visual": "x_marker",
+      "y_visual": "y_marker",
+      "z_visual": "-z_marker",
+      "visual_handedness": "right"
+    },
+    "void_span_d_exact": 1.2,
+    "void_span_m_exact": 0.06858,
+    "void_front_center_back_d_exact": [1.0, 1.6, 2.2],
+    "walnut_cavity_exclusion_maximum_z_visual_m": 0.000001,
+    "simulation_or_collision_geometry_changes_allowed": false,
+    "visual_geometry_only": true
+  },
+  "single_image_preflight_acceptance": {
+    "required_capture": {
+      "scene_id": "pocket_closeup",
+      "same_camera_exact": true,
+      "width": 1920,
+      "height": 1080,
+      "quality": "medium",
+      "msaa_samples": 4,
+      "actual_gpu": true,
+      "warmup_frames_min": 120,
+      "sample_frames_min": 300,
+      "new_manifest_and_png_sha256_binding_required": true
+    },
+    "machine_axes": [
+      "source_and_production_binding",
+      "physics_marker_and_visual_frame_freeze",
+      "rim_sidewall_drop_mesh_adjacency",
+      "rounded_tapered_void_profile_and_independent_slot_rejection",
+      "authored_D_mm_dimensions",
+      "same_camera_projected_visible_pixel_dimensions",
+      "material_parameters_and_post-tonemap_luma_gradient",
+      "walnut_exclusion_and_projected_apron_occlusion",
+      "pocket_only_ui_zero_draw_and_gold_bar_absence"
+    ],
+    "manual_ta_axes": {
+      "mouth_to_rim_to_sidewall_to_drop_reads_as_one_physical_cavity": "required PASS",
+      "no_decorative_hole_or_separate_slot_read": "required PASS",
+      "liner_depth_and_material_chain_read_at_full_frame": "required PASS",
+      "jaw_and_apron_form_integrated_boundary": "required PASS",
+      "whole_frame_shipping_cleanliness": "required PASS"
+    },
+    "decision_state_machine": [
+      {
+        "condition": "Any machine gate fails",
+        "status": "REJECTED_MACHINE",
+        "formal_six_scene_evidence_authorized": false
+      },
+      {
+        "condition": "All machine gates pass but independent TA has not reviewed the new hash-bound PNG",
+        "status": "NON_FORMAL_MACHINE_CHECKS_SATISFIED_PENDING_TA",
+        "formal_six_scene_evidence_authorized": false
+      },
+      {
+        "condition": "Independent TA reviews the new hash-bound PNG and any manual axis fails",
+        "status": "TA_FAIL",
+        "formal_six_scene_evidence_authorized": false
+      },
+      {
+        "condition": "All machine gates pass and independent TA records PASS on every manual axis for the new hash-bound PNG",
+        "status": "TA_SINGLE_IMAGE_PREFLIGHT_PASS",
+        "formal_six_scene_evidence_authorized": true,
+        "authorization_limit": "Authorizes generation of a new formal six-scene evidence package only; it is not Phase 2 acceptance and does not authorize golden promotion."
+      }
+    ]
+  },
+  "design_conclusion": "v10c must replace the threshold-only concept of a connected black cavity with an ordered, measurable mouth-rim-sidewall-drop structure. The implementation is eligible for a new same-camera single-image preflight only after every topology, D/mm, projected-pixel, luma, walnut and UI-cleanliness hard gate passes; this design artifact itself authorizes neither six-scene capture nor Phase 2/golden promotion."
+}

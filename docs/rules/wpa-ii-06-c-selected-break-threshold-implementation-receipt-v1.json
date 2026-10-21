@@ -1,0 +1,99 @@
+{
+  "schema": "wpa_ii_06_c_selected_break_threshold_implementation_receipt_v1",
+  "status": "SELECTED_THRESHOLD_IMPLEMENTED_CPU_VERIFIED_ROW_REMAINS_OPEN",
+  "selection_binding": {
+    "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+    "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+    "decision_id": "M4-POL-06C-BREAK-THRESHOLD",
+    "selected_option_id": "STRAIGHT_CUSHION_VELOCITY_IMPULSE_OBJECT_POCKET"
+  },
+  "implementation_scope": {
+    "row_id": "WPA-II-06-C",
+    "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE",
+    "qualifying_contact_contract": {
+      "ball_identity": "distinct object ball IDs 1 through 15",
+      "boundary_kind": "STRAIGHT_CUSHION",
+      "velocity_impulse_applied": true,
+      "minimum_distinct_count": 4,
+      "pocket_jaw_counts": false,
+      "position_correction_only_counts": false,
+      "repeat_contact_by_same_object_counts_again": false
+    },
+    "pocket_alternative_contract": {
+      "object_ball_pocket_satisfies_legal_break": true,
+      "cue_ball_scratch_satisfies_pocket_alternative": false,
+      "cue_ball_scratch_remains_independent_foul": true
+    },
+    "fact_contract": {
+      "authoritative_origin": "AuthoritativeShotFactCollector",
+      "completeness_required_for_product_illegal_break_offer": true,
+      "canonical_contact_rows_consumed_by_rules_adjudicator": true,
+      "product_reclassifies_contacts": false,
+      "direct_or_synthetic_scalar_remains_legacy_core_cpu_fixture": true,
+      "direct_or_synthetic_scalar_may_open_runtime_product_offer": false,
+      "direct_offer_rejection_code": "rules_illegal_break_requires_authoritative_evidence"
+    }
+  },
+  "atomic_and_failure_contract": {
+    "failed_physics_step_contributes_contact": false,
+    "failed_step_fourth_ball_crosses_threshold": false,
+    "malformed_or_incomplete_authoritative_evidence_is_rejected_before_runtime_mutation": true,
+    "direct_or_synthetic_illegal_break_offer_attempt_is_rejected_before_runtime_mutation": true,
+    "canonical_permutation_and_exact_dedupe_remain_deterministic": true
+  },
+  "source_bindings": {
+    "rules_cpp": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "f7cde87c17f445fa66b6db6c80d4ab73464be59c99ce5835f95684d972d901c8"},
+    "rules_h": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "7408e24a58c827e3de27b766cd91bdb5ce5831919cea97f733f8191baae59f7f"},
+    "runtime_cpp": {"path": "src/Billiards/game_runtime.cpp", "sha256": "abf51dc3328815ca4cf1f41a21d7a0c7271350d8986f235435e0f0a4e0319663"},
+    "collector_cpp": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "92b205a1a0025b21a47fbd86e755beceeb4f89208b5db28945ddfcdd1f7e5f7d"},
+    "collector_h": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "13453f30d0eeb7ce4231b1f5802eaf3317e085f4187e3e16abaff34cb171986c"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "78b32d96a2ad28e647b060324e647cbf45c5f30625fd8eb547c7b0ebc085606c"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "28a408570a13aa50c5c10ebb594eb651d4e7f4fdbe1d42d1cbb1e5312f890eba"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "897b11e00502bc24900da0db98e15762e54fb74ea4d376f2593ce002b640f622"},
+    "ai_tests": {"path": "tests/ai_turn_controller_tests.cpp", "sha256": "d24d3a99c9b272b9b9eb630e3930e22e70eaaba88704aeffbf599061b136110d"},
+    "cmake_unchanged": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "cpu_build": {
+    "build_root": "build-integrated-final-shared-phase4-v11-phase5-v5v2-phase2-successor-v1",
+    "gpu_cocoa_or_opengl_executed": false,
+    "cmake_source_modified": false,
+    "collector_target_link_gap": {
+      "observed": true,
+      "description": "The existing BilliardsShotFactCollectorTests CMake source list omits chinese_eight_ball_rules.cpp although the test already calls validateShotFacts.",
+      "cmake_fix_authorized": false,
+      "workaround": "Compile the same collector test with the explicit complete CPU source closure; do not edit CMake in this task."
+    },
+    "binaries": [
+      {"target": "BilliardsChineseEightBallRulesTests", "sha256": "4277af8d7fd669e35f9280f9a267aabd3b48e6fcb904e7f28527ee78776c0b1e", "exit_code": 0},
+      {"target": "BilliardsShotFactCollectorTests_explicit_complete_closure", "sha256": "e6eb29f87507ab997b31b73ab59874577d72f5d02ebc217512681682c3bb6cda", "exit_code": 0},
+      {"target": "BilliardsRulesRuntimeIntegrationTests", "sha256": "a689b3bf0997852d6c57f656324453a2bc2123cacc735b7823e1cf6d72b02bd6", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionSessionIntegrationTests", "sha256": "6bdc76b769fa7a065726eea043b4b1d2e9b1248a84d8b44b68fbb398c67fca14", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionProductRuntimeTests", "sha256": "88ec31c25c5d19ebe5a4ab95fe3c3d12a41498406424da476e56cf89f908f6e3", "exit_code": 0},
+      {"target": "BilliardsProductHudTests", "sha256": "69b1c39604e202a40fed66adf45a5c125dd5a30a3219dfa400415b780cbff52a", "exit_code": 0},
+      {"target": "BilliardsAiTurnControllerTests", "sha256": "bba4727df91576c6a05cf9a57894c6d18cc8fd87968aa46e9687839730e478c7", "exit_code": 0},
+      {"target": "BilliardsAutomationControllerTests", "sha256": "1d6fc75aecfa1d6004f375647692c84a39919c4904cce9dbb57af7bb3c8d9cf7", "exit_code": 0}
+    ],
+    "ctest_rules_subset": {"passed": 7, "failed": 0}
+  },
+  "evidence_invalidation": {
+    "prior_source_bound_rules_and_runtime_evidence": "HISTORICAL_ONLY_AFTER_THIS_SOURCE_CHANGE",
+    "fresh_release_binary_bindings_required_before_future_readiness": true,
+    "fresh_targeted_gpu_ta_required_only_if_later_product_surface_changes": true,
+    "gpu_or_readiness_authorized_here": false
+  },
+  "claims": {
+    "selected_threshold_policy_implemented": true,
+    "canonical_authoritative_product_classification_enforced": true,
+    "cpu_verified": true,
+    "wpa_ii_06_c_row_closed": false,
+    "product_choice_seam_complete": false,
+    "audit_v5_modified_or_promoted": false,
+    "profile_complete": false,
+    "m4_complete": false,
+    "ui_modified": false,
+    "cmake_modified": false,
+    "phase4_or_phase5_renderer_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

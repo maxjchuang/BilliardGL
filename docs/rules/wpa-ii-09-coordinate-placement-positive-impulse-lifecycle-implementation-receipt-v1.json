@@ -1,0 +1,51 @@
+{
+  "schema": "wpa_ii_09_coordinate_placement_positive_impulse_lifecycle_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_SELECTED_COORDINATE_LIFECYCLE_NO_AUTO_M4_COMPLETION",
+  "authority": {"implementation_design_gate": {"path": "docs/rules/wpa-ii-09-coordinate-placement-positive-impulse-lifecycle-implementation-design-gate-v1.json", "sha256": "412e89c780f6e7f14719a05957f7f774c86c240fddd8b687a3c041ab50cfe93f", "root_independently_validated": true, "root_authorized_exact_5_plus_3_allowlist": true}, "selected_option_id": "COORDINATE_PLACEMENT_ONLY_POSITIVE_IMPULSE_CONSUMES"},
+  "implementation_contract": {
+    "coordinate_commit": "retains ballInHand and exact scope, stales consumed decision, increments one revision, and stages exactly one same-actor/same-scope replacement offer",
+    "ack": "binds authoritative position/hash/revision, retained entitlement, placementPending=true, exact scope, and replacementPlacementDecisionId",
+    "repeated_product_flow": "ModernProductSession ACK validation plus authority refresh permits repeated preview/confirm cycles",
+    "positive_predicate": "application.action.ok && application.contact.applied && isfinite(application.contact.normalImpulseNs) && application.contact.normalImpulseNs > 0.0",
+    "positive_commit": "atomically consumes BIH/scope/current offer, increments one revision, emits one authority event/action, applies candidate impulse and begins collector",
+    "behind_head_string": "coordinate commit does not arm restriction; positive commit arms final-position exact center-crossing context before collector begin",
+    "non_consuming": ["zero speed or zero impulse", "rejected or unsupported contact", "miscue with applied=false", "nonfinite or nonpositive impulse", "failed launch before candidate commit"],
+    "later_physics_failure": "does not undo a successful positive launch consumption",
+    "physical_cue_part_reposition": "DISABLED_UNSUPPORTED",
+    "forward_stroke_classifier": "DISABLED_UNSUPPORTED",
+    "global_rules_ui_exposed": false,
+    "partial_commit_allowed": false
+  },
+  "fixture_matrix": {
+    "positive": ["VALID_PREVIEW_PRESERVES_ENTITLEMENT", "FIRST_COORDINATE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE", "SECOND_COORDINATE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE", "EXACT_COORDINATE_RETRY_ZERO_DELTA", "FULL_TABLE_POSITIVE_IMPULSE_CONSUMES_EXACTLY_ONCE", "BEHIND_HEAD_STRING_POSITIVE_IMPULSE_ARMS_FINAL_PLACEMENT_CONTEXT_THEN_CONSUMES", "PRODUCT_REFRESH_REACHES_REPEATED_PREVIEW_CONFIRM"],
+    "negative": ["INVALID_PREVIEW_OR_CONFIRM_PRESERVES_ENTITLEMENT", "WRONG_ACTOR_ACTION_SCOPE_DECISION_REVISION_OR_HASH_PRESERVES_ENTITLEMENT", "ZERO_SPEED_OR_ZERO_IMPULSE_PRESERVES_ENTITLEMENT", "REJECTED_OR_UNSUPPORTED_CONTACT_PRESERVES_ENTITLEMENT", "MISCUE_WITHOUT_APPLIED_IMPULSE_PRESERVES_ENTITLEMENT", "UNEXPECTED_TURN_CHANGE_FAILS_CLOSED_WITHOUT_TRANSFER", "CONFLICTING_COORDINATE_RETRY_ROLLS_BACK", "RESET_OR_MATCH_COMPLETE_INVALIDATES", "PHYSICAL_CUE_PART_AND_FORWARD_STROKE_PATHS_REMAIN_UNAVAILABLE"],
+    "wpa_ii_08_telemetry_regression": "8 positive / 9 negative remain in broad RulesRuntime suite"
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "75921946012118d8b92a92155068efb58bda7d311adf87cfe98b8d46c6f8b3d6"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "08bf282555ad21e235de18099a77bc1c9b6a30f9e647c43d9eabc59ffc823dac"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "2dfd9d3913436d6669e763751474efa7faeb1ae367cbfd50ecaf858f24f0a79e"},
+    {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "c5b4fe029722d080dfc0fb7bc5d238b8d77470aebdfb40775eea5f6fd110efe1"},
+    {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "2f799f6d5fd80aa5b8d9313333cf61fabf178c1630d880a5f50e887af90b3aa6"}
+  ],
+  "implementation_aggregate_sha256": "53548224ab0cf19ef31adb154bae776e6d44e85da070416424dc0f33d37f6f0f",
+  "test_bindings": [
+    {"path": "tests/game_runtime_tests.cpp", "sha256": "c7bd8daf8a008b03a89f2816f08195299d8ec7f341ee0eba931f47871c4f5761"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "c6928b8a04732cae3fbdc3cf1cb756d5447d772a754d97dd971cbd2c91e109be"},
+    {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "17411f1f32ef5f2d1e8d80d8020e912685598c276d4bd4fe6916befbe3312ed7"}
+  ],
+  "cpu_verification": {
+    "required": [
+      {"path": "build-product-session/BilliardsRulesRuntimeIntegrationTests", "sha256": "3590ad0bc7069fc0060a0f8890d825d209480dd3ae4b40d0140b6a97925d5925", "exit_code": 0},
+      {"path": "build-product-session/BilliardsRulesDecisionSessionIntegrationTests", "sha256": "309efd9cdc3d78b0110f89485c6f530bcab0da0f459d015f3c3a439233255c28", "exit_code": 0},
+      {"path": "build-product-session/BilliardsGameRuntimeTests", "sha256": "4460359f3577e90f0a6e56a2ebfe65f3de2d2d5be9eb064299900d8b12a7ead8", "exit_code": 0}
+    ],
+    "wide": [
+      {"target": "BilliardsRulesTests", "exit_code": 0}, {"target": "BilliardsAutomationControllerTests", "exit_code": 0}, {"target": "BilliardsProductInputControllerTests", "exit_code": 0}, {"target": "BilliardsRulesDecisionProductRuntimeTests", "exit_code": 0}, {"target": "BilliardsModernProductUiRuntimeTests", "exit_code": 0}, {"target": "BilliardsChineseEightBallRulesTests", "exit_code": 0}
+    ],
+    "all_exit_code": 0,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "cmake_binding": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41", "modified": false},
+  "claims": {"selected_coordinate_lifecycle_implemented": true, "positive_impulse_exactly_once_consumption_implemented": true, "repeated_narrow_product_coordinate_flow_reachable": true, "wpa_ii_09_row_auto_closed": false, "m4_complete": false, "audit_modified": false, "physical_cue_part_supported": false, "forward_stroke_classifier_supported": false, "global_rules_ui_exposed": false, "new_production_file": false, "cmake_modified": false, "visual_ui_modified": false, "gpu_executed": false, "readiness_or_authorization_created": false}
+}

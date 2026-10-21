@@ -1,0 +1,62 @@
+{
+  "schema": "phase5_rules_decision_ui_v3_targeted_preordinal_binding_correction_gate_v1",
+  "status": "OFFLINE_ROOT_CAUSE_CONFIRMED_CORRECTION_NOT_IMPLEMENTED_GPU_FORBIDDEN",
+  "failure_identity": {
+    "authorization_id": "phase5-rules-ui-v3-targeted28-root-20260811-080602",
+    "failed_before_capture_ordinal": 0,
+    "runner_error": "phase5-rules-ui-gpu-capture: hud_token_sha256",
+    "wrapper_exit_code": 1
+  },
+  "root_cause": {
+    "category": "READINESS_AUTHORIZATION_RUNNER_BINDING_CONTRACT_OMISSION",
+    "current_hud_token_sha256": "abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+    "current_shell_token_sha256": "c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3",
+    "hud_token_content_drift": false,
+    "runner_expected_hud_token_sha256": "abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+    "runner_expected_shell_token_sha256": "c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3",
+    "shell_token_content_drift": false,
+    "source_binding_manifest_asset_rows_present": false,
+    "signed_authorization_missing_fields_in_runner_check_order": [
+      "hud_token_sha256",
+      "shell_token_sha256",
+      "source_binding_manifest_sha256"
+    ],
+    "signed_authorization_present_misaligned_field": {
+      "field": "source_bindings_sha256",
+      "sha256": "139db69951c9b4fe9eb9b9502df86ccb66302427b1371174563c4ae0b9dbcdfa"
+    }
+  },
+  "minimum_correction_contract": {
+    "existing_v3_authorization_reusable": false,
+    "existing_v3_readiness_mutable": false,
+    "fresh_readiness_required": true,
+    "gpu_execution_allowed_by_this_gate": false,
+    "requirements": [
+      "Bind the canonical HUD and shell token paths and live SHA-256 values as read-only runtime assets in the fresh source-binding manifest.",
+      "Use one canonical source-binding manifest digest field name across readiness, authorization template, wrapper validation, and runner validation.",
+      "Include hud_token_sha256 and shell_token_sha256 in fresh readiness frozen bindings and in its unsigned authorization template.",
+      "Reject any missing or mismatched runner-required binding in the wrapper before subprocess launch, output creation, Cocoa, or OpenGL.",
+      "Add offline contract tests proving the unsigned template satisfies every runner-required authorization field and proving token path/SHA drift fails closed.",
+      "Issue no new authorization until a fresh Release runner and fresh readiness pass the offline validator and bad-input tests."
+    ]
+  },
+  "forbidden_changes": [
+    "authority",
+    "rules",
+    "physics",
+    "visual_thresholds",
+    "evidence_coverage",
+    "product_exposure",
+    "modern_renderer.cpp",
+    "phase4_files"
+  ],
+  "evidence_boundary": {
+    "actual_gpu_completed": 0,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "planned_cases": 28,
+    "product_exposed": false,
+    "technical_art_review_completed": 0,
+    "unrun_cases": 28
+  }
+}

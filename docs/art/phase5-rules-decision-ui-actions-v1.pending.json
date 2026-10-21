@@ -1,0 +1,1285 @@
+{
+  "accessibility": {
+    "essential_rules_text_ignores_subtitle_visibility": true,
+    "motion": {
+      "progress_remains_text_and_shape_redundant": true,
+      "reduced_motion_disables_nonessential_animation": true
+    },
+    "never_color_only": true,
+    "palettes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "screen_reader": {
+      "announce_order": [
+        "title",
+        "body",
+        "authority_status",
+        "focused_action",
+        "position_or_progress_detail"
+      ],
+      "decision_and_error_live_region": "assertive",
+      "placement_coordinates_have_human_description": true,
+      "progress_live_region": "polite"
+    },
+    "shape_plus_title_plus_body_plus_action": true
+  },
+  "authority_contract": {
+    "ack_required": [
+      "accepted",
+      "decision_id",
+      "action_id",
+      "idempotency_key",
+      "previous_state_revision",
+      "authoritative_state_revision",
+      "effects",
+      "authoritative_state_hash"
+    ],
+    "client_rules": {
+      "duplicate_idempotency_key_returns_same_result": true,
+      "local_preview_never_changes_authority": true,
+      "no_state_commit_before_ack": true,
+      "partial_transaction_effects_rejected": true,
+      "unknown_effect_field_fails_closed": true
+    },
+    "effects_must_include_when_changed": [
+      "current_player",
+      "turn_continues",
+      "ball_in_hand_scope",
+      "groups",
+      "ball_positions",
+      "rack_generation",
+      "original_breaker",
+      "shooting_order"
+    ],
+    "error_codes": [
+      "rules_decision_capability_pending",
+      "rules_decision_invalid_state",
+      "rules_decision_action_not_offered",
+      "rules_decision_stale_revision",
+      "rules_decision_authority_unavailable",
+      "rules_decision_timeout",
+      "rules_placement_out_of_bounds",
+      "rules_placement_overlap",
+      "rules_placement_wrong_scope",
+      "rules_respot_no_legal_position",
+      "rules_rerack_transaction_failed",
+      "rules_policy_unresolved"
+    ],
+    "request_required": [
+      "schema_version",
+      "ruleset_id",
+      "capability_id",
+      "flow_id",
+      "decision_id",
+      "action_id",
+      "authority_state_revision",
+      "idempotency_key",
+      "actor_player_id",
+      "payload"
+    ]
+  },
+  "capabilities": [
+    {
+      "capability_id": "break_foul_opponent_choices",
+      "flow_ids": [
+        "break_foul_opponent_choice"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-06-E"
+      ],
+      "state": "pending"
+    },
+    {
+      "capability_id": "eight_on_break_spot_or_rerack",
+      "flow_ids": [
+        "eight_on_break_spot_or_rerack"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-06-F"
+      ],
+      "state": "pending"
+    },
+    {
+      "capability_id": "free_ball_placement",
+      "flow_ids": [
+        "ball_in_hand_full_table",
+        "ball_in_hand_behind_head_string"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-06-D",
+        "WPA-II-08",
+        "WPA-II-09",
+        "WPA-II-17"
+      ],
+      "state": "pending"
+    },
+    {
+      "capability_id": "simultaneous_contact_and_group_choice",
+      "flow_ids": [
+        "simultaneous_group_choice"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-10-4",
+        "WPA-II-13"
+      ],
+      "state": "pending"
+    },
+    {
+      "capability_id": "ball_respot_and_rerack_executor",
+      "flow_ids": [
+        "respot_rerack_progress_error"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-04",
+        "WPA-II-06-E",
+        "WPA-II-06-F",
+        "WPA-II-07",
+        "WPA-II-08",
+        "WPA-II-21"
+      ],
+      "state": "pending"
+    },
+    {
+      "capability_id": "stalemate_decision",
+      "flow_ids": [
+        "stalemate_proposal"
+      ],
+      "product_exposed": false,
+      "source_rows": [
+        "WPA-II-21"
+      ],
+      "state": "pending"
+    }
+  ],
+  "evidence_boundary": {
+    "capability_promotion_allowed": false,
+    "changes_cpp": false,
+    "changes_frozen_rules_copy": false,
+    "changes_rule_semantics": false,
+    "flat_proof_is_gpu_capture": false,
+    "flat_proof_is_runtime_evidence": false,
+    "official_off_table_conflict_resolved": false,
+    "policy_placeholders_are_decisions": false
+  },
+  "flat_proof": {
+    "evidence_class": "flat_text_interaction_layout_proof_not_gpu_not_runtime",
+    "path": "docs/art/phase5-rules-decision-ui-actions-flat-proof-v1.svg"
+  },
+  "flows": [
+    {
+      "actions": [
+        {
+          "action_id": "rules.break_foul.accept_table",
+          "allowed_from_state": "break_foul_opponent_choice.decision_open",
+          "authority_command": "rules.submit_break_foul_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "accept_table",
+          "label": {
+            "en": "Accept table",
+            "zh_cn": "\u63a5\u53d7\u53f0\u9762"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "break_foul_opponent_choice.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.break_foul.rerack_opponent_breaks",
+          "allowed_from_state": "break_foul_opponent_choice.decision_open",
+          "authority_command": "rules.submit_break_foul_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "rerack_opponent_breaks",
+          "label": {
+            "en": "Rerack - I break",
+            "zh_cn": "\u91cd\u6446 - \u7531\u6211\u5f00\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "break_foul_opponent_choice.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.break_foul.rerack_original_breaker",
+          "allowed_from_state": "break_foul_opponent_choice.decision_open",
+          "authority_command": "rules.submit_break_foul_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "rerack_original_breaker",
+          "label": {
+            "en": "Rerack - original breaker",
+            "zh_cn": "\u91cd\u6446 - \u539f\u5f00\u7403\u65b9\u5f00\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "break_foul_opponent_choice.submitting_authority_action"
+        }
+      ],
+      "capability_id": "break_foul_opponent_choices",
+      "capability_state": "pending",
+      "completed_state": "break_foul_opponent_choice.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Choose the authority-offered result. The rack and turn do not change until confirmed.",
+          "zh_cn": "\u8bf7\u9009\u62e9\u88c1\u5224\u7cfb\u7edf\u63d0\u4f9b\u7684\u5904\u7406\u65b9\u5f0f\uff1b\u786e\u8ba4\u524d\u7403\u5c40\u4e0e\u56de\u5408\u5747\u4e0d\u6539\u53d8\u3002"
+        },
+        "title": {
+          "en": "Break decision",
+          "zh_cn": "\u5f00\u7403\u72af\u89c4\u9009\u62e9"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "break_foul_opponent_choice",
+      "frozen_copy_machine_code": "ui.break_foul_decision",
+      "frozen_copy_text_key": "rules.chinese8.pending.break_foul_choices",
+      "initial_state": "break_foul_opponent_choice.awaiting_authority_offer",
+      "machine_code": "ui.break_foul_decision.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "accepted choice is recorded with decision_id",
+        "authority returns next player, rack state, ball-in-hand scope, and new revision"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "the authority classified the break as a foul and offers this opponent a choice"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "rules_shield"
+      ],
+      "source_rows": [
+        "WPA-II-06-E"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "break_foul_opponent_choice.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "break_foul_opponent_choice.decision_open",
+          "surface": "decision_modal"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "break_foul_opponent_choice.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "break_foul_opponent_choice.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "break_foul_opponent_choice.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.break_foul_choices"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.eight_on_break.spot_continue",
+          "allowed_from_state": "eight_on_break_spot_or_rerack.decision_open",
+          "authority_command": "rules.submit_eight_on_break_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "spot_eight_continue",
+          "label": {
+            "en": "Spot 8-ball and continue",
+            "zh_cn": "\u91cd\u7f6e8\u53f7\u7403\u5e76\u7ee7\u7eed"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "eight_on_break_spot_or_rerack.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.eight_on_break.spot_ball_in_hand_head_string",
+          "allowed_from_state": "eight_on_break_spot_or_rerack.decision_open",
+          "authority_command": "rules.submit_eight_on_break_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "spot_eight_ball_in_hand_head_string",
+          "label": {
+            "en": "Spot 8-ball; ball in hand behind head string",
+            "zh_cn": "\u91cd\u7f6e8\u53f7\u7403\uff1b\u5f00\u7403\u7ebf\u540e\u81ea\u7531\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "eight_on_break_spot_or_rerack.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.eight_on_break.rerack_original_breaker",
+          "allowed_from_state": "eight_on_break_spot_or_rerack.decision_open",
+          "authority_command": "rules.submit_eight_on_break_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "rerack",
+          "label": {
+            "en": "Rerack - original breaker",
+            "zh_cn": "\u91cd\u6446 - \u539f\u5f00\u7403\u65b9\u5f00\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "eight_on_break_spot_or_rerack.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.eight_on_break.rerack_opponent_breaks",
+          "allowed_from_state": "eight_on_break_spot_or_rerack.decision_open",
+          "authority_command": "rules.submit_eight_on_break_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "rerack",
+          "label": {
+            "en": "Rerack - opponent breaks",
+            "zh_cn": "\u91cd\u6446 - \u5bf9\u624b\u5f00\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "eight_on_break_spot_or_rerack.submitting_authority_action"
+        }
+      ],
+      "capability_id": "eight_on_break_spot_or_rerack",
+      "capability_state": "pending",
+      "completed_state": "eight_on_break_spot_or_rerack.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "This is not a win. Only actions offered for this exact foul/no-foul branch are enabled.",
+          "zh_cn": "\u8fd9\u4e0d\u7b97\u83b7\u80dc\uff1b\u53ea\u542f\u7528\u88c1\u5224\u7cfb\u7edf\u4e3a\u5f53\u524d\u6709\u72af\u89c4\u6216\u65e0\u72af\u89c4\u5206\u652f\u63d0\u4f9b\u7684\u64cd\u4f5c\u3002"
+        },
+        "title": {
+          "en": "8-ball on the break",
+          "zh_cn": "\u5f00\u7403\u65f68\u53f7\u7403\u5165\u888b"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "eight_on_break_spot_or_rerack",
+      "frozen_copy_machine_code": "ui.eight_on_break_decision",
+      "frozen_copy_text_key": "rules.chinese8.pending.eight_on_break",
+      "initial_state": "eight_on_break_spot_or_rerack.awaiting_authority_offer",
+      "machine_code": "ui.eight_on_break_decision.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "8-ball is spotted or rack is rebuilt by one atomic authority transaction",
+        "next player and ball-in-hand scope come only from ACK"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "authority confirms the 8-ball was pocketed on the break",
+        "offer identifies foul or no-foul branch"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "reset_arrow",
+        "rules_shield"
+      ],
+      "source_rows": [
+        "WPA-II-06-F"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "eight_on_break_spot_or_rerack.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "eight_on_break_spot_or_rerack.decision_open",
+          "surface": "decision_modal"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "eight_on_break_spot_or_rerack.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "eight_on_break_spot_or_rerack.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "eight_on_break_spot_or_rerack.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.eight_on_break"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.ball_in_hand.preview_position",
+          "allowed_from_state": "ball_in_hand_full_table.decision_open",
+          "authority_command": "ui.local_preview_only",
+          "enabled_when": [
+            "pointer or keyboard position is finite",
+            "preview remains inside full playing surface"
+          ],
+          "frozen_copy_action_id": "place_cue_ball",
+          "label": {
+            "en": "Move cue-ball preview",
+            "zh_cn": "\u79fb\u52a8\u6bcd\u7403\u9884\u89c8"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": false,
+          "target_state_before_ack": "ball_in_hand_full_table.decision_open"
+        },
+        {
+          "action_id": "rules.ball_in_hand.confirm_full_table_placement",
+          "allowed_from_state": "ball_in_hand_full_table.decision_open",
+          "authority_command": "rules.confirm_ball_in_hand_placement",
+          "enabled_when": [
+            "authority validation preview says legal",
+            "cue ball does not overlap any ball or forbidden geometry"
+          ],
+          "frozen_copy_action_id": "confirm_placement",
+          "label": {
+            "en": "Confirm placement",
+            "zh_cn": "\u786e\u8ba4\u653e\u7f6e"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "ball_in_hand_full_table.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.ball_in_hand.reset_preview",
+          "allowed_from_state": "ball_in_hand_full_table.decision_open",
+          "authority_command": "ui.reset_local_preview",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "label": {
+            "en": "Reset preview",
+            "zh_cn": "\u91cd\u7f6e\u9884\u89c8"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": false,
+          "target_state_before_ack": "ball_in_hand_full_table.decision_open"
+        }
+      ],
+      "capability_id": "free_ball_placement",
+      "capability_state": "pending",
+      "completed_state": "ball_in_hand_full_table.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Move the preview anywhere inside the legal playing surface, then confirm.",
+          "zh_cn": "\u5728\u5408\u6cd5\u53f0\u9762\u8303\u56f4\u5185\u79fb\u52a8\u6bcd\u7403\u9884\u89c8\uff0c\u7136\u540e\u786e\u8ba4\u3002"
+        },
+        "title": {
+          "en": "Ball in hand - full table",
+          "zh_cn": "\u81ea\u7531\u7403 - \u5168\u53f0"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "ball_in_hand_full_table",
+      "frozen_copy_machine_code": "ui.ball_in_hand_placement",
+      "frozen_copy_text_key": "rules.chinese8.pending.ball_in_hand_placement",
+      "initial_state": "ball_in_hand_full_table.awaiting_authority_offer",
+      "machine_code": "ui.ball_in_hand_placement.full_table.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "ACK returns exact cue-ball position and clears entitlement",
+        "shot input remains blocked until ACK"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "authority grant scope is full_table",
+        "current player owns ball-in-hand entitlement"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "cue_ball",
+        "focus_brackets"
+      ],
+      "source_rows": [
+        "WPA-II-06-D",
+        "WPA-II-08",
+        "WPA-II-09",
+        "WPA-II-17"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_full_table.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_full_table.decision_open",
+          "surface": "ball_in_hand_placement_overlay"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_full_table.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_full_table.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "ball_in_hand_full_table.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.ball_in_hand_placement.full_table"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.ball_in_hand.preview_position",
+          "allowed_from_state": "ball_in_hand_behind_head_string.decision_open",
+          "authority_command": "ui.local_preview_only",
+          "enabled_when": [
+            "cue-ball center remains behind the authority head-string plane"
+          ],
+          "frozen_copy_action_id": "place_cue_ball",
+          "label": {
+            "en": "Move cue-ball preview",
+            "zh_cn": "\u79fb\u52a8\u6bcd\u7403\u9884\u89c8"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": false,
+          "target_state_before_ack": "ball_in_hand_behind_head_string.decision_open"
+        },
+        {
+          "action_id": "rules.ball_in_hand.confirm_behind_head_string",
+          "allowed_from_state": "ball_in_hand_behind_head_string.decision_open",
+          "authority_command": "rules.confirm_ball_in_hand_placement",
+          "enabled_when": [
+            "authority validation preview says legal",
+            "cue-ball center is behind head string",
+            "no overlap"
+          ],
+          "frozen_copy_action_id": "confirm_placement",
+          "label": {
+            "en": "Confirm behind head string",
+            "zh_cn": "\u786e\u8ba4\u653e\u7f6e\u5728\u5f00\u7403\u7ebf\u540e"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "ball_in_hand_behind_head_string.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.ball_in_hand.request_nearest_legal_respot",
+          "allowed_from_state": "ball_in_hand_behind_head_string.decision_open",
+          "authority_command": "rules.request_head_string_object_respot",
+          "enabled_when": [
+            "authority says every legal object ball is behind the head string"
+          ],
+          "label": {
+            "en": "Request legal ball re-spot",
+            "zh_cn": "\u8bf7\u6c42\u91cd\u7f6e\u6700\u8fd1\u5408\u6cd5\u76ee\u6807\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "ball_in_hand_behind_head_string.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.ball_in_hand.choose_equidistant_respot_ball",
+          "allowed_from_state": "ball_in_hand_behind_head_string.decision_open",
+          "authority_command": "rules.submit_equidistant_respot_choice",
+          "enabled_when": [
+            "authority offer contains two or more equidistant legal object-ball IDs"
+          ],
+          "label": {
+            "en": "Choose equidistant ball",
+            "zh_cn": "\u9009\u62e9\u7b49\u8ddd\u76ee\u6807\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "ball_in_hand_behind_head_string.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.ball_in_hand.reset_preview",
+          "allowed_from_state": "ball_in_hand_behind_head_string.decision_open",
+          "authority_command": "ui.reset_local_preview",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "label": {
+            "en": "Reset preview",
+            "zh_cn": "\u91cd\u7f6e\u9884\u89c8"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": false,
+          "target_state_before_ack": "ball_in_hand_behind_head_string.decision_open"
+        }
+      ],
+      "capability_id": "free_ball_placement",
+      "capability_state": "pending",
+      "completed_state": "ball_in_hand_behind_head_string.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Keep the cue-ball center behind the line. The authority validates placement and any legal-ball re-spot.",
+          "zh_cn": "\u6bcd\u7403\u7403\u5fc3\u5fc5\u987b\u4f4d\u4e8e\u5f00\u7403\u7ebf\u540e\uff1b\u653e\u7f6e\u53ca\u5408\u6cd5\u76ee\u6807\u7403\u91cd\u7f6e\u5747\u7531\u88c1\u5224\u7cfb\u7edf\u9a8c\u8bc1\u3002"
+        },
+        "title": {
+          "en": "Ball in hand - behind head string",
+          "zh_cn": "\u81ea\u7531\u7403 - \u5f00\u7403\u7ebf\u540e"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "ball_in_hand_behind_head_string",
+      "frozen_copy_machine_code": "ui.ball_in_hand_placement",
+      "frozen_copy_text_key": "rules.chinese8.pending.ball_in_hand_placement",
+      "initial_state": "ball_in_hand_behind_head_string.awaiting_authority_offer",
+      "machine_code": "ui.ball_in_hand_placement.behind_head_string.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "ACK returns exact cue-ball and optional re-spotted object-ball positions",
+        "first-shot restrictions remain authority-owned"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "authority grant scope is behind_head_string",
+        "authority provides head-string plane and legal object-ball set"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "cue_ball",
+        "distance_arrow",
+        "focus_brackets"
+      ],
+      "source_rows": [
+        "WPA-II-06-D",
+        "WPA-II-08",
+        "WPA-II-09",
+        "WPA-II-17"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_behind_head_string.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_behind_head_string.decision_open",
+          "surface": "ball_in_hand_placement_overlay"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_behind_head_string.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "ball_in_hand_behind_head_string.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "ball_in_hand_behind_head_string.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.ball_in_hand_placement.behind_head_string"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.group_choice.choose_solids",
+          "allowed_from_state": "simultaneous_group_choice.decision_open",
+          "authority_command": "rules.submit_simultaneous_group_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "label": {
+            "en": "Choose solids",
+            "zh_cn": "\u9009\u62e9\u5168\u8272\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "simultaneous_group_choice.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.group_choice.choose_stripes",
+          "allowed_from_state": "simultaneous_group_choice.decision_open",
+          "authority_command": "rules.submit_simultaneous_group_choice",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "label": {
+            "en": "Choose stripes",
+            "zh_cn": "\u9009\u62e9\u82b1\u8272\u7403"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "simultaneous_group_choice.submitting_authority_action"
+        }
+      ],
+      "capability_id": "simultaneous_contact_and_group_choice",
+      "capability_state": "pending",
+      "completed_state": "simultaneous_group_choice.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Both groups qualified on the same legal shot. Choose one; the other group is assigned by the authority.",
+          "zh_cn": "\u540c\u4e00\u5408\u6cd5\u51fb\u7403\u4f7f\u4e24\u7ec4\u5747\u6ee1\u8db3\u6761\u4ef6\uff1b\u8bf7\u9009\u62e9\u4e00\u7ec4\uff0c\u53e6\u4e00\u7ec4\u7531\u88c1\u5224\u7cfb\u7edf\u5206\u914d\u3002"
+        },
+        "title": {
+          "en": "Choose your group",
+          "zh_cn": "\u9009\u62e9\u7403\u7ec4"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "simultaneous_group_choice",
+      "frozen_copy_machine_code": null,
+      "frozen_copy_text_key": null,
+      "initial_state": "simultaneous_group_choice.awaiting_authority_offer",
+      "machine_code": "ui.simultaneous_group_choice.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "ACK atomically assigns both players' groups",
+        "turn continuation and next target come from ACK"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "table is open",
+        "authority confirms simultaneous legal contact and qualifying pockets for both groups"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "group_solid_filled_circle",
+        "group_stripe_banded_ring",
+        "group_open_diamond"
+      ],
+      "source_rows": [
+        "WPA-II-10-4",
+        "WPA-II-13"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "simultaneous_group_choice.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "simultaneous_group_choice.decision_open",
+          "surface": "decision_modal"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "simultaneous_group_choice.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "simultaneous_group_choice.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "simultaneous_group_choice.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.simultaneous_group_choice"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.execution.retry_status",
+          "allowed_from_state": "respot_rerack_progress_error.execution_error",
+          "authority_command": "rules.query_idempotent_transaction",
+          "enabled_when": [
+            "error is retryable",
+            "transaction_id is unchanged"
+          ],
+          "label": {
+            "en": "Retry status check",
+            "zh_cn": "\u91cd\u8bd5\u72b6\u6001\u68c0\u67e5"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "respot_rerack_progress_error.awaiting_authority_transaction"
+        },
+        {
+          "action_id": "rules.execution.return_to_decision",
+          "allowed_from_state": "respot_rerack_progress_error.execution_error",
+          "authority_command": "rules.request_decision_recovery",
+          "enabled_when": [
+            "authority reports transaction not applied",
+            "original decision remains open"
+          ],
+          "label": {
+            "en": "Return to decision",
+            "zh_cn": "\u8fd4\u56de\u89c4\u5219\u9009\u62e9"
+          },
+          "mutates_authoritative_state": false,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "respot_rerack_progress_error.awaiting_authority_transaction"
+        }
+      ],
+      "capability_id": "ball_respot_and_rerack_executor",
+      "capability_state": "pending",
+      "completed_state": "respot_rerack_progress_error.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Wait for the authoritative re-spot or rerack transaction. Do not shoot or leave the screen.",
+          "zh_cn": "\u8bf7\u7b49\u5f85\u6743\u5a01\u91cd\u7f6e\u6216\u91cd\u6446\u4e8b\u52a1\u5b8c\u6210\uff1b\u671f\u95f4\u4e0d\u80fd\u51fb\u7403\u6216\u79bb\u5f00\u6b64\u754c\u9762\u3002"
+        },
+        "title": {
+          "en": "Updating the table",
+          "zh_cn": "\u6b63\u5728\u66f4\u65b0\u7403\u53f0"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "transaction_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "respot_rerack_progress_error",
+      "frozen_copy_machine_code": null,
+      "frozen_copy_text_key": null,
+      "initial_state": "respot_rerack_progress_error.awaiting_authority_transaction",
+      "machine_code": "ui.rules_execution_progress.v1",
+      "policy_dependencies": [],
+      "postconditions": [
+        "position hash, rack ownership, turn, and authority revision are verified",
+        "failure never applies a local fallback layout"
+      ],
+      "preconditions": [
+        "a choice ACK contains transaction_id",
+        "balls are stationary",
+        "all shot input is blocked"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "reset_arrow",
+        "error_cross_octagon"
+      ],
+      "source_rows": [
+        "WPA-II-04",
+        "WPA-II-06-E",
+        "WPA-II-06-F",
+        "WPA-II-07",
+        "WPA-II-08",
+        "WPA-II-21"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "respot_rerack_progress_error.awaiting_authority_transaction",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "respot_rerack_progress_error.respot_in_progress",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "respot_rerack_progress_error.rerack_in_progress",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "respot_rerack_progress_error.verifying_authoritative_state",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "respot_rerack_progress_error.execution_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "respot_rerack_progress_error.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.execution_progress"
+    },
+    {
+      "actions": [
+        {
+          "action_id": "rules.stalemate.accept_rerack",
+          "allowed_from_state": "stalemate_proposal.decision_open",
+          "authority_command": "rules.submit_stalemate_response",
+          "enabled_when": [
+            "action_id is present in the authority offer"
+          ],
+          "frozen_copy_action_id": "confirm_stalemate",
+          "label": {
+            "en": "Accept rerack",
+            "zh_cn": "\u63a5\u53d7\u91cd\u6446"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "stalemate_proposal.submitting_authority_action"
+        },
+        {
+          "action_id": "rules.stalemate.refuse_continue",
+          "allowed_from_state": "stalemate_proposal.decision_open",
+          "authority_command": "rules.submit_stalemate_response",
+          "enabled_when": [
+            "authority policy version permits player refusal",
+            "continuation window is authority-defined"
+          ],
+          "label": {
+            "en": "Continue play",
+            "zh_cn": "\u7ee7\u7eed\u6bd4\u8d5b"
+          },
+          "mutates_authoritative_state": true,
+          "optimistic_authoritative_mutation": false,
+          "requires_authority_ack": true,
+          "target_state_before_ack": "stalemate_proposal.submitting_authority_action"
+        }
+      ],
+      "capability_id": "stalemate_decision",
+      "capability_state": "pending",
+      "completed_state": "stalemate_proposal.completed_authoritative",
+      "copy": {
+        "body": {
+          "en": "Respond to the authority proposal. No shot count, automatic rerack, or final declaration is assumed locally.",
+          "zh_cn": "\u8bf7\u56de\u5e94\u88c1\u5224\u7cfb\u7edf\u7684\u5904\u7406\u5efa\u8bae\uff1b\u672c\u5730\u4e0d\u9884\u8bbe\u8ffd\u52a0\u51fb\u7403\u6b21\u6570\u3001\u81ea\u52a8\u91cd\u6446\u6216\u6700\u7ec8\u5ba3\u544a\u3002"
+        },
+        "title": {
+          "en": "Stalemate proposal",
+          "zh_cn": "\u50f5\u5c40\u5904\u7406\u5efa\u8bae"
+        }
+      },
+      "failure_policy": {
+        "advance_turn_without_ack": false,
+        "clear_entitlement_without_ack": false,
+        "default_action_on_timeout": null,
+        "dismiss_on_escape": false,
+        "resume_by": [
+          "decision_id",
+          "authority_state_revision"
+        ],
+        "retry_reuses_idempotency_key": true
+      },
+      "flow_id": "stalemate_proposal",
+      "frozen_copy_machine_code": "ui.stalemate_decision",
+      "frozen_copy_text_key": "rules.chinese8.pending.stalemate",
+      "initial_state": "stalemate_proposal.awaiting_authority_offer",
+      "machine_code": "ui.stalemate_decision.v1",
+      "policy_dependencies": [
+        "stalemate_declaration_authority_policy",
+        "stalemate_continuation_window_policy"
+      ],
+      "postconditions": [
+        "accept routes to an order-preserving rerack transaction",
+        "refusal continuation window and any final declaration remain authority-owned"
+      ],
+      "preconditions": [
+        "balls are stationary",
+        "authority offer contains decision_id and authority_state_revision",
+        "local player identity matches authority actor",
+        "capability has been promoted by a future implementation gate",
+        "authority/referee has issued a stalemate proposal",
+        "offer includes original breaker and shooting-order snapshot",
+        "signed policy version is present"
+      ],
+      "product_exposed": false,
+      "shape_tokens": [
+        "warning_triangle",
+        "reset_arrow"
+      ],
+      "source_rows": [
+        "WPA-II-21"
+      ],
+      "states": [
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "stalemate_proposal.awaiting_authority_offer",
+          "surface": "hidden"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "stalemate_proposal.decision_open",
+          "surface": "decision_modal"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "stalemate_proposal.submitting_authority_action",
+          "surface": "blocking_progress"
+        },
+        {
+          "authority_mutation_allowed": false,
+          "blocking": true,
+          "state_id": "stalemate_proposal.authority_error",
+          "surface": "blocking_error"
+        },
+        {
+          "authority_mutation_allowed": true,
+          "blocking": false,
+          "state_id": "stalemate_proposal.completed_authoritative",
+          "surface": "hidden"
+        }
+      ],
+      "text_key": "rules.chinese8.pending.stalemate"
+    }
+  ],
+  "interaction_policy": {
+    "focus": {
+      "error_shape_token": "error_cross_octagon",
+      "initial_focus": "first authority-enabled action",
+      "modal_traps_focus": true,
+      "restore_focus": "gameplay_root_or_previous_rules_control",
+      "selected_shape_token": "selected_check_diamond",
+      "visible_focus_shape_token": "focus_chevron"
+    },
+    "hierarchy_high_to_low": [
+      "match_result_modal",
+      "blocking_error",
+      "blocking_progress",
+      "rules_decision_modal",
+      "ball_in_hand_placement_overlay",
+      "foul_banner",
+      "ball_in_hand_banner",
+      "turn_handoff_toast",
+      "informational_toast"
+    ],
+    "hud_to_modal": {
+      "modal_keeps_banner_summary_visible_but_unfocused": true,
+      "modal_never_uses_hud_banner_as_authority": true,
+      "reason_banner_may_announce_before_modal": true,
+      "shot_input_blocked_while_any_flow_blocking": true
+    },
+    "input": {
+      "escape_during_transaction": "ignored_with_progress_announcement",
+      "escape_on_placement": "clear_local_preview_only_and_keep_entitlement",
+      "escape_on_required_decision": "announce_decision_required_and_keep_open",
+      "gamepad_required_for_this_slice": false,
+      "keyboard": [
+        "tab",
+        "shift_tab",
+        "left",
+        "right",
+        "up",
+        "down",
+        "enter",
+        "space",
+        "escape"
+      ],
+      "pointer": [
+        "hover",
+        "primary_click",
+        "drag_for_placement"
+      ]
+    },
+    "timeout_and_resume": {
+      "authority_ack_timeout_ms": 10000,
+      "auto_confirm_placement": false,
+      "auto_select_action": false,
+      "on_ack_timeout": "enter_authority_error_without_local_mutation",
+      "resume_requires_exact_decision_or_transaction_id": true,
+      "stale_revision_reopens_from_latest_authority_offer": true
+    }
+  },
+  "package_id": "phase5_wpa_heyball_rules_decision_ui_actions_v1",
+  "policy_decision_placeholders": [
+    {
+      "assumed_answer": null,
+      "blocks_capabilities": [
+        "stalemate_decision"
+      ],
+      "policy_id": "stalemate_declaration_authority_policy",
+      "product_exposed": false,
+      "question": "Which signed authority may issue the initial and final stalemate declarations in each supported product mode?",
+      "status": "UNRESOLVED"
+    },
+    {
+      "assumed_answer": null,
+      "blocks_capabilities": [
+        "stalemate_decision"
+      ],
+      "policy_id": "stalemate_continuation_window_policy",
+      "product_exposed": false,
+      "question": "How is the official referee-discretion continuation window represented and versioned for the supported product mode?",
+      "status": "UNRESOLVED"
+    },
+    {
+      "assumed_answer": null,
+      "blocks_capabilities": [],
+      "policy_id": "off_table_12_3_vs_17_e_interpretation",
+      "product_exposed": false,
+      "question": "What signed interpretation resolves the official PDF conflict between Chapter II 12.3 page 9 and 17(e) page 11?",
+      "status": "UNRESOLVED"
+    }
+  ],
+  "product_exposed": false,
+  "profile_complete": false,
+  "ruleset_id": "wpa_heyball_2025_08_16_v1",
+  "schema": "phase5_rules_decision_ui_actions_v1",
+  "schema_version": 1,
+  "source_bindings": {
+    "frozen_rules_copy": {
+      "path": "docs/art/phase5-rules-shipping-copy-v1.json",
+      "read_only": true,
+      "sha256": "sha256:bbc5bd4199d1c876948aa3641957c0b9bbe1748b24bf517670d36d24b49781aa"
+    },
+    "frozen_rules_copy_proof": {
+      "path": "docs/art/phase5-rules-shipping-copy-flat-proof-v1.svg",
+      "read_only": true,
+      "sha256": "sha256:5d2c214c0885a42b1b4c4542c4eaf3a23bb8ce6329784b0f85e0494a6b18bb38"
+    },
+    "frozen_rules_copy_schema": {
+      "path": "docs/art/phase5-rules-shipping-copy-v1.schema.json",
+      "read_only": true,
+      "sha256": "sha256:b4c056db14ae00e2fdab6ec5374b2bce0da683a8306988482f4adfe836219d68"
+    },
+    "hud_tokens": {
+      "path": "assets/modern/hud/focused_practice_hud_shipping_tokens_v1.json",
+      "read_only": true,
+      "sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860"
+    },
+    "official_completeness_audit": {
+      "path": "docs/rules/phase5-wpa-heyball-completeness-audit.json",
+      "read_only": true,
+      "sha256": "sha256:c70e8662dd523b04eefab5745c4cd9023c2ae9dfa374f1b289d684d532ea8555"
+    },
+    "shell_tokens": {
+      "path": "assets/modern/hud/focused_practice_shell_shipping_tokens_v1.json",
+      "read_only": true,
+      "sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+    }
+  },
+  "status": "PENDING"
+}

@@ -1,0 +1,117 @@
+{
+  "schema":"billiardgl.phase4.v19.cp4_visible_integration_implementation_acceptance_checklist.v1",
+  "status":"CP4_DESIGN_CHECKLIST_FROZEN_IMPLEMENTATION_NOT_STARTED_NO_PRODUCTION_CMAKE_GPU_READINESS_AUTH",
+  "scope":"Design-only, fail-closed checklist for the future V19 CP4 visible product integration. It binds accepted CP1 geometry/semantics, CP2 shell layout/chrome, and CP3 offscreen atomic preparation. It authorizes no production or CMake edit and makes no GPU, readiness, capture, visual, human-comprehension, product, M3, golden, or beta claim.",
+  "bindings":[
+    {"path":"docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json","sha256":"c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"},
+    {"path":"docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json","sha256":"e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"},
+    {"path":"docs/art/phase4-v19-cp2-layout-draw-list-independent-ta-acceptance-addendum-v1.json","sha256":"6e7724df1a977af914b427538728f476d865db54c6cf95a3ae112e9de6172dd6"},
+    {"path":"docs/art/phase4-v19-cp3-offscreen-atomic-independent-ta-acceptance-addendum-v1.json","sha256":"46dd31775ce501969a8079171d8ff106c8de4bf9698b04ba0c09cfed21f6007d"},
+    {"path":"docs/evidence/phase4-v19-cp3-offscreen-atomic-implementation-v1/receipt.json","sha256":"9848e3f869db91f547e6c2cce1e4f6067538702a6dd04cbb18a585c57007133a"}
+  ],
+  "future_candidate_allowlist_not_authorized":[
+    "src/Billiards/render/modern/modern_renderer.h",
+    "src/Billiards/render/modern/modern_renderer.cpp",
+    "src/Billiards/render/modern/modern_product_session.h",
+    "src/Billiards/render/modern/modern_product_session.cpp",
+    "src/Billiards/render/ui/product_ui_frame_coordinator.h",
+    "src/Billiards/render/ui/product_ui_frame_coordinator.cpp",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.h",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp",
+    "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp"
+  ],
+  "frozen_cp1_cp2_cp3_files_not_editable_in_cp4":[
+    "src/Billiards/training/trajectory_inset_model.h",
+    "src/Billiards/training/trajectory_inset_model.cpp",
+    "src/Billiards/training/trajectory_inset_renderer.h",
+    "src/Billiards/training/trajectory_inset_renderer.cpp",
+    "src/Billiards/render/ui/product_shell_layout.h",
+    "src/Billiards/render/ui/product_shell_layout.cpp",
+    "src/Billiards/render/ui/product_shell_draw_list.h",
+    "src/Billiards/render/ui/product_shell_draw_list.cpp",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.h",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp"
+  ],
+  "explicit_current_frame_request_contract":{
+    "required_fields":["nonzero sessionSerial","nonzero frameSerial","nonzero layoutSerial","current ProductScreen","current CP1 package generation and five digests","current CP2 request layout and exclusion digest","current CP3 preparation generation and identity","inset toggle requested state","world overlay requested state"],
+    "accepted_screens_exact":["TrainingSession","ReplayPlayback"],
+    "default_inset_on":"Only a newly built explicit request for an accepted TrainingSession or ReplayPlayback state defaults ON. MainMenu, SinglePlayerSetup, Match, TrainingCatalog, ReplayBrowser, Settings, Help, invalid, transitioning, modal, suppressed, errored, or absent requests produce no CP3 call and no inset pixels/tokens/chrome.",
+    "world_overlay_control_on_required":false,
+    "world_overlay_visibility_required":false,
+    "screen_enum_or_product_frame_alone_may_enable":false,
+    "user_toggle_off_wins":true,
+    "stale_or_mixed_serials_fail_before_any_visible_write":true,
+    "request_must_be_consumed_at_most_once_for_exact_frame":true
+  },
+  "session_layout_package_identity_contract":{
+    "session":"Snapshot, accepted screen/state, toggle and shell viewport all share one nonzero sessionSerial and are immutable for the frame.",
+    "layout":"CP2 build and audit must succeed from that snapshot. layoutSerial binds profile, physical dimensions, UI scale, exact five exclusions, authoritative panel, transparent plot cutout, border/title/HEAD-FOOT/legend/toggle/focus geometry and CP2 denominator zero.",
+    "package":"CP1 package is freshly built from the current trajectory generation, preserves complete world-to-inset parent mapping and the five CP1 digests, and has no camera, scene color, repair coordinate, capture ID, or prior-frame input.",
+    "preparation":"CP3 prepared generation, frame serial, sample count, dimensions, CP1 digests, layout digest, palette and current-token ledger equal the current request byte-for-byte.",
+    "exclusion_ids_exact":["player status HUD","shot power and tip controls","rules decision panel or modal","caption and accessibility live-region band","safe-area edges and product footer"],
+    "any_missing_duplicate_foreign_reordered_or_moved_exclusion_fails_closed":true,
+    "no_stale_package_layout_preparation_or_ui_draw_list_reuse":true
+  },
+  "render_frame_invocation_and_order_contract":{
+    "explicit_render_frame_invocation_count_for_accepted_on_request":1,
+    "absent_off_rejected_or_invalid_request_invocation_count":0,
+    "forbidden_auto_branches":["generic productFrame","Training or Replay screen enum alone","capture or automation flag","camera name","repair case ID","pixel coordinate"],
+    "ordered_visible_sequence":["freeze current session/frame/layout/package identity","audit CP1 package and CP2 layout/chrome","explicitly invoke CP3 preparation once","validate CP3 COMPOSITE_ELIGIBLE generation without publishing stale data","atomically publish the fixed-palette inset into exact CP2 transparent plotCutoutRect","submit CP2 opaque surrounding panel then border title bilingual HEAD-FOOT labels legend toggle and focus after successful publish","restore integration and GL state and seal frame ledgers"],
+    "atomic_publish_precedes_product_ui_border_and_legend":true,
+    "plot_pixels_may_not_be_double_tone_mapped":true,
+    "panel_footer_or_surrounding_ui_may_not_refill_cutout":true,
+    "trajectory_tokens_remain_in_independent_inset_semantic_plane":true,
+    "main_world_trajectory_token_writes":0,
+    "world_overlay_draw_calls":0
+  },
+  "visible_atomicity_and_failure_contract":{
+    "success":"Exactly one current CP3 fixed-palette staging image is published into the exact current CP2 cutout, then exactly one audited CP2 chrome list is submitted.",
+    "failure":"Any failure before, during, or after the visible publish preflight invalidates the frame. It leaves zero inset pixels, inset semantic tokens, border, title, labels, legend, toggle, or focus from that failed request and never falls back to the world overlay.",
+    "publish_must_be_prevalidated_state_neutral_and_single_write":true,
+    "visible_partial_write_or_chrome_without_plot_forbidden":true,
+    "valid_fail_valid":"N may publish; N+1 injected failure has zero visible/semantic/chrome residue and destroys its current integration eligibility; N+2 requires fresh session, frame, layout, package and CP3 generations and cannot reuse N or N+1 success flags, textures, mappings, draw lists or ledgers.",
+    "resize_context_loss_screen_change_modal_or_toggle_change_invalidates":true,
+    "gl_error_query_upload_resolve_publish_or_ui_submit_fails_closed":true
+  },
+  "future_cpu_static_gl_mock_acceptance_not_run":{
+    "positive_matrix":{"screens":["TrainingSession","ReplayPlayback"],"layout_profiles":["1920x1080_ui100","1920x1080_ui135","1280x720_ui100","1280x720_ui135"],"palettes":["Standard","CVD"],"sample_counts":[1,2,4],"exact_case_count":48},
+    "visual_regression_controls":["player_standard","elevated_standard","overhead_standard","broadcast_standard","broadcast_cvd"],
+    "required_static_checks":["exactly one explicit renderFrame integration call exists only behind a validated request","no automatic screen-only productFrame capture automation camera coordinate or repair-ID enable path","CP1 and CP2 frozen files plus CP3 transaction files remain exact; CP3 accepted behavioral identity is revalidated after the allowlisted adapter extension","world overlay is always OFF and has zero calls/tokens","CMake and files outside a separately authorized allowlist are unchanged"],
+    "required_gl_mock_checks":["48 positive cases have one prepare one current publish one post-publish audited chrome submit and exact state restore","every integration boundary is injectable and checked in ordered valid-fail-valid","failure frame has zero main/inset pixels tokens and chrome and no stale reuse","current and external GL resources cannot alias and every query/upload/composite/UI transition checks errors","instrumentation-off/on have identical visible color semantic current-token and ordering ledgers"],
+    "required_negative_fixtures":["each nonaccepted screen and absent request","toggle OFF or world overlay ON","modal suppressed invalid errored or transitioning session","zero stale mismatched or reused session frame layout package preparation serial","missing duplicate foreign reordered or relocated exclusion","CP1 digest parent mapping palette denominator or token drift","CP2 cutout panel chrome bilingual order focus or denominator drift","CP3 resource generation sample dimension palette semantic or state drift","publish before CP3 eligibility or chrome before publish","partial visible write chrome-without-plot plot-without-chrome or cutout refill","resize context loss screen change and valid-fail-valid stale resource reuse","GL error or helper throw at every integration transition"],
+    "cp4_implementation_started":false,
+    "cpu_static_pass":false,
+    "gl_mock_pass":false,
+    "cp4_accepted":false
+  },
+  "future_gpu_ta_human_gates_separate_not_run":{
+    "gpu_requires_new_readiness_and_single_use_authorization":true,
+    "minimum_future_visual_cases":["player_standard","elevated_standard","overhead_standard","broadcast_standard","broadcast_cvd"],
+    "ta_requires_original_resolution_evidence_and_independent_review":true,
+    "ta_axes":["plot placement and minimum physical size","actual rails and predicted dash readability","endpoint markers and source mapping","Standard and CVD non-color separation","HEAD/开球端 and FOOT/底端 orientation","legend toggle and focus readability","transparent cutout and exclusion integrity","world overlay absence and control regressions"],
+    "human_comprehension_and_real_input_require_separate_protocol":true,
+    "gpu_authorized":false,
+    "readiness_authorized":false,
+    "capture_authorized":false,
+    "machine_pass_claimed":false,
+    "ta_visual_pass_claimed":false,
+    "human_comprehension_pass_claimed":false
+  },
+  "authorization_boundary":{
+    "cp1_accepted":true,
+    "cp2_accepted":true,
+    "cp3_accepted":true,
+    "cp4_design_frozen":true,
+    "cp4_implementation_authorized":false,
+    "production_edit_authorized":false,
+    "cmake_edit_authorized":false,
+    "gpu_authorized":false,
+    "readiness_authorized":false,
+    "capture_authorized":false,
+    "visible_product_inset_exposed":false,
+    "machine_pass_claimed":false,
+    "ta_visual_pass_claimed":false,
+    "human_comprehension_pass_claimed":false,
+    "product_m3_golden_beta_pass_claimed":false
+  }
+}

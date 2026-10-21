@@ -1,0 +1,76 @@
+{
+  "schema": "wpa_ii_09_coordinate_placement_positive_impulse_lifecycle_implementation_design_gate_v1",
+  "status": "DESIGN_COMPLETE_AWAITING_ROOT_IMPLEMENTATION_APPROVAL_NO_PRODUCTION_MUTATION",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-09", "selected_option_id": "COORDINATE_PLACEMENT_ONLY_POSITIVE_IMPULSE_CONSUMES"},
+    "original_design_gap_gate": {"path": "docs/rules/wpa-ii-09-tip-touch-until-shot-lifecycle-design-gap-gate-v1.json", "sha256": "848d45fc1d8edd8daec8f55c8a4857a9f9f57d148f64bb6db28a0caf052b615e"},
+    "current_audit": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v6.json", "sha256": "8f6abc94c3cb0c94518b47bd9bde2208744af77678200387064a196f33e85f56", "row_status": "PARTIAL", "must_not_be_promoted_by_gate": true}
+  },
+  "feasibility_finding": {
+    "core_g_confirm_currently_consumes_too_early": true,
+    "current_early_consumption_operations": ["matchState.ballInHand=false", "ballInHandPlacementScope=None", "placement offer cleared", "BehindHeadString first-contact context armed at coordinate commit"],
+    "cue_contact_is_authoritative_for_selected_boundary": true,
+    "selected_positive_predicate": "application.action.ok && application.contact.applied && isfinite(application.contact.normalImpulseNs) && application.contact.normalImpulseNs > 0.0",
+    "new_solver_or_cue_contact_telemetry_required": false,
+    "new_policy_blocker": false
+  },
+  "coordinate_commit_contract": {
+    "preconditions": "exact live Core-G actor/scope/decision/revision/state-hash/action/position/idempotency validation",
+    "commit": "atomically move and stop cue ball, retain matchState.ballInHand=true and the same non-None scope, increment one authority revision, stale the consumed decision, and stage exactly one fresh replacement Core-G offer for the same actor and scope",
+    "ack": "bind movement, authoritative cue-ball position, retained entitlement, placementPending=true, unchanged scope, and replacement decision identity/hash",
+    "repeated_preview_and_confirm": "ModernProductSession refreshes the replacement offer after ACK; any number of later valid coordinate preview/confirm cycles remain reachable",
+    "exact_retry": "return the original ACK without another move, revision increment, offer replacement, event, action, or receipt",
+    "conflicting_retry": "same key with changed actor/action/position/decision/revision/hash fails closed with zero authority delta",
+    "behind_head_string_context": "coordinate commits do not arm shot collection; retain enough frozen final-placement authority to arm the existing exact center-crossing context only in the later positive-impulse commit",
+    "partial_commit_allowed": false
+  },
+  "positive_impulse_consumption_contract": {
+    "entry": "applyShot/applyCueImpact may evaluate a cue impact while exactly one current Core-G entitlement is live and no sibling rules decision is pending",
+    "actor": "live offer actor must equal current match player; an unexpected turn change rejects and invalidates the stale entitlement without transfer",
+    "consume_if_and_only_if": "the selected positive predicate succeeds on the candidate CueShotApplication",
+    "atomic_success": "apply candidate cue-ball impulse, increment one authority revision, consume matchState ball-in-hand and scope, stale/clear the current placement offer, emit one consumption event/action, begin one shot collector, and for BehindHeadString arm the existing frozen final-position center-crossing context before collector begin",
+    "exactly_once": "after successful consumption, balls-moving and absent-entitlement guards prevent a second consumption; one revision/event/action/collector begin is observable",
+    "must_preserve_entitlement": ["zero-speed or zero-impulse contact", "rejected cue-impact validation", "unsupported contact", "miscue with applied=false", "nonfinite or nonpositive normal impulse", "failed launch before candidate commit"],
+    "later_physics_step_failure": "does not undo an already successful authoritative positive-impulse launch commit; this is not a failed launch",
+    "failed_candidate": "preserve cue position, entitlement, offer identity/hash, scope, authority revision, authority events/actions, placement receipts, and inactive shot collector",
+    "reset_or_match_completion": "invalidate entitlement and offer fail closed",
+    "partial_commit_allowed": false
+  },
+  "unsupported_boundary": {
+    "physical_cue_part_reposition": "DISABLED_UNSUPPORTED",
+    "forward_stroke_classifier": "DISABLED_UNSUPPORTED",
+    "coordinate_preview_or_confirm_is_tip_touch": false,
+    "new_tip_contact_or_forward_stroke_claim": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "foundation_or_sibling_rules_action_product_exposed": false
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/ball_in_hand_authority.h", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/render/modern/modern_product_session.h", "src/Billiards/render/modern/modern_product_session.cpp"],
+    "test_files": ["tests/game_runtime_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/rules_decision_session_integration_tests.cpp"],
+    "new_production_file_allowed": false,
+    "cue_contact_or_physics_edit_allowed": false,
+    "cmake_change_allowed": false,
+    "visual_ui_or_renderer_allowed": false
+  },
+  "required_fixtures": {
+    "positive": ["VALID_PREVIEW_PRESERVES_ENTITLEMENT", "FIRST_COORDINATE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE", "SECOND_COORDINATE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE", "EXACT_COORDINATE_RETRY_ZERO_DELTA", "FULL_TABLE_POSITIVE_IMPULSE_CONSUMES_EXACTLY_ONCE", "BEHIND_HEAD_STRING_POSITIVE_IMPULSE_ARMS_FINAL_PLACEMENT_CONTEXT_THEN_CONSUMES", "PRODUCT_REFRESH_REACHES_REPEATED_PREVIEW_CONFIRM"],
+    "negative": ["INVALID_PREVIEW_OR_CONFIRM_PRESERVES_ENTITLEMENT", "WRONG_ACTOR_ACTION_SCOPE_DECISION_REVISION_OR_HASH_PRESERVES_ENTITLEMENT", "ZERO_SPEED_OR_ZERO_IMPULSE_PRESERVES_ENTITLEMENT", "REJECTED_OR_UNSUPPORTED_CONTACT_PRESERVES_ENTITLEMENT", "MISCUE_WITHOUT_APPLIED_IMPULSE_PRESERVES_ENTITLEMENT", "UNEXPECTED_TURN_CHANGE_INVALIDATES_WITHOUT_TRANSFER", "CONFLICTING_COORDINATE_RETRY_ROLLS_BACK", "RESET_OR_MATCH_COMPLETE_INVALIDATES", "PHYSICAL_CUE_PART_AND_FORWARD_STROKE_PATHS_REMAIN_UNAVAILABLE"],
+    "regressions": ["WPA_II_08_EXACT_8_POSITIVE_9_NEGATIVE_TELEMETRY", "WPA_II_08_ALL_BEHIND_PARENT_PRODUCT", "FULL_TABLE_AND_BEHIND_HEAD_STRING_CORE_G_GEOMETRY", "GLOBAL_RULES_UI_EXPOSURE_FALSE"],
+    "headless_cpu_only": true
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "f33ab1695bfc4d13836c43f831f42ee9389e2f48fd2be1c78cb7deab72d321ca"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "08bf282555ad21e235de18099a77bc1c9b6a30f9e647c43d9eabc59ffc823dac"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "c0c6ae35340c98d92436b786beaedd2bc1694a74959821d21ec64920fba1927d"},
+    {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "c5b4fe029722d080dfc0fb7bc5d238b8d77470aebdfb40775eea5f6fd110efe1"},
+    {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "80e4a030a209789b55c84fc33d1138269bd14af1a54dd91711bb8dd6759bcf20"}
+  ],
+  "test_source_bindings": [
+    {"path": "tests/game_runtime_tests.cpp", "sha256": "c7bd8daf8a008b03a89f2816f08195299d8ec7f341ee0eba931f47871c4f5761"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "b0a2565181f57701b713e6e80a35b6bef42d97d688f60d2820b62ce44936e346"},
+    {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "127fb9d3a44adb359860ae7294aef62ff467bc837ca3906d66edad748c97911d"}
+  ],
+  "cmake_binding": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41", "modified_in_gate": false},
+  "completion_boundary": {"implementation_authorized_by_this_gate": false, "root_revalidation_required_before_tests_first_patch": true, "wpa_ii_09_may_close_from_gate_alone": false, "audit_v6_modified": false, "gpu_ta_readiness_or_authorization": false},
+  "claims": {"design_complete": true, "feasible_without_new_physics": true, "implementation_complete": false, "wpa_ii_09_complete": false, "production_modified": false, "cmake_modified": false, "visual_ui_modified": false, "gpu_executed": false}
+}

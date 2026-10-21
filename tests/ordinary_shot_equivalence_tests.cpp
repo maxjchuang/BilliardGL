@@ -1,5 +1,6 @@
 #include "game_runtime.h"
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <cstring>
@@ -161,7 +162,15 @@ std::string corpus(bool enableFrozenRouting)
         const billiardgl::ActionResult action =
             runtime.applyCueImpact(inputFor(value));
         const billiardgl::GameState post = runtime.state();
-        if (!runtime.step(8).ok) return {};
+        const auto stepped = runtime.step(8);
+        if (!stepped.ok) {
+            std::cerr << "ordinary case=" << value.name << " tick=" << runtime.tick()
+                << " error=" << stepped.errorCode;
+            if (!runtime.recentPhysicsSteps().empty())
+                std::cerr << " detail=" << runtime.recentPhysicsSteps().back().telemetry.failureDetail;
+            std::cerr << '\n';
+            return {};
+        }
 
         output << "{\"name\":\"" << value.name << "\",\"action_ok\":"
                << (action.ok ? "true" : "false")
@@ -240,6 +249,14 @@ int main(int argc, char** argv)
     const std::string actual = corpus(true);
     if (expected.empty() || actual != expected) {
         std::cerr << "v5 ordinary-shot corpus differs from the frozen v4 baseline\n";
+        std::size_t first = 0;
+        while (first < actual.size() && first < expected.size() &&
+            actual[first] == expected[first]) ++first;
+        std::cerr << "first differing byte=" << first << " expected_bytes="
+            << expected.size() << " actual_bytes=" << actual.size() << '\n';
+        const auto start = first > 100 ? first - 100 : 0;
+        std::cerr << "expected: " << expected.substr(start, 220) << '\n'
+            << "actual: " << actual.substr(std::min(start, actual.size()), 220) << '\n';
         return 1;
     }
     return 0;

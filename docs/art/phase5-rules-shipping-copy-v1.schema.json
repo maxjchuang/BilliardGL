@@ -1,0 +1,62 @@
+{
+  "$id": "billiardgl://schemas/phase5-rules-shipping-copy-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "flat_proof": {
+      "type": "object"
+    },
+    "outcome_copy": {
+      "type": "object"
+    },
+    "package_id": {
+      "type": "string"
+    },
+    "pending_ui_capabilities": {
+      "minItems": 4,
+      "type": "array"
+    },
+    "presentation_policy": {
+      "type": "object"
+    },
+    "profile_complete": {
+      "const": false
+    },
+    "reason_notices": {
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    },
+    "ruleset_id": {
+      "const": "wpa_heyball_2025_08_16_v1"
+    },
+    "schema": {
+      "const": "phase5_rules_shipping_copy_v1"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_audit": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "schema_version",
+    "package_id",
+    "ruleset_id",
+    "profile_complete",
+    "source_audit",
+    "evidence_boundary",
+    "presentation_policy",
+    "outcome_copy",
+    "reason_notices",
+    "pending_ui_capabilities",
+    "flat_proof"
+  ],
+  "title": "Phase 5 bilingual rules-feedback shipping copy",
+  "type": "object"
+}

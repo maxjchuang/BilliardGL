@@ -1,0 +1,356 @@
+{
+  "schema": "phase2_pocket_v10h_offline_correction_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase2_pocket_v10h_band_calibrated_offline_correction_v1",
+  "status": "APPROVED_FOR_OFFLINE_IMPLEMENTATION",
+  "GPU_CAPTURE_AUTHORIZED": false,
+  "ta_review_authorized": false,
+  "formal_six_scene_evidence_authorized": false,
+  "formal_pass_claimed": false,
+  "golden_promotion_authorized_or_claimed": false,
+  "purpose": "Correct the v10g sidewall upper and lower post-tonemap luminance bands with separate actual-GPU-calibrated offline bounds while preserving all passing geometry, ownership, hierarchy and scene constraints.",
+  "evidence_boundary": {
+    "offline_design_only": true,
+    "implementation_performed_by_this_gate": false,
+    "gpu_capture_performed_by_this_gate": false,
+    "production_source_or_asset_modified_by_this_gate": false,
+    "v10g_evidence_modified_by_this_gate": false,
+    "v10g_machine_rejection_overridden": false,
+    "v10g_ta_pass_claimed": false,
+    "v10h_machine_or_ta_pass_claimed": false,
+    "implementation_authorized": true
+  },
+  "input_bindings": [
+    {
+      "role": "v10g_actual_gpu_rejected_manifest",
+      "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/phase2-pocket-v10g-gpu-preflight-manifest-v1.json",
+      "sha256": "sha256:6dbc9c8c259add304eb5b039a5321f38e80764dfcc0eb01fd657bcff66d27a02"
+    },
+    {
+      "role": "v10g_actual_gpu_png",
+      "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/pocket_closeup.png",
+      "sha256": "sha256:8743545ba4ca2f803396b237afe38bafe3e6b6cc858e59e4aba6e3e67977bd64"
+    },
+    {
+      "role": "v10g_actual_gpu_metrics",
+      "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/pocket_gpu_metrics.json",
+      "sha256": "sha256:a700726d55080d06bdceeb10447568b64285c1080b6e0c6b715ba48b79f18061"
+    },
+    {
+      "role": "v10g_gpu_source_freeze",
+      "path": "docs/art/phase2-pocket-v10g-gpu-source-freeze-v1/receipt.json",
+      "sha256": "sha256:301af66efbdb2f77ce71a666093c024dbbf58365e372f81347406f37f695eed7"
+    },
+    {
+      "role": "v10g_consumed_single_gpu_authorization",
+      "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/gpu_capture_authorization_consumed.json",
+      "sha256": "sha256:e5e3b7d71581d21f5fe2b73216628e8b459c54ceff59bd806fe251d9a5338f08"
+    },
+    {
+      "role": "v10g_design_gate_v2",
+      "path": "docs/art/phase2-pocket-v10g-offline-correction-design-gate-v2.json",
+      "sha256": "sha256:eea60f8a01bf185f052ce278fc9d26f911dce57a736f29c3c27eb9a649245ae4"
+    },
+    {
+      "role": "v10g_offline_report_v2",
+      "path": "docs/art/phase2-pocket-v10g-offline-preflight-v2/phase2-pocket-v10g-offline-report-v2.json",
+      "sha256": "sha256:0830044860a94ac157c3953b995531ac695460370271d2feaaeeabbf1b3a39e1"
+    },
+    {
+      "role": "v10g_offline_source_freeze_v2",
+      "path": "docs/art/phase2-pocket-v10g-offline-source-freeze-v2/receipt.json",
+      "sha256": "sha256:dcd148cba07deaa47cd112d48a9e228126ed264ffd0b7192b00354b2cbad1284"
+    },
+    {
+      "role": "v10g_production_gltf_baseline",
+      "path": "assets/modern/phase2-v10g/focused_practice_hall_modular_v1.gltf",
+      "sha256": "sha256:a72c5ab4dd477fe3a6d85e2ced1421af93bb768ff613a411dabb0a02def6226f"
+    },
+    {
+      "role": "v10g_production_asset_manifest_baseline",
+      "path": "assets/modern/phase2-v10g/focused_practice_hall_modular_v1.asset.json",
+      "sha256": "sha256:27387e5c06606ab90cb91e8620868b02cc8f8417c5ce6db7618512b290f11e4b"
+    },
+    {
+      "role": "frozen_pbr_parameter_baseline",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_pbr_v1.params.json",
+      "sha256": "sha256:252bd726263a51bb85ab02ad171f260253df92d27c5d0aa165ecf72e2ff1b2f5"
+    },
+    {
+      "role": "frozen_lighting_rig",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_lighting_rig_v1.json",
+      "sha256": "sha256:37122c98dfbf97582c726253d16fa803fe651ce64304758b070b473ffef724ea"
+    }
+  ],
+  "frozen_v10g_outcome": {
+    "machine_status": "REJECTED_MACHINE",
+    "actual_gpu": true,
+    "actual_gpu_capture_count": 1,
+    "additional_v10g_gpu_capture_authorized": false,
+    "decision": "NO_RERUN; WAIT_FOR_ROOT",
+    "capture_dimensions_px": [1920, 1080],
+    "quality": "medium",
+    "msaa_samples": 4,
+    "post_tonemap_luma_encoded_srgb8": {
+      "rim_median": 42.941,
+      "sidewall_upper_median": 32.294,
+      "sidewall_lower_median": 19.4344,
+      "void_median": 2.0,
+      "upper_minus_lower": 12.8596,
+      "rim_minus_upper": 10.647,
+      "lower_minus_void": 17.4344
+    },
+    "target_ranges": {
+      "rim_median": [40.0, 52.0],
+      "sidewall_upper_median": [27.0, 31.0],
+      "sidewall_lower_median": [8.0, 11.0],
+      "void_median": [1.0, 3.0]
+    },
+    "failed_machine_checks": [
+      "luma_sidewall_upper_27_to_31",
+      "luma_sidewall_lower_8_to_11"
+    ],
+    "passed_findings": [
+      "strict rim > upper > lower > void hierarchy",
+      "rim-minus-upper >=10",
+      "upper-minus-lower >=12",
+      "lower-minus-void >=5",
+      "all geometry, visibility, object ownership, walnut, UI and performance checks"
+    ],
+    "review_boundary": "The retained PNG is diagnostic rejected evidence only. It is not a TA PASS, formal result or golden candidate."
+  },
+  "v10g_offline_to_gpu_band_error": {
+    "selected_v10g_offline_candidate": {
+      "base_neutral_scalar": 0.055,
+      "upper_endpoint_scalar": 0.95,
+      "lower_endpoint_scalar": 0.3,
+      "roughness": 0.84,
+      "cpu_upper_luma": 75.07789257620237,
+      "cpu_lower_luma": 16.15248558094117,
+      "cpu_delta": 58.9254069952612
+    },
+    "actual_gpu": {
+      "upper_luma": 32.294,
+      "lower_luma": 19.4344,
+      "delta": 12.8596
+    },
+    "band_specific_observed_error": {
+      "upper_gpu_to_cpu_ratio": 0.4301399372288229,
+      "lower_gpu_to_cpu_ratio": 1.2031832440037131,
+      "upper_gpu_minus_cpu_additive": -42.783892576202376,
+      "lower_gpu_minus_cpu_additive": 3.281914419058829,
+      "interpretation": "The v10g CPU model over-predicted upper by 42.784 but under-predicted lower by 3.282. A shared delta-only calibration is invalid for v10h and would again risk driving lower upward."
+    }
+  },
+  "v10h_conservative_band_calibration": {
+    "luma_domain": "encoded sRGB8 post-tonemap Y'=0.2126R+0.7152G+0.0722B under the frozen v10g ROI and erosion semantics",
+    "frozen_band_sampling": {
+      "upper_fraction_toward_upper_endpoint": 0.5199589362511269,
+      "lower_fraction_toward_upper_endpoint": 0.10358596765078035,
+      "v10g_upper_median_scalar": 0.6379733085632324,
+      "v10g_lower_median_scalar": 0.3673308789730072,
+      "formula": "S_band=(1-f_band)*L+f_band*U, where L and U are the lower and upper two-ring neutral COLOR_0 endpoint scalars"
+    },
+    "model_a_band_specific_cpu_ratio": {
+      "upper": "G_A_upper=0.4301399372288229*C_upper",
+      "lower": "G_A_lower=1.2031832440037131*C_lower",
+      "reason": "Uses separate observed CPU-to-GPU transfer for each geometric band instead of the rejected shared delta transfer."
+    },
+    "model_b_actual_gpu_effective_reflectance_anchor": {
+      "effective_ratio": "q_band=(B*S_band)/(0.055*S_v10g_band)",
+      "upper": "G_B_upper=2+(32.294-2)*q_upper",
+      "lower": "G_B_lower=2+(19.4344-2)*q_lower",
+      "reason": "Anchors each band to the actual v10g GPU measurement and scales only the sidewall-above-void contribution by authored effective reflectance."
+    },
+    "conservative_interval": {
+      "fixed_reserve_luma_each_side": 1.0,
+      "model_spread_max_luma": 0.5,
+      "lower_bound": "G_band_lower=max(0,min(G_A_band,G_B_band)-1.0)",
+      "upper_bound": "G_band_upper=max(G_A_band,G_B_band)+1.0",
+      "requirements": [
+        "Both models must be evaluated for every candidate.",
+        "Absolute G_A minus G_B must be <=0.5 independently for upper and lower.",
+        "The full interval, not only its midpoint, must pass every target and hierarchy gate.",
+        "No candidate may infer lower from upper-minus-delta; lower is independently bounded."
+      ],
+      "limitation": "This is a conservative one-actual-GPU-point local model for offline selection, not permission to claim a GPU result. The fixed reserve and dual-model hull remain mandatory until a separately authorized v10h capture exists."
+    },
+    "cpu_calibration_targets": {
+      "upper_luma_range": [65.09509482051362, 68.58233204304113],
+      "lower_luma_range": [7.563270221183297, 8.145060238197397],
+      "cpu_upper_minus_lower_min": 56.95003458231623,
+      "mapping_intent": "The CPU ranges place model-A nominal upper in 28.0..29.5 and nominal lower in 9.1..9.8, leaving explicit headroom to both GPU target edges after the interval reserve."
+    },
+    "gpu_interval_hard_gates": {
+      "upper_lower_bound_min": 27.0,
+      "upper_upper_bound_max": 31.0,
+      "lower_lower_bound_min": 8.0,
+      "lower_upper_bound_max": 11.0,
+      "conservative_upper_minus_lower_min": 12.0,
+      "rim_minus_upper_using_upper_bound_min": 10.0,
+      "lower_minus_void_using_lower_bound_and_void_upper_3_min": 5.0,
+      "strict_ordering_required": true
+    },
+    "recommended_safety_targets": {
+      "upper_interval_lower_bound_min": 27.25,
+      "upper_interval_upper_bound_max": 30.5,
+      "lower_interval_lower_bound_min": 8.25,
+      "lower_interval_upper_bound_max": 10.5,
+      "conservative_upper_minus_lower_min": 16.0,
+      "lower_nominal_max": 9.8,
+      "anti_lower_push_rule": "Candidate selection fails if lower model A, model B, interval upper bound or CPU lower exceeds its declared limit, regardless of delta or hierarchy PASS."
+    }
+  },
+  "mathematical_feasibility_witness": {
+    "not_an_implemented_or_selected_candidate": true,
+    "parameters": {
+      "base_neutral_scalar": 0.055,
+      "upper_endpoint_scalar": 1.0,
+      "lower_endpoint_scalar": 0.06,
+      "roughness": 0.84
+    },
+    "interpolated_band_scalars": {
+      "upper": 0.5487614000760592,
+      "lower": 0.15737080959173352
+    },
+    "model_b_nominal_gpu_luma": {
+      "upper": 28.057795256894263,
+      "lower": 9.469194123883426,
+      "delta": 18.588601133010837
+    },
+    "cpu_values_that_make_model_a_equal_model_b": {
+      "upper": 65.22945866793175,
+      "lower": 7.870118014919932
+    },
+    "dual_model_interval_when_equal": {
+      "upper": [27.057795256894263, 29.057795256894263],
+      "lower": [8.469194123883426, 10.469194123883426],
+      "conservative_delta_lower_bound": 16.588601133010837
+    },
+    "proof_note": "The witness lies inside the declared parameter and CPU target domains and satisfies hard target intervals plus the recommended lower ceiling. Offline implementation must still reproduce its own CPU values and search all declared candidates; the witness is not authorization to write these values directly."
+  },
+  "offline_material_and_vertex_color_search_domain": {
+    "allowed_change_scope": [
+      "sidewall-only baseColorFactor within the declared neutral range",
+      "sidewall COLOR_0 values on the two existing endpoint rings",
+      "new v10h offline calibration, validation, metadata and immutable output root"
+    ],
+    "sidewall_material": {
+      "name": "MAT_pocket_liner_sidewall_v10h",
+      "base_neutral_scalar_range": [0.0525, 0.0575],
+      "base_neutral_scalar_grid_step": 0.00125,
+      "rgb_multiplier_frozen": [0.84, 0.94, 1.0],
+      "derived_linear_rgb_bounds": {
+        "red": [0.0441, 0.0483],
+        "green": [0.04935, 0.05405],
+        "blue": [0.0525, 0.0575]
+      },
+      "alpha": 1.0,
+      "roughness_frozen": 0.84,
+      "metallic_frozen": 0.0,
+      "emissiveFactor_frozen": [0.0, 0.0, 0.0],
+      "texture_change_allowed": false
+    },
+    "two_ring_color_contract": {
+      "upper_endpoint_scalar_range": [0.98, 1.0],
+      "upper_endpoint_grid_step": 0.005,
+      "lower_endpoint_scalar_range": [0.04, 0.08],
+      "lower_endpoint_grid_step": 0.005,
+      "allowed_endpoint_difference_range": [0.9, 0.96],
+      "same_scalar_written_to_rgb": true,
+      "alpha": 1.0,
+      "monotonic_non_increasing_upper_to_lower": true,
+      "all_vertices_on_each_ring_use_one_identical_scalar": true,
+      "all_six_pockets_and_all_three_lods_use_identical_endpoint_values": true,
+      "existing_perspective_correct_barycentric_interpolation_frozen": true,
+      "new_ring_or_vertex_allowed": false
+    },
+    "deterministic_search": {
+      "complete_cartesian_grid_required": true,
+      "expected_candidate_count": 225,
+      "candidate_count_derivation": "5 base values * 5 upper values * 9 lower values",
+      "report_every_candidate_models_bounds_checks_and_rejection_reasons": true,
+      "selection": "Among candidates passing every hard and recommended target, choose the smallest squared parameter displacement from v10g after assigning lower-overbright violations infinite cost; break ties by lower interval upper bound, then base scalar, lower scalar and upper scalar.",
+      "single_cherry_picked_candidate_allowed": false
+    }
+  },
+  "frozen_geometry_renderer_and_evidence_contract": {
+    "geometry_and_indices_frozen": true,
+    "non_COLOR_0_accessors_frozen": true,
+    "allowed_accessor_byte_delta": "sidewall COLOR_0 only",
+    "sidewall_topology": {
+      "vertical_layers_y_m": [0.83597976, 0.85883975],
+      "vertical_layer_count": 2,
+      "cross_layer_unique_edges_by_lod": {"0": 432, "1": 288, "2": 180},
+      "arc_segments_per_half_by_lod": {"0": 24, "1": 16, "2": 10}
+    },
+    "unchanged": [
+      "all POSITION, NORMAL, TANGENT, TEXCOORD_0 and index decoded values and counts",
+      "rim and void geometry, COLOR_0 and materials",
+      "node transforms, object roles, LOD membership, local ranges and marker references",
+      "rim width, pocket opening, sidewall drop, void span, pocket ownership and physics binding",
+      "camera, viewport, ROI, connected-component selection, one-pixel erosion and geometric upper/lower band labeling",
+      "lighting rig, renderer, shaders, exposure, tone map, MSAA and quality",
+      "felt, cushion, facing, walnut, balls, cue, room, UI and all physics/rules/simulation data",
+      "all v10g pixel, visibility, geometry, walnut, UI and performance thresholds"
+    ],
+    "forbidden_workarounds": [
+      "raising void or darkening rim to fake the sidewall target",
+      "changing ROI, band quantiles, erosion or brightness-sorting labels",
+      "changing camera, light, exposure, tone map, shader or renderer",
+      "adding emissive, texture, render pass, light, runtime toggle, geometry ring or vertex",
+      "changing lower through a shared material alone without independently passing its upper-bound gate"
+    ]
+  },
+  "offline_machine_gate": {
+    "required_success_status": "OFFLINE_PREFLIGHT_PASS_GPU_NOT_AUTHORIZED",
+    "required_outputs": [
+      "new v10h asset root and hashes without modifying v10g",
+      "decoded accessor diff proving only sidewall COLOR_0 and permitted sidewall material scalar bytes changed",
+      "complete 225-candidate grid with CPU values, both GPU models, spread, conservative intervals and rejection reasons",
+      "selected candidate proof for upper, lower, delta, rim gap, void gap and strict ordering",
+      "two-ring barycentric continuity, seam, derivative, fragment-step and posterization proxy results inherited from v10g gate v2",
+      "all inherited geometry, ownership, ROI, visibility, walnut, UI, performance and physics checks",
+      "fresh v10h metadata with visual_review_status=NOT_RUN and no copied v10g legacy status",
+      "immutable offline source-freeze receipt binding gate, report, generator, validator and output assets"
+    ],
+    "hard_checks": {
+      "cpu_upper_in_declared_target": true,
+      "cpu_lower_in_declared_target": true,
+      "cpu_delta_at_least_56_95003458231623": true,
+      "both_band_model_spreads_at_most_0_5": true,
+      "full_gpu_intervals_in_target_ranges": true,
+      "recommended_lower_upper_bound_at_most_10_5": true,
+      "conservative_gpu_delta_at_least_16": true,
+      "strict_ordered_chain_and_pairwise_gaps": true,
+      "complete_search_and_parameter_bounds": true,
+      "all_geometry_indices_non_COLOR_accessors_and_scene_freezes_exact": true,
+      "gpu_capture_authorized": false,
+      "ta_review_authorized": false
+    },
+    "failure_rule": "Any missing, failed, PENDING, unbound, out-of-range, model-divergent, lower-overbright, geometry-drifted or authorization check is OFFLINE_PREFLIGHT_FAIL_GPU_NOT_AUTHORIZED."
+  },
+  "post_offline_freeze_single_gpu_contract": {
+    "gpu_capture_authorized_now": false,
+    "prerequisites_before_root_may_authorize": [
+      "complete v10h offline machine PASS",
+      "byte-identical immutable v10h offline source freeze",
+      "root inspection of the selected candidate, full grid, conservative bounds and every inherited check",
+      "new runner and executable hashes bound to the frozen source",
+      "new explicit authorization naming one scene, one viewport/profile and exact hashes"
+    ],
+    "future_authorized_capture_count": 1,
+    "future_capture_scope": "Exactly one v10h actual-GPU pocket_closeup at 1920x1080, medium quality, 4x MSAA under the frozen camera/lighting/ROI contract.",
+    "retry_or_second_capture_without_new_root_authorization_allowed": false,
+    "on_machine_failure": "Freeze the failure evidence and stop. No rerun, TA promotion, six-scene capture, formal or golden action is allowed.",
+    "on_machine_pass": "A machine PASS may permit root to request a separate independent TA review; it does not itself authorize or imply TA, six-scene, formal or golden PASS."
+  },
+  "authorization_after_gate": {
+    "allowed_next_action": "Offline implementation, deterministic search, validation and immutable source freeze only.",
+    "gpu_capture": "NOT_AUTHORIZED",
+    "technical_art_review": "NOT_AUTHORIZED",
+    "formal_six_scene_evidence": "NOT_AUTHORIZED",
+    "formal_pass": "NOT_AUTHORIZED",
+    "golden_promotion": "NOT_AUTHORIZED"
+  }
+}

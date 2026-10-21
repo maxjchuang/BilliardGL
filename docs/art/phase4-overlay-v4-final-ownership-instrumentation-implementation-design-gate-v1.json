@@ -1,0 +1,361 @@
+{
+  "schema": "billiardgl.phase4.overlay_v4_final_ownership_instrumentation_implementation_design_gate.v1",
+  "schema_version": 1,
+  "package_id": "phase4_overlay_v4_final_ownership_instrumentation_v1",
+  "status": "APPROVED_FOR_INSTRUMENTATION_IMPLEMENTATION_NOT_CAPTURE",
+  "scope": "Authorize a future telemetry-only implementation that preserves Phase 4 v4 failure diagnostics and measures integrated final-composite trajectory ownership. This document does not implement instrumentation, authorize GPU execution, reopen the frozen ordinal-1 attempt or change any product visual contract.",
+  "input_bindings": {
+    "offline_diagnostic_manifest": {
+      "path": "docs/art/phase4-overlay-v4-ordinal1-offline-diagnostic-v1/diagnostic-evidence-manifest-v1.json",
+      "sha256": "fb041c6e96c83f30df78742ead8a59251e3425f8b62999dd16390b349bdf7349"
+    },
+    "offline_root_cause_report": {
+      "path": "docs/art/phase4-overlay-v4-ordinal1-offline-diagnostic-v1/root-cause-diagnostic-report-v1.json",
+      "sha256": "54d0bef6af28085f6e87456645802d4eb3e2537c6ca1869a57fece27141ab50b"
+    },
+    "ordinal1_root_cause_diagnostic_gate": {
+      "path": "docs/art/phase4-overlay-v4-targeted-ordinal1-root-cause-diagnostic-gate-v1.json",
+      "sha256": "ad95db70125384a1de289792002aba05c3557d587a70ea849d5d168f415e57fa"
+    },
+    "frozen_ordinal1_failure_receipt": {
+      "path": "docs/art/phase4-training-replay-overlay-v4-targeted-failure-receipt-v1.json",
+      "sha256": "2dbd499249df1e44631669165a891f94d232f4fa436c9fd0910716de35d2717f"
+    },
+    "frozen_ordinal1_ppm": {
+      "path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/camera_player_low_1080.ppm",
+      "sha256": "f3626f44ead6cfe4729e6ff3b76168747154b2452d0ca2afd70e1520b0e09744"
+    },
+    "frozen_v4_runner_source": {
+      "path": "build-phase4-overlay-v4-ready-v3/generated/phase4_overlay_v4_gpu_capture_runner.mm",
+      "sha256": "35fa98ad44e438f11a6a5b50a80c06de00adb518de4d345d51e741283b195d43"
+    },
+    "compound_visibility_implementation": {
+      "path": "src/Billiards/training/trajectory_compound_visibility.cpp",
+      "sha256": "b2149fad4bf11151ba8779132ccc5fc377906fd8fa81e835ccd98186074b673a"
+    },
+    "compound_visibility_contract": {
+      "path": "src/Billiards/training/trajectory_compound_visibility.h",
+      "sha256": "5d8af530e49fa08f8dca8ca08db304db9aee4c3e959203e1251a43b76d820360"
+    }
+  },
+  "authorization_boundary": {
+    "instrumentation_implementation_design_approved": true,
+    "future_instrumentation_implementation_allowed_after_this_gate": true,
+    "implementation_performed_by_this_gate": false,
+    "production_visual_change_authorized": false,
+    "asset_change_authorized": false,
+    "route_or_trajectory_change_authorized": false,
+    "gpu_capture_authorized": false,
+    "targeted_rerun_resume_or_overwrite_authorized": false,
+    "formal68_authorized": false,
+    "technical_art_review_authorized": false,
+    "m3_authorized_or_claimed": false,
+    "golden_authorized_or_claimed": false,
+    "beta_authorized_or_claimed": false
+  },
+  "frozen_diagnostic_decision": {
+    "status": "DIAGNOSTIC_MISSING_FINAL_OWNERSHIP_TELEMETRY_FAIL_CLOSED",
+    "root_cause_isolated": false,
+    "frozen_counts": {
+      "source": 95,
+      "visible": 46,
+      "hidden": 49,
+      "coverage": 0.484211
+    },
+    "offline_exact_role_analytic_counts": {
+      "source": 95,
+      "visible": 69,
+      "hidden": 26
+    },
+    "offline_compound_analytic_counts": {
+      "source": 95,
+      "visible": 95,
+      "hidden": 0
+    },
+    "counterfactual_numbers_are_not_final_ownership_evidence": true,
+    "blocking_capability": "Resolved integrated final-composite per-sample ownership and pre-failure serialization are absent."
+  },
+  "implementation_sequence": [
+    {
+      "ordinal": 1,
+      "id": "A_FAILURE_TELEMETRY_PRESERVATION",
+      "status": "AUTHORIZED_NOT_IMPLEMENTED",
+      "purpose": "Make every machine failure durable and diagnosable before fail-closed termination, without changing classification or rendering.",
+      "mandatory_control_flow": {
+        "compute_audit": "Complete contrast and compound audit, candidate enumeration and exclusive arbitration.",
+        "serialize_before_gate": "Unconditionally construct, append and flush exactly one capture result row before require(machinePass) or any equivalent throw/return.",
+        "then_fail_closed": "After durable serialization, enforce the unchanged machinePass decision and terminate immediately on failure.",
+        "serialization_failure_rule": "If the row is incomplete, cannot be appended or cannot be flushed, fail closed with a distinct telemetry-preservation error and do not claim a capture result."
+      },
+      "required_failure_row_fields": [
+        "capture_id",
+        "plan_ordinal_one_based",
+        "machine_status",
+        "machine_error_code",
+        "ppm_path",
+        "ppm_sha256",
+        "source_probe_count",
+        "visible_probe_count",
+        "hidden_probe_count",
+        "aggregate_visible_probe_coverage",
+        "predicted_source_visible_hidden_and_coverage",
+        "actual_source_visible_hidden_and_coverage",
+        "component_source_counts",
+        "component_visible_counts",
+        "component_hidden_reason_counts",
+        "ordered_source_probe_ids",
+        "ordered_source_probe_digest",
+        "ordered_visible_probe_ids",
+        "ordered_visible_probe_digest",
+        "hidden_probe_id_track_role_reason_coordinates",
+        "ownership_candidate_records",
+        "exclusive_arbitration_records",
+        "double_assignment_count",
+        "foreign_track_evidence_count",
+        "unowned_evidence_count",
+        "instrumentation_schema_version",
+        "source_and_binary_bindings"
+      ],
+      "ownership_candidate_record_fields": [
+        "source_probe_id",
+        "physical_pixel",
+        "resolved_sample_count",
+        "resolved_pixel_equivalent_area",
+        "owner_track",
+        "owner_component",
+        "owner_primitive_id",
+        "probe_local_tangent_distance_px",
+        "probe_local_normal_distance_px",
+        "final_rgb_srgb8",
+        "adjacent_non_self_rgb_srgb8",
+        "edge_contrast_ratio",
+        "eligibility_or_rejection_reason"
+      ],
+      "exclusive_arbitration_record_fields": [
+        "physical_sample_or_pixel_id",
+        "claiming_source_probe_ids",
+        "winner_source_probe_id",
+        "sort_key_same_track_distance_primitive_probe_ordinal",
+        "loser_reason"
+      ],
+      "acceptance_tests": [
+        "A CPU-only synthetic machinePass=false case writes and flushes one complete FAILED row before the expected exception.",
+        "Removing any required field makes the test fail closed.",
+        "A forced append or flush failure produces a distinct telemetry-preservation error and no success claim.",
+        "A machinePass=true case writes the same schema exactly once and then completes.",
+        "The frozen ordinal-1 replay and PPM are consumed read-only and produce a preserved failure row with 95 immutable source IDs; analytic values remain explicitly non-final until Step B is present."
+      ],
+      "forbidden": [
+        "Moving or weakening machinePass",
+        "Converting a failed capture to PASS",
+        "Changing candidate eligibility, thresholds, probe inventory or classification",
+        "Overwriting the frozen ordinal-1 result root"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "id": "B_INTEGRATED_FINAL_SEMANTIC_OWNERSHIP",
+      "status": "AUTHORIZED_NOT_IMPLEMENTED",
+      "depends_on": "A_FAILURE_TELEMETRY_PRESERVATION",
+      "purpose": "Measure final trajectory ownership in lockstep with the production color frame so a counted pixel is sample-accurate, finally visible and exclusively attributable.",
+      "integration_contract": {
+        "same_render_graph": "The semantic ownership path is attached to the production scene/trajectory/resolve/tone-map/product-UI graph; a detached replay framebuffer is forbidden as final proof.",
+        "same_geometry_and_order": "Use the exact production vertices, transforms, primitive order, actual-then-predicted z-order and draw submission; do not rebuild an analytic substitute for final proof.",
+        "same_clip": "Apply the same homogeneous clip, safe-area clip, play-surface stencil, viewport, scissor and fragment discard decisions.",
+        "same_msaa": "Use the exact production MSAA sample count, sample positions and per-sample coverage. No single-sample proxy may claim resolved ownership.",
+        "same_blend_visibility": "Carry per-sample semantic coverage through the trajectory blend decision; covered but fully replaced samples are not final evidence.",
+        "same_resolve": "Resolve semantic ownership using the same sample visibility and final draw order as color; record winning and losing sample coverage rather than forcing alpha to one.",
+        "tone_map_pairing": "After ACES tone map, pair each resolved semantic owner with the exact final LDR RGB used for contrast checks.",
+        "later_ui_ownership": "Apply later product UI clip and coverage. A final UI-owned sample has track=none and can never satisfy a trajectory probe.",
+        "readback_correspondence": "Color and semantic evidence share physical dimensions, origin, frame/capture ID and immutable content digest. Any mismatch fails closed.",
+        "production_color_invariance": "Instrumentation may add capture-only metadata resources but must not alter production color bytes, timing order, visual assets or product exposure."
+      },
+      "semantic_sample_payload": [
+        "frame_and_capture_id",
+        "physical_pixel_and_sample_index",
+        "track_id_or_none",
+        "component_id_or_none",
+        "primitive_id_or_none",
+        "coverage_or_alpha",
+        "production_draw_ordinal",
+        "clip_and_ui_ownership_state"
+      ],
+      "resolved_pixel_payload": [
+        "physical_pixel",
+        "per_owner_resolved_sample_coverage",
+        "winning_final_owner",
+        "resolved_pixel_equivalent_area",
+        "final_ldr_srgb8",
+        "adjacent_non_self_ldr_srgb8",
+        "edge_contrast_ratio"
+      ],
+      "probe_attribution_contract": {
+        "source_probe_id": "sha256(capture_id|track|primitive_id|component_role|arc_segment_id|probe_ordinal|physical_profile)",
+        "ordinal1_denominator": 95,
+        "same_track_only": true,
+        "cross_component_substitution": "Allow only gate-approved same-track core, exposed solid dash-gap, outer halo edge, nearest tick and same endpoint evidence.",
+        "true_coordinate_frame": "Use the unshifted projected path tangent and normal; Euclidean-as-normal and forced zero-longitudinal values are forbidden.",
+        "normal_bound": "outer halo radius plus 2 physical pixels, or contracted tick half-length plus 2 for a tick probe",
+        "longitudinal_bound": "half local source-probe spacing capped at 12 physical pixels",
+        "exclusive_assignment": "Each final sample or resolved ownership contribution is assigned to at most one immutable source_probe_id by same-track distance, primitive ID and probe ordinal.",
+        "minimum_owned_area": "At least two 4-connected final physical pixels and at least 1.5 resolved pixel equivalents.",
+        "minimum_edge_contrast_ratio": 4.0
+      },
+      "failure_rules": [
+        "Missing sample payload, unresolved owner, color/semantic frame mismatch or unsupported MSAA mode is MACHINE_FAIL.",
+        "Any foreign-track, scene, background, panel, unowned or color-only match counted for a source probe is MACHINE_FAIL.",
+        "Any double assignment, probe-ID drift, denominator drift or evidence outside tangent/normal bounds is MACHINE_FAIL.",
+        "Instrumentation/color-byte mismatch is MACHINE_FAIL and invalidates readiness."
+      ]
+    }
+  ],
+  "immutable_invariants": {
+    "aggregate_visible_probe_coverage_min": 0.9,
+    "predicted_visible_probe_coverage_min": 0.9,
+    "actual_visible_probe_coverage_min": 0.9,
+    "minimum_local_contrast_ratio": 4.0,
+    "contrast_4_5_target_coverage_min": 0.99,
+    "predicted_actual_luma_delta_srgb8_standard_min": 32.0,
+    "predicted_actual_luma_delta_srgb8_cvd_min": 36.0,
+    "ordinal1_source_probe_denominator": 95,
+    "predicted_lateral_offset_px": 0.0,
+    "actual_lateral_offset_px": 0.0,
+    "maximum_screen_space_offset_px": 0.0,
+    "compositing_order": "actual_then_predicted",
+    "probe_deletion_allowed": false,
+    "probe_merge_allowed": false,
+    "threshold_relaxation_allowed": false,
+    "route_or_world_sample_change_allowed": false,
+    "endpoint_change_allowed": false,
+    "asset_or_palette_change_allowed": false,
+    "z_order_change_allowed": false,
+    "product_ui_layout_change_allowed": false
+  },
+  "required_cpu_negative_and_positive_fixtures": [
+    {
+      "id": "N1_TRUE_PANEL_OCCLUSION",
+      "expected": "Trajectory-colored analytic geometry under a later UI-owned final sample is rejected as track=none."
+    },
+    {
+      "id": "N2_TRUE_CROSS_TRACK_COVERAGE_NO_RESCUE",
+      "expected": "A source core covered by the other track with no exposed same-track component remains hidden."
+    },
+    {
+      "id": "P1_CROSS_COMPONENT_SAME_TRACK_RESCUE",
+      "expected": "A gate-bounded, final-owned same-track halo, exposed dash-gap solid, nearest tick or same endpoint may rescue exactly one source probe."
+    },
+    {
+      "id": "N3_FINAL_COLOR_MISMATCH",
+      "expected": "A semantic owner whose paired final LDR color does not correspond or lacks >=4.0 edge contrast is rejected."
+    },
+    {
+      "id": "N4_SHARED_PIXEL_ARBITRATION",
+      "expected": "Two probe claims yield one deterministic winner and one pixel_already_assigned loser; double assignment remains zero."
+    },
+    {
+      "id": "N5_TANGENT_NORMAL_BOUNDS",
+      "expected": "Evidence inside Euclidean radius but outside either true tangent or normal bound is rejected."
+    },
+    {
+      "id": "N6_FOREIGN_TRACK_COLOR_MATCH",
+      "expected": "A palette-matching sample owned by the other track is rejected."
+    },
+    {
+      "id": "N7_SCENE_OR_BACKGROUND_COLOR_MATCH",
+      "expected": "A palette-matching track=none scene/background sample is rejected."
+    },
+    {
+      "id": "N8_MSAA_PARTIAL_COVERAGE_BELOW_AREA",
+      "expected": "Sub-1.5 resolved pixel-equivalent coverage cannot satisfy a probe."
+    },
+    {
+      "id": "P2_MSAA_PARTIAL_COVERAGE_ABOVE_AREA",
+      "expected": "Qualifying resolved coverage is credited exactly once with its measured pixel-equivalent area."
+    },
+    {
+      "id": "N9_CLIPPED_OR_DISCARDED_SAMPLE",
+      "expected": "A pre-clip semantic hit absent after production clip/stencil/discard remains hidden."
+    },
+    {
+      "id": "N10_FAILURE_ROW_FIELD_OR_FLUSH_MISSING",
+      "expected": "Missing telemetry or failed durable flush terminates with a telemetry-preservation error before any PASS claim."
+    }
+  ],
+  "frozen_ordinal1_replay_test": {
+    "inputs_read_only": true,
+    "replay_path": "docs/art/phase4-training-replay-overlay-fixtures-v3/launch_stop_shot_center_v1.overlay.replay.json",
+    "ppm_path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/camera_player_low_1080.ppm",
+    "expected_source_probe_count": 95,
+    "expected_ordered_source_probe_digest": "d533924980efc85aeb94e4f1d31831d93e2bfce744be3b66481d08c56d10289a",
+    "required_assertions": [
+      "No Cocoa, OpenGL or GPU symbol is loaded or invoked.",
+      "The original replay and PPM SHA values remain unchanged.",
+      "A failure result row is serialized and flushed before the expected fail-closed decision.",
+      "Every source ID, per-track/component count, hidden record, candidate and arbitration record is present.",
+      "Until integrated Step B evidence is available, analytic ownership is labeled non-final and no 46/49 redistribution is claimed."
+    ]
+  },
+  "required_exit_sequence_before_any_fresh_targeted_readiness": [
+    {
+      "ordinal": 1,
+      "id": "GATE_VALIDATOR_AND_FAIL_CLOSED_TESTS_PASS",
+      "gpu_allowed": false
+    },
+    {
+      "ordinal": 2,
+      "id": "FRESH_INSTRUMENTATION_SOURCE_BINDINGS_AND_RELEASE_BUILD",
+      "gpu_allowed": false,
+      "required": "Bind every modified implementation/test/tooling source and prove production color/route/asset inputs unchanged."
+    },
+    {
+      "ordinal": 3,
+      "id": "CPU_NEGATIVE_AND_POSITIVE_FIXTURES_ALL_PASS",
+      "gpu_allowed": false,
+      "required_fixture_count": 12
+    },
+    {
+      "ordinal": 4,
+      "id": "FROZEN_ORDINAL1_READ_ONLY_FAILURE_REPLAY_PASS",
+      "gpu_allowed": false,
+      "required_source_probe_count": 95
+    },
+    {
+      "ordinal": 5,
+      "id": "STATIC_RENDER_GRAPH_AND_COLOR_INVARIANCE_CONFORMANCE_PASS",
+      "gpu_allowed": false,
+      "required": "Prove Step B is integrated with production pass ordering and that instrumentation cannot mutate color output, route, offsets, assets, UI layout or thresholds."
+    },
+    {
+      "ordinal": 6,
+      "id": "FRESH_TARGETED11_READINESS_MAY_BE_PREPARED_NOT_RUN",
+      "gpu_allowed": false,
+      "required": "Create a new empty output root, fresh plan/source bindings/runner/readiness with all 11 cases NOT_RUN and all evidence claims false."
+    }
+  ],
+  "future_capture_boundary": {
+    "fresh_targeted_readiness_is_not_capture_authorization": true,
+    "new_root_single_use_authorization_required_after_readiness": true,
+    "authorization_must_bind": [
+      "this design gate SHA",
+      "fresh implementation source aggregate",
+      "fresh runner and Billiards binary SHA values",
+      "fresh empty targeted output root and plan SHA",
+      "CPU fixture and frozen replay receipts",
+      "readiness manifest SHA"
+    ],
+    "formal68_requires_separate_post_targeted_gate": true,
+    "technical_art_review_requires_separate_machine_pass_gate": true
+  },
+  "global_forbidden_actions": [
+    "Running or resuming the frozen targeted ordinal-1 attempt",
+    "Overwriting the frozen PPM, empty results file, authorization or failure receipt",
+    "Running formal68 or technical-art review",
+    "Relaxing coverage, contrast or luma thresholds",
+    "Deleting, merging, renumbering or changing the 95 ordinal-1 source probes",
+    "Changing predicted or actual route, endpoint, world samples, screen-space offset, z-order, palette, assets or inspector layout",
+    "Treating detached semantic replay, analytic CPU geometry or PPM color proximity as final ownership proof",
+    "Treating this implementation design gate or a future readiness manifest as GPU authorization",
+    "Claiming implementation complete, machine PASS, M3, Beta or golden from this design gate"
+  ],
+  "decision": "AUTHORIZE FUTURE A-THEN-B TELEMETRY IMPLEMENTATION ONLY; FIRST PASS CPU FIXTURES AND FROZEN FAILURE REPLAY; THEN PREPARE FRESH TARGETED READINESS WITHOUT RUNNING IT"
+}

@@ -12,7 +12,7 @@
 #include "ObjLoader.h"
 #include "particle.h"
 #include "renderer.h"
-#include "shot.h"
+#include "render_resources.h"
 
 #include <cmath>
 
@@ -168,19 +168,22 @@ void renderDecoration(const RenderResources& resources)
     }
 }
 
-void renderBalls(const GameState& state, const RenderResources& resources)
+void renderBalls(
+    const PresentationSnapshot& snapshot, const RenderResources& resources)
 {
     GLfloat shadowMatrix[16] = {};
-    for (int i = 0; i < kBallCount; ++i) {
-        const BallState& ball = state.balls[i];
-        if (!ball.pocketed) {
+    for (const PresentationBall& ball : snapshot.balls) {
+        if (!ball.visible) {
+            continue;
+        }
+        glPushMatrix();
+        glTranslatef(ball.position.x, ball.position.y, ball.position.z);
+        if (ball.castsShadow) {
             for (int j = 0; j < 15; ++j) {
                 shadowMatrix[j] = 0.0f;
             }
             shadowMatrix[0] = shadowMatrix[5] = shadowMatrix[10] = 1.0f;
             shadowMatrix[7] = -1.0f / 405.0f;
-            glPushMatrix();
-            glTranslatef(ball.position.x, ball.position.y, ball.position.z);
             glPushMatrix();
             glTranslatef(0.0f, 400.0f, 0.0f);
             glMultMatrixf(shadowMatrix);
@@ -193,42 +196,44 @@ void renderBalls(const GameState& state, const RenderResources& resources)
             glDisable(GL_BLEND);
             glDepthMask(GL_TRUE);
             glPopMatrix();
-            glRotatef(ball.rotationAngle, ball.rotationAxis.x, ball.rotationAxis.y, ball.rotationAxis.z);
-            drawBall(kBallRadius, ball.texture);
-            glPopMatrix();
-        } else {
-            glPushMatrix();
-            glTranslatef(ball.position.x, ball.position.y, ball.position.z);
-            drawBall(kBallRadius, ball.texture);
-            glPopMatrix();
         }
+        glRotatef(
+            ball.rotationAngleDegrees,
+            ball.rotationAxis.x, ball.rotationAxis.y, ball.rotationAxis.z);
+        drawBall(kBallRadius, ball.legacyTexture);
+        glPopMatrix();
     }
 }
 
-void renderCue(const GameState& state, const RenderResources& resources)
+void renderCue(
+    const PresentationSnapshot& snapshot, const RenderResources& resources)
 {
     if (!resources.cueObj) {
         return;
     }
 
-    const BallState& cueBall = state.balls[0];
-    const Point3 cuePosition = cueStickPositionFromAim(
-        cueBall.position, state.aim.yaw, resources.shotPower,
-        resources.cueTipOffsetCm);
+    const CuePresentation& cue = snapshot.cue;
+    const float modelOriginBackoff =
+        cue.modelOriginBackoffCm - resources.cueTipOffsetCm;
+    const PresentationPoint cuePosition{
+        cue.referencePosition.x - cue.direction.x * modelOriginBackoff,
+        cue.referencePosition.y,
+        cue.referencePosition.z - cue.direction.z * modelOriginBackoff};
 
-    if (state.aim.showGuideLine) {
-        const Point3 lineStart = cueLineStartFromAim(state.aim.yaw);
-        const Point3 lineEnd = cueLineEndFromAim(state.aim.yaw, 150.0f);
+    if (cue.showGuideLine) {
         glPushMatrix();
-        glTranslatef(cueBall.position.x, cueBall.position.y, cueBall.position.z);
+        glTranslatef(
+            cue.referencePosition.x,
+            cue.referencePosition.y,
+            cue.referencePosition.z);
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_LIGHTING);
         glDisable(GL_DEPTH_TEST);
         glColor3f(1.0f, 0.88f, 0.1f);
         glLineWidth(2.0f);
         glBegin(GL_LINES);
-        glVertex3f(lineStart.x, lineStart.y, lineStart.z);
-        glVertex3f(lineEnd.x, lineEnd.y, lineEnd.z);
+        glVertex3f(cue.guideStart.x, cue.guideStart.y, cue.guideStart.z);
+        glVertex3f(cue.guideEnd.x, cue.guideEnd.y, cue.guideEnd.z);
         glEnd();
         glColor3f(1.0f, 1.0f, 1.0f);
         glEnable(GL_DEPTH_TEST);
@@ -248,12 +253,12 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(cuePosition.x, cuePosition.y, cuePosition.z);
-    glRotatef(cueStickRotationDegreesFromAim(state.aim.yaw), 0.0f, 1.0f, 0.0f);
+    glRotatef(cue.rotationDegrees, 0.0f, 1.0f, 0.0f);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[0]);
     glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[4], cueObj.vertices.size() - cueObj.mtlIndex[4]);
     glBindTexture(GL_TEXTURE_2D, resources.cueTextures[1]);
     glDrawArrays(GL_TRIANGLES, cueObj.mtlIndex[2], cueObj.mtlIndex[4] - cueObj.mtlIndex[2]);
-    glBindTexture(GL_TEXTURE_2D, cueBall.texture);
+    glBindTexture(GL_TEXTURE_2D, snapshot.balls[0].legacyTexture);
     glDrawArrays(GL_TRIANGLES, 0, cueObj.mtlIndex[2]);
     glPopMatrix();
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -262,16 +267,16 @@ void renderCue(const GameState& state, const RenderResources& resources)
     glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 }
 
-void renderPowerMeter(const RenderResources& resources)
+void renderPowerMeter(const HudViewModel& hud)
 {
-    if (!resources.showPowerMeter) {
+    if (!hud.showPowerMeter) {
         return;
     }
 
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0, resources.viewportWidth, 0, resources.viewportHeight);
+    gluOrtho2D(0, hud.viewportWidth, 0, hud.viewportHeight);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glPushMatrix();
@@ -281,9 +286,9 @@ void renderPowerMeter(const RenderResources& resources)
     glEnable(GL_BLEND);
     glColor4f(1.0f, 0.82f, 0.12f, 0.72f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    const GLfloat meterLeft = static_cast<GLfloat>(resources.viewportWidth) - 54.0f;
-    const GLfloat meterBottom = static_cast<GLfloat>(resources.viewportHeight) - 260.0f;
-    const GLfloat meterTop = meterBottom + resources.shotPower;
+    const GLfloat meterLeft = static_cast<GLfloat>(hud.viewportWidth) - 54.0f;
+    const GLfloat meterBottom = static_cast<GLfloat>(hud.viewportHeight) - 260.0f;
+    const GLfloat meterTop = meterBottom + hud.shotPower;
     glRectf(meterLeft, meterBottom, meterLeft + 36.0f, meterTop);
     glDisable(GL_BLEND);
     glEnable(GL_LIGHTING);
@@ -295,13 +300,14 @@ void renderPowerMeter(const RenderResources& resources)
     glMatrixMode(GL_MODELVIEW);
 }
 
-void renderParticles(const GameState& state, RenderResources& resources)
+void renderParticles(
+    const PresentationSnapshot& snapshot, RenderResources& resources)
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_DST_ALPHA);
-    for (int i = 0; i < kBallCount; ++i) {
+    for (int i = 0; i < kPresentationBallCount; ++i) {
         if ((resources.fired[i] || resources.allFired) && resources.emitters[i]) {
-            const BallState& ball = state.balls[i];
+            const PresentationBall& ball = snapshot.balls[i];
             resources.emitters[i]->emit(
                 -kBallRadius + ball.position.x,
                 kBallRadius + ball.position.x,
@@ -317,27 +323,31 @@ void renderParticles(const GameState& state, RenderResources& resources)
 
 }  // namespace
 
-void setupCameraFromGameState(const GameState& state)
+void setupCameraFromSnapshot(const CameraPresentation& camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(
         60.0f,
-        static_cast<GLdouble>(state.config.width) / static_cast<GLdouble>(state.config.height),
+        static_cast<GLdouble>(camera.viewportWidth) /
+            static_cast<GLdouble>(camera.viewportHeight),
         10.0,
         10000.0);
-    glTranslatef(state.camera.panX, state.camera.panY, state.camera.panZ);
+    glTranslatef(
+        camera.projectionPan.x,
+        camera.projectionPan.y,
+        camera.projectionPan.z);
     glMatrixMode(GL_TEXTURE);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(
-        state.camera.eye[0],
-        state.camera.eye[1],
-        state.camera.eye[2],
-        state.camera.target[0],
-        state.camera.target[1],
-        state.camera.target[2],
+        camera.eye.x,
+        camera.eye.y,
+        camera.eye.z,
+        camera.target.x,
+        camera.target.y,
+        camera.target.z,
         0.0,
         1.0,
         0.0);
@@ -374,17 +384,18 @@ void setupLights()
     glShadeModel(GL_SMOOTH);
 }
 
-void renderScene(const GameState& state, RenderResources& resources)
+void renderScene(
+    const PresentationSnapshot& snapshot, RenderResources& resources)
 {
     renderRoom(resources);
     renderTable(resources);
-    renderBalls(state, resources);
-    if (resources.showCue) {
-        renderCue(state, resources);
+    renderBalls(snapshot, resources);
+    if (snapshot.cue.visible) {
+        renderCue(snapshot, resources);
     }
     renderDecoration(resources);
-    renderParticles(state, resources);
-    renderPowerMeter(resources);
+    renderParticles(snapshot, resources);
+    renderPowerMeter(snapshot.hud);
 }
 
 }  // namespace billiardgl

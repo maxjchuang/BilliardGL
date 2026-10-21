@@ -1,0 +1,27 @@
+import copy,importlib.util,json,pathlib,unittest
+ROOT=pathlib.Path(__file__).resolve().parents[2];V=ROOT/'scripts/validate_wpa_ii_12_7_signed_push_review_declaration_lifecycle_implementation_design_gate.py';G=ROOT/'docs/rules/wpa-ii-12-7-signed-push-review-declaration-lifecycle-implementation-design-gate-v1.json'
+S=importlib.util.spec_from_file_location('gate',V);M=importlib.util.module_from_spec(S);S.loader.exec_module(M)
+class Tests(unittest.TestCase):
+ @classmethod
+ def setUpClass(c):c.v=json.loads(G.read_text())
+ def bad(self,f):v=copy.deepcopy(self.v);f(v);self.assertTrue(M.validate(v,False))
+ def test_valid(self):self.assertEqual(M.validate(self.v,True),[])
+ def test_status(self):self.bad(lambda v:v.update(status='IMPLEMENTED'))
+ def test_policy(self):self.bad(lambda v:v['authority_bindings']['root_selected_policy'].update(selected_option_id='OTHER'))
+ def test_threshold_enable(self):self.bad(lambda v:v['official_and_selected_boundary']['selected_machine_constants'].update(automatic_numeric_push_threshold_enabled=True))
+ def test_final(self):self.bad(lambda v:v['declaration_protocol_contract'].update(final_does_not_attest_measurement_push_or_foul=False))
+ def test_microtrace(self):self.bad(lambda v:v['declaration_protocol_contract'].update(positive_impulse_local_microtrace_or_modeled_duration_may_attest=True))
+ def test_payload(self):self.bad(lambda v:v['exact_payload_schemas']['forbidden_payload_fields'].pop())
+ def test_d5(self):self.bad(lambda v:v['d5_and_classification_blocker'].update(d5_complete=True))
+ def test_duration(self):self.bad(lambda v:v['d5_and_classification_blocker'].update(duration_threshold=0.1))
+ def test_distance(self):self.bad(lambda v:v['d5_and_classification_blocker'].update(distance_threshold=0.1))
+ def test_fact(self):self.bad(lambda v:v['d5_and_classification_blocker'].update(declaration_is_measurement_fact=True))
+ def test_result(self):self.bad(lambda v:v['d5_and_classification_blocker'].update(declaration_is_push_or_foul_result=True))
+ def test_allowlist(self):self.bad(lambda v:v['implementation_allowlist']['production_files'].append('src/Billiards/physics.cpp'))
+ def test_forbidden(self):self.bad(lambda v:v['implementation_allowlist'].update(physics_telemetry_shotfacts_rules_topology_cue_contact_or_coupled_contact_edit_allowed=True))
+ def test_positive(self):self.bad(lambda v:v['required_fixtures']['positive'].pop())
+ def test_negative(self):self.bad(lambda v:v['required_fixtures']['negative'].pop())
+ def test_source(self):self.bad(lambda v:v['source_bindings'].pop())
+ def test_authorized(self):self.bad(lambda v:v['completion_boundary'].update(implementation_authorized_by_this_gate=True))
+ def test_audit(self):self.bad(lambda v:v['completion_boundary'].update(audit_row_promoted=True))
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,2212 @@
+{
+  "aggregate": {
+    "status": "NOT_RUN"
+  },
+  "evidence_boundary": {
+    "agent_generated_participant_evidence_allowed": false,
+    "aggregate_before_eight_complete_sessions_allowed": false,
+    "flat_proof_is_user_study": false,
+    "gpu_capture_is_user_study": false,
+    "synthetic_or_simulated_participant_allowed": false
+  },
+  "group_contract": {
+    "billiards_experienced_user": 3,
+    "duplicate_participant_ids_allowed": false,
+    "project_new_user": 5,
+    "total": 8
+  },
+  "protocol_path": "docs/art/phase3-user-study-protocol.md",
+  "research_ethics": {
+    "agents_or_robots_allowed": false,
+    "anonymous_ids_required": true,
+    "participant_and_observer_attestation_required": true,
+    "pii_collection_allowed": false,
+    "project_members_allowed": false,
+    "real_humans_only": true
+  },
+  "schema": "phase3_user_study_v1",
+  "sessions": [
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "project_new_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "new-user-01",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "project_new_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "new-user-02",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "project_new_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "new-user-03",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "project_new_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "new-user-04",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "project_new_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "new-user-05",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "billiards_experienced_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "billiards-01",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "billiards_experienced_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "billiards-02",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    },
+    {
+      "attestations": {
+        "observer": {
+          "accepted": "PENDING",
+          "observer_id": "PENDING",
+          "signed_utc": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        },
+        "participant": {
+          "accepted": "PENDING",
+          "signed_utc": "PENDING",
+          "signer_code": "PENDING",
+          "statement_version": "phase3_user_study_attestation_v1"
+        }
+      },
+      "device": {
+        "device_code": "PENDING",
+        "dpi": "PENDING",
+        "gpu_device": "PENDING",
+        "input_devices": "PENDING",
+        "logical_viewport_px": "PENDING",
+        "operating_system": "PENDING",
+        "physical_viewport_px": "PENDING"
+      },
+      "eligibility": {
+        "agent_or_robot": "PENDING",
+        "first_time_billiardgl_user": "PENDING",
+        "group_qualification_attested": "PENDING",
+        "in_person_billiards_experience_years": "PENDING",
+        "project_member": "PENDING",
+        "real_human": "PENDING"
+      },
+      "evidence_bindings": {
+        "build_sha256": "PENDING",
+        "capture_matrix_sha256": "sha256:835210fb2a458edda80e6ba54d0dcda14805e15b5ca54c5a3c3747d154192766",
+        "content_sha256": "PENDING",
+        "gpu_capture_manifest_sha256": "PENDING",
+        "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+        "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+      },
+      "experienced_debrief": {
+        "assist_level_answer": "PENDING",
+        "assist_level_correct": "PENDING",
+        "shot_direction_answer": "PENDING",
+        "shot_direction_correct": "PENDING",
+        "tip_contact_answer": "PENDING",
+        "tip_contact_correct": "PENDING"
+      },
+      "group": "billiards_experienced_user",
+      "participant_id": "PENDING",
+      "pii_review": {
+        "performed": "PENDING",
+        "reviewer_observer_id": "PENDING",
+        "status": "PENDING"
+      },
+      "session": {
+        "duration_ms": "PENDING",
+        "ended_utc": "PENDING",
+        "started_utc": "PENDING"
+      },
+      "slot_id": "billiards-03",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "help_opened_before_power_and_tip_found": "PENDING",
+            "power_control_found_at_ms": "PENDING",
+            "tip_control_found_at_ms": "PENDING",
+            "valid_shot": "PENDING",
+            "valid_shot_at_ms": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "application_launched"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "hud_visible"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "power_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "tip_control_found"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "aim_entered"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_released"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "valid_shot_confirmed"
+            }
+          ],
+          "task_id": "first_valid_shot"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "low_draw_submitted": "PENDING",
+            "low_draw_tip_offset_xy_R": "PENDING",
+            "right_english_submitted": "PENDING",
+            "right_english_tip_offset_xy_R": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "low_draw_submitted"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "right_english_submitted"
+            }
+          ],
+          "task_id": "low_draw_and_right_english"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "overhead_selected": "PENDING",
+            "player_low_restored": "PENDING",
+            "shot_intent_after_sha256": "PENDING",
+            "shot_intent_before_sha256": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_recorded"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "overhead_selected"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "player_low_restored"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "shot_intent_rechecked"
+            }
+          ],
+          "task_id": "overhead_to_player_low_roundtrip"
+        },
+        {
+          "end_ms": "PENDING",
+          "error_count": "PENDING",
+          "help_open_count": "PENDING",
+          "measurement": {
+            "foul_explanation": "PENDING",
+            "foul_reason_identified": "PENDING",
+            "handoff_explanation": "PENDING",
+            "handoff_identified": "PENDING"
+          },
+          "open_response": "PENDING",
+          "start_ms": "PENDING",
+          "status": "PENDING",
+          "steps": [
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "foul_explained"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_presented"
+            },
+            {
+              "at_ms": "PENDING",
+              "errors": "PENDING",
+              "help_opened": "PENDING",
+              "outcome": "PENDING",
+              "step_id": "handoff_explained"
+            }
+          ],
+          "task_id": "foul_and_handoff_explanation"
+        }
+      ]
+    }
+  ],
+  "status": "NOT_RUN",
+  "study_id": "phase3_first_shot_and_controls_v1",
+  "task_contract": {
+    "first_valid_shot": {
+      "required_steps": [
+        "application_launched",
+        "hud_visible",
+        "power_control_found",
+        "tip_control_found",
+        "aim_entered",
+        "shot_released",
+        "valid_shot_confirmed"
+      ]
+    },
+    "foul_and_handoff_explanation": {
+      "required_steps": [
+        "foul_presented",
+        "foul_explained",
+        "handoff_presented",
+        "handoff_explained"
+      ]
+    },
+    "low_draw_and_right_english": {
+      "required_steps": [
+        "low_draw_selected",
+        "low_draw_submitted",
+        "right_english_selected",
+        "right_english_submitted"
+      ]
+    },
+    "overhead_to_player_low_roundtrip": {
+      "required_steps": [
+        "shot_intent_recorded",
+        "overhead_selected",
+        "player_low_restored",
+        "shot_intent_rechecked"
+      ]
+    }
+  },
+  "thresholds": {
+    "all_four_tasks_completion_rate_min": 1.0,
+    "camera_roundtrip_shot_intent_unchanged_rate_min": 1.0,
+    "experienced_tip_direction_assist_explanation_rate_min": 1.0,
+    "new_user_first_valid_shot_median_seconds_max": 30.0,
+    "new_user_power_and_tip_without_help_rate_min": 0.8
+  }
+}

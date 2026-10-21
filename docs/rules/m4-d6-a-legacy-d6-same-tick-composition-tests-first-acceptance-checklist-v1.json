@@ -1,0 +1,158 @@
+{
+  "schema": "m4_d6_a_legacy_d6_same_tick_composition_tests_first_acceptance_checklist_v1",
+  "schema_version": 1,
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_TESTS_FIRST_NOT_AUTHORIZED_NO_PRODUCTION_CHANGE",
+  "scope": "Narrow D6-A composition correction: when the existing event-driven cloth/contact solver changes a supported ball into a state requiring 3D departure handling at an exact contact TOI, the unconsumed same-tick tail must enter the D6-A continuous integrator from that TOI. This gate does not weaken an initial-penetration guard, clamp a tick-end state, replay a full tick, publish D6-B telemetry, start D6-C classification, or authorize rules, product, UI, renderer, GPU, readiness, capture, threshold, profile, asset, CMake, or public-schema changes.",
+  "frozen_bindings": [
+    {
+      "role": "d6_a_parent_design_gate",
+      "path": "docs/rules/m4-d6-a-3d-table-departure-physics-foundation-implementation-design-gate-v1.json",
+      "sha256": "676b70795fc45e4e3cc4f5c8ffa3a236c1e1e83aea9371e422ff9b54e87264d1"
+    },
+    {
+      "role": "d6_a_cross_domain_tests_first_checklist",
+      "path": "docs/rules/m4-d6-a-cross-domain-ball-ball-swept-contact-tests-first-acceptance-checklist-v1.json",
+      "sha256": "18e32ac086c6985d82dc8297f78758bb0c7734cbe60bbb66f432b6605dc303c1"
+    },
+    {
+      "role": "focused_d6_a_cpu_test_source",
+      "path": "tests/table_departure_geometry_tests.cpp",
+      "sha256": "f5998396e9b402dda6feec4db4b11e21f3d50fb0d5cf087c8e6dfd1074ff9478"
+    },
+    {
+      "role": "focused_d6_a_implementation",
+      "path": "src/Billiards/table_departure_geometry.cpp",
+      "sha256": "82a969ea2f96393634564fad72839a1546493136db8a83cdceb2c140d895008d"
+    },
+    {
+      "role": "legacy_composition_source_before_correction",
+      "path": "src/Billiards/physics.cpp",
+      "sha256": "bad3d1ac32c398463ac3048b76245b4b988b4c45ff6ae05435e4a3c70148576f"
+    },
+    {
+      "role": "interactive_120hz_control_source",
+      "path": "tests/interactive_physics_tests.cpp",
+      "sha256": "795ed009981b9ba9e0ba327d73d1b3f06e8e143b5739ffb10382058b2e087396"
+    },
+    {
+      "role": "accepted_parent_cmake_lineage",
+      "path": "CMakeLists.txt",
+      "sha256": "a227883fb85290a9cde3fff1ab33ab17d4a6d096e1d7fe7e726de64aba5408bc"
+    }
+  ],
+  "reproducible_blocker": {
+    "focused_d6_a_o0_o2": "PASS with test SHA f5998396e9b402dda6feec4db4b11e21f3d50fb0d5cf087c8e6dfd1074ff9478",
+    "interactive_control": "BilliardsInteractivePhysicsTests fails the exact assertion 'every 120 Hz break tick must converge without physics failure'",
+    "first_failure_tick": 180,
+    "mapped_failure": "InvalidControls from private D6-A AmbiguousInitialPenetration",
+    "ball_index": 15,
+    "entry_domain": "Airborne",
+    "entry_position_cm": [11.5624, 89.3074, 83.5078],
+    "entry_velocity_cm_s": [10.1418, -8.17221, 16.1194],
+    "cloth_supported_center_y_cm": 89.3415,
+    "root_cause": "The legacy contact solver produces a downward vertical velocity and Airborne domain for a previously ClothSupported ball late in tick 179, after the tick's D6-A branch has already run. Tick 180 correctly rejects the already-below-cloth initial state."
+  },
+  "selected_composition_contract": {
+    "model": "EVENT_TOI_HANDOFF_OF_UNCONSUMED_TAIL",
+    "handoff_trigger": "An existing converged legacy event/island at absolute whole-tick TOI changes any non-pocketed supported ball to Airborne or otherwise creates a state that requires D6-A continuous 3D handling.",
+    "handoff_state": "Use the staged post-island position, velocity, angular state, support reaction/domain, pocket state, stable ball identity, event budget and gameplay-event state at the exact handoff TOI.",
+    "tail_duration": "original whole-tick duration minus the exact handoff TOI; never the original whole-tick duration and never an inferred duration from the invalid tick-end state",
+    "candidate_order": "The D6-A tail participates in the same absolute whole-tick TOI lineage. Contacts, table candidates, pocket transitions and later legacy candidates are ordered or fail closed under the existing tolerance and ambiguity contracts.",
+    "single_integration": "Every analytic interval is integrated exactly once. The legacy surface solver may not advance a handed-off ball through the tail, and D6-A may not replay the prefix.",
+    "no_end_state_repair": "A tick-end clamp, domain flip, support-height snap, velocity-y zeroing, state rewind without TOI lineage, or next-tick recovery does not satisfy this contract.",
+    "initial_guard": "The existing D6-A initial-below-cloth, rail-solid and outside-floor guards remain unchanged and continue to fail closed for genuinely invalid public input.",
+    "implementation_shape": "A private physics.cpp composition seam may split/recurse at the existing event TOI or merge one deterministic staged scheduler. It may call existing D6-A APIs/helpers but may not add a public result field or duplicate the rigid contact resolver."
+  },
+  "atomicity_and_telemetry_contract": {
+    "staging": "The entire legacy prefix, handoff, D6-A tail, any later candidate and all pocket/domain/counter changes execute on one temporary whole-tick GameState.",
+    "success_commit": "Commit position, velocity, angularVelocity, rotationAxis, rotationAngle, speed, motionState, pocketed, pocket interaction, physicalDomain, capture sequence, pocket count, ballsMoving and gameplay events together only after the full tick succeeds.",
+    "failure_rollback": "Any legacy, handoff, D6-A tail, ambiguity, budget, nonfinite or passive-energy failure restores the exact pre-tick transactional state and publishes no partial success telemetry or private D6-A event list.",
+    "legacy_contact_telemetry": "Existing canonical PhysicsContactRecord and SolverEventRecord for the legacy prefix remain exactly once with the same contact TOI, island identity, impulse, residual, energy and position payload as the independently executed prefix.",
+    "d6_private": "D6-A handoff, return, landing and departure records remain physics-private and are not appended to canonical PhysicsStepTelemetry, ShotFacts, rules outcomes or product UI.",
+    "surface_and_plane_lineage": "Canonical surface-motion and requested plane-observation records cover each interval once, use absolute whole-tick times and segment ordinals, and contain neither gaps nor duplicate prefix/tail records.",
+    "no_handoff_control": "Ticks with no supported-to-D6 handoff remain byte/record equivalent to the existing legacy control path, including telemetry ordering and gameplay events.",
+    "energy": "Existing per-island and tick passive-energy tolerances remain unchanged; the composition layer may not add energy or multiply a tolerance by an unreported private event."
+  },
+  "required_tests_first_red_fixtures_exact": [
+    {
+      "id": "C01_DOWNWARD_SUPPORTED_IMPULSE_HANDOFF_AND_RETURN",
+      "requirement": "Construct one existing legacy cloth ball-ball island at independent TOI t whose converged impulse gives a ClothSupported ball negative vertical velocity. Prove the same tick hands the post-island state to D6-A, produces the independently rooted ClothReturn in the remaining tail, never begins a later tick below support, and integrates prefix and tail once."
+    },
+    {
+      "id": "C02_UPWARD_SUPPORTED_IMPULSE_RELEASE",
+      "requirement": "A legacy island that gives a supported ball positive vertical velocity hands it off as Airborne at the contact TOI. Independent ballistic/table roots prove the tail domain sequence, including a later landing when present, without a clamp or duplicate contact."
+    },
+    {
+      "id": "C03_ZERO_OR_HORIZONTAL_IMPULSE_NO_HANDOFF_CONTROL",
+      "requirement": "A no-contact tick and a converged legacy contact whose supported participants do not require D6-A remain byte-equivalent in GameState and record-equivalent in canonical telemetry to the pre-correction legacy path."
+    },
+    {
+      "id": "C04_EXACT_TOI_WHOLE_VERSUS_SPLIT_EQUIVALENCE",
+      "requirement": "Whole-tick composition agrees within sealed solver tolerances with an independently executed legacy prefix at the exact event TOI followed by a D6-A tail. Absolute event ordering, stable ball identity, domains and transactional fields agree; a float horizon just before the TOI does not claim the handoff."
+    },
+    {
+      "id": "C05_SAME_TOI_AMBIGUITY_ROLLBACK",
+      "requirement": "A handoff whose first D6-A candidate is indistinguishable from another legacy/table/pocket candidate at the same absolute TOI fails with the selected exact ambiguity code, empty committed private events and byte-exact whole-state rollback."
+    },
+    {
+      "id": "C06_EVENT_BUDGET_AND_CHILD_FAILURE_PROPAGATION",
+      "requirement": "The shared whole-tick event budget counts the prefix island and tail candidates once. Exhaustion returns EventBudget with whole rollback; a genuine D6-A InvalidState or nonfinite failure propagates without being broadly translated to EventBudget."
+    },
+    {
+      "id": "C07_CANONICAL_TELEMETRY_PREFIX_EQUIVALENCE",
+      "requirement": "The legacy contact and solver records emitted by a successful handoff case equal an independent prefix oracle field-for-field and occur exactly once. D6-A private return/landing/departure events do not grow canonical contact, solver or public schema denominators."
+    },
+    {
+      "id": "C08_PLANE_OBSERVATION_AND_ANALYTIC_SEGMENT_CONTINUITY",
+      "requirement": "Requested plane crossings and analytic surface segments across the seam use absolute whole-tick time, strictly ordered segment ordinals and exact one-interval coverage. Prefix/tail duplication, gaps, local-time publication and incomplete attestations fail closed."
+    },
+    {
+      "id": "C09_TRANSACTIONAL_FAILURE_MATRIX",
+      "requirement": "Failure injected before the legacy event, at handoff validation, during D6-A tail, during later legacy work and during final finite/energy validation restores every staged GameState field and publishes no partial success telemetry, gameplay event, pocket counter or domain mutation."
+    },
+    {
+      "id": "C10_INITIAL_GUARD_AND_NO_REPAIR_NEGATIVES",
+      "requirement": "Direct public input already below cloth support or embedded in rail/outside geometry still fails the existing D6-A guard. Source and runtime mutations that weaken the guard, clamp y, zero vy, flip domain at tick end, replay the full dt, or delay repair to the next tick must fail."
+    },
+    {
+      "id": "C11_REAL_120HZ_BREAK_CONTROL",
+      "requirement": "The unchanged interactive GameRuntime rack, aim pi/2, power 80 and Shoot sequence advances at 1/120 second until rest: every tick succeeds, the run ends before 20000 ticks and within the existing CPU budget, and the former tick-180 ball-15 path includes at least one real same-tick handoff rather than passing because the break no longer reaches that topology."
+    },
+    {
+      "id": "C12_PRIVATE_SCOPE_AND_CONSUMER_NEGATIVE",
+      "requirement": "Static audits prove the correction is confined to the exact allowlist, introduces no public D6-B telemetry field, ShotFacts/rules/product/UI/renderer/GPU consumer, coordinate whitelist, threshold or profile change, and leaves CMake unchanged."
+    }
+  ],
+  "tests_first_sequence": [
+    "Add substantive CPU fixtures to the existing D6-A focused test and interactive control without changing production; freeze an honest RED whose first cause is the missing event-TOI handoff.",
+    "Root and independent TA reproduce the RED and verify all twelve fixtures, especially C07 telemetry equivalence, C09 rollback and C11 real break topology, before production authorization.",
+    "Implement only the minimum private composition seam in physics.cpp; table_departure_geometry files may be edited only if a separately proven API seam is impossible and Root explicitly revalidates that exact expansion.",
+    "Run focused O0/O2 with identical semantic output, InteractivePhysics O2, then the existing broad CPU physics targets. Do not configure a new target or run GPU/readiness/capture.",
+    "Freeze commands, source/object/binary/stdout/stderr hashes and a CPU implementation receipt. D6-A and downstream Release remain not source-stable until a separate independent acceptance."
+  ],
+  "future_correction_allowlist_after_root_revalidation": {
+    "production_files_exact": [
+      "src/Billiards/physics.cpp"
+    ],
+    "test_files_exact": [
+      "tests/table_departure_geometry_tests.cpp",
+      "tests/interactive_physics_tests.cpp"
+    ],
+    "table_departure_geometry_edit_allowed": false,
+    "physics_header_or_public_api_edit_allowed": false,
+    "ball_ball_contact_or_solver_edit_allowed": false,
+    "cmake_edit_allowed": false,
+    "profile_threshold_or_formula_edit_allowed": false
+  },
+  "acceptance_boundary": {
+    "design_checklist_complete": true,
+    "root_revalidation_required": true,
+    "tests_first_red_authorized_by_this_artifact": false,
+    "production_edit_authorized_by_this_artifact": false,
+    "configure_or_new_target_authorized": false,
+    "gpu_readiness_capture_or_authorization": false,
+    "d6_a_source_stable": false,
+    "d6_b_or_d6_c_started": false,
+    "product_or_visual_pass_claimed": false
+  }
+}

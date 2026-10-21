@@ -1,0 +1,276 @@
+{
+  "schema": "billiardgl.phase4.v19.cp4_d_product_ui_chrome_submission_correction_design_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_PRODUCT_UI_CURRENT_LDR_CHROME_SUBMISSION_DESIGN_CORRECTION_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU_NO_AUTH",
+  "scope": "Design-only, fail-closed correction for the CP4 D chrome-submission blocker. The selected path submits the exact current CP2 trajectory-inset chrome through the existing Product UI runtime/GPU path into the current product LDR before the final full-output staging copy. It does not implement or authorize production, CMake, GPU, readiness, capture, machine, TA-visual, human-comprehension, product, M3, golden, or beta work.",
+  "frozen_bindings": [
+    {
+      "path": "docs/art/phase4-v19-cp4-visible-integration-implementation-acceptance-checklist-v1.json",
+      "sha256": "f43bf8dba7b99673fb9a2db4a4cc9ddb686816c92de60ddc203721de80d5bc69"
+    },
+    {
+      "path": "docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json",
+      "sha256": "e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"
+    },
+    {
+      "path": "docs/art/phase4-v19-cp2-layout-draw-list-independent-ta-acceptance-addendum-v1.json",
+      "sha256": "6e7724df1a977af914b427538728f476d865db54c6cf95a3ae112e9de6172dd6"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp2-layout-draw-list-implementation-v1/receipt.json",
+      "sha256": "2524223aa320ff5aecb70a164bfeac471d9fc36f09a67b30a1bb7486333bbbc5"
+    },
+    {
+      "path": "docs/art/phase4-v19-cp3-offscreen-atomic-independent-ta-acceptance-addendum-v1.json",
+      "sha256": "46dd31775ce501969a8079171d8ff106c8de4bf9698b04ba0c09cfed21f6007d"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp3-offscreen-atomic-implementation-v1/receipt.json",
+      "sha256": "9848e3f869db91f547e6c2cce1e4f6067538702a6dd04cbb18a585c57007133a"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp4-checkpoint-d-content-op-receipt-red-v8/baselines.txt",
+      "sha256": "a0cf724c8dd0fbd53a7d7757c6eedb9fe685314cf52a20342955fe75235aafa3"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp4-checkpoint-d-content-op-receipt-red-v8/command.txt",
+      "sha256": "773c6ad07b6c9887b043b6cc2226c1772448c2cf7333a814e0f04a46331275e1"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp4-checkpoint-d-content-op-receipt-red-v8/stderr.txt",
+      "sha256": "f9683410dcbb57bca350d209a498a104483512bfceb03be850b2d37de786bea5"
+    },
+    {
+      "path": "docs/evidence/phase4-v19-cp4-checkpoint-d-content-op-receipt-red-v8/exit-code.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    }
+  ],
+  "nonfinal_blocker_binding": {
+    "evidence_kind": "INDEPENDENT_STATIC_CONTROL_FLOW_FINDING_ON_NONFINAL_D_CANDIDATE_NO_IMPLEMENTATION_PASS",
+    "statement": "The CP4 D coordinate-fixed NONFINAL candidate passes the corrected semantic source/destination shader mapping, but production renders only the ordinary ProductUiFrame. current.chrome is audited by a callback that performs no draw, while productChromeAlreadyInCurrentLdr is set true. The final full-LDR copy therefore cannot prove panel, borders, seven bilingual text rows, toggle, or focus were submitted.",
+    "statement_sha256": "57aebbd960fad492e068f1daff7c56c7614aa242e7d4beb7f57f35ce009dc930",
+    "candidate_source_sha256": {
+      "src/Billiards/render/modern/trajectory_inset_visible_integration.h": "823f9d3560cdc930e6012b56446307d26314e6d7ac4786a8c8d2448dc8fcec74",
+      "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp": "0fbd08d194e3626f562fd54476d2be3a53d5f2edb08c5b0505d0b3afdff85580",
+      "src/Billiards/render/modern/modern_renderer.h": "f86f93a6ba05df4b1273b20c1b1c57db69017aa961e53f06d2663c251a776b99",
+      "src/Billiards/render/modern/modern_renderer.cpp": "0d105fead39e5fca14fb75230c8ef06a4a7709cea21c6cb2250b475a95ee9b27",
+      "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp": "2beba6cd7c1429388f0df0fe7f6108df18f60a29b9099302f196e9835a973932"
+    },
+    "candidate_is_frozen_or_accepted": false,
+    "coordinate_mapping_fix_is_not_chrome_submission_proof": true
+  },
+  "root_selected_correction_binding": {
+    "option": "A_PRODUCT_UI_CURRENT_LDR_CHROME_SUBMISSION",
+    "statement": "Root倾向A：在现有product_ui pass真正提交current.chrome到current LDR，再final full-copy；避免D final重复普通UI。Gate需精确allowlist product UI renderer/runtime/draw seam、submitted primitive/token/rect/focus ledger、draw failure fail-closed、非current chrome、final cutout不覆盖chrome；CPU/static/mock only，production authorization false，等root复验。",
+    "statement_sha256": "4fcb3a459dd5efd2aef911396f14150e75fd58f5d5cf703c8432dd241bac84d1",
+    "selected": true,
+    "final_staging_duplicate_ui_option_selected": false
+  },
+  "supersession_contract": {
+    "superseded_nonfinal_assumption": "productChromeAlreadyInCurrentLdr may be set true after ordinary ProductUiFrame submission without a resource-bound receipt for current.chrome",
+    "replacement": "productChromeAlreadyInCurrentLdr becomes true only after the existing Product UI GPU path has accepted the exact current.chrome semantic inventory, submitted its actual converted vertex/batch streams into the current LDR, and receipted them for the same session/frame/layout/package identity.",
+    "corrected_order": [
+      "build and audit exact current frame, CP2 layout, and current.chrome",
+      "submit ordinary Product UI and exact current.chrome into current product LDR in the product_ui pass",
+      "verify the resource-bound chrome receipt and seal current-LDR chrome identity",
+      "create final full-output staging and copy the complete current product LDR exactly once",
+      "composite CP3 inset color and copy CP3 inset semantics only into the exact transparent cutout",
+      "restore state, perform one prevalidated terminal publication, then present"
+    ],
+    "cp3_plot_publish_before_chrome_wording_in_original_checklist_is_replaced_for_option_a": true,
+    "final_staging_may_draw_tone_or_submit_ordinary_ui_again": false,
+    "all_cp1_geometry_semantics_cp2_layout_chrome_geometry_cp3_resource_and_other_cp4_identity_contracts_unchanged": true,
+    "original_cp4_checklist_may_be_used_without_this_correction": false
+  },
+  "future_candidate_exact_allowlist_not_authorized": [
+    "src/Billiards/render/modern/modern_product_ui_runtime.h",
+    "src/Billiards/render/modern/modern_product_ui_runtime.cpp",
+    "src/Billiards/render/modern/modern_renderer_product_ui.h",
+    "src/Billiards/render/modern/modern_renderer_product_ui.cpp",
+    "src/Billiards/render/ui/product_ui_gpu_renderer.h",
+    "src/Billiards/render/ui/product_ui_gpu_renderer.cpp",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.h",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp",
+    "src/Billiards/render/modern/modern_renderer.h",
+    "src/Billiards/render/modern/modern_renderer.cpp",
+    "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp"
+  ],
+  "frozen_files_forbidden_to_edit": [
+    "src/Billiards/training/trajectory_inset_model.h",
+    "src/Billiards/training/trajectory_inset_model.cpp",
+    "src/Billiards/training/trajectory_inset_renderer.h",
+    "src/Billiards/training/trajectory_inset_renderer.cpp",
+    "src/Billiards/render/ui/product_shell_layout.h",
+    "src/Billiards/render/ui/product_shell_layout.cpp",
+    "src/Billiards/render/ui/product_shell_draw_list.h",
+    "src/Billiards/render/ui/product_shell_draw_list.cpp",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.h",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp",
+    "CMakeLists.txt"
+  ],
+  "product_ui_submission_contract": {
+    "input": "The exact current TrajectoryInsetVisibleCurrentFrame chrome object after CP2 layout and draw-list audits; no regenerated, cached, inferred, screen-only, coordinate-selected, or caller-authored substitute.",
+    "runtime_seam": "The existing Product UI runtime/pass receives an optional typed supplemental trajectory-chrome request. Absent, OFF, rejected, stale, invalid, already-consumed, or noncurrent input performs zero supplemental atlas, upload, draw, receipt, or final-publication work.",
+    "gpu_conversion": "Convert each semantic chrome primitive through the existing Product UI SDF/solid renderer, existing straight-alpha blend, current viewport, current font atlas and current palette roles. No new final-staging UI shader or duplicate tone application is allowed.",
+    "bilingual_atlas": "Before any draw, the exact seven ordered strings must decode as UTF-8 and every required English, Chinese, punctuation and em-dash codepoint must be present in the current frozen atlas generation; missing glyph, fallback glyph, atlas drift, measure failure or clipped-to-empty text fails closed.",
+    "current_identity_fields": [
+      "sessionSerial",
+      "frameSerial",
+      "layoutSerial",
+      "cp1GenerationId",
+      "cp1 five ordered digests",
+      "cp1GeometryDigest",
+      "cp2ProfileId",
+      "cp2LayoutDigest",
+      "cp2ExclusionDigest",
+      "chromeSemanticDigest",
+      "atlasCacheKey",
+      "palette",
+      "physicalWidth",
+      "physicalHeight"
+    ],
+    "cache_policy": "The supplemental chrome request and its GPU receipt are frame-local, consumed exactly once, and are never included in or recovered from the ordinary shell-frame cache.",
+    "ordinary_ui_compatibility": "The ordinary ProductUiFrame remains authoritative for existing UI. Supplemental chrome may add only the frozen CP2 primitive inventory and may not delete, reorder, recolor, relocate, resize or relabel ordinary UI."
+  },
+  "exact_current_chrome_semantic_inventory": {
+    "ordered_text_exact": [
+      "TRAJECTORY / 轨迹",
+      "HEAD / 开球端",
+      "FOOT / 底端",
+      "ACTUAL / 实际 — paired continuous rails",
+      "PREDICTED / 预测 — centerline dashes",
+      "END / 终点 — endpoint marker",
+      "Trajectory inset / 轨迹小窗"
+    ],
+    "unfocused_semantic_primitive_count": 16,
+    "focused_semantic_primitive_count": 17,
+    "panel": "exact ordered four nonempty outside-cutout rectangles produced from current layout.panelRect minus current layout.plotCutoutRect, token trajectory_inset_panel, kind OpaquePanel, opacity 0.94",
+    "borders": "exactly one each trajectory_inset_border_0 through _3, kind Border, exact current layout.borderRects order",
+    "text": "exactly one semantic row each trajectory_inset_text_0 through _6, kind Text, exact ordered string and exact current title/orientation/legend/toggle-label rect",
+    "toggle": "exactly one trajectory_inset_toggle, kind Toggle, exact current layout.toggleRect",
+    "focus": "exactly one trajectory_inset_focus, kind Focus, exact current layout.focusRect iff current insetControlFocused is true; otherwise zero",
+    "all_primitives_excluded_from_trajectory_denominator": true,
+    "all_semantic_primitive_rectangles_have_zero_area_overlap_with_current_cutout": true,
+    "semantic_member_probe_and_denominator_contribution": [0, 0, 0],
+    "foreign_missing_duplicate_reordered_relocated_resized_rekinded_retokened_retexted_reopacity_or_focus_mismatch_fails_closed": true
+  },
+  "resource_bound_submission_receipt_contract": {
+    "required_receipt_fields_in_order": [
+      "sessionSerial",
+      "frameSerial",
+      "layoutSerial",
+      "cp1GenerationId",
+      "cp2LayoutDigest",
+      "cp2ExclusionDigest",
+      "chromeSemanticDigest",
+      "atlasCacheKey",
+      "targetCurrentLdrFramebuffer",
+      "targetCurrentLdrColorTexture",
+      "physicalWidth",
+      "physicalHeight",
+      "palette",
+      "semanticPrimitiveCount",
+      "orderedPrimitiveDigest",
+      "submittedSolidVertexCount",
+      "submittedSdfVertexCount",
+      "submittedBatchCount",
+      "submittedDrawCallCount",
+      "orderedBatchDigest",
+      "cutoutZeroCoverageProofDigest",
+      "glError",
+      "stateRestored"
+    ],
+    "actual_not_echo": "The runtime/GPU renderer constructs the receipt from the accepted current object, actual converted vertex/batch streams, actual target resource keys, actual adjacent GL error query and captured/restored state. Echoing request fields without comparing actual work is forbidden.",
+    "mapping": "Every exact semantic primitive retains a one-to-one semantic ledger row and a one-to-many actual solid/SDF batch and vertex range mapping. All ranges are finite, in-bounds, nonempty for visible rows, ordered, disjoint, and their union equals the supplemental chrome submission only.",
+    "success_condition": "productChromeAlreadyInCurrentLdr may become true only after core independently recomputes and exact-compares the current identity, semantic digest, converted stream digest, resource target, cutout-zero-coverage digest, GL error zero and state restoration.",
+    "instrumentation_parity": "Instrumentation OFF and ON have identical supplemental visible-color, semantic-inventory, text, focus, batch-order and cutout-zero-coverage ledgers; supplemental chrome writes no trajectory semantic token."
+  },
+  "cutout_and_final_staging_contract": {
+    "product_ui_target": "The supplemental chrome is written only to the same current product LDR color attachment already targeted by the ordinary product_ui pass.",
+    "cutout_transparency": "All submitted chrome physical coverage is outside the exact current plotCutoutRect. Scissor, glyph spread, line thickness, SDF fringe, triangle expansion and blend coverage are included; geometry-rectangle-only proof is insufficient.",
+    "final_copy": "After a successful resource-bound chrome receipt, CopyCurrentProductLdr performs one full-size sample-1 color copy into final staging; it preserves the submitted chrome byte-for-byte outside the cutout and does not assert or redraw it.",
+    "plot_composite": "CP3 color and semantic operations write only the exact cutout destination. Their destination coverage must have zero physical sample intersection with every current chrome sample and may not overwrite panel, border, text, toggle or focus.",
+    "tone_contract": "Current product LDR including ordinary UI and chrome has exactly one completed tone application lineage. Final staging performs zero tone application and zero ordinary or supplemental UI draw.",
+    "main_world_trajectory_tokens": 0,
+    "world_overlay_draw_calls": 0
+  },
+  "atomic_failure_and_noncurrent_contract": {
+    "draw_failure": "Any supplemental atlas, conversion, upload, scissor, draw, end-frame, GL-error, receipt, state-restore, final-copy, CP3-composite or semantic-copy failure invalidates CP3/final staging and forbids terminal publication and product_present for that accepted inset request. The ordinary LDR may remain offscreen, but no failed inset or partial chrome reaches the default framebuffer.",
+    "restore_failure": "A failed or throwing Product UI state restore poisons the adapter; same-context retries perform zero supplemental work until explicit context loss and a new dispatch/resource namespace with fresh serials and generations.",
+    "noncurrent_chrome": "Chrome from N, cached shell chrome, a second build, or any mismatched session/frame/layout/package/atlas/palette/viewport/focus identity is rejected before supplemental draw. The runtime may not silently rebuild or substitute it.",
+    "valid_fail_valid": "N may submit and publish; N+1 failure has zero terminal presents and destroys its frame-local chrome/final eligibility; N+2 requires fresh session, frame, layout, package, atlas/resource generation and distinct retained handles and ledgers.",
+    "no_fallback": "A failed accepted inset request may not fall back from an unpublished final framebuffer to the ordinary LDR framebuffer and may not enable the world overlay.",
+    "resize_context_loss_screen_modal_toggle_focus_palette_or_atlas_change_invalidates": true
+  },
+  "future_cpu_static_gl_mock_acceptance_not_run": {
+    "tests_first_red_required": true,
+    "positive_matrix": {
+      "screens": ["TrainingSession", "ReplayPlayback"],
+      "layout_profiles": ["1920x1080_ui100", "1920x1080_ui135", "1280x720_ui100", "1280x720_ui135"],
+      "palettes": ["Standard", "CVD"],
+      "sample_counts": [1, 2, 4],
+      "focus_states": ["unfocused", "focused"],
+      "exact_case_count": 96
+    },
+    "required_static_checks": [
+      "exactly one typed supplemental chrome seam enters the existing Product UI runtime and renderer only from the explicit current request",
+      "the Product UI pass completes and receipts chrome before final staging preparation; no final-staging UI draw or second tone path exists",
+      "productChromeAlreadyInCurrentLdr cannot be assigned true without successful exact receipt validation",
+      "an accepted inset failure cannot reach the ordinary-LDR fallback in product_present",
+      "CP1, CP2 and CP3 frozen files remain exact and CMake is unchanged by this correction"
+    ],
+    "required_mock_checks": [
+      "96 positives submit exact 16 or 17 semantic primitives and actual mapped solid/SDF streams to the exact current LDR",
+      "all seven bilingual strings have real current-atlas glyphs and nonempty physical coverage",
+      "every actual chrome sample is outside the complete cutout coverage at 1x, 2x and 4x for Standard and CVD",
+      "resource receipt values are derived from actual work and independently recomputed",
+      "ordinary UI then supplemental chrome receipt then final full copy then CP3 cutout operations then terminal publish/present is the only success order",
+      "valid-fail-valid, GL error, helper throw, restore poison, resize and context loss have no stale terminal output"
+    ],
+    "required_fail_closed_fixtures": [
+      "absent, OFF, rejected, modal, transitioning, automation, windowless or world-overlay-ON request",
+      "noncurrent, cached, rebuilt, reused or already-consumed chrome",
+      "any current identity, CP1 digest, CP2 layout/exclusion/chrome digest, atlas, palette, viewport or focus mismatch",
+      "missing, foreign, duplicate, reordered, relocated, resized, rekinded, retokened, retexted, opacity-mutated or denominator-contributing semantic primitive",
+      "missing Chinese or punctuation glyph, fallback glyph, empty clipped text, atlas cache drift or text-order drift",
+      "semantic ledger present but no actual mapped batch/vertices/draw, echoed fake receipt or wrong LDR resource",
+      "panel, border, SDF fringe, toggle or focus physical coverage enters cutout by one sample",
+      "CP3 destination leaves cutout or overwrites one chrome sample",
+      "supplemental upload, scissor, draw, end-frame, GL error or restore failure",
+      "final copy, CP3 color, CP3 semantic, terminal publish or present failure",
+      "failed accepted inset falls back to ordinary LDR or world overlay",
+      "instrumentation changes color, glyph, focus, batch, receipt or cutout coverage"
+    ],
+    "cpu_static_pass": false,
+    "gl_mock_pass": false,
+    "implementation_pass": false
+  },
+  "authorization_boundary": {
+    "root_option_a_selected": true,
+    "chrome_correction_design_gate_complete": true,
+    "production_edit_authorized_by_this_gate": false,
+    "cmake_edit_authorized": false,
+    "cpu_implementation_authorized_by_this_gate": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass_claimed": false,
+    "ta_visual_pass_claimed": false,
+    "human_comprehension_pass_claimed": false,
+    "visible_product_inset_exposed": false,
+    "product_m3_golden_beta_pass_claimed": false
+  },
+  "proof_boundary": {
+    "design_correction_only": true,
+    "nonfinal_d_candidate_accepted": false,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "cpu_test_executed_by_this_gate": false,
+    "gl_mock_executed_by_this_gate": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "implementation_pass": false,
+    "visual_pass": false
+  }
+}

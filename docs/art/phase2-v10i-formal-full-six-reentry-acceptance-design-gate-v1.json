@@ -1,0 +1,273 @@
+{
+  "schema": "phase2_v10i_formal_full_six_reentry_acceptance_design_gate_v1",
+  "status": "PASS_DESIGN_ONLY_READY_TO_PREPARE_FRESH_FULL_SIX_READINESS_NO_GPU",
+  "purpose": "Acceptance gate for re-entering exact six-scene formal validation after the narrow v5 break/low_aim repair passed machine and independent TA review.",
+  "frozen_bindings": [
+    {
+      "role": "v3_frozen_failure_receipt",
+      "path": "docs/evidence/phase2-v10i-formal-six-scene-v3-failure-receipt-v1.json",
+      "sha256": "818ceb4be65f4ac192676a383ca2892585b4d1fee94bbb3e7471b3fd2da9291d"
+    },
+    {
+      "role": "v4_camera_correction_design_gate",
+      "path": "docs/art/phase2-v10i-formal-six-scene-v4-camera-correction-design-gate-v1.json",
+      "sha256": "5ab090f57ff49b40bfbe12f13f568614fc9a4a193e8b123c93f3f9f9d75d9979"
+    },
+    {
+      "role": "v5_targeted_readiness_manifest",
+      "path": "docs/art/phase2-v10i-formal-targeted-camera-ready-v5/readiness-manifest-v5.json",
+      "sha256": "687fce04e0521ab26465b77ba35434353d6b210bfa703f3b9564633c9a28e01f"
+    },
+    {
+      "role": "v5_targeted_machine_pass_receipt",
+      "path": "docs/evidence/phase2-v10i-formal-targeted-camera-v5-machine-pass-receipt-v1.json",
+      "sha256": "f26c82883704b01165dbb325509aa1cc6bf72e4b655a9229860751c036dc7db9"
+    },
+    {
+      "role": "v5_independent_ta_manual_review",
+      "path": "docs/evidence/phase2-v10i-formal-targeted-camera-v5-independent-ta-manual-review-v1.json",
+      "sha256": "79f0efcf430362c41abc4abbec1dd075c9d52a551bc4969d6be44e7764cf2931"
+    },
+    {
+      "role": "current_formal_semantic_scene_registry",
+      "path": "tests/visual/formal_modern_scene_registry_v2.py",
+      "sha256": "1e2d526f1e015435d3c67b7a4eac7e9fdda4086ee23c2e640de7d4eb17dc75e3"
+    },
+    {
+      "role": "current_formal_capture_source",
+      "path": "scripts/capture_visual_baselines.py",
+      "sha256": "772ecc72a9ade0234413fbd87425fe8ddd810a85255b3f8274556eb8ecae3b89"
+    },
+    {
+      "role": "current_integrated_release_binary",
+      "path": "build-integrated-phase2-v4-phase4-ownership-v1/Billiards",
+      "sha256": "854e86b9a7f995f7abd2417cbfc8b00610ed2e5f97525163d17d165e9ae427e9"
+    },
+    {
+      "role": "current_formal_production_visual_validator",
+      "path": "scripts/validate_phase2_production_visuals.py",
+      "sha256": "3cdce7fb7fa131b54fffbcb419e24699af7c55c4af0a0e24673689ee03dad8c2"
+    },
+    {
+      "role": "frozen_formal_asset_package",
+      "path": "assets/modern/phase2-v10i-formal/formal-asset-package-v2.json",
+      "sha256": "610b1c49dcc5f798a1a40ee90f9312e5a1a15f4c5c648276c172cfd87591e37d"
+    }
+  ],
+  "prerequisite_disposition": {
+    "v3_failure_remains_frozen": true,
+    "v3_failed_scene": "low_aim",
+    "v5_targeted_machine_result": "PASS",
+    "v5_targeted_machine_scene_count": 2,
+    "v5_targeted_ta_result": "PASS",
+    "v5_targeted_ta_scene_count": 2,
+    "targeted_pass_proves_only": [
+      "break regression control under the frozen formal package",
+      "low_aim semantic camera and lamp-occlusion repair"
+    ],
+    "targeted_pass_does_not_prove": [
+      "ball_closeup",
+      "pocket_closeup",
+      "tactical_overhead",
+      "post_shot_observe",
+      "full-six formal pass",
+      "M2 promotion",
+      "golden promotion",
+      "product pass"
+    ]
+  },
+  "full_six_scene_contract": {
+    "registry_version": 2,
+    "scene_ids_in_order": [
+      "break",
+      "low_aim",
+      "ball_closeup",
+      "pocket_closeup",
+      "tactical_overhead",
+      "post_shot_observe"
+    ],
+    "expected_semantic_camera": {
+      "break": {"state": "observe_free", "preset": "elevated"},
+      "low_aim": {"state": "aim_player", "preset": "player_low"},
+      "ball_closeup": {"state": "observe_free", "preset": "elevated"},
+      "pocket_closeup": {"state": "observe_free", "preset": "elevated"},
+      "tactical_overhead": {"state": "aim_overhead", "preset": "overhead"},
+      "post_shot_observe": {"state": "observe_free", "preset": "elevated"}
+    },
+    "interest_regions": {
+      "break": {"name": "table", "rect_normalized": [0.10, 0.16, 0.80, 0.68]},
+      "low_aim": {"name": "cue_and_ball", "rect_normalized": [0.18, 0.36, 0.64, 0.42]},
+      "ball_closeup": {"name": "ball", "rect_normalized": [0.25, 0.24, 0.50, 0.55]},
+      "pocket_closeup": {"name": "pocket", "rect_normalized": [0.18, 0.18, 0.64, 0.64]},
+      "tactical_overhead": {"name": "playfield", "rect_normalized": [0.20, 0.06, 0.60, 0.88]},
+      "post_shot_observe": {"name": "moving_balls", "rect_normalized": [0.12, 0.15, 0.76, 0.68]}
+    },
+    "camera_requirements_each_scene": [
+      "at least one explicit set_camera_preset command with instant=true",
+      "any relative orbit/pan/zoom is downstream of an explicit semantic anchor and cannot be the sole camera contract",
+      "any later aim/shot/replay transition is explicitly settled before capture",
+      "get_presentation_state is queried after the complete scene recipe and before performance collection/screenshot",
+      "final semantic state and preset equal the per-scene map",
+      "final transitioning equals false",
+      "eye, target, distance and FOV are finite; projected distance is consistent",
+      "all perspective cameras remain below the lamp-safety plane; tactical overhead is the explicit exception"
+    ],
+    "fresh_process_per_scene": true
+  },
+  "immutable_acceptance_thresholds": {
+    "resolution": [1920, 1080],
+    "renderer": "modern",
+    "quality": "medium",
+    "msaa_samples": 4,
+    "pixel_format": "PPM P6 RGB8",
+    "visible_pixel_channel_rule": "max_rgb_channel_gt_8",
+    "minimum_whole_frame_visible_pixels": 1,
+    "minimum_interest_region_visible_pixels": 1,
+    "performance": {
+      "measurement_method": "gpu_timer_query_plus_cpu_frame",
+      "gpu_timer_queries_observed": true,
+      "warmup_frames_min": 120,
+      "sample_frames_min": 300,
+      "p95_total_frame_ms_max": 16.7,
+      "draw_calls_complete_scene_max": 100,
+      "texture_resident_mib_max": 256
+    },
+    "asset_attestation": {
+      "formal_asset_package_sha256": "610b1c49dcc5f798a1a40ee90f9312e5a1a15f4c5c648276c172cfd87591e37d",
+      "self_contained_capture_asset_root_required": true,
+      "required_asset_binding_count": 6,
+      "runtime_dependency_sha_verification_required": true,
+      "silent_material_fallback_allowed": false,
+      "load_errors_allowed": false,
+      "renderer_load_checks_required": [
+        "pbr_loaded",
+        "pbr_texture_count_19",
+        "environment_enabled",
+        "gltf_scene_loaded",
+        "venue_scene_loaded",
+        "medium_quality",
+        "msaa_4x"
+      ]
+    },
+    "threshold_or_region_relaxation_allowed": false
+  },
+  "fresh_reentry_readiness_gate": {
+    "status": "REQUIRED_NOT_CREATED_BY_THIS_GATE",
+    "new_readiness_root_required": true,
+    "must_bind_this_gate_sha256": true,
+    "must_bind_all_current_source_binary_asset_hashes_above": true,
+    "must_run_cpu_static_tests_without_gpu": true,
+    "must_create_exact_six_row_plan": true,
+    "required_initial_row_status": "NOT_RUN",
+    "required_initial_rows": [
+      {"ordinal": 1, "scene_id": "break", "status": "NOT_RUN"},
+      {"ordinal": 2, "scene_id": "low_aim", "status": "NOT_RUN"},
+      {"ordinal": 3, "scene_id": "ball_closeup", "status": "NOT_RUN"},
+      {"ordinal": 4, "scene_id": "pocket_closeup", "status": "NOT_RUN"},
+      {"ordinal": 5, "scene_id": "tactical_overhead", "status": "NOT_RUN"},
+      {"ordinal": 6, "scene_id": "post_shot_observe", "status": "NOT_RUN"}
+    ],
+    "all_initial_evidence_flags_false": true,
+    "capture_output_must_not_exist": true,
+    "authorization_must_not_be_issued": true,
+    "readiness_may_not_claim_machine_or_ta_pass": true
+  },
+  "future_one_shot_full_six_authorization_gate": {
+    "status": "NOT_ISSUED_NOT_AUTHORIZED",
+    "may_be_issued_only_after_fresh_readiness_pass": true,
+    "schema": "phase2_v10i_formal_six_scene_one_shot_authorization_v3",
+    "required_status": "AUTHORIZED_FOR_EXACTLY_SIX_FRESH_PROCESS_CAPTURES",
+    "authorized_capture_count": 6,
+    "consumed_capture_count_before_dispatch": 0,
+    "scene_ids_in_order_must_equal_full_contract": true,
+    "required_readiness_manifest_sha256_must_equal_fresh_readiness": true,
+    "authorized_output_canonical_path_must_be_new_and_absent": true,
+    "gpu_capture_authorized": true,
+    "formal_six_scene_evidence_authorized": true,
+    "formal_pass_at_issue": false,
+    "golden_promotion_at_issue": false,
+    "m2_promotion_at_issue": false,
+    "single_use": true,
+    "failure_consumes_authorization_and_freezes_partial_output": true,
+    "authorization_artifact_created_by_this_gate": false
+  },
+  "future_full_six_machine_gate": {
+    "status": "NOT_RUN",
+    "manifest_schema": "phase2_v10i_formal_six_scene_capture_v2",
+    "required_capture_count": 6,
+    "required_scene_ids_in_order_must_equal_full_contract": true,
+    "required_fresh_process_count": 6,
+    "capture_scope_kind": "formal_six_scene",
+    "capture_scope_full_six_scene_evidence": true,
+    "each_scene_requires": [
+      "one immutable 1920x1080 PPM with byte SHA",
+      "unchanged whole-frame and named-ROI visible-pixel pass",
+      "exact final semantic state/preset and transitioning=false",
+      "finite lamp-safe camera validation",
+      "exact loaded formal asset attestation and zero load errors",
+      "per-scene performance collection meeting unchanged thresholds"
+    ],
+    "aggregate_requires": [
+      "all six scenes machine PASS",
+      "worst-scene performance meets unchanged thresholds",
+      "no partial, missing, duplicate or extra scene",
+      "authorization consumption and fresh readiness lineage are immutable"
+    ],
+    "any_failure_result": "FAIL_FREEZE_NO_SAME_AUTH_RERUN",
+    "machine_pass_does_not_equal_ta_pass": true,
+    "machine_pass_does_not_equal_m2_golden_or_product_pass": true
+  },
+  "future_independent_ta_six_of_six_gate": {
+    "status": "NOT_RUN",
+    "may_start_only_after_all_six_machine_pass": true,
+    "review_scene_count": 6,
+    "review_each_ppm_at_original_resolution": true,
+    "allowed_axis_statuses": ["PASS", "FAIL"],
+    "required_axes_each_scene": [
+      "composition",
+      "material_color",
+      "contact_shadow",
+      "geometry_alignment",
+      "ball_identity_and_rotation_seam",
+      "venue_and_background_focus",
+      "camera_composition_and_occlusion"
+    ],
+    "fail_requires_exact_scene_and_blocking_axes": true,
+    "pass_requires_all_six_cases_and_all_42_axes_pass": true,
+    "ta_six_of_six_pass_does_not_equal_m2_golden_or_product_pass": true
+  },
+  "allowed_changes_after_this_gate": [
+    "new offline full-six readiness preparer/validator/tests",
+    "new full-six NOT_RUN plan and machine/TA templates under a new readiness root",
+    "future separately authorized evidence under one new output root"
+  ],
+  "forbidden_changes": [
+    "production C++/Objective-C++ source or integrated release binary",
+    "formal semantic registry or capture source bytes bound by this gate",
+    "renderer, shaders, exposure, tonemap, MSAA or quality",
+    "shipping assets, asset package, materials, PBR parameters or lighting",
+    "scene IDs/order/purposes, semantic camera expectations or interest regions",
+    "visible-pixel, performance or asset-attestation thresholds",
+    "rules, physics, authority or gameplay behavior",
+    "mutation or rerun of v3/v5 frozen evidence",
+    "authorization preparation/issuance or GPU execution by this gate",
+    "full-six, M2, golden or product promotion before their external gates"
+  ],
+  "evidence_boundary": {
+    "design_gate_only": true,
+    "production_modified": false,
+    "readiness_created": false,
+    "authorization_prepared": false,
+    "authorization_issued": false,
+    "gpu_executed": false,
+    "capture_performed": false,
+    "full_six_machine_pass": false,
+    "full_six_ta_review_performed": false,
+    "full_six_formal_pass": false,
+    "m2_promotion": false,
+    "golden_promotion": false,
+    "product_review_performed": false,
+    "product_pass": false,
+    "beta_pass": false
+  }
+}

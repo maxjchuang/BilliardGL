@@ -1,0 +1,91 @@
+{
+  "schema": "wpa_ii_15_2_signed_frozen_object_straight_cushion_declaration_lifecycle_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-15-2", "selected_option_id": "SIGNED_DECLARATION_STRAIGHT_CUSHION_CAPTURE_ONLY", "row_implementation_allowed": false},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"},
+    "b2_priority_register": {"path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json", "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55", "priority": 4, "protocol_only_advancement": "PARTIAL_DECLARATION_ONLY_NO_LEGAL_RESULT_UNTIL_D5_TELEMETRY"},
+    "cue_contact_cluster_gap_gate": {"path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json", "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"},
+    "section_15_1_partial_receipt": {"path": "docs/rules/wpa-ii-15-1-signed-frozen-cue-object-declaration-lifecycle-implementation-receipt-v1.json", "sha256": "97c9e2f279bd398ff62955c31e4ace3132a15e303972d917fe1105d6048518a4"},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01", "row_status": "MISSING"}
+  },
+  "official_and_selected_boundary": {
+    "officially_determined": ["frozen-to-cushion requires a referee declaration before the shot", "legal alternatives are declared ball leaves then recontacts a cushion, another object ball contacts a cushion, or a ball is pocketed"],
+    "selected_machine_constants": {"declaration_authority": "AUTHENTICATED_REFEREE", "declaration_phase": "PRE_SHOT", "accepted_cushion_boundary_kind": "STRAIGHT_CUSHION", "pocket_jaw_counts_as_cushion": false, "leave_before_recontact_required": true},
+    "this_gate_scope": "signed declaration and one-shot lifecycle only",
+    "not_claimed": ["leave/recontact total order", "another-ball cushion alternative", "complete pocket capture alternative", "Section 15.2 legal or foul result", "jaw or prerequisite classification"]
+  },
+  "declaration_protocol_contract": {
+    "declaration_kind": "WPA_II_15_2_FROZEN_OBJECT_STRAIGHT_CUSHION_DECLARATION",
+    "operations": ["PROPOSE", "FINAL_DECLARE", "CANCEL_PROPOSAL"],
+    "actor": "authenticated referee only and same referee for final/cancel",
+    "proposal_not_declaration": true,
+    "geometry_or_contact_telemetry_may_declare": false,
+    "states": ["INACTIVE", "PROPOSAL_OPEN", "DECLARATION_ACTIVE", "DECLARATION_CONSUMED", "CANCELLED", "INVALIDATED"],
+    "request_field_count": 17,
+    "frozen_snapshot": ["object_ball_id", "straight_cushion_id", "rack_identity", "parent_rules_revision", "parent_rules_state_hash", "referee_subject_id", "proposal/final payload digests"]
+  },
+  "exact_payload_schemas": {
+    "proposal_canonical": {"frozen_attested": "bool exact true", "object_ball_id": "integer 1..15", "relation": "OBJECT_BALL_FROZEN_TO_STRAIGHT_CUSHION", "straight_cushion_id": "one of HEAD, FOOT, LEFT_LONG, RIGHT_LONG"},
+    "final_canonical": {"frozen_attested": "bool exact true", "object_ball_id": "same frozen object", "proposal_decision_id": "exact live proposal", "relation": "OBJECT_BALL_FROZEN_TO_STRAIGHT_CUSHION", "straight_cushion_id": "same frozen straight cushion"},
+    "cancel_canonical": {"proposal_decision_id": "exact live proposal"},
+    "unknown_extra_missing_noncanonical_or_wrong_type": "reject before mutation"
+  },
+  "pre_shot_and_one_shot_lifecycle": {
+    "eligible": "pre-shot, live legal object ball and named straight cushion; no active shot, placement parent, pending rules decision, game over or pocketed declared ball",
+    "active_survives": ["aim", "power", "camera", "preview"],
+    "invalidates": ["ball placement or movement", "group or turn change", "rack/reset/match completion", "parent revision/state hash drift"],
+    "consume_boundary": "only successful accepted shot with finite strictly-positive applied cue-ball impulse",
+    "does_not_consume": ["rejected shoot", "zero impulse", "unsupported or miscue launch", "failed launch validation"],
+    "consumption_effect": "records accepted shot identity once and closes declaration eligibility only; produces no Section 15.2 legal/foul result",
+    "later_physics_failure_reactivates": false,
+    "second_shot_reuses": false
+  },
+  "d5_and_classification_blocker": {
+    "d5_complete": false,
+    "required_before_result_consumer": ["canonical declared-ball leave event", "same declared-ball straight-cushion recontact event", "whole-shot total order and completeness", "another-object straight-cushion alternative", "complete pocket capture alternative"],
+    "jaw_policy": "closed; jaw never counts as selected straight cushion",
+    "declaration_is_physics_fact": false,
+    "declaration_is_legal_result": false,
+    "audit_row_may_be_promoted_by_partial_lifecycle": false
+  },
+  "atomicity_idempotency_and_readback": {
+    "prevalidate": ["ruleset and capability", "declaration kind/operation", "authenticated referee", "rack/revision/state hash", "expiry", "exact payload", "live legal object", "named straight cushion", "idempotency key and nonce"],
+    "atomic_commit": "protocol, declaration snapshot, journal and receipt all commit or remain byte-equivalent",
+    "exact_retry": "returns original ACK with zero state/journal/consume delta",
+    "conflicting_retry": "fails closed with zero delta",
+    "readback": "phase, committed, object/cushion IDs, frozen parent/rack digests, referee subject, proposal/final digests and consumed shot identity; never credential/proof/canonical payload",
+    "headless_only": true
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/frozen_cushion_declaration.h", "src/Billiards/rules/frozen_cushion_declaration.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/automation_controller.cpp"],
+    "test_files": ["tests/frozen_cushion_declaration_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/automation_controller_tests.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "add frozen_cushion_declaration.cpp to core sources and one headless BilliardsFrozenCushionDeclarationTests target only",
+    "physics_telemetry_shotfacts_rules_topology_cue_contact_or_coupled_contact_edit_allowed": false,
+    "modern_product_ui_renderer_or_input_edit_allowed": false
+  },
+  "required_fixtures": {
+    "positive": ["REFEREE_PROPOSE_EXACT_OBJECT_CUSHION_DOES_NOT_DECLARE", "SAME_REFEREE_FINAL_COMMITS_PRE_SHOT_DECLARATION", "FOUR_STRAIGHT_CUSHION_IDS_EXACT", "LIVE_LEGAL_OBJECT_OPEN_OR_ASSIGNED_TABLE", "AIM_POWER_CAMERA_PREVIEW_KEEP_ACTIVE", "POSITIVE_ACCEPTED_SHOT_CONSUMES_EXACTLY_ONCE", "CONSUMED_RECORD_BINDS_SHOT_OBJECT_CUSHION_AND_DECLARATION", "SAME_REFEREE_CANCEL_BEFORE_FINAL", "EXACT_RETRY_ZERO_DELTA", "AUTOMATION_SECRET_FREE_READBACK"],
+    "negative": ["PLAYER_OR_UNAUTHENTICATED_DECLARATION_REJECTED", "GEOMETRY_OR_CONTACT_TELEMETRY_CANNOT_DECLARE", "JAW_OR_POCKET_BOUNDARY_ID_REJECTED", "WRONG_OBJECT_CUSHION_OR_RELATION_REJECTED", "POCKETED_OR_ILLEGAL_OBJECT_REJECTED", "WRONG_RACK_REVISION_STATE_HASH_OR_EXPIRY_REJECTED", "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED", "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED", "CANCEL_AFTER_FINAL_REJECTED", "PLACEMENT_BALL_MOVE_GROUP_CHANGE_TURN_RESET_INVALIDATES", "REJECTED_ZERO_UNSUPPORTED_MISCUE_OR_FAILED_LAUNCH_NOT_CONSUMED", "LATER_PHYSICS_FAILURE_DOES_NOT_REACTIVATE", "SECOND_SHOT_CANNOT_REUSE", "RESET_RERACK_OR_MATCH_COMPLETE_INVALIDATES", "IDEMPOTENCY_NONCE_OR_SHOT_CONFLICT_ZERO_DELTA", "DECLARATION_DOES_NOT_SYNTHESIZE_LEAVE_RECONTACT_CUSHION_POCKET_SHOTFACT", "DECLARATION_DOES_NOT_CLASSIFY_SECTION_15_2_LEGAL_OR_FOUL", "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REFEREE_SURFACE"]
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "7707f7726c00fea24f1ec467291c7298629ead741b4d3c1669976c8382629532"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "d54d306cb6076e83c2e17329744ccca99a85849fa6446137f575dd8126e429c0"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "0a4a36d7c67b2eaee8f82bce1eea1ac9c81040fe8c5f12c13aaa4424e6709d0a"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "65f2a6f2ff37041dfc251b3c07d98640b4f43d48e85d1df42aba8d34d700eb77"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required_before_tests_first_patch": true,
+    "signed_declaration_partial_lifecycle_implemented": false,
+    "d5_complete": false,
+    "wpa_ii_15_2_implemented": false,
+    "audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "visible_or_global_ui_exposed": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

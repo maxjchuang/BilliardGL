@@ -1,0 +1,91 @@
+{
+  "schema": "phase2_pocket_v10f_design_gate_v1",
+  "status": "DESIGN_AND_CPU_PREFLIGHT_ONLY_PENDING_ROOT_REVIEW",
+  "actual_gpu_authorized": false,
+  "formal_six_scene_evidence_authorized": false,
+  "formal_pass_claimed": false,
+  "purpose": "Require conservative CPU screen-space proof before authorizing the sole v10f actual-GPU pocket close-up.",
+  "source_failure": {
+    "report": {
+      "path": "docs/art/phase2-pocket-v10e-offline-preflight-v1/phase2-pocket-v10e-cpu-projection-report-v1.json",
+      "sha256": "sha256:7ef92794a3c90cf62d451b46ff04d67e64a88646c9171b0a8f7b9e935022a124",
+      "status": "OFFLINE_PREFLIGHT_FAIL_GPU_NOT_AUTHORIZED"
+    },
+    "blocking_gate": "rim_all_samples_10_to_14px",
+    "rim_samples_px": [15, 14, 13, 13, 13, 12, 13, 13, 13, 14, 14],
+    "root_cause": "The 1 mm outer-edge lift adds one projected pixel to the first U-shoulder sample; every non-rim safety gate already passes."
+  },
+  "frozen_projection": {
+    "eye_cm": [115.0, 215.0, 175.0],
+    "target_cm": [50.0, 89.0, 95.0],
+    "vertical_fov_degrees": 30.0,
+    "viewport_px": [1920, 1080],
+    "object_id_roi_xyxy_exclusive": [537, 756, 1113, 1015],
+    "near_far_cm": [2.0, 1800.0],
+    "projection_implementation": "src/Billiards/render/modern/camera_projection.h buildSharedCameraProjection",
+    "cpu_pixel_sample": "center",
+    "depth_rule": "OpenGL-style smaller NDC depth wins"
+  },
+  "offline_screen_space_gates": {
+    "rim": {
+      "hard_gpu_range_px": [10, 14],
+      "cpu_target_median_px": [11, 13],
+      "cpu_every_sample_range_px": [10, 14],
+      "sample_columns": 11,
+      "intent": "Aim at the 12 px midpoint, not either hard edge."
+    },
+    "sidewall": {
+      "hard_gpu_median_range_px": [14, 28],
+      "cpu_target_median_px": [18, 24],
+      "cpu_p10_min_px": 16,
+      "cpu_minimum_px": 14,
+      "intent": "Leave at least 4 px margin above the GPU median lower bound."
+    },
+    "ordered_stage_columns": {
+      "sampled_exact": 11,
+      "passing_fraction_min": 0.95,
+      "maximum_inter_stage_gap_px": 1,
+      "frozen_camera_screen_order": ["sidewall", "rim", "void"],
+      "sampling_band": "central 50% of columns that contain all three ownership roles"
+    },
+    "luma": {
+      "encoded_srgb8_definition": "Y'=0.2126R+0.7152G+0.0722B",
+      "hard_gpu_upper_minus_lower_min": 8,
+      "cpu_predicted_delta_min": 12,
+      "cpu_model_uncertainty_plus_minus_luma": 1.5,
+      "cpu_conservative_delta_lower_bound_min": 9,
+      "cpu_lower_median_range": [9, 22],
+      "calibration_anchor": "Frozen v10d sidewall/void medians 25.294/2.0; interpolate v10f COLOR_0 through a conservative 0.55 encoded response exponent."
+    },
+    "walnut_area_inside_mouth_envelope_fraction_max": 0.1,
+    "connected_stage_height_px_min": 72
+  },
+  "frozen_geometry": {
+    "physics_marker_binding_sha256": "sha256:1b8f8cdb03c88e81721525aa0a134c4e4efa564975c5e2307835514f03df2b7a",
+    "visual_to_marker_z": "-z_marker",
+    "void_front_center_back_d": [1.0, 1.6, 2.2],
+    "void_span_d": 1.2,
+    "drop_bottom_to_mouth_ratio_range": [0.55, 0.85],
+    "walnut_cavity_exclusion_required": true,
+    "simulation_or_collision_changes_allowed": false
+  },
+  "v10f_asset_contract": {
+    "asset_root": "assets/modern/phase2-v10f",
+    "generator": "scripts/generate_phase2_modular_gltf_v10f.py",
+    "validator": "scripts/validate_phase2_modular_gltf_v10f.py",
+    "cpu_calibrator": "scripts/calibrate_phase2_pocket_v10f.py",
+    "profile": "connected_cavity_v10f",
+    "only_behavioral_delta_from_v10e": "Set rim outer y equal to rim inner y (-0.006 m), replacing the v10e outer y of -0.005 m; no radial width or other geometry/material/camera value changes.",
+    "rim_inner_back_d": 1.4,
+    "sidewall_drop_d": 0.4,
+    "sidewall_color_ramp": "COLOR_0 neutral scalar, frozen-camera smoothstep from 0.14 to 1.0 across screen y=840..855; object-ID ownership is unaffected",
+    "felt_cutout": "corner=sqrt(2)*(void_back+rim_width), side=void_back+rim_width so the cloth cannot occlude the projected bowl"
+  },
+  "cpu_model_calibration_requirement": {
+    "baseline": "frozen v10d production glTF and REJECTED_MACHINE object-ID metrics",
+    "pixel_axis_absolute_residual_max": 1,
+    "walnut_fraction_absolute_residual_max": 0.005,
+    "sidewall_luma_anchor_residual_max": 0.000000001
+  },
+  "authorization_rule": "Even a complete offline PASS does not authorize GPU execution. Root must independently review the deterministic report and explicitly authorize one v10f actual-GPU close-up."
+}

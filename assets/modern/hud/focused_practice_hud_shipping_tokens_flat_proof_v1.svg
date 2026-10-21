@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" data-proof-kind="flat-token-proof" data-runtime-capture="false" data-user-research="false">
+<title>Focused Practice shipping HUD token flat proof</title>
+<desc>Flat engineering proof for original GPU vector tokens; not a rendered gameplay capture.</desc>
+<rect x="0" y="0" width="1280" height="720" rx="0" fill="#081015" />
+<text x="48" y="52" font-family="system-ui,-apple-system,sans-serif" font-size="26" font-weight="500" fill="#F4F7F8" text-anchor="start" >SHIPPING HUD TOKENS · FLAT PROOF</text>
+<text x="48" y="80" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="400" fill="#C1CBD0" text-anchor="start" >24×24 normalized geometry · existing FreeType/SDF text · not a GPU screenshot</text>
+<text x="48" y="138" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="500" fill="#C7A8FF" text-anchor="start" >STANDARD</text>
+<rect x="48" y="156" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="standard:default"/>
+<g data-icon-token="group_solid_filled_circle" data-palette-mode="standard" data-state="default" transform="translate(107 178) scale(4)">
+<circle cx="12" cy="12" r="8" stroke="#F4F7F8" fill="#31B7C8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="155" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >DEFAULT</text>
+<text x="155" y="325" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >group_solid_filled_circle</text>
+<rect x="286" y="156" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="standard:aiming"/>
+<g data-icon-token="power_bars" data-palette-mode="standard" data-state="aiming" transform="translate(310 192) scale(2.7)">
+<rect x="3" y="15" width="3" height="6" rx="1" stroke="none" fill="#31B7C8" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="8" y="11" width="3" height="10" rx="1" stroke="none" fill="#31B7C8" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="13" y="7" width="3" height="14" rx="1" stroke="none" fill="#F2BC55" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="18" y="3" width="3" height="18" rx="1" stroke="none" fill="#F2BC55" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g data-icon-token="tip_target" data-palette-mode="standard" data-state="aiming" transform="translate(412 192) scale(2.7)">
+<circle cx="12" cy="12" r="9" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="3,12 21,12" stroke="#C1CBD0" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="12,3 12,21" stroke="#C1CBD0" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="14.5" cy="8.5" r="2" stroke="#0B1116F5" fill="#C7A8FF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="393" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >AIMING</text>
+<text x="393" y="325" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >power_bars + tip_target</text>
+<rect x="524" y="156" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="standard:post-shot"/>
+<g data-icon-token="camera_frame" data-palette-mode="standard" data-state="post-shot" transform="translate(583 178) scale(4)">
+<polyline points="8,4 4,4 4,8" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="16,4 20,4 20,8" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="4,16 4,20 8,20" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="20,16 20,20 16,20" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="12" r="4" stroke="#31B7C8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="631" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >POST-SHOT</text>
+<text x="631" y="325" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >camera_frame</text>
+<rect x="762" y="156" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="standard:foul"/>
+<g data-icon-token="warning_triangle" data-palette-mode="standard" data-state="foul" transform="translate(821 178) scale(4)">
+<polygon points="12,3 22,21 2,21" stroke="#F06B5D" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="12,8 12,14" stroke="#F06B5D" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="18" r="1" stroke="#F06B5D" fill="#F06B5D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="869" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >FOUL</text>
+<text x="869" y="325" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >warning_triangle</text>
+<rect x="1000" y="156" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="standard:help"/>
+<g data-icon-token="help_circle" data-palette-mode="standard" data-state="help" transform="translate(1059 178) scale(4)">
+<circle cx="12" cy="12" r="9" stroke="#C7A8FF" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="9,9 10,7 14,7 16,9 16,11 12,14 12,16" stroke="#C7A8FF" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="19" r="1" stroke="#C7A8FF" fill="#C7A8FF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="1107" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >HELP</text>
+<text x="1107" y="325" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >help_circle</text>
+<text x="48" y="416" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="500" fill="#FFD166" text-anchor="start" >COLOR VISION SAFE</text>
+<rect x="48" y="434" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="color_vision_safe:default"/>
+<g data-icon-token="group_solid_filled_circle" data-palette-mode="color_vision_safe" data-state="default" transform="translate(107 456) scale(4)">
+<circle cx="12" cy="12" r="8" stroke="#F4F7F8" fill="#5DD9C1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="155" y="578" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >DEFAULT</text>
+<text x="155" y="603" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >group_solid_filled_circle</text>
+<rect x="286" y="434" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="color_vision_safe:aiming"/>
+<g data-icon-token="power_bars" data-palette-mode="color_vision_safe" data-state="aiming" transform="translate(310 470) scale(2.7)">
+<rect x="3" y="15" width="3" height="6" rx="1" stroke="none" fill="#5DD9C1" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="8" y="11" width="3" height="10" rx="1" stroke="none" fill="#5DD9C1" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="13" y="7" width="3" height="14" rx="1" stroke="none" fill="#FFD166" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="18" y="3" width="3" height="18" rx="1" stroke="none" fill="#FFD166" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g data-icon-token="tip_target" data-palette-mode="color_vision_safe" data-state="aiming" transform="translate(412 470) scale(2.7)">
+<circle cx="12" cy="12" r="9" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="3,12 21,12" stroke="#C1CBD0" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="12,3 12,21" stroke="#C1CBD0" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="14.5" cy="8.5" r="2" stroke="#0B1116F5" fill="#FFD166" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="393" y="578" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >AIMING</text>
+<text x="393" y="603" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >power_bars + tip_target</text>
+<rect x="524" y="434" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="color_vision_safe:post-shot"/>
+<g data-icon-token="camera_frame" data-palette-mode="color_vision_safe" data-state="post-shot" transform="translate(583 456) scale(4)">
+<polyline points="8,4 4,4 4,8" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="16,4 20,4 20,8" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="4,16 4,20 8,20" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="20,16 20,20 16,20" stroke="#F4F7F8" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="12" r="4" stroke="#5DD9C1" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="631" y="578" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >POST-SHOT</text>
+<text x="631" y="603" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >camera_frame</text>
+<rect x="762" y="434" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="color_vision_safe:foul"/>
+<g data-icon-token="warning_triangle" data-palette-mode="color_vision_safe" data-state="foul" transform="translate(821 456) scale(4)">
+<polygon points="12,3 22,21 2,21" stroke="#FF8C69" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="12,8 12,14" stroke="#FF8C69" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="18" r="1" stroke="#FF8C69" fill="#FF8C69" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="869" y="578" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >FOUL</text>
+<text x="869" y="603" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >warning_triangle</text>
+<rect x="1000" y="434" width="214" height="190" rx="12" fill="#0B1116F5" stroke="#C1CBD0" stroke-width="2" data-proof-card="color_vision_safe:help"/>
+<g data-icon-token="help_circle" data-palette-mode="color_vision_safe" data-state="help" transform="translate(1059 456) scale(4)">
+<circle cx="12" cy="12" r="9" stroke="#FFD166" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="9,9 10,7 14,7 16,9 16,11 12,14 12,16" stroke="#FFD166" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="19" r="1" stroke="#FFD166" fill="#FFD166" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="1107" y="578" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="500" fill="#F4F7F8" text-anchor="middle" >HELP</text>
+<text x="1107" y="603" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#C1CBD0" text-anchor="middle" >help_circle</text>
+<text x="48" y="690" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="400" fill="#C1CBD0" text-anchor="start" >Foul and group meaning always retain shape + text; color is redundant.</text>
+</svg>

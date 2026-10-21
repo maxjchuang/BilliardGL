@@ -1,0 +1,488 @@
+{
+  "acceptance": {
+    "implementation_may_start_when": [
+      "All four read-only binding hashes match.",
+      "Diff is restricted to the repair_contract allowed states/layers and validation scaffolding.",
+      "Authority/rules, inherited thresholds, evidence, and exposure boundaries remain byte-for-byte or semantically unchanged as applicable."
+    ],
+    "product_exposure_remains_blocked_until": [
+      "All original product-exposure requirements remain satisfied, including complete actual-GPU/manual evidence as required by the original gate and signed real keyboard, pointer, CVD, localization, screen-reader, and external-human sessions.",
+      "Unresolved policies remain hidden or receive legitimate rules-owner decisions."
+    ],
+    "result": "SCOPED_VISUAL_REPAIR_DESIGN_APPROVED_NOT_IMPLEMENTED_NOT_GPU_AUTHORIZED_NOT_PRODUCT_PASS",
+    "scoped_visual_repair_may_pass_when": [
+      "540/540 offline machine matrix passes and is byte-reproducible.",
+      "A separately authorized 28/28 targeted actual-GPU set passes machine validation.",
+      "Independent TA reviews 28/28 original-resolution PNGs and 280/280 axes with all 32 prior failures repaired and zero regressions."
+    ]
+  },
+  "beta_pass": false,
+  "bound_v2_failure_set": {
+    "axis_counts": {
+      "fail": 32,
+      "na": 96,
+      "pass": 472,
+      "pending": 0,
+      "total": 600
+    },
+    "blocking_defect_ids": [
+      "D01_CONFIRM_COPY_OMITS_EXACT_ACTION_AND_ACTOR",
+      "D02_ARMED_FOCUS_CONFIRM_NON_COLOR_TOKENS_MISSING",
+      "D03_PREVIEW_MARKER_NOT_GHOST_CUE_BALL",
+      "D04_INVALID_MARKER_MISSING_ERROR_CROSS_OCTAGON_AND_DASHED_RING",
+      "D05_HEAD_STRING_LEGAL_REGION_PATTERN_CONTRACT_MISMATCH"
+    ],
+    "case_counts": {
+      "fail": 20,
+      "pass": 40,
+      "pending": 0,
+      "reviewed": 60
+    },
+    "failed_axis_case_ids": {
+      "action_semantics_and_branch_correctness": [
+        "group_choice_armed_confirm--p1--zh_cn",
+        "group_choice_armed_confirm--p2--en",
+        "group_choice_armed_confirm--p3--zh_cn",
+        "group_choice_armed_confirm--p4--en"
+      ],
+      "focus_pointer_keyboard_redundancy": [
+        "group_choice_armed_confirm--p1--zh_cn",
+        "group_choice_armed_confirm--p2--en",
+        "group_choice_armed_confirm--p3--zh_cn",
+        "group_choice_armed_confirm--p4--en"
+      ],
+      "no_default_selection_or_accidental_submission_affordance": [
+        "group_choice_armed_confirm--p1--zh_cn",
+        "group_choice_armed_confirm--p2--en",
+        "group_choice_armed_confirm--p3--zh_cn",
+        "group_choice_armed_confirm--p4--en"
+      ],
+      "placement_scope_and_legality_readability": [
+        "full_table_preview_valid--p1--en",
+        "full_table_preview_valid--p2--zh_cn",
+        "full_table_preview_valid--p3--en",
+        "full_table_preview_valid--p4--zh_cn",
+        "full_table_preview_invalid--p1--zh_cn",
+        "full_table_preview_invalid--p2--en",
+        "full_table_preview_invalid--p3--zh_cn",
+        "full_table_preview_invalid--p4--en",
+        "behind_head_string_preview_valid--p1--en",
+        "behind_head_string_preview_valid--p2--zh_cn",
+        "behind_head_string_preview_valid--p3--en",
+        "behind_head_string_preview_valid--p4--zh_cn",
+        "behind_head_string_preview_invalid--p1--zh_cn",
+        "behind_head_string_preview_invalid--p2--en",
+        "behind_head_string_preview_invalid--p3--zh_cn",
+        "behind_head_string_preview_invalid--p4--en"
+      ],
+      "standard_cvd_non_color_redundancy": [
+        "group_choice_armed_confirm--p1--zh_cn",
+        "group_choice_armed_confirm--p2--en",
+        "group_choice_armed_confirm--p3--zh_cn",
+        "group_choice_armed_confirm--p4--en"
+      ]
+    },
+    "failed_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_valid--p2--zh_cn",
+      "full_table_preview_valid--p3--en",
+      "full_table_preview_valid--p4--zh_cn",
+      "full_table_preview_invalid--p1--zh_cn",
+      "full_table_preview_invalid--p2--en",
+      "full_table_preview_invalid--p3--zh_cn",
+      "full_table_preview_invalid--p4--en",
+      "behind_head_string_preview_valid--p1--en",
+      "behind_head_string_preview_valid--p2--zh_cn",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_valid--p4--zh_cn",
+      "behind_head_string_preview_invalid--p1--zh_cn",
+      "behind_head_string_preview_invalid--p2--en",
+      "behind_head_string_preview_invalid--p3--zh_cn",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "manual_result": "FAIL"
+  },
+  "evidence_boundary": {
+    "beta_authorized": false,
+    "design_contract_only": true,
+    "external_human_review_claimed_by_this_gate": false,
+    "gpu_capture_performed_by_this_gate": false,
+    "gpu_execution_authorized": false,
+    "implementation_authorized": true,
+    "machine_pass_claimed_by_this_gate": false,
+    "product_exposure_authorized": false,
+    "production_source_modified_by_this_gate": false,
+    "screen_reader_session_claimed_by_this_gate": false,
+    "shipping_asset_modified_by_this_gate": false,
+    "technical_art_re_review_claimed_by_this_gate": false,
+    "true_keyboard_or_pointer_session_claimed_by_this_gate": false
+  },
+  "forbidden_changes": {
+    "authority_and_rules": [
+      "No stable authority header/source, offered action inventory/order, branch, actor rule, ruleset, policy blocker, foundation action, request identity, ACK identity, error mapping, idempotency, mutation, turn, score, rack, breaker, group, entitlement, or validation geometry change."
+    ],
+    "evidence": [
+      "Do not overwrite v2 PPM/PNG/JSONL/receipt/manual evidence. v3 outputs use new roots and new manifests. No mockup, CPU raster, flat proof, or design image may substitute for actual GPU evidence."
+    ],
+    "exposure": [
+      "No product_exposed, profile_complete, Beta, manual pass, real-human pass, true-input pass, screen-reader pass, or unresolved-policy promotion."
+    ],
+    "scope_expansion": [
+      "No new action, recovery control, tooltip authority, gameplay feature, animation dependency, or unrelated HUD/shell/table visual redesign."
+    ],
+    "thresholds": [
+      "No contrast, typography, critical-shape, focus-stroke, hit-target, safe-area, table-occlusion, ui-scale range, viewport/density coverage, performance, draw-call, or evidence threshold relaxation."
+    ]
+  },
+  "inherited_thresholds_immutable": {
+    "contrast": {
+      "cvd_semantics_equal_to_standard": true,
+      "disabled_text_minimum": 3.0,
+      "large_text_and_active_shape_minimum": 3.0,
+      "normal_text_minimum": 4.5
+    },
+    "decision_modal": {
+      "action_minimum_logical_height_px": 48,
+      "action_vertical_gap_logical_px": 8,
+      "critical_shape_minimum_physical_px": 18,
+      "focus_stroke_minimum_physical_px": 2,
+      "maximum_height_fraction": 0.82,
+      "maximum_logical_width_px": 720,
+      "minimum_logical_width_px": 520
+    },
+    "modification_allowed": false,
+    "performance": {
+      "complete_scene_draw_calls_max": 100,
+      "incremental_draw_calls_max": 3,
+      "incremental_texture_residency_mib_max": 1.0,
+      "rules_ui_cpu_build_p95_ms_max": 0.35,
+      "rules_ui_gpu_submit_p95_ms_max": 0.65,
+      "rules_ui_total_incremental_p95_ms_max": 1.0,
+      "total_frame_p95_ms_max": 16.7
+    },
+    "placement_overlay": {
+      "table_occlusion_limit_fraction": 0.18
+    },
+    "source": "original_rules_ui_design_gate",
+    "typography": {
+      "action_logical_px": 16,
+      "body_logical_px": 16,
+      "line_height_multiplier_minimum": 1.25,
+      "maximum_action_lines": 2,
+      "maximum_body_lines": 3,
+      "minimum_base_logical_px": 14,
+      "no_ellipsis_for_rule_action_or_error_copy": true,
+      "title_logical_px": 24
+    }
+  },
+  "machine_validation_gate": {
+    "canonical_states": [
+      "group_choice_open_unselected",
+      "group_choice_armed_confirm",
+      "full_table_preview_valid",
+      "full_table_preview_invalid",
+      "behind_head_string_preview_valid",
+      "behind_head_string_preview_invalid",
+      "eight_legal_open_unselected",
+      "eight_foul_open_unselected",
+      "break_illegal_open_unselected",
+      "break_shot_foul_open_unselected",
+      "submitting_progress",
+      "authority_error",
+      "state_drift_refreshing",
+      "ai_or_remote_pending",
+      "section_6g_classification_pending"
+    ],
+    "cross_product": {
+      "canonical_state_count": 15,
+      "formula": "15*2*2*3*3",
+      "locale_count": 2,
+      "palette_count": 2,
+      "required_case_count": 540,
+      "ui_scale_count": 3,
+      "viewport_density_count": 3
+    },
+    "failure_policy": "Any missing case, non-reproducible byte, threshold relaxation, authority drift, token alias, text/layout failure, or visual repair assertion failure is blocking FAIL.",
+    "locales": [
+      "en",
+      "zh_cn"
+    ],
+    "logical_viewport_density_profiles": [
+      "1280x720_density1",
+      "1920x1080_density1",
+      "1280x720_retina_density2"
+    ],
+    "palettes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "per_case_hard_checks": [
+      "All original design-gate 540-case hard checks remain enabled and unchanged.",
+      "Exact offered actions and order; zero unoffered/foundation actions.",
+      "Zero truncated/ellipsized/colliding text, undersized glyph/shape/stroke, unsafe-edge violation, or hit-target overlap.",
+      "Open/pending/stale states contain no selected or armed action.",
+      "group_choice_armed_confirm contains exact localized action result and actor in both armed and confirm rows.",
+      "focus_chevron, selected_check_diamond, and confirm_double_frame_plus_enter_arrow are three independently addressable non-color shapes with no token aliasing.",
+      "Every valid placement emits ghost cue-ball plus crosshair in table/world overlay.",
+      "Every invalid placement emits ghost cue-ball plus error-cross-octagon plus dashed collision ring and disables confirm.",
+      "Every behind-head-string placement emits diagonal hatch, boundary line, bilingual in-world region/scope text, and exact world X/Z coordinates.",
+      "Standard/CVD semantic and shape inventory equality.",
+      "Local preview and presentation-only repair do not change authority hash/revision/events/actions.",
+      "Unknown/stale/error/pending paths remain blocking and action-free as contracted."
+    ],
+    "required_case_count": 540,
+    "required_reproducibility": "Two clean offline runs produce byte-identical ordered 540-case JSON and aggregate SHA.",
+    "ui_scales": [
+      0.85,
+      1.0,
+      1.35
+    ]
+  },
+  "package_id": "phase5_rules_decision_ui_v3_visual_repair_scoped_gate_v1",
+  "product_exposed": false,
+  "profile_complete": false,
+  "read_only_bindings": [
+    {
+      "path": "docs/evidence/phase5/rules-decision-ui-v2-independent-manual-review-v1.json",
+      "role": "v2_final_manual_failure_authority",
+      "sha256": "40ab295412081bba3ecb87351dabebc76a85d522c75b4bbddd9c1ed90f6540c0"
+    },
+    {
+      "path": "docs/evidence/phase5/actual-gpu-v2-evidence/rules-decision-ui-actual-gpu-evidence-v2.json",
+      "png_aggregate_sha256": "f05e668df68d61fa7d5eff84b6fc87f3b09768fe1c545be11804636c4a9ba248",
+      "role": "v2_stable_png_manifest",
+      "sha256": "cf21196bcc834a9658a2748a157bf2b7fe1f68567af4b7e52022c3013e3afb66"
+    },
+    {
+      "path": "docs/evidence/phase5/rules-decision-ui-v2-gpu-machine-pass-receipt-v1.json",
+      "role": "v2_actual_gpu_machine_pass_receipt",
+      "sha256": "3b9a807ce6c906dc2f3d29247edf15f747740c52d955a74ff50fef70d7da3cc0"
+    },
+    {
+      "path": "docs/art/phase5-rules-decision-ui-design-gate-v1.json",
+      "role": "original_rules_ui_design_gate",
+      "sha256": "26567d0547163561ed77e6e41b32753c4cc55efcd693c9ce22faf847d43f5a08"
+    }
+  ],
+  "repair_contract": {
+    "allowed_layers": [
+      "rules_decision_presentation_copy_formatting",
+      "rules_decision_product_draw_shape_emission",
+      "table_world_placement_overlay",
+      "offline_validation_and_test_scaffolding"
+    ],
+    "allowed_state_ids": [
+      "group_choice_armed_confirm",
+      "full_table_preview_valid",
+      "full_table_preview_invalid",
+      "behind_head_string_preview_valid",
+      "behind_head_string_preview_invalid"
+    ],
+    "armed_confirm": {
+      "action_label_source": "Use the exact localized label for the armed stable authority action_id; never synthesize, alias, reorder, or substitute an action.",
+      "actor_source": "Use the exact actor display derived from actor_player_id in the current offer; no local-player fallback and no stale actor carry-over.",
+      "affected_case_ids": [
+        "group_choice_armed_confirm--p1--zh_cn",
+        "group_choice_armed_confirm--p2--en",
+        "group_choice_armed_confirm--p3--zh_cn",
+        "group_choice_armed_confirm--p4--en"
+      ],
+      "armed_copy_templates": {
+        "en": "Armed — {actor_display}: {exact_action_result}",
+        "zh_cn": "已选 — {actor_display}：{exact_action_result}"
+      },
+      "confirm_copy_templates": {
+        "en": "Confirm — {actor_display}: {exact_action_result}",
+        "zh_cn": "确认 — {actor_display}：{exact_action_result}"
+      },
+      "copy_requirements": [
+        "Both armed and confirm rows name exact_action_result and actor_display.",
+        "No generic Confirm armed action / 确认已选处理 copy remains.",
+        "Text wraps to at most two action lines, never ellipsizes, and never shrinks below inherited minimum type size.",
+        "A changed action or actor clears the arm and rebuilds the row from the latest stable offer."
+      ],
+      "non_color_shape_tokens": {
+        "armed": "selected_check_diamond attached to the armed action row; remains distinct from focus and confirm",
+        "color_policy": "Shape plus text plus luminance/contrast carry state; hue is supplementary in standard and color_vision_safe palettes.",
+        "confirm": "confirm_double_frame_plus_enter_arrow attached only to the confirm row; remains distinct from focus, armed, disabled, error, and pending",
+        "focused": "focus_chevron; minimum inherited critical-shape size and focus stroke; moves without selecting or submitting"
+      },
+      "submission_semantics_unchanged": "First action activation arms only. A separate activation of the explicit confirm row submits once. Focus, hover, open, timeout, Escape, resume, right-click, double-click, and focus loss never submit."
+    },
+    "placement_world_overlay": {
+      "affected_case_ids": [
+        "full_table_preview_valid--p1--en",
+        "full_table_preview_valid--p2--zh_cn",
+        "full_table_preview_valid--p3--en",
+        "full_table_preview_valid--p4--zh_cn",
+        "full_table_preview_invalid--p1--zh_cn",
+        "full_table_preview_invalid--p2--en",
+        "full_table_preview_invalid--p3--zh_cn",
+        "full_table_preview_invalid--p4--en",
+        "behind_head_string_preview_valid--p1--en",
+        "behind_head_string_preview_valid--p2--zh_cn",
+        "behind_head_string_preview_valid--p3--en",
+        "behind_head_string_preview_valid--p4--zh_cn",
+        "behind_head_string_preview_invalid--p1--zh_cn",
+        "behind_head_string_preview_invalid--p2--en",
+        "behind_head_string_preview_invalid--p3--zh_cn",
+        "behind_head_string_preview_invalid--p4--en"
+      ],
+      "behind_head_string": {
+        "boundary": "Continuous head-string boundary line distinct from hatch and table markings.",
+        "copy_requirements": [
+          "Bilingual in-world text names legal region and behind-head-string scope.",
+          "The same in-world text carries exact preview coordinates.",
+          "No panel-only text may substitute for the required table/world annotation.",
+          "Text stays inside safe table/world overlay placement and does not cover candidate, pockets, or head-string boundary."
+        ],
+        "hatch": "Diagonal hatch fills only the legal side and remains readable in standard/CVD without relying on hue.",
+        "in_world_copy": {
+          "en": "Legal region — behind head string • Preview X {x_cm} cm, Z {z_cm} cm",
+          "zh_cn": "合法区域—开球线后 • 预览 X {x_cm} 厘米，Z {z_cm} 厘米"
+        },
+        "required_region_pattern": "diagonal_hatch_plus_boundary_line_plus_in_world_text"
+      },
+      "coordinate_source": "The exact local preview world X/Z already used by authority validation; formatting may change but values, geometry, and validation semantics may not.",
+      "invalid_candidate": {
+        "confirm_state": "Exact placement confirm stays disabled until fresh validation for the exact candidate is legal.",
+        "dashed_collision_ring": "Dashed ring centered on the candidate and scaled to cue-ball collision clearance; dash gaps remain visible at every supported density/ui scale.",
+        "error_cross_octagon": "Non-color error cross inside an octagonal outline centered on the invalid candidate.",
+        "required_shape": "ghost_cue_ball_plus_error_cross_octagon_plus_dashed_collision_ring"
+      },
+      "preserved_semantics": [
+        "Preview remains local and never mutates authority revision/hash/events/actions.",
+        "Escape/right-click clears local preview only and preserves entitlement/blocking overlay.",
+        "Full-table versus behind-head-string validation geometry is unchanged.",
+        "Table occlusion and all inherited typography/contrast/safe-area limits remain unchanged."
+      ],
+      "valid_candidate": {
+        "crosshair": "Orthogonal crosshair centered on the candidate; inherited minimum physical stroke/critical-shape thresholds apply.",
+        "ghost_ball": "Circular cue-ball silhouette at the candidate center, visibly translucent/ghosted and spatially distinct from the authoritative cue ball.",
+        "required_shape": "ghost_cue_ball_plus_crosshair",
+        "required_text": "Preview plus world X/Z coordinates remains readable without occluding the shot-critical candidate."
+      }
+    }
+  },
+  "required_external_sessions": [
+    {
+      "session": "keyboard-only traversal, arm/confirm/cancel in en and zh_cn",
+      "status": "NOT_RUN"
+    },
+    {
+      "session": "pointer-only arm/confirm and placement preview/reset",
+      "status": "NOT_RUN"
+    },
+    {
+      "session": "focus loss, Escape, right-click, double-click, timeout, stale/actor drift, ACK mismatch",
+      "status": "NOT_RUN"
+    },
+    {
+      "session": "independent real-human standard/CVD and localization comparison",
+      "status": "NOT_RUN"
+    },
+    {
+      "session": "screen-reader order and focus-versus-armed distinction in both locales",
+      "status": "NOT_RUN"
+    },
+    {
+      "session": "external Beta QA",
+      "status": "NOT_RUN"
+    }
+  ],
+  "schema": "phase5_rules_decision_ui_v3_visual_repair_design_gate_v1",
+  "schema_version": 1,
+  "scope": "Repair only the 20 visual cases and 32 manual axes that failed the bound v2 independent manual review. Preserve all authority, action inventory, request/ACK, fail-closed, layout threshold, performance, and exposure semantics.",
+  "status": "APPROVED_FOR_SCOPED_VISUAL_REPAIR_IMPLEMENTATION_ONLY",
+  "targeted_actual_gpu_gate": {
+    "authorization_status": "NOT_AUTHORIZED_BY_THIS_DESIGN_GATE",
+    "capture_requirements": [
+      "Separate explicit root authorization is required after implementation, source freeze, 540/540 machine pass, and no-GPU preflight.",
+      "Actual production Core 4.1 path after ACES tone map with shipping fonts/icons; no GPU evidence may be generated by this gate.",
+      "Use a new v3 evidence root and never overwrite any v2 evidence.",
+      "Record PNG path/SHA/physical dimensions, source/runner/binary bindings, render-pass order, draw calls, and hit rectangles.",
+      "All 28 captures pass machine validation. Any omitted-corner anomaly or manual doubt expands the targeted set before TA review."
+    ],
+    "coverage_rationale": {
+      "group_open_controls": "Four profiles prove no default selection and no focus/armed/confirm token leakage at modal open.",
+      "repair_cases": "All v2 manual FAIL cases: armed/confirm across four profiles plus every full-table/behind-head valid/invalid profile.",
+      "shared_action_controls": "Eight-on-break and break-illegal open states protect shared action-row inventory and unselected styling.",
+      "status_controls": "Submitting and authority-error states protect product status/error shape separation from new confirm/invalid tokens."
+    },
+    "minimum_case_count": 28,
+    "proof_boundary": "28/28 targeted actual-GPU machine pass closes only the scoped v3 visual-repair raster gate; it does not equal product exposure, Beta, real-input, screen-reader, localization, CVD-human, or external-QA pass.",
+    "regression_control_case_ids": [
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en"
+    ],
+    "regression_control_count": 8,
+    "repair_case_count": 20,
+    "repair_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_valid--p2--zh_cn",
+      "full_table_preview_valid--p3--en",
+      "full_table_preview_valid--p4--zh_cn",
+      "full_table_preview_invalid--p1--zh_cn",
+      "full_table_preview_invalid--p2--en",
+      "full_table_preview_invalid--p3--zh_cn",
+      "full_table_preview_invalid--p4--en",
+      "behind_head_string_preview_valid--p1--en",
+      "behind_head_string_preview_valid--p2--zh_cn",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_valid--p4--zh_cn",
+      "behind_head_string_preview_invalid--p1--zh_cn",
+      "behind_head_string_preview_invalid--p2--en",
+      "behind_head_string_preview_invalid--p3--zh_cn",
+      "behind_head_string_preview_invalid--p4--en"
+    ]
+  },
+  "technical_art_re_review_gate": {
+    "axes_per_image": [
+      "action_semantics_and_branch_correctness",
+      "actor_revision_and_authority_status_readability",
+      "no_default_selection_or_accidental_submission_affordance",
+      "focus_pointer_keyboard_redundancy",
+      "text_clipping_collision_and_minimum_size",
+      "standard_cvd_non_color_redundancy",
+      "placement_scope_and_legality_readability",
+      "stale_error_ai_pending_fail_closed_clarity",
+      "foundation_and_unoffered_action_absence",
+      "debug_and_product_surface_separation"
+    ],
+    "axis_review_count": 280,
+    "does_not_satisfy_external_human_or_true_input_sessions": true,
+    "image_count": 28,
+    "method": [
+      "Open all 28 bound PNGs individually at original physical resolution.",
+      "Review every image on all ten original axes; no inherited machine/manual PASS.",
+      "Compare each repaired case against its exact v2 stable PNG and record before/after paths and SHA.",
+      "All 32 previously failed axis occurrences must become PASS; no other axis may regress.",
+      "Any blocking defect makes the v3 TA result FAIL."
+    ],
+    "required_result": {
+      "axes_reviewed": 280,
+      "cases_reviewed": 28,
+      "failed_previous_axis_occurrences_remaining": 0,
+      "new_axis_failures": 0,
+      "overall": "PASS_REQUIRED_FOR_SCOPED_VISUAL_REPAIR_GATE_ONLY",
+      "pending_axes": 0
+    },
+    "reviewer": "Independent technical-art reviewer who did not implement the v3 repair.",
+    "status": "NOT_RUN"
+  }
+}
+

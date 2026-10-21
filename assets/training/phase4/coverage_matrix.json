@@ -1,0 +1,34 @@
+{
+  "category_counts": {
+    "break_cue_control": 2,
+    "continuous_position": 2,
+    "pocket_angle": 2,
+    "side_spin_cushion": 3,
+    "stun_follow_draw": 3
+  },
+  "difficulty_counts": {
+    "advanced": 3,
+    "beginner": 3,
+    "intermediate": 6
+  },
+  "gated_scenarios": [
+    "launch_draw_shot_v1",
+    "launch_follow_shot_v1",
+    "launch_left_english_one_rail_v1",
+    "launch_right_english_one_rail_v1",
+    "launch_side_english_two_rail_v1"
+  ],
+  "scenario_count": 12,
+  "schema": "training_scenario_v1_coverage_matrix",
+  "schema_version": 1,
+  "success_predicates": [
+    "ball_final_position_in_zone",
+    "ball_not_pocketed",
+    "ball_pocketed",
+    "distinct_object_balls_with_rail_contact_gte",
+    "first_contact_ball",
+    "ordered_ball_pockets",
+    "rail_contact_count_gte",
+    "shot_count_lte"
+  ]
+}

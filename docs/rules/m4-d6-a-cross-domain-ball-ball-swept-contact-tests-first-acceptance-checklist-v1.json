@@ -1,0 +1,121 @@
+{
+  "schema": "m4_d6_a_cross_domain_ball_ball_swept_contact_tests_first_acceptance_checklist_v1",
+  "schema_version": 1,
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_TESTS_FIRST_NOT_AUTHORIZED_NO_PRODUCTION_CHANGE",
+  "scope": "Narrow tests-first correction to D6-A: a ball in AIRBORNE must not be isolated from a simultaneously active CLOTH_SUPPORTED, RAIL_TOP_SUPPORTED, or OUTSIDE_LANDING_SUPPORTED ball. It adds no D6-B telemetry, D6-C classification, rules, product, UI, renderer, GPU, readiness, capture, threshold, camera, layout, asset, or product-exposure authority.",
+  "frozen_bindings": [
+    {
+      "role": "d6_a_parent_design_gate",
+      "path": "docs/rules/m4-d6-a-3d-table-departure-physics-foundation-implementation-design-gate-v1.json",
+      "sha256": "676b70795fc45e4e3cc4f5c8ffa3a236c1e1e83aea9371e422ff9b54e87264d1"
+    },
+    {
+      "role": "d5_completed_rigid_contact_stage",
+      "path": "docs/rules/m4-d5-cue-contact-stage-completion-successor-v1.json",
+      "sha256": "c977989b6d1045218caca8a609dd4df0b39114a81fdc1992d53ea5f79da65d15"
+    }
+  ],
+  "root_pm_decision": {
+    "selected": "CROSS_DOMAIN_BALL_BALL_IS_REQUIRED_IN_D6_A",
+    "reason": "The parent gate requires all 3D candidates on a temporary GameState, absolute whole-tick TOI ordering, and existing rigid-contact conventions; a split solver may not silently ignore an airborne-to-supported ball contact.",
+    "silent_split_or_pass_through_allowed": false,
+    "discrete_end_overlap_only_allowed": false
+  },
+  "continuous_candidate_contract": {
+    "candidate_pair": "canonical min/max ball identity plus both physical-domain analytic segment identities",
+    "geometry": "continuous swept sphere versus swept sphere using center distance equal to the sum of radii",
+    "time_basis": "absolute whole-tick seconds; recursive tails retain the original tick origin",
+    "motion_inputs": "the exact analytic position, velocity, and acceleration law active for each domain segment; no endpoint chord or final-overlap proxy",
+    "root_selection": "earliest finite root in the closed segment interval whose approach derivative is strictly negative, within the existing solver TOI tolerance",
+    "candidate_order": "absolute whole-tick TOI, then existing physical feature order, then canonical min/max ball identity and segment identity",
+    "stable_identity": "ball pair, both domain segment identities, absolute TOI and event ordinal; recursive replay cannot apply the same contact twice",
+    "same_toi_ambiguity": "indistinguishable cross-domain ball contact versus table, pocket, departure, landing, return, or another contact fails the whole tick closed unless the existing island solver proves one deterministic simultaneous island",
+    "initial_penetration": "requires the existing unique-normal penetration policy; ambiguous penetration fails and rolls back",
+    "broad_phase_or_coordinate_whitelist_may_decide_contact": false
+  },
+  "resolution_and_atomicity_contract": {
+    "resolver": "reuse existing rigid ball-ball contact mass, restitution, friction, normal/tangent impulse, contact arm, and tolerance conventions; do not invent a D6-only bounce constant",
+    "linear_and_angular_state": "position, velocity, angularVelocity, rotationAxis, rotationAngle, speed, motionState, pocket state and physical domain are staged and committed together",
+    "angular_rule": "airborne angular velocity is conserved before contact; the resolved contact may change angular state only by the existing contact impulse convention and may not reset or synthesize spin",
+    "momentum_and_energy": "resolved pair obeys existing solver momentum, passive-energy, residual and finite-state tolerances",
+    "domain_rule": "contact alone does not teleport either ball between physical domains; subsequent continuous table candidates decide landing, return, departure or pocket entry",
+    "failed_tick": "restore the exact pre-tick GameState fields covered by the parent D6-A atomic contract and publish no partial private event list",
+    "private_only": "candidate and resolution records remain physics-private D6-A data and are not appended to canonical PhysicsStepTelemetry, ShotFacts, rules outcomes, or product UI"
+  },
+  "required_tests_first_red_fixtures_exact": [
+    {
+      "id": "X01_AIRBORNE_TO_CLOTH_SUPPORTED_EXACT_TOI",
+      "requirement": "A descending or lateral airborne sphere strikes a moving cloth-supported sphere at a known analytic root; the observed absolute TOI and canonical pair identity match the independently computed root within the frozen solver tolerance."
+    },
+    {
+      "id": "X02_AIRBORNE_TO_RAIL_TOP_SUPPORTED_EXACT_TOI",
+      "requirement": "An airborne sphere contacts a rail-top-supported sphere before either table feature; exact TOI, ordering, domain retention, and one stable identity are proven."
+    },
+    {
+      "id": "X03_AIRBORNE_TO_OUTSIDE_SUPPORTED_EXACT_TOI",
+      "requirement": "An airborne sphere contacts an outside-landing-supported sphere before floor contact; exact TOI, ordering, domain retention, and one stable identity are proven."
+    },
+    {
+      "id": "X04_IMPULSE_ANGULAR_AND_ENERGY_CONVENTION",
+      "requirement": "A nontrivial oblique cross-domain contact is compared with the existing rigid ball-ball resolver: normal/tangent impulse, post velocities, angular velocities, finite state, momentum and passive-energy bounds agree; pre-contact airborne spin is not reset."
+    },
+    {
+      "id": "X05_RECURSIVE_TAIL_STABLE_IDENTITY_AND_ORDER",
+      "requirement": "A cross-domain contact followed by a landing or return in the same tick has strictly ordered absolute TOIs, unique identities, no duplicate contact, and whole-tick versus recursively split equivalence."
+    },
+    {
+      "id": "X06_SAME_TOI_AMBIGUITY_WHOLE_STATE_ROLLBACK",
+      "requirement": "A constructed cross-domain ball contact indistinguishable from a table or pocket candidate either resolves through one existing deterministic simultaneous island or fails closed; the fixture requires the selected behavior and byte-exact transactional rollback on failure."
+    },
+    {
+      "id": "X07_MISS_AND_NEAR_MISS_NO_CONTACT_CONTROL",
+      "requirement": "Separated, tangent-without-approach, and near-miss paths produce no contact identity or impulse and preserve the independent domain trajectories."
+    },
+    {
+      "id": "X08_NO_DISCRETE_TUNNEL_OR_END_OVERLAP_PROXY",
+      "requirement": "A high-speed path crosses the supported sphere between endpoints while start and end do not overlap; exactly one continuous contact is required. A mutation that checks only final overlap must fail."
+    },
+    {
+      "id": "X09_MIXED_EXISTING_CLOTH_CONTACT_AND_PLANE_CONTROL",
+      "requirement": "The already-required mixed-domain cloth collision/surface telemetry and valid/invalid plane-observation controls remain byte/record equivalent; adding cross-domain candidates may not regress them."
+    },
+    {
+      "id": "X10_PRIVATE_CONSUMER_AND_ALLOWLIST_NEGATIVE",
+      "requirement": "Static and runtime audits prove no D6-B telemetry schema, ShotFacts, rules, UI, renderer, product, coordinate whitelist, new threshold, or consumer connection is introduced."
+    }
+  ],
+  "tests_first_and_implementation_sequence": [
+    "Freeze an honest RED whose first cause is the absence of continuous cross-domain contact behavior, not a missing header or unrelated compile error.",
+    "Root and independent TA reproduce the RED and verify all ten fixtures are substantive before any production edit for this correction.",
+    "Implement the minimum continuous candidate, ordering, resolver reuse and atomic merge within the exact allowlist.",
+    "Run the dedicated tests at O0 and O2 with identical semantic output, then the parent D6-A focused target and broad headless physics regressions.",
+    "Freeze source/object/binary/command/stdout/stderr hashes and an implementation receipt; only then may Root consider D6-A CMake SOURCE_STABLE."
+  ],
+  "future_correction_allowlist_after_root_revalidation": {
+    "production_files_exact": [
+      "src/Billiards/table_departure_geometry.h",
+      "src/Billiards/table_departure_geometry.cpp",
+      "src/Billiards/physics.cpp"
+    ],
+    "test_files_exact": [
+      "tests/table_departure_geometry_tests.cpp"
+    ],
+    "cmake_edit_allowed": false,
+    "other_parent_gate_files_remain_available_only_for_already_authorized_d6_a_work": true,
+    "ball_ball_contact_or_contact_solver_source_edit_allowed": false,
+    "reuse_existing_contact_api_required": true
+  },
+  "acceptance_boundary": {
+    "design_checklist_complete": true,
+    "root_revalidation_required": true,
+    "tests_first_red_authorized_by_this_artifact": false,
+    "production_edit_authorized_by_this_artifact": false,
+    "cmake_edit_authorized": false,
+    "configure_build_or_test_executed": false,
+    "d6_a_cross_domain_contact_implemented": false,
+    "d6_a_source_stable": false,
+    "d6_b_or_d6_c_started": false,
+    "gpu_readiness_capture_or_authorization": false,
+    "product_or_visual_pass_claimed": false
+  }
+}

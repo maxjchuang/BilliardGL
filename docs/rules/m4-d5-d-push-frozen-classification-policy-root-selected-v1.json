@@ -1,0 +1,71 @@
+{
+  "schema": "m4_d5_d_push_frozen_classification_policy_root_selected_v1",
+  "selection_id": "m4-d5-d-root-selected-2026-08-12-v1",
+  "status": "ROOT_SELECTED_POLICY_ONLY_IMPLEMENTATION_NOT_AUTHORIZED",
+  "selected_by": "ROOT_PM",
+  "selected_on": "2026-08-12",
+  "input_bindings": {
+    "candidate_register": {"path": "docs/rules/m4-d5-d-push-frozen-classification-policy-candidate-register-v1.json", "sha256": "03ef6d627c3382d51635590159f1982f3d77f48a3dc72239f6aa46cfb4135b97"},
+    "root_policy_bundle": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"},
+    "d5_b_receipt": {"path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json", "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"},
+    "d5_c_receipt": {"path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-receipt-v1.json", "sha256": "07b8d9330f8d7d850101a4f16e2e365c84dec8d6c3093624e96edf91a5024a53"}
+  },
+  "root_selection_directive": {
+    "source": "explicit collaboration message from /root to /root/cpp_graphics_baselines",
+    "semantic_text": "Root正式选择D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY：same-shot signed referee final；duration/distance report-only、threshold null、tolerance0；jaw=false；straight-cushion velocity impulse only；prereq=post-first-legal-object-contact straight cushion impulse OR complete object pocket。先冻结root-selected artifact+validator/mutations，再独立implementation design gate；不改production。",
+    "semantic_sha256": "20b463a346c771688e4e81790a3984f95190a9ca8d99906576eadd2beaf4993f"
+  },
+  "selected_bundle": {
+    "id": "D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY",
+    "candidate_order": 0,
+    "root_selected": true,
+    "push_obviousness_authority": "AUTHENTICATED_REFEREE_FINAL_BOUND_TO_SAME_SHOT",
+    "duration_distance": {
+      "use": "REPORT_ONLY_CANONICAL_MEASUREMENTS",
+      "duration_threshold_seconds": null,
+      "distance_threshold_cm": null,
+      "comparison_tolerance": 0.0,
+      "automatic_numeric_push_classification": false,
+      "complete_measurements_required_for_signed_push_consumption": true
+    },
+    "frozen_cushion": {
+      "pocket_jaw_counts": false,
+      "accepted_cushion_kind": "STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE_APPLIED",
+      "prerequisite_legal_cushion_predicate": "POST_FIRST_LEGAL_OBJECT_CONTACT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_OR_COMPLETE_OBJECT_POCKET",
+      "unmet_prerequisite_alternatives": [
+        "DECLARED_BALL_LEAVES_THEN_RECONTACTS_NAMED_STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE",
+        "OTHER_OBJECT_STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE",
+        "COMPLETE_OBJECT_POCKET"
+      ]
+    }
+  },
+  "selection_semantics": {
+    "measurement_alone_is_push": false,
+    "signed_final_without_complete_same_shot_measurements_is_push": false,
+    "signed_same_shot_final_plus_complete_measurements_is_push_foul": true,
+    "frozen_declaration_suppresses_signed_push_foul": false,
+    "jaw_or_position_correction_counts_as_straight_cushion": false,
+    "cue_ball_pocket_counts_as_object_pocket_alternative": false,
+    "selection_is_implementation": false,
+    "selection_closes_wpa_ii_12_7_15_1_15_2_or_17": false,
+    "selection_closes_d5_or_m4": false
+  },
+  "implementation_permissions": {
+    "independent_implementation_design_gate_may_be_prepared": true,
+    "production_or_cmake_change_allowed_before_gate_revalidation": false,
+    "tests_first_implementation_authorized": false,
+    "rules_or_shotfacts_consumer_authorized": false,
+    "visible_or_global_ui_allowed": false,
+    "gpu_readiness_or_authorization_allowed": false
+  },
+  "claims": {
+    "policy_selected": true,
+    "implementation_started": false,
+    "push_or_frozen_classification_implemented": false,
+    "audit_rows_promoted": false,
+    "d5_complete": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "gpu_executed_or_authorized": false
+  }
+}

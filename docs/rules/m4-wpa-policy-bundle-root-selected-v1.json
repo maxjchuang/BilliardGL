@@ -1,0 +1,174 @@
+{
+  "schema": "m4_wpa_policy_bundle_root_selected_v1",
+  "bundle_id": "m4-wpa-root-selected-2026-08-12-v1",
+  "selection_version": 1,
+  "status": "ROOT_SELECTED",
+  "selected_by": "ROOT_PM",
+  "selected_on": "2026-08-12",
+  "input_bindings": {
+    "candidate": {
+      "path": "docs/rules/m4-wpa-policy-bundle-candidate-v1.json",
+      "sha256": "0cc6a5f319eaed7f7b46fb6c5579982592c504e89d57b04183bd749be82f7da9"
+    },
+    "policy_register": {
+      "path": "docs/rules/m4-wpa-policy-referee-input-decision-register-v1.json",
+      "sha256": "66e105e968fc49f46cfe7fd117e42b545c6789a87d401f1d657ee263103a31ce"
+    },
+    "critical_path_register": {
+      "path": "docs/rules/m4-remaining-gap-dependency-critical-path-register-v1.json",
+      "sha256": "a981b12424ddea9387250b884c53f058e0f987ae5ce88a0e7362df0c0015a684"
+    }
+  },
+  "root_pm_selection_directive": {
+    "source": "explicit collaboration message from /root to /root/cpp_graphics_baselines",
+    "semantic_text": "Root PM 已逐项审查15项候选，批准全部 recommended option 作为 B0 v1 正式政策选择。请生成独立 versioned ROOT_SELECTED policy bundle（绑定candidate/register/critical-path及本消息语义）：15/15 root_selected=true；允许 B1 direct-code 与 B2 authenticated referee-authority protocol 进入 tests-first CPU implementation；B3 的 D5/D6/D7 仍各需独立 implementation design gate，特别 §16 KEEP_JUMP_DISABLED 与 §17 off-table defer 明确不闭行、不完成M4。不得由selection本身声称row/profile/M4 closed；不得授权GPU/readiness。先冻结selection+validator+mutations，再开始任何production。",
+    "semantic_sha256": "a95efb1b7467fd2b5c01ed02d05bdcd97ac1a2021aa82b1e6254322abf58663c"
+  },
+  "implementation_permissions": {
+    "B1_direct_code_tests_first_cpu_implementation_allowed": true,
+    "B2_authenticated_referee_authority_protocol_tests_first_cpu_implementation_allowed": true,
+    "B3_D5_cue_contact_implementation_allowed": false,
+    "B3_D6_off_table_physics_implementation_allowed": false,
+    "B3_D7_jump_3d_physics_implementation_allowed": false,
+    "B3_requires_independent_versioned_implementation_design_gate_per_lane": true,
+    "production_work_may_start_only_after_this_bundle_validator_and_mutations_pass": true,
+    "gpu_execution_allowed": false,
+    "readiness_generation_allowed": false,
+    "authorization_issuance_allowed": false,
+    "cmake_change_allowed": false,
+    "phase4_or_phase5_renderer_change_allowed": false
+  },
+  "selection_semantics": {
+    "policy_selection_is_row_completion": false,
+    "policy_selection_is_profile_completion": false,
+    "policy_selection_is_m4_completion": false,
+    "dependency_blocked_or_deferred_rows_remain_open": true,
+    "selected_machine_constants_are_bound_by_candidate_decision_sha256": true,
+    "every_implementation_must_remain_within_a_selected_stage_and_new_tests_first_allowlist": true,
+    "global_rules_decision_ui_product_exposed": false,
+    "wpa_ii_19_remains_program_priority_without_mutating_audit_v5": true
+  },
+  "decisions": [
+    {
+      "row_id": "WPA-II-06-C", "decision_id": "M4-POL-06C-BREAK-THRESHOLD",
+      "selected_option_id": "STRAIGHT_CUSHION_VELOCITY_IMPULSE_OBJECT_POCKET", "root_selected": true,
+      "candidate_decision_sha256": "765c9fe8d30900636e4c34f04763f2c1d3ba6b397c71f1c6b12fec1eb16aaa41",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-06-D", "decision_id": "M4-POL-06D-HALF-BALL-HISTORY",
+      "selected_option_id": "FROZEN_POSITION_AT_ACCEPTED_BREAK_RELEASE_MATCH_SCOPE", "root_selected": true,
+      "candidate_decision_sha256": "03b9d1c9bc904d048443a15fd2c4bfaa0d715aaea0df719a96e5622fbcd1af69",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-06-E", "decision_id": "M4-PROD-06E-BREAK-FOUL-CHOICES",
+      "selected_option_id": "NARROW_FROZEN_OFFER_CONSUMER", "root_selected": true,
+      "candidate_decision_sha256": "7b42beeff59b6d089f5f4a25bcdf7af926539ea93e02e82c1ecc54d81ff8d109",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-06-F", "decision_id": "M4-PROD-06F-EIGHT-ON-BREAK-FULL-CHOICES",
+      "selected_option_id": "EXPAND_NARROW_CORE_F_TO_EXACT_RERACK_ACTIONS", "root_selected": true,
+      "candidate_decision_sha256": "109cc3e73f845469df60bf16fabefcdc5ee6aa787dbb67955da6d9dfb611bdb6",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-08", "decision_id": "M4-POL-08-HEAD-STRING-CROSSING",
+      "selected_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER", "root_selected": true,
+      "candidate_decision_sha256": "0dcaa87141a132f205f7a753bd1a7d723b51597c4f1c779c71d5f57c83c3a1b9",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-09", "decision_id": "M4-POL-09-TIP-TOUCH-SHOT-BOUNDARY",
+      "selected_option_id": "COORDINATE_PLACEMENT_ONLY_POSITIVE_IMPULSE_CONSUMES", "root_selected": true,
+      "candidate_decision_sha256": "495e1609acfb5bede745e6e47843b7bff8a2cdd581f38124db6c5480a63cf392",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE", "row_implementation_allowed": true,
+      "remaining_independent_gates": [], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-12-3", "decision_id": "M4-POL-12-3-OBJECT-OFF-TABLE-CONFLICT",
+      "selected_option_id": "SIGNED_TOURNAMENT_PROFILE_DEFAULT_17E_FOUL", "root_selected": true,
+      "candidate_decision_sha256": "64a366ea179057f1798228aba41f79b6bcaae2e311a926c78e53a76bd529064b",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D6-OFF-TABLE-PHYSICS_IMPLEMENTATION_DESIGN_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-12-5-6", "decision_id": "M4-POL-12-5-6-DOUBLE-HIT",
+      "selected_option_id": "AUTO_ONLY_COMPLETE_MULTI_INTERVAL_REFEREE_CLOSE_CASES", "root_selected": true,
+      "candidate_decision_sha256": "18350f0e2eb41bc7d01be148ae64249d0b5faaec82c1464b744dd5b6badd8d7f",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D5-CUE-CONTACT-IMPLEMENTATION_DESIGN_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-12-7", "decision_id": "M4-POL-12-7-PUSH",
+      "selected_option_id": "MEASUREMENTS_PLUS_SIGNED_REFEREE_PUSH_DECLARATION", "root_selected": true,
+      "candidate_decision_sha256": "59c5a94b1e2d09015f21cac16b9cde88e5e84a9c4458dc1742fd8c30209eac04",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D5-CUE-CONTACT-IMPLEMENTATION_DESIGN_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-15-1", "decision_id": "M4-POL-15-1-FROZEN-CUE-OBJECT",
+      "selected_option_id": "SIGNED_PRE_SHOT_FROZEN_DECLARATION", "root_selected": true,
+      "candidate_decision_sha256": "6c7d25df811bbd7112c2b5169af5774488437c4ce9c0415f1cd51e56ade2a07b",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D5-CUE-CONTACT-IMPLEMENTATION_DESIGN_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-15-2", "decision_id": "M4-POL-15-2-FROZEN-CUSHION",
+      "selected_option_id": "SIGNED_DECLARATION_STRAIGHT_CUSHION_CAPTURE_ONLY", "root_selected": true,
+      "candidate_decision_sha256": "4b3bf617171bb7f02bb7cab26cae4898e3336d109b7c8c23ad13d46bf8139bd2",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D5-CUE-CONTACT-IMPLEMENTATION_DESIGN_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-16", "decision_id": "M4-PROD-16-JUMP-CAPABILITY",
+      "selected_option_id": "KEEP_JUMP_DISABLED_FOR_M4", "root_selected": true,
+      "candidate_decision_sha256": "35c590eaf3b132192969f6116f2ea1c00140bda075ac1e572fa5be1e1625234b",
+      "authorized_stage": "NO_PRODUCTION_IMPLEMENTATION_CURRENT_GUARD_REMAINS", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D7-JUMP-3D-PHYSICS_IMPLEMENTATION_DESIGN_GATE_IF_EVER_ENABLED"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-17", "decision_id": "M4-PROD-17-GENERAL-FOUL-COVERAGE",
+      "selected_option_id": "EVIDENCE_BACKED_SUBSET_PLUS_SIGNED_REFEREE_EVENTS", "root_selected": true,
+      "candidate_decision_sha256": "02ecf56f3f6cfb47217f79624cf486ce10b302500b900dddeb4cd48a3b282dfe",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D5-CUE-CONTACT-IMPLEMENTATION_DESIGN_GATE", "D6-OFF-TABLE-PHYSICS_DEFERRED_OPEN"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-19", "decision_id": "M4-POL-19-GROUP-CONFUSION",
+      "selected_option_id": "SIGNED_CONFUSION_DECLARATION_ASSIGNMENT_ERROR_ONLY", "root_selected": true,
+      "candidate_decision_sha256": "218387e7c0c6a6be2cd7458c6e09a7e7c15e677ac535f9e5502962dfef9a262e",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D8-RACK-REFEREE-AUTHORITY-CONSUMER_IMPLEMENTATION_GATE"], "row_closed_by_selection": false
+    },
+    {
+      "row_id": "WPA-II-21", "decision_id": "M4-POL-21-STALEMATE",
+      "selected_option_id": "SIGNED_REFEREE_DIRECTIVE_DEFAULT_THREE_EACH", "root_selected": true,
+      "candidate_decision_sha256": "a546f9b6de59bb134ad8990a1bf4c55f2327fa939b5c1cdf40abf5246fcb7388",
+      "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY", "row_implementation_allowed": false,
+      "remaining_independent_gates": ["D8-RACK-REFEREE-AUTHORITY-CONSUMER_IMPLEMENTATION_GATE"], "row_closed_by_selection": false
+    }
+  ],
+  "claims": {
+    "decision_count": 15,
+    "all_15_recommended_options_root_selected": true,
+    "b0_policy_selection_complete": true,
+    "any_row_closed_by_selection": false,
+    "profile_complete": false,
+    "m4_complete": false,
+    "wpa_ii_16_implemented": false,
+    "wpa_ii_17_full_row_closed": false,
+    "d5_d6_d7_implementation_authorized": false,
+    "gpu_execution_authorized": false,
+    "readiness_generation_authorized": false,
+    "capture_authorization_issuance_authorized": false,
+    "production_modified_by_selection_freeze": false,
+    "cmake_modified": false
+  }
+}

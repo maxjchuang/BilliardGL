@@ -1,0 +1,340 @@
+{
+  "$schema": "lookdev_manifest.schema.json",
+  "schema_version": 1,
+  "manifest_id": "focused_practice_hall_v1",
+  "status": "m1_vertical_slice",
+  "authorship": {
+    "content_policy": "original_billiardgl_design_no_competitor_assets",
+    "reference_scope": "physical_material_response_composition_and_readability_only"
+  },
+  "color_management": {
+    "pbr_workflow": "gltf2_metallic_roughness",
+    "working_space": "linear_srgb_d65",
+    "base_color_factor_space": "linear_srgb_d65",
+    "base_color_texture_encoding": "srgb_iec61966_2_1",
+    "normal_orm_mask_encoding": "linear",
+    "normal_convention": "gltf_opengl_tangent_y_positive",
+    "orm_channel_layout": "R=occlusion,G=roughness,B=metallic",
+    "hdr_intermediate": true,
+    "ldr_output_encoding": "srgb_iec61966_2_1_rgb8"
+  },
+  "clearcoat_policy": {
+    "preferred": "KHR_materials_clearcoat",
+    "fallback": "energy_conserving_specular_lobe_approximation",
+    "fallback_must_preserve": [
+      "base_layer_energy_conservation",
+      "roughness_ordering",
+      "rectangular_key_light_highlight_continuity"
+    ]
+  },
+  "materials": {
+    "ball_resin": {
+      "surface_role": "phenolic_resin_ball",
+      "base_color_factor_linear_srgb": [0.82, 0.78, 0.66, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.12, "minimum": 0.08, "maximum": 0.18},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "clearcoat": {
+        "factor": {"target": 0.9, "minimum": 0.8, "maximum": 1.0},
+        "roughness": {"target": 0.06, "minimum": 0.03, "maximum": 0.1}
+      },
+      "normal_scale": {"target": 0.0, "minimum": 0.0, "maximum": 0.05}
+    },
+    "table_felt": {
+      "surface_role": "worsted_cloth_teal",
+      "base_color_factor_linear_srgb": [0.0044, 0.0835, 0.1128, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.82, "minimum": 0.72, "maximum": 0.92},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.22, "minimum": 0.1, "maximum": 0.35},
+      "fibre_direction_world_axis": "+Z"
+    },
+    "table_wood": {
+      "surface_role": "dark_walnut_clearcoat",
+      "base_color_factor_linear_srgb": [0.0134, 0.0044, 0.0022, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.33, "minimum": 0.24, "maximum": 0.42},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "clearcoat": {
+        "factor": {"target": 0.42, "minimum": 0.25, "maximum": 0.6},
+        "roughness": {"target": 0.18, "minimum": 0.12, "maximum": 0.28}
+      },
+      "normal_scale": {"target": 0.35, "minimum": 0.2, "maximum": 0.5}
+    },
+    "table_metal": {
+      "surface_role": "gunmetal_trim",
+      "base_color_factor_linear_srgb": [0.0272, 0.0331, 0.0395, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.28, "minimum": 0.18, "maximum": 0.38},
+      "metallic": {"target": 1.0, "minimum": 0.9, "maximum": 1.0},
+      "normal_scale": {"target": 0.18, "minimum": 0.05, "maximum": 0.3},
+      "brushing_axis": "per_part_long_axis"
+    },
+    "pocket_leather": {
+      "surface_role": "black_brown_pocket_leather",
+      "base_color_factor_linear_srgb": [0.0027, 0.0019, 0.0015, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.6, "minimum": 0.48, "maximum": 0.72},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.3, "minimum": 0.15, "maximum": 0.45}
+    },
+    "cue_shaft": {
+      "surface_role": "light_maple_cue_shaft",
+      "base_color_factor_linear_srgb": [0.477, 0.243, 0.078, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.34, "minimum": 0.25, "maximum": 0.44},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.15, "minimum": 0.05, "maximum": 0.25}
+    },
+    "cue_butt": {
+      "surface_role": "dark_lacquered_cue_butt",
+      "base_color_factor_linear_srgb": [0.010, 0.0031, 0.0014, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.22, "minimum": 0.15, "maximum": 0.32},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "clearcoat": {
+        "factor": {"target": 0.55, "minimum": 0.35, "maximum": 0.7},
+        "roughness": {"target": 0.14, "minimum": 0.08, "maximum": 0.22}
+      },
+      "normal_scale": {"target": 0.12, "minimum": 0.0, "maximum": 0.22}
+    },
+    "cue_tip": {
+      "surface_role": "matte_leather_cue_tip",
+      "base_color_factor_linear_srgb": [0.0134, 0.010, 0.0072, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.74, "minimum": 0.62, "maximum": 0.86},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.24, "minimum": 0.1, "maximum": 0.4}
+    },
+    "lamp_housing": {
+      "surface_role": "charcoal_powder_coated_metal",
+      "base_color_factor_linear_srgb": [0.010, 0.0116, 0.0134, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.42, "minimum": 0.32, "maximum": 0.55},
+      "metallic": {"target": 0.88, "minimum": 0.75, "maximum": 1.0},
+      "normal_scale": {"target": 0.08, "minimum": 0.0, "maximum": 0.18}
+    },
+    "lamp_diffuser": {
+      "surface_role": "warm_neutral_emissive_diffuser",
+      "base_color_factor_linear_srgb": [0.78, 0.72, 0.62, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.5, "minimum": 0.4, "maximum": 0.65},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.0, "minimum": 0.0, "maximum": 0.05},
+      "emissive_color_linear_srgb": [1.0, 0.79, 0.59],
+      "emissive_strength": {"target": 8.0, "minimum": 4.0, "maximum": 16.0},
+      "emissive_compatibility": "KHR_materials_emissive_strength_or_shader_uniform"
+    },
+    "background_wall": {
+      "surface_role": "charcoal_acoustic_wall",
+      "base_color_factor_linear_srgb": [0.0044, 0.0052, 0.0056, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.84, "minimum": 0.74, "maximum": 0.94},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.18, "minimum": 0.08, "maximum": 0.3}
+    },
+    "background_floor": {
+      "surface_role": "dark_matte_floor",
+      "base_color_factor_linear_srgb": [0.0019, 0.0022, 0.0023, 1.0],
+      "base_color_texture_encoding": "srgb_iec61966_2_1",
+      "roughness": {"target": 0.68, "minimum": 0.58, "maximum": 0.8},
+      "metallic": {"target": 0.0, "minimum": 0.0, "maximum": 0.0},
+      "normal_scale": {"target": 0.12, "minimum": 0.04, "maximum": 0.24}
+    }
+  },
+  "ball_identity_palette": {
+    "color_space": "linear_srgb_d65",
+    "texture_encoding": "srgb_iec61966_2_1",
+    "number_patch": [0.82, 0.78, 0.66],
+    "number_ink": [0.004, 0.004, 0.005],
+    "yellow": [0.9, 0.5, 0.01],
+    "blue": [0.015, 0.08, 0.42],
+    "red": [0.55, 0.018, 0.012],
+    "purple": [0.18, 0.025, 0.25],
+    "orange": [0.85, 0.16, 0.008],
+    "green": [0.02, 0.28, 0.07],
+    "burgundy": [0.38, 0.012, 0.025],
+    "black": [0.006, 0.006, 0.007]
+  },
+  "lighting": {
+    "length_unit": "metre",
+    "temperature_unit": "kelvin",
+    "intensity_unit": "lumen",
+    "illuminance_unit": "lux",
+    "key_light": {
+      "type": "rect_area",
+      "size_m": [1.85, 0.65],
+      "offset_from_play_surface_origin_m": [0.0, 1.35, 0.0],
+      "direction_world_unit": [0.0, -1.0, 0.0],
+      "correlated_color_temperature_k": 4550,
+      "luminous_flux_lm": 16000,
+      "target_table_illuminance_lux": {
+        "center": 700,
+        "minimum": 595,
+        "maximum": 805
+      }
+    },
+    "environment": {
+      "source": "original_neutral_training_hall_ibl_or_procedural_equivalent",
+      "intensity_ratio_to_key": 0.12,
+      "rotation_degrees": 0.0,
+      "maximum_visible_hotspot_relative_luminance": 0.35
+    },
+    "background_control": {
+      "table_to_background_ev": {"target": 2.4, "minimum": 2.0, "maximum": 3.0},
+      "corner_to_center_illuminance_ratio": {"target": 0.85, "minimum": 0.8, "maximum": 1.0},
+      "secondary_practical_lights": "disabled_for_m1"
+    }
+  },
+  "exposure": {
+    "exposure_unit": "EV100",
+    "reference_ev100": 8.1,
+    "adjustment_range_ev": [-0.5, 0.5],
+    "white_balance_k": 4550,
+    "tone_mapper": "aces_fitted",
+    "sdr_reference_white_nits": 100,
+    "bloom": "disabled",
+    "depth_of_field_gameplay": "disabled",
+    "frame_highlight_clip_fraction_max": 0.005,
+    "frame_shadow_clip_fraction_max": 0.18
+  },
+  "cameras": {
+    "player_shot": {
+      "projection": "perspective",
+      "anchor": "cue_ball_aim_axis",
+      "vertical_fov_degrees": {"target": 50.0, "minimum": 45.0, "maximum": 55.0},
+      "height_above_play_surface_m": {"target": 0.26, "minimum": 0.18, "maximum": 0.35},
+      "distance_behind_cue_ball_m": {"target": 0.72, "minimum": 0.55, "maximum": 0.9},
+      "composition": {
+        "cue_ball_screen_height_fraction": {"target": 0.1, "minimum": 0.08, "maximum": 0.14},
+        "aim_axis_center_offset_fraction_max": 0.05,
+        "table_edge_safe_margin_fraction_min": 0.04
+      },
+      "readability": {
+        "cue_ball_diameter_px_min": 54,
+        "target_ball_diameter_px_min": 20,
+        "target_pocket_contrast_ratio_min": 2.2
+      }
+    },
+    "low_aim": {
+      "projection": "perspective",
+      "anchor": "cue_ball_aim_axis",
+      "vertical_fov_degrees": {"target": 42.0, "minimum": 38.0, "maximum": 48.0},
+      "height_above_play_surface_m": {"target": 0.12, "minimum": 0.08, "maximum": 0.16},
+      "distance_behind_cue_ball_m": {"target": 0.58, "minimum": 0.45, "maximum": 0.75},
+      "composition": {
+        "cue_ball_screen_height_fraction": {"target": 0.12, "minimum": 0.08, "maximum": 0.14},
+        "aim_axis_center_offset_fraction_max": 0.03,
+        "table_edge_safe_margin_fraction_min": 0.03
+      },
+      "readability": {
+        "cue_ball_diameter_px_min": 70,
+        "target_ball_diameter_px_min": 24,
+        "target_pocket_contrast_ratio_min": 2.4
+      }
+    },
+    "tactical_overhead": {
+      "projection": "orthographic",
+      "anchor": "play_surface_origin",
+      "orthographic_vertical_span_m": {"target": 3.15, "minimum": 3.0, "maximum": 3.3},
+      "height_above_play_surface_m": {"target": 3.6, "minimum": 3.0, "maximum": 5.0},
+      "composition": {
+        "full_playfield_visible": true,
+        "table_edge_safe_margin_fraction_min": 0.08,
+        "table_edge_safe_margin_fraction_max": 0.12
+      },
+      "readability": {
+        "ball_diameter_px_min": 18,
+        "visible_pocket_count_min": 6,
+        "ball_group_color_delta_e_oklab_min": 0.08
+      }
+    },
+    "broadcast_oblique": {
+      "projection": "perspective",
+      "anchor": "table_or_action_centroid",
+      "vertical_fov_degrees": {"target": 42.0, "minimum": 35.0, "maximum": 50.0},
+      "elevation_degrees": {"target": 38.0, "minimum": 30.0, "maximum": 45.0},
+      "height_above_play_surface_m": {"target": 2.25, "minimum": 1.8, "maximum": 3.0},
+      "distance_from_table_center_m": {"target": 3.65, "minimum": 3.0, "maximum": 4.5},
+      "composition": {
+        "table_frame_coverage_fraction": {"target": 0.72, "minimum": 0.65, "maximum": 0.82},
+        "table_edge_safe_margin_fraction_min": 0.05
+      },
+      "readability": {
+        "ball_diameter_px_min": 13,
+        "visible_pocket_count_min": 4,
+        "action_ball_contrast_ratio_min": 2.0
+      }
+    }
+  },
+  "ldr_interest_region_acceptance": {
+    "resolution_px": [1920, 1080],
+    "coordinate_origin": "top_left",
+    "rectangle_encoding": "normalized_x_y_width_height",
+    "output_color_space": "srgb_iec61966_2_1_rgb8",
+    "relative_luminance_metric": "linear_rec709_after_srgb_decode",
+    "highlight_clip_definition": "any_encoded_channel_greater_than_or_equal_to_0.995",
+    "shadow_clip_definition": "all_encoded_channels_less_than_or_equal_to_0.005",
+    "edge_density_definition": "sobel_relative_luminance_gradient_greater_than_or_equal_to_0.08",
+    "global_checks": {
+      "frame_highlight_clip_fraction_max": 0.005,
+      "frame_shadow_clip_fraction_max": 0.18,
+      "table_to_background_ev_min": 2.0,
+      "table_to_background_ev_max": 3.0,
+      "review_ssim_floor": 0.93
+    },
+    "scenes": {
+      "break": {
+        "camera_id": "broadcast_oblique",
+        "regions": [
+          {"id": "table", "role": "primary_subject", "rect_normalized": [0.08, 0.12, 0.84, 0.78], "checks": {"mean_luma_min": 0.12, "mean_luma_max": 0.55, "non_black_fraction_min": 0.94, "highlight_clip_fraction_max": 0.008, "shadow_clip_fraction_max": 0.08, "minimum_contrast_to_surround": 1.5, "minimum_edge_density": 0.015}},
+          {"id": "rack", "role": "ball_identity", "rect_normalized": [0.4, 0.28, 0.2, 0.22], "checks": {"mean_luma_min": 0.09, "mean_luma_max": 0.7, "non_black_fraction_min": 0.9, "highlight_clip_fraction_max": 0.02, "shadow_clip_fraction_max": 0.08, "minimum_contrast_to_surround": 1.8, "minimum_edge_density": 0.04}},
+          {"id": "background", "role": "exposure_reference", "rect_normalized": [0.0, 0.0, 1.0, 0.12], "checks": {"mean_luma_min": 0.005, "mean_luma_max": 0.08, "non_black_fraction_min": 0.45, "highlight_clip_fraction_max": 0.001, "shadow_clip_fraction_max": 0.55, "minimum_contrast_to_surround": 1.0, "minimum_edge_density": 0.002}}
+        ]
+      },
+      "low_aim": {
+        "camera_id": "low_aim",
+        "regions": [
+          {"id": "cue_ball", "role": "aim_anchor", "rect_normalized": [0.38, 0.55, 0.24, 0.35], "checks": {"mean_luma_min": 0.2, "mean_luma_max": 0.85, "non_black_fraction_min": 0.65, "highlight_clip_fraction_max": 0.025, "shadow_clip_fraction_max": 0.08, "minimum_contrast_to_surround": 2.5, "minimum_edge_density": 0.025}},
+          {"id": "aim_corridor", "role": "trajectory_readability", "rect_normalized": [0.35, 0.18, 0.3, 0.55], "checks": {"mean_luma_min": 0.08, "mean_luma_max": 0.58, "non_black_fraction_min": 0.9, "highlight_clip_fraction_max": 0.01, "shadow_clip_fraction_max": 0.1, "minimum_contrast_to_surround": 1.3, "minimum_edge_density": 0.01}},
+          {"id": "target_pocket", "role": "pocket_readability", "rect_normalized": [0.41, 0.08, 0.18, 0.2], "checks": {"mean_luma_min": 0.01, "mean_luma_max": 0.3, "non_black_fraction_min": 0.45, "highlight_clip_fraction_max": 0.005, "shadow_clip_fraction_max": 0.45, "minimum_contrast_to_surround": 2.4, "minimum_edge_density": 0.02}}
+        ]
+      },
+      "ball_closeup": {
+        "camera_id": "player_shot",
+        "regions": [
+          {"id": "hero_ball", "role": "material_readability", "rect_normalized": [0.3, 0.25, 0.4, 0.5], "checks": {"mean_luma_min": 0.12, "mean_luma_max": 0.78, "non_black_fraction_min": 0.7, "highlight_clip_fraction_max": 0.03, "shadow_clip_fraction_max": 0.08, "minimum_contrast_to_surround": 2.2, "minimum_edge_density": 0.05}},
+          {"id": "contact_shadow", "role": "grounding", "rect_normalized": [0.35, 0.62, 0.3, 0.2], "checks": {"mean_luma_min": 0.015, "mean_luma_max": 0.35, "non_black_fraction_min": 0.5, "highlight_clip_fraction_max": 0.001, "shadow_clip_fraction_max": 0.3, "minimum_contrast_to_surround": 1.25, "minimum_edge_density": 0.012}}
+        ]
+      },
+      "pocket_closeup": {
+        "camera_id": "broadcast_oblique",
+        "regions": [
+          {"id": "pocket_mouth", "role": "geometry_alignment", "rect_normalized": [0.25, 0.2, 0.5, 0.55], "checks": {"mean_luma_min": 0.01, "mean_luma_max": 0.42, "non_black_fraction_min": 0.5, "highlight_clip_fraction_max": 0.012, "shadow_clip_fraction_max": 0.4, "minimum_contrast_to_surround": 2.0, "minimum_edge_density": 0.035}},
+          {"id": "nose_and_leather", "role": "material_separation", "rect_normalized": [0.18, 0.12, 0.64, 0.72], "checks": {"mean_luma_min": 0.02, "mean_luma_max": 0.5, "non_black_fraction_min": 0.7, "highlight_clip_fraction_max": 0.015, "shadow_clip_fraction_max": 0.32, "minimum_contrast_to_surround": 1.35, "minimum_edge_density": 0.025}}
+        ]
+      },
+      "tactical_overhead": {
+        "camera_id": "tactical_overhead",
+        "regions": [
+          {"id": "full_playfield", "role": "complete_game_state", "rect_normalized": [0.22, 0.06, 0.56, 0.88], "checks": {"mean_luma_min": 0.1, "mean_luma_max": 0.48, "non_black_fraction_min": 0.96, "highlight_clip_fraction_max": 0.008, "shadow_clip_fraction_max": 0.08, "minimum_contrast_to_surround": 1.6, "minimum_edge_density": 0.02}},
+          {"id": "ball_field", "role": "ball_group_readability", "rect_normalized": [0.28, 0.1, 0.44, 0.8], "checks": {"mean_luma_min": 0.09, "mean_luma_max": 0.62, "non_black_fraction_min": 0.94, "highlight_clip_fraction_max": 0.012, "shadow_clip_fraction_max": 0.1, "minimum_contrast_to_surround": 1.7, "minimum_edge_density": 0.025}}
+        ]
+      },
+      "post_shot_observe": {
+        "camera_id": "broadcast_oblique",
+        "regions": [
+          {"id": "action_corridor", "role": "motion_readability", "rect_normalized": [0.15, 0.2, 0.7, 0.62], "checks": {"mean_luma_min": 0.08, "mean_luma_max": 0.58, "non_black_fraction_min": 0.88, "highlight_clip_fraction_max": 0.015, "shadow_clip_fraction_max": 0.12, "minimum_contrast_to_surround": 1.4, "minimum_edge_density": 0.018}},
+          {"id": "environment", "role": "background_control", "rect_normalized": [0.0, 0.0, 1.0, 0.22], "checks": {"mean_luma_min": 0.005, "mean_luma_max": 0.1, "non_black_fraction_min": 0.4, "highlight_clip_fraction_max": 0.002, "shadow_clip_fraction_max": 0.6, "minimum_contrast_to_surround": 1.0, "minimum_edge_density": 0.002}}
+        ]
+      }
+    }
+  },
+  "m1_scope": {
+    "graybox_allowed": true,
+    "graybox_assets": ["table_proxy", "shared_ball_sphere", "cue_proxy", "rect_lamp_proxy", "room_shell"],
+    "production_high_mesh_blocked_by": "docs/art/table-visual-physics-alignment-contract.md section 10 signoff",
+    "physics_profile_change_allowed": false,
+    "legacy_asset_modification_allowed": false
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "schema": "m4_d5_cue_contact_stage_completion_successor_v1",
+  "status": "FINAL_ROOT_ACCEPTED_D5_ONLY_SUCCESSOR",
+  "bindings": {
+    "audit_v9": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json",
+      "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"
+    },
+    "d5_a_receipt": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+      "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6"
+    },
+    "d5_b_receipt": {
+      "path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json",
+      "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"
+    },
+    "d5_c_receipt": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-receipt-v1.json",
+      "sha256": "07b8d9330f8d7d850101a4f16e2e365c84dec8d6c3093624e96edf91a5024a53"
+    },
+    "d5_d_receipt": {
+      "path": "docs/rules/m4-d5-d-push-frozen-classification-implementation-receipt-v1.json",
+      "sha256": "e216cecee7709cad442bad79409ea292984720ba2dac9898c328c52a87b343bd"
+    }
+  },
+  "stage_batches": [
+    {
+      "order": 0,
+      "id": "D5-A",
+      "receipt": {
+        "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+        "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6"
+      },
+      "state": "CPU_IMPLEMENTED"
+    },
+    {
+      "order": 1,
+      "id": "D5-B",
+      "receipt": {
+        "path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json",
+        "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"
+      },
+      "state": "CPU_IMPLEMENTED"
+    },
+    {
+      "order": 2,
+      "id": "D5-C",
+      "receipt": {
+        "path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-receipt-v1.json",
+        "sha256": "07b8d9330f8d7d850101a4f16e2e365c84dec8d6c3093624e96edf91a5024a53"
+      },
+      "state": "CPU_IMPLEMENTED"
+    },
+    {
+      "order": 3,
+      "id": "D5-D",
+      "receipt": {
+        "path": "docs/rules/m4-d5-d-push-frozen-classification-implementation-receipt-v1.json",
+        "sha256": "e216cecee7709cad442bad79409ea292984720ba2dac9898c328c52a87b343bd"
+      },
+      "state": "CPU_IMPLEMENTED"
+    }
+  ],
+  "row_assessments": [
+    {
+      "order": 0,
+      "id": "WPA-II-12-5-6",
+      "audit_v9_status": "MISSING",
+      "successor_recommendation": "IMPLEMENTED",
+      "product_reachable": true,
+      "basis": [
+        "complete canonical interval count",
+        "exact cue-object/tip order",
+        "automatic multi-interval classifier",
+        "signed close-case review fallback"
+      ],
+      "remaining_selected_scope_gaps": []
+    },
+    {
+      "order": 1,
+      "id": "WPA-II-12-7",
+      "audit_v9_status": "MISSING",
+      "successor_recommendation": "IMPLEMENTED",
+      "product_reachable": true,
+      "basis": [
+        "complete report-only duration and path",
+        "same-shot signed referee push final",
+        "immutable push foul classification",
+        "ordinary foul ball-in-hand"
+      ],
+      "remaining_selected_scope_gaps": []
+    },
+    {
+      "order": 2,
+      "id": "WPA-II-15-1",
+      "audit_v9_status": "MISSING",
+      "successor_recommendation": "IMPLEMENTED",
+      "product_reachable": true,
+      "basis": [
+        "signed pre-shot frozen cue/object declaration",
+        "exact D5 contact order",
+        "multi-interval double-hit remains foul",
+        "signed obvious push remains foul and is never suppressed by frozen declaration"
+      ],
+      "remaining_selected_scope_gaps": []
+    },
+    {
+      "order": 3,
+      "id": "WPA-II-15-2",
+      "audit_v9_status": "MISSING",
+      "successor_recommendation": "IMPLEMENTED",
+      "product_reachable": true,
+      "basis": [
+        "signed frozen object and named straight cushion",
+        "departure then exact named recontact",
+        "post-first-legal-contact straight impulse or complete object pocket",
+        "jaw and correction-only contacts excluded"
+      ],
+      "remaining_selected_scope_gaps": []
+    },
+    {
+      "order": 4,
+      "id": "WPA-II-17",
+      "audit_v9_status": "PARTIAL",
+      "successor_recommendation": "PARTIAL",
+      "product_reachable": true,
+      "basis": [
+        "D5 double-hit and push ordinary-foul BIH subset now implemented",
+        "existing cue scratch and signed nonphysical subset remain implemented"
+      ],
+      "remaining_selected_scope_gaps": [
+        "D6 cue/object off-table physical telemetry and classification",
+        "WPA-II-12.3 versus 17(e) off-table policy application",
+        "mobile repeat loss-of-rack lifecycle",
+        "full general-foul inventory completion"
+      ]
+    }
+  ],
+  "dependency_successor": {
+    "D5_CUE_CONTACT": "SATISFIED_CPU_IMPLEMENTED",
+    "D6_OFF_TABLE_PHYSICS": "NOT_SATISFIED",
+    "D56_FRESH_INTEGRATION_EVIDENCE": "NOT_STARTED",
+    "M4": "NOT_COMPLETE"
+  },
+  "claims": {
+    "d5_stage_completed": true,
+    "d6_completed": false,
+    "recommended_promotions": [
+      "WPA-II-12-5-6",
+      "WPA-II-12-7",
+      "WPA-II-15-1",
+      "WPA-II-15-2"
+    ],
+    "wpa_ii_17_complete": false,
+    "audit_successor_nonfinal": true,
+    "production_or_cmake_modified_by_successor": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

@@ -493,6 +493,55 @@ CoupledCueContactResult solveCoupledCueContact(const GameState& state,
             result.contact.ballVelocityAfterMS = velocityM(ball);
             result.contact.ballAngularVelocityAfterRadS = angular(ball);
             result.contact.outputKineticEnergyJ = kineticEnergy;
+            CanonicalCueTipContactInterval interval;
+            interval.ordinal=0;interval.startTimeSeconds=0.0;
+            interval.endTimeSeconds=step.timeSeconds;
+            interval.startTickOffsetSeconds=0.0;
+            interval.endTickOffsetSeconds=step.timeSeconds;
+            interval.contactNormal=Point3{static_cast<float>(normal[0]),
+                static_cast<float>(normal[1]),static_cast<float>(normal[2])};
+            interval.cueVelocityStart=Point3{
+                static_cast<float>(result.contact.cueVelocityBeforeMS[0]),
+                static_cast<float>(result.contact.cueVelocityBeforeMS[1]),
+                static_cast<float>(result.contact.cueVelocityBeforeMS[2])};
+            interval.cueVelocityEnd=Point3{
+                static_cast<float>(result.contact.cueVelocityAfterMS[0]),
+                static_cast<float>(result.contact.cueVelocityAfterMS[1]),
+                static_cast<float>(result.contact.cueVelocityAfterMS[2])};
+            interval.cueBallVelocityStart=Point3{
+                static_cast<float>(result.contact.ballVelocityBeforeMS[0]),
+                static_cast<float>(result.contact.ballVelocityBeforeMS[1]),
+                static_cast<float>(result.contact.ballVelocityBeforeMS[2])};
+            interval.cueBallVelocityEnd=Point3{
+                static_cast<float>(result.contact.ballVelocityAfterMS[0]),
+                static_cast<float>(result.contact.ballVelocityAfterMS[1]),
+                static_cast<float>(result.contact.ballVelocityAfterMS[2])};
+            interval.normalImpulseNs=normalImpulseNs;
+            interval.tangentialImpulseNs=tangentialImpulseNs;
+            double relativePathM=0.0;
+            double previousCuePositionM=0.0;
+            Point3 previousBallPositionCm=
+                state.balls[input.cueBallIndex].position;
+            for(const CueContactMicrostep& microstep:
+                result.contact.microsteps){
+                const double cueDeltaM=
+                    microstep.cuePositionM-previousCuePositionM;
+                const Point3& currentBallPositionCm=
+                    microstep.balls[input.cueBallIndex].positionCm;
+                const Vector ballDeltaM{
+                    (currentBallPositionCm.x-previousBallPositionCm.x)/100.0,
+                    (currentBallPositionCm.y-previousBallPositionCm.y)/100.0,
+                    (currentBallPositionCm.z-previousBallPositionCm.z)/100.0};
+                const Vector cueDelta=multiply(direction,cueDeltaM);
+                const Vector relativeDelta=subtract(cueDelta,ballDeltaM);
+                relativePathM+=std::sqrt(dot(relativeDelta,relativeDelta));
+                previousCuePositionM=microstep.cuePositionM;
+                previousBallPositionCm=currentBallPositionCm;
+            }
+            interval.relativeTipBallPathLengthCm=relativePathM*100.0;
+            interval.relativeTipBallPathLengthAttested=true;
+            interval.origin=CueTipIntervalOrigin::CoupledCueContactSolver;
+            result.contact.canonicalTipIntervals.push_back(interval);
             return result;
         }
     }

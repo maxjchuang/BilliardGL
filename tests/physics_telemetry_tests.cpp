@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 
@@ -27,6 +28,209 @@ bool close(double a, double b, double epsilon = 1e-6)
 
 int main()
 {
+    billiardgl::CanonicalCueObjectOrderObservation d5bOrder;
+    d5bOrder.shotIdentity = "d5b.order";d5bOrder.actorPlayerId=0;
+    d5bOrder.rackIdentity="rack";d5bOrder.rulesStateHash="state";
+    d5bOrder.physicsTickStart=1;d5bOrder.physicsTickEnd=1;
+    d5bOrder.tipSeparationTimeSeconds=0.005;
+    d5bOrder.d5AFullStrokeComplete=true;
+    d5bOrder.successfulPhysicsTicksContiguous=true;
+    d5bOrder.shotEndObserved=true;
+    billiardgl::CanonicalCueObjectContactEvidence d5bContact;
+    d5bContact.objectBallId=1;d5bContact.strokeRelativeTimeSeconds=0.004;
+    d5bContact.physicsTick=1;d5bContact.wholeTickTimeOfImpactSeconds=0.004;
+    d5bContact.solverEventId=0;d5bContact.solverIslandId=0;
+    d5bContact.physicsContactOrdinal=0;d5bContact.complete=true;
+    d5bOrder.contacts.push_back(d5bContact);
+    const auto d5bValidation=
+        billiardgl::validateCanonicalCueObjectOrderObservation(d5bOrder);
+    expect(d5bValidation.complete&&d5bOrder.order==
+        billiardgl::CanonicalCueObjectTipOrder::ContactBeforeTipSeparation,
+        "D5-B records strict contact-before-separation as a raw complete fact");
+    d5bOrder.contacts[0].strokeRelativeTimeSeconds=0.005;
+    expect(billiardgl::validateCanonicalCueObjectOrderObservation(d5bOrder).complete&&
+        d5bOrder.order==billiardgl::CanonicalCueObjectTipOrder::
+            ContactEqualTipSeparation,
+        "D5-B preserves exact equality without classifying a foul");
+    d5bOrder.contacts[0].strokeRelativeTimeSeconds=
+        std::numeric_limits<double>::quiet_NaN();
+    expect(!billiardgl::validateCanonicalCueObjectOrderObservation(d5bOrder).valid,
+        "D5-B rejects nonfinite total-order evidence");
+    billiardgl::CanonicalCueObjectOrderObservation identity;
+    identity.shotIdentity="d5b.observer";identity.actorPlayerId=0;
+    identity.rackIdentity="rack";identity.rulesStateHash="state";
+    identity.physicsTickStart=1;
+    billiardgl::CanonicalD5BShotObserver observer;
+    expect(observer.begin(identity),"D5-B observer begins before physics");
+    billiardgl::CanonicalCueTipStrokeObservation tip;
+    tip.shotIdentity=identity.shotIdentity;tip.fullStrokeComplete=true;
+    billiardgl::CanonicalCueTipContactInterval tipInterval;
+    tipInterval.endTimeSeconds=0.005;tip.intervals.push_back(tipInterval);
+    expect(observer.bindTipObservation(tip),"D5-B binds complete D5-A observation");
+    billiardgl::PhysicsStepTelemetry orderedTick;
+    orderedTick.wholeTickDurationSeconds=0.01;
+    billiardgl::PhysicsContactRecord cueObject;
+    cueObject.kind=billiardgl::PhysicsContactKind::BallBall;
+    cueObject.firstBall=0;cueObject.secondBall=1;
+    cueObject.solverEventId=0;cueObject.solverIslandId=0;
+    cueObject.wholeTickTimeOfImpactSeconds=0.004;
+    cueObject.velocityImpulseApplied=true;cueObject.normalImpulseNs=0.1;
+    orderedTick.contacts.push_back(cueObject);
+    expect(observer.consumeSuccessfulPhysicsTick(orderedTick,1,0.0)&&
+        observer.consumeSuccessfulPhysicsTick(orderedTick,1,0.0),
+        "D5-B exact physics tick retry dedupes");
+    auto conflictingTick=orderedTick;
+    conflictingTick.contacts[0].normalImpulseNs=0.2;
+    expect(!observer.consumeSuccessfulPhysicsTick(conflictingTick,1,0.0)&&
+        observer.cueObjectObservation().contacts.size()==1,
+        "D5-B conflicting tick retry has zero observation delta");
+    expect(observer.finish(true).complete&&
+        observer.cueObjectObservation().order==
+            billiardgl::CanonicalCueObjectTipOrder::ContactBeforeTipSeparation,
+        "D5-B complete observer resolves strict total order");
+    expect(observer.finish(true).complete&&
+        observer.cueObjectObservation().contacts.size()==1,
+        "D5-B exact final retry preserves one immutable observation");
+
+    auto afterIdentity=identity;afterIdentity.shotIdentity="d5b.after";
+    billiardgl::CanonicalD5BShotObserver afterObserver;
+    auto afterTip=tip;afterTip.shotIdentity=afterIdentity.shotIdentity;
+    auto afterTick=orderedTick;
+    afterTick.contacts[0].wholeTickTimeOfImpactSeconds=0.006;
+    expect(afterObserver.begin(afterIdentity)&&
+        afterObserver.bindTipObservation(afterTip)&&
+        afterObserver.consumeSuccessfulPhysicsTick(afterTick,1,0.0)&&
+        afterObserver.finish(true).complete&&
+        afterObserver.cueObjectObservation().order==
+            billiardgl::CanonicalCueObjectTipOrder::ContactAfterTipSeparation,
+        "D5-B records strict contact-after-separation");
+    auto simultaneousIdentity=identity;
+    simultaneousIdentity.shotIdentity="d5b.simultaneous";
+    auto simultaneousTip=tip;
+    simultaneousTip.shotIdentity=simultaneousIdentity.shotIdentity;
+    auto simultaneousTick=orderedTick;
+    auto simultaneousContact=simultaneousTick.contacts[0];
+    simultaneousContact.secondBall=2;
+    simultaneousContact.solverEventId=1;
+    simultaneousTick.contacts.insert(simultaneousTick.contacts.begin(),
+        simultaneousContact);
+    billiardgl::CanonicalD5BShotObserver simultaneousObserver;
+    expect(simultaneousObserver.begin(simultaneousIdentity)&&
+        simultaneousObserver.bindTipObservation(simultaneousTip)&&
+        simultaneousObserver.consumeSuccessfulPhysicsTick(
+            simultaneousTick,1,0.0)&&simultaneousObserver.finish(true).complete&&
+        simultaneousObserver.cueObjectObservation().contacts.size()==2&&
+        simultaneousObserver.cueObjectObservation().contacts[0].objectBallId==1&&
+        simultaneousObserver.cueObjectObservation().contacts[1].objectBallId==2,
+        "simultaneous cue-object contacts retain deterministic solver-event order");
+    auto noContactIdentity=identity;noContactIdentity.shotIdentity="d5b.none";
+    auto noContactTip=tip;noContactTip.shotIdentity=noContactIdentity.shotIdentity;
+    billiardgl::CanonicalD5BShotObserver noContactObserver;
+    billiardgl::PhysicsStepTelemetry emptyTick;
+    emptyTick.wholeTickDurationSeconds=0.01;
+    expect(noContactObserver.begin(noContactIdentity)&&
+        noContactObserver.bindTipObservation(noContactTip)&&
+        noContactObserver.consumeSuccessfulPhysicsTick(emptyTick,1,0.0)&&
+        noContactObserver.finish(true).complete&&
+        noContactObserver.cueObjectObservation().order==
+            billiardgl::CanonicalCueObjectTipOrder::NoCueObjectContact,
+        "complete empty solver observation records no cue-object contact");
+
+    billiardgl::CanonicalFrozenCushionBinding binding;
+    binding.declarationDecisionId="decl";binding.declaredObjectBallId=1;
+    binding.namedStraightCushionFeatureId=0;
+    binding.declarationParentStateHash="parent";
+    binding.consumedShotIdentity=identity.shotIdentity;
+    binding.planeObservationId="departure";
+    binding.authenticated=true;binding.committedAndConsumed=true;
+    billiardgl::CanonicalD5BShotObserver frozenObserver;
+    expect(frozenObserver.begin(identity,&binding)&&
+        frozenObserver.bindTipObservation(tip),
+        "signed declaration starts frozen lifecycle observer");
+    billiardgl::PhysicsStepTelemetry frozenTick;
+    frozenTick.wholeTickDurationSeconds=0.01;
+    billiardgl::PhysicsPlaneCrossingRecord departure;
+    departure.observationId="departure";departure.ballIndex=1;
+    departure.wholeTickTimeOfImpactSeconds=0.001;
+    departure.complete=true;frozenTick.planeCrossings.push_back(departure);
+    billiardgl::PhysicsPlaneObservationAttestation departureAttestation;
+    departureAttestation.observationId="departure";
+    departureAttestation.ballIndex=1;
+    departureAttestation.wholeTickDurationSeconds=0.01;
+    departureAttestation.coveredSegmentCount=1;
+    departureAttestation.crossingRecordCount=1;
+    departureAttestation.complete=true;
+    frozenTick.planeAttestations.push_back(departureAttestation);
+    billiardgl::PhysicsContactRecord namedRail;
+    namedRail.kind=billiardgl::PhysicsContactKind::Rail;
+    namedRail.firstBall=1;namedRail.boundaryFeatureId=0;
+    namedRail.velocityImpulseApplied=true;namedRail.solverEventId=1;
+    namedRail.wholeTickTimeOfImpactSeconds=0.002;
+    frozenTick.contacts.push_back(namedRail);
+    auto otherRail=namedRail;otherRail.firstBall=2;
+    otherRail.boundaryFeatureId=3;otherRail.solverEventId=2;
+    otherRail.wholeTickTimeOfImpactSeconds=0.003;
+    frozenTick.contacts.push_back(otherRail);
+    billiardgl::PhysicsContactRecord objectPocket;
+    objectPocket.kind=billiardgl::PhysicsContactKind::Pocket;
+    objectPocket.firstBall=3;objectPocket.pocketId=2;
+    objectPocket.pocketBoundaryEvent=billiardgl::PocketBoundaryEventKind::Capture;
+    objectPocket.pocketCaptureSequence=4;
+    objectPocket.wholeTickTimeOfImpactSeconds=0.004;
+    frozenTick.contacts.push_back(objectPocket);
+    auto jaw=objectPocket;jaw.firstBall=4;
+    jaw.pocketBoundaryEvent=billiardgl::PocketBoundaryEventKind::LeftJaw;
+    jaw.pocketCaptureSequence=0;frozenTick.contacts.push_back(jaw);
+    expect(frozenObserver.consumeSuccessfulPhysicsTick(frozenTick,1,0.0)&&
+        frozenObserver.finish(true).complete&&
+        frozenObserver.frozenObservation().departureObserved&&
+        frozenObserver.frozenObservation().sameNamedCushionRecontactAfterDeparture&&
+        frozenObserver.frozenObservation().otherObjectStraightCushionBalls==
+            std::vector<int>{2}&&
+        frozenObserver.frozenObservation().objectPocketedBalls==
+            std::vector<int>{3},
+        "D5-B freezes departure/recontact and straight-rail/pocket alternatives while excluding jaw");
+    auto staleBinding=binding;
+    staleBinding.consumedShotIdentity="wrong.shot";
+    billiardgl::CanonicalD5BShotObserver staleObserver;
+    expect(!staleObserver.begin(identity,&staleBinding),
+        "stale declaration consumed by a different shot cannot start lifecycle");
+    auto geometryBinding=binding;geometryBinding.authenticated=false;
+    billiardgl::CanonicalD5BShotObserver geometryObserver;
+    expect(!geometryObserver.begin(identity,&geometryBinding),
+        "geometry-only frozen relation cannot publish complete lifecycle");
+    auto noDepartureIdentity=identity;
+    noDepartureIdentity.shotIdentity="d5b.no_departure";
+    auto noDepartureTip=tip;
+    noDepartureTip.shotIdentity=noDepartureIdentity.shotIdentity;
+    auto noDepartureBinding=binding;
+    noDepartureBinding.consumedShotIdentity=noDepartureIdentity.shotIdentity;
+    billiardgl::CanonicalD5BShotObserver noDepartureObserver;
+    auto recontactOnly=frozenTick;
+    recontactOnly.planeCrossings.clear();
+    recontactOnly.planeAttestations[0].crossingRecordCount=0;
+    expect(noDepartureObserver.begin(noDepartureIdentity,&noDepartureBinding)&&
+        noDepartureObserver.bindTipObservation(noDepartureTip)&&
+        noDepartureObserver.consumeSuccessfulPhysicsTick(
+            recontactOnly,1,0.0)&&noDepartureObserver.finish(true).complete&&
+        !noDepartureObserver.frozenObservation().departureObserved&&
+        !noDepartureObserver.frozenObservation().
+            sameNamedCushionRecontactAfterDeparture,
+        "named-cushion recontact before departure never satisfies lifecycle");
+    billiardgl::CanonicalD5BShotObserver failedObserver;
+    expect(failedObserver.begin(identity)&&failedObserver.bindTipObservation(tip),
+        "failed tick fixture begins staged observer");
+    auto failedTick=orderedTick;
+    failedTick.stepStatus=billiardgl::PhysicsStepStatus::Failed;
+    expect(!failedObserver.consumeSuccessfulPhysicsTick(failedTick,1,0.0)&&
+        !failedObserver.finish(true).complete,
+        "failed physics tick makes the staged whole-shot observation incomplete");
+    billiardgl::CanonicalD5BShotObserver gapObserver;
+    expect(gapObserver.begin(identity)&&gapObserver.bindTipObservation(tip)&&
+        gapObserver.consumeSuccessfulPhysicsTick(orderedTick,1,0.0)&&
+        !gapObserver.consumeSuccessfulPhysicsTick(orderedTick,3,0.02)&&
+        !gapObserver.finish(true).complete,
+        "gapped successful tick sequence fails closed");
     billiardgl::GameState before;
     billiardgl::initializeBalls(before);
     for (int i = 1; i < billiardgl::kBallCount; ++i) {
@@ -137,6 +341,9 @@ int main()
     railContact.rigidDomainExceeded = false;
     railContact.positionCorrected = true;
     railContact.timeOfImpactSeconds = 0.004;
+    railContact.wholeTickTimeOfImpactSeconds = 0.014;
+    railContact.firstPositionAtContactCm =
+        billiardgl::Point3{10.0f, 92.0f, -20.0f};
     step.contacts.clear();
     step.contacts.push_back(railContact);
     const billiardgl::PhysicsFrame railFrame =
@@ -144,8 +351,10 @@ int main()
     expect(railFrame.contacts.size() == 1 &&
         railFrame.contacts[0].cushionRegime == billiardgl::CushionContactRegime::Slip &&
         close(railFrame.contacts[0].cushionContactHeightCm, 3.675) &&
-        close(railFrame.contacts[0].timeOfImpactSeconds, 0.004),
-        "cushion diagnostics survive frame capture without reconstruction");
+        close(railFrame.contacts[0].timeOfImpactSeconds, 0.004) &&
+        close(railFrame.contacts[0].wholeTickTimeOfImpactSeconds, 0.014) &&
+        close(railFrame.contacts[0].firstPositionAtContactCm.z, -20.0),
+        "cushion and whole-tick contact provenance survive frame capture without reconstruction");
 
     billiardgl::PhysicsContactRecord pocketContact;
     pocketContact.kind = billiardgl::PhysicsContactKind::Pocket;
@@ -187,13 +396,35 @@ int main()
     cueRuntime.setPhysicsTraceEnabled(true);
     const billiardgl::CueImpactInput cue = billiardgl::cueImpactFromShotControls(
         0.0f, 40.0f, cueRuntime.physicsProfile());
-    expect(cueRuntime.applyCueImpact(cue).ok && cueRuntime.step(2).ok,
-        "applied cue contact should remain independently traceable");
+    expect(cueRuntime.applyCueImpact(cue).ok &&
+        cueRuntime.canonicalCueTipStrokeObservationActive() &&
+        !cueRuntime.hasCanonicalCueTipStrokeObservation(),
+        "accepted launch stages but does not publish a partial stroke observation");
+    const std::string strokeIdentity=
+        cueRuntime.activeCanonicalCueTipStrokeIdentity();
+    expect(!cueRuntime.commitAuthoritativeCueMotionObservationEnd(
+            "wrong.stroke",cueRuntime.tick()).ok &&
+        !cueRuntime.hasCanonicalCueTipStrokeObservation(),
+        "wrong stroke identity cannot publish staged intervals");
+    expect(cueRuntime.commitAuthoritativeCueMotionObservationEnd(
+            strokeIdentity,cueRuntime.tick()).ok &&
+        !cueRuntime.hasCanonicalCueTipStrokeObservation() &&
+        cueRuntime.canonicalCueTipStrokeObservation().fullStrokeComplete &&
+        !cueRuntime.canonicalCueTipStrokeObservation().digest.empty() &&
+        cueRuntime.step(2).ok,
+        "complete observation publishes only after a successful physics tick");
+    expect(cueRuntime.hasCanonicalCueTipStrokeObservation(),
+        "successful physics tick commits runtime observation readback");
     expect(cueRuntime.physicsTrace().frames()[0].hasCueContactResult &&
-        cueRuntime.physicsTrace().frames()[0].cueContactResult.applied,
-        "first post-shot frame should contain cue contact telemetry");
+        cueRuntime.physicsTrace().frames()[0].cueContactResult.applied &&
+        cueRuntime.physicsTrace().frames()[0].hasCanonicalCueTipStrokeObservation &&
+        cueRuntime.physicsTrace().frames()[0].canonicalCueTipStrokeObservation.digest==
+            cueRuntime.canonicalCueTipStrokeObservation().digest,
+        "first post-shot frame contains the immutable complete observation");
     expect(!cueRuntime.physicsTrace().frames()[1].hasCueContactResult,
         "cue contact is an event and should not repeat on later frames");
+    expect(!cueRuntime.physicsTrace().frames()[1].hasCanonicalCueTipStrokeObservation,
+        "complete stroke observation is an event and does not repeat");
     const billiardgl::CueContactResult& cueResult =
         cueRuntime.physicsTrace().frames()[0].cueContactResult;
     expect(std::isfinite(cueResult.normalImpulseNs) &&

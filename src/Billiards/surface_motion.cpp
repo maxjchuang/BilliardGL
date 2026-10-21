@@ -11,6 +11,46 @@ float horizontalLength(const Point3& value)
     return std::sqrt(value.x * value.x + value.z * value.z);
 }
 
+void appendAnalyticSegment(SurfaceMotionStep& step,
+    BallMotionState motionState, const BallState& before,
+    const BallState& after, float durationSeconds,
+    const Point3& acceleration)
+{
+    if (!(durationSeconds > 0.0f)) return;
+    SurfaceMotionAnalyticSegment segment;
+    segment.motionState = motionState;
+    for (const SurfaceMotionAnalyticSegment& previous :
+         step.analyticSegments) {
+        segment.wholeTickStartOffsetSeconds += previous.durationSeconds;
+    }
+    segment.durationSeconds = durationSeconds;
+    segment.startPositionCm = before.position;
+    segment.endPositionCm = after.position;
+    segment.startVelocityCmS = before.velocity;
+    segment.constantAccelerationCmS2 = acceleration;
+    segment.analyticPathComplete = std::isfinite(durationSeconds) &&
+        std::isfinite(before.position.x) &&
+        std::isfinite(before.position.y) &&
+        std::isfinite(before.position.z) &&
+        std::isfinite(after.position.x) &&
+        std::isfinite(after.position.y) &&
+        std::isfinite(after.position.z) &&
+        std::isfinite(before.velocity.x) &&
+        std::isfinite(before.velocity.y) &&
+        std::isfinite(before.velocity.z) &&
+        std::isfinite(acceleration.x) &&
+        std::isfinite(acceleration.y) &&
+        std::isfinite(acceleration.z);
+    step.analyticSegments.push_back(segment);
+}
+
+void appendStationaryRemainder(SurfaceMotionStep& step,
+    const BallState& ball, float durationSeconds)
+{
+    appendAnalyticSegment(step, BallMotionState::Stationary,
+        ball, ball, durationSeconds, Point3{});
+}
+
 struct Quaternion {
     float x = 0.0f;
     float y = 0.0f;
@@ -253,6 +293,7 @@ SurfaceMotionStep advanceSurfaceMotion(
     step.initialSlipSpeedCmS = horizontalLength(
         surfaceContactSlipVelocity(ball, ballProperties.radiusCm));
     if (step.before == BallMotionState::Rolling && deltaSeconds > 0.0f) {
+        const BallState before = ball;
         const float speed = horizontalLength(ball.velocity);
         const Point3 direction = speed > 0.0f
             ? Point3{ball.velocity.x / speed, 0.0f, ball.velocity.z / speed}
@@ -269,10 +310,20 @@ SurfaceMotionStep advanceSurfaceMotion(
         if (segment < deltaSeconds) {
             step.transitionTimeSeconds = segment;
         }
+        appendAnalyticSegment(step, BallMotionState::Rolling,
+            before, ball, segment, step.frictionAccelerationCmS2);
+        appendStationaryRemainder(step, ball, deltaSeconds - segment);
     } else if (step.before == BallMotionState::Sliding && deltaSeconds > 0.0f) {
         const float coefficient = surface.slidingFrictionCoefficient;
         if (coefficient <= 0.0f || step.initialSlipSpeedCmS <= 0.0f) {
+            const BallState before = ball;
             advanceLegacySlidingSegment(ball, deltaSeconds, surface, step);
+            const float movingDuration = step.transitionTimeSeconds >= 0.0f
+                ? step.transitionTimeSeconds : deltaSeconds;
+            appendAnalyticSegment(step, BallMotionState::Sliding,
+                before, ball, movingDuration, step.frictionAccelerationCmS2);
+            appendStationaryRemainder(
+                step, ball, deltaSeconds - movingDuration);
         } else {
             const Point3 slip = surfaceContactSlipVelocity(
                 ball, ballProperties.radiusCm);
@@ -288,6 +339,7 @@ SurfaceMotionStep advanceSurfaceMotion(
             const float transition = step.initialSlipSpeedCmS /
                 (3.5f * magnitude);
             const float segment = std::min(deltaSeconds, transition);
+            const BallState beforeSliding = ball;
             ball.position.x +=
                 ball.velocity.x * segment +
                 0.5f * acceleration.x * segment * segment;
@@ -301,6 +353,8 @@ SurfaceMotionStep advanceSurfaceMotion(
             ball.speed = horizontalLength(ball.velocity);
             step.frictionAccelerationCmS2 = acceleration;
             step.angularAccelerationRadS2 = angularAcceleration;
+            appendAnalyticSegment(step, BallMotionState::Sliding,
+                beforeSliding, ball, segment, acceleration);
             if (transition <= deltaSeconds) {
                 ball.angularVelocity.x =
                     ball.velocity.z / ballProperties.radiusCm;
@@ -310,8 +364,25 @@ SurfaceMotionStep advanceSurfaceMotion(
                 step.transitionTimeSeconds = transition;
                 const float remaining = deltaSeconds - transition;
                 if (remaining > 0.0f) {
-                    advanceRollingSegment(
+                    const BallState beforeRolling = ball;
+                    const float rollingSpeed = horizontalLength(ball.velocity);
+                    const Point3 rollingDirection = rollingSpeed > 0.0f
+                        ? Point3{ball.velocity.x / rollingSpeed, 0.0f,
+                            ball.velocity.z / rollingSpeed}
+                        : Point3{};
+                    const Point3 rollingAcceleration{
+                        -rollingDirection.x *
+                            surface.rollingResistanceAccelerationCmS2,
+                        0.0f,
+                        -rollingDirection.z *
+                            surface.rollingResistanceAccelerationCmS2};
+                    const float rollingDuration = advanceRollingSegment(
                         ball, remaining, ballProperties, surface);
+                    appendAnalyticSegment(step, BallMotionState::Rolling,
+                        beforeRolling, ball, rollingDuration,
+                        rollingAcceleration);
+                    appendStationaryRemainder(
+                        step, ball, remaining - rollingDuration);
                 }
             } else {
                 ball.motionState = BallMotionState::Sliding;
@@ -328,6 +399,7 @@ SurfaceMotionStep advanceSurfaceMotion(
         } else {
             ball.speed = horizontalLength(ball.velocity);
         }
+        appendStationaryRemainder(step, ball, deltaSeconds);
     }
     const float torsionalRotation = advanceTorsionalSpin(
         ball, deltaSeconds, surface, step);

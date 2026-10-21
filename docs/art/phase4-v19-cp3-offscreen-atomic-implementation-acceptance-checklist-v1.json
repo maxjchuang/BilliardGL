@@ -1,0 +1,101 @@
+{
+  "schema":"billiardgl.phase4.v19.cp3_offscreen_atomic_implementation_acceptance_checklist.v1",
+  "status":"CP3_ACCEPTANCE_CHECKLIST_FROZEN_IMPLEMENTATION_NOT_STARTED_NO_PRODUCTION_CMAKE_GPU_READINESS_AUTH",
+  "scope":"Design-only, fail-closed checklist for a future V19 CP3 offscreen atomic inset implementation. It binds accepted CP1 and CP2, defines a CPU-injectable transaction seam and future acceptance, but does not edit or authorize production, CMake, GPU, readiness, capture, or product exposure.",
+  "bindings":[
+    {"path":"docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json","sha256":"c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"},
+    {"path":"docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json","sha256":"e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"},
+    {"path":"docs/art/phase4-v19-cp2-layout-draw-list-independent-ta-acceptance-addendum-v1.json","sha256":"6e7724df1a977af914b427538728f476d865db54c6cf95a3ae112e9de6172dd6"},
+    {"path":"docs/evidence/phase4-v19-cp2-layout-draw-list-implementation-v1/receipt.json","sha256":"2524223aa320ff5aecb70a164bfeac471d9fc36f09a67b30a1bb7486333bbbc5"}
+  ],
+  "future_candidate_allowlist_not_authorized":[
+    "src/Billiards/render/modern/modern_renderer.h",
+    "src/Billiards/render/modern/modern_renderer.cpp",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.h",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp",
+    "tests/phase4_v19_trajectory_inset_offscreen_atomic_cpu_tests.cpp"
+  ],
+  "cmake_strategy":{
+    "current_cmake_must_remain_sha256":"f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41",
+    "current_checklist_authorizes_cmake_edit":false,
+    "cpu_test_strategy":"standalone deterministic compile/link command until a separate root gate explicitly authorizes CMake",
+    "adding_target_to_cmake_requires_separate_gate":true
+  },
+  "injectable_failure_interface_contract":{
+    "required":true,
+    "shape":"A narrow trajectory-inset transaction dispatch interface supplies queries, allocation, upload, framebuffer attach/check, clear, draw, resolve, fixed-palette tone encode, composite, state snapshot/restore, GL-error read and destruction. Production adapts real GL; CPU tests inject deterministic success/failure without a GL context.",
+    "may_control_or_observe_main_scene_rendering":false,
+    "may_accept_camera_scene_color_repair_coordinates_or_prior_pass":false,
+    "failure_points_in_order":["format_sample_query","color_allocation","semantic_r32ui_allocation","geometry_upload","framebuffer_attach_complete","color_clear","semantic_clear","table_draw","trajectory_draw","color_resolve","per_sample_semantic_resolve","fixed_palette_tone_encode","generation_frame_serial_check","atomic_composite","state_restore"],
+    "every_failure_point_must_have_valid_fail_valid_fixture":true,
+    "test_interface_is_not_runtime_user_or_automation_authority":true
+  },
+  "independent_resource_contract":{
+    "architecture":"OFFSCREEN_ATOMIC_INSET_COLOR_AND_SEMANTIC_PLANE",
+    "sample_counts_exact":[1,2,4],
+    "required_resources":["independent inset HDR color MSAA or exact single-sample attachment","independent per-sample R32UI inset semantic attachment","resolved inset HDR color attachment","resolved semantic storage preserving each of 1/2/4 sample ownership tokens","fixed-palette tone-encoded sRGB-alpha inset texture","dedicated inset geometry buffers, vertex array and programs"],
+    "forbidden_reuse":["main HDR color attachment","main depth attachment","main world final-ownership semantic attachment","main ACES exposure or scene-adaptive tone state","CP1 CPU raster relabeled as GPU resource evidence"],
+    "no_framebuffer_feedback":true,
+    "no_silent_sample_downgrade":true,
+    "allocation_or_format_mismatch_fails_before_draw":true
+  },
+  "transaction_state_machine_contract":{
+    "ordered_success_states":["UNALLOCATED","ALLOCATING","READY_CLEARED","DRAWN","COLOR_AND_SEMANTIC_RESOLVED","FIXED_PALETTE_TONED","COMPOSITE_ELIGIBLE","COMPOSITED"],
+    "on_any_error_state":"INVALIDATED_NO_COMPOSITE",
+    "composite_eligibility":"all prior stages succeeded; current allocation generation, frame serial, CP1 package generation, CP2 layout serial, color resolve, semantic resolve and tone serial are equal and nonzero",
+    "failure_atomicity":"Before COMPOSITE_ELIGIBLE the main HDR and main ownership targets receive zero inset pixels/tokens. On a failed frame, the final main LDR also receives zero inset panel composite, legend, toggle or focus primitives.",
+    "valid_fail_valid":"Frame N valid may composite; injected failure frame N+1 has zero main HDR inset pixels/tokens and zero final inset composite, invalidates every inset resource/mapping/probe/denominator/cache serial; recovered frame N+2 uses newly validated generation/frame resources and cannot reuse N or N+1 textures, mappings, probes, tokens or success flags.",
+    "requested_toggle_on_failure":"retained as requested-but-unavailable; never enables world overlay fallback",
+    "partial_or_stale_present_allowed":false
+  },
+  "pass_and_tone_contract":{
+    "inset_order":["offscreen HDR and R32UI semantic clear","table and CP1 trajectory draw","HDR color resolve","1/2/4 per-sample semantic resolve","fixed-palette tone and explicit sRGB-alpha encode","serial and instrumentation validation","single atomic composite into CP2 transparent plot cutout","bilingual legend toggle focus after successful composite"],
+    "fixed_palette":"independent of main ACES exposure, scene backdrop, camera and adaptive polarity; Standard and CVD use explicit frozen palette inputs",
+    "composite_rect":"exact CP2 plotCutoutRect only",
+    "world_overlay_relation":"world overlay remains default-off secondary diagnostic and is never a recovery path",
+    "main_hdr_inset_writes":0,
+    "main_world_trajectory_token_writes":0
+  },
+  "gl_error_and_state_restore_contract":{
+    "immediate_error_check_after_every_transition":true,
+    "framebuffer_complete_check_after_every_attach_resize_or_context_generation":true,
+    "required_state_snapshot_restore":["draw and read framebuffer bindings","viewport and scissor state/box","blend enable/equations/functions","depth test/write/function","cull state/front face","framebuffer sRGB","active texture and touched texture/sampler bindings","program and vertex array","array/element/uniform/pixel pack/pixel unpack buffers","draw/read buffer selections","pixel pack/unpack alignment"],
+    "restore_required_on_success_and_every_failure":true,
+    "restore_error_is_transaction_failure":true,
+    "preexisting_gl_error":"fails closed before inset work; it is reported and never cleared then ignored as inset success",
+    "upload_query_fbo_resolve_tone_or_composite_error":"invalidates transaction, destroys or quarantines affected generation, emits stable stage-specific error and performs no present"
+  },
+  "instrumentation_parity_contract":{
+    "cp1_source_mapping_inventory_and_five_digests_byte_exact":true,
+    "cp2_layout_cutout_chrome_and_exclusion_contract_byte_exact":true,
+    "inset_color_and_semantic_share_generation_frame_sample_count_dimensions_and_complete_parent_mapping":true,
+    "every_visible_inset_trajectory core_or_marker_sample_has_expected_nonzero_inset_token":true,
+    "every_nonzero_inset_token_maps_to_one_current_cp1_member_and_no_ui_member":true,
+    "ui_semantic_probe_denominator_contribution":0,
+    "main_final_ownership":"at most one inset panel-container UI token; no inset trajectory ownership token leaks into the main plane",
+    "readback_or_diagnostic_claims_must_pair_color_semantic_and_serials":true
+  },
+  "future_cpu_static_acceptance_not_run":{
+    "logical_profiles":["player_standard","elevated_standard","overhead_standard","broadcast_standard","broadcast_cvd"],
+    "sample_counts":[1,2,4],
+    "required_positive_fixtures":["all five profiles complete the exact success state order at 1x/2x/4x","Standard and CVD fixed palettes keep identical semantic topology while color bytes differ as specified","CP1 mapping and denominator parity is exact for every frame","CP2 cutout rect and post-composite UI ordering are exact","instrumentation color/semantic/sample/generation/frame parity is exact","all captured GL state is byte-for-byte restored"],
+    "required_negative_fixtures":["inject every ordered failure point in valid-fail-valid sequence","stale generation, stale frame, stale layout serial and mixed sample count","incomplete FBO, unsupported R32UI/sample count and silent sample downgrade","failed or partial color, semantic, tone and composite resolve","main HDR/depth/world semantic attachment alias or framebuffer feedback","one stale inset pixel/token or UI primitive on failed frame","reuse of prior texture, mapping, probe, denominator, token or success flag after invalidation","missing, duplicate, foreign, zero or UI-derived inset ownership token","palette path reads main exposure, scene color or camera","state restore omission or restore GL error","CP1 or CP2 source/hash/inventory drift","CMake or file outside allowlist changes"],
+    "production_implementation_started":false,
+    "cpu_static_pass":false,
+    "cp3_accepted":false
+  },
+  "authorization_boundary":{
+    "cp1_accepted":true,
+    "cp2_accepted":true,
+    "cp3_implementation_authorized":false,
+    "production_edit_authorized":false,
+    "cmake_edit_authorized":false,
+    "gpu_authorized":false,
+    "readiness_authorized":false,
+    "capture_authorized":false,
+    "machine_pass_claimed":false,
+    "ta_visual_pass_claimed":false,
+    "human_comprehension_pass_claimed":false,
+    "product_m3_golden_beta_pass_claimed":false
+  }
+}

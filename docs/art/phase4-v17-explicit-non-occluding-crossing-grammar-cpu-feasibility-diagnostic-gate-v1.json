@@ -1,0 +1,205 @@
+{
+  "schema": "billiardgl.phase4.v17.explicit_non_occluding_crossing_grammar_cpu_feasibility_diagnostic_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_CPU_DIAGNOSTIC_ONLY_AUTHORIZED_NO_PRODUCTION_NO_CMAKE_NO_GPU",
+  "scope": "CPU/static feasibility diagnostic only for the root-selected explicit non-occluding crossing grammar. The diagnostic must first prove that every frozen repair region has exactly one strict, interior, nonparallel, source-provenanced actual-segment by predicted dash-on intersection. It may emit hypothetical bracket topology only as diagnostic data; it does not authorize product geometry, rendering, CMake, GPU, readiness, capture, machine, or TA acceptance.",
+  "root_product_decision_binding": {
+    "selected_decision_id": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+    "selection_authority": "ROOT_PROJECT_MANAGER_PRODUCT_DECISION",
+    "selection_statement": "ROOT PRODUCT DECISION: SELECTED EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR from Phase4 V17 product-decision gate SHA c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329.",
+    "selection_statement_sha256": "6419b2467dd6ca3661fe2878e00ec60f0bbc5fad2467c7ec5bbb4d359b730bff",
+    "selection_is_not_implementation_or_gpu_authorization": true
+  },
+  "frozen_bindings": [
+    {
+      "role": "v17_product_decision_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-product-decision-gate-v1.json",
+      "sha256": "c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329"
+    },
+    {
+      "role": "v16_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v16_premise_failure_receipt",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-premise-falsification-v1/premise-failure-receipt-v1.json",
+      "sha256": "6e5c729016795a8744fddd7351ae8d9f9d584f9cde91946a33bcbd83f982fa96"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    },
+    {
+      "role": "v15_diagnostic_receipt",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/diagnostic-receipt-v1.json",
+      "sha256": "05e0bc2de8fd9c0978bf66547f2ce444b9bee864ca27dab871f2482b4df80dcf"
+    },
+    {
+      "role": "frozen_trajectory_renderer_cpp",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    {
+      "role": "frozen_trajectory_renderer_h",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    }
+  ],
+  "frozen_case_contract": {
+    "capture_id": "camera_broadcast_1080",
+    "physical_dimensions": [1920, 1080],
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_profiles": [
+      {"id": "center_1x", "sample_count": 1, "cpu_top_left_positions": [[0.5, 0.5]]},
+      {"id": "asymmetric_2x", "sample_count": 2, "cpu_top_left_positions": [[0.25, 0.75], [0.75, 0.25]]},
+      {"id": "asymmetric_4x", "sample_count": 4, "cpu_top_left_positions": [[0.375, 0.875], [0.875, 0.625], [0.125, 0.375], [0.625, 0.125]]}
+    ],
+    "output_only_repair_probe_coordinates_not_algorithm_inputs": [[783, 413], [892, 491], [940, 525]],
+    "required_case_count": 18,
+    "ordered_source_probe_count": 81,
+    "ordered_source_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ]
+  },
+  "descriptor_source_contract": {
+    "ledger_limitation": "The frozen V15 sample ledger records pixels, primitive IDs, arc IDs, fragment class and dash-local t, but not both analytic segment endpoints. It cannot alone prove a strict nonparallel interior intersection.",
+    "authorized_reconstruction": "A standalone CPU diagnostic may compile the exact frozen trajectory renderer and frozen replay dependencies read-only, build the broadcast draw package, and extract projected actual centerline segment plus predicted dash-on interior descriptors before rasterization. No production or CMake edit is allowed.",
+    "descriptor_fields": [
+      "track",
+      "existing_source_probe_id",
+      "primitive_id",
+      "arc_segment_id",
+      "normalized_primitive_stem",
+      "projected_centerline_first_physical",
+      "projected_centerline_second_physical",
+      "dash_ordinal",
+      "dash_on_interior_parametric_interval",
+      "endpoint_or_tick_or_outer_boolean"
+    ],
+    "generation_forbidden_inputs": [
+      "capture ID",
+      "camera name",
+      "repair probe ID",
+      "the three acceptance coordinates",
+      "palette color or framebuffer color",
+      "previous pass/fail result"
+    ]
+  },
+  "strict_intersection_predicate": {
+    "actual_operand": "One projected ActualRouteBodyCore centerline segment interior with exact existing arc and primitive provenance.",
+    "predicted_operand": "One projected predicted dash base-body centerline strictly inside its dash-on interval; cap extension, dash-gap intrusion, inner/outer halo, endpoint and marker are excluded.",
+    "nonparallel_rule": "Use a robust orientation/determinant predicate with an explicit numerical error bound. A determinant whose sign is not provable is ambiguous and fails closed; no tunable angle threshold is permitted.",
+    "strict_interior_rule": "Both segment parameters must be provably strictly inside their open intervals. Endpoint, tangent touch, shared vertex, cap-only contact and interval-boundary contact fail closed.",
+    "unique_event_key": "ordered(existing actual source ID, actual arc+stem, existing predicted source ID, predicted arc+normalized stem, analytic route-order interval)",
+    "deduplication": "Multiple covered pixels or MSAA samples from one analytic intersection collapse to one event; different source pairs never merge.",
+    "accepted_event_classes": ["strict_interior_nonparallel_actual_by_predicted_dash_on"],
+    "explicit_infeasible_classes": [
+      "zero qualifying intersection in any repair region",
+      "more than one qualifying intersection in any repair region",
+      "collinear or coaxial overlap",
+      "parallel or numerically ambiguous determinant",
+      "tangent touch or endpoint/shared-vertex contact",
+      "predicted dash gap, cap extension, halo, endpoint, marker or outer-rim contact",
+      "foreign, double, unowned, missing or color-derived provenance"
+    ]
+  },
+  "repair_region_matching_boundary": {
+    "generation_is_full_frame_and_coordinate_free": true,
+    "post_generation_audit_only": "After the complete event inventory is frozen, an audit matcher may ask which event covers each output-only repair probe region. These coordinates and repair IDs may not influence descriptor generation, intersection classification, deduplication, or glyph topology.",
+    "per_case_acceptance": "Exactly one qualifying event covers each of the three repair regions for both palettes and all three sample profiles, with the identical ordered source-provenance event key.",
+    "overall_feasible_result": "FEASIBLE_FOR_A_LATER_SEPARATE_IMPLEMENTATION_GATE",
+    "overall_fail_result": "EXPLICIT_NON_OCCLUDING_GRAMMAR_INFEASIBLE_FOR_FROZEN_THREE_REGIONS",
+    "any_single_case_failure_forces_overall_fail": true
+  },
+  "diagnostic_only_bracket_topology": {
+    "purpose": "Prove geometric feasibility only; the bracket is not product geometry and may not be consumed by the renderer.",
+    "shape": "Paired bridge/underpass bracket halves outside the complete predicted core plus inner and outer silhouette, joined by route-graph semantics rather than color.",
+    "emission_order_model": "Hypothetically after the frozen predicted silhouette without erasing, recoloring or suppressing any baseline fragment.",
+    "source_identity_model": "Each half aliases the existing actual core/halo ownership token and records the paired existing predicted source key in diagnostic metadata. No new semantic batch, token, source probe, primitive ID or arc ID is created.",
+    "required_cpu_checks": [
+      "paired halves are separate from and do not overwrite the complete protected predicted silhouette at every covered sample",
+      "actual and predicted route graphs are both traceable through the event; removing either half fails the actual-route traceability fixture",
+      "standard, CVD and grayscale topology are identical",
+      "1x, asymmetric 2x and asymmetric 4x any-sample coverage preserve the same analytic event key",
+      "original actual/predicted masks, exact 81 source order/digest and three repair IDs remain byte-identical"
+    ],
+    "cpu_graph_decoder_is_human_comprehension_proof": false
+  },
+  "allowed_cpu_diagnostic_files": [
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v1/phase4_v17_crossing_feasibility_cpu_diagnostic.cpp",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v1/feasibility-receipt-v1.json",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v1/intersection-ledger-v1.json",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v1/raster-ledger-v1.json",
+    "scripts/validate_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility.py",
+    "tests/test_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility.py"
+  ],
+  "required_fail_closed_fixtures": [
+    "strict interior nonparallel positive",
+    "same normalized stem core/halo negative",
+    "collinear and coaxial negative",
+    "parallel negative",
+    "near-parallel determinant uncertainty negative",
+    "tangent and shared-endpoint negative",
+    "dash-gap and cap-extension negative",
+    "inner/outer halo, endpoint, tick and marker negative",
+    "foreign, double, unowned and missing-provenance negative",
+    "duplicate raster samples collapse without duplicate events",
+    "zero and multiple events per repair region force overall infeasible",
+    "repair coordinate, capture, camera, palette and repair-ID mutation cannot alter generated event inventory"
+  ],
+  "later_implementation_preconditions_not_authorized_here": {
+    "feasibility_receipt_and_validator_must_pass": true,
+    "all_18_cases_must_pass": true,
+    "root_must_approve_a_new_implementation_gate": true,
+    "gl_upload_failure_must_abort_before_any_actual_or_predicted_draw": true,
+    "glGetMultisamplefv_and_sparse_mask_upload_errors_must_be_checked": true,
+    "consecutive_frame_stale_vbo_and_stale_mask_negatives_required": true,
+    "independent_ta_and_human_comprehension_remain_future_separate_gates": true
+  },
+  "forbidden": [
+    "No production source, header, CMake, shipping flag, shader, pass, texture, camera, replay, UI, asset, authority or product-exposure edit.",
+    "No coordinate, repair-ID, capture-ID, camera-name, palette-color or pass-result input to descriptor generation or intersection selection.",
+    "No acceptance-threshold, largest8, contrast, visible-region, source-count, ownership or telemetry-semantic change.",
+    "No protected predicted discard, global actual priority, erasure, recolor, z-order-only, whole-route offset or extra product pass.",
+    "No claim that diagnostic bracket topology is implemented, visually accepted, understood by humans, GPU-ready, machine-passing, golden, beta or product-passing."
+  ],
+  "authorization_boundary": {
+    "root_product_decision_selected": true,
+    "cpu_diagnostic_files_authorized": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "product_glyph_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "human_comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "cpu_diagnostic_executed_by_this_gate": false,
+    "feasibility_result_exists": false,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false,
+    "product_pass": false
+  }
+}

@@ -10,11 +10,25 @@ namespace billiardgl {
 
 enum class ContinuousContactKind {
     BallBall,
+    SupportPlane,
     StraightRail,
     Jaw,
     Mouth,
     Throat,
     Capture
+};
+
+// A supported ball striking a cushion uses the sealed elevated-nose arm from
+// cushion_collision_v1. An airborne ball reaches the same vertical boundary
+// through the 3D table-departure query, but its instantaneous contact normal
+// is the sphere/plane normal: the arm is radial and parallel to that normal.
+// Keeping this explicit prevents spin at an unrelated elevated supported-ball
+// arm from turning an approaching airborne impact into a separating contact.
+enum class BoundaryContactGeometry {
+    SupportedCushion,
+    AirborneCushionNose,
+    // Sphere against the rounded upper inner edge, with an upward component.
+    RoundedUpperRailEdge,
 };
 
 struct ContinuousContactCandidate {
@@ -26,7 +40,10 @@ struct ContinuousContactCandidate {
     int pocketId = -1;
     double timeOfImpactSeconds = 0.0;
     double penetrationCm = 0.0;
+    double supportPlaneCenterYCm = 0.0;
     Point3 normal;
+    BoundaryContactGeometry boundaryGeometry =
+        BoundaryContactGeometry::SupportedCushion;
     PocketBoundaryEventKind pocketEvent = PocketBoundaryEventKind::None;
 };
 

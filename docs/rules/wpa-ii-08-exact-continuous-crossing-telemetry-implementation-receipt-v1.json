@@ -1,0 +1,146 @@
+{
+  "schema": "wpa_ii_08_exact_continuous_crossing_telemetry_implementation_receipt_v1",
+  "status": "IMPLEMENTED_POLICY_SELECTED_TELEMETRY_FOUNDATION_CPU_VERIFIED_NO_ALL_BEHIND_PRODUCT",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/wpa-ii-08-exact-continuous-crossing-telemetry-implementation-design-gate-v1.json",
+      "sha256": "8afb026f14f62f96b0f18da2a18c05c68ca97478a74ef6329a0e6c4f2173bb7e",
+      "root_independently_validated": true,
+      "root_authorized_exact_allowlist_tests_first_implementation": true
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-08",
+      "selected_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER"
+    },
+    "feasibility_blocker": {
+      "path": "docs/rules/wpa-ii-08-selected-center-crossing-exact-continuous-order-feasibility-blocker-v1.json",
+      "sha256": "f10525b49619c2a67e6ae0530da1c0eb8b80a54a0d64e134e42158a64ea3095d",
+      "telemetry_blocker_resolved_by_this_receipt": true,
+      "all_behind_parent_product_blocker_resolved": false
+    }
+  },
+  "implementation_contract": {
+    "generic_plane_observation": "validated axis/coordinate/direction request with no rules meaning in physics",
+    "surface_motion_provenance": "same mutating integrator emits complete constant-acceleration segments split at sliding-to-rolling and stop transitions",
+    "continuous_candidate": "exact linear or quadratic root, strict direction derivative, tangent/reverse/nonfinite rejected",
+    "whole_tick_time": "recursive prefixes and tails carry absolute tick offsets; contact and segment telemetry use one whole-tick basis",
+    "segment_boundary_crossing": "adjacent complete segments jointly attest an exact boundary crossing and collapse it to one canonical record",
+    "per_tick_attestation": "one matching attestation distinguishes complete no-crossing coverage from missing telemetry on every succeeded observed tick",
+    "order_policy": "physics_tick then exact whole-tick crossing_time < contact_time; equality is unordered fail-closed with no epsilon or array-order override",
+    "coverage_contiguity_tolerance_seconds": 0.000001,
+    "coverage_tolerance_is_not_an_order_tie_breaker": true,
+    "collector_origin": "AUTHORITATIVE_CONTINUOUS_SURFACE_INTEGRATOR",
+    "collector_idempotency": "exact duplicate succeeded tick digest is no-op; conflicting digest throws before delta",
+    "failed_step_rollback": "failed telemetry publishes no plane attestation/record and is never consumed",
+    "runtime_lifecycle": "successful BehindHeadString placement freezes plane/actor/decision/revision; accepted shot arms collector; completed adjudication atomically consumes; reset clears",
+    "rules_interpretation": "on-line or foot-side object may be contacted directly; behind-line object requires complete strict crossing-before-contact evidence",
+    "direct_or_synthetic_complete_claim_allowed": false,
+    "product_reclassification_allowed": false
+  },
+  "fixture_matrix": {
+    "positive": [
+      {"id": "CROSSING_IN_EARLIER_TICK_THAN_CONTACT", "evidence": "tests/shot_fact_collector_tests.cpp:runHeadStringContinuousOrderTests earlierTick"},
+      {"id": "SAME_TICK_CROSSING_STRICTLY_BEFORE_CONTACT", "evidence": "tests/physics_tests.cpp orderedTelemetry and collector beforeFacts"},
+      {"id": "CROSSING_BEFORE_CUSHION_THEN_RETURN_CONTACT", "evidence": "tests/shot_fact_collector_tests.cpp crossingThenCushion tick20/contact tick21"},
+      {"id": "SLIDING_QUADRATIC_CROSSING_BEFORE_CONTACT", "evidence": "tests/physics_tests.cpp slidingCrossingTelemetry"},
+      {"id": "SLIDING_TO_ROLLING_PIECEWISE_CROSSING_BEFORE_CONTACT", "evidence": "tests/surface_motion_tests.cpp piecewiseStep and tests/physics_tests.cpp piecewiseCrossingTelemetry"},
+      {"id": "ON_LINE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING", "evidence": "tests/chinese_eight_ball_rules_tests.cpp onLine"},
+      {"id": "FOOT_SIDE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING", "evidence": "tests/chinese_eight_ball_rules_tests.cpp footSide"},
+      {"id": "EXACT_DUPLICATE_SUCCESSFUL_TICK_AND_RECORD_ZERO_DELTA", "evidence": "tests/shot_fact_collector_tests.cpp ordered tick10 exact retry"}
+    ],
+    "negative": [
+      {"id": "SAME_TICK_CONTACT_BEFORE_CROSSING", "evidence": "tests/chinese_eight_ball_rules_tests.cpp contactFirst"},
+      {"id": "SAME_TIME_CROSSING_AND_CONTACT_UNORDERED", "evidence": "tests/shot_fact_collector_tests.cpp tieFacts and chinese rules tied"},
+      {"id": "ENDPOINTS_CROSS_BUT_INTERMEDIATE_CUSHION_ORDER_UNATTESTED", "evidence": "tests/shot_fact_collector_tests.cpp missing attestation never synthesizes endpoint crossing"},
+      {"id": "FAILED_PHYSICS_STEP_CROSSING_DISCARDED_CONTEXT_PRESERVED", "evidence": "tests/shot_fact_collector_tests.cpp failedRollback"},
+      {"id": "MISSING_OR_INCOMPLETE_TICK_ATTESTATION_FAILS_CLOSED", "evidence": "tests/shot_fact_collector_tests.cpp missingFacts and chinese rules incomplete/partial"},
+      {"id": "NONFINITE_PLANE_OR_CROSSING_RECORD_FAILS_CLOSED", "evidence": "tests/physics_tests.cpp invalidObservation"},
+      {"id": "CONFLICTING_DUPLICATE_TICK_OR_RECORD_ZERO_PARTIAL_DELTA", "evidence": "tests/shot_fact_collector_tests.cpp conflictRejected"},
+      {"id": "DIRECT_OR_SYNTHETIC_FACTS_CANNOT_CLAIM_CROSSING", "evidence": "tests/chinese_eight_ball_rules_tests.cpp synthetic"},
+      {"id": "REJECTED_LAUNCH_WRONG_ACTOR_OR_RESET_CANNOT_LEAK_STALE_EVIDENCE", "evidence": "tests/rules_runtime_integration_tests.cpp armed direct bypass and full reset"}
+    ],
+    "positive_count": 8,
+    "negative_count": 9,
+    "all_headless_cpu": true
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/surface_motion.h", "sha256": "20a9e9da14ccfe29e7b4980a95e60e7f92746f366b0662af612cf706dcc33f2d"},
+    {"path": "src/Billiards/surface_motion.cpp", "sha256": "157da89a99ce1e97b0023b94a12d365f79bb80af391ed212e7dd6cfd06085bf4"},
+    {"path": "src/Billiards/physics.h", "sha256": "e8e56b66eb4f9e8d30a2ef6a5b9a711fca4560a71a067258dd6745732412a7fe"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "1c319a7f5d5793eaf56f3b46348c2b08e500e33d91620d3287555a0617c51802"},
+    {"path": "src/Billiards/physics.cpp", "sha256": "7371c54513bd748e1a25d3c1985a427891de29cefd820b1d281774cf0c69c2b6"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "ff04d6289b18f929c3c905e2ff5e83ecb21372a2d643526110b82bf32650f607"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "639dcfdbe213c8fb93dbe84f66d79fe60366bf099672b25cd22c7ac5d6572306"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "f6a25445ff772aeac90c4e84128fb3ad32201f53aa194d1f875bcdbb41a0fbcf"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "9270b02a101c0b7770d977fdf5e3ebafe5350bba49cb917234939efc3d1060b4"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "cca332c95cf9f462e41a2f577486046e0656a2cb545840ae6f17f867ae0740c7"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "8ba1b7988f3300fdc6e25fe2cf35cc774ffb3a12999e7d92ef8ac03f95fc7b77"}
+  ],
+  "test_source_bindings": [
+    {"path": "tests/surface_motion_tests.cpp", "sha256": "0201b237d1b7bacc6f4414d8c8ca257cbba918ac810b370826d9a08b53b0cf5d"},
+    {"path": "tests/physics_tests.cpp", "sha256": "2b76f2deabaa27baecb74a521d36b33326ea872bc3084abc787da7cb84a75a82"},
+    {"path": "tests/physics_telemetry_tests.cpp", "sha256": "542449179596b89b979cdb545294bbeb2893d7c053c10bc3acafc734349fc739"},
+    {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "9b72a9533523b8702d62190589c0869fc45f4a50888c9257f55cad8819b02394"},
+    {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "1dff864035291cded53ea4e52516175e5b6ebc5ac79d4c5580bf131250515f1c"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "81bd43406c5751a10b7b883ab4f07897fdef13d5bc6ab155b87227bd4c87ad57"}
+  ],
+  "implementation_aggregate_sha256": "ff63915f7f0732fbe88ea3b53e47ea433b1b0bc6147728bb01d51791f2663361",
+  "cmake_binding": {
+    "path": "CMakeLists.txt",
+    "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41",
+    "modified_in_task": false
+  },
+  "cpu_verification": {
+    "required_six": [
+      {"path": "build-product-session/BilliardsSurfaceMotionTests", "sha256": "220904a4f1d9e25e587cf3a3a02e1854cd47c6f0a889dd235651520218dafd0a", "exit_code": 0},
+      {"path": "build-product-session/BilliardsPhysicsTests", "sha256": "03ffebdcaf58b4d3a493d2a37b855b64b1d60726523ce465186f50d0f1a8ee9a", "exit_code": 0},
+      {"path": "build-product-session/BilliardsPhysicsTelemetryTests", "sha256": "0e843025416934132a0ab5c389c1827aaaa7e99a6264bb0b1109165fc295166d", "exit_code": 0},
+      {"path": "build-wpa-08-crossing-telemetry-cpu-v1/BilliardsShotFactCollectorTests", "sha256": "9b0c2cabac8e27c0d1aa30e083be702a7ae09abd335db9b901af4a70266cf0a2", "exit_code": 0},
+      {"path": "build-product-session/BilliardsChineseEightBallRulesTests", "sha256": "02f5a1df288117c0d0f23a1938291383c873a04381f6b86f669b3d0a2cd5393a", "exit_code": 0},
+      {"path": "build-product-session/BilliardsRulesRuntimeIntegrationTests", "sha256": "7c3d41a5477d90f47bf46f6aae57a171d7c90eeb625969b08fd785aed2827864", "exit_code": 0}
+    ],
+    "wide_regression": [
+      {"target": "BilliardsPhysicsProfileTests", "exit_code": 0},
+      {"target": "BilliardsPhysicsInstrumentationTests", "exit_code": 0},
+      {"target": "BilliardsRulesTests", "exit_code": 0},
+      {"target": "BilliardsPhysicsScenarioTests", "exit_code": 0},
+      {"target": "BilliardsAutomationControllerTests", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionProductRuntimeTests", "exit_code": 0},
+      {"target": "BilliardsProductShellTests", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionSessionIntegrationTests", "exit_code": 0}
+    ],
+    "required_passed": 6,
+    "wide_passed": 8,
+    "failed": 0,
+    "shot_fact_collector_compile_workaround": {
+      "reason": "pre-existing CMake target omits chinese_eight_ball_rules.cpp while shared test source already calls validateShotFacts; gate forbids CMake mutation",
+      "command_shape": "clang++ test + collector + chinese rules + game_state",
+      "cmake_modified_to_hide_gap": false
+    },
+    "gpu_cocoa_opengl_executed": false
+  },
+  "deferred_boundary": {
+    "all_behind_parent_authority_implemented": false,
+    "all_behind_respot_request_or_commit_implemented": false,
+    "all_behind_product_action_reachable": false,
+    "global_rules_ui_exposed": false,
+    "requires_separate_post_telemetry_gate": true,
+    "audit_v5_modified_or_promoted": false,
+    "wpa_ii_08_row_closed": false,
+    "fresh_gpu_ta_or_readiness_created": false
+  },
+  "claims": {
+    "root_selected_telemetry_foundation_implemented": true,
+    "exact_continuous_crossing_order_cpu_verified": true,
+    "failed_step_and_duplicate_boundaries_cpu_verified": true,
+    "all_behind_respot_implemented": false,
+    "product_action_reachable": false,
+    "wpa_ii_08_complete": false,
+    "cmake_modified": false,
+    "ui_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

@@ -1,0 +1,871 @@
+{
+  "aliases": {
+    "cue_scratch": "cue_ball_down_arrow",
+    "group_unknown_question_diamond": "question_diamond",
+    "illegal_eight": "eight_ball_octagon",
+    "no_contact": "crossed_circle",
+    "numbered_ball_cross": "crossed_circle",
+    "numbered_ball_outside_rectangle": "ball_outside_rectangle",
+    "outlined_triangle": "warning_triangle",
+    "rail_missing": "rail_with_slash",
+    "rule_unknown": "question_diamond",
+    "wrong_ball": "crossed_circle"
+  },
+  "authorship": "original_billiardgl_vector_tokens",
+  "debug_isolation": {
+    "debug_default_visible": false,
+    "debug_forbidden_in_release_capture": true,
+    "debug_token_namespace": "debug_telemetry",
+    "product_token_namespace": "shipping_hud",
+    "shared_layout_nodes": false
+  },
+  "external_assets": false,
+  "gpu_contract": {
+    "allowed_primitives": [
+      "rect",
+      "circle",
+      "polyline",
+      "polygon"
+    ],
+    "color_input": "srgb8_unpremultiplied_role_token",
+    "coordinate_space": "normalized_24x24_top_left_y_down",
+    "curve_policy": "straight_segments_only_no_runtime_tessellation",
+    "font_backend": "existing_freetype_sdf_atlas",
+    "icon_expansion": "cpu_expand_to_solid_and_line_triangles_before_gpu_submit",
+    "output_primitives": [
+      "Panel",
+      "SolidRect",
+      "Line",
+      "Icon",
+      "GlyphQuad"
+    ],
+    "stroke_units": "logical_px_scaled_then_pixel_snapped",
+    "svg_runtime_dependency": false
+  },
+  "icon_tokens": {
+    "ball_outside_rectangle": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 14,
+          "primitive": "rect",
+          "stroke_role": "destructive",
+          "stroke_width": 2,
+          "width": 13,
+          "x": 3,
+          "y": 5
+        },
+        {
+          "cx": 19,
+          "cy": 4,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 3,
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "camera_frame": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              4
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              16,
+              4
+            ],
+            [
+              20,
+              4
+            ],
+            [
+              20,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              16
+            ],
+            [
+              4,
+              20
+            ],
+            [
+              8,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              20,
+              16
+            ],
+            [
+              20,
+              20
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 4,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "crossed_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 8,
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              6
+            ],
+            [
+              18,
+              18
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "cue_ball_down_arrow": {
+      "commands": [
+        {
+          "cx": 10,
+          "cy": 9,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 6,
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              17,
+              8
+            ],
+            [
+              17,
+              20
+            ],
+            [
+              13,
+              16
+            ],
+            [
+              17,
+              20
+            ],
+            [
+              21,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "eight_ball_octagon": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              21,
+              8
+            ],
+            [
+              21,
+              16
+            ],
+            [
+              16,
+              21
+            ],
+            [
+              8,
+              21
+            ],
+            [
+              3,
+              16
+            ],
+            [
+              3,
+              8
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        }
+      ],
+      "label_slot": {
+        "center": [
+          12,
+          12
+        ],
+        "font_role": "caption_sdf",
+        "text": "8"
+      }
+    },
+    "group_open_diamond": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              12,
+              21
+            ],
+            [
+              3,
+              12
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "group_solid_filled_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 8,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "group_stripe_banded_ring": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 8,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              10
+            ],
+            [
+              19,
+              10
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 3
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              14
+            ],
+            [
+              19,
+              14
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 3
+        }
+      ]
+    },
+    "help_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              14,
+              7
+            ],
+            [
+              16,
+              9
+            ],
+            [
+              16,
+              11
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              12,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 19,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        }
+      ]
+    },
+    "power_bars": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "height": 6,
+          "primitive": "rect",
+          "width": 3,
+          "x": 3,
+          "y": 15
+        },
+        {
+          "fill_role": "accent",
+          "height": 10,
+          "primitive": "rect",
+          "width": 3,
+          "x": 8,
+          "y": 11
+        },
+        {
+          "fill_role": "warning",
+          "height": 14,
+          "primitive": "rect",
+          "width": 3,
+          "x": 13,
+          "y": 7
+        },
+        {
+          "fill_role": "warning",
+          "height": 18,
+          "primitive": "rect",
+          "width": 3,
+          "x": 18,
+          "y": 3
+        }
+      ]
+    },
+    "question_diamond": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              12,
+              21
+            ],
+            [
+              3,
+              12
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "warning",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              14,
+              7
+            ],
+            [
+              16,
+              9
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              12,
+              15
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "warning",
+          "stroke_width": 1.5
+        },
+        {
+          "cx": 12,
+          "cy": 18,
+          "fill_role": "warning",
+          "primitive": "circle",
+          "radius": 0.8,
+          "stroke_role": "warning",
+          "stroke_width": 1
+        }
+      ]
+    },
+    "rail_with_slash": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 6,
+          "primitive": "rect",
+          "stroke_role": "destructive",
+          "stroke_width": 2,
+          "width": 18,
+          "x": 3,
+          "y": 9
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              20
+            ],
+            [
+              19,
+              4
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "tip_ball_outline": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        }
+      ]
+    },
+    "tip_position_marker": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 4,
+          "stroke_role": "surface_strong",
+          "stroke_width": 1
+        }
+      ]
+    },
+    "tip_target": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              12
+            ],
+            [
+              21,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "text_secondary",
+          "stroke_width": 1
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              21
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "text_secondary",
+          "stroke_width": 1
+        },
+        {
+          "cx": 14.5,
+          "cy": 8.5,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "surface_strong",
+          "stroke_width": 1
+        }
+      ]
+    },
+    "warning_triangle": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              22,
+              21
+            ],
+            [
+              2,
+              21
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              8
+            ],
+            [
+              12,
+              14
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "destructive",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 18,
+          "fill_role": "destructive",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "destructive",
+          "stroke_width": 1
+        }
+      ]
+    }
+  },
+  "layout_contract": {
+    "minimum_720p_safe_margin_px": {
+      "bottom": 36,
+      "left": 43,
+      "right": 43,
+      "top": 24
+    },
+    "required_viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        1920,
+        1080
+      ]
+    ],
+    "retina_case": {
+      "logical_px": [
+        1280,
+        720
+      ],
+      "physical_px": [
+        1920,
+        1080
+      ],
+      "scale": 1.5
+    },
+    "wide_safe_margin_px": {
+      "bottom": 54,
+      "left": 64,
+      "right": 64,
+      "top": 36
+    }
+  },
+  "palette_accessibility": {
+    "foul_encoding": [
+      "warning_shape",
+      "FOUL_text",
+      "reason_text"
+    ],
+    "group_encoding": [
+      "solid_or_band_pattern",
+      "shape",
+      "text_label",
+      "ball_number"
+    ],
+    "never_color_only": true,
+    "power_encoding": [
+      "bar_length",
+      "segment_count",
+      "numeric_percent"
+    ],
+    "required_redundant_channels": [
+      "shape",
+      "text",
+      "value_or_pattern"
+    ],
+    "supported_modes": [
+      "standard",
+      "color_vision_safe"
+    ]
+  },
+  "palette_modes": {
+    "color_vision_safe": {
+      "accent": "#5DD9C1",
+      "destructive": "#FF8C69",
+      "focus": "#FFD166",
+      "icon_primary": "#F4F7F8",
+      "surface": "#10181EEB",
+      "surface_strong": "#0B1116F5",
+      "text_primary": "#F4F7F8",
+      "text_secondary": "#C1CBD0",
+      "warning": "#FFD166"
+    },
+    "standard": {
+      "accent": "#31B7C8",
+      "destructive": "#F06B5D",
+      "focus": "#C7A8FF",
+      "icon_primary": "#F4F7F8",
+      "surface": "#10181EEB",
+      "surface_strong": "#0B1116F5",
+      "text_primary": "#F4F7F8",
+      "text_secondary": "#C1CBD0",
+      "warning": "#F2BC55"
+    }
+  },
+  "schema_version": 1,
+  "state_icon_usage": {
+    "aiming": [
+      "power_bars",
+      "tip_target",
+      "camera_frame"
+    ],
+    "default": [
+      "group_solid_filled_circle",
+      "group_stripe_banded_ring",
+      "camera_frame"
+    ],
+    "foul": [
+      "warning_triangle"
+    ],
+    "help": [
+      "help_circle",
+      "power_bars",
+      "tip_target",
+      "camera_frame"
+    ],
+    "post_shot": [
+      "camera_frame"
+    ]
+  },
+  "token_set_id": "focused_practice_hud_shipping_tokens_v1",
+  "typography": {
+    "backend": "existing_freetype_sdf_atlas",
+    "compact_logical_px": {
+      "body": 16,
+      "caption": 13,
+      "display": 24,
+      "primary": 20
+    },
+    "hierarchy": [
+      "display",
+      "primary",
+      "body",
+      "caption"
+    ],
+    "minimum_logical_px": 13,
+    "retina_minimum_physical_px": 21,
+    "tabular_numeric_fields": [
+      "power_percent",
+      "cue_speed",
+      "tip_offset",
+      "ball_number"
+    ],
+    "wide_logical_px": {
+      "body": 18,
+      "caption": 14,
+      "display": 32,
+      "primary": 24
+    }
+  }
+}

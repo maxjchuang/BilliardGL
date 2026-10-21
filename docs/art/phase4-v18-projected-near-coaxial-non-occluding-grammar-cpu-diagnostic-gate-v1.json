@@ -1,0 +1,246 @@
+{
+  "schema": "billiardgl.phase4.v18.projected_near_coaxial_non_occluding_grammar_cpu_diagnostic_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_STANDALONE_CPU_DIAGNOSTIC_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU",
+  "scope": "CPU/static feasibility diagnosis only for the newly selected projected-near-or-coaxial non-occluding grammar. The diagnostic must build a complete coordinate-free, source-provenanced screen-space silhouette relationship inventory, then prove whether each frozen repair region has one unique bounded minimal local relationship component and a paired actual-attributed bypass-bracket candidate outside the protected predicted silhouette. No product geometry or rendering is authorized.",
+  "root_product_decision_binding": {
+    "selected_decision_id": "PROJECTED_NEAR_OR_COAXIAL_NON_OCCLUDING_GRAMMAR",
+    "authority": "ROOT_PROJECT_MANAGER_PRODUCT_DECISION",
+    "statement": "ROOT NEW PRODUCT DECISION: SELECT PROJECTED_NEAR_OR_COAXIAL_NON_OCCLUDING_GRAMMAR.",
+    "statement_sha256": "93c804d1df764dbea1b200b9d3f9c16d6d5713b0fe4ada5fc3205b58cea768d5",
+    "selection_authorizes_standalone_cpu_diagnostic_only": true,
+    "selection_does_not_authorize_product_implementation_or_gpu": true
+  },
+  "frozen_bindings": [
+    {
+      "role": "v17_independent_infeasibility_addendum",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-independent-ta-feasibility-failure-addendum-v1.json",
+      "sha256": "150d1d8f1cb3cf0b43935a01a795d56ceadc51a6df330d0a68e4d01f51a36b3c"
+    },
+    {
+      "role": "v17_v2_final_feasibility_receipt",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/feasibility-receipt-v2.json",
+      "sha256": "03caa540de8d6f297f30e97ef3f8e69d22a8400521577aac470894131778594a"
+    },
+    {
+      "role": "v17_semantic_provenance_correction_gate",
+      "path": "docs/art/phase4-v17-semantic-batch-provenance-cpu-feasibility-correction-gate-v1.json",
+      "sha256": "601a9322d5452178499e0922e8b423ae403d89eb7e71fd3f70198e85b1855856"
+    },
+    {
+      "role": "v17_product_decision_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-product-decision-gate-v1.json",
+      "sha256": "c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329"
+    },
+    {
+      "role": "v16_independent_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v15_two_choice_product_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    },
+    {
+      "role": "trajectory_renderer_cpp_baseline",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    {
+      "role": "trajectory_renderer_h_baseline",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    {
+      "role": "modern_renderer_cpp_baseline",
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    {
+      "role": "modern_renderer_h_baseline",
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    },
+    {
+      "role": "cmake_baseline",
+      "path": "CMakeLists.txt",
+      "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"
+    }
+  ],
+  "frozen_case_contract": {
+    "capture_id": "camera_broadcast_1080",
+    "physical_dimensions": [1920, 1080],
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_profiles": [
+      {"id": "center_1x", "sample_count": 1, "cpu_top_left_positions": [[0.5, 0.5]]},
+      {"id": "asymmetric_2x", "sample_count": 2, "cpu_top_left_positions": [[0.25, 0.75], [0.75, 0.25]]},
+      {"id": "asymmetric_4x", "sample_count": 4, "cpu_top_left_positions": [[0.375, 0.875], [0.875, 0.625], [0.125, 0.375], [0.625, 0.125]]}
+    ],
+    "required_case_count": 18,
+    "output_only_repair_coordinates": [[783, 413], [892, 491], [940, 525]],
+    "ordered_contrast_probe_count": 81,
+    "ordered_contrast_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ]
+  },
+  "coordinate_free_full_silhouette_source_contract": {
+    "generation_order": "Build complete full-frame actual and predicted semantic silhouette coverage, then build all relationship components and all diagnostic bracket candidates, freeze their canonical inventory/digest, and only then use output coordinates or repair IDs to match/report components.",
+    "source_identity_fields": [
+      "existing nonzero finalOwnershipToken uniform across the exact semantic batch range",
+      "track",
+      "arcSegmentId",
+      "exact primitiveId",
+      "componentRole and visualSublayer",
+      "analytic route-order interval"
+    ],
+    "actual_silhouette": "All existing source-provenanced actual core, inner-halo and outer-halo semantic samples belonging to the exact actual route primitive family; endpoint/tick/marker samples remain classified and cannot masquerade as route-body coverage.",
+    "protected_predicted_silhouette": "All existing source-provenanced predicted core, inner-halo and side-only outer-rim samples for the exact dash-on primitive family, including its frozen cap envelope. Dash gap, endpoint, tick and marker are classified separately and never silently added.",
+    "coverage_source": "CPU sample-resolved rasterization of the frozen draw package with the exact 1x/2x/4x top-left sample positions and physical widths/caps; framebuffer color is not provenance.",
+    "forbidden_generation_inputs": [
+      "repair coordinates or radius",
+      "repair probe IDs",
+      "capture ID or camera name",
+      "contrast-probe membership",
+      "palette or framebuffer color",
+      "prior pass/fail result",
+      "coordinate/source whitelist"
+    ],
+    "new_source_token_batch_primitive_or_arc_allowed": false
+  },
+  "relationship_component_contract": {
+    "node": "One physical sample carrying one or more exact actual silhouette member identities and one or more exact protected predicted silhouette member identities, either at the same covered sample or in an immediately adjacent sample-lattice cell whose closed sample footprints touch. Adjacency is the frozen sample lattice relation, not a tunable distance threshold.",
+    "family_aggregation_rule": "Every member is first associated by exact semantic batch/token/track/arcSegmentId/primitiveId. Only then may core, inner-halo and outer member identities sharing the same source-provenanced route-body family be aggregated. The component retains the ordered exact member-token set; normalized family names can group compatible layers but can never substitute for exact member association.",
+    "edge": "Deterministic 8-neighbor physical-pixel plus same-sample-index connectivity with the same ordered actual/predicted route-body families, compatible exact member identities and continuous analytic route-order intervals.",
+    "component_key": "ordered(actual family track+arcSegmentId+ordered exact primitiveId/finalOwnershipToken member set, predicted family track+arcSegmentId+ordered exact primitiveId/finalOwnershipToken member set, sample profile, canonical connected sample-set digest, analytic route-order interval)",
+    "strict_centerline_intersection_required": false,
+    "allowed_relationship_classes": [
+      "bounded finite-width silhouette overlap",
+      "bounded one-sample-lattice near adjacency",
+      "bounded collinear or near-coaxial silhouette component with a deterministic local frame"
+    ],
+    "deterministic_frame": "Tangent is the normalized predicted route-order direction over the component interval; if its magnitude or orientation is ambiguous the component fails. Normal is the fixed top-left-screen clockwise perpendicular to that oriented tangent. Actual route direction is recorded to preserve ownership/direction but cannot flip the frame by coordinate.",
+    "boundedness": "A component must be local: it has finite entry and exit boundaries on both source-provenanced route intervals, cannot consume an entire primitive/whole route, and cannot connect across dash gaps, endpoints, ticks, markers, unrelated arcs, or unrelated route-body families. Compatible core/inner/outer exact members within one family remain individually recorded.",
+    "explicit_infeasible_classes": [
+      "zero relationship component for a repair matcher",
+      "multiple eligible components for a repair matcher",
+      "broad component without finite entry and exit on both routes",
+      "whole-primitive or whole-route overlap",
+      "ambiguous, zero-length or non-deterministic tangent/normal frame",
+      "component spanning multiple unrelated actual or predicted route-body source families",
+      "component crossing dash gap, endpoint, tick, marker or unrelated arc",
+      "missing, zero, mixed, foreign, color-derived or multiply-associated provenance",
+      "standard/CVD topology mismatch or sample-profile-specific source identity",
+      "multiple equal minimal bracket candidates"
+    ]
+  },
+  "diagnostic_bypass_bracket_contract": {
+    "candidate_only_not_product_geometry": true,
+    "ownership": "Both bracket halves alias the existing actual route-body finalOwnershipToken, track, arcSegmentId and exact primitive identity in diagnostic metadata; the paired predicted source identity is recorded as relationship metadata. No new product token, batch, probe, primitive or arc is created.",
+    "shape": "Two route-ordered actual-attributed bypass halves leave the actual route before the bounded component and rejoin after it, bending along the deterministic normal immediately outside the complete protected predicted silhouette.",
+    "protected_predicted_non_occlusion": "At every 1x/2x/4x covered sample, neither half may erase, clip, recolor, overwrite or intersect the protected predicted core+inner+outer silhouette or its frozen cap envelope.",
+    "minimality": "Enumerate all bounded lattice candidates for every full-frame relationship component before repair matching. Minimize the exact tuple (maximum normal shell index, total added route length, vertex count, canonical topology digest); the minimum must be unique. Equal minima fail closed and may not be broken by coordinates, IDs, palette or color.",
+    "immediately_outside_definition": "The first sample-lattice shell with zero protected-predicted overlap in every sample position for that profile; no adjustable padding or visual threshold.",
+    "preserved_baseline": [
+      "original actual and predicted centerlines, widths, cap envelopes, offsets and source identities",
+      "predicted yellow dominance, dash gaps and 18/12/30 rhythm",
+      "endpoints, ticks, player/elevated/overhead controls and broadcast non-component samples",
+      "standard/CVD topology and exact 81 contrast-probe order/digest",
+      "no erase, clip, recolor, route offset, z-order-only workaround or extra product pass"
+    ],
+    "cpu_graph_decoder_is_human_comprehension_proof": false
+  },
+  "case_acceptance_contract": {
+    "full_frame_inventory_frozen_before_matcher": true,
+    "repair_matcher_only_reports_components": true,
+    "per_case": "Exactly one bounded relationship component and exactly one unique minimal paired bracket candidate match the output-only repair region; its ordered semantic source key must be stable across standard/CVD and 1x/2x/4x.",
+    "all_three_regions_required_in_all_eighteen_cases": true,
+    "feasible_result": "PROJECTED_NEAR_COAXIAL_GRAMMAR_FEASIBLE_FOR_A_LATER_SEPARATE_IMPLEMENTATION_GATE",
+    "infeasible_result": "PROJECTED_NEAR_COAXIAL_GRAMMAR_INFEASIBLE_FOR_FROZEN_THREE_REGIONS",
+    "any_single_case_failure_forces_overall_infeasible": true,
+    "diagnostic_candidate_is_not_visual_acceptance": true
+  },
+  "allowed_standalone_cpu_diagnostic_files": [
+    "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/phase4_v18_projected_near_coaxial_feasibility_cpu_diagnostic.cpp",
+    "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/feasibility-receipt-v1.json",
+    "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/component-ledger-v1.json",
+    "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/raster-ledger-v1.json",
+    "scripts/validate_phase4_v18_projected_near_coaxial_grammar_feasibility.py",
+    "tests/test_phase4_v18_projected_near_coaxial_grammar_feasibility.py"
+  ],
+  "required_fail_closed_fixtures": [
+    "exact semantic batch/token/track/arc/primitive positive without contrast probe",
+    "contrast probe without exact semantic batch negative",
+    "same-sample overlap and one-sample-lattice adjacency positives",
+    "strict centerline-disjoint but finite-width bounded overlap positive",
+    "bounded collinear component with deterministic tangent/normal positive",
+    "zero-length, ambiguous tangent and frame-flip negatives",
+    "broad, whole-primitive and whole-route overlap negatives",
+    "dash-gap, endpoint, tick, marker, unrelated-arc and multi-source component negatives",
+    "missing, zero, mixed, foreign, color-derived and multiply-associated provenance negatives",
+    "zero, multiple and equal-minimum component/candidate negatives",
+    "coordinate, repair-ID, capture, camera, probe-membership, palette, color and prior-result mutations cannot change generated inventory",
+    "paired bracket zero protected overlap at every 1x/2x/4x sample and either-half removal fails actual-route graph traceability",
+    "standard/CVD component keys and topology identical across exact 18 cases",
+    "exact 81 contrast-probe order/digest and three repair IDs checked only after inventory freeze",
+    "five production/CMake baselines and source/token/batch/primitive/arc inventories unchanged"
+  ],
+  "future_implementation_preconditions_not_authorized_here": {
+    "root_must_approve_a_new_implementation_gate_after_feasibility": true,
+    "gl_query_failure_must_abort_before_draw": true,
+    "gl_sample_position_query_errors_must_be_checked": true,
+    "gl_buffer_and_texture_upload_errors_must_be_checked": true,
+    "consecutive_frame_stale_vbo_texture_and_relationship_state_negatives_required": true,
+    "all_query_upload_or_stale_state_failures_must_suppress_both_bracket_halves": true,
+    "future_targeted_gpu_and_independent_original_resolution_ta_comprehension_are_separate": true
+  },
+  "forbidden": [
+    "No production source/header, CMake, shader, pass, texture, camera, replay, UI, asset, authority, threshold or product-exposure edit.",
+    "No repair coordinate/ID, capture/camera identity, probe membership, palette/color, previous result or source whitelist in relationship generation, connectivity, boundedness, frame construction or minimal candidate selection.",
+    "No centerline-intersection requirement reintroduced as a substitute for the selected silhouette relationship, and no broad/coaxial overlap accepted without finite source-provenanced boundaries.",
+    "No actual/predicted erase, clip, recolor, width/cap/offset/source-ID change, route offset, global actual priority, z-order-only workaround or extra product pass.",
+    "No claim of implemented geometry, visual comprehension, GPU readiness, machine pass, targeted pass, formal pass, golden, beta or product pass."
+  ],
+  "authorization_boundary": {
+    "root_product_decision_selected": true,
+    "standalone_cpu_diagnostic_authorized": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "product_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "human_comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "cpu_diagnostic_executed_by_this_gate": false,
+    "feasibility_result_exists": false,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false,
+    "product_pass": false
+  }
+}

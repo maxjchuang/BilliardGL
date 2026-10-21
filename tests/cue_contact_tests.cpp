@@ -1,9 +1,12 @@
 #include "cue_contact.h"
+#include "coupled_cue_contact.h"
+#include "frozen_cue_topology.h"
 #include "physics_profile.h"
 
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 
@@ -153,13 +156,131 @@ void testMovingSpinningBallAndNonApproachAreHandled()
         close(receding.velocity.x, 1.0), "nonapproaching input is atomic");
 }
 
+void testCanonicalStrokeObservationFoundation()
+{
+    billiardgl::CanonicalCueTipStrokeObservation observation;
+    observation.shotIdentity = "shot.1";
+    observation.actorPlayerId = 0;
+    observation.rackIdentity = "rack.1";
+    observation.rulesStateHash = "state.1";
+    observation.observationStartedBeforeFirstContact = true;
+    observation.observationEndedAfterAuthoritativeRelease = true;
+    observation.noDroppedIntervals = true;
+    observation.successfulLaunchCommit = true;
+    billiardgl::CanonicalCueTipContactInterval interval;
+    interval.relativeTipBallPathLengthCm=0.2;
+    interval.relativeTipBallPathLengthAttested=true;
+    interval.ordinal = 0;interval.startTimeSeconds = 0.0;
+    interval.endTimeSeconds = 0.001;
+    interval.startTickOffsetSeconds=0.0;
+    interval.endTickOffsetSeconds=0.001;
+    interval.origin = billiardgl::CueTipIntervalOrigin::AnalyticCueContactSolver;
+    observation.intervals.push_back(interval);
+    const auto validation = billiardgl::validateCanonicalCueTipStrokeObservation(
+        observation);
+    expect(validation.complete && validation.error.empty(),
+        "canonical complete single interval validates without foul classification");
+    billiardgl::CanonicalCueTipStrokeObserver observer;
+    billiardgl::CanonicalCueTipStrokeObservation identity=observation;
+    identity.intervals.clear();identity.endTick=identity.startTick;
+    expect(observer.begin(identity)&&observer.append(interval)&&
+        observer.append(interval)&&observer.observation().intervals.size()==1,
+        "observer canonically dedupes exact interval retry");
+    expect(observer.finish(1).complete&&observer.committed(),
+        "authoritative motion end is required for full stroke commit");
+    const std::string digest=observer.observation().digest;
+    expect(observer.finish(1).complete&&observer.observation().digest==digest,
+        "exact observation commit retry returns the immutable digest");
+    billiardgl::CanonicalCueTipContactInterval conflict=interval;
+    conflict.ordinal=0;conflict.endTimeSeconds=0.002;
+    expect(!observer.append(conflict)&&observer.observation().digest==digest,
+        "conflicting retry is rejected with zero observation delta");
+    observer.rollback();
+    expect(!observer.active()&&!observer.committed(),
+        "rollback removes uncommitted observer state");
+    expect(observer.begin(identity)&&observer.append(interval),
+        "observer restarts after rollback");
+    billiardgl::CanonicalCueTipContactInterval contiguous=interval;
+    contiguous.startTimeSeconds=interval.endTimeSeconds;
+    contiguous.endTimeSeconds=0.002;
+    contiguous.startTickOffsetSeconds=interval.endTickOffsetSeconds;
+    contiguous.endTickOffsetSeconds=0.002;
+    contiguous.solverEventIds={2};
+    expect(observer.append(contiguous)&&observer.observation().intervals.size()==1&&
+        observer.observation().intervals.front().endTimeSeconds==0.002,
+        "contiguous same-origin samples merge into one uninterrupted interval");
+    billiardgl::CanonicalCueTipContactInterval separated=contiguous;
+    separated.startTimeSeconds=0.003;separated.endTimeSeconds=0.004;
+    separated.startTickOffsetSeconds=0.003;separated.endTickOffsetSeconds=0.004;
+    separated.origin=billiardgl::CueTipIntervalOrigin::AuthoritativeCueMotionObserver;
+    expect(observer.append(separated)&&observer.observation().intervals.size()==2,
+        "separated recontact creates a second canonical interval");
+    auto invalid=identity;invalid.intervals={interval};
+    invalid.observationEndedAfterAuthoritativeRelease=true;
+    invalid.intervals[0].origin=static_cast<billiardgl::CueTipIntervalOrigin>(99);
+    expect(!billiardgl::validateCanonicalCueTipStrokeObservation(invalid).valid,
+        "unknown interval origin fails closed");
+    invalid=observation;invalid.intervals[0].normalImpulseNs=
+        std::numeric_limits<double>::quiet_NaN();
+    expect(!billiardgl::validateCanonicalCueTipStrokeObservation(invalid).valid,
+        "non-finite interval measurement fails closed");
+    invalid=observation;invalid.intervals.push_back(interval);
+    invalid.intervals[1].ordinal=1;
+    expect(!billiardgl::validateCanonicalCueTipStrokeObservation(invalid).valid,
+        "overlapping canonical intervals fail closed");
+    invalid=observation;invalid.noDroppedIntervals=false;
+    const auto dropped=
+        billiardgl::validateCanonicalCueTipStrokeObservation(invalid);
+    expect(dropped.valid&&!dropped.complete&&
+        !invalid.fullStrokeComplete,
+        "dropped intervals remain diagnostic-only and incomplete");
+    invalid=observation;invalid.observationStartedBeforeFirstContact=false;
+    expect(!billiardgl::validateCanonicalCueTipStrokeObservation(invalid).complete,
+        "late observation start cannot become a complete stroke");
+    invalid=observation;invalid.intervals.clear();
+    expect(billiardgl::validateCanonicalCueTipStrokeObservation(invalid).complete,
+        "authoritatively observed no-contact stroke may be complete and empty");
+}
+
 }  // namespace
 
 int main()
 {
+    // Additive Phase 5 interval coverage lives outside the frozen Phase 3
+    // convergence-contract file, whose bytes are historical release evidence.
+    {
+        auto profile = billiardgl::defaultChinesePoolPhysicsProfile();
+        profile.frozenCueContact.enabled = true;
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) {
+            ball.pocketed = true;
+            ball.position = {};
+            ball.velocity = {};
+            ball.angularVelocity = {};
+        }
+        state.balls[0].pocketed = false;
+        state.balls[1].pocketed = false;
+        state.balls[1].position.x = 2.0f * profile.ball.radiusCm;
+        const auto topology = billiardgl::detectFrozenCueTopology(state, 0,
+            profile, billiardgl::PhysicsBoundaryMode::Unbounded);
+        state.balls[1].pocketed = true;
+        const auto centered = billiardgl::solveCoupledCueContact(
+            state, topology, inputAt(0.0, 0.0), profile);
+        expect(centered.status == billiardgl::CoupledCueContactStatus::Released &&
+            centered.contact.applied && !centered.contact.microsteps.empty() &&
+            centered.contact.canonicalTipIntervals.size() == 1 &&
+            centered.contact.canonicalTipIntervals[0].origin ==
+                billiardgl::CueTipIntervalOrigin::CoupledCueContactSolver &&
+            centered.contact.canonicalTipIntervals[0].endTimeSeconds > 0.0 &&
+            centered.contact.canonicalTipIntervals[0].relativeTipBallPathLengthAttested &&
+            centered.contact.canonicalTipIntervals[0].relativeTipBallPathLengthCm > 0.0,
+            "released coupled contact carries its actual canonical tip path interval");
+    }
     testCenterHitIsFiniteSpinFreeAndDissipative();
     testOffsetsProduceMirroredSpinAndRespectFrictionCone();
     testChalkMiscueAndUnsupportedInputsAreExplicitAndAtomic();
     testMovingSpinningBallAndNonApproachAreHandled();
+    testCanonicalStrokeObservationFoundation();
     return EXIT_SUCCESS;
 }

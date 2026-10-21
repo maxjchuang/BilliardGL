@@ -1,0 +1,254 @@
+{
+  "schema": "wpa_ii_09_tip_touch_until_shot_lifecycle_design_gap_gate_v1",
+  "status": "POLICY_AND_TELEMETRY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-09"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [8],
+    "section_9": {
+      "chapter": "II",
+      "clause": "9",
+      "pdf_page": 8,
+      "locator": "Ball in Hand",
+      "controlled_paraphrase": "While the cue ball is in hand, the shooter may keep moving it until executing a shot. The general paragraph permits moving it with any cue part, including the tip, but not by forward stroke. Break placement is restricted behind the Head String. The later non-break-foul paragraph permits full-table movement but says only a non-tip cue part may move the ball and a tip touch is a foul."
+    },
+    "text_uniquely_determines": [
+      "a valid placement preview or movement is not itself the shot that ends ball-in-hand",
+      "the ball-in-hand entitlement persists through repeated cue-ball movement until a shot is executed",
+      "a rejected preview, rejected placement commit, or rejected technical shot request cannot consume the entitlement",
+      "break-shot ball in hand remains spatially restricted behind the Head String",
+      "ball in hand awarded for a non-break foul permits full-table placement",
+      "for the explicit non-break-foul context, touching the cue ball with the cue tip while moving it is a foul"
+    ],
+    "contextual_tip_reading": {
+      "break_or_general_sentence": "tip movement is permitted only when it is not a forward stroke",
+      "non_break_foul_specific_sentence": "the later specific sentence prohibits tip contact while moving the in-hand cue ball",
+      "specific_non_break_sentence_overrides_general_tip_permission": true,
+      "forward_stroke_definition_available": false
+    },
+    "text_does_not_specify": [
+      "the cue-tip kinematic, intent, direction, distance, duration, velocity, or acceleration predicate that constitutes a forward stroke",
+      "the numerical contact tolerance and authoritative sample time for cue-part identity",
+      "whether a technically accepted miscue or zero-impulse cue contact counts as executing a shot for entitlement consumption",
+      "how to classify a cue action whose launch is accepted but physics applies no cue-ball impulse"
+    ]
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "row_id": "WPA-II-09",
+    "row_status": "PARTIAL",
+    "product_reachable": false,
+    "product_placement_subflow_reachable": true
+  },
+  "source_bindings": {
+    "placement_authority": {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4", "relevant_lines": [[699, 726], [1449, 1649]]},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"},
+    "product_session": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9", "relevant_lines": [[334, 465]]},
+    "product_input_header": {"path": "src/Billiards/product_input_controller.h", "sha256": "bd0d10bb8eb44e15db6fdef45262d57130f284e639c45cbb0f67b42377ae3f7d"},
+    "product_input": {"path": "src/Billiards/product_input_controller.cpp", "sha256": "1e76dfdd0b5c646f0bcd6e5f4d9f8516dd3a3903d4be74b9aad5cd872e79e9b9", "relevant_lines": [[204, 272]]},
+    "platform_input_header": {"path": "src/Billiards/render/modern/product_input_adapter.h", "sha256": "f26df1a2773b4ecb9433e16e4c159b79693780ad21ca7644024f93852dbde5d0"},
+    "platform_input": {"path": "src/Billiards/render/modern/product_input_adapter.cpp", "sha256": "b672e9231d17807a59652878dbd4b70b7a949f6e6cfe2fc7694a5126de0c167d"},
+    "cue_impact": {"path": "src/Billiards/cue_impact.h", "sha256": "b8d34ee8204596366eb55ade70bb2db1177212adeff6d5aa25ba77b1b52c0000"},
+    "cue_contact_header": {"path": "src/Billiards/cue_contact.h", "sha256": "8a04660ae3927f76544a46a2676fe30e17c88856f4b2f9f53c274dd849be9a9c"},
+    "cue_contact": {"path": "src/Billiards/cue_contact.cpp", "sha256": "371eeea9353fe2759c0edf25101cdaa2a1298d6688b537690a65957c47565d27"},
+    "coupled_contact_header": {"path": "src/Billiards/coupled_cue_contact.h", "sha256": "c4e24dbfcf3b5f3a3eb4ab4ef4d639bc31a56fb194ae046b44aea5ea2c408664"},
+    "coupled_contact": {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "e5034d0697ba86e3ed2341d2555d9da6fefbd6f084b0fb74bdf45b386b75d278"},
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "shot_control_header": {"path": "src/Billiards/shot_control_model.h", "sha256": "4afd2b710a8ab7e74dc9d35bf418f00bc3cfc39a999bac8022317e4a9a12ed1f"},
+    "shot_control": {"path": "src/Billiards/shot_control_model.cpp", "sha256": "9aab55bddf904c9d8caebb7d5c1107ce28729c40392cfc52ac34b767264b0d57"},
+    "product_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "71e7fe78f078c2287814f9b836ff9588275ee532da32fb274611f1d2fde970f2"},
+    "input_tests": {"path": "tests/product_input_controller_tests.cpp", "sha256": "0137d40ab14fb09163ca3cd245d26904959369c3e8a5edea906407a820c3873b"},
+    "cue_contact_tests": {"path": "tests/cue_contact_tests.cpp", "sha256": "93a6d368f985d6c990537d12eef5ea89ea9166e0029b6836b425a0328139755d"},
+    "coupled_contact_tests": {"path": "tests/coupled_cue_contact_tests.cpp", "sha256": "b439f5a698ac7ee665f16cc1ab0c35df96fe577882d8c57fbb17adc1ffbfd777"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "aab289bcb7e01d037e6022d41676145e09027d2d90317b9cf9e2e017335f0698"}
+  },
+  "existing_mapping": {
+    "core_g_preview_read_only": true,
+    "core_g_confirm_moves_cue_ball_atomically": true,
+    "core_g_confirm_currently_clears_ball_in_hand": true,
+    "core_g_confirm_currently_clears_placement_offer": true,
+    "repeated_move_after_confirm_currently_product_reachable": false,
+    "apply_cue_impact_currently_rejects_while_placement_offer_pending": true,
+    "product_coordinate_preview_or_confirm_has_cue_part_identity": false,
+    "cue_impact_input_has_cue_part_identity": false,
+    "cue_impact_input_has_forward_stroke_classification": false,
+    "cue_contact_result_has_pre_shot_placement_touch_provenance": false,
+    "physics_telemetry_has_placement_tip_touch_event": false,
+    "global_rules_decision_ui_product_exposed": false
+  },
+  "resolved_lifecycle_contract": {
+    "entitlement_starts": "only after the authoritative foul or parent decision grants ball in hand to its exact actor",
+    "entitlement_persists_through": [
+      "read-only valid or invalid coordinate previews",
+      "rejected confirm attempts",
+      "one or more successful legal cue-ball placement/move commits",
+      "aim, power, camera, and tip-offset UI changes that do not physically touch the cue ball"
+    ],
+    "entitlement_consumption_candidate": "one authority-accepted shot execution classified under the future shot-execution policy",
+    "must_not_consume": [
+      "unbound or malformed product input",
+      "wrong actor, action, scope, decision, revision, state hash, or idempotency",
+      "invalid placement geometry",
+      "failed cue-impact validation or rejected dispatch",
+      "read-only preview",
+      "idempotent placement retry"
+    ],
+    "reset_boundaries": [
+      "official rerack or new-rack lifecycle",
+      "ruleset reset",
+      "full runtime reset",
+      "match completion"
+    ],
+    "unexpected_turn_change_while_entitlement_active": "fail closed and invalidate the stale actor-bound entitlement; do not transfer it implicitly",
+    "failed_or_miscue_shot_consumes_entitlement": "POLICY_PENDING",
+    "placement_commit_may_end_entitlement": false
+  },
+  "tip_touch_and_shot_classification": {
+    "status": "POLICY_AND_TELEMETRY_PENDING",
+    "policy_decisions": {
+      "forward_stroke_predicate": {
+        "status": "POLICY_PENDING",
+        "selected": null,
+        "required_dimensions": ["cue_part", "direction", "distance", "duration", "velocity", "intent_or_authoritative_gesture"],
+        "forbidden_guess": true
+      },
+      "shot_execution_boundary": {
+        "status": "POLICY_PENDING",
+        "selected": null,
+        "allowed_candidates": [
+          "validated_launch_request",
+          "cue_contact_regime_classified_as_shot_even_without_impulse",
+          "positive_authoritative_cue_ball_impulse"
+        ],
+        "must_distinguish": ["rejected_launch", "zero_speed", "miscue", "unsupported_contact", "successful_impulse"],
+        "forbidden_guess": true
+      },
+      "tip_contact_numeric_policy": {
+        "status": "POLICY_PENDING",
+        "selected": null,
+        "allowed_candidates": ["exact_geometry", "documented_deterministic_quantization"],
+        "forbidden_guess": true
+      }
+    },
+    "required_future_telemetry": [
+      "placement_entitlement_id_actor_scope_and_revision",
+      "cue_part_identity_tip_or_non_tip",
+      "cue_part_contact_point_and_normal",
+      "cue_motion_direction_distance_duration_velocity_and_acceleration",
+      "forward_stroke_classifier_version_and_result",
+      "event_origin_sample_time_and_completeness",
+      "shot_launch_request_validation_result",
+      "cue_contact_regime_and_impulse_applied",
+      "entitlement_consumption_reason"
+    ],
+    "coordinate_drag_policy": "The existing product coordinate preview/confirm path is an explicit placement tool, not a simulated cue-part touch; it remains governed by Core-G geometry and authority validation.",
+    "physics_solver_may_report_contact_kinematics_but_not_decide_foul": true,
+    "production_implementation_authorized": false
+  },
+  "future_atomic_product_contract": {
+    "placement_move_commit": [
+      "validate live actor-bound Core-G offer, scope, decision, revision, state hash, action, position and idempotency",
+      "move the cue ball atomically without consuming ball in hand",
+      "increment one revision and stage one replacement offer for the same actor and scope",
+      "return an ACK binding both the movement and replacement offer identity"
+    ],
+    "shot_release_commit_after_policy": [
+      "validate current entitlement actor/revision/hash and a classified shot execution",
+      "freeze the final committed cue-ball position and requested cue impact",
+      "atomically consume the entitlement, invalidate the placement offer and apply the cue impact",
+      "start shot-fact collection only after the same atomic commit succeeds"
+    ],
+    "rejected_or_unclassified_shot_release": "preserve the cue position, entitlement, offer, revision, journals and receipts exactly",
+    "failed_or_miscue_release": "follow only the later-selected shot_execution_boundary; no behavior is selected here",
+    "exact_retry": "return the original movement or release ACK without moving again or consuming entitlement twice",
+    "conflicting_retry": "a reused key with changed actor/action/position/impact/revision/hash fails closed",
+    "failure_rollback": "cue position, ball-in-hand state, offer, actor, match state, revision, events/actions, shot collector and receipts all return to the exact pre-call state",
+    "foundation_actions_product_exposed": false,
+    "other_rules_actions_product_exposed": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "lifecycle_positive": [
+      "VALID_PREVIEW_PRESERVES_ENTITLEMENT",
+      "FIRST_MOVE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE",
+      "SECOND_MOVE_COMMIT_RESTAGES_SAME_ACTOR_SCOPE",
+      "AIM_POWER_CAMERA_TIP_OFFSET_UI_PRESERVE_ENTITLEMENT",
+      "SELECTED_SUCCESSFUL_SHOT_BOUNDARY_CONSUMES_ONCE",
+      "RERACK_RULESET_RESET_RUNTIME_RESET_AND_MATCH_COMPLETE_CLEAR"
+    ],
+    "lifecycle_negative": [
+      "INVALID_PREVIEW_OR_CONFIRM_PRESERVES_ENTITLEMENT",
+      "WRONG_ACTOR_ACTION_SCOPE_DECISION_REVISION_HASH_PRESERVES_ENTITLEMENT",
+      "REJECTED_TECHNICAL_SHOT_PRESERVES_ENTITLEMENT",
+      "UNEXPECTED_TURN_CHANGE_INVALIDATES_WITHOUT_TRANSFER",
+      "IDEMPOTENT_MOVE_RETRY_DOES_NOT_RESTAGE_TWICE",
+      "CONFLICTING_MOVE_OR_RELEASE_RETRY_ROLLS_BACK",
+      "ATOMIC_RELEASE_FAILURE_RESTORES_OFFER_AND_COLLECTOR"
+    ],
+    "tip_and_shot_after_policy": [
+      "NON_BREAK_NON_TIP_MOVE_ALLOWED",
+      "NON_BREAK_TIP_TOUCH_FOUL_ONCE",
+      "BREAK_TIP_NON_FORWARD_MOVE_POLICY_CASE",
+      "BREAK_TIP_FORWARD_STROKE_POLICY_CASE",
+      "REJECTED_LAUNCH_NOT_EXECUTED",
+      "ZERO_SPEED_BOUNDARY_CASE",
+      "MISCUE_BOUNDARY_CASE",
+      "SUCCESSFUL_IMPULSE_EXECUTED_ONCE",
+      "INCOMPLETE_CUE_PART_OR_STROKE_TELEMETRY_FAILS_CLOSED"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/ball_in_hand_authority.h",
+      "src/Billiards/rules/ball_in_hand_lifecycle.h",
+      "src/Billiards/rules/ball_in_hand_lifecycle.cpp",
+      "src/Billiards/cue_impact.h",
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/product_input_controller.cpp",
+      "src/Billiards/render/modern/modern_product_session.h",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "test_files": [
+      "tests/ball_in_hand_lifecycle_tests.cpp",
+      "tests/cue_contact_tests.cpp",
+      "tests/product_input_controller_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp",
+      "tests/rules_decision_session_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_tip_and_shot_policies_resolved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gate task",
+    "guessing a forward-stroke, tip-contact, miscue, zero-speed, or shot-execution threshold",
+    "treating coordinate preview or drag as a cue-tip touch",
+    "consuming ball in hand on preview, rejected confirm, or rejected shot dispatch",
+    "promotion of WPA-II-09 above PARTIAL",
+    "changes to WPA-II-08 re-spot or first-contact semantics",
+    "global rulesDecisionUiProductExposed enablement",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "entitlement_persistence_text_resolved": true,
+    "reset_and_rejected_attempt_boundaries_resolved": true,
+    "forward_stroke_policy_resolved": false,
+    "shot_execution_boundary_resolved": false,
+    "tip_touch_telemetry_complete": false,
+    "production_implementation_complete": false,
+    "product_behavior_changed": false,
+    "audit_row_promoted": false,
+    "gpu_executed": false
+  }
+}

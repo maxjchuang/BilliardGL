@@ -1,0 +1,350 @@
+{
+  "allowed_controls": {
+    "actions": [
+      "aim_yaw",
+      "shot_power",
+      "camera_cycle",
+      "reset_attempt"
+    ],
+    "camera_presets": [
+      "player_shot",
+      "tactical_overhead"
+    ],
+    "explicitly_forbidden": [
+      "cue_elevation",
+      "chalk",
+      "auto_shot",
+      "auto_aim"
+    ],
+    "tip_offset": {
+      "axis": "none",
+      "enabled": false,
+      "preferred_radius_units": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "assist": {
+    "allowed": [
+      "aim_line",
+      "first_contact_marker",
+      "target_zone"
+    ],
+    "default": "basic",
+    "maximum_level": "training_guides_no_auto_execution"
+  },
+  "authorship": {
+    "asset_policy": "original_billiardgl_content_no_third_party_assets",
+    "owner": "BilliardGL"
+  },
+  "category": "stun_follow_draw",
+  "failure": {
+    "any": [
+      {
+        "predicate": "numerical_failure"
+      },
+      {
+        "predicate": "cue_ball_pocketed"
+      },
+      {
+        "maximum": 1,
+        "predicate": "shot_limit_exceeded"
+      },
+      {
+        "maximum": 6000,
+        "predicate": "timeout_ticks"
+      }
+    ],
+    "evaluation": "after_each_shot_then_at_attempt_end",
+    "precedence": [
+      "numerical_failure",
+      "cue_ball_pocketed",
+      "shot_limit_exceeded",
+      "timeout_ticks"
+    ]
+  },
+  "id": "launch_straight_pot_intro_v2",
+  "initial_scenario": {
+    "binding": "embedded_canonical_physics_scenario_v1",
+    "canonical_sha256": "d4b6d2bb33d366f097a345d63207e5174109afac0012d49616810c605668bb59",
+    "physics_profile_sha256": "1c133871fefdb0aaac136f44e08be30894f1d61d85db83e75169cb06bc5b27df",
+    "scenario": {
+      "balls": [
+        {
+          "angular_velocity_rad_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "index": 0,
+          "pocketed": false,
+          "position_cm": [
+            10.0,
+            89.341476,
+            0.0
+          ],
+          "velocity_cm_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "angular_velocity_rad_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "index": 1,
+          "pocketed": false,
+          "position_cm": [
+            40.0,
+            89.341476,
+            0.0
+          ],
+          "velocity_cm_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "boundary_mode": "production_table",
+      "description": "BilliardGL training initial state for launch_straight_pot_intro_v2",
+      "evidence": {
+        "equipment": "CHINESE_EIGHT_BALL",
+        "grade": "C",
+        "source": "original_training_design"
+      },
+      "expectations": [
+        {
+          "metric": "finite_state",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "id": "launch_straight_pot_intro_v2_initial_v2",
+      "physics_profile": {
+        "ball": {
+          "friction_coefficient": 0.1,
+          "inertia_factor": 0.4,
+          "mass_kg": 0.17,
+          "material": "phenolic_resin",
+          "normal_restitution": 0.97,
+          "radius_cm": 2.8575
+        },
+        "cue": {
+          "chalked_friction_coefficient": 0.6,
+          "cue_speed_per_power_unit_cm_s": 1.675,
+          "effective_mass_kg": 0.5,
+          "maximum_reliable_offset_radius": 0.8,
+          "normal_restitution": 0.0,
+          "unchalked_friction_coefficient": 0.1
+        },
+        "cushion": {
+          "friction_coefficient": 0.14,
+          "material": "mathavan_speed_dependent_cushion_v2",
+          "maximum_restitution": 0.93,
+          "maximum_rigid_incident_speed_cm_s": 250.0,
+          "minimum_restitution": 0.0,
+          "normal_restitution": 0.93,
+          "nose_height_ratio": 1.4,
+          "restitution_intercept": 1.0,
+          "restitution_slope_per_mps": 0.056
+        },
+        "formula_version": "legacy_v1",
+        "frozen_cue_contact": {
+          "enabled": false,
+          "maximum_compression_m": 0.004,
+          "maximum_contact_seconds": 0.006,
+          "maximum_normal_force_n": 10000.0,
+          "microstep_seconds": 1e-05,
+          "normal_dissipation_s_per_m": 0.05,
+          "normal_stiffness_n_per_m32": 12500000.0,
+          "release_compression_m": 1e-08,
+          "tangential_damping_ns_per_m": 25.0,
+          "tangential_stiffness_n_per_m": 400000.0
+        },
+        "id": "chinese_pool_interactive_120hz_v5",
+        "solver": {
+          "maximum_events_per_tick": 64,
+          "maximum_island_size": 16,
+          "maximum_penetration_cm": 2.75,
+          "passive_energy_tolerance_j": 1e-10,
+          "penetration_slop_cm": 0.001,
+          "position_iterations": 4,
+          "residual_tolerance_cm_s": 0.001,
+          "time_step_seconds": 0.008333333333333333,
+          "toi_tolerance_seconds": 1e-07,
+          "velocity_iterations": 64
+        },
+        "surface": {
+          "legacy_friction_acceleration_cm_s2": 4.0,
+          "material": "mathavan_interactive_surface_v2",
+          "rolling_resistance_acceleration_cm_s2": 12.5,
+          "sliding_friction_coefficient": 0.2,
+          "slip_speed_epsilon_cm_s": 0.0001,
+          "stop_energy_threshold_j": 1e-09,
+          "torsional_spin_deceleration_rad_s2": 12.0
+        },
+        "table_boundary": {
+          "capture_depth_cm": 6.0,
+          "corner_mouth_width_cm": 13.2,
+          "corner_throat_width_cm": 13.2,
+          "geometry_id": "legacy_opening_band",
+          "jaw_radius_cm": 0.0001,
+          "material": "legacy_table_boundary",
+          "playfield_length_cm": 254.0,
+          "playfield_width_cm": 127.0,
+          "side_mouth_width_cm": 8.6,
+          "side_throat_width_cm": 8.6,
+          "throat_depth_cm": 6.0
+        }
+      },
+      "schema_version": 12,
+      "simulation": {
+        "ticks": 1,
+        "time_step_seconds": 0.008333333333333333
+      }
+    }
+  },
+  "locale": {
+    "description_en": "Pocket the 1-ball in the right side pocket on a short straight line.",
+    "description_zh_cn": "短距离直线击打1号球入右侧中袋，先建立瞄准与力度的基本手感。",
+    "title_en": "Straight pot basics",
+    "title_zh_cn": "直线进球入门"
+  },
+  "reference_replay": {
+    "binding_rule": {
+      "action_log_sha256": "cf9d9724fdf39e34687eb0aa5601bffd3c4123f2f364f57357c738a4372f44d9",
+      "activation_requires": [
+        "replay_id",
+        "scenario_sha256",
+        "physics_profile_id",
+        "action_log_sha256",
+        "trace_sha256",
+        "review_status_automated_verified"
+      ],
+      "physics_profile_id": "chinese_pool_interactive_120hz_v5",
+      "review_status": "automated_verified",
+      "scenario_sha256_must_equal": "d4b6d2bb33d366f097a345d63207e5174109afac0012d49616810c605668bb59",
+      "trace_must_be_generated_by": "deterministic_fixed_step_runtime",
+      "trace_sha256": "30e61e58b9f90c0849317e2d2ccb0612c2bf4e7aa71ebe3eb782e58059b55cad"
+    },
+    "file": "replays_v2/launch_straight_pot_intro_v2.replay.json",
+    "id": "training-replay://phase4/launch_straight_pot_intro_v2/v2",
+    "status": "bound"
+  },
+  "reset": {
+    "attempt_seed": 0,
+    "mode": "atomic_reload_embedded_initial_scenario",
+    "preserve": [
+      "accessibility",
+      "camera_preference",
+      "assist_preference"
+    ],
+    "reset_tick_to": 0
+  },
+  "runtime_gate": {
+    "on_missing": "visible_locked_no_score",
+    "production_default_enabled": true,
+    "required_capabilities": [
+      "training_scenario_v1"
+    ]
+  },
+  "schema": "training_scenario_v1",
+  "schema_version": 1,
+  "scoring": {
+    "base_points": 100,
+    "deductions": [
+      {
+        "cap_points": 35,
+        "metric": "cue_ball_target_error_cm",
+        "points_per_unit": 1,
+        "quantization": 0.1
+      },
+      {
+        "cap_points": 30,
+        "metric": "shot_count_over_par",
+        "points_per_unit": 30,
+        "quantization": 1
+      }
+    ],
+    "deterministic": true,
+    "maximum": 100,
+    "minimum": 0,
+    "par_shots": 1,
+    "rounding": "nearest_integer_half_away_from_zero",
+    "tie_break": [
+      "higher_score",
+      "lower_attempt_ticks",
+      "lexicographic_trace_sha256"
+    ]
+  },
+  "success": {
+    "all": [
+      {
+        "ball_index": 1,
+        "predicate": "ball_pocketed"
+      },
+      {
+        "ball_index": 0,
+        "predicate": "ball_not_pocketed"
+      },
+      {
+        "maximum": 1,
+        "predicate": "shot_count_lte"
+      }
+    ],
+    "evaluation": "attempt_end_after_balls_stopped"
+  },
+  "tags": [
+    "launch13",
+    "straight_pot",
+    "center_ball",
+    "beginner"
+  ],
+  "teaching_hints": {
+    "aim": {
+      "tolerance_degrees": 1.0,
+      "yaw_radians": 0.0
+    },
+    "cue_ball_target_zone": {
+      "center_cm": [
+        34.285,
+        0.0
+      ],
+      "radius_cm": 4.5,
+      "visible": false
+    },
+    "recommended_power": {
+      "default_percent": 27.5,
+      "maximum_percent": 37.5,
+      "minimum_percent": 22.5
+    },
+    "recommended_tip": {
+      "label": "center_ball",
+      "x_ball_radii": 0.0,
+      "y_ball_radii": 0.0
+    },
+    "shot_line": {
+      "cue_ball_index": 0,
+      "object_ball_index": 1,
+      "object_center_cm": [
+        40.0,
+        0.0
+      ],
+      "start_cm": [
+        10.0,
+        0.0
+      ]
+    },
+    "target_pocket_center_cm": [
+      63.5,
+      0.0
+    ],
+    "target_pocket_id": "side_px"
+  },
+  "version": 2
+}

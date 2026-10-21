@@ -1,0 +1,72 @@
+{
+  "schema": "m4_b2_authenticated_referee_authority_protocol_foundation_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_FOUNDATION_ONLY_NO_RULE_CONSUMER_NO_UI",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"},
+    "implementation_design_gate": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-design-gate-v1.json", "sha256": "0d006f9571cb3ae439e5be6d6f618f06afafdd2167bec777cabbc31eb33d19c8"},
+    "root_gate_revalidation": "PASS_14_OF_14_STRICT_ALLOWLIST_TESTS_FIRST_AUTHORIZED"
+  },
+  "tests_first_record": {
+    "red_observed": true,
+    "red_failures": [
+      "tests/referee_authority_protocol_tests.cpp failed because rules/referee_authority_protocol.h did not exist",
+      "tests/rules_runtime_integration_tests.cpp failed because GameRuntime had no refereeAuthorityState accessor or protocol symbol",
+      "tests/automation_controller_tests.cpp required get_referee_authority_state which did not exist"
+    ],
+    "green_after_production_patch": true
+  },
+  "implemented_contract": {
+    "protocol_id": "authenticated_referee_authority_v1",
+    "authenticated_exact_request_field_count": 17,
+    "production_authenticator": "fail-closed host verifier capability with no embedded credential, secret, signature key or test bypass",
+    "authority_roles": ["REFEREE", "PLAYER_0", "PLAYER_1"],
+    "registered_specific_wpa_consumer_count": 0,
+    "foundation_test_policy_kinds": ["TEST_REFEREE_ONLY_DECLARATION", "TEST_PLAYER_ALLOWED_DECLARATION"],
+    "operations": ["PROPOSE", "FINAL_DECLARE", "CANCEL_PROPOSAL"],
+    "proposal_is_final": false,
+    "final_requires_live_exact_proposal_revalidation": true,
+    "context_bindings": ["decision_id", "rack_identity", "authority_revision", "authority_state_hash", "actor_role", "actor_subject", "expiry", "nonce", "idempotency_key", "canonical_payload"],
+    "atomic_commit_guard_and_rollback": true,
+    "exact_retry_zero_delta": true,
+    "nonce_and_idempotency_conflict_fail_closed": true,
+    "reset_changes_generation_and_hash_and_invalidates_proposal_nonce_receipts": true,
+    "automation_readback_omits": ["credential_id", "authentication_proof", "payload_canonical"],
+    "referee_declaration_promoted_to_physics_shotfacts_or_foul": false
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "a9e62886eda559f8a34f56b6d465cffcfc971fba31256f5658f19a1dff31e0cc"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.h", "sha256": "e1ab746f3ac971bf6e226686cf0c631e3f9b25e3ebec5c9485872bee5e8d15f1"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.cpp", "sha256": "639a4a8ec036a8df5a419395067474f1ffbd2b69bd9c18446f4baee2fe94ff68"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "c340b37c1d2abe9acb33262f7f70fc59cad5aa061b559bad015d126a5a18bfd9"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "efeea6303e3854c937a752deb5da92a535d901c5a2ce36da1c596ff4c1bd0297"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "ef177ed69126b039f84b4e1ecc793b2c0ed72fe16234466a3f19bd11af202f2d"}
+  ],
+  "test_bindings": [
+    {"path": "tests/referee_authority_protocol_tests.cpp", "sha256": "bd52b6757a9eb87ac3bdc231c15913ed9d51287bcef7d33afa9fc77a77887767"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "c57b51de6009a21ead9a2f95f668d9de839c16ac3f5374992048b22c0dbfcae6"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "23e22f5b0503e5c63b094f47ea31d97224636fcb2018e6a161d8ff983046d26e"}
+  ],
+  "implementation_aggregate_sha256": "7bfa14ee830c0366530c206c552ee44c040a7ced7d66977f424778b803e06d51",
+  "cpu_verification": {
+    "build_root": "build-m4-b2-referee-authority-cpu-v1",
+    "passed_targets": ["BilliardsRefereeAuthorityProtocolTests", "BilliardsRulesRuntimeIntegrationTests", "BilliardsAutomationControllerTests", "BilliardsAutomationProtocolTests", "BilliardsGameRuntimeTests", "BilliardsRulesDecisionProductRuntimeTests", "BilliardsRulesDecisionSessionIntegrationTests", "BilliardsModernProductUiRuntimeTests", "BilliardsProductShellTests", "BilliardsChineseEightBallRulesTests", "BilliardsShotFactCollectorTestsManual"],
+    "passed_target_count": 11,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "known_unrelated_build_gap": {
+    "target": "BilliardsShotFactCollectorTests",
+    "existing_issue": "CMake target omits chinese_eight_ball_rules.cpp needed by validateShotFacts",
+    "workaround": "explicit headless clang compile linked chinese_eight_ball_rules.cpp and passed",
+    "modified_outside_allowlist_to_fix": false
+  },
+  "completion_boundary": {
+    "foundation_implemented": true,
+    "specific_wpa_rule_consumer_implemented": false,
+    "b2_complete": false,
+    "audit_row_promoted": false,
+    "global_player_rules_ui_exposed": false,
+    "physics_shotfacts_adjudicator_rack_modified": false,
+    "gpu_ta_readiness_or_authorization": false,
+    "next_step_requires_per_consumer_design_gate": true
+  }
+}

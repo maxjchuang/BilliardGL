@@ -1,0 +1,74 @@
+{
+  "schema": "phase5_rules_decision_ui_v5v2_exact16_manifest_runner_contract_correction_gate_v1",
+  "status": "APPROVED_MANIFEST_ONLY_FIELD_PARITY_CORRECTION_NO_GPU_NO_AUTH",
+  "failure_receipt": {
+    "path": "docs/evidence/phase5/rules-decision-ui-v5v2-exact16-preordinal-missing-gate-field-failure-receipt-v1.json",
+    "sha256": "fd721e3c8dff6f1b526abb2c51ce66a4f81e749108b301737451ad83efc759c5",
+    "missing_field": "gate_sha256"
+  },
+  "diagnosis": {
+    "manifest_schema": "phase5_rules_decision_ui_v5_exact16_source_bindings_v2",
+    "runner_required_missing_field": "gate_sha256",
+    "existing_semantic_value_field": "visual_design_gate_sha256",
+    "required_value": "657f3ab6f4ccac4db23fb0ab72889bc49d091f27fd5f63bd5610b736b1aa2a10",
+    "runner_source_change_required": false,
+    "cmake_change_required": false,
+    "dispatcher_protocol_change_required": false,
+    "product_visual_or_rules_change_required": false
+  },
+  "frozen_implementation_bindings": {
+    "CMakeLists.txt": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41",
+    "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm": "99a9624c5e95229ac42619bfb1824559224fa259a6b166bb26bd95682c9a1086",
+    "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py": "2156eac151f845e1b264f93a89464c92634d72fbe27d63e6624d6eb719f7c5d2",
+    "scripts/prepare_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v2.py": "1713a93fb00ae376e8048dcc980ec8a0c7efc0c57691cbe81aea8ecc3d391b67",
+    "scripts/validate_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v2.py": "ed573a3c5e0faa228da8f37c25ec8b44eaa6764e7635a620d7ae4b032c7dc4aa"
+  },
+  "allowed_new_files": [
+    "scripts/phase5_rules_decision_ui_v5_exact16_runner_json_contract.py",
+    "tests/visual/test_phase5_rules_decision_ui_v5_exact16_runner_json_contract.py",
+    "scripts/prepare_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v3.py",
+    "scripts/validate_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v3.py",
+    "tests/visual/test_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v3.py",
+    "scripts/validate_phase5_rules_decision_ui_v5v2_exact16_manifest_runner_contract_correction_gate.py",
+    "tests/visual/test_phase5_rules_decision_ui_v5v2_exact16_manifest_runner_contract_correction_gate.py"
+  ],
+  "required_correction": {
+    "source_manifest_add_top_level_field": "gate_sha256",
+    "source_manifest_gate_sha256": "657f3ab6f4ccac4db23fb0ab72889bc49d091f27fd5f63bd5610b736b1aa2a10",
+    "retain_visual_design_gate_sha256": true,
+    "retain_producer_correction_lineage": true,
+    "readiness_schema_for_unchanged_runner": "phase5_rules_decision_ui_v5_exact16_readiness_v2",
+    "authorization_schema": "phase5_rules_decision_ui_v4_exact16_gpu_authorization_v2",
+    "case_count": 16,
+    "all_case_rows_not_run": true
+  },
+  "parity_test_requirements": {
+    "parse_real_frozen_v2_signed_authorization": true,
+    "parse_real_frozen_v2_consumed_marker": true,
+    "parse_real_frozen_v2_readiness": true,
+    "parse_real_frozen_v2_source_manifest_with_only_approved_field_overlay": true,
+    "validate_every_v5_exact_runner_json_field_before_claim": true,
+    "validate_runner_source_access_inventory": true,
+    "missing_or_wrong_field_mutations_fail_closed": true,
+    "no_output_process_cocoa_opengl_gpu": true
+  },
+  "forbidden_changes": [
+    "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm",
+    "CMakeLists.txt",
+    "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py",
+    "production rendering, UI copy, geometry, color or thresholds",
+    "authority, rules or physics",
+    "Phase4 files or readiness",
+    "frozen v2 readiness, authorization, consumed marker, output or receipts",
+    "authorization issuance or GPU retry"
+  ],
+  "acceptance": {
+    "old_failure_artifacts_byte_and_permission_exact": true,
+    "faithful_full_contract_positive_pass": true,
+    "all_required_field_negative_mutations_rejected": true,
+    "fresh_successor_package_not_run": true,
+    "authorization_template_not_issued": true,
+    "final_build_and_readiness_wait_for_phase4": true,
+    "gpu_executed": false
+  }
+}

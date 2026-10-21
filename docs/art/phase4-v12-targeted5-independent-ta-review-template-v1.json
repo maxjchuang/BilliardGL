@@ -1,0 +1,356 @@
+{
+  "schema": "billiardgl.phase4.v12.targeted5_independent_ta_review.v1",
+  "schema_version": 1,
+  "status": "TEMPLATE_NOT_RUN_WAITING_FOR_SUCCESSOR_EVIDENCE",
+  "overall_result": "NOT_RUN",
+  "review_scope": {
+    "case_ids_in_order": [
+      "camera_player_low_1080",
+      "camera_elevated_1080",
+      "camera_overhead_1080",
+      "camera_broadcast_1080",
+      "actual_retina_ui135_cvd"
+    ],
+    "control_case_ids_in_order": [
+      "camera_player_low_1080",
+      "camera_elevated_1080",
+      "camera_overhead_1080",
+      "actual_retina_ui135_cvd"
+    ],
+    "repair_case_id": "camera_broadcast_1080",
+    "case_count": 5,
+    "canonical_axes_in_order": [
+      "predicted_track_visual_identity",
+      "actual_track_visual_identity",
+      "core_inner_halo_separation",
+      "outer_halo_background_silhouette",
+      "predicted_dash_gap_rhythm",
+      "endpoint_tick_terminal_readability",
+      "coaxial_predicted_actual_disambiguation"
+    ],
+    "axes_per_case": 7,
+    "total_axis_count": 35,
+    "original_physical_resolution_required": true,
+    "machine_five_of_five_required_before_human_review": true
+  },
+  "frozen_bindings": [
+    {
+      "role": "v12_broadcast_visual_repair_design_gate",
+      "path": "docs/art/phase4-v12-broadcast-projected-trajectory-visual-repair-design-gate-v1.json",
+      "sha256": "0fe6d893cd8fa1130e93c975be8e297802749b6515eb4f4e65b7d9af2006b8d2"
+    },
+    {
+      "role": "v11_connectivity_algorithm_gate",
+      "path": "docs/art/phase4-final-ownership-v11-ordinal4-offline-diagnostic-v1/minimal-raster-support-connectivity-correction-design-gate-v1.json",
+      "sha256": "59bbabf437e9195392b2a41f4e48eea0513afb222706115a07e9c0965cbad059"
+    },
+    {
+      "role": "v11_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v11-ordinal4-independent-ta-failure-acceptance-addendum-v1.json",
+      "sha256": "64936ca990a0077323dcc2d64e9dbdf8bf9b400da72f7a11d450beb0a89b04c4"
+    },
+    {
+      "role": "v11_offline_failure_evidence_receipt",
+      "path": "docs/art/phase4-final-ownership-v11-ordinal4-offline-diagnostic-v1/failure-evidence-receipt-v1.json",
+      "sha256": "07f251d466b0dcad550b4951e8242403bcaaaeb97dd800cbde99cdf23c2f3f85"
+    },
+    {
+      "role": "v11_authoritative_final_ownership_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    },
+    {
+      "role": "v11_dispatch_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/phase4-final-ownership-dispatch-failure-receipt-v1.json",
+      "sha256": "282056928154ce78ad79b8cee0062d460d03f76c9d130f1c9f268f0dfa009a39"
+    }
+  ],
+  "future_successor_evidence": {
+    "readiness": {
+      "status": "NOT_AVAILABLE",
+      "path": null,
+      "sha256": null,
+      "required_schema": "billiardgl.phase4.v12.targeted5_readiness.v1",
+      "required_status": "TARGETED5_NOT_RUN_NO_AUTHORIZATION"
+    },
+    "machine_receipt": {
+      "status": "NOT_AVAILABLE",
+      "path": null,
+      "sha256": null,
+      "required_schema": "billiardgl.phase4.v12.broadcast_visual_targeted5_machine_pass.v1",
+      "required_status": "TARGETED5_MACHINE_PASS",
+      "required_case_count": 5,
+      "required_passed_count": 5,
+      "required_failed_count": 0,
+      "required_unrun_count": 0
+    },
+    "ppm_aggregate_sha256": null,
+    "telemetry_aggregate_sha256": null,
+    "stable_aggregate_sha256": null,
+    "aggregate_algorithm": "ordered exact targeted5: SHA256 of case_id+NUL+artifact_sha/dimensions+LF as specified by validator"
+  },
+  "completion_preconditions": [
+    "A successor readiness is frozen and bound by repository-relative path and SHA-256; it binds both separately implemented correction receipts, the exact targeted5 plan, runner, executable, assets, and unchanged machine thresholds.",
+    "A future machine receipt binds that readiness and reports exact 5/5 machine PASS, zero failed, and zero unrun cases in the frozen case order.",
+    "Each case binds an original PPM path/SHA/decoded 1920x1080 physical dimensions and an authoritative telemetry file plus canonical telemetry-row SHA.",
+    "PPM, telemetry, and combined stable aggregates are independently recomputed over the exact ordered five-case inventory.",
+    "Only after all machine and artifact preconditions pass may a reviewer open all five PPMs individually at original 1920x1080 and atomically replace all 35 PENDING axes with PASS or FAIL.",
+    "Broadcast closure requires independently traceable actual solid core across the full path, actual identity in all three predicted gaps, both formerly failing silhouette outcomes at unchanged contrast >=4.0, predicted yellow/gaps preserved, endpoint/ticks preserved, and zero cross-track regression.",
+    "Player-low, elevated, overhead, and CVD controls are newly reviewed and cannot inherit v11 findings; any control regression is blocking.",
+    "Any missing evidence, NOT_RUN/PENDING result, machine failure, failed manual axis, or inconsistent case/overall result fails closed."
+  ],
+  "cases": [
+    {
+      "ordinal": 1,
+      "case_id": "camera_player_low_1080",
+      "coverage_kind": "STANDARD_CONTROL",
+      "camera_preset": "player_low",
+      "palette": "standard",
+      "logical_dimensions": [1920, 1080],
+      "expected_physical_dimensions": [1920, 1080],
+      "v11_control_floor": {"source": 95, "visible_minimum": 89, "actual_coverage_minimum": 1.0},
+      "required_review_contract": [
+        "Re-review predicted and actual identity at original resolution without inheriting v11 PASS.",
+        "Predicted yellow dominance, dash gaps, core/halo separation, endpoint/ticks, and co-axial separation do not regress.",
+        "Actual remains independently traceable with no foreign-track, double-assignment, unowned, detached, or cross-swapped evidence."
+      ],
+      "future_evidence": {
+        "ppm_path": null,
+        "ppm_sha256": null,
+        "ppm_physical_dimensions": null,
+        "telemetry_path": null,
+        "telemetry_file_sha256": null,
+        "telemetry_row_sha256": null
+      },
+      "future_review_metrics": {
+        "machine_status": null,
+        "source_visible_hidden": null,
+        "actual_coverage": null,
+        "no_visual_regression": null,
+        "foreign_track_evidence_count": null,
+        "double_assignment_count": null,
+        "unowned_evidence_count": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "predicted_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "actual_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "core_inner_halo_separation": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "outer_halo_background_silhouette": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "predicted_dash_gap_rhythm": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "endpoint_tick_terminal_readability": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "coaxial_predicted_actual_disambiguation": {"status": "PENDING", "observation": null, "physical_coordinates": []}
+      }
+    },
+    {
+      "ordinal": 2,
+      "case_id": "camera_elevated_1080",
+      "coverage_kind": "STANDARD_CONTROL",
+      "camera_preset": "elevated",
+      "palette": "standard",
+      "logical_dimensions": [1920, 1080],
+      "expected_physical_dimensions": [1920, 1080],
+      "v11_control_floor": {"source": 83, "visible_minimum": 80, "actual_coverage_minimum": 1.0},
+      "required_review_contract": [
+        "Re-review the smaller projected trajectory at original resolution without inheriting v11 PASS.",
+        "Predicted yellow dominance, open dash rhythm, actual identity, endpoint/ticks, and core/halo roles remain readable.",
+        "The visual repair introduces no same-axis collapse, cross-track swap, detachment, or ownership regression."
+      ],
+      "future_evidence": {
+        "ppm_path": null,
+        "ppm_sha256": null,
+        "ppm_physical_dimensions": null,
+        "telemetry_path": null,
+        "telemetry_file_sha256": null,
+        "telemetry_row_sha256": null
+      },
+      "future_review_metrics": {
+        "machine_status": null,
+        "source_visible_hidden": null,
+        "actual_coverage": null,
+        "no_visual_regression": null,
+        "foreign_track_evidence_count": null,
+        "double_assignment_count": null,
+        "unowned_evidence_count": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "predicted_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "actual_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "core_inner_halo_separation": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "outer_halo_background_silhouette": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "predicted_dash_gap_rhythm": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "endpoint_tick_terminal_readability": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "coaxial_predicted_actual_disambiguation": {"status": "PENDING", "observation": null, "physical_coordinates": []}
+      }
+    },
+    {
+      "ordinal": 3,
+      "case_id": "camera_overhead_1080",
+      "coverage_kind": "STANDARD_CONTROL",
+      "camera_preset": "overhead",
+      "palette": "standard",
+      "logical_dimensions": [1920, 1080],
+      "expected_physical_dimensions": [1920, 1080],
+      "v11_control_floor": {"source": 87, "visible_minimum": 84, "actual_coverage_minimum": 1.0},
+      "required_review_contract": [
+        "Re-review the overhead co-axial route at original resolution without inheriting v11 PASS.",
+        "Repeated predicted gaps and actual markers remain role-distinct along the complete vertical projection.",
+        "Endpoint/ticks, silhouettes, and both track identities remain attached and readable with zero cross-track regression."
+      ],
+      "future_evidence": {
+        "ppm_path": null,
+        "ppm_sha256": null,
+        "ppm_physical_dimensions": null,
+        "telemetry_path": null,
+        "telemetry_file_sha256": null,
+        "telemetry_row_sha256": null
+      },
+      "future_review_metrics": {
+        "machine_status": null,
+        "source_visible_hidden": null,
+        "actual_coverage": null,
+        "no_visual_regression": null,
+        "foreign_track_evidence_count": null,
+        "double_assignment_count": null,
+        "unowned_evidence_count": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "predicted_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "actual_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "core_inner_halo_separation": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "outer_halo_background_silhouette": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "predicted_dash_gap_rhythm": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "endpoint_tick_terminal_readability": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "coaxial_predicted_actual_disambiguation": {"status": "PENDING", "observation": null, "physical_coordinates": []}
+      }
+    },
+    {
+      "ordinal": 4,
+      "case_id": "camera_broadcast_1080",
+      "coverage_kind": "PRIMARY_REPAIR",
+      "camera_preset": "broadcast",
+      "palette": "standard",
+      "logical_dimensions": [1920, 1080],
+      "expected_physical_dimensions": [1920, 1080],
+      "v11_failure_reference": {"source_visible_hidden": [81, 68, 13], "predicted_visible_over_source": [62, 69], "actual_visible_over_source": [6, 12]},
+      "required_review_contract": [
+        "Actual solid core is independently traceable across the complete oblique broadcast path at normal original-resolution viewing.",
+        "Actual identity is visibly present in all three predicted dash-gap neighborhoods centered at [783,413], [892,491], and [940,525], while each predicted gap remains perceptually open.",
+        "Both formerly failing predicted silhouette neighborhoods centered at [855,469] and [879,486] meet the unchanged final-LDR contrast requirement >=4.0 and remain visually readable.",
+        "Predicted yellow remains the dominant predicted identity and its dash rhythm is not replaced by a broad white/dark compound band.",
+        "Endpoint and both ticks remain attached and readable; same-axis disambiguation passes with zero foreign-track, double-assignment, unowned, detached, or cross-swapped evidence."
+      ],
+      "future_evidence": {
+        "ppm_path": null,
+        "ppm_sha256": null,
+        "ppm_physical_dimensions": null,
+        "telemetry_path": null,
+        "telemetry_file_sha256": null,
+        "telemetry_row_sha256": null
+      },
+      "future_review_metrics": {
+        "machine_status": null,
+        "source_visible_hidden": null,
+        "predicted_visible_hidden": null,
+        "actual_visible_hidden": null,
+        "actual_full_path_independently_traceable": null,
+        "actual_visible_in_predicted_gap_783_413": null,
+        "actual_visible_in_predicted_gap_892_491": null,
+        "actual_visible_in_predicted_gap_940_525": null,
+        "silhouette_contrast_855_469": null,
+        "silhouette_contrast_879_486": null,
+        "predicted_yellow_and_open_gaps_preserved": null,
+        "endpoint_and_ticks_preserved": null,
+        "foreign_track_evidence_count": null,
+        "double_assignment_count": null,
+        "unowned_evidence_count": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "predicted_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "actual_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "core_inner_halo_separation": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "outer_halo_background_silhouette": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "predicted_dash_gap_rhythm": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "endpoint_tick_terminal_readability": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "coaxial_predicted_actual_disambiguation": {"status": "PENDING", "observation": null, "physical_coordinates": []}
+      }
+    },
+    {
+      "ordinal": 5,
+      "case_id": "actual_retina_ui135_cvd",
+      "coverage_kind": "CVD_CONTROL",
+      "camera_preset": "broadcast",
+      "palette": "color_vision_safe",
+      "logical_dimensions": [1280, 720],
+      "expected_physical_dimensions": [1920, 1080],
+      "required_review_contract": [
+        "At physical 1920x1080, predicted and actual remain independently identifiable in color-vision-safe presentation without hue-only inference.",
+        "Actual solid identity remains readable through predicted gaps; predicted gaps stay open and predicted/actual do not merge into one compound band.",
+        "Core/halo, silhouettes, endpoint/ticks, and same-axis separation remain readable with zero cross-track regression."
+      ],
+      "future_evidence": {
+        "ppm_path": null,
+        "ppm_sha256": null,
+        "ppm_physical_dimensions": null,
+        "telemetry_path": null,
+        "telemetry_file_sha256": null,
+        "telemetry_row_sha256": null
+      },
+      "future_review_metrics": {
+        "machine_status": null,
+        "source_visible_hidden": null,
+        "standard_cvd_non_color_track_distinction": null,
+        "actual_visible_in_predicted_gaps": null,
+        "predicted_gaps_preserved": null,
+        "foreign_track_evidence_count": null,
+        "double_assignment_count": null,
+        "unowned_evidence_count": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "predicted_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "actual_track_visual_identity": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "core_inner_halo_separation": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "outer_halo_background_silhouette": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "predicted_dash_gap_rhythm": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "endpoint_tick_terminal_readability": {"status": "PENDING", "observation": null, "physical_coordinates": []},
+        "coaxial_predicted_actual_disambiguation": {"status": "PENDING", "observation": null, "physical_coordinates": []}
+      }
+    }
+  ],
+  "summary": {
+    "case_result_counts": {"PASS": 0, "FAIL": 0, "NOT_RUN": 5},
+    "axis_result_counts": {"PASS": 0, "FAIL": 0, "PENDING": 35},
+    "blocking_case_ids": [],
+    "machine_five_of_five_pass": false,
+    "human_review_performed": false,
+    "targeted5_ta_pass": false
+  },
+  "proof_boundary": {
+    "template_only": true,
+    "future_readiness_bound": false,
+    "future_machine_receipt_bound": false,
+    "future_ppm_count": 0,
+    "future_telemetry_row_count": 0,
+    "machine_five_of_five_pass": false,
+    "human_review_performed": false,
+    "targeted5_ta_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "beta_pass": false,
+    "production_modified": false,
+    "gpu_authorized_or_executed": false,
+    "authorization_created_or_issued": false
+  }
+}

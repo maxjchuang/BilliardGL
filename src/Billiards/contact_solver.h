@@ -3,6 +3,7 @@
 #include "ball_ball_contact.h"
 #include "contact_island.h"
 #include "physics_profile.h"
+#include "solver_position_projection.h"
 
 #include <vector>
 
@@ -49,7 +50,18 @@ struct ContactSolverResult {
     double totalKineticEnergyBeforeJ = 0.0;
     double totalKineticEnergyAfterJ = 0.0;
     std::vector<ContactImpulseDiagnostic> contacts;
+    std::vector<SolverPositionProjection> positionProjections;
 };
+
+ContinuousContactCandidate supportPlaneContactCandidate(
+    int ballIndex, double centerPlaneYCm,
+    double timeOfImpactSeconds = 0.0);
+ContinuousContactCandidate airborneCushionNoseContactCandidate(
+    int ballIndex, int featureId, double timeOfImpactSeconds,
+    const Point3& inwardNormal);
+ContinuousContactCandidate roundedUpperRailEdgeContactCandidate(
+    int ballIndex, int featureId, double timeOfImpactSeconds,
+    const Point3& inwardUpwardNormal);
 
 ContactSolverResult solveContactIsland(
     GameState& state, const ContactIsland& island,

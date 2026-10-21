@@ -1,0 +1,168 @@
+{
+  "schema": "billiardgl.phase4.v19.combined_release_target_closure_design_gate.v1",
+  "schema_version": 1,
+  "status": "FINAL_DESIGN_ONLY_WAIT_D6_A_CMAKE_SOURCE_STABLE_REBIND_NO_IMPLEMENTATION_NO_BUILD_NO_GPU",
+  "scope": "Design-only target and final-link closure for the frozen V19 dedicated trajectory inset. This gate names the future CMake ownership and test graph but performs and authorizes no production edit, CMake edit, configure, build, test execution, GPU work, readiness, capture, product exposure or rules-authority change.",
+  "frozen_bindings": [
+    {
+      "role": "combined_release_successor_checklist",
+      "path": "docs/art/phase4-v19-combined-release-readiness-successor-checklist-v1.json",
+      "sha256": "73e72e0e0f0833543c7d80d7525dcb1813f34f5f7cb31c8f41fac2ea1af4d9fe"
+    },
+    {
+      "role": "cp4_d_independent_acceptance",
+      "path": "docs/art/phase4-v19-cp4-d-visible-integration-independent-ta-acceptance-addendum-v1.json",
+      "sha256": "c7b80d14a3e6d260da5594d347de24a3bb31eb07c83d22c765c848e339d1fcef"
+    },
+    {
+      "role": "cp4_d_implementation_receipt",
+      "path": "docs/evidence/phase4-v19-cp4-d-visible-integration-implementation-v1/receipt.json",
+      "sha256": "fe341d320050e5cba3d67655631e0dfb314b4ccb39d880300ef3278a49dbc9c0"
+    },
+    {
+      "role": "current_cmake_external_accepted_d5_d_lineage",
+      "path": "CMakeLists.txt",
+      "sha256": "871c7916e2d1033073ca880c1c5e61263dff5f97bb28405fe9fd9a95c40d1dc2"
+    },
+    {
+      "role": "d6_a_approved_successor_lineage_definition",
+      "path": "docs/rules/m4-d6-a-3d-table-departure-physics-foundation-implementation-design-gate-v1.json",
+      "sha256": "676b70795fc45e4e3cc4f5c8ffa3a236c1e1e83aea9371e422ff9b54e87264d1"
+    }
+  ],
+  "current_source_bindings": {
+    "src/Billiards/training/trajectory_inset_model.cpp": "58a9a3dfe922c235314884d36bd8cea47df8cfe400adcf5a4a716e64e093e2b4",
+    "src/Billiards/training/trajectory_inset_renderer.cpp": "9969c1736fb89329e25dfa1d0252f18e5475d18a9027ddebf740cab4e8804201",
+    "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp": "183f630052f7676b37f0b66da6f6b2725faf6da930f6dc3cea79c6b160a4c6b2",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp": "0fbd08d194e3626f562fd54476d2be3a53d5f2edb08c5b0505d0b3afdff85580",
+    "src/Billiards/render/modern/modern_renderer.cpp": "8ab8ba8b10a473924d5294e69b8bb008d670391fd60c6294d8cfd5549dfdb1e3",
+    "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp": "cc00e8b5f5d8fab6e0cc955378aa8e0aa04d735fb7ec623bda3a502e4a830b74"
+  },
+  "observed_current_cmake_gap": {
+    "four_v19_cpp_reference_count_each": 0,
+    "zero_reference_sources_exact": [
+      "src/Billiards/training/trajectory_inset_model.cpp",
+      "src/Billiards/training/trajectory_inset_renderer.cpp",
+      "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp",
+      "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp"
+    ],
+    "modern_renderer_consumes_cp1_cp3_cp4_symbols": true,
+    "static_archive_creation_allows_unresolved_symbols": true,
+    "archive_only_or_unrelated_smoke_success_is_final_link_closure": false,
+    "existing_smoke_may_not_pull_modern_renderer_object": true,
+    "stale_comment_exact": "Modern renderer foundation. This library is intentionally not linked into the production executable until the dual-backend migration reaches integration.",
+    "apple_branch_actually_links_modern_gpu_resources_to_billiards": true,
+    "fresh_release_closure_currently_proven": false
+  },
+  "root_selected_future_target_graph": {
+    "implementation_owner": {
+      "target": "BilliardsPhase4V19TrajectoryInsetImplementation",
+      "type": "STATIC",
+      "sources_exact": [
+        "src/Billiards/training/trajectory_inset_model.cpp",
+        "src/Billiards/training/trajectory_inset_renderer.cpp",
+        "src/Billiards/render/modern/trajectory_inset_atomic_transaction.cpp",
+        "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp"
+      ],
+      "source_occurrences_across_all_cmake_target_source_lists_each": 1,
+      "direct_link_dependencies_exact": [
+        "BilliardsModernProductUiRuntime"
+      ],
+      "consumer_edge": "BilliardsModernGpuResources PRIVATE BilliardsPhase4V19TrajectoryInsetImplementation",
+      "duplicate_compilation_into_executables_or_other_libraries_forbidden": true
+    },
+    "formal_v19_cpu_test": {
+      "target": "BilliardsPhase4V19TrajectoryInsetVisibleIntegrationCpuTests",
+      "source": "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp",
+      "direct_link_dependencies_exact": [
+        "BilliardsPhase4V19TrajectoryInsetImplementation",
+        "BilliardsModernProductUiRuntime",
+        "BilliardsProductUiOpenGL41"
+      ],
+      "actual_core41_link_shim_required": true,
+      "registered_with_ctest": true,
+      "release_run_required": true
+    },
+    "modern_renderer_cp4_final_link_test": {
+      "target": "BilliardsPhase4V19ModernRendererCp4FinalLinkTests",
+      "new_source": "tests/phase4_v19_modern_renderer_cp4_final_link_tests.cpp",
+      "direct_link_dependencies_exact": [
+        "BilliardsModernGpuResources",
+        "BilliardsGltfGpuBridge"
+      ],
+      "must_not_link_implementation_owner_directly": true,
+      "must_instantiate_modern_renderer": true,
+      "must_call_preinitialized_cp4_visible_method_and_require_fail_closed_result": "ModernRenderer::prepareTrajectoryInsetVisibleFinalStaging returns false with trajectory_inset_final_missing_cp3_staging",
+      "required_symbol_anchors_exact": [
+        "billiardgl::render::ModernRenderer::prepareTrajectoryInsetVisibleFinalStaging",
+        "billiardgl::training::trajectoryInsetRoleName",
+        "billiardgl::training::trajectoryInsetSampleProfile1x",
+        "billiardgl::render::modern::validateTrajectoryInsetAtomicIdentity",
+        "billiardgl::render::modern::orderedTrajectoryInsetVisibleAtomicFinalStages"
+      ],
+      "link_map_or_demangled_symbol_inventory_must_contain_all_anchors": true,
+      "whole_archive_or_force_load_substitution_for_real_references_forbidden": true,
+      "registered_with_ctest": true,
+      "release_run_required": true,
+      "creates_gl_context_or_executes_gpu": false
+    },
+    "stale_comment_correction": {
+      "old_comment_must_be_absent": true,
+      "replacement_exact": "Modern renderer foundation. The Apple production executable links this library; V19 inset implementation objects are supplied by the dedicated target-closure dependency.",
+      "runtime_or_link_behavior_change_from_comment_edit": false
+    }
+  },
+  "future_implementation_allowlist_after_d6_a_rebind_only": [
+    "CMakeLists.txt",
+    "tests/phase4_v19_modern_renderer_cp4_final_link_tests.cpp"
+  ],
+  "future_release_closure_acceptance_not_run": {
+    "fresh_build_directory": true,
+    "cmake_build_type": "Release",
+    "required_targets_exact": [
+      "BilliardsProductUiGpuCore",
+      "BilliardsProductUiOpenGL41",
+      "BilliardsModernProductUiRuntime",
+      "BilliardsPhase4V19TrajectoryInsetImplementation",
+      "BilliardsModernGpuResources",
+      "BilliardsPhase4V19TrajectoryInsetVisibleIntegrationCpuTests",
+      "BilliardsPhase4V19ModernRendererCp4FinalLinkTests"
+    ],
+    "archive_only_build_is_acceptance": false,
+    "smoke_only_build_is_acceptance": false,
+    "final_link_binary_sha_and_link_map_or_symbol_inventory_required": true,
+    "cp4_d_standalone_validator_replay_required": true,
+    "all_object_source_cmake_command_stdout_stderr_hashes_required": true,
+    "configure_run": false,
+    "release_build_run": false,
+    "cpu_tests_run": false,
+    "final_link_pass": false,
+    "closure_receipt_created": false
+  },
+  "d6_a_successor_lineage_barrier": {
+    "current_cmake_baseline_sha256": "871c7916e2d1033073ca880c1c5e61263dff5f97bb28405fe9fd9a95c40d1dc2",
+    "d6_a_is_the_only_preimplementation_cmake_successor_lineage_allowed": true,
+    "unknown_future_cmake_sha_is_accepted_by_this_gate": false,
+    "required_before_v19_target_closure_implementation": [
+      "D6-A implementation is independently accepted and explicitly declared CMake SOURCE_STABLE by Root.",
+      "The exact successor CMake SHA and D6-A receipt or acceptance SHA are frozen in a separate V19 target-closure rebind addendum.",
+      "The rebind validator proves the CMake delta is D6-A-authorized lineage plus no V19 target-closure implementation yet.",
+      "Root and TA separately authorize the V19 target-closure implementation against that rebound SHA."
+    ],
+    "automatic_rebind_or_hash_wildcard_forbidden": true,
+    "d6_a_cmake_source_stable_received": false,
+    "rebind_addendum_frozen": false,
+    "implementation_may_start": false
+  },
+  "authorization_boundary": {
+    "design_gate_complete": true,
+    "target_names_and_graph_selected": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "test_source_edit_authorized": false,
+    "configure_or_build_authorized": false,
+    "gpu_readiness_capture_or_authorization": false,
+    "product_pass_or_exposure_claimed": false,
+    "rules_authority_or_threshold_change": false
+  }
+}

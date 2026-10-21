@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 void expect(bool value, const char* message)
@@ -30,6 +31,29 @@ int main()
     expect(state.at("aim").has("yaw"), "state should include aim");
     expect(state.at("camera").has("target"), "state should include camera");
     expect(state.at("players").has("current_player"), "state should include players");
+    expect(!state.has("renderer_backend"),
+        "renderer selection must not enter authoritative automation state");
+    billiardgl::GameRuntime removedRuntime;
+    removedRuntime.mutableState().balls[1].outOfPlay = true;
+    const auto removedState = billiardgl::serializeAutomationState(removedRuntime);
+    expect(removedState.at("balls").asArray()[1].at("out_of_play").asBool() &&
+        !removedState.at("balls").asArray()[1].at("pocketed").asBool(),
+        "automation distinguishes off-table removal from pocket capture");
+
+    runtime.mutableState().balls[0].trajectoryGeneration =
+        std::numeric_limits<std::uint64_t>::max();
+    const billiardgl::json::Value generationState =
+        billiardgl::serializeAutomationState(runtime);
+    expect(generationState.at("balls").asArray()[0]
+        .at("trajectory_generation").asString() == "18446744073709551615",
+        "automation state should preserve full-width trajectory generation as canonical decimal text");
+
+    billiardgl::GameRuntime modernSelectionRuntime;
+    modernSelectionRuntime.mutableState().config.rendererBackend =
+        billiardgl::RendererBackendSelection::Modern;
+    expect(billiardgl::json::stringify(state) == billiardgl::json::stringify(
+        billiardgl::serializeAutomationState(modernSelectionRuntime)),
+        "renderer selection must not change the serialized physics state or tick");
 
     runtime.setPhysicsTraceEnabled(true);
     expect(runtime.step(1).ok, "runtime should produce a trace frame");
@@ -93,7 +117,9 @@ int main()
         serializedContact.has("kinetic_energy_before_j") &&
         serializedContact.has("kinetic_energy_after_j") &&
         serializedContact.has("first_position_correction_cm") &&
-        serializedContact.has("second_position_correction_cm"),
+        serializedContact.has("second_position_correction_cm") &&
+        serializedContact.has("first_position_at_contact_cm") &&
+        serializedContact.has("second_position_at_contact_cm"),
         "ball contact serialization should use explicit units and lowercase regime");
     expect(serializedContact.at("solver_event_id").asInt() == 2 &&
         serializedContact.at("solver_island_id").asInt() == 1 &&
@@ -102,6 +128,51 @@ int main()
         "solver contact serialization should retain canonical event identity");
 
     billiardgl::PhysicsContactRecord railContact;
+    billiardgl::PhysicsContactRecord supportContact;
+    supportContact.kind = billiardgl::PhysicsContactKind::Support;
+    supportContact.firstBall = 1;
+    supportContact.secondBall = -1;
+    supportContact.normal = billiardgl::Point3{0.0f, 1.0f, 0.0f};
+    supportContact.normalImpulseNs = 0.02;
+    const auto supportJson = billiardgl::serializePhysicsContact(supportContact);
+    expect(supportJson.at("kind").asString() == "support" &&
+        supportJson.at("second_ball").asInt() == -1 &&
+        supportJson.at("normal_impulse_ns").asNumber() == 0.02,
+        "support contact serialization must not masquerade as ball-ball or rail");
+    auto projectionFrame = runtime.physicsTrace().frames().front();
+    billiardgl::SolverEventRecord solverEvent;
+    solverEvent.wholeTickTimeOfImpactSeconds = 0.003;
+    billiardgl::SolverPositionProjection projection;
+    projection.ordinal = 0;
+    projection.iteration = 2;
+    projection.contactIndex = 3;
+    projection.ballIndex = 1;
+    projection.trajectoryGeneration = std::numeric_limits<std::uint64_t>::max();
+    projection.beforeCm = billiardgl::Point3{1.0f, 2.0f, 3.0f};
+    projection.afterCm = billiardgl::Point3{1.125f, 2.0f, 3.0f};
+    solverEvent.positionProjections.push_back(projection);
+    projectionFrame.solverEvents = {solverEvent};
+    const auto projectionJson = billiardgl::serializePhysicsFrame(projectionFrame)
+        .at("solver_events").asArray().front();
+    const auto& receipt = projectionJson.at("position_projections").asArray().front();
+    expect(projectionJson.at("whole_tick_time_of_impact_seconds").asNumber() == 0.003 &&
+        receipt.at("ordinal").asInt() == 0 && receipt.at("iteration").asInt() == 2 &&
+        receipt.at("contact_index").asInt() == 3 && receipt.at("ball_index").asInt() == 1 &&
+        receipt.at("trajectory_generation").asString() == "18446744073709551615" &&
+        receipt.at("before_cm").at("x").asNumber() == 1.0 &&
+        receipt.at("after_cm").at("x").asNumber() == 1.125,
+        "exported projection evidence preserves order, exact float mutations and full-width generation");
+    billiardgl::PhysicsContactRecord resetContact;
+    resetContact.administrativeResetAfterCapture = true;
+    resetContact.trajectoryGenerationBefore = std::numeric_limits<std::uint64_t>::max() - 1;
+    resetContact.trajectoryGenerationAfter = std::numeric_limits<std::uint64_t>::max();
+    resetContact.administrativeResetPositionCm = billiardgl::Point3{1.0f, 2.0f, 3.0f};
+    const auto resetJson = billiardgl::serializePhysicsContact(resetContact);
+    expect(resetJson.at("administrative_reset_after_capture").asBool() &&
+        resetJson.at("trajectory_generation_before").asString() == "18446744073709551614" &&
+        resetJson.at("trajectory_generation_after").asString() == "18446744073709551615" &&
+        resetJson.at("administrative_reset_position_cm").at("z").asNumber() == 3.0,
+        "exported capture reset preserves exact generation transition and destination");
     railContact.kind = billiardgl::PhysicsContactKind::Rail;
     railContact.cushionRegime = billiardgl::CushionContactRegime::Stick;
     railContact.cushionContactArmCm = billiardgl::Point3{2.0f, 1.0f, 0.0f};
@@ -145,6 +216,7 @@ int main()
     pocketContact.pocketLocal.depthCm = 6.0;
     pocketContact.pocketLocal.offsetCm = -0.25;
     pocketContact.pocketPassable = true;
+    pocketContact.pocketVerticalShaft = true;
     pocketContact.pocketCaptureSequence = 12;
     const billiardgl::json::Value serializedPocket =
         billiardgl::serializePhysicsContact(pocketContact);
@@ -160,7 +232,8 @@ int main()
         serializedPocket.has("pocket_jaw_radius_cm") &&
         serializedPocket.has("pocket_throat_signed_distance_cm") &&
         serializedPocket.has("pocket_capture_signed_distance_cm") &&
-        serializedPocket.has("pocket_passable"),
+        serializedPocket.has("pocket_passable") &&
+        serializedPocket.at("pocket_vertical_shaft").asBool(),
         "pocket contact serialization should expose complete geometry and state");
 
     billiardgl::GameRuntime cueRuntime;
@@ -258,7 +331,8 @@ int main()
     expect(error == "{\"error\":{\"code\":\"invalid_argument\",\"message\":\"bad value\"},\"id\":7,\"ok\":false}",
         "error schema should remain stable");
 
-    const billiardgl::json::Value ready = billiardgl::automationReadyEvent("headless", "stdio", {"ping", "get_state"});
+    const billiardgl::json::Value ready = billiardgl::automationReadyEvent(
+        "headless", "stdio", {"ping", "get_state"});
     expect(ready.at("event").asString() == "ready", "ready should be an event");
     expect(ready.at("protocol_version").asInt() == 1, "ready should report protocol version");
     expect(ready.at("capabilities").asArray().size() == 2, "ready should list capabilities");

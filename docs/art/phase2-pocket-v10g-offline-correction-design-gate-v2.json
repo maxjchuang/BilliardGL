@@ -1,0 +1,388 @@
+{
+  "schema": "phase2_pocket_v10g_offline_correction_design_gate_v2",
+  "schema_version": 2,
+  "package_id": "phase2_pocket_v10g_post_tonemap_luma_chain_correction_v2",
+  "status": "APPROVED_FOR_OFFLINE_IMPLEMENTATION",
+  "GPU_CAPTURE_AUTHORIZED": false,
+  "formal_six_scene_evidence_authorized": false,
+  "ta_review_authorized": false,
+  "formal_pass_claimed": false,
+  "purpose": "Replace the mathematically unreachable v1 multi-ring vertex-gradient contract with a two-ring endpoint plus renderer interpolation contract while preserving the v1 luminance, material, geometry, ownership, evidence and authorization gates.",
+  "evidence_boundary": {
+    "offline_design_only": true,
+    "render_performed_by_this_gate": false,
+    "production_source_or_asset_modified_by_this_gate": false,
+    "v10f_or_v10g_v1_evidence_modified_by_this_gate": false,
+    "v10f_machine_rejection_overridden": false,
+    "v10f_ta_visual_pass_claimed": false,
+    "v10g_gpu_pass_claimed": false,
+    "v10g_ta_pass_claimed": false,
+    "implementation_authorized": true
+  },
+  "input_bindings": [
+    {
+      "role": "superseded_v10g_design_gate_v1",
+      "path": "docs/art/phase2-pocket-v10g-offline-correction-design-gate-v1.json",
+      "sha256": "sha256:496fdb69158ec43085b05a4659c9c3a5491a560c08b7978711a19e255346897c"
+    },
+    {
+      "role": "v10f_production_gltf_topology_baseline",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_modular_v1.gltf",
+      "sha256": "sha256:4bd3726f569b3b04d9b5d0e9b002c268d0bd15385112b147575d3a4845a04d56"
+    },
+    {
+      "role": "v10f_production_asset_manifest_baseline",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_modular_v1.asset.json",
+      "sha256": "sha256:3f2cf12e2f2b5bfc34352548d8a457046fd50b4db8df2db927fbff81d7907824"
+    },
+    {
+      "role": "v10f_read_only_root_cause_diagnostic",
+      "path": "docs/art/phase2-pocket-v10f-gpu-preflight-v1/root-cause-diagnostic-v1.json",
+      "sha256": "sha256:194f0e03e40bc95e7ecdb3a982dd1f91b039d5849efd2606bfec621b863a3592"
+    },
+    {
+      "role": "v10f_design_gate",
+      "path": "docs/art/phase2-pocket-v10f-design-gate-v1.json",
+      "sha256": "sha256:d66bac59ade4d38c123862ca9b3f0165de99e83d59b0e44cca021f2c60bd8644"
+    },
+    {
+      "role": "v10f_offline_cpu_projection_report",
+      "path": "docs/art/phase2-pocket-v10f-offline-preflight-v1/phase2-pocket-v10f-cpu-projection-report-v1.json",
+      "sha256": "sha256:925bc99b8b4e9398191fe361b02583da3d6dcfb19659635f056736e5f9d76b7b"
+    },
+    {
+      "role": "v10f_actual_gpu_rejected_manifest",
+      "path": "docs/art/phase2-pocket-v10f-gpu-preflight-v1/phase2-pocket-v10f-gpu-preflight-manifest-v1.json",
+      "sha256": "sha256:0583853e16845cf94a7955379c8cfc3790aab4ebd775373ce76785776d05fc12"
+    },
+    {
+      "role": "v10f_frozen_gpu_metrics_sidecar",
+      "path": "docs/art/phase2-pocket-v10f-gpu-preflight-v1/pocket_gpu_metrics.json",
+      "sha256": "sha256:29686bf3f3f312e9fe58d8ced9c5180993011a9d4477d1eb7040b3c53acb9eb8"
+    },
+    {
+      "role": "v10f_pbr_parameter_baseline",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_pbr_v1.params.json",
+      "sha256": "sha256:252bd726263a51bb85ab02ad171f260253df92d27c5d0aa165ecf72e2ff1b2f5"
+    },
+    {
+      "role": "v10f_lighting_rig_freeze",
+      "path": "assets/modern/phase2-v10f/focused_practice_hall_lighting_rig_v1.json",
+      "sha256": "sha256:37122c98dfbf97582c726253d16fa803fe651ce64304758b070b473ffef724ea"
+    },
+    {
+      "role": "frozen_renderer_interpolation_baseline",
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "sha256:7626026f5cbbb8df443df3a89e9cb7c4243c97d74113f927ea0705d1bc7e745b"
+    }
+  ],
+  "v1_supersession": {
+    "v1_status_for_v10g_implementation": "SUPERSEDED_UNIMPLEMENTABLE_CONTRACT",
+    "v1_file_rewritten": false,
+    "v1_valid_parts_inherited": true,
+    "superseded_clauses": [
+      "offline_implementation_parameter_contract.sidewall_vertex_gradient.upper_plateau_t_range",
+      "offline_implementation_parameter_contract.sidewall_vertex_gradient.transition_t_range",
+      "offline_implementation_parameter_contract.sidewall_vertex_gradient.lower_plateau_t_range",
+      "offline_implementation_parameter_contract.sidewall_vertex_gradient.interpolation=monotone cubic smoothstep",
+      "offline_implementation_parameter_contract.sidewall_vertex_gradient.maximum_adjacent_vertex_scalar_step=0.15"
+    ],
+    "supersession_reason": "The frozen sidewall topology has only upper and lower vertex rings. With upper scalar >=0.95 and lower scalar <=0.42, every cross-ring indexed edge has scalar difference >=0.53. The v1 maximum adjacent vertex step <=0.15, cubic transition and explicit intermediate plateaus therefore require unavailable intermediate rings while v1 simultaneously freezes POSITION and indices.",
+    "not_relaxed": [
+      "offline D_cpu >=47.6",
+      "calibrated D_gpu_lower >=16.0",
+      "future actual-GPU sidewall delta >=12.0",
+      "strict rim > sidewall_upper > sidewall_lower > void chain",
+      "sidewall material and endpoint color ranges",
+      "geometry, indices, ownership, camera, lighting and tone-map freezes",
+      "anti-regression and authorization boundaries"
+    ]
+  },
+  "independently_verified_v10f_sidewall_topology": {
+    "verification_method": "Decode the embedded glTF buffer; read each sidewall primitive POSITION and index accessor; count distinct Y values and unique undirected indexed edges whose endpoint Y values differ.",
+    "coordinate_units": "meters",
+    "vertical_layers_y": [0.83597976, 0.85883975],
+    "vertical_layer_count": 2,
+    "vertical_drop_m": 0.02285999,
+    "lods": {
+      "0": {
+        "mesh": "MESH_pocket_liner_sidewall_assembly_LOD0",
+        "position_accessor": 60,
+        "index_accessor": 65,
+        "vertex_count": 576,
+        "vertices_per_layer": 288,
+        "index_count": 864,
+        "triangle_count": 288,
+        "unique_undirected_edges": 720,
+        "cross_layer_unique_undirected_edges": 432
+      },
+      "1": {
+        "mesh": "MESH_pocket_liner_sidewall_assembly_LOD1",
+        "position_accessor": 126,
+        "index_accessor": 131,
+        "vertex_count": 384,
+        "vertices_per_layer": 192,
+        "index_count": 576,
+        "triangle_count": 192,
+        "unique_undirected_edges": 480,
+        "cross_layer_unique_undirected_edges": 288
+      },
+      "2": {
+        "mesh": "MESH_pocket_liner_sidewall_assembly_LOD2",
+        "position_accessor": 187,
+        "index_accessor": 192,
+        "vertex_count": 240,
+        "vertices_per_layer": 120,
+        "index_count": 360,
+        "triangle_count": 120,
+        "unique_undirected_edges": 300,
+        "cross_layer_unique_undirected_edges": 180
+      }
+    },
+    "endpoint_scalar_bounds": {
+      "upper": [0.95, 1.0],
+      "lower": [0.3, 0.42],
+      "cross_layer_absolute_difference": [0.53, 0.7]
+    },
+    "contradiction_proven": true,
+    "new_rings_or_geometry_changes_allowed": false
+  },
+  "frozen_calibration_and_luma_gates": {
+    "v10f_cpu_delta": 15.302119152445684,
+    "v10f_actual_gpu_delta": 5.7874,
+    "gpu_to_cpu_delta_ratio": 0.3782090534221869,
+    "cpu_minus_gpu_additive_residual": 9.514719152445686,
+    "uncertainty_reserve_luma": 2.0,
+    "conservative_gpu_lower_bound": "D_gpu_lower=max(0,min(0.3782090534221869*D_cpu,max(0,D_cpu-9.514719152445686))-2.0)",
+    "offline_hard_minimum_D_cpu": 47.6,
+    "offline_hard_minimum_D_gpu_lower": 16.0,
+    "calibrated_D_gpu_lower_at_D_cpu_47_6": 16.002750942896096,
+    "future_actual_gpu_hard_minimum_delta": 12.0,
+    "recommended_future_actual_gpu_target": 16.0,
+    "preferred_future_actual_gpu_target_band": [16.0, 20.0],
+    "ordered_chain": "rim > sidewall_upper > sidewall_lower > void",
+    "future_gpu_target_ranges": {
+      "rim_median": [40.0, 52.0],
+      "sidewall_upper_median": [27.0, 31.0],
+      "sidewall_lower_median": [8.0, 11.0],
+      "void_median": [1.0, 3.0]
+    },
+    "hard_pairwise_gates": {
+      "rim_minus_sidewall_upper_min": 10.0,
+      "sidewall_upper_minus_lower_min": 12.0,
+      "sidewall_lower_minus_void_min": 5.0
+    }
+  },
+  "offline_implementation_parameter_contract": {
+    "solution": "A_TWO_RING_ENDPOINT_GPU_INTERPOLATION",
+    "allowed_change_scope": [
+      "sidewall-only baseColorFactor",
+      "sidewall-only roughness within the declared range",
+      "sidewall COLOR_0 neutral values on the two existing endpoint rings",
+      "new v10g metadata and offline calibration or validation code"
+    ],
+    "forbidden_change_scope": [
+      "adding an intermediate sidewall ring or vertex",
+      "changing sidewall POSITION, NORMAL, TANGENT, TEXCOORD_0, indices, primitive topology, node transform or ownership",
+      "rim or void geometry, material or COLOR_0",
+      "felt, walnut, cushion or facing geometry or materials",
+      "camera, lighting rig, exposure, tone-map operator, MSAA, quality or viewport",
+      "shader source, shader branch, interpolation qualifier or runtime toggle",
+      "texture, emissive term, light or render pass"
+    ],
+    "material_split": {
+      "required": true,
+      "rim_material_frozen": {
+        "name": "MAT_pocket_liner",
+        "baseColorFactor_linear_rgba": [0.021, 0.025, 0.027, 1.0],
+        "roughness": 0.76,
+        "metallic": 0.0
+      },
+      "sidewall_material": {
+        "name": "MAT_pocket_liner_sidewall_v10g",
+        "base_neutral_scalar_range": [0.055, 0.08],
+        "rgb_multiplier": [0.84, 0.94, 1.0],
+        "derived_linear_rgb_bounds": {
+          "red": [0.0462, 0.0672],
+          "green": [0.0517, 0.0752],
+          "blue": [0.055, 0.08]
+        },
+        "alpha": 1.0,
+        "roughness_range": [0.74, 0.84],
+        "metallic": 0.0,
+        "emissiveFactor": [0.0, 0.0, 0.0],
+        "texture_change_allowed": false
+      },
+      "void_material_frozen": {
+        "name": "MAT_pocket_void",
+        "baseColorFactor_linear_rgba": [0.0005, 0.0005, 0.0006, 1.0],
+        "roughness": 0.9,
+        "metallic": 0.0
+      }
+    },
+    "two_ring_endpoint_contract": {
+      "coordinate": "geometry-local Y; the ring at Y=0.85883975 is upper and the ring at Y=0.83597976 is lower",
+      "upper_scalar_range": [0.95, 1.0],
+      "lower_scalar_range": [0.3, 0.42],
+      "allowed_endpoint_difference_range": [0.53, 0.7],
+      "same_scalar_written_to_rgb": true,
+      "alpha": 1.0,
+      "every_vertex_on_one_ring_uses_one_identical_scalar": true,
+      "duplicate_vertices_at_geometric_seams_match_with_absolute_tolerance": 0.000001,
+      "monotonic_non_increasing_upper_to_lower": true,
+      "all_six_pockets_and_all_three_lods_use_identical_endpoint_scalars": true,
+      "interpolation_owner": "existing GPU vertex-to-fragment smooth perspective-correct barycentric interpolation",
+      "authored_cubic_smoothstep_required": false,
+      "authored_intermediate_plateau_required": false,
+      "adjacent_vertex_step_limit_applicable": false,
+      "reason": "Continuity is supplied inside existing indexed triangles by the frozen renderer; vertex adjacency cannot be used as a smoothness proxy on a two-ring mesh."
+    },
+    "offline_search_policy": {
+      "deterministic_grid_required": true,
+      "base_neutral_scalar_step_max": 0.0025,
+      "lower_scalar_step_max": 0.02,
+      "upper_scalar_step_max": 0.01,
+      "roughness_step_max": 0.02,
+      "candidate_selection": "Select the lowest-energy candidate satisfying D_cpu>=47.6, calibrated D_gpu_lower>=16 and every inherited and v2 continuity gate.",
+      "report_all_candidates_and_rejection_reasons": true,
+      "single_cherry_picked_candidate_without_grid_report_allowed": false
+    }
+  },
+  "machine_testable_interpolation_quality_contract": {
+    "domain": "Decoded neutral COLOR_0 scalar and offline predicted post-tonemap encoded-sRGB8 luma; no GPU capture is authorized.",
+    "barycentric_triangle_test": {
+      "sample_lattice_denominator_min": 32,
+      "samples": "For every sidewall triangle, evaluate all barycentric triples (i/N,j/N,k/N), i+j+k=N, N>=32.",
+      "expected_scalar": "s=lambda0*s0+lambda1*s1+lambda2*s2",
+      "convex_hull_violation_tolerance": 0.000001,
+      "cross_shared_edge_test": "For every two-sided indexed edge, evaluate 33 equally spaced points from both incident triangles; scalar mismatch must be <=1e-6.",
+      "geometric_seam_test": "Coincident duplicated vertices and paired seam samples must differ by <=1e-6.",
+      "hard_failure": "Any NaN, extrapolation, shared-edge mismatch, seam mismatch or non-neutral RGB is OFFLINE_PREFLIGHT_FAIL_GPU_NOT_AUTHORIZED."
+    },
+    "monotonic_derivative_test": {
+      "sample_scope": "Every projected connected sidewall column and every upper-to-lower barycentric trace in all six pockets and all three LODs.",
+      "finite_difference_direction": "upper_to_lower",
+      "positive_step_tolerance": 0.000001,
+      "required": "All scalar finite differences ds must be <=1e-6; at least 80% of interior unquantized samples must have ds<-1e-5. Predicted luma derivative must retain the same non-positive sign after excluding mask boundaries and one-pixel endpoint neighborhoods.",
+      "sign_reversal_allowed": false
+    },
+    "fragment_step_and_posterization_proxy": {
+      "canonical_projection": "Use the frozen v10f pocket-closeup camera, viewport 1920x1080, medium quality, 4x MSAA, object-ID ownership and one-pixel erosion semantics.",
+      "minimum_connected_height_px": 14,
+      "per_column_scalar_step_limit": "For height H and endpoint difference E, max absolute adjacent in-mask fragment-center scalar step <=min(0.075,1.35*E/(H-1)).",
+      "per_column_predicted_luma_step_limit": "max absolute adjacent predicted encoded-luma step <=max(4.0,1.5*median absolute nonzero adjacent predicted-luma step).",
+      "minimum_distinct_unquantized_scalar_samples_per_column": "min(8,H-2)",
+      "coverage_requirement": "At least 95% of the 11 canonical central columns pass all scalar-step, luma-step, distinct-sample and derivative checks; every failing column and sample coordinate is reported.",
+      "hard_band_proxy": "No interior adjacent pair may exceed either step limit, and no two neighboring triangles may introduce a shared-edge scalar or predicted-luma jump.",
+      "posterization_proxy": "After excluding the endpoint neighborhoods, no run longer than 25% of connected height may repeat the same unquantized scalar within 1e-6 unless the full analytic barycentric trace proves a nonzero derivative below pixel sampling resolution.",
+      "claim_boundary": "Passing these proxies establishes offline mathematical continuity only; it is not a TA visual PASS and does not replace future actual-GPU inspection."
+    }
+  },
+  "geometry_and_ownership_freeze": {
+    "inherit_v10g_v1_and_v10f_passing_constraints": true,
+    "physics_marker_binding_sha256": "sha256:1b8f8cdb03c88e81721525aa0a134c4e4efa564975c5e2307835514f03df2b7a",
+    "rim_width_m": 0.010287,
+    "sidewall_vertical_drop_m": 0.02286,
+    "void_front_z_range_m": [0.05715000884634982, 0.05715001583099366],
+    "void_back_z_range_m": [0.12572996989727575, 0.12572998762130738],
+    "void_minimum_span_m": 0.06857996105092592,
+    "arc_segments_per_half_by_lod": {"0": 24, "1": 16, "2": 10},
+    "object_roles": [
+      "pocket_liner_rim_visual_only",
+      "pocket_liner_sidewall_visual_only",
+      "pocket_void_visual_only",
+      "pocket_apron_integrated_wedge"
+    ],
+    "future_gpu_pixel_gates_unchanged": {
+      "rim_median_px_range": [11, 13],
+      "rim_all_samples_px_range": [10, 14],
+      "sidewall_median_px_range": [18, 24],
+      "sidewall_p10_px_min": 16,
+      "sidewall_minimum_px_min": 14,
+      "ordered_stage_columns_passing_min": 11,
+      "ordered_stage_columns_sampled": 11,
+      "connected_stage_height_px_min": 72,
+      "walnut_area_inside_mouth_envelope_fraction_max": 0.1,
+      "walnut_intrusion_max_px": 8,
+      "walnut_intrusion_median_px": 0
+    },
+    "byte_level_checks": [
+      "All POSITION, NORMAL, TANGENT, TEXCOORD_0 and index accessors for rim, sidewall and void equal the v10f decoded values and counts.",
+      "Sidewall vertex and index counts, two-ring Y values and cross-layer unique-edge counts equal this v2 topology record.",
+      "Node transforms, local_ranges, role strings, LOD membership and marker references equal v10f.",
+      "Only sidewall material index and sidewall COLOR_0 accessor bytes may differ within this contract."
+    ]
+  },
+  "anti_regression_contract": {
+    "post_tonemap": [
+      "Rim remains brightest and inside 40..52 encoded luma.",
+      "Sidewall upper remains at least 10 luma below rim; do not flatten rim and upper together.",
+      "Sidewall lower remains at least 5 luma above void; do not crush lower into void.",
+      "Void median remains 1..3 and void p95 <=4.",
+      "Sidewall upper and lower maximum post-tonemap sRGB channel spread remains <=12 and does not shift cyan, gold or walnut-colored.",
+      "At least 95% of canonical central columns preserve strict rim > upper > lower > void ordering."
+    ],
+    "gradient_quality": [
+      "No one-pixel bright ring, hard horizontal band, posterized step, emissive edge, isolated COLOR_0 discontinuity or derivative sign reversal.",
+      "Upper and lower samples remain connected within one sidewall object-ID ownership region.",
+      "All v2 barycentric continuity, derivative, fragment-step and posterization proxies pass."
+    ],
+    "scene_integrity": [
+      "Full-frame UI delta remains zero and gold component pixels in the bottom band remain zero.",
+      "Cushion, facing, felt, walnut, balls, cue, room, exposure and white balance hashes remain frozen.",
+      "Texture residency, draw calls, triangles and p95 frame time may not regress beyond existing v10f hard gates.",
+      "No new texture, light, render pass, shader branch or production runtime toggle is permitted."
+    ]
+  },
+  "offline_machine_gate": {
+    "required_status_on_success": "OFFLINE_PREFLIGHT_PASS_GPU_NOT_AUTHORIZED",
+    "required_outputs": [
+      "new v10g asset root and hashes without modifying v10f",
+      "decoded accessor diff proving only sidewall material index and COLOR_0 changed",
+      "topology audit reproducing v2 two-ring and cross-layer edge counts",
+      "deterministic candidate grid and rejection report",
+      "predicted rim, sidewall upper, sidewall lower and void post-tonemap medians",
+      "D_cpu, both calibrated branches, uncertainty reserve and D_gpu_lower",
+      "barycentric lattice, shared-edge, seam, derivative, fragment-step and posterization proxy reports",
+      "all inherited geometry, ownership, visibility, walnut, drop and connection checks",
+      "explicit metadata and authorization boundary"
+    ],
+    "hard_checks": {
+      "D_cpu_at_least_47_6": true,
+      "calibrated_D_gpu_lower_at_least_16": true,
+      "future_gpu_hard_delta_declared_as_12": true,
+      "predicted_ordered_luma_chain": true,
+      "material_and_two_ring_endpoint_parameters_in_bounds": true,
+      "barycentric_and_fragment_continuity_proxies_pass": true,
+      "all_geometry_indices_and_ownership_freezes_exact": true,
+      "all_v10f_passing_machine_constraints_preserved": true,
+      "metadata_not_inherited_from_v10f_sidecar": true,
+      "gpu_capture_authorized": false,
+      "ta_review_authorized": false
+    },
+    "failure_rule": "Any failed, missing, PENDING, unbound, out-of-range, discontinuous or geometry-drifted check is OFFLINE_PREFLIGHT_FAIL_GPU_NOT_AUTHORIZED."
+  },
+  "frozen_v10f_metadata_defect": {
+    "embedded_evidence_scope_actual": "phase2_pocket_v10c_single_scene_non_formal",
+    "embedded_visual_review_status_actual": "PENDING_TA",
+    "top_level_evidence_scope_actual": "one_actual_gpu_pocket_closeup_only",
+    "top_level_visual_review_status_actual": "PENDING_ROOT_AND_TA",
+    "classification": "EVIDENCE_METADATA_DEFECT_IN_FROZEN_REJECTED_PACKAGE",
+    "v10f_rewrite_allowed": false,
+    "does_not_authorize_ta": true,
+    "required_v10g_behavior": {
+      "evidence_scope": "phase2_pocket_v10g_offline_only",
+      "visual_review_status": "NOT_RUN",
+      "machine_status_before_execution": "NOT_RUN",
+      "copy_v10f_gpu_metrics_sidecar_metadata": false
+    }
+  },
+  "authorization_after_gate": {
+    "allowed_next_action": "Implement and validate the v2 contract offline only.",
+    "gpu_capture": "NOT_AUTHORIZED",
+    "formal_six_scene_capture": "NOT_AUTHORIZED",
+    "technical_art_visual_review": "NOT_AUTHORIZED",
+    "promotion_or_ship_claim": "NOT_AUTHORIZED",
+    "required_followup": "Root must inspect a passing offline package and issue separate authorization before any GPU capture or TA review."
+  }
+}

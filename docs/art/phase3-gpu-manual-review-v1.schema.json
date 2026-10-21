@@ -1,0 +1,51 @@
+{
+  "$id": "billiardgl://schemas/phase3-gpu-manual-review-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_binding": {
+      "type": "object"
+    },
+    "capture_reviews": {
+      "maxItems": 594,
+      "minItems": 594,
+      "type": "array"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "review_axes": {
+      "maxItems": 7,
+      "minItems": 7,
+      "type": "array"
+    },
+    "reviewer_role": {
+      "const": "independent_technical_artist"
+    },
+    "schema": {
+      "const": "phase3_gpu_manual_review_v1"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "template_policy": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "status",
+    "reviewer_role",
+    "capture_binding",
+    "evidence_boundary",
+    "review_axes",
+    "capture_reviews",
+    "template_policy"
+  ],
+  "title": "BilliardGL Phase 3 GPU Manual Review",
+  "type": "object"
+}

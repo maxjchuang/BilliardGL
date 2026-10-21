@@ -1,0 +1,31 @@
+{
+  "schema": "m4_d5_d6_exact_dependency_implementation_feasibility_register_v1",
+  "status": "FINAL_DESIGN_ONLY_BATCH_FEASIBILITY_NO_IMPLEMENTATION_AUTHORIZATION",
+  "bindings": {
+    "root_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"},
+    "b2_successor": {"path": "docs/rules/m4-b2-referee-consumer-stage-completion-successor-v1.json", "sha256": "663a2a28faf93bd98de89e60498af1c955c55c36033849a0da12af965a478e69"},
+    "cue_contact_gap_gate": {"path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json", "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"},
+    "off_table_gap_gate": {"path": "docs/rules/wpa-ii-17-a-e-off-table-physical-telemetry-design-gap-gate-v1.json", "sha256": "3fc468502ab09e7ba0122d84b6c20386b0646d1f0db76a3f8ab3e8a1d30a9dbe"},
+    "c8_defer_gate": {"path": "docs/rules/wpa-ii-12-3-profile-only-d6-dependency-defer-gate-v1.json", "sha256": "f217958cf035024150b622421b68d80bdcf5e8dd4f7281bfeecf447fee87043a"},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"}
+  },
+  "batches": [
+    {"order": 0, "id": "D5-A", "name": "stroke observation and canonical cue-tip interval foundation", "kind": ["NEW_TELEMETRY", "LIMITED_CUE_DYNAMICS"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": [], "scope": "begin before first possible tip contact; preserve cue-tip motion through authoritative stroke end; record ordered intervals and completeness without classifying fouls", "unblocks": ["D5-B"], "does_not_close": ["WPA-II-12-5-6", "WPA-II-12-7", "WPA-II-15-1", "WPA-II-17"]},
+    {"order": 1, "id": "D5-B", "name": "cue-object and frozen-cushion policy-independent telemetry", "kind": ["TELEMETRY", "COLLECTOR"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": ["D5-A"], "scope": "contact-before-tip-separation total order; frozen-object departure/recontact; other-ball straight-cushion and pocket alternatives; origin/completeness", "unblocks": ["D5-C", "D5-D"], "does_not_close": ["WPA-II-15-2", "WPA-II-12-5-6"]},
+    {"order": 2, "id": "D5-C", "name": "machine double-hit classification consumer", "kind": ["CLASSIFICATION", "RULES"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": ["D5-A", "D5-B"], "scope": "complete interval count >1 and selected close-case/light-graze/tie policy; signed declaration bound to measurement", "unblocks": ["WPA-II-12-5-6 completion audit", "WPA-II-15-1 partial classification"], "policy_inputs": ["very-close threshold", "light-graze predicate", "tip-separation ordering tolerance"]},
+    {"order": 3, "id": "D5-D", "name": "push and frozen-rule classification consumers", "kind": ["REFEREE", "POLICY", "CLASSIFICATION", "RULES"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": ["D5-A", "D5-B"], "scope": "bind complete duration/distance records to signed obvious-push final; consume frozen declarations and exact cushion alternatives", "unblocks": ["WPA-II-12-7 completion audit", "WPA-II-15-1 completion audit", "WPA-II-15-2 completion audit", "WPA-II-17 D5 subset"], "policy_inputs": ["push obviousness authority", "duration/distance reference and tolerance", "15.2 jaw treatment", "prerequisite legal-cushion predicate"]},
+    {"order": 4, "id": "D6-A", "name": "3D table-departure physics foundation", "kind": ["NEW_PHYSICS"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": true, "depends_on": [], "scope": "3D integration, gravity, cushion nose/rail-top/outside landing geometry, pocket-disjoint departure and return", "unblocks": ["D6-B"], "evidence_effect": "invalidates shared physics/binary and visible-motion inheritance; requires fresh rendering baselines after CPU stability"},
+    {"order": 5, "id": "D6-B", "name": "departure, return, landing and terminal-rest telemetry", "kind": ["TELEMETRY", "COLLECTOR"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": ["D6-A"], "scope": "canonical ball/event identity, continuous departure, rail-top return exclusion, outside landing/rest, pocket exclusion, successful-step completeness", "unblocks": ["D6-C"], "does_not_close": ["WPA-II-12-3", "WPA-II-17"]},
+    {"order": 6, "id": "D6-C", "name": "signed profile and off-table classification consumers", "kind": ["REFEREE", "POLICY", "CLASSIFICATION", "RULES", "PRODUCT_BIH"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": false, "depends_on": ["D6-B"], "scope": "bind immutable signed tournament profile; classify complete cue/object off-table facts; preserve 8-ball sibling; atomic ordinary-foul BIH", "unblocks": ["WPA-II-12-3 completion audit", "WPA-II-17 completion audit"], "policy_inputs": ["profile signing and match immutability", "12.3 versus 17(e) selected application boundary"]},
+    {"order": 7, "id": "D56-E", "name": "fresh integration and evidence", "kind": ["CPU_INTEGRATION", "GPU", "TA", "HUMAN"], "cpu_first": true, "new_root_decision_required": true, "gpu_required": true, "depends_on": ["D5-C", "D5-D", "D6-C"], "scope": "wide CPU rollback/idempotency; fresh shared Release/source bindings; targeted visual motion and foul presentation only where product-visible; TA and beta acceptance", "unblocks": ["successor audits", "M4 evidence convergence"], "does_not_equal_m4_complete": true}
+  ],
+  "execution_constraints": {
+    "stable_order": ["D5-A", "D5-B", "D5-C", "D5-D", "D6-A", "D6-B", "D6-C", "D56-E"],
+    "parallel_cpu_feasible": [["D5-A", "D6-A"], ["D5-C", "D5-D"]],
+    "every_batch_requires_independent_implementation_design_gate": true,
+    "selection_or_feasibility_is_not_implementation": true,
+    "gpu_before_cpu_stable_forbidden": true,
+    "physics_or_telemetry_may_not_encode_policy": true
+  },
+  "claims": {"register_complete": true, "production_or_cmake_modified": false, "d5_implemented": false, "d6_implemented": false, "rows_promoted": false, "gpu_authorized": false, "m4_complete": false}
+}

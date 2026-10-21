@@ -1,0 +1,84 @@
+{
+  "schema": "m4_d5_a_stroke_observation_canonical_tip_interval_foundation_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"},
+    "d5_d6_feasibility": {"path": "docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json", "sha256": "86d4957620d9e2c9033708ef3dbd5329610cc9cc9c44a134369079cffa375f77", "batch": "D5-A"},
+    "cue_contact_gap_gate": {"path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json", "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"},
+    "b2_successor": {"path": "docs/rules/m4-b2-referee-consumer-stage-completion-successor-v1.json", "sha256": "663a2a28faf93bd98de89e60498af1c955c55c36033849a0da12af965a478e69"}
+  },
+  "foundation_contract": {
+    "schema_id": "canonical_cue_tip_stroke_observation_v1",
+    "policy_independent_measurement_only": true,
+    "stroke_start": "accepted finite strictly-positive cue launch before the first possible cue-tip/cue-ball contact",
+    "stroke_end": "authoritative cue-input motion observation reaches release/end boundary; not inferred from ball sleep or arbitrary frame count",
+    "stroke_identity": ["shot_identity", "actor", "rack_identity", "rules_revision", "rules_state_hash", "start_tick", "end_tick"],
+    "origin_values": ["ANALYTIC_CUE_CONTACT_SOLVER", "COUPLED_CUE_CONTACT_SOLVER", "AUTHORITATIVE_CUE_MOTION_OBSERVER"],
+    "interval_fields": ["ordinal", "start_time_seconds", "end_time_seconds", "start_tick_offset_seconds", "end_tick_offset_seconds", "contact_point", "contact_normal", "cue_velocity_start", "cue_velocity_end", "cue_ball_velocity_start", "cue_ball_velocity_end", "normal_impulse_ns", "tangential_impulse_ns", "origin", "solver_event_ids"],
+    "ordering": "strictly increasing non-overlapping half-open intervals [start,end), canonical tie order by solver event identity",
+    "interval_merge": "only physically contiguous samples from the same uninterrupted contact and origin; separation creates a new interval",
+    "completeness_fields": ["observation_started_before_first_contact", "observation_ended_after_authoritative_release", "no_dropped_intervals", "all_values_finite", "canonical_order", "successful_launch_commit", "full_stroke_complete"],
+    "empty_complete_observation": "allowed only when the authoritative stroke was observed start-to-end and no tip contact occurred"
+  },
+  "current_gap_and_minimum_extension": {
+    "regular_contact_is_single_analytic_resolution": true,
+    "coupled_trace_ends_at_initial_release": true,
+    "cue_tip_after_release_observed": false,
+    "full_stroke_second_contact_observable": false,
+    "minimum_extension": ["dedicated cue-motion observer state independent of ball physics", "start observer before launch contact", "continue observer after initial release until authoritative input end", "emit all contact interval edges and completeness", "attach immutable observation to runtime/physics telemetry only after success"],
+    "existing_microsteps_may_seed_interval_samples_but_do_not_prove_full_stroke": true
+  },
+  "atomicity_dedupe_and_rollback": {
+    "staging": "build observation in temporary state; do not publish partial intervals",
+    "commit": "publish exactly one immutable observation only after accepted launch and authoritative stroke end with validated finiteness/order/origin",
+    "failed_launch": "discard start candidate and all interval samples",
+    "failed_solver_or_runtime_step": "discard uncommitted interval edges and mark any retained diagnostic observation incomplete; never expose it as complete",
+    "reset_rerack_turn_or_state_conflict": "invalidate active observer with no complete fact",
+    "dedupe_key": ["shot_identity", "interval_ordinal", "start_time_seconds", "origin", "solver_event_ids"],
+    "exact_retry": "return the same immutable observation digest without duplicate intervals",
+    "conflicting_retry": "fail closed with zero telemetry/runtime delta"
+  },
+  "classification_boundary": {
+    "double_hit_classified": false,
+    "push_classified": false,
+    "foul_classified": false,
+    "close_case_policy_selected": false,
+    "duration_or_distance_threshold_selected": false,
+    "frozen_rule_classified": false,
+    "shotfacts_or_rules_consumer_added": false,
+    "interval_count_is_not_a_foul_until_separate_consumer_gate": true
+  },
+  "required_fixtures": {
+    "positive": ["ACCEPTED_STROKE_STARTS_BEFORE_FIRST_CONTACT", "ONE_COMPLETE_ANALYTIC_INTERVAL", "ONE_COMPLETE_COUPLED_INTERVAL", "SEPARATE_RECONTACT_CREATES_SECOND_ORDERED_INTERVAL", "CONTIGUOUS_SAME_CONTACT_SAMPLES_MERGE", "COMPLETE_NO_CONTACT_STROKE_EMPTY_INTERVALS", "AUTHORITATIVE_END_AFTER_RELEASE", "EXACT_RETRY_SAME_DIGEST_ZERO_DUPLICATES"],
+    "negative": ["REJECTED_ZERO_UNSUPPORTED_MISCUE_LAUNCH_NO_OBSERVATION", "START_AFTER_CONTACT_INCOMPLETE", "END_BEFORE_RELEASE_INCOMPLETE", "DROPPED_INTERVAL_INCOMPLETE", "OVERLAPPING_OR_NONCANONICAL_INTERVAL_REJECTED", "NONFINITE_TIME_POINT_NORMAL_VELOCITY_OR_IMPULSE_REJECTED", "MIXED_OR_UNKNOWN_ORIGIN_REJECTED", "MICROTRACE_ONLY_NOT_FULL_STROKE_COMPLETE", "FAILED_SOLVER_STEP_ROLLS_BACK_UNCOMMITTED_EDGES", "RESET_RERACK_TURN_OR_STATE_CONFLICT_INVALIDATES", "DUPLICATE_INTERVAL_DEDUPED", "CONFLICTING_RETRY_ZERO_DELTA", "INTERVAL_COUNT_DOES_NOT_SET_DOUBLE_HIT_PUSH_OR_FOUL", "NO_SHOTFACT_RULE_UI_OR_GPU_SIDE_EFFECT"]
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/cue_contact.h", "src/Billiards/cue_contact.cpp", "src/Billiards/coupled_cue_contact.h", "src/Billiards/coupled_cue_contact.cpp", "src/Billiards/physics_telemetry.h", "src/Billiards/physics_telemetry.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp"],
+    "test_files": ["tests/cue_contact_tests.cpp", "tests/coupled_cue_contact_tests.cpp", "tests/physics_telemetry_tests.cpp", "tests/rules_runtime_integration_tests.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "one headless stroke-observation foundation test target only if existing targets cannot express the contract",
+    "rules_shotfacts_ui_renderer_edit_allowed": false
+  },
+  "live_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801"},
+    {"path": "src/Billiards/cue_contact.h", "sha256": "8a04660ae3927f76544a46a2676fe30e17c88856f4b2f9f53c274dd849be9a9c"},
+    {"path": "src/Billiards/cue_contact.cpp", "sha256": "371eeea9353fe2759c0edf25101cdaa2a1298d6688b537690a65957c47565d27"},
+    {"path": "src/Billiards/coupled_cue_contact.h", "sha256": "c4e24dbfcf3b5f3a3eb4ab4ef4d639bc31a56fb194ae046b44aea5ea2c408664"},
+    {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "e5034d0697ba86e3ed2341d2555d9da6fefbd6f084b0fb74bdf45b386b75d278"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "1c319a7f5d5793eaf56f3b46348c2b08e500e33d91620d3287555a0617c51802"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "86ab2c88200f4336f1c54ca39ea3977f2c825d795b24da0e976f24d957fcfc7f"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "f8d44f1b86b20c22c5aa9c0aeec8c3760a1527157ee4fbd6dc0061f33d57ecf0"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required": true,
+    "d5_a_implemented": false,
+    "d5_complete": false,
+    "classification_or_audit_progress": false,
+    "production_or_cmake_modified": false,
+    "rules_shotfacts_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

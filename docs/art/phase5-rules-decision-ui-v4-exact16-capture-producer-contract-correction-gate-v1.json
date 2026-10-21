@@ -1,0 +1,254 @@
+{
+  "schema": "phase5_rules_decision_ui_v4_exact16_capture_producer_contract_correction_gate_v1",
+  "schema_version": 1,
+  "status": "APPROVED_FOR_CAPTURE_ONLY_PRODUCER_CONTRACT_IMPLEMENTATION_NO_GPU_NO_AUTH",
+  "scope": "Add one compile-time-isolated exact16 capture-producer contract to the existing Phase5 Rules UI capture-only runner and bind it completely to the existing single-use dispatcher. This gate does not authorize capture, change rendered pixels, or change product behavior.",
+  "frozen_problem_statement": {
+    "current_capture_producer_modes": [
+      {
+        "compile_mode": "default",
+        "required_case_count": 60
+      },
+      {
+        "compile_mode": "BILLIARDGL_PHASE5_RULES_UI_V3_TARGETED",
+        "required_case_count": 28
+      }
+    ],
+    "missing_mode": "BILLIARDGL_PHASE5_RULES_UI_V4_EXACT16",
+    "blocking_fact": "The frozen v4 readiness has CPU/static exact16 preflight and a single-use dispatcher, but compatible_capture_producer_bound is false; therefore authorization may not be issued.",
+    "correction_class": "capture_producer_contract_only"
+  },
+  "baseline_bindings": [
+    {
+      "role": "v4_exact_shape_visual_authority",
+      "path": "docs/art/phase5-rules-decision-ui-v4-exact-shape-correction-design-gate-v1.json",
+      "sha256": "f93ca59634875ed5256f5c22678a55817e0f3e8bf8df582b3b04ac527b886051"
+    },
+    {
+      "role": "dispatcher_ready_but_producer_blocked_manifest",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-ready-v2/rules-decision-ui-v4-exact16-ready.json",
+      "sha256": "796e895b0917027b3774dde1f223adda067716ad4c4589607f60c354c299741a"
+    },
+    {
+      "role": "dispatcher_ready_but_producer_blocked_receipt",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-ready-v2/offline-readiness-receipt.json",
+      "sha256": "9902fdf790a08a097aa7ae5d00455f15bdfc1b4704c21e097a955cf0b6afd23e"
+    },
+    {
+      "role": "non_executable_authorization_template",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-ready-v2/rules-decision-ui-v4-authorization-template-not-issued.json",
+      "sha256": "12a130bd994a1b4b4924294ebff8b8371f4f99833d4a5d9d9367bd8bde2fcdb6"
+    },
+    {
+      "role": "exact16_ordered_plan",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-ready-v2/rules-decision-ui-v4-exact16-plan.tsv",
+      "sha256": "426de40ba87b8cfdb5eefc88464720507e53ced2190ffb61564e7cd848eb593f"
+    },
+    {
+      "role": "v2_source_binding_manifest",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-ready-v2/rules-decision-ui-v4-source-bindings.json",
+      "sha256": "533f82cf339df809023e98e0836a982946d91b700320872580c9eed29fb012a7"
+    },
+    {
+      "role": "single_use_dispatcher_source",
+      "path": "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py",
+      "sha256": "428668d38ece54d71cd23617df1b50477716c983d267f6ffad6d33fd297fcdd5"
+    },
+    {
+      "role": "single_use_dispatch_validator_source",
+      "path": "scripts/validate_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py",
+      "sha256": "1b5c96f758c0497fd501b9281b8ec3575a5a0a4d8b0807d5ed7d809057987cba"
+    },
+    {
+      "role": "incompatible_capture_runner_source_baseline",
+      "path": "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm",
+      "sha256": "a5a2764fe526cd4670b90f5dce5e44c1a0fda1610d5d4a9a3e3a3292509bec3a"
+    },
+    {
+      "role": "capture_target_build_wiring_baseline",
+      "path": "CMakeLists.txt",
+      "sha256": "acf6abcb7f6ae9bc177f872a4ec11d052f5fa81757d9b58f86c406d52a628835"
+    }
+  ],
+  "baseline_binding_policy": {
+    "immutable_evidence_roles": [
+      "v4_exact_shape_visual_authority",
+      "dispatcher_ready_but_producer_blocked_manifest",
+      "dispatcher_ready_but_producer_blocked_receipt",
+      "non_executable_authorization_template",
+      "exact16_ordered_plan",
+      "v2_source_binding_manifest"
+    ],
+    "implementation_baseline_roles": [
+      "single_use_dispatcher_source",
+      "single_use_dispatch_validator_source",
+      "incompatible_capture_runner_source_baseline",
+      "capture_target_build_wiring_baseline"
+    ],
+    "policy": "Immutable evidence bindings never change. Implementation baseline hashes describe the diagnosed starting tree and may change only inside allowed_modification_surface; a successor readiness must bind every resulting source and binary hash."
+  },
+  "exact16_case_ids_in_order": [
+    "group_choice_armed_confirm--p1--zh_cn",
+    "group_choice_armed_confirm--p2--en",
+    "group_choice_armed_confirm--p3--zh_cn",
+    "group_choice_armed_confirm--p4--en",
+    "group_choice_open_unselected--p1--en",
+    "group_choice_open_unselected--p2--zh_cn",
+    "group_choice_open_unselected--p3--en",
+    "group_choice_open_unselected--p4--zh_cn",
+    "eight_legal_open_unselected--p1--en",
+    "break_illegal_open_unselected--p2--zh_cn",
+    "submitting_progress--p3--en",
+    "authority_error--p4--en",
+    "full_table_preview_valid--p1--en",
+    "full_table_preview_invalid--p2--en",
+    "behind_head_string_preview_valid--p3--en",
+    "behind_head_string_preview_invalid--p4--en"
+  ],
+  "allowed_modification_surface": [
+    {
+      "category": "capture_target_compile_time_wiring",
+      "allowed_path": "CMakeLists.txt",
+      "boundary": "Add one separately named capture-only runner target using the existing runner source and existing link dependencies, with only BILLIARDGL_PHASE5_RULES_UI_V4_EXACT16=1 plus the existing source-root and runner-source-SHA definitions. The v3 exact28 and default60 targets remain byte-semantically unchanged."
+    },
+    {
+      "category": "capture_runner_compile_time_contract",
+      "allowed_path": "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm",
+      "boundary": "Only compile-time selection of the v4 gate identity, exact16 loadPlan inventory/order, v4 authorization schema/count/fields, source-manifest gate binding, and exact16 completion count/message. No renderer, fixture, frame, raster, product-state, or evidence-threshold logic may change."
+    },
+    {
+      "category": "offline_readiness_and_dispatch_binding",
+      "allowed_path_prefixes": [
+        "scripts/prepare_phase5_rules_decision_ui_v4_exact16_",
+        "scripts/validate_phase5_rules_decision_ui_v4_exact16_",
+        "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py"
+      ],
+      "boundary": "Create a fresh successor NOT_RUN readiness that binds the exact16 runner source and binary SHA, compile definition, exact plan SHA, dispatcher SHA, validator SHA, and source aggregate. The dispatcher may be changed only as needed to validate those frozen bindings before its existing durable single-use consumption and process launch."
+    },
+    {
+      "category": "offline_fail_closed_tests",
+      "allowed_path_prefixes": [
+        "tests/visual/test_phase5_rules_decision_ui_v4_exact16_"
+      ],
+      "boundary": "Static/source tests and mocked no-GPU process tests only."
+    }
+  ],
+  "capture_producer_contract": {
+    "compile_definition": "BILLIARDGL_PHASE5_RULES_UI_V4_EXACT16=1",
+    "required_distinct_binary_target": "BilliardsPhase5RulesDecisionUiV4Exact16GpuCaptureRunner",
+    "compile_mode_exclusivity": "Exactly one of v4 exact16, v3 exact28, or default60 semantics is compiled into a runner binary; v4 and v3 definitions may not coexist.",
+    "plan_contract": {
+      "required_case_count": 16,
+      "required_field_count_per_row": 12,
+      "required_ids_and_order": "exact16_case_ids_in_order",
+      "duplicate_ids_forbidden": true,
+      "empty_or_extra_rows_forbidden": true,
+      "plan_sha256_must_equal_authorization_and_readiness": true
+    },
+    "authorization_contract": {
+      "required_schema": "phase5_rules_decision_ui_v4_exact16_gpu_authorization_v2",
+      "required_case_count": 16,
+      "required_flag": {
+        "exact16_capture_producer_contract": true
+      },
+      "required_bindings": [
+        "ready_manifest_sha256",
+        "dispatcher_sha256",
+        "runner_source_sha256",
+        "runner_binary_sha256",
+        "plan_sha256",
+        "source_binding_manifest_sha256",
+        "source_aggregate_sha256",
+        "billiards_binary_sha256",
+        "font_sha256",
+        "hud_token_sha256",
+        "shell_token_sha256",
+        "authorized_output_canonical_path",
+        "scene_ids_in_order"
+      ],
+      "identity_and_expiry_required": true,
+      "single_use_required": true,
+      "pre_process_rejection_required": true
+    },
+    "source_manifest_contract": {
+      "v4_gate_sha256": "f93ca59634875ed5256f5c22678a55817e0f3e8bf8df582b3b04ac527b886051",
+      "runner_source_and_binary_must_be_distinctly_bound": true,
+      "compile_definition_and_target_identity_must_be_recorded": true,
+      "all_live_files_must_match_sha_before_authorization": true
+    },
+    "output_contract": {
+      "results_rows": 16,
+      "telemetry_rows": 16,
+      "ppm_files": 16,
+      "capture_order_must_equal_plan": true,
+      "partial_or_extra_output_is_failure": true,
+      "failure_bytes_and_telemetry_must_be_preserved": true
+    }
+  },
+  "single_use_dispatcher_binding_gate": {
+    "status": "CURRENT_DISPATCHER_IMPLEMENTED_PRODUCER_BINDING_PENDING",
+    "required_before_authorization_may_be_signed": [
+      "A fresh successor readiness validates the exact16 plan and binds the new runner source SHA, runner binary SHA, compile definition, CMake target identity, dispatcher SHA, dispatch-validator SHA, all capture assets, and source aggregate.",
+      "The exact16 runner independently rejects wrong schema, count, ID/order, plan SHA, source aggregate, source/runner/binary/asset SHA, output path, identity, expiry, consumed authorization, and any v3/default mode authorization.",
+      "The dispatcher rejects an unbound producer and validates the same exact16 source, binary, plan, readiness, output, and scene-order identities before durable single-use consumption.",
+      "Offline mocked end-to-end tests prove authorization is consumed exactly once before any process/output operation, reuse is rejected, and success requires exact 16 ordered results, telemetry rows, and PPMs.",
+      "A static diff audit proves all changed source lines belong to allowed_modification_surface and no product/raster/visual/threshold file changed.",
+      "The successor authorization artifact remains a NOT_ISSUED template after preparation and validation; signing is a separate root decision."
+    ],
+    "authorization_may_be_signed_now": false,
+    "gpu_execution_authorized": false
+  },
+  "required_offline_tests": [
+    "Compile-time static test proves a distinct exact16 target and mutually exclusive mode definitions.",
+    "Exact frozen 16-row plan parses; 15, 17, duplicate, reordered, wrong-ID, malformed-field, and plan-SHA-drift inputs fail before process creation.",
+    "v4 schema/count/flag and every required binding are accepted only when exact; v3 exact28, default60, unknown, expired, already-consumed, wrong-output, and missing-identity authorizations fail before process creation.",
+    "Runner/source/binary/dispatcher/readiness/source-aggregate mismatch fails before process creation.",
+    "Mock dispatcher success requires 16 ordered results, 16 ordered telemetry rows, and 16 PPM files; prefix-only, missing, extra, reordered, duplicate, failed-row, or nonzero-exit output cannot produce a pass receipt.",
+    "Mocked launch proves the consumption marker is created with exclusive create, flushed and fsynced before subprocess invocation; a failed launch remains consumed and evidence bytes are preserved.",
+    "Regression tests prove v3 exact28 and default60 contracts are unchanged.",
+    "Static forbidden-path audit rejects any product, render/raster, fixture, authority/rules, visual token, localization, threshold, or exposure change."
+  ],
+  "forbidden_changes": {
+    "production_and_visual": [
+      "No src/Billiards production source or header change.",
+      "No draw-list, Product UI frame, renderer, shader, font, icon, token, color, geometry, layout, copy, localization, input, gameplay, fixture, state, screenshot, PNG, or PPM change."
+    ],
+    "authority_and_rules": [
+      "No authority, offered-action, actor, ruleset, clause, mutation, request/ACK, idempotency, validation, turn, score, rack, breaker, group, entitlement, or submission semantic change."
+    ],
+    "thresholds": [
+      "No contrast, shape-size, stroke, hit-target, safe-area, typography, layout, occlusion, viewport, density, performance, draw-call, ROI, visible-pixel, image-dimension, evidence-count, or acceptance-threshold change."
+    ],
+    "authorization_and_evidence": [
+      "No authorization may be created, signed, issued, consumed, or treated as reusable by this gate implementation.",
+      "No NSApplication, Cocoa, OpenGL, capture runner, GPU, screenshot, human session, or technical-art review execution.",
+      "Do not overwrite frozen v2 readiness, plan, source bindings, authorization template, receipt, prior PPM/PNG, manifests, or manuals."
+    ]
+  },
+  "acceptance": {
+    "implementation_gate_result": "PASS_CAPTURE_PRODUCER_CONTRACT_IMPLEMENTATION_ONLY",
+    "minimum_machine_outcome": "All required offline/static/mocked tests pass with fresh successor readiness still NOT_RUN and authorization still NOT_ISSUED.",
+    "authorization_signing_precondition": "Only after exact16 producer plus single-use dispatcher are completely and mutually SHA-bound, all fail-closed tests pass, and a separate root review approves the frozen successor readiness may a separate single-use authorization be signed.",
+    "proof_boundary": "Passing this gate does not authorize GPU, execute capture, prove 16/16 machine evidence, prove TA 16/16, pass real input or screen-reader review, expose product, or promote Golden, M2, or Beta."
+  },
+  "non_execution_boundary": {
+    "production_modified_by_this_gate": false,
+    "capture_runner_modified_by_this_gate": false,
+    "capture_producer_compiled": false,
+    "successor_readiness_created": false,
+    "authorization_prepared": false,
+    "authorization_issued": false,
+    "authorization_consumed": false,
+    "gpu_executed": false,
+    "capture_performed": false,
+    "machine_capture_pass": false,
+    "technical_art_review_pass": false,
+    "real_input_pass": false,
+    "screen_reader_pass": false,
+    "product_exposed": false,
+    "product_pass": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

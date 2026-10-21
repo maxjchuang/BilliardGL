@@ -1,0 +1,311 @@
+{
+  "schema": "billiardgl.phase4.v16.local_cross_track_actual_continuity_implementation_design_gate.v1",
+  "schema_version": 1,
+  "status": "DESIGN_GATE_CPU_STATIC_IMPLEMENTATION_AUTHORIZED_GPU_READINESS_AUTH_NOT_AUTHORIZED",
+  "scope": "Selected product decision implementation gate for provenance-derived local cross-track ActualRouteBodyCore continuity. It authorizes only the scoped production-source and CPU/static implementation below; it does not authorize GPU execution, readiness, capture authorization, machine/TA acceptance, or product exposure.",
+  "root_product_decision_binding": {
+    "source_gate_path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+    "source_gate_sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b",
+    "source_candidate_json_pointer": "/product_decision_candidates_in_priority_order/0",
+    "selected_decision_id": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+    "selected_priority": 1,
+    "selected_recommended": true,
+    "mutually_exclusive_alternative_rejected": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+    "selection_authority": "ROOT_PROJECT_MANAGER_PRODUCT_DECISION",
+    "selection_statement": "ROOT PRODUCT DECISION: SELECTED LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY from Phase4 V15 independent TA decision gate SHA 2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b.",
+    "selection_statement_sha256": "bf126b92dd4cbc3e019cfb2dd739b42bb358aa3b3dfb8dfc59ebc09e8e62f188",
+    "selection_is_not_gpu_or_capture_authorization": true
+  },
+  "frozen_bindings": [
+    {
+      "role": "selected_v15_ta_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v15_corrected_diagnostic_receipt",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/diagnostic-receipt-v1.json",
+      "sha256": "05e0bc2de8fd9c0978bf66547f2ce444b9bee864ca27dab871f2482b4df80dcf"
+    },
+    {
+      "role": "v15_corrected_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    },
+    {
+      "role": "v14_reproducible_receipt_v2",
+      "path": "docs/art/phase4-v14-cap-mask-premise-falsification-v2/premise-falsification-receipt-v2.json",
+      "sha256": "bf320f08453a1b55f48235193ecd92ed3a88ccf671b506ee0cea36276e9f97f8"
+    },
+    {
+      "role": "v11_exact_source_inventory",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    },
+    {
+      "role": "baseline_trajectory_renderer_cpp",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    {
+      "role": "baseline_trajectory_renderer_h",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    {
+      "role": "baseline_modern_renderer_cpp",
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    {
+      "role": "baseline_modern_renderer_h",
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    },
+    {
+      "role": "baseline_cmake",
+      "path": "CMakeLists.txt",
+      "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"
+    }
+  ],
+  "exact_source_and_repair_contract": {
+    "capture_id": "camera_broadcast_1080",
+    "physical_dimensions": [
+      1920,
+      1080
+    ],
+    "palettes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "ordered_source_probe_count": 81,
+    "ordered_source_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "source_id_count_order_digest_must_remain_exact": true,
+    "foreign_double_unowned_must_remain_zero": true
+  },
+  "candidate_eligibility_contract": {
+    "prior_actual_requirement": "The sample was covered before predicted submission by renderer-tagged ActualRouteBodyCore, never by actual halo/rim/tick/endpoint/marker or a color-equivalent scene pixel.",
+    "true_crossing_requirement": "At the physical sample, predicted coverage contains at least two distinct provenance keys; each key is exactly (arc_segment_id, normalized_primitive_stem), with _core and _halo removed only for stem normalization.",
+    "same_stem_core_halo_is_cross": false,
+    "different_normalized_stem_is_cross": true,
+    "different_arc_is_cross": true,
+    "color_selects_eligibility": false,
+    "allowed_candidate": "prior_actual_route_body && true_distinct_predicted_crossing",
+    "forbidden_candidates": [
+      "non-cross dash-on interior",
+      "semantic-gap cap intrusion that is not a true crossing",
+      "single predicted stem represented by both _core and _halo",
+      "endpoint, tick, marker, outer side band",
+      "actual halo/rim/tick/endpoint/marker",
+      "scene or color-derived evidence",
+      "unowned, foreign, double-assigned, stale, or ambiguous provenance"
+    ]
+  },
+  "minimum_connected_selection_algorithm": {
+    "coordinate_whitelist_allowed": false,
+    "input_domain": "All physical framebuffer samples generated from the shared projection and semantic batches; acceptance coordinates are probes only and may not enter production selection logic.",
+    "connectivity": "8-connected within the same physical sample plane and prior actual route arc.",
+    "crossing_island": "One 8-connected component of true-crossing candidate samples, plus every baseline-surviving ActualRouteBodyCore 8-component touching that candidate component.",
+    "baseline_survivor": "A prior ActualRouteBodyCore sample already surviving without changing protected predicted ownership under the V15 frozen semantic-gap-only rule.",
+    "objective": "For each crossing island, select the minimum-cardinality subset S of eligible true-crossing candidates such that largest8(baseline_survivors union S) >= 2.",
+    "already_satisfied": "If baseline survivor largest8>=2, select zero samples.",
+    "fail_closed": "If no eligible subset reaches 2, select zero, report an explicit selector error, and do not broaden eligibility.",
+    "deterministic_tie_break": [
+      "minimum selected sample count",
+      "minimum row-major ordered tuple list using (sample_index, physical_y, physical_x)",
+      "minimum ordered provenance-key tuple list"
+    ],
+    "selected_mask_semantics": "Only the selected samples may let prior ActualRouteBodyCore survive predicted route-body ownership; all other samples retain frozen actual-then-predicted behavior."
+  },
+  "frozen_fixture_expected_selector_result_per_palette": [
+    {
+      "probe_coordinate": [
+        783,
+        413
+      ],
+      "baseline_eligible_count": 18,
+      "selected_true_crossing_count": 0,
+      "final_actual_largest8": 18,
+      "meets_required_largest8": true
+    },
+    {
+      "probe_coordinate": [
+        892,
+        491
+      ],
+      "baseline_eligible_count": 1,
+      "selected_true_crossing_count": 1,
+      "canonical_selected_output_only_not_input": [
+        [
+          894,
+          492
+        ]
+      ],
+      "final_actual_largest8": 2,
+      "meets_required_largest8": true
+    },
+    {
+      "probe_coordinate": [
+        940,
+        525
+      ],
+      "baseline_eligible_count": 0,
+      "selected_true_crossing_count": 2,
+      "canonical_selected_output_only_not_input": [
+        [
+          932,
+          517
+        ],
+        [
+          933,
+          517
+        ]
+      ],
+      "final_actual_largest8": 2,
+      "meets_required_largest8": true
+    }
+  ],
+  "implementation_contract": {
+    "trajectory_package_cpu_selector": [
+      "Emit renderer-only sample provenance for prior ActualRouteBodyCore and predicted (arc, normalized-stem) coverage from unchanged projected triangles.",
+      "Compute the generic crossing islands and deterministic minimum selection mask without reading capture ID, camera name, fixture ID, or the three acceptance coordinates.",
+      "Store a bounded sparse selected-crossing sample mask and diagnostics; do not modify vertices, colors, widths, cap geometry, dash geometry, source probes, tokens, semantic batches, source IDs, or draw order.",
+      "Fail closed on duplicate/unowned/foreign provenance, invalid dimensions/sample positions, mask overflow, or a selection that is non-minimal/non-connected."
+    ],
+    "modern_renderer_sample_mask_pipeline": [
+      "Own non-color integer prior-actual-core and selected-crossing masks, cleared every frame and recreated on resize/context loss. No HDR/RGB equality or capture instrumentation may choose a sample.",
+      "Freeze the prior ActualRouteBodyCore mask after actual submission and before predicted submission. Upload/bind the CPU-selected crossing mask using the same physical sample convention; never sample an attached target.",
+      "Before predicted color and ownership writes, preserve prior actual only when both masks are positive for that exact sample and the submission is predicted route body. Endpoint/tick/marker and samples outside the selected mask retain baseline behavior.",
+      "MSAA handling must be sample-aware or conservatively fail closed; normalized averaging, unresolved integer aliasing, or one-pixel blanket suppression is forbidden.",
+      "Keep exactly two trajectory color submissions in actual-then-predicted order; bookkeeping masks are not a new product color pass."
+    ],
+    "unchanged_visual_contract": [
+      "Predicted yellow identity and dominance remain unchanged away from selected crossing samples.",
+      "Predicted 18/12/30 dash rhythm, endpoint markers, ticks, centerlines, widths, offsets, cap envelopes, side-only rim, and source ownership remain unchanged.",
+      "The 2px predicted inner annulus remains physically intact everywhere outside selected true-crossing samples.",
+      "Standard and CVD use topology-identical selection; hue never selects or breaks a tie."
+    ]
+  },
+  "allowed_files": [
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "allowed": "Generic sample-provenance raster, crossing-island minimum selector, selected-mask emission, diagnostics and fail-closed errors only."
+    },
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "allowed": "Bounded renderer-only provenance/selected-sample structs, diagnostics and error fields only; no product model or authority field."
+    },
+    {
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "allowed": "Integer mask resource lifecycle, exact actual-freeze/selected-mask binding, predicted route-body sample predicate, and CPU/static inspectable shader contract only."
+    },
+    {
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "allowed": "Read-only metrics for mask dimensions/count/freeze/use, selector status and unchanged submission order only."
+    },
+    {
+      "path": "CMakeLists.txt",
+      "allowed": "One CPU/static implementation test target and compile definition only; no shipping flags/link/runtime changes."
+    },
+    {
+      "path": "tests/phase4_v16_local_cross_track_actual_continuity_cpu_tests.cpp",
+      "allowed": "Positive, negative, minimality, source-ID, visual-regression, controls and static shader fixtures only."
+    },
+    {
+      "path": "scripts/validate_phase4_v16_local_cross_track_actual_continuity_implementation.py",
+      "allowed": "Future implementation receipt validator only."
+    },
+    {
+      "path": "tests/test_phase4_v16_local_cross_track_actual_continuity_implementation.py",
+      "allowed": "Future fail-closed receipt/input mutation tests only."
+    }
+  ],
+  "cpu_static_acceptance_required_before_any_future_gpu": {
+    "status": "NOT_RUN",
+    "required_fixtures": [
+      "corrected_same_stem_core_halo_negative_and_distinct_stem_arc_positive",
+      "generic_selector_contains_no_capture_camera_or_acceptance_coordinate_literals",
+      "standard_and_cvd_topology_identical",
+      "three_gap_minimal_counts_0_1_2_and_largest8_18_2_2",
+      "removing_any_selected_sample_fails_the_corresponding_largest8_goal",
+      "adding_any_unneeded_selected_sample_fails_minimality",
+      "noncross_dash_on_never_selected",
+      "endpoint_tick_marker_outer_side_band_never_selected",
+      "actual_halo_scene_color_foreign_double_unowned_never_select",
+      "exact_81_order_digest_and_three_repair_ids_unchanged",
+      "selected_mask_only_changes_selected_crossing_samples",
+      "predicted_yellow_dash_endpoint_tick_and_away_crossing_annulus_regression",
+      "player_elevated_overhead_and_cvd_controls_no_unapproved_regression",
+      "mask_resize_context_loss_stale_feedback_and_msaa_fail_closed",
+      "exactly_two_color_submissions_actual_then_freeze_then_predicted",
+      "all_existing trajectory ownership telemetry and renderer CPU suites pass"
+    ],
+    "required_fixture_count": 16,
+    "implementation_receipt_required": true,
+    "production_post_sha_for_each_allowed_production_file_required": true,
+    "cpu_binary_and_source_aggregate_sha_required": true,
+    "passing_cpu_static_is_not_gpu_or_ta_acceptance": true
+  },
+  "forbidden_changes": [
+    "No capture ID, fixture ID, camera name, [783,413], [892,491], [940,525], or selected-output coordinate literal in production selection logic.",
+    "No global actual-over-predicted priority and no suppression outside the minimum selected true-crossing sample mask.",
+    "No non-cross dash-on, same-stem _core/_halo, endpoint, tick, marker, outer rim, scene-color, actual-halo, ambiguous, foreign, double, or unowned sample selection.",
+    "No threshold, visible region, largest8, contrast, source-count, ownership, acceptance-helper, or telemetry semantic change.",
+    "No route, centerline, width, cap, dash on/off/period/phase, offset, camera, viewport, layout, asset, UI, replay, authority, or product exposure change.",
+    "No source ID/count/order/digest or three repair-ID substitution, removal, reordering, coordinate retargeting, or color-selected topology.",
+    "No extra color draw, predicted-before-actual reorder, z-order-only workaround, HDR/RGB equality, stale mask, framebuffer feedback, unresolved MSAA alias, or fail-open resource fallback.",
+    "No files outside allowed_files and no GPU execution, readiness, capture authorization, machine/TA/targeted5/targeted11/formal68/M3/golden/beta/product claim from this gate."
+  ],
+  "future_gpu_and_ta_boundary": {
+    "status": "NOT_AUTHORIZED_NOT_RUN",
+    "minimum_future_cases": [
+      "camera_player_low_1080",
+      "camera_elevated_1080",
+      "camera_overhead_1080",
+      "camera_broadcast_1080",
+      "actual_retina_ui135_cvd"
+    ],
+    "requires_frozen_implementation_receipt": true,
+    "requires_new_readiness": true,
+    "requires_single_use_gpu_authorization": true,
+    "machine_five_of_five_before_original_resolution_ta": true,
+    "existing_targeted5_template_cannot_be_marked_from_cpu_only": true,
+    "targeted11_formal68_m3_product_remain_false": true
+  },
+  "authorization_boundary": {
+    "cpu_static_scoped_implementation_authorized": true,
+    "production_files_authorized_only_as_allowlisted": true,
+    "product_decision_bound": true,
+    "alternative_crossing_grammar_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorization_created": false,
+    "machine_or_ta_acceptance": false,
+    "product_exposure_authorized": false
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "production_modified_by_this_gate": false,
+    "cpu_static_implementation_executed_by_this_gate": false,
+    "cpu_static_pass": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}
+
+

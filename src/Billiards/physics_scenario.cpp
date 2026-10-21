@@ -487,11 +487,25 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             ball.position = pointArray(item, "position_cm");
             ball.velocity = pointArray(item, "velocity_cm_s");
             ball.angularVelocity = pointArray(item, "angular_velocity_rad_s");
+            ball.trajectoryGeneration = 0;
+            if (item.has("trajectory_generation") &&
+                (!item.at("trajectory_generation").isString() ||
+                    !parseCanonicalTrajectoryGeneration(
+                        item.at("trajectory_generation").asString(),
+                        ball.trajectoryGeneration)))
+                throw std::runtime_error(
+                    "trajectory_generation must be a canonical unsigned 64-bit decimal string");
             if (item.has("pocketed")) {
                 if (!item.at("pocketed").isBool()) throw std::runtime_error("pocketed must be boolean");
                 ball.pocketed = item.at("pocketed").asBool();
             } else {
                 ball.pocketed = false;
+            }
+            ball.outOfPlay = false;
+            if (item.has("out_of_play")) {
+                if (!item.at("out_of_play").isBool()) throw std::runtime_error("out_of_play must be boolean");
+                ball.outOfPlay = item.at("out_of_play").asBool();
+                if (ball.outOfPlay && ball.pocketed) throw std::runtime_error("out_of_play and pocketed are distinct removal states");
             }
             ball.speed = std::sqrt(
                 ball.velocity.x * ball.velocity.x + ball.velocity.z * ball.velocity.z);
@@ -504,7 +518,8 @@ PhysicsScenarioResult parsePhysicsScenario(const json::Value& value)
             CueImpactInput input;
             input.cueBallIndex = required(cue, "cue_ball_index").asInt();
             if (input.cueBallIndex < 0 || input.cueBallIndex >= kBallCount ||
-                !seen[input.cueBallIndex] || scenario.balls[input.cueBallIndex].pocketed) {
+                !seen[input.cueBallIndex] || scenario.balls[input.cueBallIndex].pocketed ||
+                scenario.balls[input.cueBallIndex].outOfPlay) {
                 throw std::runtime_error("cue_ball_index must identify one active listed ball");
             }
             input.cueSpeedCmS = requiredNumber(cue, "cue_speed_cm_s");

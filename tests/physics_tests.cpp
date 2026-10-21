@@ -2,6 +2,7 @@
 #include "cushion_contact.h"
 #include "game_state.h"
 #include "physics.h"
+#include "physics_telemetry_exact_test_helpers.h"
 #include "pocket_boundary.h"
 #include "surface_motion.h"
 
@@ -27,6 +28,304 @@ int fail(const char* message)
 
 int main()
 {
+    {
+        const auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& airborne = state.balls[1];
+        auto& cloth = state.balls[2];
+        airborne.pocketed = cloth.pocketed = false;
+        const float plane = profile.tableDeparture.clothSurfaceYCm + profile.ball.radiusCm;
+        const double separation = 2.0 * profile.ball.radiusCm - 0.00109;
+        airborne.position = {0.0f, plane + 0.1f, 0.0f};
+        airborne.physicalDomain = billiardgl::PhysicalBallDomain::Airborne;
+        cloth.position = {static_cast<float>(std::sqrt(separation * separation - 0.01)), plane, 0.0f};
+        cloth.velocity = {1.0f, 0.0f, 0.0f};
+        cloth.speed = 1.0f;
+        const auto original = state;
+        const auto correction = billiardgl::updatePhysics(state, 0.0f, profile);
+        bool actualProjection = false;
+        bool zeroImpulseContact = false;
+        for (const auto& solver : correction.solverEvents)
+            actualProjection = actualProjection || !solver.positionProjections.empty();
+        for (const auto& contact : correction.contacts)
+            zeroImpulseContact = zeroImpulseContact ||
+                (contact.kind == billiardgl::PhysicsContactKind::BallBall &&
+                 contact.firstBall == 1 && contact.secondBall == 2 &&
+                 contact.normalImpulseNs == 0.0 && contact.positionCorrected);
+        if (correction.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            !actualProjection || !zeroImpulseContact ||
+            state.balls[1].position.x == original.balls[1].position.x)
+            return fail("separating mixed overlap requires a real zero-time position correction receipt");
+        const auto following = billiardgl::updatePhysics(state, 1.0f / 120.0f, profile);
+        if (following.stepStatus == billiardgl::PhysicsStepStatus::Failed)
+            return fail("corrected mixed overlap enters the swept domain query without relaxing penetration limits");
+        auto invalid = original;
+        invalid.balls[2].position.x = 0.1f;
+        const auto invalidBefore = invalid;
+        const auto rejected = billiardgl::updatePhysics(invalid, 1.0f / 120.0f, profile);
+        if (rejected.stepStatus != billiardgl::PhysicsStepStatus::Failed ||
+            rejected.failureCode != billiardgl::PhysicsFailureCode::PenetrationLimit ||
+            !rejected.contacts.empty() || !rejected.solverEvents.empty() ||
+            !rejected.analyticSurfaceMotion.empty() ||
+            !billiardgl::test::detail::exactPoint(invalid.balls[1].position, invalidBefore.balls[1].position) ||
+            !billiardgl::test::detail::exactPoint(invalid.balls[2].position, invalidBefore.balls[2].position))
+            return fail("excessive mixed overlap still fails atomically without publishing a correction");
+    }
+    {
+        auto profile = billiardgl::defaultChinesePoolPhysicsProfile();
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& cue = state.balls[0];
+        cue.pocketed = false;
+        cue.position = {0.0f, billiardgl::kTableHeight + billiardgl::kBallRadius, 0.0f};
+        cue.trajectoryGeneration = 7;
+        const auto telemetry = billiardgl::updatePhysics(state, 1.0f / 120.0f, profile);
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            telemetry.analyticSurfaceMotion.empty())
+            return fail("post-reset free motion emits an analytic segment");
+        for (const auto& segment : telemetry.analyticSurfaceMotion)
+            if (segment.ballIndex != 0 || segment.trajectoryGeneration != 7)
+                return fail("discrete free motion retains the actual trajectory generation");
+    }
+    {
+        auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& ball = state.balls[1];
+        ball.pocketed = false;
+        ball.position = {0.0f, profile.tableDeparture.clothSurfaceYCm +
+            profile.ball.radiusCm, 0.0f};
+        ball.physicalDomain = billiardgl::PhysicalBallDomain::Airborne;
+        ball.velocity = {0.0f, 0.00001f, 0.0f};
+        state.ballsMoving = true;
+        const auto telemetry = billiardgl::updatePhysics(state,
+            profile.solver.timeStepSeconds, profile);
+        bool landed = false;
+        for (const auto& event : telemetry.tableDepartureEvents) {
+            if (event.kind != billiardgl::TableDepartureEventKind::ClothReturn) continue;
+            landed = true;
+            if (event.linkedPhysicsContactOrdinal < 0 ||
+                event.linkedPhysicsContactOrdinal >= static_cast<int>(telemetry.contacts.size()))
+                return fail("sub-tolerance airborne return retains a real support receipt");
+            const auto& contact = telemetry.contacts[event.linkedPhysicsContactOrdinal];
+            if (contact.kind != billiardgl::PhysicsContactKind::Support ||
+                contact.firstBall != event.ballIndex || contact.solverEventId != event.solverEventId)
+                return fail("sub-tolerance landing receipt binds the actual support solver");
+        }
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed || !landed)
+            return fail("tiny airborne excursion completes through the canonical landing island");
+    }
+    {
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& removed = state.balls[1];
+        removed.pocketed = false;
+        removed.outOfPlay = true;
+        removed.physicalDomain = billiardgl::PhysicalBallDomain::OutsideLandingSupported;
+        removed.position = {200.0f, 2.8575f, 0.0f};
+        const auto before = removed;
+        const auto telemetry = billiardgl::updatePhysics(state, 0.1f,
+            billiardgl::interactiveChinesePoolPhysicsProfile());
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            !telemetry.contacts.empty() || !telemetry.tableDepartureEvents.empty() ||
+            !telemetry.analyticSurfaceMotion.empty() || removed.pocketed || !removed.outOfPlay ||
+            !billiardgl::test::detail::exactPoint(removed.position, before.position) || state.ballsMoving)
+            return fail("adjudicated off-table ball is inactive without a fake pocket capture or storage relocation");
+    }
+    for (int ballId : {0, 1}) for (int pocketId : {0, 1, 2, 3, 4, 5}) {
+        const auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        const auto frames = billiardgl::buildPocketBoundaryFrames(profile.tableBoundary);
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& ball = state.balls[ballId];
+        ball.pocketed = false;
+        ball.physicalDomain = billiardgl::PhysicalBallDomain::Airborne;
+        ball.position = {frames[pocketId].mouthCenter.x,
+            profile.tableDeparture.clothSurfaceYCm + profile.ball.radiusCm + 1.0f,
+            frames[pocketId].mouthCenter.z};
+        ball.velocity = {0.0f, -20.0f, 0.0f};
+        ball.speed = 20.0f;
+        ball.trajectoryGeneration = 9;
+        state.ballsMoving = true;
+        auto replay = state;
+        bool entry = false;
+        bool capture = false;
+        bool throat = false;
+        int entryTick = -1;
+        for (int tick = 0; tick < 120 && !capture; ++tick) {
+            const auto telemetry = billiardgl::updatePhysics(state, 1.0f / 120.0f, profile);
+            const auto replayTelemetry = billiardgl::updatePhysics(replay, 1.0f / 120.0f, profile);
+            if (!billiardgl::test::exactPhysicsStepTelemetry(telemetry, replayTelemetry) ||
+                !billiardgl::test::detail::exactPoint(ball.position, replay.balls[ballId].position) ||
+                !billiardgl::test::detail::exactPoint(ball.velocity, replay.balls[ballId].velocity) ||
+                ball.trajectoryGeneration != replay.balls[ballId].trajectoryGeneration)
+                return fail("vertical channel public replay preserves exact states and complete telemetry");
+            if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed) {
+                std::cerr << "vertical pocket tick=" << tick << ' ' << telemetry.failureDetail << '\n';
+                return fail("vertical pocket descent must remain a successful physical trajectory");
+            }
+            for (const auto& event : telemetry.tableDepartureEvents) {
+                if (event.kind != billiardgl::TableDepartureEventKind::PocketEntry) continue;
+                entry = true;
+                entryTick = tick;
+            }
+            for (const auto& contact : telemetry.contacts) {
+                if (contact.kind != billiardgl::PhysicsContactKind::Pocket) continue;
+                if (contact.pocketBoundaryEvent == billiardgl::PocketBoundaryEventKind::Throat)
+                    throat = true;
+                if (contact.pocketBoundaryEvent != billiardgl::PocketBoundaryEventKind::Capture) continue;
+                capture = contact.firstBall == ballId && contact.pocketId == pocketId &&
+                    contact.pocketCaptureSequence != 0 && contact.pocketVerticalShaft &&
+                    contact.trajectoryGenerationBefore == 9 && throat && tick > entryTick &&
+                    nearlyEqual(contact.firstPositionAtContactCm.y,
+                        profile.tableDeparture.clothSurfaceYCm - profile.ball.radiusCm);
+                if (ballId == 0 && (!contact.administrativeResetAfterCapture ||
+                        contact.trajectoryGenerationAfter != contact.trajectoryGenerationBefore + 1))
+                    return fail("vertical cue capture publishes its actual reset generation");
+            }
+        }
+        if (!entry || !capture || (ballId != 0 && !ball.pocketed) ||
+            (ballId == 0 && (ball.pocketed || ball.physicalDomain !=
+                billiardgl::PhysicalBallDomain::ClothSupported)))
+            return fail("vertical pocket entry progresses to a real canonical capture instead of freezing at the mouth");
+    }
+    {
+        const auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for (auto& ball : state.balls) ball.pocketed = true;
+        auto& ball = state.balls[1];
+        ball.pocketed = false;
+        ball.physicalDomain = billiardgl::PhysicalBallDomain::Airborne;
+        ball.position = {profile.tableBoundary.playfieldWidthCm * 0.5f -
+            profile.ball.radiusCm - 0.1f,
+            profile.tableDeparture.clothSurfaceYCm + profile.ball.radiusCm + 0.2f,
+            30.0f};
+        ball.velocity = {100.0f, 0.0f, 0.0f};
+        ball.speed = 100.0f;
+        state.ballsMoving = true;
+        const auto telemetry = billiardgl::updatePhysics(state, 0.002f, profile);
+        bool linkedRailImpulse = false;
+        for (const auto& event : telemetry.tableDepartureEvents) {
+            if (event.kind != billiardgl::TableDepartureEventKind::CushionNoseContact)
+                continue;
+            const int index = event.linkedPhysicsContactOrdinal;
+            if (index < 0 || index >= static_cast<int>(telemetry.contacts.size())) continue;
+            const auto& contact = telemetry.contacts[index];
+            linkedRailImpulse = contact.kind == billiardgl::PhysicsContactKind::Rail &&
+                contact.firstBall == 1 && contact.boundaryFeatureId == 1 &&
+                contact.velocityImpulseApplied && contact.normalImpulseNs > 0.0 &&
+                contact.solverEventId == event.solverEventId &&
+                contact.wholeTickTimeOfImpactSeconds == event.absoluteWholeTickTimeSeconds &&
+                contact.wholeTickTimeOfImpactSeconds > 0.0;
+        }
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            !linkedRailImpulse || !(ball.velocity.x < 0.0f) || !state.events.railCollision)
+            return fail("airborne nose collision uses authoritative cushion impulse and exact private event link");
+    }
+    {
+        billiardgl::GameState supported;
+        billiardgl::initializeBalls(supported);
+        for (auto& ball : supported.balls) ball.pocketed = true;
+        auto& ball = supported.balls[1];
+        const auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        ball.pocketed = false;
+        ball.position = billiardgl::Point3{0.0f,
+            profile.tableDeparture.clothSurfaceYCm + profile.ball.radiusCm, 0.0f};
+        ball.velocity = billiardgl::Point3{0.0f, -10.0f, 0.0f};
+        ball.speed = 10.0f;
+        ball.physicalDomain = billiardgl::PhysicalBallDomain::ClothSupported;
+        const auto telemetry = billiardgl::updatePhysics(supported, 0.01f, profile);
+        bool supportImpulse = false;
+        for (const auto& contact : telemetry.contacts) {
+            if (contact.kind == billiardgl::PhysicsContactKind::Support &&
+                contact.firstBall == 1 && contact.velocityImpulseApplied &&
+                contact.wholeTickTimeOfImpactSeconds == 0.0 &&
+                contact.normalImpulseNs > 0.0)
+                supportImpulse = true;
+        }
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            !supportImpulse || ball.velocity.y != 0.0f ||
+            supported.events.railCollision || telemetry.solverEvents.empty()) {
+            std::cerr << telemetry.failureDetail << '\n';
+            return fail("supported downward velocity produces an authoritative support impulse, never a silent clamp or rail event");
+        }
+    }
+    {
+        billiardgl::GameState state;
+        billiardgl::initializeBalls(state);
+        for(int i=0;i<billiardgl::kBallCount;++i)state.balls[i].pocketed=true;
+        state.balls[1].pocketed=false;
+        const auto profile=billiardgl::defaultChinesePoolPhysicsProfile();
+        state.balls[1].position.x=-profile.tableBoundary.playfieldWidthCm*0.5f+
+            profile.ball.radiusCm;
+        state.balls[1].velocity.x=-100.0f;state.balls[1].speed=100.0f;
+        state.ballsMoving=true;
+        const auto telemetry=billiardgl::updatePhysics(state,0.01f,profile);
+        bool straight=false;
+        for(const auto& c:telemetry.contacts)straight=straight||
+            (c.kind==billiardgl::PhysicsContactKind::Rail&&c.firstBall==1&&
+             c.boundaryFeatureId==0&&c.velocityImpulseApplied);
+        if(!straight)return fail("D5-B straight cushion contact preserves exact feature id");
+    }
+    {
+        billiardgl::GameState landing;
+        billiardgl::initializeBalls(landing);
+        for (auto& ball : landing.balls) ball.pocketed = true;
+        const auto profile = billiardgl::interactiveChinesePoolPhysicsProfile();
+        const float plane = profile.tableDeparture.clothSurfaceYCm + profile.ball.radiusCm;
+        auto& falling = landing.balls[1];
+        auto& supported = landing.balls[2];
+        falling.pocketed = supported.pocketed = false;
+        falling.position = billiardgl::Point3{0.0f, plane, 0.0f};
+        supported.position = billiardgl::Point3{2.0f * profile.ball.radiusCm, plane, 0.0f};
+        falling.velocity = billiardgl::Point3{10.0f, -10.0f, 0.0f};
+        falling.speed = std::sqrt(200.0f);
+        falling.physicalDomain = billiardgl::PhysicalBallDomain::Airborne;
+        supported.velocity = billiardgl::Point3{};
+        supported.speed = 0.0f;
+        supported.physicalDomain = billiardgl::PhysicalBallDomain::ClothSupported;
+        const auto telemetry = billiardgl::updatePhysics(landing, 0.001f, profile);
+        bool coupled = false;
+        for (const auto& support : telemetry.contacts) {
+            if (support.kind != billiardgl::PhysicsContactKind::Support ||
+                support.firstBall != 1 || !(support.normalImpulseNs > 0.0) ||
+                support.wholeTickTimeOfImpactSeconds != 0.0) continue;
+            for (const auto& pair : telemetry.contacts) {
+                if (pair.kind == billiardgl::PhysicsContactKind::BallBall &&
+                    pair.firstBall == 1 && pair.secondBall == 2 &&
+                    pair.solverEventId == support.solverEventId &&
+                    pair.solverIslandId == support.solverIslandId)
+                    coupled = true;
+            }
+        }
+        bool landingReceiptBound = false;
+        for (const auto& event : telemetry.tableDepartureEvents) {
+            if (event.kind != billiardgl::TableDepartureEventKind::ClothReturn ||
+                event.ballIndex != 1 || event.sourceDomain !=
+                    billiardgl::PhysicalBallDomain::Airborne ||
+                event.trajectoryGeneration != falling.trajectoryGeneration ||
+                event.linkedPhysicsContactOrdinal < 0 ||
+                static_cast<std::size_t>(event.linkedPhysicsContactOrdinal) >=
+                    telemetry.contacts.size()) continue;
+            const auto& support = telemetry.contacts[event.linkedPhysicsContactOrdinal];
+            landingReceiptBound = support.kind == billiardgl::PhysicsContactKind::Support &&
+                support.firstBall == event.ballIndex &&
+                support.solverEventId == event.solverEventId &&
+                support.wholeTickTimeOfImpactSeconds == event.absoluteWholeTickTimeSeconds;
+        }
+        if (telemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+            !coupled || !landingReceiptBound) {
+            std::cerr << telemetry.failureDetail << '\n';
+            return fail("simultaneous landing and ball contact preserve incoming vertical velocity in one authoritative island");
+        }
+    }
     billiardgl::GameState state;
     billiardgl::initializeBalls(state);
     if (state.balls[0].position.y != billiardgl::kTableHeight + billiardgl::kBallRadius) {
@@ -122,9 +421,14 @@ int main()
     billiardgl::setBallVelocity(sweptState.balls[0], 500.0f, 0.0f, 0.0f);
     const billiardgl::PhysicsStepTelemetry sweptTelemetry =
         billiardgl::updatePhysics(sweptState, 0.1f, cushionProfile);
+    int sweptRailContacts = 0;
+    for (const auto& contact : sweptTelemetry.contacts)
+        if (contact.kind == billiardgl::PhysicsContactKind::Rail)
+            ++sweptRailContacts;
     if (!(sweptState.balls[0].velocity.x < 0.0f) ||
         sweptState.balls[0].position.x > xLimit + 0.001f ||
-        sweptTelemetry.contacts.size() != 1) {
+        sweptTelemetry.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+        sweptRailContacts != 1) {
         return fail("swept rail contact must stop high-speed tunneling within one tick");
     }
     const billiardgl::PhysicsStepTelemetry adjacentRailTelemetry =
@@ -178,8 +482,10 @@ int main()
     for (int index = 2; index < billiardgl::kBallCount; ++index) {
         contactState.balls[index].pocketed = true;
     }
-    contactState.balls[0].position = billiardgl::Point3{0.0f, 92.715f, 20.0f};
-    contactState.balls[1].position = billiardgl::Point3{5.7f, 92.715f, 20.0f};
+    const float contactCenterY = contactProfile.tableDeparture.clothSurfaceYCm +
+        contactProfile.ball.radiusCm;
+    contactState.balls[0].position = billiardgl::Point3{0.0f, contactCenterY, 20.0f};
+    contactState.balls[1].position = billiardgl::Point3{5.7f, contactCenterY, 20.0f};
     billiardgl::setBallVelocity(contactState.balls[0], 100.0f, 0.0f, 30.0f);
     billiardgl::BallState directFirst = contactState.balls[0];
     billiardgl::BallState directSecond = contactState.balls[1];
@@ -195,9 +501,16 @@ int main()
         !nearlyEqual(contactState.balls[1].velocity.z, directSecond.velocity.z)) {
         return fail("production collision must match the standalone contact model");
     }
-    if (contactTelemetry.contacts.size() != 1 ||
-        !nearlyEqual(static_cast<float>(contactTelemetry.contacts[0].normalImpulseNs),
-            static_cast<float>(direct.normalImpulseNs))) {
+    int authoritativePairContacts = 0;
+    bool authoritativePairImpulse = false;
+    for (const auto& contact : contactTelemetry.contacts) {
+        if (contact.kind != billiardgl::PhysicsContactKind::BallBall) continue;
+        ++authoritativePairContacts;
+        authoritativePairImpulse = nearlyEqual(
+            static_cast<float>(contact.normalImpulseNs),
+            static_cast<float>(direct.normalImpulseNs));
+    }
+    if (authoritativePairContacts != 1 || !authoritativePairImpulse) {
         return fail("production collision telemetry must use the authoritative impulse");
     }
     if (!nearlyEqual(contactState.balls[0].velocity.x, 25.0f) ||
@@ -340,6 +653,8 @@ int main()
         billiardgl::updatePhysics(sweptPocketState, 0.1f, pocketProfile);
     if (!sweptPocketState.events.cueBallPocketed ||
         sweptPocketState.nextPocketCaptureSequence != 2) {
+        std::cerr << "swept capture failure=" << int(pocketTelemetry.failureCode)
+                  << " detail=" << pocketTelemetry.failureDetail << '\n';
         return fail("swept side-pocket capture should not tunnel at high speed");
     }
     int captureContacts = 0;
@@ -395,9 +710,11 @@ int main()
     eventProfile.surface.rollingResistanceAccelerationCmS2 = 0.0f;
     eventProfile.surface.legacyFrictionAccelerationCmS2 = 0.0f;
     billiardgl::GameState highSpeed;
+    billiardgl::initializeBalls(highSpeed);
     for (billiardgl::BallState& ball : highSpeed.balls) ball.pocketed = true;
     highSpeed.balls[0].pocketed = false;
     highSpeed.balls[1].pocketed = false;
+    highSpeed.balls[0].position.z = highSpeed.balls[1].position.z = 0.0f;
     highSpeed.balls[0].position.x = -50.0f;
     highSpeed.balls[1].position.x = 50.0f;
     highSpeed.balls[0].velocity.x = 1000.0f;
@@ -431,13 +748,26 @@ int main()
     ballRail.balls[1].velocity.x = 200.0f;
     ballRail.balls[0].speed = 100.0f;
     ballRail.balls[1].speed = 200.0f;
+    auto coupledProfile = billiardgl::interactiveChinesePoolPhysicsProfile();
+    coupledProfile.ball.normalRestitution = eventProfile.ball.normalRestitution;
+    coupledProfile.ball.frictionCoefficient = eventProfile.ball.frictionCoefficient;
+    coupledProfile.surface = eventProfile.surface;
     const billiardgl::PhysicsStepTelemetry ballRailTelemetry =
-        billiardgl::updatePhysics(ballRail, 0.01f, eventProfile);
+        billiardgl::updatePhysics(ballRail, 0.01f, coupledProfile);
+    int ballRailPairs = 0, ballRailRails = 0, ballRailSupports = 0;
+    bool oneBallRailIsland = !ballRailTelemetry.contacts.empty();
+    for (const auto& contact : ballRailTelemetry.contacts) {
+        ballRailPairs += contact.kind == billiardgl::PhysicsContactKind::BallBall;
+        ballRailRails += contact.kind == billiardgl::PhysicsContactKind::Rail;
+        ballRailSupports += contact.kind == billiardgl::PhysicsContactKind::Support;
+        oneBallRailIsland = oneBallRailIsland &&
+            contact.solverEventId == ballRailTelemetry.contacts.front().solverEventId &&
+            contact.solverIslandId == ballRailTelemetry.contacts.front().solverIslandId;
+    }
     if (ballRailTelemetry.solverEvents.size() != 1 ||
-        ballRailTelemetry.solverEvents[0].contactCount != 2 ||
-        ballRailTelemetry.contacts.size() < 2 ||
-        ballRailTelemetry.contacts[0].solverIslandId !=
-            ballRailTelemetry.contacts[1].solverIslandId) {
+        ballRailTelemetry.solverEvents[0].contactCount != 4 ||
+        ballRailPairs != 1 || ballRailRails != 1 || ballRailSupports != 2 ||
+        !oneBallRailIsland) {
         return fail("same-TOI ball and straight-rail contacts must solve in one island");
     }
 
@@ -469,9 +799,12 @@ int main()
             billiardgl::PhysicsStepStatus::Failed ||
         failedBatchTelemetry.failureCode !=
             billiardgl::PhysicsFailureCode::PenetrationLimit ||
-        failedBatchTelemetry.solverEvents.empty() ||
-        std::string(failedBatchTelemetry.solverEvents[0].failureCode) !=
-            "penetration_limit" ||
+        !failedBatchTelemetry.solverEvents.empty() ||
+        !failedBatchTelemetry.contacts.empty() ||
+        !failedBatchTelemetry.surfaceMotion.empty() ||
+        !failedBatchTelemetry.analyticSurfaceMotion.empty() ||
+        !failedBatchTelemetry.planeCrossings.empty() ||
+        !failedBatchTelemetry.planeAttestations.empty() ||
         !nearlyEqual(failedPhysicalBatch.balls[0].position.x, 0.0f) ||
         !nearlyEqual(failedPhysicalBatch.balls[1].position.x, 1.0f) ||
         failedPhysicalBatch.balls[2].pocketInteraction.phase !=
@@ -639,7 +972,10 @@ int main()
     }
 
     billiardgl::GameState simultaneous;
-    for (billiardgl::BallState& ball : simultaneous.balls) ball.pocketed = true;
+    for (billiardgl::BallState& ball : simultaneous.balls) {
+        ball.pocketed = true;
+        ball.position.y = eventProfile.tableDeparture.clothSurfaceYCm + eventProfile.ball.radiusCm;
+    }
     for (int index = 0; index < 3; ++index) simultaneous.balls[index].pocketed = false;
     simultaneous.balls[0].position.x = -10.0f;
     simultaneous.balls[1].position.x = 0.0f;
@@ -659,7 +995,10 @@ int main()
     }
 
     billiardgl::GameState chained;
-    for (billiardgl::BallState& ball : chained.balls) ball.pocketed = true;
+    for (billiardgl::BallState& ball : chained.balls) {
+        ball.pocketed = true;
+        ball.position.y = eventProfile.tableDeparture.clothSurfaceYCm + eventProfile.ball.radiusCm;
+    }
     for (int index = 0; index < 3; ++index) chained.balls[index].pocketed = false;
     chained.balls[0].position.x = -30.0f;
     chained.balls[1].position.x = 0.0f;
@@ -682,16 +1021,23 @@ int main()
     }
 
     billiardgl::GameState singleTick;
-    for (billiardgl::BallState& ball : singleTick.balls) ball.pocketed = true;
+    for (billiardgl::BallState& ball : singleTick.balls) {
+        ball.pocketed = true;
+        ball.position.y = eventProfile.tableDeparture.clothSurfaceYCm + eventProfile.ball.radiusCm;
+    }
     singleTick.balls[0].pocketed = singleTick.balls[1].pocketed = false;
     singleTick.balls[0].position.x = -50.0f;
     singleTick.balls[1].position.x = 50.0f;
     singleTick.balls[0].velocity.x = 1000.0f;
     singleTick.balls[0].speed = 1000.0f;
     billiardgl::GameState subdivided = singleTick;
-    billiardgl::updatePhysics(singleTick, 0.1f, eventProfile);
-    billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
-    billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
+    const auto singleResult = billiardgl::updatePhysics(singleTick, 0.1f, eventProfile);
+    const auto firstHalf = billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
+    const auto secondHalf = billiardgl::updatePhysics(subdivided, 0.05f, eventProfile);
+    if (singleResult.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+        firstHalf.stepStatus == billiardgl::PhysicsStepStatus::Failed ||
+        secondHalf.stepStatus == billiardgl::PhysicsStepStatus::Failed)
+        return fail("tick-subdivision comparison requires successful physical steps");
     for (int index = 0; index < 2; ++index) {
         if (std::fabs(singleTick.balls[index].position.x -
                 subdivided.balls[index].position.x) > 0.001f ||
@@ -710,10 +1056,170 @@ int main()
     limitedProfile.solver.maximumPenetrationCm = 0.5f;
     const billiardgl::PhysicsStepTelemetry limitedTelemetry =
         billiardgl::updatePhysics(limited, 0.1f, limitedProfile);
-    if (limitedTelemetry.solverEvents.size() != 1 ||
-        std::string(limitedTelemetry.solverEvents[0].failureCode) !=
-            "penetration_limit") {
+    if (limitedTelemetry.stepStatus != billiardgl::PhysicsStepStatus::Failed ||
+        limitedTelemetry.failureCode != billiardgl::PhysicsFailureCode::PenetrationLimit ||
+        !limitedTelemetry.solverEvents.empty() ||
+        !limitedTelemetry.contacts.empty() ||
+        !limitedTelemetry.surfaceMotion.empty() ||
+        !limitedTelemetry.analyticSurfaceMotion.empty() ||
+        !limitedTelemetry.planeCrossings.empty() ||
+        !limitedTelemetry.planeAttestations.empty() ||
+        limited.balls[0].position.x != -2.5f || limited.balls[1].position.x != 2.5f) {
         return fail("solver hard limit should stop the tick with one explicit failure");
+    }
+
+    billiardgl::PhysicsProfile crossingProfile = eventProfile;
+    crossingProfile.surface.rollingResistanceAccelerationCmS2 = 0.0f;
+    billiardgl::GameState crossingState;
+    for (auto& ball : crossingState.balls) ball.pocketed = true;
+    crossingState.balls[0].pocketed = false;
+    crossingState.balls[0].position.z = -5.0f;
+    crossingState.balls[0].velocity.z = 100.0f;
+    crossingState.balls[0].speed = 100.0f;
+    crossingState.balls[0].angularVelocity.x =
+        100.0f / crossingProfile.ball.radiusCm;
+    crossingState.balls[0].motionState =
+        billiardgl::BallMotionState::Rolling;
+    billiardgl::PhysicsPlaneObservationRequest plane;
+    plane.observationId = "wpa_ii_08_head_string_cue_center";
+    plane.ballIndex = 0;
+    plane.axis = billiardgl::PhysicsPlaneAxis::Z;
+    plane.planeCoordinateCm = 0.0;
+    plane.direction = billiardgl::PhysicsPlaneCrossingDirection::
+        NegativeToPositive;
+    const auto crossingTelemetry = billiardgl::updatePhysics(
+        crossingState, 0.1f, crossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (crossingTelemetry.stepStatus !=
+            billiardgl::PhysicsStepStatus::Succeeded ||
+        crossingTelemetry.planeAttestations.size() != 1 ||
+        !crossingTelemetry.planeAttestations[0].complete ||
+        crossingTelemetry.planeCrossings.size() != 1 ||
+        std::fabs(crossingTelemetry.planeCrossings[0].
+            wholeTickTimeOfImpactSeconds - 0.05) > 0.00001 ||
+        crossingTelemetry.planeCrossings[0].
+            axisVelocityAtCrossingCmS <= 0.0) {
+        return fail("authoritative rolling segment emits exact cue-center plane crossing and complete attestation");
+    }
+
+    billiardgl::GameState departureState = crossingState;
+    departureState.balls[0].position.z = 0.0f;
+    plane.allowStartOnPlaneDeparture = true;
+    const auto departureTelemetry = billiardgl::updatePhysics(
+        departureState, 0.1f, crossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (departureTelemetry.planeCrossings.size() != 1 ||
+        departureTelemetry.planeCrossings[0].
+            wholeTickTimeOfImpactSeconds != 0.0 ||
+        departureTelemetry.planeCrossings[0].signedDistanceBeforeCm != 0.0 ||
+        departureTelemetry.planeCrossings[0].signedDistanceAfterCm <= 0.0 ||
+        !departureTelemetry.planeAttestations[0].complete) {
+        return fail("signed frozen-boundary request emits exact start-of-segment departure");
+    }
+    plane.allowStartOnPlaneDeparture = false;
+    departureState = crossingState;
+    departureState.balls[0].position.z = 0.0f;
+    const auto strictDepartureTelemetry = billiardgl::updatePhysics(
+        departureState, 0.1f, crossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (!strictDepartureTelemetry.planeCrossings.empty()) {
+        return fail("ordinary plane request preserves strict side-to-side crossing semantics");
+    }
+
+    billiardgl::PhysicsProfile slidingCrossingProfile = crossingProfile;
+    slidingCrossingProfile.surface.slidingFrictionCoefficient = 0.20f;
+    slidingCrossingProfile.surface.rollingResistanceAccelerationCmS2 = 1.0f;
+    billiardgl::GameState slidingCrossing;
+    for (auto& ball : slidingCrossing.balls) ball.pocketed = true;
+    slidingCrossing.balls[0].pocketed = false;
+    slidingCrossing.balls[0].position.z = -5.0f;
+    slidingCrossing.balls[0].velocity.z = 100.0f;
+    slidingCrossing.balls[0].speed = 100.0f;
+    slidingCrossing.balls[0].motionState =
+        billiardgl::BallMotionState::Sliding;
+    plane.planeCoordinateCm = 0.0;
+    const auto slidingCrossingTelemetry = billiardgl::updatePhysics(
+        slidingCrossing, 0.1f, slidingCrossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (slidingCrossingTelemetry.planeCrossings.size() != 1 ||
+        slidingCrossingTelemetry.planeCrossings[0].segmentOrdinal != 0 ||
+        !slidingCrossingTelemetry.planeAttestations[0].complete) {
+        return fail("quadratic sliding segment emits one authoritative crossing");
+    }
+
+    billiardgl::GameState piecewiseCrossing;
+    for (auto& ball : piecewiseCrossing.balls) ball.pocketed = true;
+    piecewiseCrossing.balls[0].pocketed = false;
+    piecewiseCrossing.balls[0].position.z = -10.0f;
+    piecewiseCrossing.balls[0].velocity.z = 100.0f;
+    piecewiseCrossing.balls[0].speed = 100.0f;
+    piecewiseCrossing.balls[0].motionState =
+        billiardgl::BallMotionState::Sliding;
+    plane.planeCoordinateCm = 5.0;
+    const auto piecewiseCrossingTelemetry = billiardgl::updatePhysics(
+        piecewiseCrossing, 0.25f, slidingCrossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (piecewiseCrossingTelemetry.analyticSurfaceMotion.size() < 2 ||
+        piecewiseCrossingTelemetry.planeCrossings.size() != 1 ||
+        piecewiseCrossingTelemetry.planeCrossings[0].segmentOrdinal != 1 ||
+        !piecewiseCrossingTelemetry.planeAttestations[0].complete) {
+        return fail("piecewise sliding-to-rolling coverage orders a crossing in the rolling tail");
+    }
+
+    billiardgl::GameState ordered;
+    for (auto& ball : ordered.balls) ball.pocketed = true;
+    ordered.balls[0].pocketed = ordered.balls[1].pocketed = false;
+    ordered.balls[0].position.z = -20.0f;
+    ordered.balls[1].position.z = 20.0f;
+    ordered.balls[0].velocity.z = 1000.0f;
+    ordered.balls[0].speed = 1000.0f;
+    ordered.balls[0].angularVelocity.x =
+        1000.0f / crossingProfile.ball.radiusCm;
+    ordered.balls[0].motionState = billiardgl::BallMotionState::Rolling;
+    plane.planeCoordinateCm = -10.0;
+    const auto orderedTelemetry = billiardgl::updatePhysics(
+        ordered, 0.05f, crossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    double firstContactTime = std::numeric_limits<double>::infinity();
+    for (const auto& contact : orderedTelemetry.contacts) {
+        if (contact.kind == billiardgl::PhysicsContactKind::BallBall)
+            firstContactTime = std::min(firstContactTime,
+                contact.wholeTickTimeOfImpactSeconds);
+    }
+    if (orderedTelemetry.planeCrossings.size() != 1 ||
+        !(orderedTelemetry.planeCrossings[0].
+            wholeTickTimeOfImpactSeconds < firstContactTime) ||
+        !(firstContactTime > 0.0 && firstContactTime <= 0.05)) {
+        std::cerr << "ordered crossing/contact: "
+                  << orderedTelemetry.planeCrossings.size() << ", "
+                  << (orderedTelemetry.planeCrossings.empty() ? -1.0 :
+                      orderedTelemetry.planeCrossings[0].
+                        wholeTickTimeOfImpactSeconds)
+                  << ", " << firstContactTime << ", attest="
+                  << orderedTelemetry.planeAttestations.size() << ", complete="
+                  << (!orderedTelemetry.planeAttestations.empty() &&
+                      orderedTelemetry.planeAttestations[0].complete)
+                  << '\n';
+        return fail("same-tick continuous crossing is totally ordered before rebased first contact TOI");
+    }
+
+    billiardgl::GameState invalidObservationState = crossingState;
+    const billiardgl::GameState invalidObservationBefore =
+        invalidObservationState;
+    plane.planeCoordinateCm =
+        std::numeric_limits<double>::quiet_NaN();
+    const auto invalidObservation = billiardgl::updatePhysics(
+        invalidObservationState, 0.1f, crossingProfile,
+        billiardgl::PhysicsBoundaryMode::Unbounded, {plane});
+    if (invalidObservation.stepStatus !=
+            billiardgl::PhysicsStepStatus::Failed ||
+        invalidObservation.failureCode !=
+            billiardgl::PhysicsFailureCode::InvalidControls ||
+        invalidObservationState.balls[0].position.z !=
+            invalidObservationBefore.balls[0].position.z ||
+        !invalidObservation.planeCrossings.empty() ||
+        !invalidObservation.planeAttestations.empty()) {
+        return fail("invalid plane request fails before mutation and publishes no authoritative evidence");
     }
 
     return EXIT_SUCCESS;

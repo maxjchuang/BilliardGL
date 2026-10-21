@@ -1,0 +1,262 @@
+{
+  "schema": "wpa_ii_17_a_e_off_table_physical_telemetry_design_gap_gate_v1",
+  "status": "TELEMETRY_AND_PHYSICS_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-17(a)", "WPA-II-17(e)"],
+  "requested_scope_locator_correction": {
+    "request_named": "WPA-II-17(b)/(e) off-table physical telemetry",
+    "official_cue_off_table_locator": "17(a)",
+    "official_17_b_locator": "cue ball first contacts the wrong object ball",
+    "silent_relabel_forbidden": true
+  },
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [9, 11],
+    "clauses": [
+      {
+        "clause": "12.3",
+        "pdf_page": 9,
+        "locator": "Ball off the table",
+        "controlled_paraphrase": "A non-pocketed object ball and the cue ball must remain on the table; a non-8 object ball stopping outside the table is described as a legal disappearance and is not respotted."
+      },
+      {
+        "clause": "17(a)",
+        "pdf_page": 11,
+        "locator": "Cue ball scratched or off the table",
+        "controlled_paraphrase": "Cue-ball scratch or cue ball off the table is listed as a general foul."
+      },
+      {
+        "clause": "17(e)",
+        "pdf_page": 11,
+        "locator": "Object ball comes to rest off the table",
+        "controlled_paraphrase": "An object ball coming to rest off the table is listed as a general foul."
+      }
+    ],
+    "object_ball_policy_conflict": {
+      "clauses": ["12.3", "17(e)"],
+      "status": "POLICY_PENDING",
+      "resolved_by_this_gate": false,
+      "classification_or_adjudication_authorized": false
+    }
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "rows": [
+      {"id": "WPA-II-12-3", "status": "PARTIAL", "policy_decision_required": true},
+      {"id": "WPA-II-17", "status": "PARTIAL", "policy_decision_required": true}
+    ],
+    "physical_telemetry_claim_supersession": "The frozen audit's classifier and injected-fact coverage must not be read as proof that production physics or ShotFactCollector derives off-table events.",
+    "promotion_authorized": false
+  },
+  "independent_cue_scratch_receipt": {
+    "path": "docs/rules/wpa-ii-17-a-cue-scratch-policy-independent-telemetry-implementation-receipt-v1.json",
+    "sha256": "38d4c067d0f3c77603ef5149ea5160e859f8fc8d02c52d04a116761b8106aef5",
+    "scope": "real cue-ball pocket capture only",
+    "off_table_extension_claimed": false,
+    "must_remain_independent_and_unchanged": true
+  },
+  "source_bindings": {
+    "surface_motion_header": {"path": "src/Billiards/surface_motion.h", "sha256": "76b282b8173acfe6ef87421232b97eeddc5f537178a5ee7b9c5d9eadf71da248"},
+    "surface_motion": {"path": "src/Billiards/surface_motion.cpp", "sha256": "66803444f1ecdcbf8c0b6ae8b37095dc61a8babf4b7b0bcd2fbe4a50098cca4e"},
+    "physics_header": {"path": "src/Billiards/physics.h", "sha256": "962c06be2ac99b93484de948b51669dbc25da1c72b3009fe38a0d9d0f8883f42"},
+    "physics": {"path": "src/Billiards/physics.cpp", "sha256": "fc497d79650bf2ff9cd8570c320653c8742e4201b8a2428a7892bfcb0124de77"},
+    "physics_telemetry_header": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    "pocket_boundary_header": {"path": "src/Billiards/pocket_boundary.h", "sha256": "07e3e69930b460e9dfed1952e97f88a4f29a1a099e00cab0ad64a18341380440"},
+    "pocket_boundary": {"path": "src/Billiards/pocket_boundary.cpp", "sha256": "0ca06e54b565053bbd7027318aea8a84e0c8d96712ff5bca93eac00a52f770b0"},
+    "physics_boundary_mode": {"path": "src/Billiards/physics_boundary_mode.h", "sha256": "f4052fa8d31ffd261aa66987ba87b37e73727396d78689681df2af46d0060ddf"},
+    "game_state_header": {"path": "src/Billiards/game_state.h", "sha256": "6363b8c2481df6702bb22c4b00b44a546eb594241a7744684c2c94c96adaed4d"},
+    "game_state": {"path": "src/Billiards/game_state.cpp", "sha256": "a91185ba5fad8c8571aa1b0efd36de967d0fc3c307fef01b2903c2f910de88c3"},
+    "table_specs_header": {"path": "src/Billiards/table_specs.h", "sha256": "9e2b64b317d99f6e8e1877522d9cd06049b529de54caebc89742c76af19ba592"},
+    "table_specs": {"path": "src/Billiards/table_specs.cpp", "sha256": "751b4f4629b07416590b8bc46744e8d086c262fb488cc0cf8ea124845ca0dce6"},
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "7408e24a58c827e3de27b766cd91bdb5ce5831919cea97f733f8191baae59f7f"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "a591b919e99580a8e859e98ebfda9de1a0f2ec89e521d47f67ef180c6145f930"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "13453f30d0eeb7ce4231b1f5802eaf3317e085f4187e3e16abaff34cb171986c"},
+    "collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "92b205a1a0025b21a47fbd86e755beceeb4f89208b5db28945ddfcdd1f7e5f7d"},
+    "physics_tests": {"path": "tests/physics_tests.cpp", "sha256": "f127de3a46b22c042c97c5a348e96b7edd55fe081f646c68f6390ad8674e20ac"},
+    "surface_motion_tests": {"path": "tests/surface_motion_tests.cpp", "sha256": "c5a05e0d73bbadbe0c9b5443a6aef03df7049c1059ab17f5f2ea45da38f404ec"},
+    "physics_telemetry_tests": {"path": "tests/physics_telemetry_tests.cpp", "sha256": "cbbb2eb4e5f1c1eb22c5525d0c1859e19aebf2a0d975b94321f6daf741ced0c8"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "2b592431fdee204a6c7cfb976125d8697770a477a0749e7e7fcc332c66bbd401"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "950a98501feca064cbaab8c4b1025b3b421dfcbc8b59a8f82739042069d7997c"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "f4f67a8f2b34b7c35ce8c555d12d7a4b65922c4f5710d21c8efe66408476152c"}
+  },
+  "current_physics_mapping": {
+    "production_motion_dimensions": "PLANAR_XZ_ONLY",
+    "position_y_integrated": false,
+    "velocity_y_integrated": false,
+    "gravity_or_airborne_phase_exists": false,
+    "rail_top_collision_volume_exists": false,
+    "outside_table_landing_surface_exists": false,
+    "leave_table_event_exists": false,
+    "rail_top_return_event_exists": false,
+    "off_table_rest_event_exists": false,
+    "straight_rail_resolution_clamps_center_to_boundary": true,
+    "pocket_mouth_is_only_production_passable_boundary_path": true,
+    "pocket_topology_is_mouth_throat_capture": true,
+    "pocket_capture_is_distinct_from_off_table": true,
+    "object_capture_storage_coordinates_are_physical_off_table_evidence": false,
+    "unbounded_mode_is_product_off_table_physics": false,
+    "physics_frame_xyz_storage_proves_vertical_dynamics": false,
+    "shot_facts_schema_has_injectable_off_table_fields": true,
+    "shot_fact_collector_derives_cue_off_table": false,
+    "shot_fact_collector_derives_object_off_table": false,
+    "physical_off_table_observable_now": false
+  },
+  "capture_and_exclusion_boundary": {
+    "accepted_existing_physical_events": [
+      "straight rail contact with solver provenance and boundary clamp",
+      "pocket jaw contact",
+      "pocket mouth, throat and capture topology transitions",
+      "successful cue-ball pocket capture covered by the independent scratch receipt",
+      "successful object-ball pocket capture"
+    ],
+    "forbidden_substitutes": [
+      "manually placing a ball outside the x/z playfield rectangle",
+      "using PhysicsBoundaryMode::Unbounded to let a planar ball wander beyond a boundary",
+      "treating the cue-ball reset position after pocket capture as an off-table lifecycle",
+      "treating an object's post-pocket storage coordinates as an off-table rest",
+      "injecting cueBallOffTable or objectBallsOffTable through automation or a unit-test ShotFacts object",
+      "treating inert position.y or velocity.y storage as airborne motion",
+      "inferring departure from absence of a rail contact",
+      "inferring off-table rest without a landing surface and terminal rest event"
+    ],
+    "production_extension_safe_now": false,
+    "reason": "The production solver prevents non-pocket boundary escape and has no three-dimensional departure, rail-top return, outside-table landing or terminal rest lifecycle from which canonical off-table evidence could be derived."
+  },
+  "required_future_physics_contract": {
+    "status": "PHYSICS_PENDING",
+    "capabilities": [
+      "three-dimensional position and velocity integration with gravity",
+      "cloth, cushion nose, rail-top and outside-table collision volumes",
+      "continuous table-departure boundary crossing with ball identity",
+      "rail-top contact and return-to-cloth lifecycle",
+      "outside-table landing surface and terminal rest lifecycle",
+      "pocket channel and capture topology kept disjoint from table departure",
+      "successful-step commit and failed-step rollback for every event"
+    ],
+    "no_coordinate_only_shortcut": true
+  },
+  "required_future_telemetry_contract": {
+    "status": "TELEMETRY_PENDING",
+    "event_identity": ["shot_id", "ball_id", "ball_kind", "physics_tick", "event_ordinal", "solver_event_id"],
+    "departure": ["boundary_feature_id", "time", "position", "velocity", "ball_radius", "swept_contact_provenance"],
+    "rail_top_return": ["rail_feature_id", "contact_time", "return_time", "return_position", "return_velocity", "returned_to_cloth"],
+    "outside_rest": ["landing_surface_id", "landing_time", "rest_time", "rest_position", "terminal_speed", "came_to_rest_off_table"],
+    "exclusions": ["pocket_id", "pocket_capture_sequence", "captured_in_pocket", "returned_over_rail_top", "failed_or_incomplete_step"],
+    "attestation": ["origin", "solver_profile_id", "boundary_mode", "canonical_order", "no_dropped_samples", "observation_complete"],
+    "facts_are_measurements_not_legality_decisions": true
+  },
+  "pending_classification_contract": {
+    "cue_ball": {
+      "official_locator": "17(a)",
+      "classification_requires_complete_physical_evidence": true,
+      "pocket_scratch_remains_separate": true,
+      "status": "TELEMETRY_AND_PHYSICS_PENDING"
+    },
+    "object_ball": {
+      "official_locators": ["12.3", "17(e)"],
+      "classification_predicate": null,
+      "policy_conflict_status": "POLICY_PENDING",
+      "telemetry_may_not_choose_the_policy": true,
+      "status": "POLICY_TELEMETRY_AND_PHYSICS_PENDING"
+    },
+    "eight_ball": {
+      "existing_rules_path_unchanged": true,
+      "no_new_loss_or_foul_semantics_authorized": true
+    }
+  },
+  "future_atomic_contract": {
+    "append_only_on_succeeded_physics_steps": true,
+    "dedupe_key": ["shot_id", "ball_id", "event_ordinal", "physics_tick", "solver_event_id"],
+    "failed_step": "No departure, return, landing, rest, completeness or ShotFacts mutation survives.",
+    "reset": "A new shot or state reset clears incomplete prior observations without fabricating a terminal event.",
+    "exact_retry": "Returns the same canonical evidence without a duplicate event.",
+    "conflicting_retry": "Fails closed with zero state, facts, revision, journal or receipt delta.",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "physics_positive": [
+      "CUE_LEAVES_TABLE_LANDS_AND_RESTS_OUTSIDE",
+      "OBJECT_LEAVES_TABLE_LANDS_AND_RESTS_OUTSIDE",
+      "BALL_CONTACTS_RAIL_TOP_AND_RETURNS_TO_CLOTH",
+      "BALL_ENTERS_POCKET_AND_IS_CAPTURED_NOT_OFF_TABLE"
+    ],
+    "physics_negative": [
+      "STRAIGHT_RAIL_CLAMP_IS_NOT_OFF_TABLE",
+      "MANUAL_OUT_OF_RECTANGLE_COORDINATE_IS_NOT_EVIDENCE",
+      "UNBOUNDED_PLANAR_WANDER_IS_NOT_EVIDENCE",
+      "POST_POCKET_STORAGE_POSITION_IS_NOT_EVIDENCE",
+      "INERT_Y_SAMPLE_IS_NOT_VERTICAL_DYNAMICS",
+      "DEPARTURE_WITHOUT_LANDING_OR_REST_IS_INCOMPLETE",
+      "RAIL_TOP_RETURN_IS_EXCLUDED_FROM_OFF_TABLE_REST",
+      "FAILED_STEP_ROLLS_BACK_ALL_OBSERVATIONS",
+      "DUPLICATE_EVENT_IS_CANONICALLY_DEDUPED",
+      "RESET_CLEARS_INCOMPLETE_OBSERVATION"
+    ],
+    "classification_after_policy": [
+      "COMPLETE_CUE_OFF_TABLE_FACT_CONSUMED_UNDER_17_A",
+      "OBJECT_OFF_TABLE_12_3_VS_17_E_POLICY_CASE",
+      "EIGHT_BALL_OFF_TABLE_EXISTING_POLICY_REGRESSION"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/surface_motion.h",
+      "src/Billiards/surface_motion.cpp",
+      "src/Billiards/physics_profile.h",
+      "src/Billiards/physics_profile.cpp",
+      "src/Billiards/physics.h",
+      "src/Billiards/physics.cpp",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics_telemetry.cpp",
+      "src/Billiards/pocket_boundary.h",
+      "src/Billiards/pocket_boundary.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp"
+    ],
+    "test_files": [
+      "tests/surface_motion_tests.cpp",
+      "tests/physics_tests.cpp",
+      "tests/physics_telemetry_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_physics_telemetry_and_object_policy_gates_are_approved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gap task",
+    "using injected or out-of-bounds coordinates as physical off-table evidence",
+    "using unbounded test mode as product off-table physics",
+    "using pocket capture or post-pocket storage coordinates as off-table evidence",
+    "classifying incomplete departure without landing and terminal rest",
+    "resolving the 12.3 versus 17(e) object-ball policy conflict",
+    "changing cue-scratch receipt or pocket-capture semantics",
+    "promoting WPA-II-12-3 or WPA-II-17 audit rows",
+    "enabling global rulesDecisionUiProductExposed",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_pages_visually_reviewed": true,
+    "production_boundary_and_pocket_paths_mapped": true,
+    "physical_off_table_telemetry_available": false,
+    "cue_off_table_fact_collector_complete": false,
+    "object_off_table_fact_collector_complete": false,
+    "rail_top_return_observable": false,
+    "object_policy_conflict_resolved": false,
+    "production_implementation_complete": false,
+    "audit_row_promoted": false,
+    "cue_scratch_receipt_modified": false,
+    "cmake_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

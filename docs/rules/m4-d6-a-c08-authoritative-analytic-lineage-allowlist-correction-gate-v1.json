@@ -1,0 +1,134 @@
+{
+  "schema": "m4_d6_a_c08_authoritative_analytic_lineage_allowlist_correction_gate_v1",
+  "schema_version": 1,
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_AUTHORIZATION",
+  "decision": "D6_MUTATOR_OWNS_PRIVATE_ANALYTIC_SEGMENTS_PHYSICS_ONLY_REBASES_AND_PUBLISHES_CANONICAL_LINEAGE",
+  "scope": "This is the minimal C08 allowlist correction. It permits only table_departure_geometry.h/cpp to expose physics-private analytic segments produced by the actual D6 mutator. physics.cpp remains the composition owner and may only rebase, append, globally number and attest those segments. No second integrator, inferred endpoint, public D6 event, consumer schema, threshold or CMake change is authorized.",
+  "frozen_bindings": [
+    {
+      "role": "parent_same_tick_checklist",
+      "path": "docs/rules/m4-d6-a-legacy-d6-same-tick-composition-tests-first-acceptance-checklist-v1.json",
+      "sha256": "4b9abbce5e010194af942996dd963dcf25cc7f32c0e32dba5625cf2bd2683fea"
+    },
+    {
+      "role": "c09_correction_gate",
+      "path": "docs/rules/m4-d6-a-c09-final-validation-unreachable-path-correction-gate-v1.json",
+      "sha256": "9089cd6778764be0c0ff6b0fa8a3600e5fa3b14a31ab1bb265c8c55b9f2f88be"
+    },
+    {
+      "role": "composition_candidate_at_c08_blocker",
+      "path": "src/Billiards/physics.cpp",
+      "sha256": "8bdb0a11013700116c3cc3d86c242b0d82218de7303f40913a6dfb08605c7530"
+    },
+    {
+      "role": "d6_header_before_lineage",
+      "path": "src/Billiards/table_departure_geometry.h",
+      "sha256": "6ad680503270f70583d4f9417bb98147b3bf1e5a584a4a6c453c33f72331e781"
+    },
+    {
+      "role": "d6_implementation_before_lineage",
+      "path": "src/Billiards/table_departure_geometry.cpp",
+      "sha256": "82a969ea2f96393634564fad72839a1546493136db8a83cdceb2c140d895008d"
+    },
+    {
+      "role": "focused_test_at_c08_blocker",
+      "path": "tests/table_departure_geometry_tests.cpp",
+      "sha256": "70ce07f5db93d21a1bcda4392737674e7a982ce1ad5a4c797e9198630a35b801"
+    },
+    {
+      "role": "accepted_cmake_lineage",
+      "path": "CMakeLists.txt",
+      "sha256": "a227883fb85290a9cde3fff1ab33ab17d4a6d096e1d7fe7e726de64aba5408bc"
+    }
+  ],
+  "blocker": {
+    "observed": "The composed request succeeds physically but publishes only two prefix analytic segments, zero requested crossings and one incomplete attestation; the D6 tail changes state without returning authoritative analytic lineage.",
+    "why_physics_reconstruction_is_forbidden": "TableDepartureEvent lacks per-interval start/end position, start velocity, acceleration and post-contact state. Reconstructing these in physics.cpp would duplicate D6 ballistic, supported, collision, landing and transition laws and would not be the mutator that changed the state.",
+    "required_owner": "The exact D6 function that mutates each interval records its lineage before and after that same mutation."
+  },
+  "private_result_contract": {
+    "field": "TableDepartureStepResult::analyticSegments",
+    "type": "std::vector<SurfaceMotionAnalyticSegment>",
+    "scope": "physics-private producer result; not a canonical event, ShotFact, rule outcome, product UI field or serialized public schema",
+    "required_fields_exact": [
+      "ballIndex",
+      "local segmentOrdinal",
+      "wholeTickStartOffsetSeconds local to the D6 call",
+      "durationSeconds",
+      "startPositionCm",
+      "endPositionCm",
+      "startVelocityCmS",
+      "constantAccelerationCmS2",
+      "motionState",
+      "analyticPathComplete"
+    ]
+  },
+  "authoritative_recording_contract": {
+    "single_integrator": "A segment is emitted only around the actual advanceBallistic, advanceSupported or domain-segment mutation that changes the same BallState; no replay, shadow integration, event-to-state inference or final-endpoint synthesis is allowed.",
+    "interval_partition": "For every active non-pocket-channel ball and every successful positive-duration D6 call, ordered local intervals start at zero, are positive length, have no gaps or overlaps and end at the exact input duration. A zero-duration call returns an empty complete lineage; a positive-duration no-event or stationary path still emits complete coverage.",
+    "ballistic": "Each ballistic interval records the exact start state, gravity acceleration, duration and actual mutated end position. Constant x/z velocity and gravity-updated y velocity remain the authoritative law.",
+    "supported_piecewise": "Supported deceleration is split at the exact stop time: the moving interval records its actual constant x/z deceleration, and any remaining stationary interval records zero velocity and acceleration. A single average-acceleration segment across a stop is forbidden.",
+    "event_boundaries": "Cushion nose, outer departure, rail-top landing, outside landing, cloth return and pocket entry split intervals at their exact local event time. Pre-event end and post-event start positions agree; instantaneous velocity/domain changes are represented only as the boundary between segments.",
+    "cross_domain_boundary": "Every cross-domain ball contact ends both participants' pre-contact segments at the same local TOI. Recursive tail segments begin from the actual post-resolver/support-reaction states and are rebased by that TOI exactly once; stable ball identity is preserved.",
+    "failure_discard": "Any invalid geometry/state, ambiguity, event-budget, nonfinite or recursive child failure returns no analytic segments and leaves GameState at the exact input snapshot.",
+    "determinism": "Repeated O0/O2 execution yields the same ordered segment ledger and exact field digest; segment ordering uses local start time then stable ball identity then producer-local ordinal, never pointer or container address."
+  },
+  "composition_consumer_contract": {
+    "physics_cpp_only_operations": [
+      "verify successful private lineage is complete for the D6 call",
+      "add prefixDuration once to each local wholeTickStartOffsetSeconds",
+      "append segments without recomputing any geometry or endpoint",
+      "assign one global segmentOrdinal equal to final canonical vector index",
+      "run existing appendPlaneObservationEvidence after the full ledger is assembled"
+    ],
+    "canonical_continuity": "For each observed ball the prefix plus D6 tail covers [0, wholeTickDuration] exactly once. Crossing ownership is half-open except the final endpoint, and attestation coveredSegmentCount equals the independently counted segments for that ball.",
+    "publication_boundary": "Only canonical analytic segments and the already-authorized requested plane crossing/attestation are published. D6 private events and private result metadata remain absent from contacts, solverEvents, ShotFacts, rules, UI and automation schemas.",
+    "fail_closed": "Missing, incomplete, duplicated, locally unre-based, foreign-ball, nonfinite or endpoint-inconsistent private lineage fails the whole composed tick with snapshot restore and empty canonical telemetry."
+  },
+  "required_tests_first_mutations": [
+    "drop a no-event segment",
+    "duplicate a segment",
+    "insert a gap",
+    "insert an overlap",
+    "change ball identity",
+    "change local start offset",
+    "change duration",
+    "change start position",
+    "change end position",
+    "change start velocity",
+    "change acceleration",
+    "mark analyticPathComplete false",
+    "collapse moving and stationary supported pieces",
+    "omit one cross-contact participant boundary",
+    "rebase a recursive tail twice",
+    "retain lineage on failure",
+    "recompute a segment endpoint in physics.cpp",
+    "publish a private D6 event as canonical contact or solver evidence"
+  ],
+  "corrected_allowlist_after_root_revalidation": {
+    "production_files_exact": [
+      "src/Billiards/physics.cpp",
+      "src/Billiards/table_departure_geometry.h",
+      "src/Billiards/table_departure_geometry.cpp"
+    ],
+    "test_files_exact": [
+      "tests/table_departure_geometry_tests.cpp",
+      "tests/interactive_physics_tests.cpp"
+    ],
+    "surface_motion_header_edit_allowed": false,
+    "physics_header_edit_allowed": false,
+    "canonical_telemetry_schema_edit_allowed": false,
+    "solver_profile_threshold_or_formula_edit_allowed": false,
+    "cmake_edit_allowed": false,
+    "public_d6_event_or_consumer_edit_allowed": false
+  },
+  "acceptance_boundary": {
+    "design_correction_complete": true,
+    "root_revalidation_required": true,
+    "tests_first_authorized_by_this_artifact": false,
+    "production_edit_authorized_by_this_artifact": false,
+    "d6_a_source_stable": false,
+    "release_build_authorized": false,
+    "gpu_readiness_capture_or_authorization": false
+  }
+}

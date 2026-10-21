@@ -1,0 +1,92 @@
+{
+  "schema": "m4_b2_authenticated_referee_authority_protocol_foundation_implementation_design_gate_v1",
+  "status": "DESIGN_COMPLETE_AWAITING_ROOT_EXACT_ALLOWLIST_APPROVAL_NO_PRODUCTION_MUTATION",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "authorized_stage": "B2_TESTS_FIRST_CPU_REFEREE_PROTOCOL_FOUNDATION_ONLY"},
+    "b1_completion_receipt": {"path": "docs/rules/m4-b1-fast-code-lane-completion-receipt-v1.json", "sha256": "a66ca9b31fc75607cc82638a3ddd96075793f748e708aaa361086b5901fce2de"},
+    "critical_path_successor": {"path": "docs/rules/m4-remaining-gap-dependency-critical-path-register-v2-b1-successor.json", "sha256": "f2cc41f2c00ea5da3eb01cb12c2d1f76acea265eeed688eabc89b0302a98ea53"}
+  },
+  "foundation_scope": {
+    "protocol_id": "authenticated_referee_authority_v1",
+    "specific_wpa_rule_row_consumer_implemented": false,
+    "specific_foul_or_rerack_semantics_implemented": false,
+    "visual_or_player_ui_implemented": false,
+    "global_player_rules_ui_exposed": false,
+    "referee_declaration_is_physics_fact": false,
+    "physics_fact_may_authenticate_referee": false
+  },
+  "identity_and_authentication_contract": {
+    "authority_subject": "stable authority_subject_id plus authority_role",
+    "authority_roles": ["REFEREE", "PLAYER_0", "PLAYER_1"],
+    "role_policy": "REFEREE is required by default; a future consumer may explicitly allow exact current player roles, never inferred from payload or match actor",
+    "authentication": "request carries credential_id and authentication_proof; foundation verifies them through an injected deterministic RefereeAuthorityAuthenticator and records authenticator/key version",
+    "authenticator_boundary": "production defines a fail-closed verifier capability interface only; credential/key lookup and signature verification are supplied by the trusted host, while deterministic fake verification exists only in CPU tests",
+    "signature_binding": "proof covers protocol/schema, role, subject, credential/key version, operation, declaration kind, decision/rack identity, revision, state hash, expiry, nonce, idempotency key and canonical payload bytes",
+    "no_embedded_secret_or_test_bypass_in_production": true,
+    "failed_authentication": "fail closed before proposal/final state, revision, journal, receipt or audit mutation"
+  },
+  "request_schema": {
+    "required_fields": ["protocol_id", "schema_version", "operation", "declaration_kind", "decision_id", "rack_identity", "expected_authority_revision", "expected_authority_state_hash", "authority_role", "authority_subject_id", "credential_id", "key_version", "authentication_nonce", "authentication_proof", "expires_at_authority_tick", "idempotency_key", "payload_canonical"],
+    "operation_values": ["PROPOSE", "FINAL_DECLARE", "CANCEL_PROPOSAL"],
+    "payload": "exact canonical JSON object string; duplicate keys, arrays/scalars, unknown consumer keys, noncanonical whitespace/order and over-limit bytes fail closed",
+    "declaration_kind": "opaque allowlisted consumer kind; foundation does not interpret foul, frozen, push, confusion, off-table or stalemate truth",
+    "rack_identity": "nonempty current rack identity supplied by runtime authority; exact match required",
+    "expiry": "strictly current_authority_tick <= expires_at_authority_tick and bounded lifetime; expiry checked before authentication commit and on final",
+    "nonce": "nonempty bounded replay identity included in proof and retained receipt",
+    "idempotency": "nonempty <=128 bytes and bound into authenticated bytes"
+  },
+  "consumer_policy_registry": {
+    "purpose": "future rule consumers register an immutable declaration policy without granting the foundation rule-classification authority",
+    "required_policy_fields": ["declaration_kind", "allowed_actor_roles", "exact_payload_key_types", "max_payload_bytes", "max_lifetime_ticks", "proposal_required", "same_actor_cancel_required"],
+    "foundation_test_kinds_only": ["TEST_REFEREE_ONLY_DECLARATION", "TEST_PLAYER_ALLOWED_DECLARATION"],
+    "unknown_kind_or_unregistered_payload_schema": "fail closed before authentication commit",
+    "specific_wpa_kinds_registered_by_this_gate": false
+  },
+  "proposal_final_state_machine": {
+    "proposal": "authenticated PROPOSE stages exactly one live proposal bound to declaration kind, actor role/subject, decision/rack/revision/hash, expiry and canonical payload; proposal is not a final referee fact",
+    "final": "authenticated FINAL_DECLARE must reference the exact live proposal decision/kind/rack and revalidate current revision/state hash/expiry; it commits one final declaration and consumes the proposal",
+    "cancel": "authenticated CANCEL_PROPOSAL must be authorized for the same proposal subject/role unless a future consumer explicitly allows referee override; consumes proposal without producing a final declaration",
+    "separation": "PROPOSE ACK has final_declaration_committed=false; only FINAL_DECLARE ACK has final_declaration_committed=true",
+    "consumer_boundary": "foundation stores opaque declaration record; no GameRuntime rule, MatchState, BIH, rack, physics, ShotFacts or adjudication mutation occurs",
+    "atomicity": "candidate state, revision, proposal/final journal and receipt commit together or all roll back; an injected storage-commit failure seam exists for CPU proof and cannot be selected by production input",
+    "reset": "runtime/ruleset/rack reset invalidates live proposal, authentication nonce and retained idempotency receipt; stale requests never resurrect",
+    "partial_commit_allowed": false
+  },
+  "ack_journal_and_readback": {
+    "ack_fields": ["accepted", "operation", "declaration_kind", "decision_id", "proposal_decision_id", "authority_role", "authority_subject_id", "credential_id", "key_version", "authentication_nonce", "idempotency_key", "previous_authority_revision", "authoritative_revision", "authoritative_state_hash", "expires_at_authority_tick", "proposal_pending", "final_declaration_committed", "payload_sha256"],
+    "exact_retry": "byte-equivalent authenticated request returns original ACK with zero additional revision/journal/receipt/nonce mutation",
+    "conflict": "same idempotency key or nonce with any changed authenticated field fails closed",
+    "audit_journal": "append-only CPU journal records authentication outcome only for accepted commits, authority identity, operation, kind, decision/rack/revisions/hash, payload digest and proposal/final state; no secret/proof bytes exposed",
+    "automation_readback": "headless get_referee_authority_state exposes protocol version, live proposal metadata, latest final declaration metadata and audit digest; never credentials, proof bytes or inferred physics",
+    "bad_input_readback": "malformed or unauthenticated requests do not create authority state visible in readback"
+  },
+  "implementation_allowlist": {
+    "production_files": ["src/Billiards/rules/referee_authority_protocol.h", "src/Billiards/rules/referee_authority_protocol.cpp", "src/Billiards/game_runtime.h", "src/Billiards/game_runtime.cpp", "src/Billiards/automation_controller.cpp"],
+    "build_files": ["CMakeLists.txt"],
+    "test_files": ["tests/referee_authority_protocol_tests.cpp", "tests/rules_runtime_integration_tests.cpp", "tests/automation_controller_tests.cpp"],
+    "new_production_files": ["src/Billiards/rules/referee_authority_protocol.h", "src/Billiards/rules/referee_authority_protocol.cpp"],
+    "new_test_files": ["tests/referee_authority_protocol_tests.cpp"],
+    "cmake_change_allowed": true,
+    "cmake_strategy": "add the new protocol cpp to BILLIARDGL_CORE_SOURCES and add one headless BilliardsRefereeAuthorityProtocolTests target only; no GPU, runner, application, renderer or product UI target changes",
+    "visual_ui_renderer_product_session_edit_allowed": false,
+    "physics_shotfacts_adjudicator_rack_executor_edit_allowed": false
+  },
+  "required_fixtures": {
+    "positive": ["AUTHENTICATED_REFEREE_PROPOSAL_STAGES_OPAQUE_RECORD", "AUTHENTICATED_FINAL_REVALIDATES_AND_COMMITS", "EXPLICITLY_ALLOWED_PLAYER_ROLE_PROPOSAL_ONLY", "EXACT_RETRY_RETURNS_ORIGINAL_ACK_ZERO_DELTA", "CANCEL_BY_SAME_AUTHORITY_CONSUMES_WITHOUT_FINAL", "AUTOMATION_READBACK_OMITS_SECRET_AND_PROOF", "RESET_INVALIDATES_PROPOSAL_NONCE_AND_RECEIPT"],
+    "negative": ["UNKNOWN_ROLE_OR_PLAYER_WHEN_REFEREE_REQUIRED", "MISSING_OR_BAD_AUTHENTICATION_PROOF", "WRONG_CREDENTIAL_KEY_VERSION_OR_SUBJECT", "WRONG_DECISION_RACK_REVISION_OR_STATE_HASH", "EXPIRED_OR_EXCESS_LIFETIME", "MALFORMED_NONCANONICAL_UNKNOWN_OR_OVERSIZE_PAYLOAD", "FINAL_WITHOUT_PROPOSAL_OR_PROPOSAL_FINAL_FIELD_DRIFT", "NONCE_REPLAY_OR_IDEMPOTENCY_CONFLICT", "WRONG_CANCEL_AUTHORITY", "ATOMIC_STORAGE_OR_JOURNAL_FAILURE_ROLLS_BACK", "REFEREE_DECLARATION_NEVER_APPEARS_AS_PHYSICS_SHOTFACT_OR_FOUL"],
+    "headless_cpu_only": true
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/game_runtime.h", "sha256": "08bf282555ad21e235de18099a77bc1c9b6a30f9e647c43d9eabc59ffc823dac"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "2dfd9d3913436d6669e763751474efa7faeb1ae367cbfd50ecaf858f24f0a79e"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "765652a8c2e25e96df3b557dc0233cf4ad0a8d90174ebee79e319ca096d32fb7"}
+  ],
+  "build_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  ],
+  "test_source_bindings": [
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "c6928b8a04732cae3fbdc3cf1cb756d5447d772a754d97dd971cbd2c91e109be"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "75dc564fe4a64981d48b9795b7bd1184b5bb078c550f258b67ea40aef3a8326a"}
+  ],
+  "completion_boundary": {"implementation_authorized_by_this_gate": false, "root_revalidation_required_before_tests_first_patch": true, "specific_rule_consumers_authorized": false, "b2_complete_from_foundation": false, "m4_complete": false, "production_modified": false, "cmake_modified": false, "gpu_ui_readiness_or_authorization": false}
+}

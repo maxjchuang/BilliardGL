@@ -6,6 +6,11 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 BUILD_DIR="${BILLIARDGL_BUILD_DIR:-${REPO_ROOT}/build/check}"
 BUILD_JOBS="${BILLIARDGL_BUILD_JOBS:-}"
 
+# Python validation tests also launch freshly built helper executables. Keep
+# their build lookup on the same directory used by CMake instead of silently
+# falling back to the repository's legacy build/ directory.
+export BILLIARDGL_BUILD_DIR="${BUILD_DIR}"
+
 BUILD_PARALLEL_ARGS=(--parallel)
 if [[ -n "${BUILD_JOBS}" ]]; then
     if [[ ! "${BUILD_JOBS}" =~ ^[1-9][0-9]*$ ]]; then

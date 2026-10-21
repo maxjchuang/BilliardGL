@@ -1,0 +1,1652 @@
+{
+  "schema": "billiardgl.audio_contact_review_v3.v1",
+  "asset_count": 10,
+  "parent_manifest_sha256": "ca2267ac9ad2d020f0bbb1cbe935ed544c4f6b0875ffd53e101108bffaadcc10",
+  "generator_sha256": "a876e80845eeb55f16bdfbbbcfd4db4062d6e10eaab9a186481c3090b812db73",
+  "technical_gate_sha256": "c9bdbe929afa868e94e991835f3bd52972d67d5ef9aedb80605c21ec489d1e00",
+  "assets": [
+    {
+      "semantic_id": "cue_impact",
+      "filename": "cue_impact.wav",
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "loop_contract": null,
+      "source_v2_sha256": "c3dcff3eaa703626b873500792f71242f5396bccd3e8fe99f7e11b3fb67f94ea",
+      "output_file_sha256": "d2e6c5c2b2d1400b367bbda58807c6a583a7480853e799a28672caf232ef0dc9",
+      "operation": "internal_noise_modal_resynthesis",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 6720,
+        "duration_seconds": 0.14,
+        "sample_peak_dbfs": -3.000001,
+        "true_peak_dbtp": -2.99972,
+        "true_peak_per_channel_dbtp": [
+          -2.99972
+        ],
+        "unweighted_full_file_rms_dbfs": -25.633606,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -29.373963,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -39.373963,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 0.5625,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 2564,
+          "active_region_rms_dbfs": -21.449133,
+          "active_crest_factor_db": 18.449132,
+          "last_10ms_rms_dbfs": -300.0,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -3.000001,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -2.99972,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 0.5625,
+          "threshold": {
+            "lte": 20
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 18.449132,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -21.449133,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS",
+      "synthesis_parameters": {
+        "duration": 0.14,
+        "peak_dbfs": -3.0,
+        "seed": 3236102145,
+        "low_hz": 350,
+        "high_hz": 4800,
+        "noise_decay": 0.004,
+        "noise_weight": 0.85,
+        "modes": [
+          [
+            175,
+            0.01,
+            0.22
+          ],
+          [
+            430,
+            0.006,
+            0.18
+          ],
+          [
+            1130,
+            0.003,
+            0.08
+          ]
+        ]
+      }
+    },
+    {
+      "semantic_id": "ball_ball",
+      "filename": "ball_ball.wav",
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "loop_contract": null,
+      "source_v2_sha256": "47e9a9e9d545279d231d06cf0a588c0b62cc491453552e07f93f37dd6885217b",
+      "output_file_sha256": "4bef273976f2bc2a495436a5ca55c61cd070bbf2b08cdf951daaabe2b7549fe3",
+      "operation": "internal_noise_modal_resynthesis",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 3840,
+        "duration_seconds": 0.08,
+        "sample_peak_dbfs": -4.000001,
+        "true_peak_dbtp": -3.789931,
+        "true_peak_per_channel_dbtp": [
+          -3.789931
+        ],
+        "unweighted_full_file_rms_dbfs": -27.035722,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -30.914529,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -40.914529,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 0.3125,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 774,
+          "active_region_rms_dbfs": -20.079837,
+          "active_crest_factor_db": 16.079836,
+          "last_10ms_rms_dbfs": -300.0,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -4.000001,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -3.789931,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 0.3125,
+          "threshold": {
+            "lte": 20
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 16.079836,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -20.079837,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS",
+      "synthesis_parameters": {
+        "duration": 0.08,
+        "peak_dbfs": -4.0,
+        "seed": 3121688579,
+        "low_hz": 1500,
+        "high_hz": 11000,
+        "noise_decay": 0.0016,
+        "noise_weight": 1.0,
+        "modes": [
+          [
+            2130,
+            0.003,
+            0.18
+          ],
+          [
+            3370,
+            0.0025,
+            0.13
+          ],
+          [
+            6190,
+            0.0017,
+            0.08
+          ],
+          [
+            8870,
+            0.0012,
+            0.04
+          ]
+        ]
+      }
+    },
+    {
+      "semantic_id": "rail",
+      "filename": "rail.wav",
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "loop_contract": null,
+      "source_v2_sha256": "b68d9939f24ba00f07ad912354a301457cfec88e3ac1da90296881b07488462d",
+      "output_file_sha256": "ca15f8d489ec37cbc977e3373bef9c87952231cfb9c23ef418db762c8e4a5b18",
+      "operation": "internal_noise_modal_resynthesis",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 8640,
+        "duration_seconds": 0.18,
+        "sample_peak_dbfs": -5.000002,
+        "true_peak_dbtp": -4.999702,
+        "true_peak_per_channel_dbtp": [
+          -4.999702
+        ],
+        "unweighted_full_file_rms_dbfs": -23.945908,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -28.131234,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -38.131234,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 6.1875,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 4056,
+          "active_region_rms_dbfs": -20.661765,
+          "active_crest_factor_db": 15.661763,
+          "last_10ms_rms_dbfs": -300.0,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -5.000002,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -4.999702,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 6.1875,
+          "threshold": {
+            "lte": 20
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 15.661763,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -20.661765,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS",
+      "synthesis_parameters": {
+        "duration": 0.18,
+        "peak_dbfs": -5.0,
+        "seed": 168898563,
+        "low_hz": 60,
+        "high_hz": 1100,
+        "noise_decay": 0.012,
+        "noise_weight": 1.0,
+        "modes": [
+          [
+            127,
+            0.014,
+            0.28
+          ],
+          [
+            273,
+            0.01,
+            0.15
+          ],
+          [
+            587,
+            0.005,
+            0.05
+          ]
+        ]
+      }
+    },
+    {
+      "semantic_id": "pocket_jaw",
+      "filename": "pocket_jaw.wav",
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "loop_contract": null,
+      "source_v2_sha256": "3117670921b3aa88948f43966a9fc931002d09b0e60860d8110221f6b29a959a",
+      "output_file_sha256": "7b4c4d66af578301013517eae5e53b5fa37fb416b336a74e02a71cb9972fdfff",
+      "operation": "internal_noise_modal_resynthesis",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 7680,
+        "duration_seconds": 0.16,
+        "sample_peak_dbfs": -5.500001,
+        "true_peak_dbtp": -5.500001,
+        "true_peak_per_channel_dbtp": [
+          -5.500001
+        ],
+        "unweighted_full_file_rms_dbfs": -30.620928,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -33.010202,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -43.010202,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 0.270833,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 1517,
+          "active_region_rms_dbfs": -23.577219,
+          "active_crest_factor_db": 18.077218,
+          "last_10ms_rms_dbfs": -300.0,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -5.500001,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -5.500001,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 0.270833,
+          "threshold": {
+            "lte": 20
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 18.077218,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -23.577219,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS",
+      "synthesis_parameters": {
+        "duration": 0.16,
+        "peak_dbfs": -5.5,
+        "seed": 202321923,
+        "low_hz": 450,
+        "high_hz": 5200,
+        "noise_decay": 0.003,
+        "noise_weight": 1.0,
+        "modes": [
+          [
+            437,
+            0.006,
+            0.24
+          ],
+          [
+            1291,
+            0.004,
+            0.14
+          ],
+          [
+            2939,
+            0.002,
+            0.07
+          ]
+        ]
+      }
+    },
+    {
+      "semantic_id": "pocket_drop",
+      "filename": "pocket_drop.wav",
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "loop_contract": null,
+      "source_v2_sha256": "2eebc456895d90a7805f6211968a3f0c157438d0dae32f6d2d38ef2466b3f2fa",
+      "output_file_sha256": "6f6d9aeb7a72aeee8084354c4840069fd6eb08309e294720124ab184dc9dc0f2",
+      "operation": "internal_noise_modal_resynthesis",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 18240,
+        "duration_seconds": 0.38,
+        "sample_peak_dbfs": -6.0,
+        "true_peak_dbtp": -5.900468,
+        "true_peak_per_channel_dbtp": [
+          -5.900468
+        ],
+        "unweighted_full_file_rms_dbfs": -26.163963,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -26.646799,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -36.646799,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 0.958333,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 11582,
+          "active_region_rms_dbfs": -24.191562,
+          "active_crest_factor_db": 18.191561,
+          "last_10ms_rms_dbfs": -300.0,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -6.0,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -5.900468,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 0.958333,
+          "threshold": {
+            "lte": 20
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 18.191561,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -24.191562,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS",
+      "synthesis_parameters": {
+        "duration": 0.38,
+        "peak_dbfs": -6.0,
+        "seed": 3523411971,
+        "low_hz": 70,
+        "high_hz": 2600,
+        "noise_decay": 0.019,
+        "noise_weight": 0.6,
+        "modes": [
+          [
+            139,
+            0.019,
+            0.36
+          ],
+          [
+            383,
+            0.008,
+            0.12
+          ]
+        ],
+        "events": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            0.057,
+            0.28
+          ],
+          [
+            0.119,
+            0.12
+          ],
+          [
+            0.181,
+            0.045
+          ]
+        ]
+      }
+    },
+    {
+      "semantic_id": "ui_feedback",
+      "filename": "ui_feedback.wav",
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "loop_contract": null,
+      "source_v2_sha256": "a31c7aae67dda2330a8c071b725494a0d39f3ce1bdc31b6c269f8f5d1bb45853",
+      "output_file_sha256": "a31c7aae67dda2330a8c071b725494a0d39f3ce1bdc31b6c269f8f5d1bb45853",
+      "operation": "byte_identical_copy",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 10560,
+        "duration_seconds": 0.22,
+        "sample_peak_dbfs": -8.0,
+        "true_peak_dbtp": -7.988133,
+        "true_peak_per_channel_dbtp": [
+          -7.988133
+        ],
+        "unweighted_full_file_rms_dbfs": -23.111589,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -25.482556,
+          "block_count": 1,
+          "absolute_gated_block_count": 1,
+          "relative_gated_block_count": 1,
+          "relative_gate_lufs": -35.482556,
+          "short_program_zero_padded_to_400ms": true
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 1,
+          "onset_to_peak_ms": 3.104167,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 8513,
+          "active_region_rms_dbfs": -22.175781,
+          "active_crest_factor_db": 14.175781,
+          "last_10ms_rms_dbfs": -141.575532,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -8.0,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -7.988133,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 3.104167,
+          "threshold": {
+            "lte": 50
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 14.175781,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -22.175781,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -141.575532,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS"
+    },
+    {
+      "semantic_id": "foul",
+      "filename": "foul.wav",
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "loop_contract": null,
+      "source_v2_sha256": "e31a9b9e5da2538a0ed8f2eb492a70559d98a67d68344af282c7d86de88c4f66",
+      "output_file_sha256": "e31a9b9e5da2538a0ed8f2eb492a70559d98a67d68344af282c7d86de88c4f66",
+      "operation": "byte_identical_copy",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 43200,
+        "duration_seconds": 0.9,
+        "sample_peak_dbfs": -6.0,
+        "true_peak_dbtp": -5.997557,
+        "true_peak_per_channel_dbtp": [
+          -5.997557
+        ],
+        "unweighted_full_file_rms_dbfs": -20.969429,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -22.978665,
+          "block_count": 6,
+          "absolute_gated_block_count": 6,
+          "relative_gated_block_count": 5,
+          "relative_gate_lufs": -33.722852,
+          "short_program_zero_padded_to_400ms": false
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 2,
+          "onset_to_peak_ms": 14.083333,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 40800,
+          "active_region_rms_dbfs": -20.721194,
+          "active_crest_factor_db": 14.721194,
+          "last_10ms_rms_dbfs": -139.12671,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -6.0,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -5.997557,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 14.083333,
+          "threshold": {
+            "lte": 50
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 14.721194,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -20.721194,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -139.12671,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS"
+    },
+    {
+      "semantic_id": "match_finish",
+      "filename": "match_finish.wav",
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "loop_contract": null,
+      "source_v2_sha256": "56bb9aa33c9ec5ffbeee5ea3c903c36ece005d3fe449472f2b5b9e04be7a331a",
+      "output_file_sha256": "56bb9aa33c9ec5ffbeee5ea3c903c36ece005d3fe449472f2b5b9e04be7a331a",
+      "operation": "byte_identical_copy",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 1,
+        "frame_count": 124800,
+        "duration_seconds": 2.6,
+        "sample_peak_dbfs": -5.000002,
+        "true_peak_dbtp": -5.000002,
+        "true_peak_per_channel_dbtp": [
+          -5.000002
+        ],
+        "unweighted_full_file_rms_dbfs": -20.37836,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -20.577745,
+          "block_count": 23,
+          "absolute_gated_block_count": 23,
+          "relative_gated_block_count": 16,
+          "relative_gate_lufs": -32.092753,
+          "short_program_zero_padded_to_400ms": false
+        },
+        "one_shot": {
+          "onset_sample_index_minus60_dbfs": 2,
+          "onset_to_peak_ms": 10.479167,
+          "active_region_start_frame": 0,
+          "active_region_end_frame_exclusive": 122547,
+          "active_region_rms_dbfs": -20.299242,
+          "active_crest_factor_db": 15.29924,
+          "last_10ms_rms_dbfs": -142.189909,
+          "first_sample_linear": 0.0,
+          "last_sample_linear": 0.0
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 1,
+          "threshold": 1
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -5.000002,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -5.000002,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "onset_to_peak_ms",
+          "result": "PASS",
+          "measured": 10.479167,
+          "threshold": {
+            "lte": 50
+          }
+        },
+        {
+          "check": "active_crest_factor_db",
+          "result": "PASS",
+          "measured": 15.29924,
+          "threshold": {
+            "range_inclusive": [
+              6.0,
+              24.0
+            ]
+          }
+        },
+        {
+          "check": "active_region_rms_dbfs",
+          "result": "PASS",
+          "measured": -20.299242,
+          "threshold": {
+            "range_inclusive": [
+              -30.0,
+              -14.0
+            ]
+          }
+        },
+        {
+          "check": "last_10ms_rms_dbfs",
+          "result": "PASS",
+          "measured": -142.189909,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "endpoint_zero_samples",
+          "result": "PASS",
+          "measured": [
+            0.0,
+            0.0
+          ],
+          "threshold": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "technical_threshold_result": "PASS"
+    },
+    {
+      "semantic_id": "music_loop",
+      "filename": "music_loop.wav",
+      "asset_type": "stereo_loop",
+      "bus": "music",
+      "loop_contract": "explicit_full_file_loop",
+      "source_v2_sha256": "ecca09c6e0fd855f5b796c1076912a1c53b790787489bcfb2a42fd5d2576dad1",
+      "output_file_sha256": "ecca09c6e0fd855f5b796c1076912a1c53b790787489bcfb2a42fd5d2576dad1",
+      "operation": "byte_identical_copy",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 2,
+        "frame_count": 1536000,
+        "duration_seconds": 32.0,
+        "sample_peak_dbfs": -15.359998,
+        "true_peak_dbtp": -15.359776,
+        "true_peak_per_channel_dbtp": [
+          -18.424851,
+          -15.359776
+        ],
+        "unweighted_full_file_rms_dbfs": -25.676073,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -24.008294,
+          "block_count": 317,
+          "absolute_gated_block_count": 317,
+          "relative_gated_block_count": 317,
+          "relative_gate_lufs": -34.008294,
+          "short_program_zero_padded_to_400ms": false
+        },
+        "loop": {
+          "boundary_sample_jump_dbfs_max": -300.0,
+          "head_tail_100ms_rms_delta_db_max": 0.233769,
+          "head_tail_100ms_zero_crossing_rate_delta_max": 0.000208,
+          "head_tail_100ms_first_difference_rms_delta_db_max": 0.117182,
+          "per_channel": [
+            {
+              "channel_index": 0,
+              "boundary_sample_jump_dbfs": -300.0,
+              "head_tail_100ms_rms_delta_db": 0.0,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.000208,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.039138
+            },
+            {
+              "channel_index": 1,
+              "boundary_sample_jump_dbfs": -300.0,
+              "head_tail_100ms_rms_delta_db": 0.233769,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.0,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.117182
+            }
+          ]
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 2,
+          "threshold": 2
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -15.359998,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -15.359776,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "loop_minimum_duration_seconds",
+          "result": "PASS",
+          "measured": 32.0,
+          "threshold": {
+            "gte": 30.0
+          }
+        },
+        {
+          "check": "explicit_full_file_loop_contract",
+          "result": "PASS",
+          "measured": "explicit_full_file_loop",
+          "threshold": "explicit_full_file_loop"
+        },
+        {
+          "check": "loop_boundary_sample_jump_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "loop_head_tail_100ms_rms_delta_db",
+          "result": "PASS",
+          "measured": 0.233769,
+          "threshold": {
+            "lte": 1.0
+          }
+        },
+        {
+          "check": "spectral_or_rhythmic_discontinuity_machine_proxy",
+          "result": "PASS",
+          "measured": {
+            "zcr_delta": 0.000208,
+            "first_difference_rms_delta_db": 0.117182
+          },
+          "threshold": {
+            "zcr_delta_lte": 0.02,
+            "first_difference_rms_delta_db_lte": 1.0
+          }
+        },
+        {
+          "check": "bs1770_integrated_lufs_target",
+          "result": "PASS",
+          "measured": -24.008294,
+          "threshold": {
+            "target": -24.0,
+            "tolerance": 2.0
+          }
+        }
+      ],
+      "technical_threshold_result": "PASS"
+    },
+    {
+      "semantic_id": "venue_ambience",
+      "filename": "venue_ambience.wav",
+      "asset_type": "stereo_loop",
+      "bus": "ambience",
+      "loop_contract": "explicit_full_file_loop",
+      "source_v2_sha256": "f74afb8c2c43149f479d31455d63ee97e03df2e2289697797bc7e5611210192d",
+      "output_file_sha256": "f74afb8c2c43149f479d31455d63ee97e03df2e2289697797bc7e5611210192d",
+      "operation": "byte_identical_copy",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "measurements": {
+        "container": "RIFF_WAVE",
+        "encoding": "PCM_SIGNED_LE",
+        "sample_rate_hz": 48000,
+        "bits_per_sample": 24,
+        "channels": 2,
+        "frame_count": 1536000,
+        "duration_seconds": 32.0,
+        "sample_peak_dbfs": -16.979999,
+        "true_peak_dbtp": -16.978946,
+        "true_peak_per_channel_dbtp": [
+          -21.805534,
+          -16.978946
+        ],
+        "unweighted_full_file_rms_dbfs": -28.90971,
+        "full_scale_sample_count": 0,
+        "flat_top_run_count": 0,
+        "bs1770": {
+          "integrated_lufs": -30.006475,
+          "block_count": 317,
+          "absolute_gated_block_count": 317,
+          "relative_gated_block_count": 317,
+          "relative_gate_lufs": -40.006475,
+          "short_program_zero_padded_to_400ms": false
+        },
+        "loop": {
+          "boundary_sample_jump_dbfs_max": -300.0,
+          "head_tail_100ms_rms_delta_db_max": 0.076195,
+          "head_tail_100ms_zero_crossing_rate_delta_max": 0.000208,
+          "head_tail_100ms_first_difference_rms_delta_db_max": 0.096259,
+          "per_channel": [
+            {
+              "channel_index": 0,
+              "boundary_sample_jump_dbfs": -300.0,
+              "head_tail_100ms_rms_delta_db": 0.0,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.000208,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.061688
+            },
+            {
+              "channel_index": 1,
+              "boundary_sample_jump_dbfs": -300.0,
+              "head_tail_100ms_rms_delta_db": 0.076195,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.0,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.096259
+            }
+          ]
+        }
+      },
+      "threshold_checks": [
+        {
+          "check": "delivery_sample_rate_hz",
+          "result": "PASS",
+          "measured": 48000,
+          "threshold": 48000
+        },
+        {
+          "check": "delivery_bits_per_sample",
+          "result": "PASS",
+          "measured": 24,
+          "threshold": 24
+        },
+        {
+          "check": "delivery_channel_count",
+          "result": "PASS",
+          "measured": 2,
+          "threshold": 2
+        },
+        {
+          "check": "sample_peak_dbfs",
+          "result": "PASS",
+          "measured": -16.979999,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "true_peak_dbtp",
+          "result": "PASS",
+          "measured": -16.978946,
+          "threshold": {
+            "lte": -1.0
+          }
+        },
+        {
+          "check": "full_scale_sample_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "flat_top_run_count",
+          "result": "PASS",
+          "measured": 0,
+          "threshold": 0
+        },
+        {
+          "check": "loop_minimum_duration_seconds",
+          "result": "PASS",
+          "measured": 32.0,
+          "threshold": {
+            "gte": 30.0
+          }
+        },
+        {
+          "check": "explicit_full_file_loop_contract",
+          "result": "PASS",
+          "measured": "explicit_full_file_loop",
+          "threshold": "explicit_full_file_loop"
+        },
+        {
+          "check": "loop_boundary_sample_jump_dbfs",
+          "result": "PASS",
+          "measured": -300.0,
+          "threshold": {
+            "lte": -60.0
+          }
+        },
+        {
+          "check": "loop_head_tail_100ms_rms_delta_db",
+          "result": "PASS",
+          "measured": 0.076195,
+          "threshold": {
+            "lte": 1.0
+          }
+        },
+        {
+          "check": "spectral_or_rhythmic_discontinuity_machine_proxy",
+          "result": "PASS",
+          "measured": {
+            "zcr_delta": 0.000208,
+            "first_difference_rms_delta_db": 0.096259
+          },
+          "threshold": {
+            "zcr_delta_lte": 0.02,
+            "first_difference_rms_delta_db_lte": 1.0
+          }
+        },
+        {
+          "check": "bs1770_integrated_lufs_target",
+          "result": "PASS",
+          "measured": -30.006475,
+          "threshold": {
+            "target": -30.0,
+            "tolerance": 3.0
+          }
+        }
+      ],
+      "technical_threshold_result": "PASS"
+    }
+  ],
+  "provenance": "Internal deterministic seeded-noise and damped non-harmonic modal synthesis. No recordings, downloads or external samples.",
+  "evidence_boundary": {
+    "content_accepted": false,
+    "human_listening_completed": false,
+    "rights_certified": false,
+    "real_recording_claimed": false,
+    "shipping_default_promoted": false
+  },
+  "technical_result": "PASS"
+}

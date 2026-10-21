@@ -1,0 +1,152 @@
+{
+  "schema": "wpa_ii_08_all_behind_respot_product_subflow_implementation_design_gate_v1",
+  "status": "DESIGN_COMPLETE_AWAITING_ROOT_IMPLEMENTATION_APPROVAL_NO_PRODUCTION_MUTATION",
+  "authority_bindings": {
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-08",
+      "selected_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER"
+    },
+    "original_design_gap_gate": {
+      "path": "docs/rules/wpa-ii-08-all-behind-respot-first-contact-design-gap-gate-v1.json",
+      "sha256": "2219bab50689979b77e6ba92630c4afae3276396993a73ac81b12e9e968acefe"
+    },
+    "telemetry_implementation_receipt": {
+      "path": "docs/rules/wpa-ii-08-exact-continuous-crossing-telemetry-implementation-receipt-v1.json",
+      "sha256": "86379eecd2437a6e17643d0964f4460b857615f0eddbc50ab7dbeaefe3afa878",
+      "implementation_aggregate_sha256": "ff63915f7f0732fbe88ea3b53e47ea433b1b0bc6147728bb01d51791f2663361",
+      "root_independently_verified": true
+    }
+  },
+  "scope_and_authority": {
+    "current_authority": "one live Core-G BehindHeadString ball-in-hand placement offer",
+    "actor": "exact actor_player_id of that offer",
+    "request_action": "rules.ball_in_hand.request_nearest_legal_respot",
+    "tie_choice_action": "rules.ball_in_hand.choose_equidistant_respot_ball",
+    "payload_policy": "canonical selected_ball_id only for tie choice; initial request is canonical empty object",
+    "foundation_action_product_exposed": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "product_may_reclassify_legal_balls": false
+  },
+  "candidate_contract": {
+    "sample_time": "initial request stage and atomic commit revalidation",
+    "legal_object_predicate": "the same open-table/assigned-group/group-cleared first-contact predicate consumed by ChineseEightBallRules",
+    "open_table": "active 1-7 and 9-15; active 8 excluded",
+    "assigned_group_not_cleared": "active balls in actor group only",
+    "assigned_group_cleared": "active 8 only",
+    "behind": "finite active object-ball center world_z_cm < frozen head_string_world_z_cm",
+    "on_line": "exact equality is not behind and suppresses the offer",
+    "trigger": "eligible set is nonempty and every eligible ball is strictly behind",
+    "closest": "maximum world_z_cm among eligible balls",
+    "tie": "exact equal world_z_cm; ascending canonical ball IDs; entitled player selects exactly one",
+    "nonfinite_or_incomplete_layout": "fail closed before authority mutation"
+  },
+  "transaction_contract": {
+    "unique_request": "freeze candidate/layout/revision/hash, rebuild Core-E Section-7 foot-spot plan, exact revalidate, atomically respot and replace one Core-G child",
+    "tie_request": "freeze exact tied candidate IDs/layout/revision/hash and stage one player-choice parent without ball movement",
+    "tie_commit": "validate exact offered ball/actor/revision/hash, rebuild Core-E plan, exact revalidate, atomically respot and replace one Core-G child",
+    "nominal_position": "official foot spot on longitudinal axis",
+    "obstruction_policy": "existing Core-E Section-7 longitudinal search",
+    "no_solution": "zero mutation and old Core-G child preserved",
+    "stale_layout": "zero mutation and old Core-G child preserved",
+    "successful_child": "same actor and BehindHeadString scope, exactly one fresh decision identity",
+    "idempotent_retry": "exact request returns original ACK and child/tie identity with zero additional mutation",
+    "conflicting_retry": "same key with changed action/actor/selected ball/revision/hash fails closed",
+    "reset": "invalidates request/tie authority and retained product request; no stale resurrection",
+    "partial_commit_allowed": false
+  },
+  "telemetry_successor_contract": {
+    "unchanged_implementation_receipt_bound": true,
+    "selected_respot_does_not_consume_behind_head_string_restriction": true,
+    "restriction_arms_only_after_subsequent_Core_G_placement_commit": true,
+    "behind_object_contact_legal_only_when_exact_center_crossing_strictly_precedes_first_contact": true,
+    "same_time_or_incomplete_evidence": "fail closed WrongFirstContact",
+    "required_regression": "all exact 8 positive and 9 negative telemetry fixtures remain green"
+  },
+  "implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/ball_in_hand_authority.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/render/modern/modern_product_session.h",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "test_files": [
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp",
+      "tests/rules_decision_session_integration_tests.cpp"
+    ],
+    "new_production_file_allowed": false,
+    "rack_executor_edit_allowed": false,
+    "cmake_change_allowed": false,
+    "visual_ui_or_renderer_allowed": false
+  },
+  "required_fixtures": {
+    "positive": [
+      "OPEN_TABLE_ALL_BEHIND_UNIQUE_CLOSEST",
+      "ASSIGNED_GROUP_ALL_BEHIND_UNIQUE_CLOSEST",
+      "GROUP_CLEARED_EIGHT_ONLY_CLOSEST",
+      "EXACT_TIE_STAGES_ASCENDING_PLAYER_CHOICE",
+      "SELECTED_TIE_BALL_RESPOTS_AT_FOOT_SPOT",
+      "OBSTRUCTED_FOOT_SPOT_USES_SECTION7_SEARCH",
+      "SUCCESS_PRESERVES_ACTOR_AND_REPLACES_ONE_CORE_G_CHILD",
+      "EXACT_RETRY_RETURNS_ORIGINAL_ACK_ZERO_DELTA"
+    ],
+    "negative": [
+      "NO_LEGAL_OBJECT_REJECTS",
+      "LEGAL_OBJECT_ON_LINE_SUPPRESSES_OFFER",
+      "LEGAL_OBJECT_FOOT_SIDE_SUPPRESSES_OFFER",
+      "OPPONENT_GROUP_AND_EIGHT_EXCLUDED_UNTIL_GROUP_CLEARED",
+      "WRONG_ACTOR_ACTION_FLOW_DECISION_REVISION_OR_HASH_ROLLS_BACK",
+      "NONFINITE_OBJECT_GEOMETRY_ROLLS_BACK",
+      "STALE_LAYOUT_BETWEEN_STAGE_AND_COMMIT_ROLLS_BACK",
+      "FOUNDATION_NO_SOLUTION_PRESERVES_OLD_CORE_G_CHILD",
+      "FOUNDATION_OR_SIBLING_ACTION_CANNOT_ENTER_PRODUCT_SEAM",
+      "CONFLICTING_RETRY_ROLLS_BACK",
+      "RESET_INVALIDATES_PARENT_TIE_AND_PRODUCT_RETRY"
+    ],
+    "telemetry_regression_positive_count": 8,
+    "telemetry_regression_negative_count": 9,
+    "headless_cpu_only": true
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/rules/ball_in_hand_authority.h", "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "ff04d6289b18f929c3c905e2ff5e83ecb21372a2d643526110b82bf32650f607"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "639dcfdbe213c8fb93dbe84f66d79fe60366bf099672b25cd22c7ac5d6572306"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "cca332c95cf9f462e41a2f577486046e0656a2cb545840ae6f17f867ae0740c7"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "8ba1b7988f3300fdc6e25fe2cf35cc774ffb3a12999e7d92ef8ac03f95fc7b77"},
+    {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "4a5fcf9cfd60e0907944fa05f1a1febec61238820e6b461ee4adfbc3bc552a3c"},
+    {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "cdef883d0d77c84839c8c3b5d6c52d2e881dfffcbf4f5dc28c613f3eef095b93"}
+  ],
+  "test_source_bindings": [
+    {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "1dff864035291cded53ea4e52516175e5b6ebc5ac79d4c5580bf131250515f1c"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "81bd43406c5751a10b7b883ab4f07897fdef13d5bc6ab155b87227bd4c87ad57"},
+    {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "3dd1468aedc40a0d686128490a6d6c65336d1df30d7cdf501814546d2a1f4ef0"}
+  ],
+  "cmake_binding": {
+    "path": "CMakeLists.txt",
+    "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41",
+    "collector_target_link_gap_must_remain_honestly_recorded": true,
+    "modified_in_gate": false
+  },
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required_before_tests_first_patch": true,
+    "wpa_ii_08_row_may_close_from_gate_alone": false,
+    "audit_v5_modified": false,
+    "gpu_ta_readiness_or_authorization": false
+  },
+  "claims": {
+    "design_complete": true,
+    "implementation_complete": false,
+    "all_behind_product_reachable": false,
+    "wpa_ii_08_complete": false,
+    "production_modified": false,
+    "cmake_modified": false,
+    "visual_ui_modified": false,
+    "gpu_executed": false
+  }
+}

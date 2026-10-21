@@ -1,0 +1,72 @@
+{
+  "reviewer_role": "independent_technical_artist",
+  "schema": "phase2_ta_manual_review_v1",
+  "scenes": {
+    "ball_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "The 8 and red-ball number glyphs are visibly aliased/broken, stripe boundaries stair-step, and the frame does not demonstrate a clean rotation seam.", "status": "FAIL"},
+        "composition": {"evidence": "Four balls are centered at a useful inspection scale, but this is a lineup rather than the approved single hero-ball/contact-shadow composition.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "All four balls read as hovering; no compact contact shadow anchors any ball to the felt.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "No pocket or relevant rail/ball alignment is present in this close-up.", "status": "N/A"},
+        "material_color": {"evidence": "Ball highlights are broad and plastic-like while the cyan felt and high-frequency weave compete with the ball identities.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "The background is a black rail/wall band without useful venue depth; acceptable as a close-up only after the hero-ball axes pass.", "status": "N/A"}
+      },
+      "screenshot_sha256": "sha256:3ac93e0819d2bf26c2d70aca9f9a005a8e20b5889af0bd979a3de5e6272f0289"
+    },
+    "break": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "The rack is too small for reliable number reading and there is no rotation-seam evidence.", "status": "FAIL"},
+        "composition": {"evidence": "The lamp is cropped at the top, the table sits low/right with excessive empty wall, and the manifest explicitly records cue_visible=false.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "Cue ball and rack lack readable compact grounding shadows and appear detached from the felt.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Pocket mouths and cushion noses collapse into black, preventing reliable pocket/cushion/ball proportion review.", "status": "FAIL"},
+        "material_color": {"evidence": "Felt remains strongly cyan, walnut is red with oversized high-frequency figure, and the cropped lamp is too dark to establish warm-neutral light.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Only wall panels and trim are readable; the delivered venue does not form a complete spatial layer and the empty corner dominates.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:60927f2b42a5402a70454b45abcab33ad4927496313a978acdb2878a4c1a0e18"
+    },
+    "low_aim": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Some rack color bands are visible, but number glyphs remain too small/aliased and no rotation seam can be judged.", "status": "FAIL"},
+        "composition": {"evidence": "The cue is offset left of the cue-ball centerline, stops short of a credible tip contact, and the aim guide is entirely absent.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "The enlarged cue ball floats above the felt without a contact shadow.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Side cushions remain nearly black and the target pocket is not legible from the aim line.", "status": "FAIL"},
+        "material_color": {"evidence": "The cyan felt fills most of the frame and the cue wood has an exaggerated, high-frequency orange figure.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Venue wall panels are present, but the blank wall occupies excessive area and does not support shot focus.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:6b055f06575eff068540414a2700c4bab308338c4e88863b89f3ee37db422d84"
+    },
+    "pocket_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "No ball is present in this geometry-only scene.", "status": "N/A"},
+        "composition": {"evidence": "The pocket void is largely off-screen at left; the frame is dominated by felt and a cushion block rather than the pocket mouth and jaws.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "No ball/contact-shadow subject is present.", "status": "N/A"},
+        "geometry_alignment": {"evidence": "The cloth edge ends in visible triangular teeth, the mouth/jaw silhouette is not centered, and leather/void separation cannot be judged.", "status": "FAIL"},
+        "material_color": {"evidence": "The cushion is crushed near black, felt is cyan, and the red walnut remains visually dominant at the lower edge.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Venue is outside the intended close-up evidence scope.", "status": "N/A"}
+      },
+      "screenshot_sha256": "sha256:3e9d1ff3ae38202c190cdd50cb09654306deb765c8e30704a28a9c4043d07332"
+    },
+    "post_shot_observe": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Ball groups are visible, but numbers and rotation seams are not readable at this distance.", "status": "FAIL"},
+        "composition": {"evidence": "The post-shot spread and cue ball are visible in a coherent oblique table view, although the cropped lamp weakens the frame.", "status": "PASS"},
+        "contact_shadow": {"evidence": "Moving and stopped balls lack readable grounding shadows and appear suspended.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Near pocket void and cushion edges remain crushed black, obscuring pocket-mouth proportions.", "status": "FAIL"},
+        "material_color": {"evidence": "Cyan felt and red high-frequency walnut still dominate; lamp light does not provide the approved warm-neutral hierarchy.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Wall panels establish some venue presence, but the cropped lamp and empty corner take focus without adding believable room depth.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:bfbf90998fc2a2ea1d68d3d0fb19727d4d93c8bfed7ee41b81c4dab4252a4b14"
+    },
+    "tactical_overhead": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "No balls or playable field are visible in the center of the frame.", "status": "FAIL"},
+        "composition": {"evidence": "The camera is edge-on/sideways: only two narrow rail strips surround a black center, so this is not a tactical overhead view.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "No ball contact-shadow evidence is visible.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "The full table and pocket layout are not visible, so table proportions cannot be reviewed.", "status": "FAIL"},
+        "material_color": {"evidence": "Almost the entire frame is black; felt, wood, and lamp color hierarchy is absent.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "No usable venue or background-focus evidence is present.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:061e8c6532b64e603e0580319bad4b763795008b292e41e91b2ec27d6b54ae76"
+    }
+  }
+}

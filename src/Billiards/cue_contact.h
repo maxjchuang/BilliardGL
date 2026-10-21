@@ -5,10 +5,91 @@
 #include "physics_profile.h"
 
 #include <array>
+#include <cstdint>
 #include <string>
 #include <vector>
 
 namespace billiardgl {
+
+enum class CueTipIntervalOrigin {
+    AnalyticCueContactSolver,
+    CoupledCueContactSolver,
+    AuthoritativeCueMotionObserver,
+};
+
+struct CanonicalCueTipContactInterval {
+    int ordinal = -1;
+    double startTimeSeconds = 0.0;
+    double endTimeSeconds = 0.0;
+    double startTickOffsetSeconds = 0.0;
+    double endTickOffsetSeconds = 0.0;
+    Point3 contactPoint;
+    Point3 contactNormal;
+    Point3 cueVelocityStart;
+    Point3 cueVelocityEnd;
+    Point3 cueBallVelocityStart;
+    Point3 cueBallVelocityEnd;
+    double normalImpulseNs = 0.0;
+    double tangentialImpulseNs = 0.0;
+    // Canonical line integral of cue-tip motion relative to the cue-ball
+    // centre while this interval is active.  It is report-only: rules must
+    // never compare it with a numeric push threshold.
+    double relativeTipBallPathLengthCm = 0.0;
+    bool relativeTipBallPathLengthAttested = false;
+    CueTipIntervalOrigin origin =
+        CueTipIntervalOrigin::AnalyticCueContactSolver;
+    std::vector<int> solverEventIds;
+};
+
+struct CanonicalCueTipStrokeObservation {
+    std::string schemaId = "canonical_cue_tip_stroke_observation_v1";
+    std::string shotIdentity;
+    int actorPlayerId = -1;
+    std::string rackIdentity;
+    std::uint64_t rulesRevision = 0;
+    std::string rulesStateHash;
+    std::uint64_t startTick = 0;
+    std::uint64_t endTick = 0;
+    std::vector<CanonicalCueTipContactInterval> intervals;
+    bool observationStartedBeforeFirstContact = false;
+    bool observationEndedAfterAuthoritativeRelease = false;
+    bool noDroppedIntervals = false;
+    bool allValuesFinite = false;
+    bool canonicalOrder = false;
+    bool successfulLaunchCommit = false;
+    bool fullStrokeComplete = false;
+    std::string digest;
+};
+
+struct CanonicalCueTipStrokeObservationValidation {
+    bool valid = false;
+    bool complete = false;
+    std::string error;
+};
+
+class CanonicalCueTipStrokeObserver {
+public:
+    bool begin(const CanonicalCueTipStrokeObservation& identity);
+    bool append(const CanonicalCueTipContactInterval& interval);
+    CanonicalCueTipStrokeObservationValidation finish(
+        std::uint64_t endTick);
+    void rollback();
+    bool active() const { return active_; }
+    bool committed() const { return committed_; }
+    const CanonicalCueTipStrokeObservation& observation() const
+    {
+        return observation_;
+    }
+private:
+    bool active_ = false;
+    bool committed_ = false;
+    CanonicalCueTipStrokeObservation observation_;
+};
+
+CanonicalCueTipStrokeObservationValidation
+validateCanonicalCueTipStrokeObservation(
+    CanonicalCueTipStrokeObservation& observation);
+const char* cueTipIntervalOriginName(CueTipIntervalOrigin origin);
 
 enum class CueContactRegime {
     Unsupported,
@@ -85,6 +166,7 @@ struct CueContactResult {
     std::array<double, 3> ballAngularVelocityAfterRadS{{0.0, 0.0, 0.0}};
     int microtraceSchemaVersion = 1;
     std::vector<CueContactMicrostep> microsteps;
+    std::vector<CanonicalCueTipContactInterval> canonicalTipIntervals;
 };
 
 CueContactResult resolveCueContact(BallState& ball, const CueImpactInput& input,

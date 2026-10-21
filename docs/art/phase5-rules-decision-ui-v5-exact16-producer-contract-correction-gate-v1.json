@@ -1,0 +1,88 @@
+{
+  "schema": "phase5_rules_decision_ui_v5_exact16_producer_contract_correction_gate_v1",
+  "status": "APPROVED_MINIMAL_CAPTURE_ONLY_CONTRACT_CORRECTION_NO_GPU_NO_AUTH",
+  "failure_receipt": {
+    "path": "docs/evidence/phase5/rules-decision-ui-v5-exact16-preordinal-contract-failure-receipt-v1.json",
+    "sha256": "4d261779bdcb4c9efa938147267425bfd3fb20685cd57b5482ca91cb79ddd588",
+    "result": "FROZEN_PREORDINAL_PRODUCER_CONTRACT_FAILURE_NO_GPU_NO_REUSE"
+  },
+  "diagnosis": {
+    "first_mismatch": "runner_v4_gate_vs_v5_source_manifest_gate",
+    "latent_next_mismatch": "runner_v4_readiness_schema_vs_v5_readiness_schema",
+    "correction_layer": "capture_only_runner_and_build_target",
+    "production_visual_bytes_need_change": false,
+    "authority_rules_physics_need_change": false,
+    "dispatcher_single_use_protocol_need_change": false
+  },
+  "pre_correction_bindings": {
+    "CMakeLists.txt": "917291bff5a23f6986d496fd677ad65f0f6921eebad2a34c6db8acc880ae2f93",
+    "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm": "9f72fb8c412bab48dbce9cfea2f5de7eaad1ab7538ebdc87b796072c07a61ae4",
+    "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py": "6891c18e7df9f9a6b1dd41d4838fae2b3b43119c8fec8fd8b010bd38102fbc59"
+  },
+  "allowed_source_changes": [
+    {
+      "path": "CMakeLists.txt",
+      "scope": "add isolated BilliardsPhase5RulesDecisionUiV5Exact16GpuCaptureRunner target using the existing capture source and exact16 implementation with an additional V5 contract compile definition"
+    },
+    {
+      "path": "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm",
+      "scope": "select v5 design gate SHA and v5 readiness schema only when the V5 exact16 capture-only definition is present; preserve all exact16 IDs/order/rendering/telemetry"
+    },
+    {
+      "path": "scripts/run_phase5_rules_decision_ui_v4_exact16_capture_dispatch.py",
+      "scope": "extend readiness identity allowlist to the corrected v5/v2 schema only; do not alter authorization, durable consumption, command, result or failure semantics"
+    },
+    {
+      "path": "scripts/prepare_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v2.py",
+      "scope": "fresh v2 NOT_RUN readiness binding corrected runner, gate and unchanged visual/product sources"
+    },
+    {
+      "path": "scripts/validate_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v2.py",
+      "scope": "read-only successor readiness and embedded-contract validation"
+    },
+    {
+      "path": "tests/visual/test_phase5_rules_decision_ui_v5_pixel_visible_exact16_ready_v2.py",
+      "scope": "offline mutation and fail-closed contract tests"
+    },
+    {
+      "path": "scripts/validate_phase5_rules_decision_ui_v5_exact16_producer_contract_correction_gate.py",
+      "scope": "this correction gate validator"
+    },
+    {
+      "path": "tests/visual/test_phase5_rules_decision_ui_v5_exact16_producer_contract_correction_gate.py",
+      "scope": "this correction gate mutation tests"
+    }
+  ],
+  "required_corrected_contract": {
+    "new_target": "BilliardsPhase5RulesDecisionUiV5Exact16GpuCaptureRunner",
+    "base_exact16_definition": "BILLIARDGL_PHASE5_RULES_UI_V4_EXACT16=1",
+    "v5_contract_definition": "BILLIARDGL_PHASE5_RULES_UI_V5_EXACT16=1",
+    "authorization_schema_unchanged": "phase5_rules_decision_ui_v4_exact16_gpu_authorization_v2",
+    "manifest_gate_sha256": "657f3ab6f4ccac4db23fb0ab72889bc49d091f27fd5f63bd5610b736b1aa2a10",
+    "readiness_schema": "phase5_rules_decision_ui_v5_exact16_readiness_v2",
+    "case_count": 16,
+    "case_ids_and_order_unchanged": true,
+    "renderer_and_visual_source_unchanged": true,
+    "single_use_dispatcher_unchanged": true,
+    "dispatcher_protocol_unchanged_except_v5_v2_readiness_identity": true,
+    "validate_before_output_cocoa_opengl": true
+  },
+  "forbidden_changes": [
+    "src/Billiards/render/modern/modern_renderer.cpp",
+    "any Phase4 source or readiness",
+    "rules authority or physics",
+    "Phase5 product draw geometry/color/copy",
+    "visual thresholds or evidence coverage",
+    "existing frozen v5 readiness/auth/marker/output/failure receipts",
+    "authorization issuance or GPU execution"
+  ],
+  "acceptance": {
+    "old_failure_artifacts_remain_byte_and_permission_exact": true,
+    "static_binary_strings_bind_v5_gate_and_v5_readiness_schema": true,
+    "corrected_runner_rejects_v4_gate_or_v4_readiness_offline": true,
+    "fresh_release_build": true,
+    "fresh_v2_readiness_16_not_run": true,
+    "authorization_template_not_issued": true,
+    "gpu_executed": false
+  }
+}

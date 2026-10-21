@@ -1,0 +1,154 @@
+{
+  "schema": "phase4_v10_ordinal1_independent_ta_failure_acceptance_addendum_v1",
+  "schema_version": 1,
+  "status": "ORDINAL1_VISUAL_STYLE_PARTIAL_REPAIR_LOCAL_CONTRAST_FAIL_CAPTURE_AND_TA_ACCEPTANCE_FALSE",
+  "scope": "Independent, original-resolution visual inspection of the frozen v10 camera_player_low_1080 PPM against frozen v9 and v8 ordinal1 evidence. This addendum is informational and fail-closed because the authoritative v10 telemetry and dispatch receipt are FAILED.",
+  "read_only_bindings": [
+    {
+      "role": "v10_ordinal1_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v10/camera_player_low_1080.ppm",
+      "sha256": "82d6f9e5aba1821b3b27c00f2b76977fff035cf8541c768bd5361c1ee4ee744a",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v10_authoritative_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v10/results.jsonl.final-ownership.jsonl",
+      "sha256": "d8e06f0aa0e77d0e677af72ce2250a563d2595b70b790b05ad5728c9cc59c94d"
+    },
+    {
+      "role": "v10_dispatch_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v10/phase4-final-ownership-dispatch-failure-receipt-v1.json",
+      "sha256": "5b5923a8efbce6f293af4d2fd71ce2d4c016d2faaabc5dbd4d19600ea10772ae"
+    },
+    {
+      "role": "v10_readiness",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-ready-v10/targeted11-readiness-v10.json",
+      "sha256": "878d69d0833b1a8becd6322fbb29e3cdb20f57723a8d1d3ff43c985c10750f37"
+    },
+    {
+      "role": "v9_compositing_style_correction_gate",
+      "path": "docs/art/phase4-final-ownership-v9-ordinal1-offline-diagnostic-v1/minimal-compositing-style-correction-design-gate-v1.json",
+      "sha256": "e80baf05f0240872ba24b9ca9a6c7daa0d5a51496dde99902014d8ea3391a4f6"
+    },
+    {
+      "role": "v9_failure_evidence_receipt",
+      "path": "docs/art/phase4-final-ownership-v9-ordinal1-offline-diagnostic-v1/failure-evidence-receipt-v1.json",
+      "sha256": "6bfcaf2c5ac5602deb557ccca176ebfd478c4183cf9bad6a054b6642f13a39eb"
+    },
+    {
+      "role": "v9_ordinal1_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v9/camera_player_low_1080.ppm",
+      "sha256": "90db92505afaf6d6c2d74193dee646afb73515a42acb3d25fa32b8034d84686c",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v9_authoritative_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v9/results.jsonl.final-ownership.jsonl",
+      "sha256": "3f40581fc4f66861a3a5f0953d6350619ca3195ad0c560f1202c5458dd66f62a"
+    },
+    {
+      "role": "v8_ordinal1_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/camera_player_low_1080.ppm",
+      "sha256": "f3626f44ead6cfe4729e6ff3b76168747154b2452d0ca2afd70e1520b0e09744",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "v8_authoritative_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/results.jsonl.final-ownership.jsonl",
+      "sha256": "48d34fb11a342ffb7ff00f0729396ad48544bcfec4db43470bedd3d92148bd99"
+    }
+  ],
+  "review_method": {
+    "original_resolution_reviewed": true,
+    "physical_dimensions": [1920, 1080],
+    "source_format": "P6 RGB PPM",
+    "resampling_used_for_decision": false,
+    "lossless_conversion_note": "A temporary lossless PNG view and unscaled track crop were used only to expose the PPM in the review UI; all measurements and decisions bind the original PPM bytes.",
+    "comparison_roi_xyxy_inclusive": [945, 406, 975, 949],
+    "roi_metric_role": "Supplemental visual-style comparison only; authoritative machine status remains the frozen telemetry status.",
+    "focus": [
+      "continuous high-frequency three-line artifact versus adaptive narrow rim",
+      "primary predicted track color dominance",
+      "local silhouette contrast/readability over dark, teal, red, and pale/near-white surfaces",
+      "co-axial and cross-track predicted/actual behavior"
+    ]
+  },
+  "authoritative_v10_result": {
+    "machine_status": "FAILED",
+    "machine_error_code": "phase4_overlay_machine_gate_failed",
+    "source_probe_count": 95,
+    "visible_probe_count": 89,
+    "hidden_probe_count": 6,
+    "aggregate_visible_probe_coverage": 0.9368421052631579,
+    "actual_source_visible_hidden_coverage": {"source": 19, "visible": 19, "hidden": 0, "coverage": 1.0},
+    "predicted_source_visible_hidden_coverage": {"source": 76, "visible": 70, "hidden": 6, "coverage": 0.9210526315789473},
+    "component_hidden_reason_counts": {"outer_halo_edge|final_edge_contrast_below_4": 6},
+    "foreign_track_evidence_count": 0,
+    "double_assignment_count": 0,
+    "unowned_evidence_count": 0,
+    "dispatch_status": "CAPTURE_FAILED_TELEMETRY_PRESERVED",
+    "dispatch_completed_count": 0,
+    "dispatch_failed_count": 1,
+    "dispatch_unrun_count": 10,
+    "failed_capture_id": "camera_player_low_1080",
+    "technical_art_review_authorized": false
+  },
+  "failed_local_contrast_evidence": [
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [0, 0, 0], "adjacent_rgb": [5, 7, 9], "contrast_ratio": 1.040789170157227, "owner_pixel": [963, 406], "surface": "deep_dark"},
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [0, 0, 0], "adjacent_rgb": [5, 7, 9], "contrast_ratio": 1.040789170157227, "owner_pixel": [957, 406], "surface": "deep_dark"},
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [0, 0, 0], "adjacent_rgb": [211, 32, 25], "contrast_ratio": 3.990418946918024, "owner_pixel": [956, 518], "surface": "red_ball"},
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [255, 255, 255], "adjacent_rgb": [223, 221, 212], "contrast_ratio": 1.3609084616536222, "owner_pixel": [955, 554], "surface": "pale_ball"},
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [255, 255, 255], "adjacent_rgb": [242, 241, 236], "contrast_ratio": 1.1309296884053173, "owner_pixel": [965, 938], "surface": "near_white_cue_ball"},
+    {"track": "predicted", "component": "outer_halo_edge", "owner_rgb": [255, 255, 255], "adjacent_rgb": [242, 241, 237], "contrast_ratio": 1.1302200337259745, "owner_pixel": [965, 937], "surface": "near_white_cue_ball"}
+  ],
+  "v8_v9_v10_comparison": {
+    "metric_definition": "Exact RGB counts in x=945..975, y=406..949. Yellow=[255,253,112], white=[255,255,255], black=[0,0,0]. A triple-color row contains yellow, white, and black; yellow-dominant means yellow pixel count exceeds white in that row.",
+    "v8": {"machine_status": "PASS", "visible_over_source": [92, 95], "white_pixels": 838, "triple_color_rows": 106, "yellow_dominant_rows": 414, "actual_visible_over_source": [19, 19], "predicted_visible_over_source": [73, 76]},
+    "v9": {"machine_status": "FAILED", "visible_over_source": [66, 95], "white_pixels": 2317, "triple_color_rows": 430, "yellow_dominant_rows": 326, "actual_visible_over_source": [14, 19], "predicted_visible_over_source": [52, 76]},
+    "v10": {"machine_status": "FAILED", "visible_over_source": [89, 95], "white_pixels": 1132, "triple_color_rows": 249, "yellow_dominant_rows": 378, "actual_visible_over_source": [19, 19], "predicted_visible_over_source": [70, 76]},
+    "interpretation": [
+      "Relative to v9, v10 removes the continuous broad white/black/yellow treatment: white occupancy falls by 1185 pixels and triple-color rows by 181, while yellow-dominant rows increase by 52.",
+      "The v10 rim is visually narrow and conditional rather than a full-width continuous band. Some three-color cross-sections remain, so this is not a claim that all white/black/yellow pixels disappeared.",
+      "v10 does not fully recover the v8 ordinal1 local-contrast result: it has 6 hidden predicted outer-halo probes versus v8's 3 and remains authoritatively FAILED."
+    ]
+  },
+  "canonical_axis_decisions": [
+    {"axis_id": "predicted_track_visual_identity", "result": "PASS", "finding": "The yellow predicted core is the dominant continuous identity at original resolution; its route is clearer and less rim-dominated than v9."},
+    {"axis_id": "actual_track_visual_identity", "result": "PASS", "finding": "Actual-track solid/tick evidence remains independently visible, with authoritative actual coverage 19/19 and no foreign-track evidence."},
+    {"axis_id": "core_inner_halo_separation", "result": "PASS", "finding": "The yellow core and narrow dark halo remain visually separable; the v9 broad three-layer alias no longer dominates the route."},
+    {"axis_id": "outer_halo_background_silhouette", "result": "FAIL", "finding": "Six frozen predicted outer-halo boundaries remain below the immutable 4.0 contrast requirement on deep-dark, red, pale, and near-white surfaces; ratios range from 1.040789170157227 to 3.990418946918024."},
+    {"axis_id": "predicted_dash_gap_rhythm", "result": "PASS", "finding": "Predicted dash/gap rhythm stays legible and the four solid-in-predicted-gap probes remain visible; the adaptive rim does not close the route into a broad white band."},
+    {"axis_id": "endpoint_tick_terminal_readability", "result": "PASS", "finding": "Endpoint and tick shapes remain attached and readable at the rack, center marker, and cue-ball end without the v9 full-width rim takeover."},
+    {"axis_id": "coaxial_predicted_actual_disambiguation", "result": "PASS", "finding": "On the co-axial route, yellow predicted core and actual solid/tick markers remain traceable; foreign-track, double-assignment, and unowned counts are all zero."}
+  ],
+  "focused_visual_decisions": {
+    "adaptive_narrow_rim_removed_continuous_three_line_artifact": "PASS",
+    "primary_track_color_dominance": "PASS",
+    "local_contrast_and_readability": "FAIL",
+    "cross_track_behavior": "PASS",
+    "formal_ordinal1_ta_result": "FAIL"
+  },
+  "acceptance": {
+    "ordinal1_visual_style_acceptance": false,
+    "blocking_axis": "outer_halo_background_silhouette",
+    "blocking_reason": "Authoritative v10 telemetry contains six final_edge_contrast_below_4 failures and machine_status FAILED.",
+    "targeted11_capture_acceptance": false,
+    "targeted11_technical_art_acceptance": false,
+    "reentry_requirement": "A future fresh targeted11 must first pass the unchanged machine gate for all 11 captures; only then may an authorized independent TA review all required images/axes. This addendum does not create readiness or authorization."
+  },
+  "proof_boundary": {
+    "informational_original_resolution_review_performed": true,
+    "machine_pass_inferred": false,
+    "capture_acceptance": false,
+    "technical_art_review_authorized": false,
+    "technical_art_acceptance": false,
+    "production_source_modified": false,
+    "gpu_authorized_or_executed_by_this_addendum": false,
+    "threshold_changed": false,
+    "formal68_authorized": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m3_promotion": false,
+    "beta_pass": false
+  }
+}

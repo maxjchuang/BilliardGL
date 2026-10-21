@@ -1,0 +1,625 @@
+{
+  "alignment_binding": {
+    "alignment_id": "focused_practice_hall_m1_alignment_v1",
+    "capture_presentation": "simulation_driven_no_detach",
+    "geometry_id": "legacy_opening_band",
+    "marker_tolerance_cm": 0.05,
+    "no_visual_solid_clearance_cm": 0.1,
+    "nose_height_ratio": 1.4,
+    "physics_marker_binding_sha256": "sha256:1b8f8cdb03c88e81721525aa0a134c4e4efa564975c5e2307835514f03df2b7a",
+    "pocket_marker_scope": "mouth_only",
+    "runtime_profile_id": "chinese_pool_interactive_120hz_v5",
+    "surface_y_cm": 86.483976,
+    "visual_to_marker_frame": {
+      "visual_handedness": "right",
+      "x_visual": "x_marker",
+      "y_visual": "y_marker",
+      "z_visual": "-z_marker"
+    }
+  },
+  "asset_id": "focused_practice_hall_modular_v1",
+  "authorship": "original_procedural_billiardgl",
+  "ball_atlas_contract": {
+    "glyph_storage_orientation": "upright_source",
+    "padding": "edge_dilated_identity_base",
+    "review_identities": [
+      1,
+      8,
+      11,
+      15
+    ],
+    "safe_inset_px": 24,
+    "sphere_uv_u_orientation": "decreases_with_positive_longitude",
+    "tile_size_px": [
+      512,
+      256
+    ]
+  },
+  "ball_material_variants": {
+    "0": {
+      "atlas_tile": [
+        0,
+        0
+      ],
+      "material": "MAT_ball_identity_00",
+      "safe_inset_px": 24
+    },
+    "1": {
+      "atlas_tile": [
+        1,
+        0
+      ],
+      "material": "MAT_ball_identity_01",
+      "safe_inset_px": 24
+    },
+    "10": {
+      "atlas_tile": [
+        2,
+        1
+      ],
+      "material": "MAT_ball_identity_10",
+      "safe_inset_px": 24
+    },
+    "11": {
+      "atlas_tile": [
+        3,
+        1
+      ],
+      "material": "MAT_ball_identity_11",
+      "safe_inset_px": 24
+    },
+    "12": {
+      "atlas_tile": [
+        4,
+        1
+      ],
+      "material": "MAT_ball_identity_12",
+      "safe_inset_px": 24
+    },
+    "13": {
+      "atlas_tile": [
+        5,
+        1
+      ],
+      "material": "MAT_ball_identity_13",
+      "safe_inset_px": 24
+    },
+    "14": {
+      "atlas_tile": [
+        6,
+        1
+      ],
+      "material": "MAT_ball_identity_14",
+      "safe_inset_px": 24
+    },
+    "15": {
+      "atlas_tile": [
+        7,
+        1
+      ],
+      "material": "MAT_ball_identity_15",
+      "safe_inset_px": 24
+    },
+    "2": {
+      "atlas_tile": [
+        2,
+        0
+      ],
+      "material": "MAT_ball_identity_02",
+      "safe_inset_px": 24
+    },
+    "3": {
+      "atlas_tile": [
+        3,
+        0
+      ],
+      "material": "MAT_ball_identity_03",
+      "safe_inset_px": 24
+    },
+    "4": {
+      "atlas_tile": [
+        4,
+        0
+      ],
+      "material": "MAT_ball_identity_04",
+      "safe_inset_px": 24
+    },
+    "5": {
+      "atlas_tile": [
+        5,
+        0
+      ],
+      "material": "MAT_ball_identity_05",
+      "safe_inset_px": 24
+    },
+    "6": {
+      "atlas_tile": [
+        6,
+        0
+      ],
+      "material": "MAT_ball_identity_06",
+      "safe_inset_px": 24
+    },
+    "7": {
+      "atlas_tile": [
+        7,
+        0
+      ],
+      "material": "MAT_ball_identity_07",
+      "safe_inset_px": 24
+    },
+    "8": {
+      "atlas_tile": [
+        0,
+        1
+      ],
+      "material": "MAT_ball_identity_08",
+      "safe_inset_px": 24
+    },
+    "9": {
+      "atlas_tile": [
+        1,
+        1
+      ],
+      "material": "MAT_ball_identity_09",
+      "safe_inset_px": 24
+    }
+  },
+  "budgets": {
+    "atlas_disk_bytes": 21766,
+    "atlas_gpu_bytes_rgba8_with_full_mips": 11184828,
+    "embedded_geometry_buffer_bytes": 507876,
+    "functional_material_slots": {
+      "background": 1,
+      "ball_variants": 16,
+      "cue": 2,
+      "lamp": 2,
+      "table": 7
+    },
+    "materials_total": 28,
+    "pbr_texture_disk_bytes": 1103613,
+    "pbr_texture_gpu_bytes_rgba8_with_full_mips": 15728616,
+    "review_preview_disk_bytes_excluded_from_runtime": 426784,
+    "runtime_texture_disk_bytes": 1125379,
+    "runtime_texture_gpu_bytes_rgba8_with_full_mips": 26913444,
+    "textures": 19,
+    "unique_triangles": 7054
+  },
+  "constraints": {
+    "all_lod_marker_lists_identical": true,
+    "ball_atlas_mip_safe_inset_validated": true,
+    "basecolor_srgb_normal_orm_linear": true,
+    "clearcoat_extensions_required": false,
+    "felt_index_bounds_winding_boundary_validated": true,
+    "lighting_rig_has_no_external_hdr": true,
+    "metallic_roughness_fallback_present": true,
+    "normal_convention": "opengl_positive_y",
+    "pbr_textures_original_procedural": true,
+    "pocket_leather_no_visual_solid_checked": true,
+    "remote_furniture_in_scope": false,
+    "unpromoted_pocket_parameters_present": false
+  },
+  "felt_topology": {
+    "boundary_loops": 1,
+    "max_edge_incidence": 2,
+    "nondegenerate_triangles": true,
+    "pocket_openings": 6,
+    "surface": "single_manifold_with_boundary",
+    "winding": "counter_clockwise_when_viewed_from_positive_y"
+  },
+  "files": {
+    "ball_atlas_png": {
+      "encoding": "srgb_iec61966_2_1_rgba8",
+      "height_px": 512,
+      "path": "assets/modern/phase2/focused_practice_hall_ball_identity_atlas_v1.png",
+      "sha256": "sha256:4958d3b8443ddd3f9a3b559ca1e22b6130c169d733ec73c7b918aadcd14fd60e",
+      "width_px": 4096
+    },
+    "ball_atlas_vector_source": {
+      "format": "svg_original_procedural",
+      "path": "assets/modern/phase2/focused_practice_hall_ball_identity_atlas_v1.svg",
+      "sha256": "sha256:e46473ec46e06077b17c0f87a8453263a7f43420aff3993b3259bf0c412e08b9"
+    },
+    "ball_identity_closeup": {
+      "identities": [
+        1,
+        8,
+        11,
+        15
+      ],
+      "path": "assets/modern/phase2/focused_practice_hall_ball_identity_closeup_1_8_11_15_v2.png",
+      "runtime": false,
+      "sha256": "sha256:dc4d45c650ea7271d0c790ad5f56785196589db4f84547c72570548e49e778ca"
+    },
+    "gltf": {
+      "path": "assets/modern/phase2/focused_practice_hall_modular_v1.gltf",
+      "sha256": "sha256:4bd3726f569b3b04d9b5d0e9b002c268d0bd15385112b147575d3a4845a04d56"
+    },
+    "lighting_rig": {
+      "path": "assets/modern/phase2/focused_practice_hall_lighting_rig_v1.json",
+      "sha256": "sha256:37122c98dfbf97582c726253d16fa803fe651ce64304758b070b473ffef724ea"
+    },
+    "material_review_preview": {
+      "path": "assets/modern/phase2/focused_practice_hall_pbr_review_v1.png",
+      "runtime": false,
+      "sha256": "sha256:4e1af8c4769178547b6773c4e90326d884c85558b86511dc219b1f79bee3b1c9"
+    },
+    "pbr_parameters": {
+      "path": "assets/modern/phase2/focused_practice_hall_pbr_v1.params.json",
+      "sha256": "sha256:252bd726263a51bb85ab02ad171f260253df92d27c5d0aa165ecf72e2ff1b2f5"
+    },
+    "pbr_textures": {
+      "cue": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_cue_basecolor_srgb_v1.png",
+          "sha256": "sha256:6dc8f827955acf3b60ef7895a565b2b6b490c657c5f1dc2ce66bde832ab47339"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_cue_normal_gl_v1.png",
+          "sha256": "sha256:799c0177d62ebb5077aa13d43a1f124b699de8740b9b682ffe5119c72d41f68f"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_cue_orm_linear_v1.png",
+          "sha256": "sha256:c742e1e215b2972700a2a9bd378535690ac6fec63503c22eea0380630b1b4e2f"
+        }
+      },
+      "felt": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_felt_basecolor_srgb_v1.png",
+          "sha256": "sha256:12d05772dcc2fe94ce017c71af3048ce9733da3ad4c05e49ea049f98fa1b3985"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_felt_normal_gl_v1.png",
+          "sha256": "sha256:78d71e2d1639a9ccfcaf2a0493d2d9fcc092abce54c1f8e1872f65005774e532"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_felt_orm_linear_v1.png",
+          "sha256": "sha256:e12f8d5b57f1cd9b65f6e97ac6b7ae643b9e3a4155a482f14dcc4c70a0f9ef3b"
+        }
+      },
+      "gunmetal": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_basecolor_srgb_v1.png",
+          "sha256": "sha256:2282373701043b83804c767a00d37d195735e19117c3f2e3abd2653e90437893"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_normal_gl_v1.png",
+          "sha256": "sha256:4b5d34071da96d8843f73ed88169d483e64aee913e47a3b654851e055d66eed3"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_orm_linear_v1.png",
+          "sha256": "sha256:5ca5721dc7216421359f89d08649789114e3af6a972e3721be36948cde25623d"
+        }
+      },
+      "leather": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_leather_basecolor_srgb_v1.png",
+          "sha256": "sha256:0ffeb45741997780a89dd49379ac94bcdd11167a7c8cc349f0c000c40b7c704e"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_leather_normal_gl_v1.png",
+          "sha256": "sha256:90957b188cf4e5fc67aef722fd73cb72a03884a1f2cdeabebcd74c6ff3c77762"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_leather_orm_linear_v1.png",
+          "sha256": "sha256:b9aa08ccbb369007083a3e02b501bdc4c86fea5070d655cfde6b8b9bae0d7703"
+        }
+      },
+      "rubber": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_basecolor_srgb_v1.png",
+          "sha256": "sha256:e2cc513e8973ed4f5bfa97dbff09f48211b2052c4d76c6e02396d15d008b793f"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_normal_gl_v1.png",
+          "sha256": "sha256:332a374acd9d9bd823d926675468630d194088a853ae996c2b25cf621246cd84"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_orm_linear_v1.png",
+          "sha256": "sha256:dd10b944bc43298aa82aa38f32aa60ef6d30615278df22d2a1e6abb14979980b"
+        }
+      },
+      "walnut": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_basecolor_srgb_v1.png",
+          "sha256": "sha256:f8f6a6381bb57cd1d9827c58675adba08d5dc4dbdfb7fa16e257cd62ec81a62e"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_normal_gl_v1.png",
+          "sha256": "sha256:40226ee02c39682ffd7c312434aa74d5f6ce93b52accf0372c2f94984aba265c"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_orm_linear_v1.png",
+          "sha256": "sha256:7115b0779f07884ac0584acdd9a095f8de6f45ae98e363e69ed73326dd0dc421"
+        }
+      }
+    }
+  },
+  "generator": "scripts/generate_phase2_modular_gltf_v10f.py",
+  "lod_sets": {
+    "ball": {
+      "alignment_markers": [
+        "SOCKET_play_surface_origin",
+        "SOCKET_rail_nose_x_neg",
+        "SOCKET_rail_nose_x_pos",
+        "SOCKET_rail_nose_z_neg",
+        "SOCKET_rail_nose_z_pos",
+        "SOCKET_pocket_0_mouth",
+        "SOCKET_pocket_0_mouth_neg_t",
+        "SOCKET_pocket_0_mouth_pos_t",
+        "SOCKET_pocket_1_mouth",
+        "SOCKET_pocket_1_mouth_neg_t",
+        "SOCKET_pocket_1_mouth_pos_t",
+        "SOCKET_pocket_2_mouth",
+        "SOCKET_pocket_2_mouth_neg_t",
+        "SOCKET_pocket_2_mouth_pos_t",
+        "SOCKET_pocket_3_mouth",
+        "SOCKET_pocket_3_mouth_neg_t",
+        "SOCKET_pocket_3_mouth_pos_t",
+        "SOCKET_pocket_4_mouth",
+        "SOCKET_pocket_4_mouth_neg_t",
+        "SOCKET_pocket_4_mouth_pos_t",
+        "SOCKET_pocket_5_mouth",
+        "SOCKET_pocket_5_mouth_neg_t",
+        "SOCKET_pocket_5_mouth_pos_t"
+      ],
+      "nodes": {
+        "0": 64,
+        "1": 65,
+        "2": 66
+      },
+      "triangles": {
+        "0": 1536,
+        "1": 560,
+        "2": 192
+      }
+    },
+    "cue": {
+      "alignment_markers": [
+        "SOCKET_play_surface_origin",
+        "SOCKET_rail_nose_x_neg",
+        "SOCKET_rail_nose_x_pos",
+        "SOCKET_rail_nose_z_neg",
+        "SOCKET_rail_nose_z_pos",
+        "SOCKET_pocket_0_mouth",
+        "SOCKET_pocket_0_mouth_neg_t",
+        "SOCKET_pocket_0_mouth_pos_t",
+        "SOCKET_pocket_1_mouth",
+        "SOCKET_pocket_1_mouth_neg_t",
+        "SOCKET_pocket_1_mouth_pos_t",
+        "SOCKET_pocket_2_mouth",
+        "SOCKET_pocket_2_mouth_neg_t",
+        "SOCKET_pocket_2_mouth_pos_t",
+        "SOCKET_pocket_3_mouth",
+        "SOCKET_pocket_3_mouth_neg_t",
+        "SOCKET_pocket_3_mouth_pos_t",
+        "SOCKET_pocket_4_mouth",
+        "SOCKET_pocket_4_mouth_neg_t",
+        "SOCKET_pocket_4_mouth_pos_t",
+        "SOCKET_pocket_5_mouth",
+        "SOCKET_pocket_5_mouth_neg_t",
+        "SOCKET_pocket_5_mouth_pos_t"
+      ],
+      "nodes": {
+        "0": 69,
+        "1": 72,
+        "2": 75
+      },
+      "triangles": {
+        "0": 96,
+        "1": 48,
+        "2": 32
+      }
+    },
+    "lamp": {
+      "alignment_markers": [
+        "SOCKET_play_surface_origin",
+        "SOCKET_rail_nose_x_neg",
+        "SOCKET_rail_nose_x_pos",
+        "SOCKET_rail_nose_z_neg",
+        "SOCKET_rail_nose_z_pos",
+        "SOCKET_pocket_0_mouth",
+        "SOCKET_pocket_0_mouth_neg_t",
+        "SOCKET_pocket_0_mouth_pos_t",
+        "SOCKET_pocket_1_mouth",
+        "SOCKET_pocket_1_mouth_neg_t",
+        "SOCKET_pocket_1_mouth_pos_t",
+        "SOCKET_pocket_2_mouth",
+        "SOCKET_pocket_2_mouth_neg_t",
+        "SOCKET_pocket_2_mouth_pos_t",
+        "SOCKET_pocket_3_mouth",
+        "SOCKET_pocket_3_mouth_neg_t",
+        "SOCKET_pocket_3_mouth_pos_t",
+        "SOCKET_pocket_4_mouth",
+        "SOCKET_pocket_4_mouth_neg_t",
+        "SOCKET_pocket_4_mouth_pos_t",
+        "SOCKET_pocket_5_mouth",
+        "SOCKET_pocket_5_mouth_neg_t",
+        "SOCKET_pocket_5_mouth_pos_t"
+      ],
+      "nodes": {
+        "0": 78,
+        "1": 81,
+        "2": 83
+      },
+      "triangles": {
+        "0": 120,
+        "1": 24,
+        "2": 12
+      }
+    },
+    "table": {
+      "alignment_markers": [
+        "SOCKET_play_surface_origin",
+        "SOCKET_rail_nose_x_neg",
+        "SOCKET_rail_nose_x_pos",
+        "SOCKET_rail_nose_z_neg",
+        "SOCKET_rail_nose_z_pos",
+        "SOCKET_pocket_0_mouth",
+        "SOCKET_pocket_0_mouth_neg_t",
+        "SOCKET_pocket_0_mouth_pos_t",
+        "SOCKET_pocket_1_mouth",
+        "SOCKET_pocket_1_mouth_neg_t",
+        "SOCKET_pocket_1_mouth_pos_t",
+        "SOCKET_pocket_2_mouth",
+        "SOCKET_pocket_2_mouth_neg_t",
+        "SOCKET_pocket_2_mouth_pos_t",
+        "SOCKET_pocket_3_mouth",
+        "SOCKET_pocket_3_mouth_neg_t",
+        "SOCKET_pocket_3_mouth_pos_t",
+        "SOCKET_pocket_4_mouth",
+        "SOCKET_pocket_4_mouth_neg_t",
+        "SOCKET_pocket_4_mouth_pos_t",
+        "SOCKET_pocket_5_mouth",
+        "SOCKET_pocket_5_mouth_neg_t",
+        "SOCKET_pocket_5_mouth_pos_t"
+      ],
+      "nodes": {
+        "0": 36,
+        "1": 50,
+        "2": 63
+      },
+      "triangles": {
+        "0": 2318,
+        "1": 1486,
+        "2": 570
+      }
+    }
+  },
+  "pbr_material_bindings": {
+    "MAT_cue_shaft": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "cue",
+      "uv_repeat": [
+        1.0,
+        12.0
+      ]
+    },
+    "MAT_cue_tip": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "leather",
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "MAT_lamp_housing": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "gunmetal",
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "MAT_pocket_leather": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "leather",
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "MAT_table_cushion_rubber": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "rubber",
+      "uv_repeat": [
+        4.0,
+        16.0
+      ]
+    },
+    "MAT_table_felt_teal": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "felt",
+      "uv_repeat": [
+        1.0,
+        1.0
+      ]
+    },
+    "MAT_table_gunmetal": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "gunmetal",
+      "uv_repeat": [
+        2.0,
+        2.0
+      ]
+    },
+    "MAT_table_walnut": {
+      "channels": {
+        "basecolor": "srgb",
+        "normal": "linear_opengl_positive_y",
+        "orm": "linear_r_ao_g_roughness_b_metallic"
+      },
+      "texture_set": "walnut",
+      "uv_repeat": [
+        2.0,
+        1.0
+      ]
+    }
+  },
+  "pocket_v10b_contract": {
+    "authored_span_d": 1.2,
+    "authored_span_m": 0.06858,
+    "ball_diameter_m": 0.05715,
+    "black_depth_width_ratio_min": 0.32,
+    "formal_six_scene_evidence_authorized": false,
+    "front_center_back_d": [
+      1.0,
+      1.6,
+      2.2
+    ],
+    "front_center_back_m": [
+      0.05715,
+      0.09144000000000001,
+      0.12573
+    ],
+    "liner_occlusion_target_px": [
+      8,
+      30
+    ],
+    "liner_width_m": 0.007,
+    "manual_visual_status": "PENDING_TA",
+    "material_sequence": [
+      "rubber",
+      "facing",
+      "dark_liner",
+      "black_void"
+    ],
+    "minimum_span_d": 1.1,
+    "minimum_span_m": 0.062865,
+    "pure_black_inward_min_projected_ball_diameter": 0.5,
+    "pure_black_inward_min_px": 36,
+    "side_x_margin_m": 0.004425,
+    "status": "TA_DESIGN_PASS_IMPLEMENTATION_CANDIDATE",
+    "z_margin_m": 0.005715
+  },
+  "schema_version": 1,
+  "status": "phase2_production_candidate_not_final_high_mesh"
+}

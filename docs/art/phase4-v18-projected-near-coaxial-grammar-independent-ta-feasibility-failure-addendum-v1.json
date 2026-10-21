@@ -1,0 +1,269 @@
+{
+  "schema": "billiardgl.phase4.v18.projected_near_coaxial_grammar_independent_ta_feasibility_failure_addendum.v1",
+  "schema_version": 1,
+  "status": "INDEPENDENT_FAIL_SELECTED_GRAMMAR_INFEASIBLE_CPU_ONLY_NO_PRODUCTION_NO_GPU_NO_AUTH",
+  "scope": "Independent technical-art and renderer-contract audit of the final frozen V18 standalone CPU feasibility diagnostic. It determines only that the selected projected-near-or-coaxial paired non-occluding bypass grammar cannot produce a qualifying candidate for the frozen broadcast repair regions under its complete protected-predicted-silhouette and exact route-anchor contracts. It does not implement or select a successor, authorize production/CMake/GPU/readiness/capture, or claim machine, visual, comprehension, golden, beta or product acceptance.",
+  "frozen_bindings": [
+    {
+      "role": "v18_final_feasibility_receipt",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/feasibility-receipt-v1.json",
+      "sha256": "664d7b10875202571ad869fc477b5fd35b27994280217ad02ebff08e0ffe0398"
+    },
+    {
+      "role": "v18_diagnostic_source",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/phase4_v18_projected_near_coaxial_feasibility_cpu_diagnostic.cpp",
+      "sha256": "a05396941065526bc29cf01c1b4859d12c3076a3dbe49e88fd770f47eb0bd32d"
+    },
+    {
+      "role": "v18_component_ledger",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/component-ledger-v1.json",
+      "sha256": "2102de09e9665f0aeb2d089862a2f82052574d00f46c66eae5e66c7e8b481c09"
+    },
+    {
+      "role": "v18_raster_ledger",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/raster-ledger-v1.json",
+      "sha256": "5c817b951d1f14e5b89c3f48e03e92cb0b2a4a51676860ae2cef82957d3615b1"
+    },
+    {
+      "role": "v18_validator",
+      "path": "scripts/validate_phase4_v18_projected_near_coaxial_grammar_feasibility.py",
+      "sha256": "86a32caa15c2ed73b80f831b3e40c501504b8063c0628d505c474b42d687fa36"
+    },
+    {
+      "role": "v18_fail_closed_tests",
+      "path": "tests/test_phase4_v18_projected_near_coaxial_grammar_feasibility.py",
+      "sha256": "8e665d783e481e979ef753d7f61568bbce09b68c3525465ef5ab7e1d2ba752b0"
+    },
+    {
+      "role": "v18_original_cpu_diagnostic_gate",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-non-occluding-grammar-cpu-diagnostic-gate-v1.json",
+      "sha256": "33fc72c744717a6fa3f5c9953eed49eaf449487b22a5cb9fbb8922934c4cefe7"
+    },
+    {
+      "role": "v18_signed_normal_correction_gate",
+      "path": "docs/art/phase4-v18-signed-normal-axis-cpu-diagnostic-interpretation-correction-gate-v1.json",
+      "sha256": "b5011c0e7f765b958631d5fbd5750dc3bd9de130fd2dd3c12b5018976906798f"
+    },
+    {
+      "role": "v17_independent_infeasibility_addendum",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-independent-ta-feasibility-failure-addendum-v1.json",
+      "sha256": "150d1d8f1cb3cf0b43935a01a795d56ceadc51a6df330d0a68e4d01f51a36b3c"
+    },
+    {
+      "role": "v16_independent_implementation_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    }
+  ],
+  "restored_baselines": {
+    "trajectory_cpp": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    "trajectory_h": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    "modern_cpp": {
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    "modern_h": {
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    },
+    "cmake": {
+      "path": "CMakeLists.txt",
+      "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"
+    }
+  },
+  "independent_reproduction_audit": {
+    "final_evidence_validator_and_tests_read_only_0444": true,
+    "validator_fresh_recompile_relink_byte_replay": "PASS_ERRORS_EMPTY",
+    "fail_closed_test_count": 73,
+    "fail_closed_test_pass_count": 73,
+    "production_and_cmake_baselines_exact": true,
+    "coordinate_output_only_full_frame_generation": true,
+    "probe_repair_id_and_coordinates_used_only_after_both_palette_inventories_frozen": true,
+    "eligibility_provenance": "exact existing semantic batch range + uniform nonzero finalOwnershipToken + track + arcSegmentId + exact primitiveId + componentRole + visualSublayer, then compatible route-family aggregation with ordered exact members retained",
+    "source_token_batch_primitive_or_arc_growth": 0,
+    "top_left_y_down_half_open_raster_fixtures_1x_2x_4x": true,
+    "exact_projected_t_route_lattice_without_integer_rounding": true,
+    "both_signed_normal_sides_generated_before_matching": true,
+    "cross_side_equal_best_geometry_rank_fails_closed": true,
+    "candidate_safety_precedes_ranking": true,
+    "complete_protected_predicted_silhouette": "all exact predicted dash-on route core, inner-halo and side-only outer-rim samples including frozen cap envelope",
+    "ordered_contrast_probe_count": 81,
+    "ordered_contrast_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "palettes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "sample_profiles": [
+      "center_1x",
+      "asymmetric_2x",
+      "asymmetric_4x"
+    ],
+    "exact_case_count": 18,
+    "standard_cvd_full_component_ledgers_byte_equivalent_per_profile": true,
+    "one_two_four_sample_metrics_are_real_not_relabels": true
+  },
+  "independent_profile_findings": [
+    {
+      "id": "center_1x",
+      "sample_count": 1,
+      "actual_exact_member_count": 243,
+      "predicted_exact_member_count": 204,
+      "complete_protected_predicted_sample_count": 4347,
+      "relationship_component_count": 476,
+      "bounded_component_count": 4,
+      "bounded_missing_leave_count": 4,
+      "bounded_missing_rejoin_count": 0,
+      "bounded_missing_both_count": 0,
+      "bounded_with_both_safe_anchors": 0,
+      "evaluated_candidate_count": 0,
+      "valid_candidate_count": 0,
+      "minimum_candidate_count": 0
+    },
+    {
+      "id": "asymmetric_2x",
+      "sample_count": 2,
+      "actual_exact_member_count": 243,
+      "predicted_exact_member_count": 204,
+      "complete_protected_predicted_sample_count": 8626,
+      "relationship_component_count": 956,
+      "bounded_component_count": 280,
+      "bounded_missing_leave_count": 266,
+      "bounded_missing_rejoin_count": 263,
+      "bounded_missing_both_count": 249,
+      "bounded_with_both_safe_anchors": 0,
+      "evaluated_candidate_count": 0,
+      "valid_candidate_count": 0,
+      "minimum_candidate_count": 0
+    },
+    {
+      "id": "asymmetric_4x",
+      "sample_count": 4,
+      "actual_exact_member_count": 243,
+      "predicted_exact_member_count": 204,
+      "complete_protected_predicted_sample_count": 17272,
+      "relationship_component_count": 1904,
+      "bounded_component_count": 832,
+      "bounded_missing_leave_count": 791,
+      "bounded_missing_rejoin_count": 791,
+      "bounded_missing_both_count": 750,
+      "bounded_with_both_safe_anchors": 0,
+      "evaluated_candidate_count": 0,
+      "valid_candidate_count": 0,
+      "minimum_candidate_count": 0
+    }
+  ],
+  "independent_failure_finding": {
+    "classification": "V18_SELECTED_PROJECTED_NEAR_COAXIAL_PAIRED_BYPASS_GRAMMAR_INFEASIBLE",
+    "both_safe_identity": "bounded - (missing_leave + missing_rejoin - missing_both)",
+    "both_safe_results_in_profile_order": [
+      0,
+      0,
+      0
+    ],
+    "empty_evaluated_candidate_universe_digest": "2a53d331726eb68da715243483143cda9eb1f70a708c8e90c5738be9880f0553",
+    "empty_valid_candidate_inventory_digest": "85fdd3431d28ee276fc2c823fd0650e9558a975dac20a92344df08d6053adf3c",
+    "exact18_candidate_match_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounded_output_match_counts_standard_then_cvd": [
+      1,
+      0,
+      0,
+      44,
+      46,
+      25,
+      119,
+      147,
+      70,
+      1,
+      0,
+      0,
+      44,
+      46,
+      25,
+      119,
+      147,
+      70
+    ],
+    "why_safe_anchor_prefilter_is_necessary_not_an_extra_threshold": "Every bypass half contains its route leave or rejoin anchor. pointTouchesProtected and samplePolyline use the same 0.5-pixel sample footprint at that endpoint; therefore an anchor touching the complete protected predicted silhouette cannot belong to a zero-overlap candidate.",
+    "why_adjacent_route_anchors_are_not_omitted": "The finite route lattice retains every exact projected-T value from every actual route-body core-covered sample before and after the bounded component, including the nearest adjacent and all farther source-derived anchors; no integer longitudinal rounding or midpoint-only selection remains.",
+    "primary_blocker": "No bounded relationship component in any real 1x, 2x or 4x profile has both a safe leave anchor and a safe rejoin anchor, so the paired candidate universe is empty before signed normal-shell ranking.",
+    "secondary_case_blocker": "The output-only matcher also finds zero or multiple bounded components in 16 of 18 cases; no case has one bounded component with one candidate, and all 18 candidate match counts are zero.",
+    "synthetic_bracket_fixture_passed": true,
+    "synthetic_fixture_is_frozen_scene_feasibility": false,
+    "frozen_bracket_emitted": false,
+    "implementation_acceptance": false,
+    "gpu_or_readiness_may_follow": false
+  },
+  "bounded_grammar_disposition": {
+    "v16_local_cross_track_actual_continuity": "CLOSED_BY_REPRODUCIBLE_FULL_FRAME_PREMISE_FALSIFICATION",
+    "v17_explicit_non_occluding_strict_intersection_grammar": "CLOSED_BY_CORRECTED_REPRODUCIBLE_ZERO_INTERSECTION_FEASIBILITY_RESULT",
+    "v18_projected_near_or_coaxial_paired_bypass_grammar": "CLOSED_BY_REPRODUCIBLE_ZERO_SAFE_ANCHOR_PAIR_FEASIBILITY_RESULT",
+    "production_path_remaining_under_v16_v17_v18_bounded_grammars": false,
+    "all_possible_visual_grammars_proven_infeasible": false,
+    "why_scope_cannot_be_generalized": "The V18 evidence proves only the frozen three broadcast regions, exact semantic inventories, sample profiles and selected paired bypass grammar. It does not evaluate detached glyphs, different protected-silhouette contact semantics or every possible non-occluding visual grammar.",
+    "automatic_reopen_or_fallback_allowed": false
+  },
+  "successor_product_decision_requirement": {
+    "current_selected_grammar_may_resume_without_new_root_decision": false,
+    "new_root_product_decision_required": true,
+    "reason": "A future solution must relax or replace at least one product-level invariant of the selected grammar: paired route anchors entirely outside the complete protected predicted silhouette, the paired bypass topology, or the definition of which projected/coaxial relationship is represented. CPU diagnostics cannot silently make that product choice.",
+    "minimum_bounded_questions_for_root": [
+      "May a future actual-attributed crossing mark touch a protected predicted silhouette only at a source-provenanced route anchor, while never erasing, clipping, recoloring or overwriting it?",
+      "If anchors must remain fully outside, should the successor use a detached ownership glyph rather than a paired route leave/rejoin bypass?",
+      "How must multiple bounded components in one output region be disambiguated without coordinate, repair-ID, camera, palette, color or prior-result input?"
+    ],
+    "automatic_fallback_or_scope_expansion_allowed": false,
+    "successor_selected_here": false,
+    "successor_gate_created_here": false,
+    "implementation_authorized_here": false
+  },
+  "authorization_boundary": {
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "successor_product_decision_selected": false,
+    "successor_gate_authorized": false,
+    "successor_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "human_comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}

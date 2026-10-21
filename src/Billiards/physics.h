@@ -22,5 +22,9 @@ PhysicsStepTelemetry updatePhysics(
 PhysicsStepTelemetry updatePhysics(
     GameState& state, float timeStep, const PhysicsProfile& profile,
     PhysicsBoundaryMode boundaryMode);
+PhysicsStepTelemetry updatePhysics(
+    GameState& state, float timeStep, const PhysicsProfile& profile,
+    PhysicsBoundaryMode boundaryMode,
+    const std::vector<PhysicsPlaneObservationRequest>& planeObservations);
 
 }  // namespace billiardgl

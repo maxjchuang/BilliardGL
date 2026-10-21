@@ -1,0 +1,524 @@
+{
+  "evidence_boundary": {
+    "changes_rule_semantics": false,
+    "changes_runtime": false,
+    "flat_proof_is_gpu_capture": false,
+    "pending_capabilities_may_be_product_exposed": false,
+    "unreviewed_shape_aliases_allowed": false
+  },
+  "flat_proof": {
+    "evidence_class": "flat_text_layout_proof_not_gpu",
+    "path": "docs/art/phase5-rules-shipping-copy-flat-proof-v1.svg"
+  },
+  "outcome_copy": {
+    "ball_in_hand": {
+      "en": "Opponent has ball in hand.",
+      "shape_token": "cue_ball_down_arrow",
+      "zh_cn": "\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002"
+    },
+    "loss": {
+      "en": "You lose.",
+      "shape_token": "error_cross_octagon",
+      "zh_cn": "\u4f60\u5931\u5229\u3002"
+    },
+    "turn_continues": {
+      "en": "Turn continues.",
+      "shape_token": "selected_check_diamond",
+      "zh_cn": "\u7ee7\u7eed\u5f53\u524d\u56de\u5408\u3002"
+    },
+    "turn_handoff": {
+      "en": "Turn passes to the opponent.",
+      "shape_token": "focus_chevron",
+      "zh_cn": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\u3002"
+    },
+    "win": {
+      "en": "You win.",
+      "shape_token": "selected_check_diamond",
+      "zh_cn": "\u4f60\u83b7\u80dc\u3002"
+    }
+  },
+  "package_id": "wpa_heyball_rules_feedback_zh_en_v1",
+  "pending_ui_capabilities": [
+    {
+      "actions": [
+        {
+          "en": "Accept table",
+          "id": "accept_table",
+          "zh_cn": "\u63a5\u53d7\u53f0\u9762"
+        },
+        {
+          "en": "Rerack \u2014 opponent breaks",
+          "id": "rerack_opponent_breaks",
+          "zh_cn": "\u91cd\u6446\u2014\u5bf9\u624b\u5f00\u7403"
+        },
+        {
+          "en": "Rerack \u2014 original breaker",
+          "id": "rerack_original_breaker",
+          "zh_cn": "\u91cd\u6446\u2014\u539f\u5f00\u7403\u65b9\u5f00\u7403"
+        }
+      ],
+      "capability": "pending",
+      "capability_id": "break_foul_opponent_choices",
+      "explanation": {
+        "en": "Choose whether to accept the table or rerack.",
+        "zh_cn": "\u9009\u62e9\u63a5\u53d7\u5f53\u524d\u53f0\u9762\u6216\u91cd\u65b0\u6446\u7403\u3002"
+      },
+      "machine_code": "ui.break_foul_decision",
+      "product_exposed": false,
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "action_text"
+      ],
+      "shape_token": "rules_shield",
+      "surface": "modal_when_implemented",
+      "text_key": "rules.chinese8.pending.break_foul_choices",
+      "title": {
+        "en": "Break decision",
+        "zh_cn": "\u5f00\u7403\u5224\u5b9a\u9009\u62e9"
+      }
+    },
+    {
+      "actions": [
+        {
+          "en": "Spot 8-ball and continue",
+          "id": "spot_eight_continue",
+          "zh_cn": "\u91cd\u7f6e8\u53f7\u7403\u5e76\u7ee7\u7eed"
+        },
+        {
+          "en": "Spot 8-ball; ball in hand behind head string",
+          "id": "spot_eight_ball_in_hand_head_string",
+          "zh_cn": "\u91cd\u7f6e8\u53f7\u7403\uff1b\u5f00\u7403\u7ebf\u540e\u81ea\u7531\u7403"
+        },
+        {
+          "en": "Rerack",
+          "id": "rerack",
+          "zh_cn": "\u91cd\u65b0\u6446\u7403"
+        }
+      ],
+      "capability": "pending",
+      "capability_id": "eight_on_break_spot_or_rerack",
+      "explanation": {
+        "en": "The 8-ball must be spotted or the rack reset; this is not a win.",
+        "zh_cn": "8\u53f7\u7403\u5fc5\u987b\u91cd\u7f6e\u70b9\u4f4d\u6216\u91cd\u65b0\u6446\u7403\uff1b\u8fd9\u4e0d\u7b97\u83b7\u80dc\u3002"
+      },
+      "machine_code": "ui.eight_on_break_decision",
+      "product_exposed": false,
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "action_text"
+      ],
+      "shape_token": "reset_arrow",
+      "surface": "modal_when_implemented",
+      "text_key": "rules.chinese8.pending.eight_on_break",
+      "title": {
+        "en": "8-ball on the break",
+        "zh_cn": "\u5f00\u7403\u65f68\u53f7\u7403\u5165\u888b"
+      }
+    },
+    {
+      "actions": [
+        {
+          "en": "Confirm and follow rerack procedure",
+          "id": "confirm_stalemate",
+          "zh_cn": "\u786e\u8ba4\u5e76\u6267\u884c\u91cd\u6446\u7a0b\u5e8f"
+        }
+      ],
+      "capability": "pending",
+      "capability_id": "stalemate_decision",
+      "explanation": {
+        "en": "Play cannot progress under the approved procedure.",
+        "zh_cn": "\u6309\u65e2\u5b9a\u7a0b\u5e8f\u5df2\u65e0\u6cd5\u7ee7\u7eed\u63a8\u8fdb\u6bd4\u8d5b\u3002"
+      },
+      "machine_code": "ui.stalemate_decision",
+      "product_exposed": false,
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "action_text"
+      ],
+      "shape_token": "warning_triangle",
+      "surface": "modal_when_implemented",
+      "text_key": "rules.chinese8.pending.stalemate",
+      "title": {
+        "en": "Stalemate",
+        "zh_cn": "\u50f5\u5c40"
+      }
+    },
+    {
+      "actions": [
+        {
+          "en": "Place cue ball",
+          "id": "place_cue_ball",
+          "zh_cn": "\u653e\u7f6e\u6bcd\u7403"
+        },
+        {
+          "en": "Confirm placement",
+          "id": "confirm_placement",
+          "zh_cn": "\u786e\u8ba4\u4f4d\u7f6e"
+        }
+      ],
+      "capability": "pending",
+      "capability_id": "free_ball_placement",
+      "explanation": {
+        "en": "Place the cue ball only inside the currently legal area.",
+        "zh_cn": "\u53ea\u80fd\u5728\u5f53\u524d\u89c4\u5219\u5141\u8bb8\u7684\u533a\u57df\u5185\u653e\u7f6e\u6bcd\u7403\u3002"
+      },
+      "machine_code": "ui.ball_in_hand_placement",
+      "product_exposed": false,
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "action_text"
+      ],
+      "shape_token": "cue_ball",
+      "surface": "modal_when_implemented",
+      "text_key": "rules.chinese8.pending.ball_in_hand_placement",
+      "title": {
+        "en": "Ball in hand",
+        "zh_cn": "\u81ea\u7531\u7403"
+      }
+    }
+  ],
+  "presentation_policy": {
+    "accessibility": {
+      "cvd_palettes": [
+        "standard",
+        "color_vision_safe"
+      ],
+      "essential_rules_text_always_visible": true,
+      "never_color_only": true,
+      "shape_plus_text_required": true,
+      "subtitle_setting_may_hide_rules_text": false
+    },
+    "duration_ms": {
+      "ball_in_hand_banner": 5000,
+      "decision_modal": "until_valid_choice",
+      "foul_banner": 6000,
+      "informational_toast": 2500,
+      "match_result_modal": "until_acknowledged",
+      "turn_handoff_toast": 3000
+    },
+    "focus": {
+      "banner_steals_focus": false,
+      "initial_modal_focus": "first_enabled_action",
+      "keyboard": [
+        "tab",
+        "shift_tab",
+        "arrow_keys",
+        "enter",
+        "space"
+      ],
+      "modal_traps_focus": true,
+      "visible_focus_shape_required": true
+    },
+    "priority_order": [
+      "match_result_modal",
+      "decision_modal",
+      "foul_banner",
+      "ball_in_hand_banner",
+      "turn_handoff_toast",
+      "informational_toast"
+    ],
+    "screen_reader": {
+      "announce_order": [
+        "title",
+        "explanation",
+        "next_action",
+        "focused_action"
+      ],
+      "foul_and_result_live_region": "assertive",
+      "turn_and_information_live_region": "polite"
+    }
+  },
+  "profile_complete": false,
+  "reason_notices": [
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The break did not pocket an object ball or drive four object balls to rails.",
+          "next_action": "Wait for the opponent's accept-table or rerack decision.",
+          "title": "Break requirements not met"
+        },
+        "zh_cn": {
+          "explanation": "\u672c\u6b21\u5f00\u7403\u65e2\u672a\u8fdb\u76ee\u6807\u7403\uff0c\u4e5f\u672a\u8ba9\u56db\u9897\u76ee\u6807\u7403\u89e6\u5e93\u3002",
+          "next_action": "\u7b49\u5f85\u5bf9\u624b\u9009\u62e9\u63a5\u53d7\u53f0\u9762\u6216\u91cd\u65b0\u6446\u7403\u3002",
+          "title": "\u5f00\u7403\u6761\u4ef6\u672a\u6ee1\u8db3"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "illegal_break",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "outlined_triangle",
+      "semantic_effect": {
+        "ball_in_hand": "conditional_on_other_break_foul",
+        "handoff": "conditional",
+        "loss": "none",
+        "turn": "decision_required",
+        "win": "none"
+      },
+      "shape_token": "warning_triangle",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.illegal_break"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The cue ball did not contact any object ball.",
+          "next_action": "Turn passes; the opponent receives ball in hand.",
+          "title": "No object-ball contact"
+        },
+        "zh_cn": {
+          "explanation": "\u6bcd\u7403\u6ca1\u6709\u78b0\u5230\u4efb\u4f55\u76ee\u6807\u7403\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002",
+          "title": "\u672a\u78b0\u5230\u76ee\u6807\u7403"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "no_object_ball_contact",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "crossed_circle",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "crossed_circle",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.no_object_contact"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The first contacted ball was not legal for the shooter's group.",
+          "next_action": "Turn passes; the opponent receives ball in hand.",
+          "title": "Wrong ball contacted first"
+        },
+        "zh_cn": {
+          "explanation": "\u9996\u5148\u78b0\u5230\u7684\u7403\u4e0d\u5c5e\u4e8e\u51fb\u7403\u65b9\u5f53\u524d\u53ef\u51fb\u7403\u7ec4\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002",
+          "title": "\u9996\u78b0\u7403\u9519\u8bef"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "wrong_first_contact",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "numbered_ball_cross",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "crossed_circle",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.wrong_first_contact"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "After first contact, no ball was pocketed or reached a rail.",
+          "next_action": "Turn passes; the opponent receives ball in hand.",
+          "title": "No rail after contact"
+        },
+        "zh_cn": {
+          "explanation": "\u9996\u6b21\u78b0\u7403\u540e\uff0c\u6ca1\u6709\u7403\u5165\u888b\u6216\u89e6\u5e93\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002",
+          "title": "\u78b0\u7403\u540e\u65e0\u7403\u89e6\u5e93"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "no_rail_after_contact",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "rail_with_slash",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "rail_with_slash",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.no_rail_after_contact"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The cue ball was pocketed.",
+          "next_action": "Turn passes; place the cue ball when ball-in-hand placement is available.",
+          "title": "Cue-ball scratch"
+        },
+        "zh_cn": {
+          "explanation": "\u6bcd\u7403\u5df2\u843d\u888b\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u81ea\u7531\u7403\u653e\u7f6e\u529f\u80fd\u53ef\u7528\u540e\u653e\u7f6e\u6bcd\u7403\u3002",
+          "title": "\u6bcd\u7403\u843d\u888b"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "cue_ball_scratch",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "cue_ball_down_arrow",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "cue_ball_down_arrow",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.cue_ball_scratch"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The cue ball left the playing surface.",
+          "next_action": "Turn passes; the opponent receives ball in hand.",
+          "title": "Cue ball off the table"
+        },
+        "zh_cn": {
+          "explanation": "\u6bcd\u7403\u79bb\u5f00\u4e86\u53f0\u9762\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002",
+          "title": "\u6bcd\u7403\u79bb\u53f0"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "cue_ball_off_table",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "ball_outside_rectangle",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "ball_outside_rectangle",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.cue_ball_off_table"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "An object ball left the playing surface.",
+          "next_action": "Turn passes; the opponent receives ball in hand.",
+          "title": "Object ball off the table"
+        },
+        "zh_cn": {
+          "explanation": "\u4e00\u9897\u76ee\u6807\u7403\u79bb\u5f00\u4e86\u53f0\u9762\u3002",
+          "next_action": "\u56de\u5408\u4ea4\u7ed9\u5bf9\u624b\uff1b\u5bf9\u624b\u83b7\u5f97\u81ea\u7531\u7403\u3002",
+          "title": "\u76ee\u6807\u7403\u79bb\u53f0"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "object_ball_off_table",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "numbered_ball_outside_rectangle",
+      "semantic_effect": {
+        "ball_in_hand": "opponent",
+        "handoff": "opponent",
+        "loss": "none",
+        "turn": "passes",
+        "win": "none"
+      },
+      "shape_token": "ball_outside_rectangle",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.foul.object_ball_off_table"
+    },
+    {
+      "capability": "implemented",
+      "copy": {
+        "en": {
+          "explanation": "The 8-ball was pocketed before the legal winning shot.",
+          "next_action": "The match ends; the opponent wins.",
+          "title": "Illegal 8-ball"
+        },
+        "zh_cn": {
+          "explanation": "8\u53f7\u7403\u5728\u5408\u6cd5\u5236\u80dc\u7403\u4e4b\u524d\u5165\u888b\u3002",
+          "next_action": "\u672c\u5c40\u7ed3\u675f\uff1b\u5bf9\u624b\u83b7\u80dc\u3002",
+          "title": "8\u53f7\u7403\u975e\u6cd5\u5165\u888b"
+        }
+      },
+      "product_exposed": true,
+      "reason_code": "illegal_eight_ball",
+      "redundant_channels": [
+        "shape",
+        "title_text",
+        "explanation_text",
+        "next_action_text"
+      ],
+      "runtime_shape_alias": "eight_ball_octagon",
+      "semantic_effect": {
+        "ball_in_hand": "none",
+        "handoff": "none",
+        "loss": "shooter",
+        "turn": "match_complete",
+        "win": "opponent"
+      },
+      "shape_token": "eight_ball_octagon",
+      "surface": "hud_foul_banner",
+      "text_key": "rules.chinese8.loss.illegal_eight"
+    }
+  ],
+  "ruleset_id": "wpa_heyball_2025_08_16_v1",
+  "schema": "phase5_rules_shipping_copy_v1",
+  "schema_version": 1,
+  "source_audit": {
+    "hud_token_sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860",
+    "product_hud_cpp_sha256": "sha256:07608218c6a0a04cbb94b8b6fa6c0d0820bd9f0809f2ab262ec30440e6e954e6",
+    "rules_cpp_sha256": "sha256:d7741b15a506fe7b76447403dfb2cd194cf126a9396e5235542d22d7be54ccbf",
+    "rules_profile_doc_sha256": "sha256:9c296eddd47d3f3a050748fb7b764076134f2d778d9c9d4d7010c2933bb2d4e0",
+    "shell_token_sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "schema": "wpa_ii_19_ball_group_confusion_discovery_rerack_design_gap_gate_v1",
+  "status": "REFEREE_OR_PLAYER_INPUT_AND_POLICY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-19"],
+  "program_priority": {
+    "current_task": "M4_REQUIRED",
+    "frozen_audit_v5_m4_required": false,
+    "priority_override_changes_audit_status_or_evidence": false
+  },
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [11],
+    "section": {
+      "chapter": "II",
+      "clause": "19",
+      "pdf_page": 11,
+      "locator": "Ball Group Confusion",
+      "controlled_paraphrase": "After the table is closed, a foul for wrongly hitting the other group must be pronounced before the next shot. When any player or a referee realizes the groups have been wrongly played, the rack stops immediately and the balls are reracked."
+    },
+    "uniquely_determined_rules": [
+      "the clause applies after the table is closed rather than while groups remain open",
+      "wrongly hitting the other group is a foul",
+      "the foul-pronouncement deadline is before the next shot",
+      "a player or referee may be the party who realizes that groups were wrongly played",
+      "a valid group-confusion realization stops the rack immediately",
+      "the prescribed rack-level remedy is rerack"
+    ],
+    "text_does_not_uniquely_determine": [
+      "whether every ordinary wrong-first-ball foul is also a group-confusion rerack event",
+      "whether groups wrongly played means one wrong-group stroke, a mistaken group assignment, or a longer sequence of play under confused assignments",
+      "the authoritative evidence or declaration payload by which a player or referee realizes the confusion",
+      "whether discovery after the next shot has no remedy, a different remedy, or a referee remedy",
+      "whether next shot means cue-strike acceptance, completed stroke, or another boundary",
+      "whether the ordinary ball-in-hand foul entitlement is staged, suppressed, or superseded when a timely rerack declaration occurs",
+      "who breaks the rerack",
+      "whether the original breaker and original shooting order are restored",
+      "the numbered rack seed or any non-official implementation completion beyond official rack geometry"
+    ],
+    "automatic_wrong_first_to_rerack_mapping_authorized": false
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "row": {
+      "id": "WPA-II-19",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "assessment": "No wrong-group discovery window, stop-rack action or corrective rerack transaction exists."
+    },
+    "promotion_authorized": false
+  },
+  "source_bindings": {
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "7408e24a58c827e3de27b766cd91bdb5ce5831919cea97f733f8191baae59f7f"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "a591b919e99580a8e859e98ebfda9de1a0f2ec89e521d47f67ef180c6145f930"},
+    "group_choice_authority": {"path": "src/Billiards/rules/group_choice_authority.h", "sha256": "9ebf1e938b7248e34245f3ce40205d5438e06d6d3463a2d7cf986063e55101d3"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "13453f30d0eeb7ce4231b1f5802eaf3317e085f4187e3e16abaff34cb171986c"},
+    "collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "92b205a1a0025b21a47fbd86e755beceeb4f89208b5db28945ddfcdd1f7e5f7d"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4"},
+    "rack_executor_header": {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+    "rack_executor": {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"},
+    "replay_recorder_header": {"path": "src/Billiards/replay/replay_recorder.h", "sha256": "90ac051be4dda3294433e545fc1326152711cc44733c0207c2bcd924a6b38c7a"},
+    "replay_recorder": {"path": "src/Billiards/replay/replay_recorder.cpp", "sha256": "0864c2d7af54230eb1adc7851466ffd6201e600d21574fc6de450cbcfd1569ed"},
+    "game_state_header": {"path": "src/Billiards/game_state.h", "sha256": "6363b8c2481df6702bb22c4b00b44a546eb594241a7744684c2c94c96adaed4d"},
+    "game_state": {"path": "src/Billiards/game_state.cpp", "sha256": "a91185ba5fad8c8571aa1b0efd36de967d0fc3c307fef01b2903c2f910de88c3"},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"},
+    "product_session": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "950a98501feca064cbaab8c4b1025b3b421dfcbc8b59a8f82739042069d7997c"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "2b592431fdee204a6c7cfb976125d8697770a477a0749e7e7fcc332c66bbd401"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "f4f67a8f2b34b7c35ce8c555d12d7a4b65922c4f5710d21c8efe66408476152c"},
+    "replay_tests": {"path": "tests/replay_recorder_tests.cpp", "sha256": "40e47f08df57c8437482d05050589e16433ed93e6cea96b4543e805283578b02"},
+    "decision_session_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "318561223599fae85fa628d03b104f01cd7dedeb169fd6975deac6aac12f3379"}
+  },
+  "current_system_mapping": {
+    "groups_assigned_phase_exists": true,
+    "authoritative_player_group_assignment_exists": true,
+    "first_contact_ball_identity_exists": true,
+    "simultaneous_first_contact_set_exists": true,
+    "wrong_first_contact_foul_exists": true,
+    "wrong_first_contact_awards_ordinary_ball_in_hand": true,
+    "wrong_first_contact_is_section_19_discovery_event": false,
+    "group_confusion_discovery_actor_or_input_exists": false,
+    "offending_shot_identity_persists_for_discovery_window": false,
+    "before_next_shot_window_state_exists": false,
+    "rack_stop_action_exists": false,
+    "section_19_parent_authority_exists": false,
+    "rack_foundation_can_stage_official_rerack_for_explicit_breaker": true,
+    "rack_foundation_requires_caller_to_select_breaker": true,
+    "section_19_breaker_or_order_policy_exists": false,
+    "applied_shoot_journal_exists": true,
+    "applied_shoot_journal_is_section_19_discovery_authority": false,
+    "replay_shot_count_exists": true,
+    "replay_shot_count_is_section_19_deadline_authority": false,
+    "dedicated_group_confusion_product_seam_exists": false,
+    "global_rules_decision_ui_product_exposed": false
+  },
+  "ordinary_foul_boundary": {
+    "section_17_wrong_first_contact": {
+      "fact": "authoritative first-contact identity does not match the shooter's assigned group after groups are assigned",
+      "current_effect": "ordinary foul, opponent ball in hand and turn change",
+      "remains_independent": true
+    },
+    "section_19_group_confusion": {
+      "fact": null,
+      "requires_discovery_input": true,
+      "timely_window_required": true,
+      "rack_level_effect": "stop rack and rerack",
+      "may_not_be_inferred_from_wrong_first_contact_alone": true
+    },
+    "no_optimistic_entitlement_or_rerack_mutation": true
+  },
+  "why_implementation_is_blocked": {
+    "classification": "The text does not uniquely say whether every wrong-first contact is group confusion or whether group confusion means play under a mistaken group assignment.",
+    "input": "No player/referee realization request, actor authentication or evidence payload exists.",
+    "deadline": "The runtime has no durable offending-shot identity and no Section 19 window that closes at the authoritative next-shot boundary.",
+    "effect_interaction": "The text does not define how the ordinary ball-in-hand foul entitlement interacts with a timely stop-and-rerack declaration.",
+    "rerack": "Section 19 does not state who breaks or which shooting order follows the rerack, while Core E requires an explicit breaker.",
+    "production_extension_safe_now": false
+  },
+  "pending_policy_and_input_contract": {
+    "status": "REFEREE_OR_PLAYER_INPUT_AND_POLICY_PENDING",
+    "classification": {
+      "ordinary_wrong_first_always_section_19": null,
+      "mistaken_assignment_or_sequence_required": null,
+      "authoritative_realization_evidence_schema": null,
+      "forbidden_guess": true
+    },
+    "actor": {
+      "allowed_textual_classes": ["player", "referee"],
+      "authenticated_player_request_schema": null,
+      "authenticated_referee_request_schema": null,
+      "conflict_resolution_between_claims": null,
+      "forbidden_guess": true
+    },
+    "deadline": {
+      "next_shot_machine_boundary": null,
+      "late_discovery_effect": null,
+      "clock_or_pause_behavior": null,
+      "forbidden_guess": true
+    },
+    "rerack": {
+      "breaker_player_id": null,
+      "shooting_order": null,
+      "ordinary_ball_in_hand_disposition": null,
+      "forbidden_guess": true
+    }
+  },
+  "required_future_evidence": {
+    "rack": ["rack_id", "rack_start_revision", "ruleset_id", "original_breaker_if_policy_requires", "original_order_if_policy_requires"],
+    "offending_shot": ["shot_id", "shot_ordinal_in_rack", "shooter", "groups_snapshot", "first_contact_balls", "completed_revision", "completed_state_hash"],
+    "discovery": ["discovery_id", "actor_class", "actor_id", "claimed_confusion_kind", "referenced_shot_or_assignment", "submitted_revision", "submitted_state_hash", "attestation_or_signature"],
+    "window": ["opened_after_shot_id", "next_shot_not_yet_accepted", "window_policy_version", "window_complete"],
+    "all_fields_in_rules_authority_hash": true
+  },
+  "future_state_machine": {
+    "states": [
+      "INACTIVE",
+      "TIMELY_DISCOVERY_WINDOW_OPEN",
+      "DISCOVERY_VALIDATING",
+      "RACK_STOPPED",
+      "RERACK_COMMITTING",
+      "RERACK_COMMITTED",
+      "WINDOW_EXPIRED"
+    ],
+    "window_open": "Only after an authoritative completed shot under a closed-table assignment and only when future policy says its evidence can support Section 19.",
+    "discovery_submit": "Validate actor class and identity, referenced rack/shot/assignment, policy version, deadline, authority revision/state hash and idempotency before stopping play.",
+    "next_shot_close": "Close the window at the future policy-defined authoritative next-shot boundary; previews, aim changes and rejected Shoot requests never close it.",
+    "rerack_commit": "After policy supplies the breaker/order, prebuild one verified official rerack and atomically commit rack stop, rerack, reset, revision, event, action and receipt.",
+    "product_exposed": false
+  },
+  "future_atomic_idempotency_contract": {
+    "precommit": "Validate ruleset, capability, flow, discovery/rack/shot identity, actor class and actor ID, exact action/payload, policy version, authority revision, state hash, deadline and idempotency before mutation.",
+    "stop_and_rerack": "Rack stop may not become externally committed until the complete verified rerack plan and selected breaker/order are available for the same atomic parent transaction.",
+    "ordinary_foul_isolation": "A failed, stale or conflicting Section 19 request leaves the independently adjudicated Section 17 foul and placement entitlement unchanged.",
+    "success_reset": "One successful commit clears superseded foul placement, decision offers, shot collector, group assignment and Section 19 window, then starts one official rack under the approved breaker/order policy.",
+    "failure_rollback": "Runtime, balls, rack, groups, player, entitlement, offers, discovery window, authority revision/hash, events, actions and receipts remain byte-equivalent to pre-call state.",
+    "exact_retry": "Returns the original ACK without a second stop, rerack, reset, revision, event or action.",
+    "conflicting_retry": "Fails closed with zero mutation.",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "positive_after_policy": [
+      "PLAYER_DISCOVERS_POLICY_DEFINED_CONFUSION_BEFORE_NEXT_SHOT",
+      "REFEREE_DISCOVERS_POLICY_DEFINED_CONFUSION_BEFORE_NEXT_SHOT",
+      "TIMELY_DISCOVERY_STOPS_RACK_AND_COMMITS_ONE_RERACK",
+      "APPROVED_BREAKER_AND_ORDER_APPLIED",
+      "ORDINARY_WRONG_FIRST_REMAINS_ORDINARY_WHEN_SECTION_19_NOT_INVOKED"
+    ],
+    "negative": [
+      "WRONG_FIRST_CONTACT_ALONE_CANNOT_AUTO_RERACK",
+      "OPEN_TABLE_CANNOT_OPEN_SECTION_19_WINDOW",
+      "UNAUTHENTICATED_PLAYER_OR_REFEREE_REJECTED",
+      "WRONG_RACK_SHOT_OR_ASSIGNMENT_REFERENCE_REJECTED",
+      "AIM_PREVIEW_OR_REJECTED_SHOOT_DOES_NOT_CLOSE_WINDOW",
+      "POLICY_DEFINED_NEXT_SHOT_CLOSES_WINDOW",
+      "LATE_DISCOVERY_FAILS_CLOSED_UNTIL_POLICY_EXISTS",
+      "STALE_REVISION_OR_STATE_HASH_REJECTED",
+      "UNKNOWN_ACTION_PAYLOAD_OR_POLICY_REJECTED",
+      "CURRENT_PLAYER_CANNOT_GUESS_RERACK_BREAKER",
+      "FOUNDATION_DIRECT_CALL_IS_NOT_SECTION_19_PARENT",
+      "RERACK_PLAN_FAILURE_ROLLS_BACK_ALL_STATE",
+      "EXACT_RETRY_ACK_AND_CONFLICT_ZERO_DELTA",
+      "RULES_RESET_RERACK_OR_MATCH_COMPLETE_CLEARS_WINDOW",
+      "FAILED_SECTION_19_REQUEST_PRESERVES_SECTION_17_ENTITLEMENT"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/group_confusion_authority.h",
+      "src/Billiards/rules/group_confusion_authority.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/rules/rack_executor.h",
+      "src/Billiards/rules/rack_executor.cpp"
+    ],
+    "test_files": [
+      "tests/group_confusion_authority_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_discovery_input_classification_deadline_and_rerack_policy_are_approved": true,
+    "product_session_files_allowed": false,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gap task",
+    "mapping every wrong-first-ball foul directly to a Section 19 rerack",
+    "guessing whether group confusion means one stroke or mistaken assignment play",
+    "inventing a player or referee discovery event from physics facts alone",
+    "guessing the next-shot deadline boundary or late-discovery remedy",
+    "guessing the rerack breaker or shooting order",
+    "changing Section 17 wrong-first-contact foul semantics",
+    "exposing a group-confusion product seam or global Rules UI",
+    "promoting WPA-II-19 above MISSING",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_page_visually_reviewed": true,
+    "group_assignment_contact_journal_and_rack_paths_mapped": true,
+    "ordinary_wrong_first_contact_implemented": true,
+    "section_19_discovery_input_available": false,
+    "section_19_classification_resolved": false,
+    "next_shot_deadline_policy_resolved": false,
+    "rerack_breaker_and_order_policy_resolved": false,
+    "section_19_internal_authority_implemented": false,
+    "dedicated_product_seam_available": false,
+    "production_implementation_complete": false,
+    "audit_row_promoted": false,
+    "global_ui_exposed": false,
+    "cmake_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

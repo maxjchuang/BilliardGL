@@ -1,0 +1,105 @@
+{
+  "schema": "billiardgl.phase4.v19.endpoint_event_overlap_ta_acceptance_interpretation_addendum.v1",
+  "status": "TA_INTERPRETATION_FROZEN_CP1_NOT_ACCEPTED_NO_PRODUCTION_NO_GPU_NO_AUTH",
+  "scope": "Technical-art acceptance interpretation only for the V19 inset predicted tail dash event entering its closed hollow diamond endpoint and for the paired actual endpoint capsules. This addendum resolves an impossible zero-geometry-overlap interpretation; it neither changes production nor accepts CP1.",
+  "frozen_gate_bindings": [
+    {
+      "path": "docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json",
+      "sha256": "c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"
+    },
+    {
+      "path": "docs/art/phase4-v19-landscape-orientation-layout-interpretation-correction-gate-v1.json",
+      "sha256": "cffc93f29bb24f7f9378dee3c17fffd1da1c139745eec17bdb380cf6bda04d13"
+    },
+    {
+      "path": "docs/art/phase4-v19-route-wide-dash-event-semantic-interpretation-correction-gate-v1.json",
+      "sha256": "de1d3dd818050d42e03025080939002af82395fd42ea9a22d3413aab0efe3441"
+    }
+  ],
+  "root_decision_binding": {
+    "selected_interpretation": "BOUNDED_ANALYTIC_CROSSING_WITH_DETERMINISTIC_FINAL_SAMPLE_OWNERSHIP",
+    "statement": "The centerline must enter the closed hollow diamond and therefore necessarily crosses its outline. Pre-resolve isolated geometry zero-overlap is not an acceptance requirement. Bounded analytic crossing is allowed, but every final sample has one deterministic semantic owner; the full two-pixel tail event interval is retained; tail-event and endpoint-marker identities each retain independent resolved area and exact probes across 1x/2x/4x and standard/CVD. No notch and no cadence truncation are allowed.",
+    "new_endpoint_geometry_or_product_grammar_selected": false
+  },
+  "why_zero_geometry_overlap_is_impossible": {
+    "topology": "A centerline route that terminates at the center of a closed hollow diamond must cross the closed outline before entering the hollow interior.",
+    "invalid_test_removed_from_acceptance": "isolated tail-event core geometry and isolated complete closed-diamond outline geometry have zero common covered samples",
+    "not_a_relaxation_of_identity_or_visibility": true
+  },
+  "locked_endpoint_geometry": {
+    "predicted_endpoint_halo_l1_band_outer_to_inner_px": [4.5, 3.5],
+    "predicted_endpoint_marker_l1_band_outer_to_inner_px": [3.5, 2.5],
+    "actual_capsule_tangent_by_normal_extent_px": [7.0, 2.5],
+    "actual_capsule_center_offsets_from_canonical_endpoint_px": [-7.75, 7.75],
+    "paired_capsule_midpoint_is_canonical_endpoint": true,
+    "full_cadence_tail_event_interval_is_retained": true,
+    "edge_corner_reference_tail_event_interval_px": [550.0, 552.0],
+    "open_notch_in_closed_diamond_allowed": false,
+    "tail_event_truncation_or_suppression_allowed": false,
+    "endpoint_or_route_relocation_allowed": false
+  },
+  "deterministic_overlap_ownership_contract": {
+    "draw_order": [
+      "route-wide predicted dash outer rim",
+      "route-wide predicted dash inner halo",
+      "route-wide predicted dash core",
+      "predicted endpoint halo closed band",
+      "predicted endpoint marker closed band"
+    ],
+    "analytic_overlap_samples_are_owned_by_later_endpoint_band": true,
+    "hollow_interior_samples_remain_available_to_tail_event_core": true,
+    "one_final_nonzero_semantic_owner_per_sample": true,
+    "ownership_must_be_top_left_half_open_and_repeatable": true,
+    "palette_may_change_color_but_not_topology_or_ownership": true
+  },
+  "cp1_endpoint_acceptance_delta_not_yet_executed": {
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_profiles": ["center_1x", "asymmetric_2x", "asymmetric_4x"],
+    "required_geometry_assertions": [
+      "both closed L1 bands use only the locked inner and outer radii",
+      "both actual capsules retain exact 7.0 by 2.5 physical extents and symmetric 7.75 offsets",
+      "the full tail interval remains 550.0 through 552.0 in the edge/corner fixture",
+      "no vertex exits the frozen plot rectangle"
+    ],
+    "required_resolved_semantic_assertions_per_palette_profile_and_sample": [
+      "tail dash-event core has nonzero independent final exact-token area and one exact core-plus-inner probe",
+      "endpoint marker band and endpoint halo band each have nonzero independent final exact-token area and the marker has one exact marker-plus-halo probe",
+      "both actual capsules each have nonzero independent final exact-token area and one exact probe",
+      "the two-pixel tail event is not fully consumed by endpoint bands",
+      "every overlap sample resolves to exactly one deterministic owner and repeated rasters are byte-identical"
+    ],
+    "required_fail_closed_mutations": [
+      "open or notch either closed diamond band",
+      "truncate, suppress or rephase the two-pixel tail event",
+      "make an endpoint band consume every tail-event core sample",
+      "remove or duplicate any tail-event, marker, halo or capsule probe",
+      "change band radii, capsule dimensions, capsule offset, endpoint center or draw order",
+      "make standard and CVD semantic topology or ownership differ",
+      "replace real 1x/2x/4x sample profiles with relabeled results"
+    ],
+    "cp1_accepted": false,
+    "implementation_receipt_bound": false
+  },
+  "unchanged_contracts": {
+    "route_wide_event_and_contributor_lineage": true,
+    "source_group_member_and_probe_denominators": true,
+    "landscape_orientation_and_gutter": true,
+    "world_overlay_secondary_diagnostic_default_off": true,
+    "inset_independent_semantic_plane": true,
+    "authority_rules_thresholds_camera_layout_and_source_ids": true
+  },
+  "authorization_boundary": {
+    "production_edit_authorized_by_this_addendum": false,
+    "cmake_edit_authorized_by_this_addendum": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_auth_authorized": false,
+    "cp1_accepted": false,
+    "cp2_accepted": false,
+    "cp3_accepted": false,
+    "machine_pass_claimed": false,
+    "ta_visual_pass_claimed": false,
+    "human_comprehension_pass_claimed": false,
+    "product_or_m3_pass_claimed": false
+  }
+}

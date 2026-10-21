@@ -1,0 +1,391 @@
+{
+  "schema": "m4_wpa_policy_bundle_candidate_v1",
+  "bundle_id": "m4-wpa-recommended-candidate-2026-08-12-v1",
+  "candidate_version": 1,
+  "status": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+  "approval_state": "NOT_APPROVED",
+  "root_selected": false,
+  "implementation_authorized": false,
+  "input_bindings": {
+    "policy_register": {
+      "path": "docs/rules/m4-wpa-policy-referee-input-decision-register-v1.json",
+      "sha256": "66e105e968fc49f46cfe7fd117e42b545c6789a87d401f1d657ee263103a31ce"
+    },
+    "dependency_register": {
+      "path": "docs/rules/m4-remaining-gap-dependency-critical-path-register-v1.json",
+      "sha256": "a981b12424ddea9387250b884c53f058e0f987ae5ce88a0e7362df0c0015a684"
+    }
+  },
+  "candidate_contract": {
+    "option_source": "Each proposed_option_id is exactly the recommended_shipping_policy.id from the bound policy register.",
+    "proposal_is_not_selection": true,
+    "proposal_is_not_approval": true,
+    "proposal_does_not_authorize_implementation": true,
+    "machine_constants_are_inert_until_root_selects_and_versions_the_item": true,
+    "deferred_or_dependency_blocked_rows_remain_open": true,
+    "root_must_review_each_decision_id_individually": true,
+    "global_rules_decision_ui_product_exposed": false
+  },
+  "decisions": [
+    {
+      "row_id": "WPA-II-06-C",
+      "decision_id": "M4-POL-06C-BREAK-THRESHOLD",
+      "proposed_option_id": "STRAIGHT_CUSHION_VELOCITY_IMPULSE_OBJECT_POCKET",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "required_distinct_object_ball_cushion_contacts": 4,
+        "accepted_boundary_kind": "STRAIGHT_CUSHION",
+        "require_velocity_impulse_applied": true,
+        "jaw_contacts_count": false,
+        "pocket_branch_ball_kind": "OBJECT_BALL",
+        "cue_ball_pocket_is_separate_foul": true
+      },
+      "authority_boundary": {
+        "fact_owner": "ShotFactCollector authoritative complete provenance",
+        "classification_owner": "rules adjudicator using only canonical facts",
+        "product_owner": "current runtime-frozen illegal-break offer consumer",
+        "forbidden": "product-side classification, jaw inference, cue scratch satisfying the object-pocket branch, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D3-BREAK-CLASSIFICATION", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_OFFER_VISIBLE"],
+      "evidence_invalidation": "Any linked source or binary change makes prior source-bound evidence historical-only and requires fresh bindings."
+    },
+    {
+      "row_id": "WPA-II-06-D",
+      "decision_id": "M4-POL-06D-HALF-BALL-HISTORY",
+      "proposed_option_id": "FROZEN_POSITION_AT_ACCEPTED_BREAK_RELEASE_MATCH_SCOPE",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "sample_event": "ACCEPTED_BREAK_SHOT_RELEASE",
+        "position_source": "FROZEN_COMMITTED_CUE_BALL_CENTER",
+        "crossing_relation": "STRICTLY_MORE_THAN_HALF_BALL_PAST_HEAD_STRING",
+        "quantization_grid_world_units": 0.000001,
+        "first_offense_result": "REMINDER",
+        "subsequent_offense_result": "FOUL",
+        "history_partition": "PER_PLAYER",
+        "history_scope": "MATCH"
+      },
+      "authority_boundary": {
+        "fact_owner": "GameRuntime accepted break release snapshot",
+        "classification_owner": "break head-string offense authority",
+        "product_owner": "committed reminder/foul presentation only",
+        "forbidden": "counting drag preview, rejected placement, failed launch, another player's history, or rack-scoped reset"
+      },
+      "expected_code_lanes": ["D3-BREAK-CLASSIFICATION", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_REMINDER_VISIBLE"],
+      "evidence_invalidation": "Rules/runtime binary changes require fresh bindings; visible reminder presentation requires fresh targeted evidence."
+    },
+    {
+      "row_id": "WPA-II-06-E",
+      "decision_id": "M4-PROD-06E-BREAK-FOUL-CHOICES",
+      "proposed_option_id": "NARROW_FROZEN_OFFER_CONSUMER",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "product_scope": "MATCH_ONLY_CURRENT_OFFER",
+        "required_actor": "OPPONENT_OF_FROZEN_ORIGINAL_BREAKER",
+        "ordered_action_ids": [
+          "rules.break_foul.ball_in_hand_behind_head_string",
+          "rules.break_foul.rerack_opponent_breaks",
+          "rules.break_foul.rerack_original_breaker"
+        ],
+        "canonical_payload": {},
+        "ack_then_refresh": true,
+        "foundation_actions_product_reachable": false
+      },
+      "authority_boundary": {
+        "fact_owner": "upstream rules classification",
+        "classification_owner": "Core H break-foul authority",
+        "product_owner": "ModernProductSession exact current-offer consumer",
+        "forbidden": "constructing/reclassifying an offer, accepting sibling/foundation IDs, early BIH, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D3-BREAK-CLASSIFICATION", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_EXACT_ACTION_UI"],
+      "evidence_invalidation": "Product-session or shared binary change requires fresh bindings and exact action UI evidence."
+    },
+    {
+      "row_id": "WPA-II-06-F",
+      "decision_id": "M4-PROD-06F-EIGHT-ON-BREAK-FULL-CHOICES",
+      "proposed_option_id": "EXPAND_NARROW_CORE_F_TO_EXACT_RERACK_ACTIONS",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "legal_branch_actor": "FROZEN_ORIGINAL_BREAKER",
+        "legal_ordered_action_ids": ["rules.eight_on_break.spot_continue", "rules.eight_on_break.rerack_original_breaker"],
+        "foul_branch_actor": "OPPONENT_OF_FROZEN_ORIGINAL_BREAKER",
+        "foul_ordered_action_ids": ["rules.eight_on_break.spot_ball_in_hand_head_string", "rules.eight_on_break.rerack_opponent_breaks", "rules.eight_on_break.rerack_original_breaker"],
+        "bih_grant_point": "ACCEPTED_FOUL_SPOT_PARENT_COMMIT_ONLY",
+        "rerack_grants_or_preserves_bih": false,
+        "canonical_payload": {},
+        "foundation_actions_product_reachable": false
+      },
+      "authority_boundary": {
+        "fact_owner": "validated break ShotFacts with ball 8 pocketed",
+        "classification_owner": "Core F eight-on-break authority",
+        "product_owner": "ModernProductSession exact offered Core F action consumer",
+        "forbidden": "product branch inference, sibling Core H offer, direct Core E action, early BIH, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D3-BREAK-CLASSIFICATION", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_EXACT_ACTION_UI"],
+      "evidence_invalidation": "Expanded product source/binary makes prior spot-only source bindings historical and requires fresh exact action evidence."
+    },
+    {
+      "row_id": "WPA-II-08",
+      "decision_id": "M4-POL-08-HEAD-STRING-CROSSING",
+      "proposed_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "crossing_reference_point": "CUE_BALL_CENTER",
+        "crossing_event_required": true,
+        "event_order": "CROSSING_STRICTLY_BEFORE_FIRST_OBJECT_CONTACT",
+        "continuous_evidence_required": true,
+        "incomplete_or_unordered_evidence_result": "FAIL_CLOSED",
+        "on_head_string_object_direct_contact_legal": true
+      },
+      "authority_boundary": {
+        "fact_owner": "continuous physics telemetry and canonical ShotFactCollector",
+        "classification_owner": "BehindHeadString rules authority",
+        "product_owner": "current respot/placement offer consumer only",
+        "forbidden": "leading-edge inference, sampled-order approximation, direct foundation respot, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D4-PLACEMENT-LIFECYCLE", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_RESPOT_VISIBLE"],
+      "evidence_invalidation": "Collector/runtime/product changes require fresh bindings; visible respot controls require fresh targeted evidence."
+    },
+    {
+      "row_id": "WPA-II-09",
+      "decision_id": "M4-POL-09-TIP-TOUCH-SHOT-BOUNDARY",
+      "proposed_option_id": "COORDINATE_PLACEMENT_ONLY_POSITIVE_IMPULSE_CONSUMES",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "placement_input_mode": "COORDINATE_PREVIEW_CONFIRM_ONLY",
+        "physical_cue_part_reposition_enabled": false,
+        "entitlement_consumption_event": "AUTHORITATIVE_CUE_BALL_IMPULSE",
+        "impulse_relation": "STRICTLY_POSITIVE",
+        "rejected_zero_or_failed_attempt_consumes": false,
+        "consume_exactly_once": true
+      },
+      "authority_boundary": {
+        "fact_owner": "successful authoritative runtime impulse result",
+        "classification_owner": "ball-in-hand lifecycle authority",
+        "product_owner": "existing narrow coordinate preview/confirm controller",
+        "forbidden": "preview mutation, zero-speed consumption, forward-stroke intent inference, physical cue reposition, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D4-PLACEMENT-LIFECYCLE", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_INTERACTION_VISIBLE"],
+      "evidence_invalidation": "Lifecycle/product-input source or binary change requires fresh bindings; GPU evidence only when visible interaction changes."
+    },
+    {
+      "row_id": "WPA-II-12-3",
+      "decision_id": "M4-POL-12-3-OBJECT-OFF-TABLE-CONFLICT",
+      "proposed_option_id": "SIGNED_TOURNAMENT_PROFILE_DEFAULT_17E_FOUL",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "profile_authority": "SIGNED_TOURNAMENT_AUTHORITY",
+        "displayed_default_profile": "WPA_17E_OBJECT_OFF_TABLE_GENERAL_FOUL",
+        "supported_mutually_exclusive_profile": "WPA_12_3_NON_EIGHT_LEGAL_DISAPPEARANCE",
+        "true_physical_off_table_fact_required": true,
+        "coordinate_overflow_synthesis_allowed": false,
+        "eight_ball_off_table_separate": true
+      },
+      "authority_boundary": {
+        "fact_owner": "future complete off-table physics telemetry",
+        "classification_owner": "rules adjudicator under one signed tournament profile",
+        "product_owner": "read-only signed profile display; no ordinary player policy picker",
+        "forbidden": "silent 12.3/17(e) precedence, geometry synthesis, off-table claim before physics, or blending profiles"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D6-OFF-TABLE-PHYSICS", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_NEW_VISIBLE_PHYSICS"],
+      "evidence_invalidation": "New physics invalidates inheritance of all shared binary and visual baselines; full fresh CPU, readiness and visible-motion evidence is required."
+    },
+    {
+      "row_id": "WPA-II-12-5-6",
+      "decision_id": "M4-POL-12-5-6-DOUBLE-HIT",
+      "proposed_option_id": "AUTO_ONLY_COMPLETE_MULTI_INTERVAL_REFEREE_CLOSE_CASES",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "automatic_foul_requires_complete_full_stroke": true,
+        "automatic_foul_tip_contact_interval_relation": "GREATER_THAN_ONE",
+        "canonical_interval_dedupe_required": true,
+        "close_ball_presumption_route": "SIGNED_REFEREE_INPUT",
+        "very_close_distance_threshold": null,
+        "light_graze_threshold": null,
+        "incomplete_evidence_result": "NO_AUTOMATIC_CLASSIFICATION"
+      },
+      "authority_boundary": {
+        "fact_owner": "future complete full-stroke cue-contact telemetry",
+        "classification_owner": "rules adjudicator for proven multi-interval; referee authority for close cases",
+        "product_owner": "committed foul/review presentation only",
+        "forbidden": "microtrace-as-full-stroke, geometry-only double-hit, invented close/graze thresholds, or player self-declaration"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_FOUL_VISIBLE"],
+      "evidence_invalidation": "Cue-contact/physics source changes require fresh shared binary bindings and full contact/rules regression evidence."
+    },
+    {
+      "row_id": "WPA-II-12-7",
+      "decision_id": "M4-POL-12-7-PUSH",
+      "proposed_option_id": "MEASUREMENTS_PLUS_SIGNED_REFEREE_PUSH_DECLARATION",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "complete_contact_duration_required": true,
+        "complete_contact_distance_required": true,
+        "automatic_numeric_push_threshold_enabled": false,
+        "signed_referee_push_declaration_required": true,
+        "declaration_binding_fields": ["actor", "decision", "revision", "state_hash", "idempotency_key"],
+        "incomplete_measurement_result": "FAIL_CLOSED_NO_CLASSIFICATION"
+      },
+      "authority_boundary": {
+        "fact_owner": "future complete cue-contact duration/distance telemetry",
+        "classification_owner": "authenticated referee authority",
+        "product_owner": "committed foul result consumer only",
+        "forbidden": "positive impulse as push, local duration threshold inference, unsigned declaration, or ordinary player authority"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_FOUL_VISIBLE"],
+      "evidence_invalidation": "Cue physics/referee authority changes require fresh binary bindings, telemetry/rules CPU and visible foul evidence when surfaced."
+    },
+    {
+      "row_id": "WPA-II-15-1",
+      "decision_id": "M4-POL-15-1-FROZEN-CUE-OBJECT",
+      "proposed_option_id": "SIGNED_PRE_SHOT_FROZEN_DECLARATION",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "declaration_authority": "AUTHENTICATED_REFEREE",
+        "declaration_phase": "PRE_SHOT",
+        "binding_fields": ["cue_ball_id", "object_ball_id", "rack_id", "revision", "state_hash", "idempotency_key"],
+        "expiry_event": "FIRST_ACCEPTED_SHOT_OR_RESET",
+        "geometry_may_suggest_but_not_declare": true,
+        "obvious_push_remains_independent": true
+      },
+      "authority_boundary": {
+        "fact_owner": "signed referee pre-shot declaration plus complete cue telemetry",
+        "classification_owner": "frozen-ball rules authority",
+        "product_owner": "dedicated referee surface; ordinary player sees committed state/result",
+        "forbidden": "geometry-as-declaration, stale declaration, multi-shot persistence, or bypass of push authority"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_REFEREE_SURFACE"],
+      "evidence_invalidation": "Authority/rules changes require fresh bindings; any referee surface requires new targeted UI evidence."
+    },
+    {
+      "row_id": "WPA-II-15-2",
+      "decision_id": "M4-POL-15-2-FROZEN-CUSHION",
+      "proposed_option_id": "SIGNED_DECLARATION_STRAIGHT_CUSHION_CAPTURE_ONLY",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "declaration_authority": "AUTHENTICATED_REFEREE",
+        "declaration_phase": "PRE_SHOT",
+        "accepted_cushion_boundary_kind": "STRAIGHT_CUSHION",
+        "pocket_jaw_counts_as_cushion": false,
+        "legal_alternatives": ["DECLARED_BALL_LEAVES_THEN_RECONTACTS", "ANOTHER_BALL_STRAIGHT_CUSHION_CONTACT", "COMPLETE_POCKET_CAPTURE"],
+        "leave_before_recontact_required": true
+      },
+      "authority_boundary": {
+        "fact_owner": "signed declaration and canonical leave/recontact/cushion/pocket facts",
+        "classification_owner": "frozen-to-cushion rules authority",
+        "product_owner": "dedicated referee surface and committed foul result consumer",
+        "forbidden": "geometry-as-declaration, jaw counting, unordered recontact, incomplete capture, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_REFEREE_SURFACE"],
+      "evidence_invalidation": "Collector/rules/referee authority changes require fresh bindings and CPU; visible declaration/foul surfaces require targeted evidence."
+    },
+    {
+      "row_id": "WPA-II-16",
+      "decision_id": "M4-PROD-16-JUMP-CAPABILITY",
+      "proposed_option_id": "KEEP_JUMP_DISABLED_FOR_M4",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "cue_elevation_capability": false,
+        "nonzero_elevation_input_result": "EXPLICIT_REJECTION",
+        "jump_controls_visible": false,
+        "jump_legality_claimed": false,
+        "three_dimensional_physics_promoted": false,
+        "deferred_physics_row_closed": false
+      },
+      "authority_boundary": {
+        "fact_owner": "current capability registry",
+        "classification_owner": "none while jump remains unsupported",
+        "product_owner": "hide jump controls and report unsupported capability",
+        "forbidden": "simulated jump, referee result presented as physics, legality claim, or treating product-scope defer as implementation"
+      },
+      "expected_code_lanes": ["D7-JUMP-3D-PHYSICS_DEFERRED_OPEN", "D9-CPU-NEGATIVE-CAPABILITY", "D10-FRESH-SHARED-BUILD_IF_SOURCE_CHANGES"],
+      "evidence_invalidation": "Any 3D physics implementation invalidates inheritance of all physics-linked shared binaries and visual baselines."
+    },
+    {
+      "row_id": "WPA-II-17",
+      "decision_id": "M4-PROD-17-GENERAL-FOUL-COVERAGE",
+      "proposed_option_id": "EVIDENCE_BACKED_SUBSET_PLUS_SIGNED_REFEREE_EVENTS",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "automatic_fact_subset": ["CUE_BALL_POCKET_SCRATCH", "WRONG_FIRST_CONTACT", "NO_CONTACT_OR_NO_RAIL"],
+        "signed_referee_fact_classes": ["BODY_INTERFERENCE", "EQUIPMENT_INTERFERENCE", "MOBILE_DEVICE", "OBVIOUS_CONTACT_FOUL"],
+        "off_table_automatic_classification_enabled": false,
+        "object_off_table_policy_selected": false,
+        "ball_in_hand_scope_after_classified_general_foul": "ANYWHERE",
+        "global_rules_ui_exposed": false
+      },
+      "authority_boundary": {
+        "fact_owner": "canonical complete telemetry subset or signed referee event",
+        "classification_owner": "general-foul adjudicator",
+        "product_owner": "narrow referee channel plus existing current BIH placement seam",
+        "forbidden": "unsupported automatic foul, off-table inference, §12.3/17(e) silent resolution, early BIH, or global Rules UI exposure"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D5-CUE-CONTACT-TELEMETRY", "D6-OFF-TABLE-PHYSICS_DEFERRED_OPEN", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_REFEREE_OR_FOUL_SURFACE"],
+      "evidence_invalidation": "Rules/referee/physics changes require fresh shared bindings; visible referee/foul surfaces require new targeted evidence."
+    },
+    {
+      "row_id": "WPA-II-19",
+      "decision_id": "M4-POL-19-GROUP-CONFUSION",
+      "proposed_option_id": "SIGNED_CONFUSION_DECLARATION_ASSIGNMENT_ERROR_ONLY",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "classification_scope": "ASSIGNMENT_OR_SEQUENCE_CONFUSION_ONLY",
+        "ordinary_wrong_first_contact_routes_to_section_17": true,
+        "accepted_declarers": ["AUTHENTICATED_PLAYER", "AUTHENTICATED_REFEREE"],
+        "deadline_event": "BEFORE_NEXT_ACCEPTED_SHOOT",
+        "rerack_breaker": "FROZEN_ORIGINAL_RACK_BREAKER",
+        "shooting_order": "PRESERVE_ORIGINAL_RACK_ORDER",
+        "audit_v5_m4_required_override": false
+      },
+      "authority_boundary": {
+        "fact_owner": "signed timely confusion declaration plus assignment/shot journal",
+        "classification_owner": "group-confusion parent authority",
+        "product_owner": "dedicated signed realization channel",
+        "forbidden": "every WrongFirstContact triggering rerack, late declaration, audit-v5 mutation, or direct rack foundation action"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D8-RACK-REFEREE-AUTHORITY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_IF_SIGNED_CHANNEL_VISIBLE"],
+      "evidence_invalidation": "Authority/rerack/product changes require fresh bindings; visible signed channel requires targeted decision evidence."
+    },
+    {
+      "row_id": "WPA-II-21",
+      "decision_id": "M4-POL-21-STALEMATE",
+      "proposed_option_id": "SIGNED_REFEREE_DIRECTIVE_DEFAULT_THREE_EACH",
+      "candidate_state": "PROPOSED_RECOMMENDED_NOT_ROOT_SELECTED",
+      "machine_policy_constants": {
+        "proposal_authority": "AUTHENTICATED_REFEREE",
+        "default_completed_shots_per_player": 3,
+        "default_is_advisory_directive": true,
+        "automatic_stalemate_on_counter_expiry": false,
+        "either_player_may_refuse": true,
+        "final_declaration_authority": "AUTHENTICATED_REFEREE",
+        "rerack_breaker": "FROZEN_ORIGINAL_RACK_BREAKER",
+        "shooting_order": "PRESERVE_ORIGINAL_RACK_ORDER"
+      },
+      "authority_boundary": {
+        "fact_owner": "rack-scoped completed-shot counters plus signed referee directives and player responses",
+        "classification_owner": "stalemate authority after final signed declaration",
+        "product_owner": "dedicated referee proposal and player response surface",
+        "forbidden": "global replay count, automatic declaration at three, ignored refusal, changed breaker/order, or direct rack foundation action"
+      },
+      "expected_code_lanes": ["D2-REFEREE-AUTHORITY-PROTOCOL", "D8-RACK-REFEREE-AUTHORITY", "D9-CPU-INTEGRATION", "D10-FRESH-SHARED-BUILD", "D11-GPU-TA_PROPOSAL_RESPONSE_UI", "D12-HUMAN-BETA"],
+      "evidence_invalidation": "Authority/rack/product changes require fresh bindings and exact proposal/response evidence when exposed."
+    }
+  ],
+  "root_review_contract": {
+    "required_review_result_per_decision": ["SELECT_RECOMMENDED", "SELECT_REGISTER_ALTERNATIVE", "DEFER_OPEN", "REJECT_AND_REQUEST_REVISION"],
+    "selection_artifact_must_be_separate_and_versioned": true,
+    "candidate_must_remain_immutable_history_after_review": true,
+    "implementation_requires_selected_artifact_and_new_allowlist_gate": true
+  },
+  "claims": {
+    "decision_count": 15,
+    "all_options_equal_bound_register_recommendations": true,
+    "root_review_complete": false,
+    "any_item_root_selected": false,
+    "approved": false,
+    "implementation_authorized": false,
+    "production_modified": false,
+    "cmake_modified": false,
+    "readiness_or_authorization_created": false,
+    "gpu_or_cocoa_or_opengl_executed": false
+  }
+}

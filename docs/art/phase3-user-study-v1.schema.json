@@ -1,0 +1,61 @@
+{
+  "$id": "billiardgl://schemas/phase3-user-study-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "aggregate": {
+      "type": "object"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "group_contract": {
+      "type": "object"
+    },
+    "protocol_path": {
+      "type": "string"
+    },
+    "research_ethics": {
+      "type": "object"
+    },
+    "schema": {
+      "const": "phase3_user_study_v1"
+    },
+    "sessions": {
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "NOT_RUN",
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "study_id": {
+      "const": "phase3_first_shot_and_controls_v1"
+    },
+    "task_contract": {
+      "type": "object"
+    },
+    "thresholds": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "status",
+    "study_id",
+    "protocol_path",
+    "research_ethics",
+    "group_contract",
+    "task_contract",
+    "thresholds",
+    "sessions",
+    "aggregate",
+    "evidence_boundary"
+  ],
+  "title": "Phase 3 real-user study evidence",
+  "type": "object"
+}

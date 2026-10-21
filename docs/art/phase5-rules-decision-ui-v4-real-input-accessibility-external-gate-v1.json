@@ -1,0 +1,412 @@
+{
+  "schema": "phase5_rules_decision_ui_v4_real_input_accessibility_external_gate_v1",
+  "schema_version": 1,
+  "status": "EXTERNAL_SESSION_PROTOCOL_APPROVED_NOT_RUN",
+  "scope": "Independent real keyboard, pointer, bilingual, standard/CVD, and screen-reader sessions for the Phase5 Rules UI v4 exact-shape correction. This gate defines external evidence only and changes no product, authority, rules, threshold, or exposure state.",
+  "read_only_bindings": [
+    {
+      "role": "v3_corrected_targeted28_final_manual",
+      "path": "docs/evidence/phase5/rules-decision-ui-v3-binding-corrected-targeted28-independent-ta-manual-review-v1.json",
+      "sha256": "f044e39c7765f3026bd53521e7cca8cf11b619ca5e6369c6e37e338da0afb954"
+    },
+    {
+      "role": "v4_exact_shape_correction_design_gate",
+      "path": "docs/art/phase5-rules-decision-ui-v4-exact-shape-correction-design-gate-v1.json",
+      "sha256": "f93ca59634875ed5256f5c22678a55817e0f3e8bf8df582b3b04ac527b886051"
+    }
+  ],
+  "future_targeted16_ta_prerequisite": {
+    "status": "NOT_AVAILABLE",
+    "manual_path": null,
+    "manual_sha256": null,
+    "required_schema": "phase5_rules_decision_ui_v4_targeted16_independent_ta_manual_review_v1",
+    "required_result": "PASS",
+    "required_cases_reviewed": 16,
+    "required_axes_reviewed": 160,
+    "required_failed_axes": 0,
+    "policy": "No external session may start or receive PASS/FAIL until a future targeted16 independent TA manual is byte-bound and validates PASS. This gate does not reference or predict a nonexistent SHA."
+  },
+  "independence_and_privacy": {
+    "implementation_team_members_allowed_as_subjects": false,
+    "technical_art_reviewer_allowed_as_subject": false,
+    "external_moderator_required": true,
+    "pseudonymous_subject_codes_only": true,
+    "direct_personal_identifiers_in_artifacts_forbidden": true,
+    "informed_consent_record_required_before_session": true,
+    "raw_accessibility_or_input_logs_must_redact_personal_data": true
+  },
+  "participant_contract": {
+    "required_unique_subject_count": 12,
+    "locale_counts": {
+      "en": 6,
+      "zh_cn": 6
+    },
+    "cohorts": [
+      {
+        "cohort_id": "visual_input_en",
+        "subject_slots": [
+          "P01",
+          "P02",
+          "P03",
+          "P04"
+        ],
+        "locale": "en",
+        "required_standard_vision_count": 2,
+        "required_cvd_count": 2,
+        "required_cvd_types": [
+          "protan",
+          "deutan"
+        ],
+        "sessions_per_subject": [
+          "keyboard_only",
+          "pointer_only"
+        ]
+      },
+      {
+        "cohort_id": "visual_input_zh_cn",
+        "subject_slots": [
+          "P05",
+          "P06",
+          "P07",
+          "P08"
+        ],
+        "locale": "zh_cn",
+        "required_standard_vision_count": 2,
+        "required_cvd_count": 2,
+        "required_cvd_types": [
+          "protan",
+          "deutan"
+        ],
+        "sessions_per_subject": [
+          "keyboard_only",
+          "pointer_only"
+        ]
+      },
+      {
+        "cohort_id": "experienced_screen_reader_users",
+        "subject_slots": [
+          "P09",
+          "P10",
+          "P11",
+          "P12"
+        ],
+        "locale_distribution": {
+          "en": 2,
+          "zh_cn": 2
+        },
+        "minimum_regular_screen_reader_use_months": 12,
+        "sessions_per_subject": [
+          "screen_reader"
+        ]
+      }
+    ],
+    "minimum_real_input_session_count": 16,
+    "minimum_screen_reader_session_count": 4
+  },
+  "device_contract": {
+    "required_distinct_physical_device_count": 4,
+    "device_slots": [
+      {
+        "device_slot": "D01",
+        "platform_family": "macOS",
+        "input_configuration": "built_in_keyboard_and_trackpad",
+        "required_screen_reader_family": "VoiceOver"
+      },
+      {
+        "device_slot": "D02",
+        "platform_family": "Windows",
+        "input_configuration": "external_keyboard_and_mouse",
+        "required_screen_reader_family": "NVDA"
+      },
+      {
+        "device_slot": "D03",
+        "platform_family": "macOS",
+        "input_configuration": "external_keyboard_and_mouse",
+        "required_screen_reader_family": null
+      },
+      {
+        "device_slot": "D04",
+        "platform_family": "Windows",
+        "input_configuration": "high_dpi_external_keyboard_and_mouse",
+        "required_screen_reader_family": null
+      }
+    ],
+    "future_device_evidence_required": [
+      "Pseudonymous device ID, manufacturer/model, physical display dimensions/density, OS build, keyboard layout, pointing device model, app binary SHA, configuration SHA, and session timestamps.",
+      "At least one real-input session per locale on each platform family and at least one session on every device slot.",
+      "Synthetic events, automation-only input, remote macro tools, and emulator-only devices do not count as real input."
+    ]
+  },
+  "screen_reader_contract": {
+    "required_distinct_screen_reader_family_count": 2,
+    "screen_reader_families": [
+      {
+        "family": "VoiceOver",
+        "platform_family": "macOS",
+        "required_locale_sessions": [
+          "en",
+          "zh_cn"
+        ],
+        "required_subject_slots": [
+          "P09",
+          "P11"
+        ]
+      },
+      {
+        "family": "NVDA",
+        "platform_family": "Windows",
+        "required_locale_sessions": [
+          "en",
+          "zh_cn"
+        ],
+        "required_subject_slots": [
+          "P10",
+          "P12"
+        ]
+      }
+    ],
+    "future_configuration_evidence_required": [
+      "Exact screen-reader version/build, speech synthesizer and voice/locale, verbosity settings, browse/focus mode, OS accessibility settings, and output transcript.",
+      "The participant must be a regular user of the assigned screen-reader family; moderator-only inspection does not count."
+    ]
+  },
+  "protocol_catalog": [
+    {
+      "item_id": "K01_OPEN_HAS_NO_DEFAULT_OR_SUBMISSION",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Opening the group-choice dialog through real keyboard input shows no selected/armed action, emits no authority request, and performs no submission."
+    },
+    {
+      "item_id": "K02_FOCUS_TRAVERSAL_CHEVRON_ONLY",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Tab/arrow traversal moves the independent leading focus chevron in authority order without arming, selecting, or submitting."
+    },
+    {
+      "item_id": "K03_FIRST_ACTIVATION_ARMS_ONLY",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "One activation of Choose solids arms only, exposes the enclosed check-diamond and exact actor/action copy, and emits zero submission requests."
+    },
+    {
+      "item_id": "K04_CONFIRM_FOCUS_SHAPES_DISTINCT",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Moving focus to confirm simultaneously exposes leading focus chevron, armed-row enclosed check-diamond, and confirm double-frame bent enter-arrow as three distinct shapes."
+    },
+    {
+      "item_id": "K05_CONFIRM_SUBMITS_EXACTLY_ONCE",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "One separate confirm activation submits the exact armed action once; input/request trace contains exactly one submit and matching authority request identity."
+    },
+    {
+      "item_id": "K06_CANCEL_FOCUS_LOSS_TIMEOUT_NO_SUBMIT",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Escape, focus loss, timeout, resume, and navigation away clear or preserve state only as contracted and never submit."
+    },
+    {
+      "item_id": "K07_REPEAT_STALE_ACTOR_DRIFT_FAILS_CLOSED",
+      "category": "keyboard_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Key repeat, stale revision, actor/action drift, and ACK mismatch never duplicate submission; stale arm clears and current authority must be reacquired."
+    },
+    {
+      "item_id": "M01_OPEN_HOVER_NO_DEFAULT_OR_SUBMISSION",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Opening and hovering through real pointer input causes no selection, arm, confirm, authority request, or submission."
+    },
+    {
+      "item_id": "M02_SINGLE_CLICK_ARMS_ONLY",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "One click on Choose solids arms only and exposes exact actor/action copy plus enclosed check-diamond with zero submission request."
+    },
+    {
+      "item_id": "M03_DOUBLE_CLICK_ACTION_NEVER_SUBMITS",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "A real double-click on an action row never crosses into confirm and emits zero submission requests."
+    },
+    {
+      "item_id": "M04_CONFIRM_CLICK_SUBMITS_EXACTLY_ONCE",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "After arming, one click inside the explicit confirm hit rectangle submits exactly once and matches the exact armed action/request identity."
+    },
+    {
+      "item_id": "M05_OUTSIDE_RIGHT_CLICK_FOCUS_LOSS_NO_SUBMIT",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Outside click, right-click, drag across a boundary, and application focus loss never submit or convert hover/focus into selection."
+    },
+    {
+      "item_id": "M06_HIT_RECT_BOUNDARIES_NO_CROSS_ACTIVATION",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Clicks on every shared edge/gap activate at most the intended single row; no action/confirm overlap or adjacent-row cross activation occurs."
+    },
+    {
+      "item_id": "M07_STALE_ACTOR_DRIFT_ACK_MISMATCH_FAILS_CLOSED",
+      "category": "pointer_only",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"],
+      "acceptance": "Stale revision, actor/action drift, and ACK mismatch clear the arm or remain blocked and never produce duplicate or wrong-action submission."
+    },
+    {
+      "item_id": "L01_EN_VISIBLE_COPY_EXACT",
+      "category": "bilingual_copy",
+      "required_subject_slots": ["P01", "P02", "P03", "P04", "P09", "P10"],
+      "acceptance": "English armed and confirm visible copy names exact actor and exact action result with no generic wording, clipping, collision, or ellipsis."
+    },
+    {
+      "item_id": "L02_ZH_CN_VISIBLE_COPY_EXACT",
+      "category": "bilingual_copy",
+      "required_subject_slots": ["P05", "P06", "P07", "P08", "P11", "P12"],
+      "acceptance": "Simplified-Chinese armed and confirm visible copy names exact actor and exact action result with correct punctuation, no generic wording, clipping, collision, or ellipsis."
+    },
+    {
+      "item_id": "L03_EN_ACCESSIBLE_NAMES_MATCH_VISIBLE_COPY",
+      "category": "bilingual_copy",
+      "required_subject_slots": ["P09", "P10"],
+      "acceptance": "English accessible names preserve the same exact actor/action meaning and state as visible armed/confirm copy without hidden authority additions."
+    },
+    {
+      "item_id": "L04_ZH_CN_ACCESSIBLE_NAMES_MATCH_VISIBLE_COPY",
+      "category": "bilingual_copy",
+      "required_subject_slots": ["P11", "P12"],
+      "acceptance": "Simplified-Chinese accessible names preserve the same exact actor/action meaning and state as visible armed/confirm copy without hidden authority additions."
+    },
+    {
+      "item_id": "C01_STANDARD_THREE_SHAPES_IDENTIFIABLE_WITHOUT_HUE",
+      "category": "standard_cvd",
+      "required_subject_slots": ["P03", "P04", "P07", "P08"],
+      "acceptance": "In standard palette each CVD participant identifies focus, selected, and confirm from shape/text/luminance without using hue and does not count the Player HUD diamond."
+    },
+    {
+      "item_id": "C02_CVD_PALETTE_THREE_SHAPES_IDENTIFIABLE_WITHOUT_HUE",
+      "category": "standard_cvd",
+      "required_subject_slots": ["P03", "P04", "P07", "P08"],
+      "acceptance": "In color_vision_safe palette each CVD participant identifies focus, selected, and confirm from the same independent shape inventory without using hue."
+    },
+    {
+      "item_id": "C03_STANDARD_CVD_SEMANTIC_INVENTORY_EQUAL",
+      "category": "standard_cvd",
+      "required_subject_slots": ["P03", "P04", "P07", "P08"],
+      "acceptance": "Standard and color_vision_safe sessions expose identical action order, copy, token roles, focus order, and submission behavior."
+    },
+    {
+      "item_id": "C04_CVD_NO_PLACEMENT_STATUS_CONTROL_REGRESSION",
+      "category": "standard_cvd",
+      "required_subject_slots": ["P03", "P04", "P07", "P08"],
+      "acceptance": "CVD participants do not confuse new focus/selected/confirm shapes with placement valid/invalid markers, submitting status, authority error, or Player HUD diamond."
+    },
+    {
+      "item_id": "A01_DIALOG_NAME_ROLE_STATE_ANNOUNCED",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "On open, the screen reader announces dialog role, localized title/body, actor, revision, and no default selected/armed state."
+    },
+    {
+      "item_id": "A02_FOCUS_ORDER_MATCHES_AUTHORITY_ACTION_ORDER",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "Focus order is title/context then actions in exact authority order, followed by confirm only after arming; no hidden/unoffered/foundation action enters traversal."
+    },
+    {
+      "item_id": "A03_FOCUS_AND_ARMED_STATE_ANNOUNCED_SEPARATELY",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "Moving accessibility focus never announces selected/armed; first activation announces armed/selected while preserving a separate focused element."
+    },
+    {
+      "item_id": "A04_CONFIRM_NAME_INCLUDES_EXACT_ACTOR_ACTION",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "Confirm control accessible name includes localized confirm intent, exact actor, and exact action result; role/state indicate enabled only for a fresh exact arm."
+    },
+    {
+      "item_id": "A05_CANCEL_STALE_ERROR_PENDING_ANNOUNCED_FAIL_CLOSED",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "Cancel, stale revision, actor drift, submitting, and authority error changes are announced, focus is restored predictably, and no blocked action remains activatable."
+    },
+    {
+      "item_id": "A06_VOICEOVER_EN_ZH_CN_PASS",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P11"],
+      "required_screen_reader_family": "VoiceOver",
+      "acceptance": "Experienced VoiceOver users complete the full localized arm/confirm/cancel flow in English and Simplified Chinese with correct names, roles, states, and focus order."
+    },
+    {
+      "item_id": "A07_NVDA_EN_ZH_CN_PASS",
+      "category": "screen_reader",
+      "required_subject_slots": ["P10", "P12"],
+      "required_screen_reader_family": "NVDA",
+      "acceptance": "Experienced NVDA users complete the full localized arm/confirm/cancel flow in English and Simplified Chinese with correct names, roles, states, and focus order."
+    },
+    {
+      "item_id": "A08_NO_DUPLICATE_OR_SILENT_ACCESSIBILITY_EVENTS",
+      "category": "screen_reader",
+      "required_subject_slots": ["P09", "P10", "P11", "P12"],
+      "acceptance": "Accessibility transcript has no duplicate submit announcement, silent focus move, stale accessible name, hidden action, or mismatch between visible and announced state."
+    }
+  ],
+  "protocol_counts": {
+    "keyboard_items": 7,
+    "pointer_items": 7,
+    "bilingual_copy_items": 4,
+    "standard_cvd_items": 4,
+    "screen_reader_items": 8,
+    "total_items": 30
+  },
+  "item_result_contract": {
+    "allowed_statuses": [
+      "PASS",
+      "FAIL",
+      "NOT_RUN"
+    ],
+    "pass_policy": "Every required subject result for the item is PASS and all required evidence bindings validate. No averaging, majority vote, waived critical error, inherited machine/TA PASS, or N/A is allowed.",
+    "fail_policy": "Any subject FAIL, wrong-action or duplicate submission, accidental submission, inaccessible required control, incorrect actor/action name, focus-order violation, color-only distinction, missing transcript/evidence, or protocol deviation makes the item FAIL and the overall external gate FAIL.",
+    "not_run_policy": "Any item or required subject result not executed remains NOT_RUN and prevents overall PASS. NOT_RUN may never be converted to PASS by machine evidence, moderator judgment, template generation, or design approval."
+  },
+  "future_evidence_contract": {
+    "per_subject_session": [
+      "Pseudonymous subject code, cohort/locale, consent receipt hash, independent moderator ID, device/configuration binding, app binary SHA, start/end timestamps, and protocol version SHA.",
+      "Raw keyboard or pointer event trace with monotonic timestamps, focused/armed/confirm state transitions, authority request count/identity, and observed outcome for real-input sessions.",
+      "Visible capture or lossless screenshots sufficient to bind bilingual copy and standard/CVD shapes without exposing personal data.",
+      "Screen-reader version/configuration plus time-aligned speech/accessibility transcript, focus events, accessible name/role/state, and participant observation for screen-reader sessions."
+    ],
+    "aggregate": [
+      "Exact subject/session/item inventory, per-file SHA-256, and a stable ordered aggregate SHA-256.",
+      "Independent moderator sign-off and external review receipt; any missing file, hash, item, subject, device, locale, CVD type, or screen-reader family is fail-closed."
+    ]
+  },
+  "forbidden_changes_and_claims": [
+    "No authority/rules/action inventory/order/request/ACK/idempotency/submission behavior implementation change is authorized by this gate.",
+    "No product source, shipping asset, threshold, placement overlay, visual token, copy, localization, screen-reader adapter, or exposure implementation change is authorized by this gate.",
+    "No contrast, type, shape-size/stroke, hit-target, safe-area, layout, performance, evidence, participant, device, or pass threshold may be relaxed.",
+    "No session is executed by creating this gate/template. No targeted16 TA pass, external-human pass, keyboard pass, pointer pass, CVD pass, localization pass, screen-reader pass, product exposure, Golden, M2, or Beta pass is claimed."
+  ],
+  "evidence_boundary": {
+    "design_protocol_only": true,
+    "future_targeted16_ta_pass_bound": false,
+    "participant_recruitment_performed": false,
+    "real_keyboard_sessions_performed": 0,
+    "real_pointer_sessions_performed": 0,
+    "cvd_human_sessions_performed": 0,
+    "screen_reader_sessions_performed": 0,
+    "external_human_review_pass": false,
+    "product_source_modified": false,
+    "gpu_executed": false,
+    "authority_or_rules_modified": false,
+    "threshold_modified": false,
+    "product_exposed": false,
+    "product_pass": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

@@ -1,0 +1,2172 @@
+{
+  "schema": "phase5_rules_decision_ui_v3_targeted28_independent_ta_review_v1",
+  "status": "TEMPLATE_NOT_RUN_WAITING_FOR_TARGETED28_MACHINE_PASS",
+  "overall_result": "NOT_RUN",
+  "template_version": 1,
+  "review_scope": {
+    "kind": "phase5_rules_ui_v3_targeted28_independent_ta",
+    "case_ids_in_order": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_valid--p2--zh_cn",
+      "full_table_preview_valid--p3--en",
+      "full_table_preview_valid--p4--zh_cn",
+      "full_table_preview_invalid--p1--zh_cn",
+      "full_table_preview_invalid--p2--en",
+      "full_table_preview_invalid--p3--zh_cn",
+      "full_table_preview_invalid--p4--en",
+      "behind_head_string_preview_valid--p1--en",
+      "behind_head_string_preview_valid--p2--zh_cn",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_valid--p4--zh_cn",
+      "behind_head_string_preview_invalid--p1--zh_cn",
+      "behind_head_string_preview_invalid--p2--en",
+      "behind_head_string_preview_invalid--p3--zh_cn",
+      "behind_head_string_preview_invalid--p4--en",
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en"
+    ],
+    "repair_case_ids_in_order": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_valid--p2--zh_cn",
+      "full_table_preview_valid--p3--en",
+      "full_table_preview_valid--p4--zh_cn",
+      "full_table_preview_invalid--p1--zh_cn",
+      "full_table_preview_invalid--p2--en",
+      "full_table_preview_invalid--p3--zh_cn",
+      "full_table_preview_invalid--p4--en",
+      "behind_head_string_preview_valid--p1--en",
+      "behind_head_string_preview_valid--p2--zh_cn",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_valid--p4--zh_cn",
+      "behind_head_string_preview_invalid--p1--zh_cn",
+      "behind_head_string_preview_invalid--p2--en",
+      "behind_head_string_preview_invalid--p3--zh_cn",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "regression_control_case_ids_in_order": [
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en"
+    ],
+    "case_count": 28,
+    "repair_case_count": 20,
+    "regression_control_case_count": 8,
+    "canonical_axes_in_order": [
+      "action_semantics_and_branch_correctness",
+      "actor_revision_and_authority_status_readability",
+      "no_default_selection_or_accidental_submission_affordance",
+      "focus_pointer_keyboard_redundancy",
+      "text_clipping_collision_and_minimum_size",
+      "standard_cvd_non_color_redundancy",
+      "placement_scope_and_legality_readability",
+      "stale_error_ai_pending_fail_closed_clarity",
+      "foundation_and_unoffered_action_absence",
+      "debug_and_product_surface_separation"
+    ],
+    "axis_count_per_case": 10,
+    "total_axis_count": 280,
+    "prior_failed_axis_occurrence_count": 32,
+    "original_physical_resolution_required": true
+  },
+  "frozen_bindings": {
+    "visual_repair_design_gate": {
+      "path": "docs/art/phase5-rules-decision-ui-v3-visual-repair-design-gate-v1.json",
+      "sha256": "6b587c67721521607d81a28beaafa59ad4a76d664399805e922ecdc969905e25"
+    },
+    "targeted_preordinal_failure_receipt": {
+      "path": "docs/evidence/phase5-rules-decision-ui-v3-targeted-preordinal-failure-receipt-v1.json",
+      "sha256": "f29fe3ee3ca206eed63a8a9f7924f499f99e531b874c04b8dcdcdf61f9e93a8a"
+    }
+  },
+  "future_machine_pass_binding": {
+    "status": "NOT_AVAILABLE",
+    "receipt_path": null,
+    "receipt_sha256": null,
+    "required_schema": "phase5_rules_decision_ui_v3_targeted28_machine_pass_receipt_v1",
+    "required_status": "TARGETED28_MACHINE_PASS",
+    "required_case_count": 28,
+    "required_machine_pass_case_count": 28,
+    "required_failed_machine_check_count": 0,
+    "required_ppm_count": 28,
+    "required_png_count": 28,
+    "required_aggregate_algorithm": "sha256_canonical_json_utf8_v1_of_ordered_case_id_ppm_png_physical_dimensions",
+    "ppm_aggregate_sha256": null,
+    "png_aggregate_sha256": null,
+    "stable_aggregate_sha256": null
+  },
+  "completion_preconditions": [
+    "A future receipt binds both frozen inputs and reports exact targeted 28/28 machine PASS with zero failed checks.",
+    "Every case binds existing immutable P6 RGB8 PPM and PNG files by path and raw SHA-256.",
+    "Every PPM and PNG physical dimension is independently decoded and equals its p1/p2/p3/p4 profile contract.",
+    "PPM, PNG, and combined stable aggregate SHA-256 values are independently recomputed over all 28 ordered cases.",
+    "All 20 repair cases review every canonical axis and explicitly cover every gate-bound prior blocking axis.",
+    "All eight controls review every canonical axis and explicitly cover their gate-derived regression axes.",
+    "Only after every machine, image, dimension, and aggregate precondition passes may all 280 axes change from PENDING to PASS or FAIL.",
+    "Partial or mixed NOT_RUN/PENDING/PASS/FAIL review state is forbidden."
+  ],
+  "allowed_statuses": {
+    "template_case": [
+      "NOT_RUN"
+    ],
+    "template_axis": [
+      "PENDING"
+    ],
+    "completed_case": [
+      "PASS",
+      "FAIL"
+    ],
+    "completed_axis": [
+      "PASS",
+      "FAIL"
+    ]
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "case_id": "group_choice_armed_confirm--p1--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "case_id": "group_choice_armed_confirm--p2--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "case_id": "group_choice_armed_confirm--p3--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 4,
+      "case_id": "group_choice_armed_confirm--p4--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 5,
+      "case_id": "full_table_preview_valid--p1--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 6,
+      "case_id": "full_table_preview_valid--p2--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 7,
+      "case_id": "full_table_preview_valid--p3--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 8,
+      "case_id": "full_table_preview_valid--p4--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 9,
+      "case_id": "full_table_preview_invalid--p1--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 10,
+      "case_id": "full_table_preview_invalid--p2--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 11,
+      "case_id": "full_table_preview_invalid--p3--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 12,
+      "case_id": "full_table_preview_invalid--p4--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 13,
+      "case_id": "behind_head_string_preview_valid--p1--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 14,
+      "case_id": "behind_head_string_preview_valid--p2--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 15,
+      "case_id": "behind_head_string_preview_valid--p3--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 16,
+      "case_id": "behind_head_string_preview_valid--p4--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 17,
+      "case_id": "behind_head_string_preview_invalid--p1--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 18,
+      "case_id": "behind_head_string_preview_invalid--p2--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 19,
+      "case_id": "behind_head_string_preview_invalid--p3--zh_cn",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 20,
+      "case_id": "behind_head_string_preview_invalid--p4--en",
+      "coverage_kind": "REPAIR",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [
+        "placement_scope_and_legality_readability"
+      ],
+      "required_regression_axes": [],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 21,
+      "case_id": "group_choice_open_unselected--p1--en",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 22,
+      "case_id": "group_choice_open_unselected--p2--zh_cn",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 23,
+      "case_id": "group_choice_open_unselected--p3--en",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 24,
+      "case_id": "group_choice_open_unselected--p4--zh_cn",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "standard_cvd_non_color_redundancy"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 25,
+      "case_id": "eight_legal_open_unselected--p1--en",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p1",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "standard_cvd_non_color_redundancy",
+        "foundation_and_unoffered_action_absence"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 26,
+      "case_id": "break_illegal_open_unselected--p2--zh_cn",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p2",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "action_semantics_and_branch_correctness",
+        "no_default_selection_or_accidental_submission_affordance",
+        "standard_cvd_non_color_redundancy",
+        "foundation_and_unoffered_action_absence"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 27,
+      "case_id": "submitting_progress--p3--en",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p3",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "actor_revision_and_authority_status_readability",
+        "standard_cvd_non_color_redundancy",
+        "stale_error_ai_pending_fail_closed_clarity"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 28,
+      "case_id": "authority_error--p4--en",
+      "coverage_kind": "REGRESSION_CONTROL",
+      "profile_id": "p4",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "prior_blocking_axes": [],
+      "required_regression_axes": [
+        "actor_revision_and_authority_status_readability",
+        "standard_cvd_non_color_redundancy",
+        "stale_error_ai_pending_fail_closed_clarity"
+      ],
+      "future_evidence": {
+        "ppm": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        },
+        "png": {
+          "path": null,
+          "sha256": null,
+          "physical_dimensions": null
+        }
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "actor_revision_and_authority_status_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "standard_cvd_non_color_redundancy": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "placement_scope_and_legality_readability": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "foundation_and_unoffered_action_absence": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "debug_and_product_surface_separation": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    }
+  ],
+  "review_counts": {
+    "cases_total": 28,
+    "repair_cases_total": 20,
+    "regression_control_cases_total": 8,
+    "cases_not_run": 28,
+    "cases_pass": 0,
+    "cases_fail": 0,
+    "axes_total": 280,
+    "axes_pending": 280,
+    "axes_pass": 0,
+    "axes_fail": 0,
+    "prior_blocking_axis_occurrences_total": 32,
+    "prior_blocking_axis_occurrences_pass": 0,
+    "prior_blocking_axis_occurrences_fail": 0
+  },
+  "failed_case_ids": [],
+  "blocking_axis_occurrences": [],
+  "evidence_boundary": {
+    "template_only": true,
+    "machine_receipt_bound": false,
+    "capture_ppm_bound_count": 0,
+    "capture_png_bound_count": 0,
+    "stable_aggregate_bound": false,
+    "human_ta_review_performed": false,
+    "targeted28_ta_pass": false,
+    "scoped_visual_repair_gate_pass": false,
+    "authorization_prepared_by_template_work": false,
+    "authorization_issued_by_template_work": false,
+    "gpu_executed_by_template_work": false,
+    "production_modified": false,
+    "m2_promotion": false,
+    "golden_promotion": false,
+    "product_exposed": false,
+    "product_pass": false,
+    "beta_pass": false,
+    "true_keyboard_or_pointer_session_pass": false,
+    "screen_reader_session_pass": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "binary_sha256": "c8178fc477f8d3cbab05843099ffb457311cb4f052e72efa648005174d761495",
+  "finding": "cue_ball_used_multiple_rails_before_reaching_the_legacy_rear_zone",
+  "result": {
+    "actions": {
+      "power": 159.0,
+      "tip_x": 0.0,
+      "tip_y": -0.4,
+      "yaw": -1.6167963267948966
+    },
+    "facts": {
+      "cue_ball_position_at_first_contact_cm": [
+        -2.998274326324463,
+        89.34147644042969,
+        -7.133828163146973
+      ],
+      "distinct_object_balls_with_rail_contact": 0,
+      "first_contact_ball": 1,
+      "pocket_order": [
+        1
+      ],
+      "rail_contacts": [
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "final_cue_position": {
+      "x": 5.856492042541504,
+      "y": 89.34147644042969,
+      "z": 28.367717742919922
+    },
+    "final_tick": 1196,
+    "score": {
+      "failed": false,
+      "reason": "success",
+      "score": 93,
+      "score_eligible": true,
+      "succeeded": true
+    },
+    "settled": {
+      "balls_moving": false,
+      "steps": 1196,
+      "tick": 1196
+    }
+  },
+  "scenario_id": "launch_draw_shot_v1",
+  "scenario_sha256": "09ad651a28b34ae48a7011ccbff742139676123f7c14abc0e679f72bfc3ff59a",
+  "schema": "billiardgl.phase4.legacy_demo_diagnostic.v1"
+}

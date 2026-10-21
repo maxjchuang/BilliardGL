@@ -1,0 +1,72 @@
+{
+  "allowed_change": {
+    "capture_case_ui_scale_type": "float_to_double",
+    "capture_plan_parser": "std::stof_to_std::stod_for_ui_scale_only",
+    "files": [
+      "spikes/render_core_profile/phase5_rules_decision_ui_gpu_capture_runner.mm"
+    ],
+    "production_settings_range_change_allowed": false,
+    "production_source_change_allowed": false,
+    "threshold_relaxation_allowed": false
+  },
+  "evidence_boundary": {
+    "actual_gpu_authorized": false,
+    "actual_gpu_completed": 1,
+    "actual_gpu_failed_case_count": 1,
+    "actual_gpu_unrun": 58,
+    "beta_pass": false,
+    "manual_review_authorized": false,
+    "product_exposed": false,
+    "v2_implementation_authorized": true,
+    "v2_rerun_authorized": false
+  },
+  "failure_binding": {
+    "authorization_sha256": "607da103e842ae51f317644ad82ad0d0215a7ae0b6c61a6e3dc474c504d6c663",
+    "failure_receipt_path": "docs/evidence/phase5/rules-decision-ui-gpu-failure-receipt-v1.json",
+    "failure_receipt_sha256": "003bfe13e7c8a122ace4a0153d083f886bbd451c3015971a33f14ade3847351e",
+    "failed_capture_id": "group_choice_open_unselected--p2--zh_cn",
+    "failed_plan_ordinal_one_based": 2,
+    "frozen_actual_gpu_root": "docs/evidence/phase5/actual-gpu",
+    "status": "ACTUAL_GPU_FAIL_FROZEN_AT_ORDINAL_2"
+  },
+  "immutable_v1_bindings": {
+    "billiards_binary_sha256": "a900a03e3920a197537f5f5c6f501cd2960cd0b40363dc89bccd20597355cdd3",
+    "design_gate_sha256": "26567d0547163561ed77e6e41b32753c4cc55efcd693c9ce22faf847d43f5a08",
+    "gpu_plan_sha256": "1fd67271bfa8ea774f603ecc4fd575c643fc12303e62e9af1e1471cf7dbaf9d4",
+    "ready_manifest_sha256": "9321c0216224a9ce7c96cbfdb4ac85f491b70831017758e2e7f78a0afed89387",
+    "runner_binary_sha256": "cd575448c11430214bae9d68932631b9d9db77eb728bfb0c7880d7d6ff063a13",
+    "runner_source_sha256": "ed6b7ed793d2ea40c083305e0fe6155a452065d6ee965ca017347e5b92a93f8e",
+    "source_bindings_sha256": "5f683887de0a7789dd54b230a013c9d74952b6b86388271c0b7dc648fe61b2e4"
+  },
+  "required_v2_readiness": {
+    "all_four_profiles_per_state": true,
+    "bad_inputs": [
+      "ui_scale_below_0_85",
+      "ui_scale_above_1_35",
+      "non_finite_ui_scale",
+      "shell_settings_scale_mismatch",
+      "duplicate_or_incomplete_plan"
+    ],
+    "fresh_binary_and_source_bindings": true,
+    "machine_matrix_byte_reproducible_540_of_540": true,
+    "new_ready_manifest_and_authorization_template": true,
+    "no_gpu_cpu_frame_preflight_60_of_60": true,
+    "old_v1_ready_and_failure_evidence_immutable": true,
+    "product_integration_ctest_4_of_4": true,
+    "ui_scale_boundary_profiles": {
+      "0.85": "must_pass",
+      "1.0": "must_pass",
+      "1.35": "must_pass_exact_decimal_without_range_relaxation"
+    },
+    "unauthorized_gpu_path_creates_no_output": true
+  },
+  "root_cause": {
+    "coordinator_contract": "ProductSettings.uiScale is double and valid in inclusive [0.85, 1.35].",
+    "failed_conversion": "std::stof(\"1.35\") widened to double equals 1.3500000238418579, which is greater than exact double 1.35.",
+    "fix_rationale": "The TSV decimal is a product setting value. Parse and preserve it as double until the existing coordinator contract explicitly converts it for float-only draw/layout fields.",
+    "source_status": "CONFIRMED",
+    "thresholds_unchanged": true
+  },
+  "schema": "phase5_rules_decision_ui_v2_float_boundary_correction_design_gate_v1",
+  "status": "APPROVED_FOR_RUNNER_CORRECTION_AND_OFFLINE_READINESS_ONLY"
+}

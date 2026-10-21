@@ -17,3 +17,12 @@ Release/
 
 # Superpowers implementation plans are local working artifacts
 docs/superpowers/plans/
+
+# Development builds and retained local evidence (see docs/recovery/README.md)
+/build-*/
+/CMakeFiles/
+/tmp/
+/test-output/
+/--help/
+/docs/evidence/
+/docs/art/*/

@@ -1,0 +1,95 @@
+{
+  "schema": "billiardgl.phase4.v19.cp2_layout_draw_list_implementation_acceptance_checklist.v1",
+  "status": "CP2_ACCEPTANCE_CHECKLIST_FROZEN_IMPLEMENTATION_NOT_STARTED_NO_GPU_NO_AUTH",
+  "scope": "Design-only, fail-closed acceptance checklist for a future V19 CP2 product-shell layout and draw-list implementation. It binds accepted CP1 but does not edit production, start CP2, authorize CMake, GPU, readiness, capture, or accept CP2.",
+  "bindings": [
+    {"path":"docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json","sha256":"c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"},
+    {"path":"docs/art/phase4-v19-landscape-orientation-layout-interpretation-correction-gate-v1.json","sha256":"cffc93f29bb24f7f9378dee3c17fffd1da1c139745eec17bdb380cf6bda04d13"},
+    {"path":"docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json","sha256":"e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"}
+  ],
+  "future_allowed_files_only": [
+    "src/Billiards/render/ui/product_shell_layout.h",
+    "src/Billiards/render/ui/product_shell_layout.cpp",
+    "src/Billiards/render/ui/product_shell_draw_list.h",
+    "src/Billiards/render/ui/product_shell_draw_list.cpp",
+    "tests/phase4_v19_trajectory_inset_layout_draw_list_cpu_tests.cpp"
+  ],
+  "layout_contract": {
+    "reference_viewport_px": [1920,1080],
+    "reference_outer_panel_rect_px": [1440,680,448,288],
+    "reference_plot_rect_within_panel_px": [16,48,416,208],
+    "minimum_outer_panel_px": [336,216],
+    "reference_right_margin_px": 32,
+    "reference_bottom_clearance_px": 112,
+    "plot_aspect_ratio": 2.0,
+    "canonical_orientation": "z horizontal; HEAD/开球端 left; FOOT/底端 right; no anisotropic distortion",
+    "default_inset_visible": true,
+    "default_world_overlay_visible": false,
+    "scene_content_may_relocate_or_resize_inset": false,
+    "collision_or_below_minimum_behavior": "suppress with exact reason; never overlap, shrink below minimum, move by camera/scene, or enable world overlay"
+  },
+  "transparent_cutout_contract": {
+    "plot_cutout_is_fully_transparent": true,
+    "cutout_writes_no_opaque_panel_fill_text_border_legend_or_toggle_pixels": true,
+    "panel_border_header_title_legend_toggle_are_outside_plot_cutout": true,
+    "trajectory_semantic_members_or_probes_may_enter_ui_draw_list": false,
+    "ui_label_toggle_or_border_may_enter_inset_semantic_denominator": false
+  },
+  "bilingual_ui_contract": {
+    "title": "TRAJECTORY / 轨迹",
+    "orientation_labels_in_order": ["HEAD / 开球端","FOOT / 底端"],
+    "legend_entries_in_order": [
+      "ACTUAL / 实际 — paired continuous rails",
+      "PREDICTED / 预测 — centerline dashes",
+      "END / 终点 — endpoint marker"
+    ],
+    "minimum_legend_text_px_at_reference": 16,
+    "minimum_toggle_target_px": [44,44],
+    "all_labels_excluded_from_trajectory_denominators": true
+  },
+  "zero_overlap_and_exclusion_contract": {
+    "required_exclusions": ["player status HUD","shot power and tip controls","rules decision panel or modal","caption and accessibility live-region band","safe-area edges and product footer"],
+    "panel_vs_each_exclusion_overlap_area_px": 0,
+    "plot_cutout_vs_border_header_legend_toggle_overlap_area_px": 0,
+    "modal_behavior": "inset_suppressed_by_modal and world overlay remains off",
+    "layout_failure_behavior": "inset_layout_unavailable and world overlay remains off"
+  },
+  "future_cpu_static_acceptance_not_run": {
+    "exact_layout_profiles_in_order": ["1920x1080_ui100","1920x1080_ui135","1280x720_ui100","1280x720_ui135"],
+    "required_positive_checks": [
+      "reference panel and plot rectangles are physically exact",
+      "minimum 336x216 panel never underflows and plot remains 2:1",
+      "transparent cutout is an explicit draw-list region with zero opaque/UI coverage",
+      "title, bilingual orientation labels, ordered bilingual legend, toggle and border remain outside cutout",
+      "panel has zero overlap with every exclusion and safe/footer clearance is exact",
+      "default inset ON and world overlay OFF are independent state values",
+      "modal and collision suppression emit exact reasons without relocation or world fallback",
+      "CP1 four inventory rows and digests remain byte-exact"
+    ],
+    "required_fail_closed_mutations": [
+      "make one cutout pixel opaque or covered by a UI primitive",
+      "place border, title, label, legend or toggle inside plot",
+      "remove, reorder, mistranslate or denominator-count a bilingual label/legend entry",
+      "reduce panel below 336x216, distort plot from 2:1, or change reference rectangles",
+      "overlap any exclusion or violate right/footer clearance",
+      "relocate from camera or scene content",
+      "enable world overlay when inset is visible, suppressed, modal-blocked or layout-unavailable",
+      "change any CP1 source/inventory/digest",
+      "change a file outside the future allowlist"
+    ],
+    "implementation_started": false,
+    "cpu_static_pass": false,
+    "cp2_accepted": false
+  },
+  "authorization_boundary": {
+    "production_edit_authorized_by_checklist": false,
+    "cmake_edit_authorized": false,
+    "cp2_started": false,
+    "cp2_accepted": false,
+    "cp3_started": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "product_or_machine_pass_claimed": false
+  }
+}

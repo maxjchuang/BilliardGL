@@ -1,0 +1,193 @@
+{
+  "bad_input_fixtures": [
+    {
+      "expected_error_code": "E_REQUIRED_SUCCESS",
+      "file": "bad_inputs_v2/missing_success.training.invalid.json",
+      "sha256": "842a63643b47f390cad93687cda2355a70ebeb31692f284720623f6b6aa0ede2"
+    },
+    {
+      "expected_error_code": "E_GEOMETRY_OVERLAP",
+      "file": "bad_inputs_v2/overlapping_balls.training.invalid.json",
+      "sha256": "c853655d22530b5fee1aa613e76a459b3608daf206a6a9bc1630fecd6aed8430"
+    },
+    {
+      "expected_error_code": "E_SPIN_CAPABILITY_GATE",
+      "file": "bad_inputs_v2/ungated_spin.training.invalid.json",
+      "sha256": "ce1b12b87f6ee916fd7f6a53c37bc88b4956523f6fb2316d62cf83549d1e2ae2"
+    },
+    {
+      "expected_error_code": "E_REPLAY_BINDING",
+      "file": "bad_inputs_v2/replay_bound_without_hash.training.invalid.json",
+      "sha256": "5c05b0ad760e8c6737bf1227f290ec94ccf3e15789a12b3781b2931a11a356dc"
+    },
+    {
+      "expected_error_code": "E_SCORING_DETERMINISM",
+      "file": "bad_inputs_v2/nondeterministic_scoring.training.invalid.json",
+      "sha256": "193dd831c43e96e1a81ea8cd1419534dab73d586064585fd1632b2438bcaff7f"
+    }
+  ],
+  "content_policy": "original_billiardgl_content_no_third_party_assets",
+  "coverage_matrix": {
+    "file": "coverage_matrix_v2.json",
+    "sha256": "c8ea21ed957cea5ffa68867e658138f48e65a8c0ae471c1155f9ffa24af66b49"
+  },
+  "determinism_contract": {
+    "canonical_json": "UTF-8_sorted_keys_LF",
+    "forbidden_sources": [
+      "wall_clock",
+      "platform_rng",
+      "unordered_iteration",
+      "visual_frame_rate"
+    ],
+    "initial_state_seed": 0,
+    "static_checks": [
+      "schema",
+      "hashes",
+      "geometry",
+      "predicate_vocabulary",
+      "scoring",
+      "capability_gates",
+      "replay_binding"
+    ]
+  },
+  "id": "billiardgl_phase4_launch13_v2",
+  "reference_generation": {
+    "file": "reference_generation_v2.json",
+    "sha256": "dd3a350b4301ffa5ea16040ab601fb5d9bec2614026af2b754bb5f5558802197"
+  },
+  "scenario_schema": "training_scenario_v1",
+  "scenarios": [
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios_v2/launch_straight_pot_intro_v2.training.json",
+      "id": "launch_straight_pot_intro_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_straight_pot_intro_v2.replay.json",
+        "sha256": "d6e054ff8bd8a25c96c78360d52f35eb80072c18fc8e002dfd306e98b7e1a3db"
+      },
+      "sha256": "ec3e69d6b9e2c99268b7d7773a558c6a14c5df2d4c9180cf05a71a955456036d"
+    },
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios_v2/launch_straight_stop_intro_v2.training.json",
+      "id": "launch_straight_stop_intro_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_straight_stop_intro_v2.replay.json",
+        "sha256": "b3859f51f99250ae45d0ea86a441b668b6b0b75e8bb5e0fc07f0520ae69be4fe"
+      },
+      "sha256": "9adcd4e45bf292e6b88d61bea12f144903acc109c0f6f8ac6c128df8ee9a311b"
+    },
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios_v2/launch_straight_follow_intro_v2.training.json",
+      "id": "launch_straight_follow_intro_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_straight_follow_intro_v2.replay.json",
+        "sha256": "526960d9e3460ea447ca514e4b5e4168a635ad331e9b7f293d696964e249a4a6"
+      },
+      "sha256": "5284b2929093321ed16c7a47e341b262d9a04dfaa18503e839a39b41544a6110"
+    },
+    {
+      "category": "stun_follow_draw",
+      "file": "scenarios_v2/launch_straight_draw_intro_v2.training.json",
+      "id": "launch_straight_draw_intro_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_straight_draw_intro_v2.replay.json",
+        "sha256": "bfb2dacb2aba002c0bba36416baebebe1f414cc18d1e520f673bbe30f84ead0f"
+      },
+      "sha256": "eede2b1b69570461aa282e1d95eea2f2c1eee06f28b32310c60e3b10955d4181"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios_v2/launch_left_english_one_rail_v2.training.json",
+      "id": "launch_left_english_one_rail_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_left_english_one_rail_v2.replay.json",
+        "sha256": "26ab82ee578cced1e12caed0958453b4dfe42870f31821cc6650b43887001648"
+      },
+      "sha256": "fbba0ede34049a5d8bb5374328ff77c519898bb6c5897bdf0487c834f601cfb1"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios_v2/launch_right_english_one_rail_v2.training.json",
+      "id": "launch_right_english_one_rail_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_right_english_one_rail_v2.replay.json",
+        "sha256": "2fb9ec268c94a0a1b30b96e43b402a00cf5ead4abea5c612cedcee404ca8aa93"
+      },
+      "sha256": "e7efb161f0032b8e413397610bd1aa5f28942ef3e0451b5ad7e3d5b41f718509"
+    },
+    {
+      "category": "side_spin_cushion",
+      "file": "scenarios_v2/launch_side_english_two_rail_v2.training.json",
+      "id": "launch_side_english_two_rail_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_side_english_two_rail_v2.replay.json",
+        "sha256": "d18000aa7870dd3f2cdba74d43a571a2b5efafc6274c1ebb613139706755e34d"
+      },
+      "sha256": "de3c92106a33b15f31b9661787289b500a338a990c3a0848236604618432f2aa"
+    },
+    {
+      "category": "pocket_angle",
+      "file": "scenarios_v2/launch_corner_pocket_angle_v2.training.json",
+      "id": "launch_corner_pocket_angle_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_corner_pocket_angle_v2.replay.json",
+        "sha256": "a9e0dcbd62d6bd1b6f0592c3dfaf01b8d5af27a19d681de0dcc0aad1004edeca"
+      },
+      "sha256": "0cf8c6801102f3be92f6ab488cb94e4dcd98525708f1500c33e2eeb1751e3af8"
+    },
+    {
+      "category": "pocket_angle",
+      "file": "scenarios_v2/launch_side_pocket_angle_v2.training.json",
+      "id": "launch_side_pocket_angle_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_side_pocket_angle_v2.replay.json",
+        "sha256": "8974b69c3e7ae720501ff886b8d02aa697797441ac872c04079f3286faffde03"
+      },
+      "sha256": "2b77d282cc407dee241f9faf89d1843e60f4302d4496301fc0f3d10dc08ddb3f"
+    },
+    {
+      "category": "continuous_position",
+      "file": "scenarios_v2/launch_two_ball_lane_route_v2.training.json",
+      "id": "launch_two_ball_lane_route_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_two_ball_lane_route_v2.replay.json",
+        "sha256": "be09f02e640e71163ce729f44b832d690ea4756ab3c402298cf081fa23be1e40"
+      },
+      "sha256": "b2620260d27cdcac054776448c92d67a7f25369d13bdc2b334d7e0164a1f6490"
+    },
+    {
+      "category": "continuous_position",
+      "file": "scenarios_v2/launch_three_ball_corner_route_v2.training.json",
+      "id": "launch_three_ball_corner_route_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_three_ball_corner_route_v2.replay.json",
+        "sha256": "e2b71c92cf4ebe5262667961ac0f5e9de370e81816f53d51830f09b6e25b87ba"
+      },
+      "sha256": "18792c4485e156634ca00c40351493dbf55f9c72e8c3785712a9555a5bf559d5"
+    },
+    {
+      "category": "break_cue_control",
+      "file": "scenarios_v2/launch_head_ball_break_control_v2.training.json",
+      "id": "launch_head_ball_break_control_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_head_ball_break_control_v2.replay.json",
+        "sha256": "f079fb0765c6ba315e035cd0ac20b04b867ff978733dec88ab65ca47203ff495"
+      },
+      "sha256": "7da407d0dd03e52b6f26ca9a649b585a759ecf8dfdc42a5a8eda7e83300cfec9"
+    },
+    {
+      "category": "break_cue_control",
+      "file": "scenarios_v2/launch_cut_break_control_v2.training.json",
+      "id": "launch_cut_break_control_v2",
+      "reference_replay": {
+        "file": "replays_v2/launch_cut_break_control_v2.replay.json",
+        "sha256": "4dece14dbe239adc426299dd4769a31f0caea88c7227d326f7612e6cd134b552"
+      },
+      "sha256": "455496a0048a60d7ca67f75e9e7f989270d1af12572a2781ce857aaa3c79d38f"
+    }
+  ],
+  "schema": "training_pack_v1",
+  "schema_version": 1
+}

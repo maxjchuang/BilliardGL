@@ -1,0 +1,198 @@
+{
+  "schema": "wpa_ii_12_7_signed_push_review_declaration_lifecycle_implementation_receipt_v1",
+  "status": "PARTIAL_PUSH_REVIEW_CPU_VERIFIED_D5_AUDIT_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/wpa-ii-12-7-signed-push-review-declaration-lifecycle-implementation-design-gate-v1.json",
+      "sha256": "7dfb149547c8f831c362aadc4d9a30c5f2c6de4676364b23d9ec32046d3f477e"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-12-7",
+      "selected_option_id": "MEASUREMENTS_PLUS_SIGNED_REFEREE_PUSH_DECLARATION",
+      "row_implementation_allowed": false
+    },
+    "b2_foundation_receipt": {
+      "path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json",
+      "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"
+    }
+  },
+  "tests_first": {
+    "red_observed": true,
+    "red_exit_code": 1,
+    "red_failure": "no such file or directory: src/Billiards/rules/push_review_declaration.cpp",
+    "green": true
+  },
+  "contract": {
+    "review_needed_only": true,
+    "measurement_complete": false,
+    "push_classified": false,
+    "foul_classified": false,
+    "thresholds_selected": false,
+    "microtrace_as_measurement": false,
+    "consume_once": true,
+    "exact_retry": true
+  },
+  "automation": {
+    "capability": "wpa_ii_12_7_signed_push_review_declaration_v1",
+    "commands": [
+      "rules.push_review_propose",
+      "rules.push_review_final",
+      "rules.push_review_cancel",
+      "get_push_review_state"
+    ],
+    "headless": true,
+    "secret_free": true
+  },
+  "fixtures": {
+    "positive": [
+      "REFEREE_PROPOSE_PUSH_REVIEW_DOES_NOT_ATTEST",
+      "SAME_REFEREE_FINAL_ATTESTS_REVIEW_NEEDED_ONLY",
+      "CUE_BALL_IN_PLAY_PRE_SHOT",
+      "AIM_POWER_CAMERA_PREVIEW_KEEP_ACTIVE",
+      "POSITIVE_ACCEPTED_SHOT_CONSUMES_EXACTLY_ONCE",
+      "CONSUMED_RECORD_BINDS_SHOT_AND_DECLARATION",
+      "SAME_REFEREE_CANCEL_BEFORE_FINAL",
+      "EXACT_RETRY_ZERO_DELTA",
+      "AUTOMATION_SECRET_FREE_READBACK",
+      "READBACK_REVIEW_NEEDED_TRUE_MEASUREMENT_PUSH_FOUL_FALSE"
+    ],
+    "negative": [
+      "PLAYER_OR_UNAUTHENTICATED_DECLARATION_REJECTED",
+      "POSITIVE_IMPULSE_OR_LOCAL_MICROTRACE_CANNOT_ATTEST",
+      "PAYLOAD_PUSH_OR_FOUL_FIELD_REJECTED",
+      "PAYLOAD_DURATION_DISTANCE_FIELD_REJECTED",
+      "PAYLOAD_NUMERIC_THRESHOLD_OR_OBVIOUS_FIELD_REJECTED",
+      "WRONG_CUE_OR_RELATION_REJECTED",
+      "POCKETED_CUE_BALL_REJECTED",
+      "WRONG_RACK_REVISION_STATE_HASH_OR_EXPIRY_REJECTED",
+      "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED",
+      "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED",
+      "CANCEL_AFTER_FINAL_REJECTED",
+      "PLACEMENT_BALL_MOVE_GROUP_CHANGE_TURN_RESET_INVALIDATES",
+      "REJECTED_ZERO_UNSUPPORTED_MISCUE_OR_FAILED_LAUNCH_NOT_CONSUMED",
+      "LATER_PHYSICS_FAILURE_DOES_NOT_REACTIVATE",
+      "SECOND_SHOT_CANNOT_REUSE",
+      "RESET_RERACK_OR_MATCH_COMPLETE_INVALIDATES",
+      "IDEMPOTENCY_NONCE_OR_SHOT_CONFLICT_ZERO_DELTA",
+      "DECLARATION_DOES_NOT_SYNTHESIZE_DURATION_DISTANCE_SHOTFACT_PUSH_OR_FOUL",
+      "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REFEREE_SURFACE"
+    ]
+  },
+  "source_bindings": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "be551dbe182bac4610fcd2c94cebf95d9d96ced4088aa16042da2f880b0a11f2"
+    },
+    {
+      "path": "src/Billiards/rules/push_review_declaration.h",
+      "sha256": "e84443156c7d8c47078f2415880efd502596521f5d10a9982ca34a5af49a5a90"
+    },
+    {
+      "path": "src/Billiards/rules/push_review_declaration.cpp",
+      "sha256": "67756f797d2793f61d8ab67b4c81cbd795a738fb14dab3cdc4ddb7e5862e8150"
+    },
+    {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "3604748833a92993f55b3c668d97c49d9e9d544814859db308f5347148697ed0"
+    },
+    {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "1309727b7cc03675fc9603ec238d50f3fce3a99dca2aabaeb52d626c4ffd1452"
+    },
+    {
+      "path": "src/Billiards/automation_controller.cpp",
+      "sha256": "864b5be506b5aff2f4e1b7bbd5f1cbdc18965e8137634cd1f9c04e9befa74987"
+    }
+  ],
+  "test_bindings": [
+    {
+      "path": "tests/push_review_declaration_tests.cpp",
+      "sha256": "2dcb66d19c9e5941c858b7866e03c92c997535a4d8b7eda7661520e48f34a529"
+    },
+    {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "bc602b247bcfea44e61cb7097ff5343430b3fc2c8af59544334aed6fc41da17f"
+    },
+    {
+      "path": "tests/automation_controller_tests.cpp",
+      "sha256": "666252540f83e23ea2c93d90498f1bbf6e5ec275373a2681171a04e6cf56d0cb"
+    }
+  ],
+  "cpu": {
+    "build_root": "build-wpa-ii-12-7-green-v1",
+    "passed_count": 12,
+    "binaries": [
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsPushReviewDeclarationTests",
+        "sha256": "57ee63adfe5e5d411daafd2a3718a65737a59071ae45d55a7e318b856ba2dc35",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsRulesRuntimeIntegrationTests",
+        "sha256": "bb9ef777aa2f2962a02dcf2a53159ac153ea93bad6df15cbe63f771563a0ed65",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsAutomationControllerTests",
+        "sha256": "7461bf8d43b5179c98cf496fc12fbb3a8bbef2fb7ac307bc6af81e17d1942585",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsRefereeAuthorityProtocolTests",
+        "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsDoubleHitCloseCaseDeclarationTests",
+        "sha256": "0f66d01a07bc1cb3b567fefb867af0a82bd5ef11fc8c92d60f29d79c293b9cea",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsFrozenBallDeclarationTests",
+        "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsFrozenCushionDeclarationTests",
+        "sha256": "0a258f6c5a08d8520c530f801f73d35dfdf78d1c5375ce9b370a3181e19a7cc7",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsGroupConfusionAuthorityTests",
+        "sha256": "067058e5de66cf434a60185a1208ee3f630a46930b59a9aa1af2050936935ee9",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsStalemateAuthorityTests",
+        "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsChineseEightBallRulesTests",
+        "sha256": "9aa82f0c2983932e04abcd9a8d451afbe087f535fb6190d80eff4d13e12679ba",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsRulesTests",
+        "sha256": "f01d89367fd11aa94af81377a442cd4fde55cf75d20790ca4e99a7006a904315",
+        "exit_code": 0
+      },
+      {
+        "path": "build-wpa-ii-12-7-green-v1/BilliardsAutomationProtocolTests",
+        "sha256": "9d13bde19be1551d68984f9eba176ee74be98499bcbde9057a81b80e5fce3542",
+        "exit_code": 0
+      }
+    ],
+    "gpu": false
+  },
+  "completion": {
+    "partial_lifecycle": true,
+    "d5_complete": false,
+    "audit_promoted": false,
+    "m4_complete": false,
+    "forbidden_sources_modified": false,
+    "ui_gpu_readiness": false
+  }
+}

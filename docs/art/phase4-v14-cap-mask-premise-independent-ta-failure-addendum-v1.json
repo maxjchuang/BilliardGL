@@ -1,0 +1,237 @@
+{
+  "schema": "billiardgl.phase4.v14.cap_mask_premise_independent_ta_failure_addendum.v1",
+  "schema_version": 1,
+  "status": "FAIL_ADDENDUM_CPU_ONLY_SUCCESSOR_DIAGNOSTIC_REQUIRED_NO_GPU_NO_AUTH",
+  "scope": "Independent technical-art control-flow and pixel-owner assessment of the frozen v14 CPU premise falsification. No new image review, production edit, GPU run, readiness, authorization, machine acceptance, or TA acceptance is performed.",
+  "frozen_bindings": [
+    {
+      "role": "v14_premise_falsification_receipt",
+      "path": "docs/art/phase4-v14-cap-mask-premise-falsification-v1/premise-falsification-receipt-v1.json",
+      "sha256": "a7ee84eae3622b4e9dc472ed1dccdd8c2d6604d0218501e9cafc019473baa76e"
+    },
+    {
+      "role": "v14_cap_only_design_gate",
+      "path": "docs/art/phase4-v14-broadcast-predicted-cap-prior-actual-core-mask-design-gate-v1.json",
+      "sha256": "4e7d2419c9ae78b0e573b20482cbca8d91d2de084277ed40910862786cc91be4"
+    },
+    {
+      "role": "v13_cap_release_gate",
+      "path": "docs/art/phase4-v13-broadcast-predicted-dash-cap-release-design-gate-v1.json",
+      "sha256": "da26e980cf5fb365c37473d74025e03122ed99d9c7328482ce325a9cbf3e097d"
+    },
+    {
+      "role": "v13_primary_exhaustion",
+      "path": "docs/art/phase4-v13-primary-equal-cap-contraction-exhaustion-v1/primary-exhaustion-receipt-v1.json",
+      "sha256": "6055242d80be491c1cda05f5283cf92aa301a26e33c5f0b436b4ce5c04bf811d"
+    },
+    {
+      "role": "v12_actual_only_exhaustion",
+      "path": "docs/art/phase4-v12-visual-local-alternatives-exhaustion-v1/exhaustion-evidence-receipt-v1.json",
+      "sha256": "62b9120252f9a224e965cb3815ebbcce4a4854019e75a5e4b0d80b7f0b563f97"
+    },
+    {
+      "role": "v11_algorithm_implementation",
+      "path": "docs/art/phase4-v11-raster-support-connectivity-implementation-v1/algorithm-implementation-receipt-v1.json",
+      "sha256": "abc181f48adb8e94db31965c2d0111c7641c0ac20242dd4a93189a237c8d01f2"
+    }
+  ],
+  "restored_production_bindings": {
+    "trajectory_renderer_cpp": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    "trajectory_renderer_h": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    "modern_renderer_cpp": {
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    "modern_renderer_h": {
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    }
+  },
+  "independent_failure_finding": {
+    "v14_gate_result": "FAIL_PREMISE_FALSIFIED_DO_NOT_RESUME_IMPLEMENTATION",
+    "blocking_coordinate": [940, 525],
+    "neighborhood_radius_px": 8,
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_route": "single_sample_center_0.5_0.5",
+    "blocking_axes": [
+      "actual_track_visual_identity",
+      "coaxial_predicted_actual_disambiguation",
+      "route_body_vs_tick_semantic_provenance"
+    ],
+    "unchanged_failed_result_per_palette": {
+      "actual_route_body_final_pixels": 0,
+      "legacy_helper_actual_core_pixels": 1,
+      "legacy_helper_actual_core_largest8": 1,
+      "required_actual_route_body_largest8": 2
+    }
+  },
+  "pixel_and_control_flow_root_cause": {
+    "prior_actual_route_body_mask_pixels": 88,
+    "tagged_predicted_inner_cap_discards_executed": 59,
+    "final_prior_mask_pixels_owned_by_predicted_core": 81,
+    "final_prior_mask_pixels_owned_by_untagged_predicted_inner_body": 7,
+    "final_prior_mask_pixels_owned_by_tagged_predicted_inner_cap": 0,
+    "owner_partition_identity": "81 + 7 + 0 = 88",
+    "cap_predicate_execution": "The v14 cap predicate executed and discarded 59 tagged cap fragments, so the failure is not an unexecuted mask branch, zero mask, or missing cap tag.",
+    "final_authority_failure": "Every prior ActualRouteBodyCore sample was finally covered by a still-authorized untagged predicted write: 81 predicted-core samples and seven central/lateral inner-body samples. The tagged cap owned none of the final 88 samples.",
+    "helper_misclassification": "The legacy helper counted all actual Core visual sublayers. Its sole surviving pixel is actual tick core, not ActualRouteBodyCore, so it cannot prove continuous actual-route readability.",
+    "classification": "TARGET_OWNER_PREMISE_ERROR_NOT_THRESHOLD_FAILURE_NOT_COLOR_FAILURE_NOT_MASK_EXECUTION_FAILURE"
+  },
+  "v14_disposition": {
+    "cap_only_strategy_can_meet_required_result": false,
+    "partial_implementation_reverted": true,
+    "four_production_files_restored": true,
+    "v14_readiness_allowed": false,
+    "v14_gpu_allowed": false,
+    "v14_machine_or_ta_claim_allowed": false,
+    "threshold_or_helper_relaxation_allowed": false
+  },
+  "successor_design_decision": {
+    "decision": "CONDITIONALLY_FEASIBLE_ONLY_AFTER_V15_DIAGNOSTIC_PROVENANCE_GATE",
+    "visual_repair_authorized_now": false,
+    "reason": "The 81 predicted-core and seven inner-body final owners have not been decomposed into protected dash-on body versus cap/gap-intrusion fragments. Any direct wider discard would risk deleting the predicted yellow core or lateral 2px annulus that the v12-v14 gates freeze.",
+    "mandatory_next_stage": "CPU_STATIC_DIAGNOSTIC_ONLY_NO_VISUAL_CHANGE",
+    "successor_implementation_gate_required_after_diagnostic": true,
+    "automatic_scope_expansion_from_v14": false
+  },
+  "v15_diagnostic_only_gate": {
+    "status": "DESIGN_ONLY_NOT_IMPLEMENTED_NOT_RUN",
+    "diagnostic_objective": "Produce sample-resolved, source-resolved provenance for the 81 predicted-core owners and seven inner-body owners before deciding whether any semantic-gap-only non-overwrite rule is implementable without touching protected predicted body/lateral pixels.",
+    "exact_case": {
+      "capture_id": "camera_broadcast_1080",
+      "palettes": ["standard", "color_vision_safe"],
+      "physical_dimensions": [1920, 1080],
+      "blocking_gap_coordinates": [[783, 413], [892, 491], [940, 525]],
+      "neighborhood_radius_px": 8,
+      "ordered_source_count": 81,
+      "ordered_source_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645"
+    },
+    "exact_repair_probe_ids": {
+      "predicted_contrast": [
+        "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+        "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a"
+      ],
+      "actual_connectivity": "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    },
+    "required_predicted_fragment_classes": [
+      "core_base_body",
+      "core_start_cap_extension",
+      "core_end_cap_extension",
+      "inner_central_body",
+      "inner_lateral_annulus",
+      "inner_start_cap_annulus",
+      "inner_end_cap_annulus",
+      "outer_side_band",
+      "endpoint_or_tick_or_marker"
+    ],
+    "required_semantic_interval_classes": [
+      "dash_on_interior",
+      "dash_gap_intrusion",
+      "route_endpoint_envelope",
+      "cross_segment_or_cross_source_overlap"
+    ],
+    "required_per_sample_fields": [
+      "palette",
+      "physical_pixel",
+      "sample_index_and_position",
+      "prior_actual_source_probe_id",
+      "prior_actual_primitive_id",
+      "prior_actual_route_body_boolean",
+      "final_predicted_source_probe_id",
+      "final_predicted_primitive_id",
+      "predicted_fragment_class",
+      "semantic_interval_class",
+      "dash_ordinal_and_local_tangent_parameter",
+      "is_protected_predicted_body_or_lateral",
+      "would_be_candidate_for_future_gap_only_non_overwrite"
+    ],
+    "required_aggregates": [
+      "The predicted-core fragment-class counts sum exactly to 81 for each palette at the frozen [940,525] neighborhood.",
+      "The inner-body fragment-class counts sum exactly to seven for each palette at the frozen [940,525] neighborhood.",
+      "All three gap coordinates receive the same decomposition and prove whether at least two ActualRouteBodyCore pixels could survive after suppressing only eligible semantic-gap intrusions.",
+      "All exact three repair probe IDs receive a final owner chain and no ID is substituted, dropped, or reclassified by color.",
+      "Standard and CVD classifications are topology-identical; color may not select fragment class.",
+      "The exact ordered 81 source IDs and digest remain unchanged and foreign, double, or unowned evidence remains zero."
+    ],
+    "allowed_future_diagnostic_files": [
+      {
+        "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+        "boundary": "Compile-time diagnostic-only fragment/interval tags and counters; no geometry, color, order, source ID, token, threshold, or discard behavior."
+      },
+      {
+        "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+        "boundary": "Compile-time diagnostic enum/fields only; ordinary production layout and behavior must remain unchanged when the diagnostic define is absent."
+      },
+      {
+        "path": "tests/phase4_v15_broadcast_overwrite_provenance_cpu_tests.cpp",
+        "boundary": "Exact frozen replay/camera CPU sample raster, owner ledger, positive/negative fixtures and receipt source."
+      },
+      {
+        "path": "CMakeLists.txt",
+        "boundary": "One CPU diagnostic test target and compile definition only; no shipping target flags or link changes."
+      },
+      {
+        "path": "scripts/validate_phase4_v15_broadcast_overwrite_provenance_diagnostic.py",
+        "boundary": "Fail-closed diagnostic receipt validator only."
+      },
+      {
+        "path": "tests/test_phase4_v15_broadcast_overwrite_provenance_diagnostic.py",
+        "boundary": "Bad-input and mutation tests only."
+      }
+    ],
+    "modern_renderer_edit_allowed": false,
+    "visual_or_raster_behavior_change_allowed": false,
+    "diagnostic_execution_authorized_by_this_addendum": false
+  },
+  "future_narrow_candidate_eligibility": {
+    "status": "UNPROVEN_NOT_AUTHORIZED",
+    "eligible_fragment_classes_only": [
+      "core_start_cap_extension with semantic_interval_class=dash_gap_intrusion",
+      "core_end_cap_extension with semantic_interval_class=dash_gap_intrusion",
+      "inner_start_cap_annulus with semantic_interval_class=dash_gap_intrusion",
+      "inner_end_cap_annulus with semantic_interval_class=dash_gap_intrusion",
+      "inner_central_body only where sample-resolved proof classifies the exact covered portion as dash_gap_intrusion rather than dash_on_interior"
+    ],
+    "always_protected_never_suppress": [
+      "core_base_body",
+      "inner_lateral_annulus",
+      "any fragment classified dash_on_interior",
+      "predicted endpoint, tick, marker, side-only outer rim",
+      "any fragment lacking exact source/sample provenance"
+    ],
+    "eligibility_test": "A future visual gate may be proposed only if every pixel needed to reach ActualRouteBodyCore largest8>=2 at all three gaps is covered exclusively by eligible semantic-gap intrusions, while predicted yellow dominance, open gaps, 2px lateral annulus, silhouette contrast, exact 81 IDs, and three controls remain unchanged.",
+    "fail_closed_outcome": "If even one required surviving actual-route-body sample requires suppressing core_base_body, inner_lateral_annulus, or dash_on_interior, the visual repair is INFEASIBLE_UNDER_FROZEN_SEMANTICS and must return for a new product/design decision rather than widen discard authority."
+  },
+  "forbidden": [
+    "Resume or authorize the v14 cap-only implementation.",
+    "Discard all predicted core, any core_base_body, any dash_on_interior fragment, or any inner_lateral_annulus fragment.",
+    "Treat the final actual tick pixel as route-body connectivity evidence.",
+    "Use color equality, helper overcount, halo area, all-actual-sublayer area, threshold relaxation, or largest8 relaxation as route-body proof.",
+    "Change predicted core/inner/outer widths, 18/12/30 rhythm, phase, centerline, offset, z-order, actual-then-predicted order, endpoint, ticks, camera, layout, assets, source IDs, ownership semantics, thresholds, or product exposure.",
+    "Edit modern_renderer during the diagnostic-only stage.",
+    "Run GPU, create readiness or authorization, or claim machine, TA, targeted5, targeted11, formal68, M3, golden, Beta, or product pass from this addendum."
+  ],
+  "proof_boundary": {
+    "production_modified_by_this_addendum": false,
+    "cmake_modified_by_this_addendum": false,
+    "cpu_diagnostic_run_by_this_addendum": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}

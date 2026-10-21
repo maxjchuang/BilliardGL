@@ -1,0 +1,210 @@
+{
+  "schema": "billiardgl.phase4.v14.broadcast_predicted_cap_prior_actual_core_mask_design_gate.v1",
+  "schema_version": 1,
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED_NO_GPU_NO_AUTHORIZATION",
+  "scope": "Successor gate required after v13 primary equal-cap contraction exhausted. It permits a renderer-tagged, non-color actual-core midpoint mask so only predicted inner-halo cap fragments that would replace prior actual-core physical-pixel support are discarded. Predicted core, lateral 2px inner annulus, side-only outer rim, 18/12/30 dash rhythm, source identities, thresholds, and actual-then-predicted color submission remain unchanged.",
+  "feasibility_conclusion": {
+    "trajectory_renderer_two_file_cpu_geometry_only": "NOT_FEASIBLE_FAIL_CLOSED",
+    "reason": "The trajectory package knows continuous projected geometry but not the production MSAA/sample-resolved prior owner. Polygon or pixel-grid clipping would be an approximation and cannot distinguish actual core from actual halo, scene color, or partial sample coverage without expanding the contract.",
+    "current_v13_allowlist_sufficient": false,
+    "modern_renderer_midpoint_actual_core_mask_required": true,
+    "default_scope_expansion_permitted": false,
+    "new_gate_required_and_this_file_is_that_design_only_gate": true
+  },
+  "frozen_bindings": [
+    {
+      "role": "v13_predicted_dash_cap_release_gate",
+      "path": "docs/art/phase4-v13-broadcast-predicted-dash-cap-release-design-gate-v1.json",
+      "sha256": "da26e980cf5fb365c37473d74025e03122ed99d9c7328482ce325a9cbf3e097d"
+    },
+    {
+      "role": "v13_primary_equal_cap_exhaustion_receipt",
+      "path": "docs/art/phase4-v13-primary-equal-cap-contraction-exhaustion-v1/primary-exhaustion-receipt-v1.json",
+      "sha256": "6055242d80be491c1cda05f5283cf92aa301a26e33c5f0b436b4ce5c04bf811d"
+    },
+    {
+      "role": "v11_connectivity_algorithm_implementation_receipt",
+      "path": "docs/art/phase4-v11-raster-support-connectivity-implementation-v1/algorithm-implementation-receipt-v1.json",
+      "sha256": "abc181f48adb8e94db31965c2d0111c7641c0ac20242dd4a93189a237c8d01f2"
+    },
+    {
+      "role": "v9_compositing_style_gate",
+      "path": "docs/art/phase4-final-ownership-v9-ordinal1-offline-diagnostic-v1/minimal-compositing-style-correction-design-gate-v1.json",
+      "sha256": "e80baf05f0240872ba24b9ca9a6c7daa0d5a51496dde99902014d8ea3391a4f6"
+    },
+    {
+      "role": "restored_trajectory_renderer_cpp",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    {
+      "role": "restored_trajectory_renderer_h",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    {
+      "role": "baseline_modern_renderer_cpp",
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    {
+      "role": "baseline_modern_renderer_h",
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    }
+  ],
+  "bound_failure": {
+    "coordinate": [940, 525],
+    "standard_actual_core_pixels_and_largest8": [1, 1],
+    "cvd_actual_core_pixels_and_largest8": [1, 1],
+    "required_actual_core_minimum_area": 1.5,
+    "required_actual_core_largest8": 2,
+    "primary_cap_candidates_exhausted": [1.5, 1.25, 1.0],
+    "actual_only_local_candidates_exhausted": true,
+    "fallback_implemented": false,
+    "machine_pass": false,
+    "ta_pass": false
+  },
+  "minimum_implementable_contract": {
+    "trajectory_package_tagging": [
+      "Keep frozen predicted coreCap=1.5px, innerCap=3.5px, outerCap=3.5px, dashOn=18px, dashOff=12px, period=30px, phase, centers, line width, route, and endpoint geometry.",
+      "Split each predicted inner-halo dash primitive into the unchanged central/lateral body and exact 2px start/end cap-annulus fragments only for tagging; their union must be byte-for-byte geometrically equivalent to the baseline inner-halo rectangle.",
+      "Add one flat per-vertex overlayMaskRole enum. All three vertices of a triangle must agree: PredictedInnerCap only for cap-annulus fragments, ActualRouteBodyCore only for continuous actual segment-core triangles, and None for predicted core/lateral inner/outer/endpoint plus actual halo/rim/ticks/endpoints/markers.",
+      "Retain the existing predicted dash halo semantic batch/token/source identity; splitting/tagging may not add a batch, token, probe, draw call, or change vertex ownership."
+    ],
+    "actual_core_mask_pipeline": [
+      "Create an overlay-local non-color integer actual-core coverage attachment and a separate frozen single-sample GL_R8UI or GL_R32UI mask texture owned by ModernRenderer; clear to zero every frame and recreate on resize/context loss.",
+      "During the existing actual color submission, write mask value 1 only when uSubmissionTrackActual is true and overlayMaskRole is ActualRouteBodyCore; actual halo/rim/ticks/endpoints write zero. The mask attachment has blending disabled and the decision must not depend on HDR/RGB equality or capture instrumentation.",
+      "With MSAA, use an explicit integer any-sample/max resolve from the multisample mask into the frozen mask: one or more actual-core samples resolve to 1 and zero samples resolve to 0. Freeze/copy after actual completes and before predicted starts; never sample an attached render target and never rely on normalized-color averaging.",
+      "During predicted submission, discard a fragment before both color and ownership-token writes only when overlayMaskRole is PredictedInnerCap and the frozen actual-core mask at that physical pixel is positive.",
+      "Keep exactly two trajectory color draws and actual-then-predicted submission. The midpoint mask resolve/blit is non-color bookkeeping, not a reordered color draw or new product pass."
+    ],
+    "resulting_behavior": [
+      "Actual core under a predicted inner-halo cap fragment remains the final color/owner at that pixel.",
+      "Predicted core still replaces actual core and remains yellow dominant; lateral inner halo and 2px lateral annulus still replace prior content as before.",
+      "Actual halo/rim, scene cloth, ball, cue, guide, and coincident deep-cyan scene color never activate the non-overwrite path.",
+      "The two repaired predicted silhouette probes and side-only outer rim remain unchanged."
+    ]
+  },
+  "allowed_production_files": [
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "allowed_symbols_or_regions": "Predicted inner-halo cap-fragment decomposition/tag emission and renderer-only diagnostics; baseline cap dimensions and all source/semantic identities remain fixed."
+    },
+    {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "allowed_symbols_or_regions": "One flat overlayMaskRole vertex enum/field for None, ActualRouteBodyCore, and PredictedInnerCap plus bounded diagnostics; no model, source probe, ownership algorithm, or authority changes."
+    },
+    {
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "allowed_symbols_or_regions": "Overlay-local actual-core mask target/freeze/resolve lifecycle, trajectory vertex attribute and shader mask predicate, and exact actual/predicted submission plumbing only."
+    },
+    {
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "allowed_symbols_or_regions": "Read-only frame metrics proving actual-core mask allocation/freeze/use and unchanged two-color-draw order; no public product option or exposure toggle."
+    }
+  ],
+  "forbidden_changes": [
+    "No edits outside the four allowed production files and non-production CPU/static tests/validators/receipts; the prior v13 two-file allowlist is not silently amended.",
+    "No HDR/RGB/color-equality inference, alpha marker, scene-color heuristic, actual-halo substitution, stencil/depth workaround, or capture-only instrumentation dependency for actual-core detection.",
+    "No predicted core discard, lateral inner-halo discard, outer-rim discard caused by this mask, whole-cap unconditional removal, or suppression when the midpoint mask is zero.",
+    "No cap width, inner annulus, dash on/off/period/phase/center, route, centerline, offset, endpoint, tick, marker, camera, viewport, scene, asset, UI, or layout change.",
+    "No actual core/halo/rim width, overlap, join, marker, color, or geometry change and no retry of exhausted v12/v13 candidates.",
+    "No color-draw reorder, predicted-before-actual change, extra trajectory color draw, pass reorder, depth override, post-process repaint, or later-UI masking workaround.",
+    "No source ID/count/order/coordinate, semantic batch/token, ownership association/arbitration/connectivity/reason, threshold, final-LDR pairing, tone-map, or acceptance change.",
+    "No stale mask reuse, framebuffer feedback, unresolved MSAA aliasing, fail-open allocation/format/resize behavior, or mask sampling outside tagged cap fragments.",
+    "No product exposure flag, readiness, authorization, GPU execution, capture retry, machine/TA/targeted5/targeted11/formal68 claim, golden, M2, or Beta promotion from this design gate."
+  ],
+  "required_cpu_and_static_negative_fixtures": {
+    "status": "NOT_RUN",
+    "fixtures": [
+      {
+        "id": "tag_scope_exact",
+        "requirement": "Only predicted inner-halo start/end cap-annulus triangles use PredictedInnerCap; only continuous actual segment-core triangles use ActualRouteBodyCore; predicted core/lateral-inner/outer/endpoint and actual halo/rim/ticks/endpoints use None. Every triangle's three roles match."
+      },
+      {
+        "id": "geometry_union_identity",
+        "requirement": "Tagged cap fragments plus untagged inner body exactly reproduce baseline 1.5/3.5 cap geometry, 2px annulus, 18/12/30 rhythm, source IDs, tokens, batches, probes, and <=8192 budget."
+      },
+      {
+        "id": "actual_core_positive",
+        "requirement": "Tagged cap + positive renderer-tagged actual-core mask discards before color and ownership writes, preserving prior actual-core color/token."
+      },
+      {
+        "id": "actual_halo_negative",
+        "requirement": "Actual inner/outer halo without actual core yields mask=0 and must not suppress a tagged predicted cap."
+      },
+      {
+        "id": "scene_color_negative",
+        "requirement": "Cloth, ball, cue, guide, or arbitrary scene RGB equal/near the actual deep cyan with mask=0 must not suppress a tagged predicted cap."
+      },
+      {
+        "id": "predicted_core_negative",
+        "requirement": "Positive actual-core mask under an untagged predicted core does not discard; predicted yellow color/token remains final."
+      },
+      {
+        "id": "lateral_annulus_negative",
+        "requirement": "Positive actual-core mask under untagged lateral predicted inner halo does not discard; the lateral 2px annulus is preserved."
+      },
+      {
+        "id": "no_actual_negative",
+        "requirement": "Tagged cap with a zero mask renders unchanged; no unconditional cap hole is permitted."
+      },
+      {
+        "id": "msaa_any_sample_positive",
+        "requirement": "For 1x and 4x fixtures, any actual-core sample resolves to positive and zero actual-core samples resolve to zero; instrumentation on/off produces identical color and mask decisions."
+      },
+      {
+        "id": "stale_or_invalid_mask_fail_closed",
+        "requirement": "Unallocated, wrong-size, wrong-format, framebuffer-incomplete, feedback-bound, or stale-frame mask prevents trajectory submission with an explicit error; it never blanket-discards or silently renders the fallback."
+      },
+      {
+        "id": "three_gap_and_cvd_positive",
+        "requirement": "Standard and CVD CPU raster at [783,413], [892,491], and [940,525] each has an open predicted gap and actual-core area >=1.5 with largest8 >=2; halo pixels cannot substitute."
+      },
+      {
+        "id": "controls_and_exact_ids",
+        "requirement": "Algorithm 78 inherited visible IDs are monotonic, exact three repair IDs union to 81, and v11 player/elevated/overhead source and visible-ID digests/metrics do not regress; foreign/double/unowned remain zero."
+      },
+      {
+        "id": "silhouette_and_order_regression",
+        "requirement": "[855,469] and [879,486] remain >=4.0, predicted yellow/side-only rim remain dominant, exactly two trajectory color draws remain actual then predicted, and mask freeze occurs strictly between them."
+      },
+      {
+        "id": "resource_lifecycle_and_budget",
+        "requirement": "Resize/context loss/reinitialize clears and recreates both source and frozen mask targets; package texture count remains zero, renderer mask bytes/dimensions are reported, and existing performance thresholds remain unchanged."
+      }
+    ],
+    "implementation_exit": "All fourteen fixtures and existing renderer/ownership/telemetry suites must pass under frozen source and CPU binary hashes. This still does not authorize GPU capture or establish machine/TA acceptance."
+  },
+  "future_targeted_boundary": {
+    "status": "NOT_AUTHORIZED_NOT_RUN",
+    "minimum_cases": ["camera_player_low_1080", "camera_elevated_1080", "camera_overhead_1080", "camera_broadcast_1080", "actual_retina_ui135_cvd"],
+    "requires_separate_implementation_receipt": true,
+    "requires_separate_readiness_and_single_use_authorization": true,
+    "machine_five_of_five_before_ta": true,
+    "ta_axes": 35,
+    "targeted5_is_not_targeted11_or_formal68": true,
+    "product_or_beta_acceptance": false
+  },
+  "proof_boundary": {
+    "design_gate_only": true,
+    "production_modified_by_this_gate": false,
+    "renderer_only_geometry_fallback_approved": false,
+    "modern_mask_implemented": false,
+    "cpu_static_fixtures_run": false,
+    "readiness_created": false,
+    "authorization_created_or_issued": false,
+    "gpu_authorized_or_executed": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "threshold_changed": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

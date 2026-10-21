@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-21 Asia/Shanghai",
+  "protected_binary_sha256": "44374e01d2b4eecadef773aa8775324047f4ceda42822cbbf4004aa50a6169eb",
+  "archive_parts_verified": 4,
+  "private_v132_source_paths_verified": 493,
+  "cmake_fresh_configure_exit": 0,
+  "cmake_log": "/tmp/bgl-maintenance-configure-20261021.txt",
+  "full_game_regression": "NOT_RUN; maintenance checkpoint only, all M4 blockers retained",
+  "secret_pattern_scan": {
+    "main_staged_files_hits": 0,
+    "initial_research_source_paths_hits": 0
+  },
+  "agents": "Stopped at saved safe boundary; no active build/GPU",
+  "source_restore": "verified actual local sources; no overwrite",
+  "raw_evidence": "retained at original local paths, not remote backup",
+  "git_diff_check": {
+    "exit": 2,
+    "scope": "Pre-existing Markdown hard breaks/EOF whitespace and vendored cgltf whitespace retained; no normalization of historical sources.",
+    "diagnostic_lines": 111
+  }
+}

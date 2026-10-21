@@ -1,0 +1,2302 @@
+{
+  "schema": "phase5_wpa_heyball_as_built_reconciliation_audit_v3",
+  "schema_version": 3,
+  "audit_id": "phase5_wpa_heyball_2025_08_16_as_built_reconciliation_v3",
+  "generated_on": "2026-07-28",
+  "ruleset_id": "wpa_heyball_2025_08_16_v1",
+  "audit_scope": "targeted_product_closure_wpa_ii_04_and_07",
+  "profile_complete": false,
+  "product_exposed": false,
+  "complete_profile_product_exposed": false,
+  "normative_source": {
+    "title": "WPA Rules of Heyball - Rules of Play, Effective 2025-08-16",
+    "url": "https://wpapool.com/wp-content/uploads/2025/08/250816-Rules-of-Heyball.pdf",
+    "effective_date": "2025-08-16",
+    "retrieval_status": "VERIFIED",
+    "retrieved_on": "2026-07-28",
+    "page_count": 21,
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24"
+  },
+  "frozen_predecessor_files": {
+    "docs/rules/phase5-wpa-heyball-completeness-audit.json": "c70e8662dd523b04eefab5745c4cd9023c2ae9dfa374f1b289d684d532ea8555",
+    "docs/rules/phase5-wpa-heyball-completeness-audit.md": "f4384c54a245184c281697d6e18562cf1d8a656856f07174d590e351f2b1fd04",
+    "docs/rules/phase5-wpa-heyball-completeness-audit.schema.json": "6694e31bed405fa8c3258b9103110f9b4ff6aa7bbb5da1d9946183510471529d",
+    "scripts/validate_phase5_wpa_heyball_completeness_audit.py": "735c70bea8adf3529707cf994d52a4a8b74495492b7244fe93baf9dfae660837",
+    "tests/visual/test_phase5_wpa_heyball_completeness_audit.py": "ee2db00a4580084fc9466574b2e5e8a495062bf6a3a846abecfa1c27eb3f9184"
+  },
+  "status_semantics": {
+    "IMPLEMENTED": "Authoritative product-reachable automatic behavior has complete source and test evidence for the row.",
+    "PARTIAL": "A proper subset or non-product foundation/authority exists; product-action rows cannot be IMPLEMENTED while gated off.",
+    "MISSING": "Required fact, adjudication, action, state or test surface is absent.",
+    "PROCEDURAL_ONLY": "The row requires referee/event procedure and is not fabricated as gameplay automation."
+  },
+  "summary": {
+    "total": 40,
+    "implemented": 10,
+    "partial": 10,
+    "missing": 13,
+    "procedural_only": 7
+  },
+  "policy_conflicts": [
+    {
+      "id": "off_table_12_3_vs_17_e",
+      "rows": [
+        "WPA-II-12-3",
+        "WPA-II-17"
+      ],
+      "status": "policy_decision_required",
+      "resolved": false,
+      "decision_owner": "external_rules_policy"
+    }
+  ],
+  "classification_pending": [
+    {
+      "id": "section_6_g_no_rack_contact",
+      "row": "WPA-II-06-G",
+      "status": "classification_pending",
+      "error_code": "rules_break_no_rack_contact_classification_pending",
+      "mutation_allowed": false
+    }
+  ],
+  "m4_required_unclosed": [
+    "WPA-II-06-C",
+    "WPA-II-06-D",
+    "WPA-II-06-E",
+    "WPA-II-06-F",
+    "WPA-II-08",
+    "WPA-II-09",
+    "WPA-II-10-4",
+    "WPA-II-12-3",
+    "WPA-II-12-5-6",
+    "WPA-II-12-7",
+    "WPA-II-15-1",
+    "WPA-II-15-2",
+    "WPA-II-16",
+    "WPA-II-17",
+    "WPA-II-21"
+  ],
+  "next_deterministic_implementation_plan": [
+    {
+      "priority": "P0",
+      "rows": [
+        "WPA-II-06-C",
+        "WPA-II-06-E",
+        "WPA-II-06-F",
+        "WPA-II-08",
+        "WPA-II-09",
+        "WPA-II-10-4"
+      ],
+      "depends_on": [
+        "rules_decision_ui_v2_verification",
+        "production_capability_enablement"
+      ],
+      "deliverable": "Promote existing Core C/F/G/H/D authority transactions through the verified product decision surface."
+    },
+    {
+      "priority": "P1",
+      "rows": [
+        "WPA-II-06-G"
+      ],
+      "depends_on": [
+        "authoritative_miscue_and_intent_telemetry"
+      ],
+      "deliverable": "Replace classification_pending with a tested no-rack-contact classifier and re-break authority path."
+    },
+    {
+      "priority": "P1",
+      "rows": [
+        "WPA-II-06-D"
+      ],
+      "depends_on": [
+        "head_string_crossing_telemetry",
+        "per_player_break_offense_history"
+      ],
+      "deliverable": "Implement deterministic reminder then foul escalation."
+    },
+    {
+      "priority": "P1",
+      "rows": [
+        "WPA-II-12-5-6",
+        "WPA-II-12-7",
+        "WPA-II-15-1",
+        "WPA-II-15-2",
+        "WPA-II-16"
+      ],
+      "depends_on": [
+        "cue_tip_contact_telemetry",
+        "frozen_ball_declaration_input",
+        "jump_trajectory_classification"
+      ],
+      "deliverable": "Add measurable stroke/contact predicates, adjudication and bad-input tests without inventing referee judgments."
+    },
+    {
+      "priority": "P2",
+      "rows": [
+        "WPA-II-21"
+      ],
+      "depends_on": [
+        "referee_stalemate_proposal_input",
+        "shot_counter_and_original_breaker_state"
+      ],
+      "deliverable": "Implement the official stalemate proposal/refusal and rerack state machine."
+    }
+  ],
+  "matrix": [
+    {
+      "id": "WPA-I-05",
+      "source": {
+        "chapter": "I",
+        "clause": "5",
+        "pages": [
+          3
+        ],
+        "locator": "Declaration of Frozen Balls"
+      },
+      "requirement": "A referee declares whether an object ball is frozen to a cushion or cue ball; absent a declaration it is not frozen.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Frozen-ball declaration remains a referee observation; neither ShotFacts nor the foul model carries a declaration state.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Frozen-ball declaration remains a referee observation; neither ShotFacts nor the foul model carries a declaration state."
+      ]
+    },
+    {
+      "id": "WPA-II-01",
+      "source": {
+        "chapter": "II",
+        "clause": "1",
+        "pages": [
+          6
+        ],
+        "locator": "Player's Responsibilities"
+      },
+      "requirement": "Players remain responsible for knowing event rules, regulations, and schedules.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Player knowledge and schedule responsibility is event procedure, not gameplay automation.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Player knowledge and schedule responsibility is event procedure, not gameplay automation."
+      ]
+    },
+    {
+      "id": "WPA-II-02",
+      "source": {
+        "chapter": "II",
+        "clause": "2",
+        "pages": [
+          6
+        ],
+        "locator": "Method of Play"
+      },
+      "requirement": "A player wins a rack by clearing the assigned group and then legally pocketing the 8-ball.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A"
+      ],
+      "assessment": "Core A ends the rack only after assigned-group clearance and a legal 8-ball; early, foul, same-shot and off-table 8 outcomes lose.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1284,
+            "end": 1392
+          },
+          "finding": "Core A integration tests cover corrected 8-ball, no-rail and off-table outcomes."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-04",
+      "source": {
+        "chapter": "II",
+        "clause": "4",
+        "pages": [
+          6
+        ],
+        "locator": "Racking Balls"
+      },
+      "requirement": "Rack geometry, ball placement, rack tightness, inspection, and correction follow the official procedure.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": true,
+      "core_increments": [
+        "E"
+      ],
+      "assessment": "The standard ProductShell Match lifecycle commits the fixed-seed Core E official rack exactly once before AI configuration and Match visibility, with atomic cleanup on failure. WPA geometry/group constraints are normative; seeded numbered-ball order remains explicitly non-normative.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/rack_executor.cpp",
+          "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17",
+          "lines": {
+            "start": 153,
+            "end": 355
+          },
+          "finding": "Core E enforces the official rack geometry/group contract while marking seeded number order non-normative."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/product_shell_controller.cpp",
+          "sha256": "eb1a754778808e23232ff14ab1a411be9189da876070910961ec6f4cbdf69a6c",
+          "lines": {
+            "start": 218,
+            "end": 280
+          },
+          "finding": "The standard product Match start stages and commits one fixed official rack before AI configuration and Match visibility, with busy preflight and cleanup on every failure."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 192,
+            "end": 568
+          },
+          "finding": "Core E tests independently verify official geometry, group constraints, transaction integrity and seeded-order semantics."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/product_shell_tests.cpp",
+          "sha256": "d09685c6ae70e6bcdf30069f69cb61ec161a0ff26d2de1776d0209019dcb5412",
+          "lines": {
+            "start": 262,
+            "end": 402
+          },
+          "finding": "Product tests require exact ball-ID/position contract bytes, one commit, restart determinism, busy preflight and AI/runtime/shell rollback."
+        },
+        {
+          "kind": "migration_gate",
+          "path": "docs/rules/wpa-ii-04-official-rack-product-migration-gate-v1.json",
+          "sha256": "bf02b866e6017278c60366718535053049738555d72a573c8afc1f675d5c5545",
+          "lines": {
+            "start": 1,
+            "end": 83
+          },
+          "finding": "The approved migration records the noncompliant predecessor layout and forbids inheritance of affected historical visual evidence."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-05",
+      "source": {
+        "chapter": "II",
+        "clause": "5, 5.1, 5.2",
+        "pages": [
+          7
+        ],
+        "locator": "Lag for Break"
+      },
+      "requirement": "Lag determines first break and handles bad/tied lags and re-lag conditions.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No lag facts, bad-lag/tie state, re-lag action or test exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No lag facts, bad-lag/tie state, re-lag action or test exists."
+      ]
+    },
+    {
+      "id": "WPA-II-06-A-B",
+      "source": {
+        "chapter": "II",
+        "clause": "6(a)-(b)",
+        "pages": [
+          7
+        ],
+        "locator": "Forceful break; intentional no-break/miscue penalties"
+      },
+      "requirement": "Referee judges soft breaks with escalating warning/rack/match loss; intentional no-break or miscue loses the rack.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No soft-break judgment, warning history, intentional no-break/miscue classification or escalating rack/match penalty exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No soft-break judgment, warning history, intentional no-break/miscue classification or escalating rack/match penalty exists."
+      ]
+    },
+    {
+      "id": "WPA-II-06-C",
+      "source": {
+        "chapter": "II",
+        "clause": "6(c)",
+        "pages": [
+          7
+        ],
+        "locator": "Objective illegal-break threshold"
+      },
+      "requirement": "A break is objectively legal if at least four object balls contact cushions or at least one object ball is pocketed; otherwise expose accept/rerack choices.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "H"
+      ],
+      "assessment": "Objective legal-break adjudication and opponent accept/rerack authority exist, but the product decision gate remains closed.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1613,
+            "end": 1754
+          },
+          "finding": "Core H validates and commits the break-foul opponent choice transaction."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1027,
+            "end": 1130
+          },
+          "finding": "Runtime tests cover break-foul choices, blocking and the 6(g) classification-pending rejection."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Enable the verified Rules Decision product capability for accept/rerack choices."
+      ]
+    },
+    {
+      "id": "WPA-II-06-D",
+      "source": {
+        "chapter": "II",
+        "clause": "6(d)",
+        "pages": [
+          7
+        ],
+        "locator": "Cue-ball placement behind Head String"
+      },
+      "requirement": "Break placement is behind the Head String; crossing more than half the ball produces reminder then foul on a later offense.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Break cue-ball geometry is seeded behind the head string, but no half-ball crossing measurement or reminder/offense escalation exists.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/rack_executor.cpp",
+          "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17",
+          "lines": {
+            "start": 153,
+            "end": 355
+          },
+          "finding": "Core E builds official rack geometry and deterministic rerack/respot foundation plans."
+        },
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Add half-ball head-string crossing telemetry and per-player reminder/offense history."
+      ]
+    },
+    {
+      "id": "WPA-II-06-E",
+      "source": {
+        "chapter": "II",
+        "clause": "6(e)",
+        "pages": [
+          7
+        ],
+        "locator": "Break-shot foul opponent choices"
+      },
+      "requirement": "After a break foul, opponent chooses head-string ball in hand, rerack/self break, or rerack/opponent break.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "H",
+        "G"
+      ],
+      "assessment": "Core H offers the three official opponent choices and Core G handles head-string placement, but product actions remain gated off.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1613,
+            "end": 1754
+          },
+          "finding": "Core H validates and commits the break-foul opponent choice transaction."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1027,
+            "end": 1130
+          },
+          "finding": "Runtime tests cover break-foul choices, blocking and the 6(g) classification-pending rejection."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 2040,
+            "end": 2072
+          },
+          "finding": "Core G tests cover head-string placement and explicitly assert Product HUD remains hidden."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Enable the verified product choice and head-string placement flows."
+      ]
+    },
+    {
+      "id": "WPA-II-06-F",
+      "source": {
+        "chapter": "II",
+        "clause": "6(f)",
+        "pages": [
+          8
+        ],
+        "locator": "8-ball pocketed on break"
+      },
+      "requirement": "Legal break: breaker chooses spot-and-continue or rerack/break again. Break foul: opponent chooses spot plus head-string ball in hand or either rerack/break assignment.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "F",
+        "G",
+        "E"
+      ],
+      "assessment": "Core F implements spot-or-rerack authority and Core E commits effects, but the choice is not product exposed.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1755,
+            "end": 1912
+          },
+          "finding": "Core F validates and commits 8-on-break spot/rerack authority through Core E."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 569,
+            "end": 680
+          },
+          "finding": "Runtime tests cover 8-on-break authority and explicitly assert Product HUD remains hidden."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Enable the verified product spot/rerack flow."
+      ]
+    },
+    {
+      "id": "WPA-II-06-G",
+      "source": {
+        "chapter": "II",
+        "clause": "6(g)",
+        "pages": [
+          8
+        ],
+        "locator": "Unintentional break miscue with no rack contact"
+      },
+      "requirement": "Opponent chooses who re-breaks; no head-string ball in hand.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "H"
+      ],
+      "assessment": "Generic no-contact cannot distinguish an unintentional miscue from other causes; authority rejects with classification_pending and mutates nothing.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1613,
+            "end": 1754
+          },
+          "finding": "Core H validates and commits the break-foul opponent choice transaction."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1027,
+            "end": 1130
+          },
+          "finding": "Runtime tests cover break-foul choices, blocking and the 6(g) classification-pending rejection."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Add authoritative intentional/no-intentional and miscue classification before offering a re-break."
+      ],
+      "classification": "pending",
+      "classification_error": "rules_break_no_rack_contact_classification_pending"
+    },
+    {
+      "id": "WPA-II-07",
+      "source": {
+        "chapter": "II",
+        "clause": "7",
+        "pages": [
+          8
+        ],
+        "locator": "Re-spotting Balls"
+      },
+      "requirement": "Referee re-spots at original position or prescribed longitudinal-axis fallback around obstructions.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": true,
+      "core_increments": [
+        "E"
+      ],
+      "assessment": "ModernProductSession exposes a narrow product-authorized seam for only the spot actions in the current 8-on-break parent offer. It binds local actor, authority revision, action and canonical payload before GameRuntime performs the Core E respot; foundation and rerack IDs remain unreachable and the global Rules Decision UI stays hidden.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1818,
+            "end": 1911
+          },
+          "finding": "The authoritative 8-on-break parent decision builds and applies Core E respot before recording the exact parent action ACK."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/render/modern/modern_product_session.h",
+          "sha256": "f9b5ecef2223943bc8cb278b081b8f7f7fb886e7b5a0cc4db4c1fe2bac8528c4",
+          "lines": {
+            "start": 100,
+            "end": 122
+          },
+          "finding": "The shipping session declares only a narrow 8-on-break respot parent seam, not a foundation executor surface."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 220,
+            "end": 263
+          },
+          "finding": "The product seam accepts only offered spot actions and binds exact actor, revision, context and canonical payload."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 460,
+            "end": 568
+          },
+          "finding": "Core E tests cover nominal, longitudinal fallback, no-solution and stale-state respot behavior."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_decision_session_integration_tests.cpp",
+          "sha256": "6082e1d44054a1adc8b3743c2eb31698472a3842626bf25da17db82dadd3220d",
+          "lines": {
+            "start": 155,
+            "end": 264
+          },
+          "finding": "Product tests cover exact parent commit plus outside-Match, foundation, rerack, malformed-key and actor mismatch rejection with zero mutation."
+        },
+        {
+          "kind": "migration_gate",
+          "path": "docs/rules/wpa-ii-04-official-rack-product-migration-gate-v1.json",
+          "sha256": "bf02b866e6017278c60366718535053049738555d72a573c8afc1f675d5c5545",
+          "lines": {
+            "start": 1,
+            "end": 83
+          },
+          "finding": "The approved boundary keeps foundation actions and global Rules UI product exposure disabled."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-08",
+      "source": {
+        "chapter": "II",
+        "clause": "8",
+        "pages": [
+          8
+        ],
+        "locator": "Ball in Hand Behind the Head String"
+      },
+      "requirement": "Placement and first-contact geometry are restricted; a legal object ball may be re-spotted when all are behind the string.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "G",
+        "E"
+      ],
+      "assessment": "Core G enforces behind-head-string placement and authority freshness; the full first-contact restriction/re-spot workflow is not product complete.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1491,
+            "end": 1612
+          },
+          "finding": "Core D/G validates and atomically commits full-table or head-string cue-ball placement."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 2040,
+            "end": 2072
+          },
+          "finding": "Core G tests cover head-string placement and explicitly assert Product HUD remains hidden."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Complete the first-contact restriction and all-behind-string re-spot path; expose the placement flow."
+      ]
+    },
+    {
+      "id": "WPA-II-09",
+      "source": {
+        "chapter": "II",
+        "clause": "9",
+        "pages": [
+          8
+        ],
+        "locator": "Ball in Hand"
+      },
+      "requirement": "After a non-break foul, opponent may place and move the cue ball anywhere until a legal shot; tip contact rules differ while placing.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "D"
+      ],
+      "assessment": "Core D validates and commits full-table cue-ball placement, but product placement actions remain gated off.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1491,
+            "end": 1612
+          },
+          "finding": "Core D/G validates and atomically commits full-table or head-string cue-ball placement."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1700,
+            "end": 1912
+          },
+          "finding": "Core D tests cover full-table placement authority and fail-closed transaction behavior."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Enable the verified full-table placement flow in product."
+      ]
+    },
+    {
+      "id": "WPA-II-10-1",
+      "source": {
+        "chapter": "II",
+        "clause": "10.1",
+        "pages": [
+          8,
+          9
+        ],
+        "locator": "Open table and legal first contact"
+      },
+      "requirement": "Table opens after break; any non-8 object ball is legal first contact, while 8 first is a foul; all-one-group-removed remains open with constrained choice.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A",
+        "B"
+      ],
+      "assessment": "Open-table first-contact logic accepts any non-8 contact, rejects 8-only contact, and retains open-table state after the break.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 307,
+            "end": 389
+          },
+          "finding": "Rules tests cover legal-first presumption and simultaneous two-group choice staging."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-10-2",
+      "source": {
+        "chapter": "II",
+        "clause": "10.2",
+        "pages": [
+          9
+        ],
+        "locator": "Illegally pocketed balls on open table"
+      },
+      "requirement": "Illegally pocketed non-8 object balls remain off the table.",
+      "status": "PARTIAL",
+      "m4_required": false,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A"
+      ],
+      "assessment": "Runtime preserves pocketed non-8 balls, but off-table treatment is entangled with the unresolved section 12.3 versus 17(e) policy conflict.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1284,
+            "end": 1392
+          },
+          "finding": "Core A integration tests cover corrected 8-ball, no-rail and off-table outcomes."
+        }
+      ],
+      "gaps": [
+        "Resolve the section 12.3 versus 17(e) off-table policy before claiming complete behavior."
+      ]
+    },
+    {
+      "id": "WPA-II-10-3",
+      "source": {
+        "chapter": "II",
+        "clause": "10.3",
+        "pages": [
+          9
+        ],
+        "locator": "Group assignment after break"
+      },
+      "requirement": "Break never assigns groups; first legally pocketed group after break closes the table and assigns opposite group to the opponent.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A"
+      ],
+      "assessment": "The break never assigns groups; the first legal post-break group pocket assigns shooter and opponent groups.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-10-4",
+      "source": {
+        "chapter": "II",
+        "clause": "10.4",
+        "pages": [
+          9
+        ],
+        "locator": "Simultaneous different-group contact and pocket choice"
+      },
+      "requirement": "If both groups are legally contacted simultaneously and both are pocketed, shooter chooses either group; next player is constrained to the other group.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": true,
+      "product_reachable": false,
+      "core_increments": [
+        "B",
+        "C"
+      ],
+      "assessment": "Core B stages simultaneous two-group choice and Core C commits a revision-bound selection, but no product action is exposed.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/game_runtime.cpp",
+          "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a",
+          "lines": {
+            "start": 1309,
+            "end": 1490
+          },
+          "finding": "Core C validates and atomically commits revision-bound group-choice authority."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1393,
+            "end": 1699
+          },
+          "finding": "Core B/C tests cover simultaneous contact and revision-bound group choice while product remains hidden."
+        },
+        {
+          "kind": "product_gate",
+          "path": "src/Billiards/render/modern/modern_product_session.cpp",
+          "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+          "lines": {
+            "start": 691,
+            "end": 718
+          },
+          "finding": "The production session still explicitly keeps the global Rules Decision UI product exposure false."
+        }
+      ],
+      "gaps": [
+        "Enable the verified group-choice action in product."
+      ]
+    },
+    {
+      "id": "WPA-II-11",
+      "source": {
+        "chapter": "II",
+        "clause": "11",
+        "pages": [
+          9
+        ],
+        "locator": "Call Your Shot - No Need"
+      },
+      "requirement": "No called ball or pocket is required, including the 8-ball.",
+      "status": "IMPLEMENTED",
+      "m4_required": false,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "The default ruleset requires no called ball or pocket, including for the 8-ball.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 34,
+            "end": 71
+          },
+          "finding": "Ruleset defaults and state/fact fields define the no-call profile."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 391,
+            "end": 418
+          },
+          "finding": "Configuration tests prove the default no-call behavior and explicit called-pocket variant boundary."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-12-1",
+      "source": {
+        "chapter": "II",
+        "clause": "12.1",
+        "pages": [
+          9
+        ],
+        "locator": "Ball grouping and first legal target"
+      },
+      "requirement": "Open-table first legal pocket assigns group; after closure first contact must be own group, then 8 after group clearance.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A",
+        "B"
+      ],
+      "assessment": "Open-table assignment and assigned-group/cleared-group first-contact rules are enforced by the adjudicator.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 307,
+            "end": 389
+          },
+          "finding": "Rules tests cover legal-first presumption and simultaneous two-group choice staging."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-12-2",
+      "source": {
+        "chapter": "II",
+        "clause": "12.2",
+        "pages": [
+          9
+        ],
+        "locator": "Cushion after contact"
+      },
+      "requirement": "If no object ball is pocketed after contact, at least one ball including cue ball must contact a cushion.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A",
+        "B"
+      ],
+      "assessment": "Collector records cushion contact only from the first object-contact tick onward; adjudicator requires a pocket or such a cushion contact.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/shot_fact_collector.cpp",
+          "sha256": "94fcb372a4a3c9fe16f1db12723a29de9572d8fe260ea8163fc547012ac11498",
+          "lines": {
+            "start": 19,
+            "end": 93
+          },
+          "finding": "The runtime collector derives canonical first-contact, rail, pocket and off-table facts from physics telemetry."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/shot_fact_collector_tests.cpp",
+          "sha256": "0c4920d317ac1ce7edf6a866a431f2164ee417b32be999b82834039417fec3f9",
+          "lines": {
+            "start": 52,
+            "end": 165
+          },
+          "finding": "Collector tests prove after-contact rail semantics and canonical same-tick first-contact sets."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-12-3",
+      "source": {
+        "chapter": "II",
+        "clause": "12.3 and 17(e)",
+        "pages": [
+          9,
+          11
+        ],
+        "locator": "Object ball off table - internal source conflict"
+      },
+      "requirement": "Section 12.3 calls non-8 object-ball off-table a legal disappearance; Section 17(e) lists an object ball resting off-table as a general foul.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A"
+      ],
+      "assessment": "Non-8 off-table currently emits a foul, while official 12.3 and 17(e) conflict; this remains policy_decision_required.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1284,
+            "end": 1392
+          },
+          "finding": "Core A integration tests cover corrected 8-ball, no-rail and off-table outcomes."
+        }
+      ],
+      "gaps": [
+        "Keep policy_decision_required until the official conflict receives an explicit ruling."
+      ]
+    },
+    {
+      "id": "WPA-II-12-4",
+      "source": {
+        "chapter": "II",
+        "clause": "12.4",
+        "pages": [
+          9
+        ],
+        "locator": "Illegal touching"
+      },
+      "requirement": "Body, clothing, hair, or equipment other than cue tip may not touch balls during the shot.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "ShotFacts has no body, clothing, hair or equipment contact signal.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "ShotFacts has no body, clothing, hair or equipment contact signal."
+      ]
+    },
+    {
+      "id": "WPA-II-12-5-6",
+      "source": {
+        "chapter": "II",
+        "clause": "12.5-12.6",
+        "pages": [
+          9
+        ],
+        "locator": "Multiple cue-tip contacts and double hit"
+      },
+      "requirement": "Cue tip may contact the cue ball only once; close-ball double-hit criteria and grazing presumption apply.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "ShotFacts has no cue-tip contact count, close-ball separation or double-hit classification.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "ShotFacts has no cue-tip contact count, close-ball separation or double-hit classification."
+      ]
+    },
+    {
+      "id": "WPA-II-12-7",
+      "source": {
+        "chapter": "II",
+        "clause": "12.7",
+        "pages": [
+          10
+        ],
+        "locator": "Push shot"
+      },
+      "requirement": "Prolonged tip-to-cue-ball contact forming a push is a foul.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "ShotFacts has no cue-tip contact-duration or push-shot signal.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "ShotFacts has no cue-tip contact-duration or push-shot signal."
+      ]
+    },
+    {
+      "id": "WPA-II-12-8",
+      "source": {
+        "chapter": "II",
+        "clause": "12.8",
+        "pages": [
+          10
+        ],
+        "locator": "Ball rolling onto cushion"
+      },
+      "requirement": "A ball returning from a cushion top is legal only if it touches nothing there and does not remain there.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No cushion-top trajectory/contact classification exists; referee policy remains required.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No cushion-top trajectory/contact classification exists; referee policy remains required."
+      ]
+    },
+    {
+      "id": "WPA-II-12-9",
+      "source": {
+        "chapter": "II",
+        "clause": "12.9",
+        "pages": [
+          10
+        ],
+        "locator": "Handicap ball removal"
+      },
+      "requirement": "Player reminds referee to remove handicapped ball before continuing; failure is a foul.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Handicapped-ball removal and player reminder are event/referee procedure.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Handicapped-ball removal and player reminder are event/referee procedure."
+      ]
+    },
+    {
+      "id": "WPA-II-13",
+      "source": {
+        "chapter": "II",
+        "clause": "13",
+        "pages": [
+          10
+        ],
+        "locator": "Cue Ball Contacting Legal & Illegal Balls Simultaneously"
+      },
+      "requirement": "When first contact is effectively simultaneous and order cannot be determined, presume legal ball first.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "B"
+      ],
+      "assessment": "Core B captures the same-tick first-contact set and presumes the shot legal whenever that set contains a legal ball.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/shot_fact_collector.cpp",
+          "sha256": "94fcb372a4a3c9fe16f1db12723a29de9572d8fe260ea8163fc547012ac11498",
+          "lines": {
+            "start": 19,
+            "end": 93
+          },
+          "finding": "The runtime collector derives canonical first-contact, rail, pocket and off-table facts from physics telemetry."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/shot_fact_collector_tests.cpp",
+          "sha256": "0c4920d317ac1ce7edf6a866a431f2164ee417b32be999b82834039417fec3f9",
+          "lines": {
+            "start": 52,
+            "end": 165
+          },
+          "finding": "Collector tests prove after-contact rail semantics and canonical same-tick first-contact sets."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 307,
+            "end": 389
+          },
+          "finding": "Rules tests cover legal-first presumption and simultaneous two-group choice staging."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-14",
+      "source": {
+        "chapter": "II",
+        "clause": "14",
+        "pages": [
+          10
+        ],
+        "locator": "Balls Settling"
+      },
+      "requirement": "Referee handles self-settling balls, 3-second pocket validity, restoration, and replay when outcome is affected.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Self-settling, three-second pocket validity, restoration and replay remain referee procedure.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Self-settling, three-second pocket validity, restoration and replay remain referee procedure."
+      ]
+    },
+    {
+      "id": "WPA-II-15-1",
+      "source": {
+        "chapter": "II",
+        "clause": "15.1",
+        "pages": [
+          10
+        ],
+        "locator": "Cue ball frozen to legal object ball"
+      },
+      "requirement": "Frozen cue/object contact changes hit and double-hit presumptions but still prohibits obvious push shots.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No frozen cue/object declaration or frozen-contact double-hit/push presumption is represented.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No frozen cue/object declaration or frozen-contact double-hit/push presumption is represented."
+      ]
+    },
+    {
+      "id": "WPA-II-15-2",
+      "source": {
+        "chapter": "II",
+        "clause": "15.2",
+        "pages": [
+          10
+        ],
+        "locator": "Object ball frozen to cushion"
+      },
+      "requirement": "When no other legal cushion contact has occurred, the frozen object must leave and re-contact, another ball must contact a cushion, or a ball must be pocketed.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No frozen-object leave/re-contact or alternative-cushion predicate is represented.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No frozen-object leave/re-contact or alternative-cushion predicate is represented."
+      ]
+    },
+    {
+      "id": "WPA-II-16",
+      "source": {
+        "chapter": "II",
+        "clause": "16.1-16.3",
+        "pages": [
+          10,
+          11
+        ],
+        "locator": "Jump Shot"
+      },
+      "requirement": "Legal jump strikes upper half; scoop/lower-half or miscue jump over an obstacle is illegal, with ball in hand.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No upper/lower cue-ball strike, scoop, obstacle-overflight or miscue jump classification exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No upper/lower cue-ball strike, scoop, obstacle-overflight or miscue jump classification exists."
+      ]
+    },
+    {
+      "id": "WPA-II-17",
+      "source": {
+        "chapter": "II",
+        "clause": "17(a)-(l)",
+        "pages": [
+          11
+        ],
+        "locator": "General Fouls"
+      },
+      "requirement": "General fouls award ball in hand and include scratch/off-table, wrong first, balls moving, both feet, object off-table, touching, double hit, push, bad head-string play, one-hand/equipment placement, and mobile-device penalties.",
+      "status": "PARTIAL",
+      "m4_required": true,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A",
+        "D",
+        "G"
+      ],
+      "assessment": "Scratch/off-table, wrong-first and no-contact/no-rail subsets award ball in hand; the remaining general-foul inventory and 17(e) policy are incomplete.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1284,
+            "end": 1392
+          },
+          "finding": "Core A integration tests cover corrected 8-ball, no-rail and off-table outcomes."
+        }
+      ],
+      "gaps": [
+        "Add the unrepresented general-foul facts/actions and preserve the 17(e) policy gate."
+      ]
+    },
+    {
+      "id": "WPA-II-18",
+      "source": {
+        "chapter": "II",
+        "clause": "18",
+        "pages": [
+          11
+        ],
+        "locator": "Intentional Fouls"
+      },
+      "requirement": "First intentional foul loses rack; second loses match.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No intentional-foul classifier or rack/match escalation history exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No intentional-foul classifier or rack/match escalation history exists."
+      ]
+    },
+    {
+      "id": "WPA-II-19",
+      "source": {
+        "chapter": "II",
+        "clause": "19",
+        "pages": [
+          11
+        ],
+        "locator": "Ball Group Confusion"
+      },
+      "requirement": "Wrong-group play discovered before next shot stops the rack and triggers rerack.",
+      "status": "MISSING",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No wrong-group discovery window, stop-rack action or corrective rerack transaction exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No wrong-group discovery window, stop-rack action or corrective rerack transaction exists."
+      ]
+    },
+    {
+      "id": "WPA-II-20",
+      "source": {
+        "chapter": "II",
+        "clause": "20(a)-(e)",
+        "pages": [
+          12
+        ],
+        "locator": "Loss of Rack"
+      },
+      "requirement": "Loss covers 8-ball with foul, 8 pocketed on last pre-8 shot, 8 off table, 8 before group clearance, and any foul where 8 no longer remains on table.",
+      "status": "IMPLEMENTED",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [
+        "A"
+      ],
+      "assessment": "Core A covers foul with 8, same-shot last group plus 8, 8 off table, early 8 and legal 8 win as mutually exclusive outcomes.",
+      "evidence": [
+        {
+          "kind": "source_positive",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+          "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3",
+          "lines": {
+            "start": 175,
+            "end": 351
+          },
+          "finding": "The authoritative adjudicator implements break, contact, 8-ball, assignment, continuation and ball-in-hand outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 43,
+            "end": 190
+          },
+          "finding": "Scenario tests cover break, groups, contact, rail, scratch and legal/illegal 8 outcomes."
+        },
+        {
+          "kind": "test_positive",
+          "path": "tests/rules_runtime_integration_tests.cpp",
+          "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55",
+          "lines": {
+            "start": 1284,
+            "end": 1392
+          },
+          "finding": "Core A integration tests cover corrected 8-ball, no-rail and off-table outcomes."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "WPA-II-21",
+      "source": {
+        "chapter": "II",
+        "clause": "21",
+        "pages": [
+          12
+        ],
+        "locator": "Stalemate"
+      },
+      "requirement": "Referee proposes rerack; on refusal allows generally three shots each, then reracks with original breaker and shooting order.",
+      "status": "MISSING",
+      "m4_required": true,
+      "policy_decision_required": false,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "No stalemate proposal/refusal state, three-shot counter or original-breaker rerack workflow exists.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "No stalemate proposal/refusal state, three-shot counter or original-breaker rerack workflow exists."
+      ]
+    },
+    {
+      "id": "WPA-II-22",
+      "source": {
+        "chapter": "II",
+        "clause": "22",
+        "pages": [
+          12
+        ],
+        "locator": "Outside Interference"
+      },
+      "requirement": "Referee restores/replays affected shots or restores disturbed balls; unrecoverable position becomes stalemate.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Ball restoration/replay and unrecoverable-position judgment remain referee procedure.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Ball restoration/replay and unrecoverable-position judgment remain referee procedure."
+      ]
+    },
+    {
+      "id": "WPA-II-23-24",
+      "source": {
+        "chapter": "II",
+        "clause": "23-24",
+        "pages": [
+          12,
+          13
+        ],
+        "locator": "Concession and Unsportsmanlike Conduct"
+      },
+      "requirement": "Concession is prohibited and referee applies discretionary conduct penalties from warning through event disqualification.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Concession and conduct penalties remain referee/event discretion.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Concession and conduct penalties remain referee/event discretion."
+      ]
+    },
+    {
+      "id": "WPA-III-01-08",
+      "source": {
+        "chapter": "III",
+        "clause": "1-8",
+        "pages": [
+          13,
+          14,
+          15
+        ],
+        "locator": "Rules for Time-Limited Matches"
+      },
+      "requirement": "Optional event variant adds total/shot clocks, extensions, time-expiry outcomes, shootout, timeout, dispute, and conduct escalation.",
+      "status": "PROCEDURAL_ONLY",
+      "m4_required": false,
+      "policy_decision_required": true,
+      "product_action_required": false,
+      "product_reachable": true,
+      "core_increments": [],
+      "assessment": "Optional clocks, shootout, timeout, dispute and conduct variant are outside the current gameplay product profile.",
+      "evidence": [
+        {
+          "kind": "source_boundary",
+          "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+          "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b",
+          "lines": {
+            "start": 22,
+            "end": 71
+          },
+          "finding": "The authoritative foul and ShotFacts model enumerates the currently representable signals."
+        },
+        {
+          "kind": "test_boundary",
+          "path": "tests/chinese_eight_ball_rules_tests.cpp",
+          "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c",
+          "lines": {
+            "start": 423,
+            "end": 430
+          },
+          "finding": "The rule-core test entry point contains no clause-specific scenario for this missing/procedural requirement."
+        }
+      ],
+      "gaps": [
+        "Optional clocks, shootout, timeout, dispute and conduct variant are outside the current gameplay product profile."
+      ]
+    }
+  ],
+  "frozen_v2_predecessor": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v2.json",
+    "sha256": "a1e675cc32057880a4805ddafaf93c2192b6f127ae6bc2f28c71f5390d444809"
+  },
+  "official_rack_migration_gate": {
+    "path": "docs/rules/wpa-ii-04-official-rack-product-migration-gate-v1.json",
+    "sha256": "bf02b866e6017278c60366718535053049738555d72a573c8afc1f675d5c5545",
+    "status": "APPROVED_NO_GPU_PRODUCT_LAYOUT_MIGRATION_REQUIRED"
+  },
+  "targeted_product_closure": {
+    "rows": [
+      "WPA-II-04",
+      "WPA-II-07"
+    ],
+    "foundation_actions_product_exposed": false,
+    "rules_decision_ui_product_exposed": false,
+    "seeded_numbered_ball_order_normative": false,
+    "historical_phase2_phase4_phase5_visual_evidence_inheritable": false
+  },
+  "downstream_binding_impact": {
+    "phase2_visual_readiness": "FRESH_SOURCE_BINARY_BINDINGS_REQUIRED",
+    "phase4_probe_digest": "NOT_RECOMPUTED_NO_INHERITANCE_CLAIM",
+    "phase4_readiness": "FRESH_SOURCE_BINARY_BINDINGS_REQUIRED_IF_PRODUCT_LIFECYCLE_IS_LINKED",
+    "phase5_machine_inputs": "SOURCE_BINDING_DRIFT_FRESH_MACHINE_AND_READINESS_REQUIRED",
+    "phase5_prior_modern_product_session_sha256": "f5493e5f9b610312180f57bc60a624167c55e82627c08ad572539e6f6d91d74b",
+    "phase5_successor_modern_product_session_sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174",
+    "successor_product_shell_controller_sha256": "eb1a754778808e23232ff14ab1a411be9189da876070910961ec6f4cbdf69a6c",
+    "old_visual_or_machine_evidence_modified": false,
+    "gpu_executed": false
+  },
+  "completed_targeted_increments": [
+    {
+      "priority": "P0",
+      "rows": [
+        "WPA-II-04",
+        "WPA-II-07"
+      ],
+      "result": "Official product rack lifecycle and narrow parent-authorized respot are product reachable with CPU evidence."
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "m4_d5_c_machine_double_hit_classification_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_selected_d5_c_policy": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-policy-root-selected-v1.json",
+      "sha256": "c3529ff92ccb1540513f9be3fbbf725832dfd5c81ce78394d53a9b8b8c994ef6",
+      "selected_bundle": "D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER"
+    },
+    "candidate_gate": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-policy-candidate-gate-v1.json",
+      "sha256": "cf89e3491e7eac9d41704c73784e625125292bf28526c7044c303be6fd172be9"
+    },
+    "d5_a_receipt": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+      "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6"
+    },
+    "d5_b_receipt": {
+      "path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json",
+      "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"
+    },
+    "signed_close_case_receipt": {
+      "path": "docs/rules/wpa-ii-12-5-6-signed-close-case-declaration-lifecycle-implementation-receipt-v1.json",
+      "sha256": "eb0ac7392ca9bfb9f84c768c22cc90bf120da32d8edb8a7d32674b2383fa51f1"
+    }
+  },
+  "selected_policy_constants": {
+    "very_close_surface_gap_cm": null,
+    "light_graze_normal_impulse_ratio": null,
+    "tip_separation_tie_tolerance_seconds": 0.0,
+    "raw_exact_order": true,
+    "machine_close_or_graze_threshold_branch": false
+  },
+  "classifier_contract": {
+    "schema_id": "canonical_double_hit_classification_v1",
+    "inputs": [
+      "canonical_cue_tip_stroke_observation_v1",
+      "canonical_cue_object_tip_separation_order_v1",
+      "signed_close_case_state_if_consumed_by_same_shot"
+    ],
+    "required_identity_match": [
+      "shot_identity",
+      "actor_player_id",
+      "rack_identity",
+      "rules_revision",
+      "rules_state_hash"
+    ],
+    "automatic_foul_predicate": "both observations valid and complete, identity matches exactly, and canonical cue-tip interval count > 1",
+    "automatic_foul_result": "DOUBLE_HIT_FOUL",
+    "single_interval_signed_close_case_raw_before": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "raw_equal": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "signed_light_graze_or_other_close_case": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "single_interval_unsigned_and_not_close_case": "NO_DOUBLE_HIT_OBSERVED",
+    "zero_intervals_complete": "NO_DOUBLE_HIT_OBSERVED",
+    "invalid_incomplete_mismatch_or_conflict": "INCOMPLETE_NO_CLASSIFICATION",
+    "interval_count_precedes_close_case_branch": true,
+    "signed_review_never_overrides_proven_multiple_intervals": true,
+    "result_fields": [
+      "schema_id",
+      "shot_identity",
+      "result",
+      "canonical_tip_interval_count",
+      "cue_object_tip_order",
+      "signed_close_case_bound",
+      "source_observation_digests",
+      "selected_policy_sha256",
+      "origin",
+      "complete",
+      "digest"
+    ]
+  },
+  "rules_consumption_contract": {
+    "classification_occurs_after_d5_a_and_d5_b_finish": true,
+    "shotfacts_may_carry_only_complete_immutable_classifier_result": true,
+    "new_foul_reason": "DoubleHit",
+    "double_hit_foul_grants_existing_general_foul_ball_in_hand": true,
+    "review_required_does_not_mutate_match_state_or_adjudication": true,
+    "no_classification_does_not_mutate_match_state_or_adjudication": true,
+    "adjudicator_may_not_recompute_interval_count_or_order": true,
+    "signed_close_case_review_state_remains_headless_and_separate": true,
+    "foul_must_be_bound_to_current_completed_shot_before_next_shot": true
+  },
+  "atomicity_and_idempotency": {
+    "stage_classifier_result_before_shotfacts_finish": true,
+    "publish_with_same_completed_shot_transaction": true,
+    "failed_physics_or_incomplete_d5_rolls_back_classifier_result": true,
+    "identity_state_hash_revision_or_digest_conflict_zero_delta": true,
+    "exact_retry_same_digest_zero_delta": true,
+    "reset_rerack_turn_or_next_shot_invalidates_unpublished_result": true,
+    "adjudication_failure_restores_preclassification_runtime_state": true
+  },
+  "required_fixtures": {
+    "positive": [
+      "TWO_COMPLETE_CANONICAL_INTERVALS_AUTOMATIC_DOUBLE_HIT_FOUL",
+      "THREE_COMPLETE_CANONICAL_INTERVALS_SAME_RESULT",
+      "AUTOMATIC_DOUBLE_HIT_ADDS_EXACT_FOUL_REASON",
+      "AUTOMATIC_DOUBLE_HIT_GRANTS_OPPONENT_BALL_IN_HAND",
+      "SINGLE_COMPLETE_INTERVAL_UNSIGNED_NO_DOUBLE_HIT",
+      "ZERO_INTERVAL_COMPLETE_NO_DOUBLE_HIT",
+      "SIGNED_CLOSE_CASE_SINGLE_INTERVAL_RAW_BEFORE_REVIEW_ONLY",
+      "RAW_EQUAL_REVIEW_ONLY",
+      "EXACT_CLASSIFIER_AND_ADJUDICATION_RETRY_ZERO_DELTA",
+      "IMMUTABLE_RESULT_BINDS_SOURCE_AND_POLICY_DIGESTS"
+    ],
+    "negative": [
+      "INCOMPLETE_D5_A_NO_CLASSIFICATION",
+      "INCOMPLETE_D5_B_NO_CLASSIFICATION",
+      "MISMATCHED_SHOT_IDENTITY_REJECTED",
+      "MISMATCHED_ACTOR_RACK_REVISION_OR_STATE_HASH_REJECTED",
+      "MISSING_OR_CHANGED_SOURCE_DIGEST_REJECTED",
+      "FAILED_OR_GAPPED_PHYSICS_NEVER_FOUL",
+      "ONE_INTERVAL_NEVER_AUTOMATIC_FOUL",
+      "RAW_BEFORE_WITHOUT_SIGNED_CLOSE_CASE_NEVER_AUTOMATIC_FOUL",
+      "RAW_EQUAL_NEVER_REWRITTEN_AS_BEFORE",
+      "RAW_AFTER_NEVER_AUTOMATIC_FOUL",
+      "SIGNED_REVIEW_NEEDED_NEVER_FOUL",
+      "SIGNED_LIGHT_GRAZE_NEVER_MACHINE_NO_FOUL_RESULT_WITHOUT_REFEREE_FINAL",
+      "NULL_GAP_PREVENTS_MACHINE_VERY_CLOSE_BRANCH",
+      "NULL_GRAZE_PREVENTS_MACHINE_LIGHT_GRAZE_BRANCH",
+      "NO_NUMERIC_TOLERANCE_APPLIED_TO_RAW_ORDER",
+      "FROZEN_DECLARATION_DOES_NOT_OVERRIDE_MULTI_INTERVAL_FOUL",
+      "PUSH_CLASSIFICATION_REMAINS_ABSENT",
+      "STALE_WRONG_OR_UNCONSUMED_CLOSE_CASE_IGNORED",
+      "CONFLICTING_RETRY_ZERO_DELTA",
+      "FAILED_ADJUDICATION_ROLLS_BACK",
+      "RESET_RERACK_TURN_OR_NEXT_SHOT_INVALIDATES",
+      "NO_VISIBLE_GLOBAL_UI_GPU_OR_AUDIT_SIDE_EFFECT"
+    ]
+  },
+  "implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/double_hit_classifier.h",
+      "src/Billiards/rules/double_hit_classifier.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/double_hit_classifier_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "add only double_hit_classifier.cpp to BILLIARDGL_CORE_SOURCES and one headless classifier target if required",
+    "explicitly_forbidden_files": [
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics_telemetry.cpp",
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/cue_contact.cpp",
+      "src/Billiards/automation_controller.cpp",
+      "src/Billiards/hud.cpp",
+      "src/Billiards/renderer.cpp",
+      "src/Billiards/render/modern/modern_renderer.cpp"
+    ]
+  },
+  "live_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "7d765c7fbf86082ceb919b97dcc097f1dcf9c87f2b947db6843cd3f9e43a78fa"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "8a5d85f94786e5352b9f3c70ccba365cd93c9bf43d7d74145b9359295303787b"},
+    {"path": "src/Billiards/rules/double_hit_close_case_declaration.h", "sha256": "a44f2d49bb9fcb8d5fdf6306840d5da56d9465ca9b25bc70a1e89ebf4c763cf9"},
+    {"path": "src/Billiards/rules/double_hit_close_case_declaration.cpp", "sha256": "358d65a33b61fa6dfb7218821771c26a43a4d9680bb3be19f5214ee2b0b16b04"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "82ed617905a8718189aed1b41a37672160af2e690a7bfe2bb71fa75bb9cc71f7"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "060175a664ceaedd016509506bf84cd104fe34e8bbebce431eb2f0df1bde4059"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "f6a25445ff772aeac90c4e84128fb3ad32201f53aa194d1f875bcdbb41a0fbcf"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "9270b02a101c0b7770d977fdf5e3ebafe5350bba49cb917234939efc3d1060b4"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "275eb3faf8a59e77972646b3e0aa82f1de3dc4077a60eb7e473990aa552556a1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "d64407121d4a7456b01c47af15008813ae35fce82638e805240d6098288f92da"},
+    {"path": "tests/physics_telemetry_tests.cpp", "sha256": "8c8ecd2cb4f6003e18c8838358ce3e47cf1f5fde2f850c87c90fa1337de2ad48"},
+    {"path": "tests/double_hit_close_case_declaration_tests.cpp", "sha256": "af2041eb9a2b7f48ea871f315816fe2d8fca390f764d68b16938b101797a3a2b"},
+    {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "83c1abac7c6360ab41b726f691a86054b7e2fd39d737e60038dac671f75c7d5e"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "2ad796713976523efdd22f1f85b20a2fd46fec2d82d69f511bfdafa88a3d8ee9"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required": true,
+    "d5_c_implemented": false,
+    "d5_complete": false,
+    "wpa_ii_12_5_6_or_15_1_promoted": false,
+    "push_or_frozen_exception_implemented": false,
+    "visible_or_global_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

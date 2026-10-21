@@ -1,5 +1,6 @@
 #include "game_runtime.h"
 #include "shot.h"
+#include "physics_telemetry_exact_test_helpers.h"
 
 #include <cmath>
 #include <cstring>
@@ -19,6 +20,43 @@ void expect(bool value, const char* message)
 bool closeEnough(float lhs, float rhs)
 {
     return std::fabs(lhs - rhs) < 0.0001f;
+}
+
+bool exactShotControl(const billiardgl::ShotControlModel& first,
+                      const billiardgl::ShotControlModel& second)
+{
+    return first.schemaVersion == second.schemaVersion &&
+        first.yawRadians == second.yawRadians &&
+        first.tipOffsetX == second.tipOffsetX &&
+        first.tipOffsetY == second.tipOffsetY &&
+        first.powerMode == second.powerMode &&
+        first.requestedPower == second.requestedPower &&
+        first.strokeSpeedCmS == second.strokeSpeedCmS &&
+        first.cueElevationDegrees == second.cueElevationDegrees &&
+        first.chalk == second.chalk &&
+        first.assistLevel == second.assistLevel;
+}
+
+bool exactCameraFrame(const billiardgl::camera::Frame& first,
+                      const billiardgl::camera::Frame& second)
+{
+    return first.state == second.state && first.preset == second.preset &&
+        first.pose.eye.x == second.pose.eye.x &&
+        first.pose.eye.y == second.pose.eye.y &&
+        first.pose.eye.z == second.pose.eye.z &&
+        first.pose.target.x == second.pose.target.x &&
+        first.pose.target.y == second.pose.target.y &&
+        first.pose.target.z == second.pose.target.z &&
+        first.pose.yawRadians == second.pose.yawRadians &&
+        first.pose.pitchRadians == second.pose.pitchRadians &&
+        first.pose.distanceCm == second.pose.distanceCm &&
+        first.pose.fieldOfViewDegrees == second.pose.fieldOfViewDegrees &&
+        first.input.orbit == second.input.orbit &&
+        first.input.pan == second.input.pan &&
+        first.input.zoom == second.input.zoom &&
+        first.input.changeAim == second.input.changeAim &&
+        first.transitioning == second.transitioning &&
+        first.transitionAlpha == second.transitionAlpha;
 }
 
 void applyShot(billiardgl::GameRuntime& runtime)
@@ -109,9 +147,16 @@ int main()
     expect(traced.physicsTrace().frames().empty(), "clear removes retained frames");
     traced.setPhysicsTraceEnabled(true);
     traced.step(1);
+    traced.mutableState().balls[0].trajectoryGeneration = 17;
+    const billiardgl::GameState trajectorySnapshot = traced.state();
+    traced.replaceState(trajectorySnapshot);
+    expect(traced.state().balls[0].trajectoryGeneration == 17,
+        "GameState snapshots and replaceState preserve trajectory generation");
     traced.reset();
     expect(!traced.physicsTraceEnabled() && traced.physicsTrace().frames().empty(),
         "reset clears and disables tracing");
+    expect(traced.state().balls[0].trajectoryGeneration == 0,
+        "runtime reset starts a new generation-zero rack state");
 
     billiardgl::GameRuntime profiled;
     expect(profiled.physicsProfile().id == "chinese_pool_legacy_v1",
@@ -135,6 +180,134 @@ int main()
         "invalid profile should be rejected");
     expect(profiled.physicsProfile().id == "experiment_surface_v1",
         "failed replacement should preserve the previous profile");
+
+    billiardgl::GameRuntime loadedAfterActiveShot;
+    billiardgl::GameRuntime freshlyLoaded;
+    const billiardgl::GameState scenarioB = freshlyLoaded.state();
+    const billiardgl::PhysicsProfile scenarioProfile =
+        freshlyLoaded.physicsProfile();
+    const billiardgl::CueImpactInput scenarioShot =
+        billiardgl::cueImpactFromShotControls(
+            -1.9334165703363158f, 200.0f, scenarioProfile);
+    billiardgl::GameAction scenarioAAim;
+    scenarioAAim.type = billiardgl::ActionType::SetAimYaw;
+    scenarioAAim.first = -0.75f;
+    expect(loadedAfterActiveShot.dispatch(scenarioAAim).ok,
+        "scenario A records a real semantic action");
+    expect(loadedAfterActiveShot.applyCueImpact(scenarioShot).ok &&
+        loadedAfterActiveShot.d5BObservationActive() &&
+        loadedAfterActiveShot.canonicalCueTipStrokeObservationActive(),
+        "scenario A starts real per-shot observation lifecycles");
+
+    const std::string activeStateHash =
+        loadedAfterActiveShot.rulesAuthorityStateHash();
+    const std::uint64_t activeTick = loadedAfterActiveShot.tick();
+    const std::uint64_t activeActionJournalGeneration =
+        loadedAfterActiveShot.appliedSemanticActionJournalGeneration();
+    const std::size_t activeActionCount =
+        loadedAfterActiveShot.appliedSemanticActions().size();
+    const billiardgl::ShotControlModel activeShotControl =
+        loadedAfterActiveShot.shotControl();
+    const billiardgl::camera::Frame activeCamera =
+        loadedAfterActiveShot.cameraFrame();
+    const std::string activeStrokeIdentity =
+        loadedAfterActiveShot.activeCanonicalCueTipStrokeIdentity();
+    billiardgl::PhysicsProfile rejectedScenarioProfile = scenarioProfile;
+    rejectedScenarioProfile.ball.radiusCm = 0.0f;
+    expect(!loadedAfterActiveShot.replaceStateForScenario(
+               scenarioB, rejectedScenarioProfile).ok &&
+        loadedAfterActiveShot.rulesAuthorityStateHash() == activeStateHash &&
+        loadedAfterActiveShot.tick() == activeTick &&
+        loadedAfterActiveShot.d5BObservationActive() &&
+        loadedAfterActiveShot.canonicalCueTipStrokeObservationActive() &&
+        loadedAfterActiveShot.appliedSemanticActions().size() ==
+            activeActionCount &&
+        loadedAfterActiveShot.appliedSemanticActionJournalGeneration() ==
+            activeActionJournalGeneration &&
+        exactShotControl(loadedAfterActiveShot.shotControl(),
+            activeShotControl) &&
+        exactCameraFrame(loadedAfterActiveShot.cameraFrame(), activeCamera) &&
+        loadedAfterActiveShot.activeCanonicalCueTipStrokeIdentity() ==
+            activeStrokeIdentity,
+        "rejected scenario replacement preserves state and active observers");
+
+    billiardgl::CueImpactInput rejectedScenarioShot = scenarioShot;
+    rejectedScenarioShot.cueBallIndex = -1;
+    expect(!loadedAfterActiveShot.replaceStateForScenario(
+               scenarioB, scenarioProfile, &rejectedScenarioShot, true).ok &&
+        loadedAfterActiveShot.rulesAuthorityStateHash() == activeStateHash &&
+        loadedAfterActiveShot.tick() == activeTick &&
+        loadedAfterActiveShot.d5BObservationActive() &&
+        loadedAfterActiveShot.canonicalCueTipStrokeObservationActive() &&
+        loadedAfterActiveShot.appliedSemanticActions().size() ==
+            activeActionCount &&
+        loadedAfterActiveShot.appliedSemanticActionJournalGeneration() ==
+            activeActionJournalGeneration &&
+        exactShotControl(loadedAfterActiveShot.shotControl(),
+            activeShotControl) &&
+        exactCameraFrame(loadedAfterActiveShot.cameraFrame(), activeCamera) &&
+        loadedAfterActiveShot.activeCanonicalCueTipStrokeIdentity() ==
+            activeStrokeIdentity,
+        "rejected scenario cue impact leaves the prior lifecycle atomic");
+
+    expect(loadedAfterActiveShot.replaceStateForScenario(
+               scenarioB, scenarioProfile).ok &&
+        freshlyLoaded.replaceStateForScenario(
+               scenarioB, scenarioProfile).ok,
+        "scenario B installs after A and in a fresh runtime");
+    expect(!loadedAfterActiveShot.d5BObservationActive() &&
+        !loadedAfterActiveShot.canonicalCueTipStrokeObservationActive() &&
+        !loadedAfterActiveShot.hasCueImpactInput() &&
+        !loadedAfterActiveShot.hasCueContactResult() &&
+        !loadedAfterActiveShot.hasCanonicalCueTipStrokeObservation() &&
+        !loadedAfterActiveShot.hasCanonicalCueObjectOrderObservation() &&
+        !loadedAfterActiveShot.hasCanonicalFrozenCushionShotObservation() &&
+        loadedAfterActiveShot.appliedSemanticActions().empty() &&
+        loadedAfterActiveShot.appliedSemanticActionJournalGeneration() ==
+            activeActionJournalGeneration + 1,
+        "scenario replacement clears every prior per-shot observation");
+    expect(loadedAfterActiveShot.rulesAuthorityStateHash() ==
+            freshlyLoaded.rulesAuthorityStateHash() &&
+        exactShotControl(loadedAfterActiveShot.shotControl(),
+            freshlyLoaded.shotControl()) &&
+        exactCameraFrame(loadedAfterActiveShot.cameraFrame(),
+            freshlyLoaded.cameraFrame()),
+        "scenario B state, shot controls, and camera equal a fresh load");
+    expect(loadedAfterActiveShot.applyCueImpact(scenarioShot).ok &&
+        freshlyLoaded.applyCueImpact(scenarioShot).ok,
+        "A then B and fresh B accept the same real cue impact");
+    int comparedScenarioBTicks = 0;
+    do {
+        expect(loadedAfterActiveShot.step(1).ok && freshlyLoaded.step(1).ok,
+            "A then B and fresh B advance the same real physics tick");
+        expect(loadedAfterActiveShot.rulesAuthorityStateHash() ==
+                freshlyLoaded.rulesAuthorityStateHash() &&
+            loadedAfterActiveShot.events().size() ==
+                freshlyLoaded.events().size() &&
+            loadedAfterActiveShot.hasRecentPhysicsStep() &&
+            freshlyLoaded.hasRecentPhysicsStep() &&
+            billiardgl::test::exactPhysicsStepTelemetry(
+                loadedAfterActiveShot.latestPhysicsStep().telemetry,
+                freshlyLoaded.latestPhysicsStep().telemetry),
+            "A then B has exact per-tick state and telemetry parity with fresh B");
+        ++comparedScenarioBTicks;
+    } while ((loadedAfterActiveShot.state().ballsMoving ||
+              freshlyLoaded.state().ballsMoving) &&
+             comparedScenarioBTicks < 5000);
+    expect(comparedScenarioBTicks > 1 && comparedScenarioBTicks < 5000 &&
+        !loadedAfterActiveShot.state().ballsMoving &&
+        !freshlyLoaded.state().ballsMoving,
+        "A then B and fresh B settle at the same bounded terminal tick");
+
+    billiardgl::GameRuntime scenarioWithExecutedImpact;
+    expect(scenarioWithExecutedImpact.replaceStateForScenario(
+               scenarioB, scenarioProfile, &scenarioShot, true).ok &&
+        scenarioWithExecutedImpact.hasCueImpactInput() &&
+        scenarioWithExecutedImpact.hasCueContactResult() &&
+        scenarioWithExecutedImpact.canonicalCueTipStrokeObservationActive() &&
+        scenarioWithExecutedImpact.activeCanonicalCueTipStrokeIdentity() ==
+            "scenario.stroke.0",
+        "successful scenario cue impact publishes its staged observation");
 
     billiardgl::GameState before = profiled.state();
     for (int index = 1; index < billiardgl::kBallCount; ++index) {

@@ -2,6 +2,8 @@ import hashlib
 import json
 import os
 import subprocess
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -96,7 +98,18 @@ class BuildV5ProfileTests(unittest.TestCase):
         for artifact in artifacts:
             path = ROOT / artifact["path"]
             self.assertTrue(path.is_file(), artifact["path"])
-            self.assertEqual(sha256(path), artifact["sha256"], artifact["path"])
+            if artifact["path"].startswith("src/"):
+                # This is the selected historical candidate inventory, not an
+                # inventory of today's product source. Validate its actual
+                # frozen revision without rebasing the sealed evidence.
+                freeze = json.loads((ROOT / "physics_models/candidates/phase3_integrated_v5/freeze.json").read_text())
+                content = subprocess.run(
+                    ["git", "show", freeze["source_revision"] + ":" + artifact["path"]],
+                    cwd=ROOT, check=True, capture_output=True).stdout
+                actual_hash = hashlib.sha256(content).hexdigest()
+            else:
+                actual_hash = sha256(path)
+            self.assertEqual(actual_hash, artifact["sha256"], artifact["path"])
         serialized = json.dumps(inventory, sort_keys=True)
         for forbidden in ("confirmation_consumption", "confirmation_result",
                           "validation_receipt"):
@@ -151,7 +164,25 @@ class BuildV5ProfileTests(unittest.TestCase):
             ROOT / "physics_models/regression/phase3_v4_ordinary_shot_baseline.json",
         ]
         before = {path: sha256(path) for path in protected}
-        write_v5_candidate(ROOT)
+        inventory_before = INVENTORY.read_bytes()
+        inventory = json.loads(inventory_before)
+        artifacts = [inventory["profile"], inventory["full_game_matrix"],
+                     inventory["performance_budget"], *inventory["calibration_reports"],
+                     *inventory["confirmation_packages"], *inventory["metric_contracts"]]
+        inputs = {ROOT / item["path"] for item in artifacts} | set(protected)
+        with tempfile.TemporaryDirectory(prefix="billiardgl-v5-generator-") as directory:
+            isolated = Path(directory)
+            for source in inputs:
+                destination = isolated / source.relative_to(ROOT)
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, destination)
+            write_v5_candidate(isolated)
+            generated = json.loads((isolated / INVENTORY.relative_to(ROOT)).read_text())
+            for artifact in generated["metric_contracts"]:
+                self.assertEqual(sha256(isolated / artifact["path"]), artifact["sha256"])
+            for source in protected:
+                self.assertEqual(before[source], sha256(isolated / source.relative_to(ROOT)))
+        self.assertEqual(inventory_before, INVENTORY.read_bytes())
         self.assertEqual(before, {path: sha256(path) for path in protected})
 
 

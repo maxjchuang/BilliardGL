@@ -1,0 +1,285 @@
+{
+  "schema": "wpa_ii_21_stalemate_state_machine_design_gap_gate_v1",
+  "status": "REFEREE_INPUT_AND_POLICY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-21"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [12],
+    "section": {
+      "chapter": "II",
+      "clause": "21",
+      "pdf_page": 12,
+      "locator": "Stalemate",
+      "controlled_paraphrase": "When the referee judges that a stalemate has occurred or is likely, the referee proposes a rerack and break. If any player refuses, the referee permits play to continue for a period; generally each player receives three more shots, or the referee makes another judgment-based decision. If the stalemate remains, the referee declares it and reracks, with the original breaker breaking again and the original shooting order unchanged."
+    },
+    "uniquely_determined_rules": [
+      "the initial proposal is triggered by referee judgment, not by an automatic shot predicate",
+      "the proposal is to rerack and break",
+      "a refusal by any player causes play to continue for a referee-controlled period",
+      "after that continuation, a remaining stalemate requires a referee declaration before rerack",
+      "the final rerack assigns the break to the original breaking player",
+      "the original shooting order remains unchanged"
+    ],
+    "text_does_not_uniquely_determine": [
+      "a machine predicate for stalemate occurred or likely to occur",
+      "the signed referee identity and transport in each product mode",
+      "whether acceptance requires explicit responses from both players or an authority timeout",
+      "the exact continuation duration",
+      "whether generally three more shots each is a default, recommendation, maximum, or replaceable allocation",
+      "the complete set of another judgment-based decisions",
+      "the ordering and accounting of the generally three shots when turns continue after legal pockets",
+      "which events prove that the stalemate was broken",
+      "the exact time at which the referee reassesses and issues the final declaration"
+    ],
+    "fixed_three_each_machine_policy_authorized": false
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "row": {
+      "id": "WPA-II-21",
+      "status": "MISSING",
+      "m4_required": true,
+      "assessment": "No stalemate proposal/refusal state, three-shot counter or original-breaker rerack workflow exists."
+    },
+    "promotion_authorized": false
+  },
+  "existing_pending_ui_lineage": {
+    "actions_manifest": {
+      "path": "docs/art/phase5-rules-decision-ui-actions-v1.pending.json",
+      "sha256": "7b3de569f57d1a8e589a6d053bf3959f04a5b68bbfb204046bfe8b63428383f1"
+    },
+    "design_gate": {
+      "path": "docs/art/phase5-rules-decision-ui-design-gate-v1.json",
+      "sha256": "26567d0547163561ed77e6e41b32753c4cc55efcd693c9ce22faf847d43f5a08"
+    },
+    "capability": "stalemate_decision",
+    "product_exposed": false,
+    "unresolved_policy_ids": [
+      "stalemate_declaration_authority_policy",
+      "stalemate_continuation_window_policy"
+    ],
+    "placeholder_is_not_authority_or_implementation": true
+  },
+  "source_bindings": {
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "7408e24a58c827e3de27b766cd91bdb5ce5831919cea97f733f8191baae59f7f"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "a591b919e99580a8e859e98ebfda9de1a0f2ec89e521d47f67ef180c6145f930"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4"},
+    "rack_executor_header": {"path": "src/Billiards/rules/rack_executor.h", "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"},
+    "rack_executor": {"path": "src/Billiards/rules/rack_executor.cpp", "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"},
+    "replay_recorder_header": {"path": "src/Billiards/replay/replay_recorder.h", "sha256": "90ac051be4dda3294433e545fc1326152711cc44733c0207c2bcd924a6b38c7a"},
+    "replay_recorder": {"path": "src/Billiards/replay/replay_recorder.cpp", "sha256": "0864c2d7af54230eb1adc7851466ffd6201e600d21574fc6de450cbcfd1569ed"},
+    "replay_v1_header": {"path": "src/Billiards/replay/replay_v1.h", "sha256": "85ba7442355d52b7a329b6008aa0b5d8c6118fc9cedde2cbbbd6f5843ade47c5"},
+    "replay_v1": {"path": "src/Billiards/replay/replay_v1.cpp", "sha256": "4bbac73fa19881f158d8c9c184e8eac0463e35fb225218534fe531ed0c1a8b51"},
+    "game_state_header": {"path": "src/Billiards/game_state.h", "sha256": "6363b8c2481df6702bb22c4b00b44a546eb594241a7744684c2c94c96adaed4d"},
+    "game_state": {"path": "src/Billiards/game_state.cpp", "sha256": "a91185ba5fad8c8571aa1b0efd36de967d0fc3c307fef01b2903c2f910de88c3"},
+    "rules_presentation": {"path": "src/Billiards/rules/rules_presentation.cpp", "sha256": "383a4d4488f406b0e7cac336aef4ac50ae3206527e17f79f0e69df82f3100044"},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"},
+    "product_session": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "950a98501feca064cbaab8c4b1025b3b421dfcbc8b59a8f82739042069d7997c"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "f4f67a8f2b34b7c35ce8c555d12d7a4b65922c4f5710d21c8efe66408476152c"},
+    "replay_tests": {"path": "tests/replay_recorder_tests.cpp", "sha256": "40e47f08df57c8437482d05050589e16433ed93e6cea96b4543e805283578b02"},
+    "decision_session_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "318561223599fae85fa628d03b104f01cd7dedeb169fd6975deac6aac12f3379"},
+    "product_runtime_tests": {"path": "tests/modern_product_ui_runtime_tests.cpp", "sha256": "9054f03ec9d41341fb5afb7a5d0b42af33a675b98eb91dc279b28d2173b8107b"}
+  },
+  "current_system_mapping": {
+    "match_state_has_stalemate_phase": false,
+    "match_state_has_rack_identity": false,
+    "match_state_persists_original_breaker": false,
+    "match_state_persists_original_shooting_order": false,
+    "referee_proposal_input_exists": false,
+    "referee_final_declaration_input_exists": false,
+    "player_refusal_authority_exists": false,
+    "continuation_window_policy_exists": false,
+    "per_player_stalemate_shot_counters_exist": false,
+    "stalemate_broken_predicate_exists": false,
+    "rack_foundation_can_stage_official_rerack_for_explicit_breaker": true,
+    "rack_foundation_commit_is_revision_hash_and_idempotency_bound": true,
+    "rack_foundation_by_itself_proves_section_21_parent_authority": false,
+    "applied_shoot_journal_exists": true,
+    "applied_shoot_journal_is_authoritative_per_rack_per_player_stalemate_counter": false,
+    "replay_global_shot_count_exists": true,
+    "replay_global_shot_count_is_rules_authority": false,
+    "pending_ui_placeholder_exists": true,
+    "dedicated_stalemate_product_seam_exists": false,
+    "global_rules_decision_ui_product_exposed": false
+  },
+  "why_implementation_is_blocked": {
+    "referee_input": "The rule delegates both the initial likelihood judgment and final declaration to a referee, but no signed referee authority or transport exists.",
+    "continuation_policy": "The phrase generally three shots each expressly permits another referee decision and does not define a single fixed machine window.",
+    "state_identity": "The current runtime does not retain a stable rack ID, original breaker or original shooting-order snapshot beyond transient break-decision offers.",
+    "counter_boundary": "Replay and semantic-action shot counts are recording aids, not revision-bound per-player counters scoped to a referee continuation window.",
+    "rerack_boundary": "Core E can execute a verified rerack for a caller-selected breaker, but without a Section 21 parent it cannot prove referee declaration, preserved order or correct reset.",
+    "production_extension_safe_now": false
+  },
+  "pending_policy_contract": {
+    "status": "REFEREE_INPUT_AND_POLICY_PENDING",
+    "referee_authority": {
+      "initial_proposal_issuer": null,
+      "final_declaration_issuer": null,
+      "authentication_and_replay_protection": null,
+      "forbidden_guess": true
+    },
+    "player_response": {
+      "any_player_may_refuse": true,
+      "acceptance_quorum_or_timeout": null,
+      "response_order": null,
+      "forbidden_guess": true
+    },
+    "continuation_window": {
+      "fixed_three_shots_each": null,
+      "default_allocation": null,
+      "alternative_referee_directive_schema": null,
+      "stalemate_broken_predicate": null,
+      "final_reassessment_boundary": null,
+      "forbidden_guess": true
+    }
+  },
+  "required_future_state": {
+    "rack_identity": ["rack_id", "ruleset_id", "rack_start_revision"],
+    "original_order": ["original_breaker_player_id", "original_shooting_order", "order_snapshot_hash"],
+    "proposal": ["proposal_id", "referee_authority_id", "referee_signature_or_attestation", "proposal_revision", "proposal_state_hash", "policy_version"],
+    "responses": ["eligible_player_ids", "response_by_player", "response_revision", "response_idempotency_key"],
+    "continuation": ["directive_id", "directive_kind", "per_player_allowance", "per_player_completed_shots", "window_started_revision", "window_complete"],
+    "final_declaration": ["declaration_id", "referee_authority_id", "declaration_revision", "declaration_state_hash", "stalemate_still_present_attestation"],
+    "all_fields_in_rules_authority_hash": true
+  },
+  "shot_counting_boundary": {
+    "count_only": [
+      "one authoritative Shoot action accepted for the window's rack and current player",
+      "one shot whose rules lifecycle reaches an authoritative completed-shot boundary"
+    ],
+    "never_count": [
+      "aim, power, preview or placement input",
+      "a rejected Shoot action",
+      "a failed physics step or rolled-back shot",
+      "a duplicate idempotent retry",
+      "a replay seek, replay playback action or imported replay shot count",
+      "a shot from another rack, rules reset or superseded proposal"
+    ],
+    "turn_continuation_after_legal_pocket_requires_policy": true,
+    "hardcoded_three_each_forbidden": true
+  },
+  "future_state_machine": {
+    "states": [
+      "INACTIVE",
+      "REFEREE_PROPOSAL_OPEN",
+      "AWAITING_PLAYER_RESPONSES",
+      "CONTINUATION_DIRECTIVE_ACTIVE",
+      "AWAITING_REFEREE_REASSESSMENT",
+      "FINAL_DECLARATION_COMMITTING",
+      "RERACK_COMMITTED"
+    ],
+    "proposal_transition": "Validate signed referee input, rack identity, original breaker/order snapshot, policy version, authority revision/state hash and idempotency before publishing one blocking proposal.",
+    "accept_transition": "Only a policy-defined complete acceptance outcome may stage and atomically commit the original-breaker rerack; one player's acceptance may not bypass the other player's right to refuse.",
+    "refusal_transition": "Any valid player refusal closes response collection and activates exactly the signed referee continuation directive without rerack.",
+    "progress_transition": "Count only authoritative completed shots against the directive; reaching a numerical allowance never itself declares stalemate or reracks.",
+    "final_transition": "A fresh signed referee declaration bound to the same rack and completed directive stages one verified official rerack, restores the original breaker/order, then commits state, revision, event, action and receipt atomically.",
+    "stalemate_broken_transition": "Requires the future policy/referee input; it closes the subflow without rerack and resets its counters.",
+    "product_exposed": false
+  },
+  "reset_contract": {
+    "clear_all_stalemate_state_on": [
+      "successful accepted-proposal rerack commit",
+      "successful final-declaration rerack commit",
+      "referee-authorized stalemate-broken closure",
+      "new rack or official rerack from another authority flow",
+      "rules mode reset",
+      "match completion"
+    ],
+    "superseded_proposal": "A signed replacement may supersede only under a future policy; stale IDs remain rejected.",
+    "turn_change_alone_resets_window": false,
+    "legal_pocket_alone_resets_window": false,
+    "failed_or_rejected_request_resets_or_mutates": false
+  },
+  "future_atomic_idempotency_contract": {
+    "precommit": "Validate ruleset, capability, rack/proposal/directive identity, actor class, player actor where applicable, exact action and payload, referee attestation, policy version, authority revision, state hash and idempotency before mutation.",
+    "rerack_staging": "Build and verify the full Core E official rack plan for the frozen original breaker before the first parent mutation.",
+    "commit": "Apply proposal, response, counter, closure or rerack plus one revision/event/action/receipt as one logical transaction.",
+    "original_breaker_and_order": "The rerack breaker and order come only from the immutable rack-start snapshot, never from currentPlayer at proposal or declaration time.",
+    "failure_rollback": "Runtime, rack, balls, current player, original order, counters, offers, receipts, authority revision/hash, events and journals remain byte-equivalent to pre-call state.",
+    "exact_retry": "Returns the original ACK without a second proposal, response, count, declaration, rerack, revision, event or action.",
+    "conflicting_retry": "Fails closed with zero mutation.",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "positive_after_policy": [
+      "SIGNED_REFEREE_PROPOSAL_ACCEPTED_THEN_ORIGINAL_BREAKER_RERACK",
+      "PLAYER_ZERO_REFUSES_AND_SIGNED_CONTINUATION_STARTS",
+      "PLAYER_ONE_REFUSES_AND_SIGNED_CONTINUATION_STARTS",
+      "DIRECTIVE_COUNTS_ONLY_COMPLETED_SHOTS_PER_PLAYER",
+      "SIGNED_FINAL_DECLARATION_RERACKS_ORIGINAL_BREAKER",
+      "ORIGINAL_SHOOTING_ORDER_SURVIVES_RERACK",
+      "REFEREE_CLOSES_BROKEN_STALEMATE_WITHOUT_RERACK"
+    ],
+    "negative": [
+      "AUTOMATIC_BOARD_HEURISTIC_CANNOT_OPEN_PROPOSAL",
+      "UNSIGNED_OR_UNKNOWN_REFEREE_REJECTED",
+      "WRONG_RACK_PROPOSAL_OR_DECLARATION_REJECTED",
+      "WRONG_PLAYER_RESPONSE_REJECTED",
+      "STALE_REVISION_OR_STATE_HASH_REJECTED",
+      "UNKNOWN_ACTION_OR_PAYLOAD_REJECTED",
+      "ONE_ACCEPTANCE_CANNOT_OVERRIDE_OTHER_PLAYER_REFUSAL_RIGHT",
+      "REJECTED_OR_FAILED_SHOT_NOT_COUNTED",
+      "DUPLICATE_SHOT_OR_REQUEST_NOT_COUNTED_TWICE",
+      "GLOBAL_REPLAY_SHOT_COUNT_CANNOT_SEED_WINDOW",
+      "NUMERICAL_WINDOW_END_CANNOT_AUTO_DECLARE_STALEMATE",
+      "CURRENT_PLAYER_CANNOT_REPLACE_ORIGINAL_BREAKER",
+      "RERACK_PLAN_FAILURE_ROLLS_BACK_ALL_STATE",
+      "RESET_RERACK_OR_MATCH_COMPLETE_CLEARS_SUBFLOW",
+      "EXACT_RETRY_ACK_AND_CONFLICT_ZERO_DELTA"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/rules/stalemate_authority.h",
+      "src/Billiards/rules/stalemate_authority.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/rules/rack_executor.h",
+      "src/Billiards/rules/rack_executor.cpp"
+    ],
+    "test_files": [
+      "tests/stalemate_authority_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_referee_input_and_continuation_policy_are_approved": true,
+    "product_session_files_allowed": false,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gap task",
+    "hardcoding generally three shots each as mandatory policy",
+    "automatically detecting or finally declaring stalemate without referee input",
+    "using global replay shotCount as a rules-authoritative per-player continuation counter",
+    "inferring original breaker or order from currentPlayer at proposal time",
+    "calling the rack foundation directly as proof of a Section 21 parent transaction",
+    "exposing the pending stalemate UI or product seam",
+    "promoting WPA-II-21 above MISSING",
+    "enabling global rulesDecisionUiProductExposed",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_page_visually_reviewed": true,
+    "match_rack_replay_and_counter_paths_mapped": true,
+    "referee_input_available": false,
+    "continuation_policy_resolved": false,
+    "fixed_three_each_authorized": false,
+    "stalemate_authority_implemented": false,
+    "dedicated_product_seam_available": false,
+    "production_implementation_complete": false,
+    "audit_row_promoted": false,
+    "global_ui_exposed": false,
+    "cmake_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

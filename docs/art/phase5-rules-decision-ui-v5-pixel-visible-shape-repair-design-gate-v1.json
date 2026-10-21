@@ -1,0 +1,303 @@
+{
+  "schema": "phase5_rules_decision_ui_v5_pixel_visible_shape_repair_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase5_rules_decision_ui_v5_pixel_visible_shape_scoped_gate_v1",
+  "status": "APPROVED_FOR_SCOPED_V5_PIXEL_VISIBLE_IMPLEMENTATION_ONLY",
+  "scope": "Repair only the pixel visibility/topology of the three existing v4 armed-confirm shape roles in the four failed profiles and reserve a non-overlapping leading focus slot. Preserve authority, rules, exact actor/action copy, submission, placement, controls, inherited thresholds, and exposure state.",
+  "read_only_bindings": [
+    {
+      "role": "v4_independent_ta_failure_authority",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-independent-ta-manual-review-v1.json",
+      "sha256": "8847ae7af29ee16cba968f2c23704fe7968cdc113581877c7d4bf3a291381014"
+    },
+    {
+      "role": "v4_machine_freeze_receipt",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-machine-pass-freeze-v1/machine-pass-freeze-receipt.json",
+      "sha256": "db59bc6b5e7bfd0b2038043b147deac13cde20fa6ebaafef7085bcef94d85fd5"
+    },
+    {
+      "role": "v4_stable_png_manifest",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact16-machine-pass-freeze-v1/stable-png-manifest.json",
+      "sha256": "f1242dba2c5fdde4728fbf474ae8163475f0108df16a074e0f80bc0a63076bec"
+    },
+    {
+      "role": "v4_visual_failure_receipt",
+      "path": "docs/evidence/phase5/rules-decision-ui-v4-exact-shape-visual-failure-evidence-receipt-v1.json",
+      "sha256": "28c514cfe08e6cec2ccd94d28b593419fa9d8fa54d656362865358822cc5ba56"
+    },
+    {
+      "role": "v4_offline_root_cause_report",
+      "path": "docs/art/phase5-rules-decision-ui-v4-exact-shape-offline-root-cause-report-v1.json",
+      "sha256": "0f5cc2c9c4941c4fa1782c0ffc9e6c2db7b5e8aebe284d526ed5ffe347eccb96"
+    },
+    {
+      "role": "v4_exact_shape_design_gate",
+      "path": "docs/art/phase5-rules-decision-ui-v4-exact-shape-correction-design-gate-v1.json",
+      "sha256": "f93ca59634875ed5256f5c22678a55817e0f3e8bf8df582b3b04ac527b886051"
+    }
+  ],
+  "bound_failure_set": {
+    "result": "FAIL",
+    "failed_case_count": 4,
+    "failed_axis_occurrence_count": 8,
+    "failed_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en"
+    ],
+    "failed_axes_per_case": [
+      "focus_pointer_keyboard_redundancy",
+      "standard_cvd_non_color_redundancy"
+    ],
+    "root_cause_id": "V4_ACCENT_ON_ACCENT_ZERO_CONTRAST",
+    "secondary_layout_defect_id": "V4_FOCUS_SLOT_NOT_RESERVED_FROM_COPY",
+    "verification_escape_id": "V4_TOKEN_BBOX_WITHOUT_RASTER_TOPOLOGY"
+  },
+  "repair_contract": {
+    "state_id": "group_choice_armed_confirm",
+    "token_ids_immutable": {
+      "focus_chevron": "rules_ui.focus_chevron_v4",
+      "selected_check_diamond": "rules_ui.selected_check_diamond_v4",
+      "confirm_double_frame_plus_enter_arrow": "rules_ui.confirm_double_frame_plus_enter_arrow_v4"
+    },
+    "row_foreground_contrast": {
+      "measurement_surface": "Final composited CPU raster pixels for the role outline/strokes against the actual local armed/confirm row background after alpha, clip, and draw order.",
+      "minimum_ratio": 4.0,
+      "applies_to": ["standard", "color_vision_safe"],
+      "supplemental_stricter_repair_constraint": true,
+      "inherited_thresholds_changed": false,
+      "accent_on_accent_forbidden": true,
+      "transparent_or_overwritten_foreground_forbidden": true
+    },
+    "focus_chevron": {
+      "geometry": "Two diagonal strokes joined at one apex as one independently recognizable chevron component.",
+      "placement": "A dedicated leading slot inside the focused confirm hit rectangle, separated from Player HUD geometry, selected/confirm trailing slots, and text glyphs.",
+      "minimum_physical_bbox_px": [18, 18],
+      "minimum_physical_stroke_px": 2,
+      "required_joined_component_count": 1,
+      "must_span_upper_and_lower_slot_regions": true,
+      "minimum_text_clearance_px": 2,
+      "copy_leading_inset_must_reserve_slot": true,
+      "must_not_share_pixels_with_text_or_hud_diamond": true
+    },
+    "selected_check_diamond": {
+      "geometry": "One visible closed four-sided diamond outline enclosing the visible check glyph.",
+      "placement": "Existing armed action trailing role slot only; absent from every open/unselected/control state.",
+      "minimum_physical_bbox_px": [18, 18],
+      "minimum_outline_stroke_px": 2,
+      "minimum_check_stroke_px": 2,
+      "minimum_check_to_outline_clearance_px": 2,
+      "minimum_visible_closed_outline_count": 1,
+      "check_enclosed_by_outline_required": true,
+      "bare_check_forbidden": true
+    },
+    "confirm_double_frame_plus_enter_arrow": {
+      "geometry": "Two visible closed nested rectangular frames enclosing a visible bent enter-arrow glyph.",
+      "placement": "Existing explicit confirm trailing role slot only; absent from action/open/status/error/control states.",
+      "minimum_physical_bbox_px": [18, 18],
+      "minimum_outer_frame_stroke_px": 2,
+      "minimum_inner_frame_stroke_px": 2,
+      "minimum_frame_separation_px": 2,
+      "minimum_arrow_stroke_px": 2,
+      "minimum_visible_nested_closed_frame_count": 2,
+      "arrow_inside_innermost_frame_required": true,
+      "bare_arrow_forbidden": true
+    },
+    "copy_and_interaction_freeze": [
+      "Preserve the exact localized armed and confirm actor/action strings and their source from the stable offer actor/action result.",
+      "A leading content inset may move the unchanged confirm glyph run only enough to reserve the focus slot; no wording, localization, wrapping limit, ellipsis, row order, hit rectangle, focus target, arm, confirm, cancel, or submission semantic change is authorized.",
+      "All three roles must remain simultaneously visible before submission, with distinct token attribution and non-overlapping role masks."
+    ]
+  },
+  "cpu_raster_snapshot_gate": {
+    "status": "NOT_RUN",
+    "required_profiles": [
+      {"profile": "p1", "logical": [1280, 720], "physical": [1280, 720], "density": 1, "ui_scale": 0.85, "palette": "standard", "locale": "zh_cn"},
+      {"profile": "p2", "logical": [1280, 720], "physical": [1280, 720], "density": 1, "ui_scale": 1.35, "palette": "color_vision_safe", "locale": "en"},
+      {"profile": "p3", "logical": [1920, 1080], "physical": [1920, 1080], "density": 1, "ui_scale": 1.0, "palette": "color_vision_safe", "locale": "zh_cn"},
+      {"profile": "p4", "logical": [1280, 720], "physical": [2560, 1440], "density": 2, "ui_scale": 1.0, "palette": "standard", "locale": "en"}
+    ],
+    "raster_contract": [
+      "Rasterize the real ProductUiFrame HudDrawList into a deterministic CPU RGB(A) surface at every required physical resolution, preserving production primitive/triangle stream order, alpha compositing, safeRect clipping, glyph clipping, and profile density/uiScale.",
+      "Export final composited pixels plus token-attributed role masks and text masks. A role mask is diagnostic attribution only; every pass decision must also be observed in the final composited pixels.",
+      "Run the same final-pixel topology checks for standard, color_vision_safe, and deterministic protanopia, deuteranopia, and tritanopia transforms. Non-color geometry/closure/component results must remain invariant.",
+      "No token declaration, nominal bbox, triangle count, source constant, or synthetic shape_contract boolean may substitute for final-raster evidence."
+    ],
+    "required_final_pixel_checks_per_profile": {
+      "row_outline_contrast_ratio_minimum": 4.0,
+      "focus_joined_independent_component_count": 1,
+      "focus_spans_upper_and_lower_slot_regions": true,
+      "focus_text_mask_intersection_pixels": 0,
+      "selected_visible_closed_outline_count_minimum": 1,
+      "selected_check_inside_closed_outline": true,
+      "confirm_visible_nested_closed_frame_count_minimum": 2,
+      "confirm_arrow_inside_innermost_frame": true,
+      "three_role_masks_pairwise_non_overlapping": true,
+      "final_visible_role_pixel_survival_required": true,
+      "minimum_role_physical_bbox_px": [18, 18],
+      "minimum_role_stroke_px": 2
+    },
+    "topology_algorithm_requirements": [
+      "Connected-component analysis is performed on final foreground pixels in each dedicated role slot; components touching text or an unrelated HUD mask fail.",
+      "Closed outlines are proven by border flood-fill on final composited pixels: the selected outline isolates an interior and the two confirm frames expose two nested enclosure levels.",
+      "Open or missing edge segments, accent-on-accent, alpha zero, clipping, later overwrite, role aliasing, undersize, text collision, or a bare glyph must fail closed.",
+      "Snapshot files, per-role masks, physical dimensions, profile metadata, pixel/topology metrics, and stable SHA aggregates are mandatory evidence."
+    ],
+    "required_snapshot_cases": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_invalid--p2--en",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "negative_fixtures_required": [
+      "outline_color_equals_row_background",
+      "outline_alpha_zero",
+      "focus_lower_arm_missing",
+      "focus_intersects_text_mask",
+      "diamond_one_edge_missing",
+      "diamond_outline_absent_bare_check_only",
+      "confirm_outer_frame_open",
+      "confirm_inner_frame_absent",
+      "confirm_frames_absent_bare_arrow_only",
+      "shape_clipped_or_overwritten",
+      "token_bbox_only_without_raster",
+      "standard_only_without_cvd_transforms"
+    ]
+  },
+  "machine_and_static_gate": {
+    "status": "NOT_RUN",
+    "required_case_count": 540,
+    "required_reproducibility": "Two clean offline runs must produce byte-identical ordered 540-case results, CPU raster snapshot metrics, and stable aggregates.",
+    "requirements": [
+      "All inherited 540-case authority/action/copy/layout/contrast/performance/placement checks remain enabled at their existing values.",
+      "The four repair cases pass every CPU final-raster contrast, component, closure, enclosure, size, clip/order, and CVD transform check.",
+      "The twelve snapshot controls preserve copy/layout/status/placement visuals and reject v4/v5 token leakage.",
+      "Static diff inspection confines changes to the explicit allowlist and rejects authority/rules/copy/placement/threshold/exposure drift.",
+      "Token/bbox/triangle checks remain supporting diagnostics and are never counted as pixel-visible acceptance."
+    ]
+  },
+  "allowed_modification_boundary": {
+    "production_files": [
+      {
+        "path": "src/Billiards/render/ui/rules_decision_ui_draw_list.cpp",
+        "allowed": "Only reserve the dedicated group_choice_armed_confirm focus slot and inset the unchanged confirm glyph run without changing row/hit semantics."
+      },
+      {
+        "path": "src/Billiards/render/ui/rules_decision_product_draw.cpp",
+        "allowed": "Only the three existing v4 role foreground colors/primitive parameters needed for final-pixel contrast and closure; no placement/world or unrelated UI raster path."
+      }
+    ],
+    "test_and_evidence_categories": [
+      "Deterministic CPU HudDrawList raster snapshot implementation and role/text mask instrumentation.",
+      "Rules UI v5 540-machine integration, pixel/topology validator, negative fixtures, and future readiness/evidence validation.",
+      "No shipping asset, font, palette token shared with Player HUD/shell, capture image, frozen receipt, or prior evidence mutation."
+    ],
+    "all_unlisted_production_files_forbidden": true
+  },
+  "forbidden_changes": {
+    "authority_rules": "No ruleset, offered action inventory/order, branch, clause, actor, foundation action, authority hash/revision, request/ACK identity, validation, idempotency, mutation, turn, score, rack, breaker, group, or entitlement change.",
+    "copy_interaction": "No actor/action wording, locale mapping, wrapping limit, ellipsis, row/control order, hit rectangle, focus target, arm/confirm/cancel/submit behavior, or input semantic change.",
+    "placement_controls": "No ghost cue-ball, crosshair, invalid octagon, dashed ring, behind-head hatch/boundary/copy/coordinate, placement region, submitting, error, open/unselected, pending, stale, disabled, or unoffered visual/behavior change.",
+    "thresholds": "No inherited contrast, text, critical-shape, stroke, hit-target, safe-area, layout, occlusion, ui-scale, viewport/density, performance, draw-call, or evidence threshold relaxation or replacement. The v5 4.0:1 row-outline constraint is supplemental and stricter, not a relaxation.",
+    "exposure_evidence": "No overwrite of frozen v2/v3/v4 evidence; no product exposure, profile-complete, Golden, M2, Beta, real-input, screen-reader, external-human, implementation-pass, machine-pass, GPU-pass, or TA-pass claim from this design gate."
+  },
+  "future_targeted_actual_gpu_gate": {
+    "status": "NOT_AUTHORIZED",
+    "authorization_required": true,
+    "minimum_case_count": 16,
+    "repair_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en"
+    ],
+    "regression_control_case_ids": [
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_invalid--p2--en",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "preconditions": [
+      "540/540 machine and all 16 CPU raster snapshots pass twice reproducibly with source/binary/snapshot hashes frozen.",
+      "Every required negative raster fixture fails closed and static diff scope passes.",
+      "A new readiness package records all 16 cases NOT_RUN; a separate single-use root authorization is required and is not issued here."
+    ],
+    "capture_requirements": [
+      "Fresh process, production Core 4.1 product_ui path after ACES tone map, shipping fonts, exact 4 repair plus 12 controls.",
+      "Bind PPM and byte-faithful PNG paths/SHA/physical dimensions, source/binary/runner/auth lineage, render order, role masks/metrics, and stable aggregates.",
+      "Machine 16/16 is required with zero token leakage, copy/layout/placement/status regression, or inherited threshold drift."
+    ],
+    "proof_boundary": "Future GPU machine pass closes only sampled raster execution. It does not equal independent TA, product, Golden, M2, Beta, real-input, screen-reader, or external-human pass."
+  },
+  "future_technical_art_gate": {
+    "status": "NOT_RUN",
+    "reviewer": "Independent technical artist who did not implement v5.",
+    "image_count": 16,
+    "canonical_axes": [
+      "action_semantics_and_branch_correctness",
+      "actor_revision_and_authority_status_readability",
+      "no_default_selection_or_accidental_submission_affordance",
+      "focus_pointer_keyboard_redundancy",
+      "text_clipping_collision_and_minimum_size",
+      "standard_cvd_non_color_redundancy",
+      "placement_scope_and_legality_readability",
+      "stale_error_ai_pending_fail_closed_clarity",
+      "foundation_and_unoffered_action_absence",
+      "debug_and_product_surface_separation"
+    ],
+    "axis_review_count": 160,
+    "repair_axis_occurrence_count": 8,
+    "requirements": [
+      "Open every future frozen PNG at original physical resolution and decide all ten axes per image; do not inherit machine or v4 findings as PASS.",
+      "For all four repair images, visually distinguish the reserved leading chevron, closed selected diamond enclosing its check, and two closed confirm frames enclosing the bent arrow in standard/CVD without relying on hue.",
+      "All twelve controls must show zero regression and zero v4/v5 token leakage. Any remaining prior failure or any new failure blocks v5."
+    ]
+  },
+  "acceptance": {
+    "implementation_may_start_when": "All six bindings match and the implementation is confined to the two production allowlist entries plus test/evidence scaffolding.",
+    "v5_scoped_visual_may_pass_when": "Two reproducible 540/540 machine plus 16/16 CPU raster snapshot runs pass, separately authorized future targeted GPU is 16/16 machine PASS, and independent TA decides 160/160 axes PASS with all eight prior failures repaired and zero regressions.",
+    "result": "V5_PIXEL_VISIBLE_DESIGN_APPROVED_NOT_IMPLEMENTED_NOT_GPU_AUTHORIZED_NOT_TA_PASS_NOT_PRODUCT_PASS"
+  },
+  "evidence_boundary": {
+    "design_contract_only": true,
+    "implementation_authorized": true,
+    "implementation_performed_by_this_gate": false,
+    "production_source_modified_by_this_gate": false,
+    "shipping_asset_modified_by_this_gate": false,
+    "cpu_raster_pass_claimed": false,
+    "machine_pass_claimed": false,
+    "gpu_execution_authorized": false,
+    "gpu_capture_performed": false,
+    "technical_art_pass_claimed": false,
+    "scoped_visual_repair_pass": false,
+    "product_exposure_authorized": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false,
+    "real_input_pass": false,
+    "screen_reader_pass": false,
+    "external_human_pass": false
+  }
+}

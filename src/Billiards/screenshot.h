@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -9,5 +10,8 @@ bool writePpm(const std::string& path, int width, int height, const std::vector<
 bool hasVisiblePixels(const std::vector<unsigned char>& rgb);
 int countVisiblePixelsInRegion(const std::vector<unsigned char>& rgb, int width, int height, int x, int y, int regionWidth, int regionHeight);
 bool saveFramebufferToPpm(const std::string& path, int width, int height);
+bool captureOffscreenToPpm(
+    const std::string& path, int width, int height,
+    const std::function<void()>& render);
 
 }  // namespace billiardgl

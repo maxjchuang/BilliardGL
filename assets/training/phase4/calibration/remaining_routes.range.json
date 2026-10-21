@@ -1,0 +1,3216 @@
+{
+  "binary_sha256": "27ff9839510aa308a576da4d15d35645e8225ec6746bc22ba8846f888f8672ac",
+  "calibration_scenario_sha256": {
+    "launch_two_ball_lane_route_v2": "d6d338fbe212dca320ef3083971072fbf99d0f12d5e86f00efd288b45d5f9c81",
+    "launch_three_ball_corner_route_v2": "67f3bd6e9f72c2e6c9d730115115621c3100d433757d9f8b6d2a369793fc7668"
+  },
+  "module_sha256": "637dbe7639f04655b046112de17ee20c44132be875310a70a2787e088eba0d68",
+  "method": "real_public_automation_sequential_shots_independent_and_whole_sequence_perturbations",
+  "attempt_count": 38,
+  "all_succeeded": true,
+  "attempts": [
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -1,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.13700115732563,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": -0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.387996673583984,
+            "y": 89.34147644042969,
+            "z": 0.08280684798955917
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          -0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          -3.13700115732563,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": 0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.387996673583984,
+            "y": 89.34147644042969,
+            "z": -0.08280684798955917
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.136154998301089,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": -0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.33251953125,
+            "y": 89.34147644042969,
+            "z": 0.09681419283151627
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          -0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          -3.136154998301089,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": 0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.33251953125,
+            "y": 89.34147644042969,
+            "z": -0.09681419283151627
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1381019950858047,
+          62.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.665283203125,
+            "y": 89.34147644042969,
+            "z": 0.810316264629364
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1450833120937816,
+          62.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.665283203125,
+            "y": 89.34147644042969,
+            "z": -0.8103577494621277
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1381019950858047,
+          67.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.453426361083984,
+            "y": 89.34147644042969,
+            "z": 1.1050055027008057
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1450833120937816,
+          67.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.453433990478516,
+            "y": 89.34147644042969,
+            "z": -1.1050628423690796
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.1335104988216416,
+          62.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": -0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.70457077026367,
+            "y": 89.34147644042969,
+            "z": 0.8795608878135681
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          -0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          62.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.039249420166016,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.60424041748047,
+            "y": 89.34147644042969,
+            "z": -2.007547482207883e-05
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28472137451172,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          -3.1335104988216416,
+          62.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": 0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.70457077026367,
+            "y": 89.34147644042969,
+            "z": -0.8795608878135681
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1330940900076776,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.54994583129883,
+            "y": 89.34147644042969,
+            "z": -0.3647535443305969
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.48635482788086,
+            "y": 89.34147644042969,
+            "z": 1.0365383625030518
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285587310791016,
+          89.34147644042969,
+          -0.08477303385734558
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          55,
+          0,
+          0
+        ],
+        [
+          -3.1330940900076776,
+          65,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.54994583129883,
+            "y": 89.34147644042969,
+            "z": 0.3647535443305969
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.48635482788086,
+            "y": 89.34147644042969,
+            "z": -1.0365383625030518
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285587310791016,
+          89.34147644042969,
+          0.08477303385734558
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.1326643397971004,
+          67.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": -0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.45077133178711,
+            "y": 89.34147644042969,
+            "z": 1.2330085039138794
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          -0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          67.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.052406311035156,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.29362106323242,
+            "y": 89.34147644042969,
+            "z": -2.7427173336036503e-05
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28498458862305,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_two_ball_lane_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          -3.1326643397971004,
+          67.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": 0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.45077133178711,
+            "y": 89.34147644042969,
+            "z": -1.2330085039138794
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 1,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          1,
+          2
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -1,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ],
+        [
+          1.748847335159477,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.11217498779297,
+            "y": 89.34147644042969,
+            "z": 83.75769805908203
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.13700115732563,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7486914805177824,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": -0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.387996673583984,
+            "y": 89.34147644042969,
+            "z": 0.08280684798955917
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.10611343383789,
+            "y": 89.34147644042969,
+            "z": 83.76441192626953
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          -0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          -3.13700115732563,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7483043104338964,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": 0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.387996673583984,
+            "y": 89.34147644042969,
+            "z": -0.08280684798955917
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.0906867980957,
+            "y": 89.34147644042969,
+            "z": 83.76124572753906
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.136154998301089,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7494472337583156,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": -0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.33251953125,
+            "y": 89.34147644042969,
+            "z": 0.09681419283151627
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.13581466674805,
+            "y": 89.34147644042969,
+            "z": 83.75383758544922
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          -0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 0,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          -3.136154998301089,
+          65,
+          0,
+          0
+        ],
+        [
+          1.748992810297357,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": 0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.33251953125,
+            "y": 89.34147644042969,
+            "z": -0.09681419283151627
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.11785888671875,
+            "y": 89.34147644042969,
+            "z": 83.74986267089844
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1381019950858047,
+          62.5,
+          0,
+          0
+        ],
+        [
+          1.7599000689421873,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.665283203125,
+            "y": 89.34147644042969,
+            "z": 0.810316264629364
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.546138763427734,
+            "y": 89.34147644042969,
+            "z": 83.64476776123047
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 99,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1450833120937816,
+          62.5,
+          0,
+          0
+        ],
+        [
+          1.7559197924275713,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.665283203125,
+            "y": 89.34147644042969,
+            "z": -0.8103577494621277
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.38479995727539,
+            "y": 89.34147644042969,
+            "z": 83.60865020751953
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1381019950858047,
+          67.5,
+          0,
+          0
+        ],
+        [
+          1.7370191189826074,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.453426361083984,
+            "y": 89.34147644042969,
+            "z": 1.1050055027008057
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -51.64499282836914,
+            "y": 89.34147644042969,
+            "z": 84.00872039794922
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 1,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1450833120937816,
+          67.5,
+          0,
+          0
+        ],
+        [
+          1.7322403596977394,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.453433990478516,
+            "y": 89.34147644042969,
+            "z": -1.1050628423690796
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -51.45684814453125,
+            "y": 89.34147644042969,
+            "z": 83.96151733398438
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 100,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7453566766554884,
+          72.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -50.51780319213867,
+            "y": 89.34147644042969,
+            "z": 82.90608978271484
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7523379936634658,
+          72.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -53.553321838378906,
+            "y": 89.34147644042969,
+            "z": 81.65092468261719
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7453566766554884,
+          77.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -50.047119140625,
+            "y": 89.34147644042969,
+            "z": 86.95146179199219
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": 2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.0,
+          55,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7523379936634658,
+          77.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.53441619873047,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.36112976074219,
+            "y": 89.34147644042969,
+            "z": -2.3358388716587797e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -54.293216705322266,
+            "y": 89.34147644042969,
+            "z": 85.14801025390625
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.1335104988216416,
+          62.5,
+          0,
+          0
+        ],
+        [
+          1.7560678891895258,
+          72.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": -0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.70457077026367,
+            "y": 89.34147644042969,
+            "z": 0.8795608878135681
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -50.89221954345703,
+            "y": 89.34147644042969,
+            "z": 82.74638366699219
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          -0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          52.5,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          62.5,
+          0,
+          0
+        ],
+        [
+          1.7586807360655308,
+          72.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.039249420166016,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.60424041748047,
+            "y": 89.34147644042969,
+            "z": -2.007547482207883e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -52.360877990722656,
+            "y": 89.34147644042969,
+            "z": 81.95130157470703
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28472137451172,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": -2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          52.5,
+          0,
+          0
+        ],
+        [
+          -3.1335104988216416,
+          62.5,
+          0,
+          0
+        ],
+        [
+          1.7587400412795304,
+          72.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.05302047729492,
+            "y": 89.34147644042969,
+            "z": 0.33214208483695984
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -37.70457077026367,
+            "y": 89.34147644042969,
+            "z": -0.8795608878135681
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -53.76704025268555,
+            "y": 89.34147644042969,
+            "z": 81.56793975830078
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28534698486328,
+          89.34147644042969,
+          0.08477222174406052
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          55,
+          0,
+          0
+        ],
+        [
+          3.1330940900076776,
+          65,
+          0,
+          0
+        ],
+        [
+          1.7461658133653146,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.54994583129883,
+            "y": 89.34147644042969,
+            "z": -0.3647535443305969
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.48635482788086,
+            "y": 89.34147644042969,
+            "z": 1.0365383625030518
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -50.35188674926758,
+            "y": 89.34147644042969,
+            "z": 84.79554748535156
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285587310791016,
+          89.34147644042969,
+          -0.08477303385734558
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 0,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          55,
+          0,
+          0
+        ],
+        [
+          -3.1330940900076776,
+          65,
+          0,
+          0
+        ],
+        [
+          1.748333308324965,
+          75,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 38.54994583129883,
+            "y": 89.34147644042969,
+            "z": 0.3647535443305969
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -38.48635482788086,
+            "y": 89.34147644042969,
+            "z": -1.0365383625030518
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -53.746978759765625,
+            "y": 89.34147644042969,
+            "z": 83.22661590576172
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285587310791016,
+          89.34147644042969,
+          0.08477303385734558
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": -0.2,
+      "actions": [
+        [
+          -0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.1326643397971004,
+          67.5,
+          0,
+          0
+        ],
+        [
+          1.7338491122083735,
+          77.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": -0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.45077133178711,
+            "y": 89.34147644042969,
+            "z": 1.2330085039138794
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -49.47694396972656,
+            "y": 89.34147644042969,
+            "z": 87.3441390991211
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          -0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0,
+      "actions": [
+        [
+          0.0,
+          57.5,
+          0,
+          0
+        ],
+        [
+          3.141592653589793,
+          67.5,
+          0,
+          0
+        ],
+        [
+          1.7366847055128953,
+          77.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.052406311035156,
+            "y": 89.34147644042969,
+            "z": 0
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.29362106323242,
+            "y": 89.34147644042969,
+            "z": -2.7427173336036503e-05
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -51.60651779174805,
+            "y": 89.34147644042969,
+            "z": 85.97395324707031
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 1,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.28498458862305,
+          89.34147644042969,
+          0
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    },
+    {
+      "id": "launch_three_ball_corner_route_v2",
+      "changed_shot": -2,
+      "power_delta_units": 2.5,
+      "yaw_delta_degrees": 0.2,
+      "actions": [
+        [
+          0.003490658503988659,
+          57.5,
+          0,
+          0
+        ],
+        [
+          -3.1326643397971004,
+          67.5,
+          0,
+          0
+        ],
+        [
+          1.7354969860039267,
+          77.5,
+          0,
+          0
+        ]
+      ],
+      "steps": [
+        {
+          "cue_position_cm": {
+            "x": 39.069786071777344,
+            "y": 89.34147644042969,
+            "z": 0.3988819718360901
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -39.45077133178711,
+            "y": 89.34147644042969,
+            "z": -1.2330085039138794
+          },
+          "target_pocketed": true
+        },
+        {
+          "cue_position_cm": {
+            "x": -53.50999450683594,
+            "y": 89.34147644042969,
+            "z": 85.22901153564453
+          },
+          "target_pocketed": true
+        }
+      ],
+      "facts": {
+        "first_contact_ball": 3,
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "pocket_order": [
+          3,
+          4,
+          5
+        ],
+        "cue_ball_position_at_first_contact_cm": [
+          34.285614013671875,
+          89.34147644042969,
+          0.08477313816547394
+        ]
+      },
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      }
+    }
+  ]
+}

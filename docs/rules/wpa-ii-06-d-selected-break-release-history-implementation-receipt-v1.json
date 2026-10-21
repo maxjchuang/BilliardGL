@@ -1,0 +1,115 @@
+{
+  "schema": "wpa_ii_06_d_selected_break_release_history_implementation_receipt_v1",
+  "status": "SELECTED_RELEASE_HISTORY_IMPLEMENTED_CPU_VERIFIED_ROW_REMAINS_OPEN",
+  "selection_binding": {
+    "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+    "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+    "decision_id": "M4-POL-06D-HALF-BALL-HISTORY",
+    "selected_option_id": "FROZEN_POSITION_AT_ACCEPTED_BREAK_RELEASE_MATCH_SCOPE",
+    "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE"
+  },
+  "predecessor_bindings": {
+    "candidate": {
+      "path": "docs/rules/m4-wpa-policy-bundle-candidate-v1.json",
+      "sha256": "0cc6a5f319eaed7f7b46fb6c5579982592c504e89d57b04183bd749be82f7da9"
+    },
+    "design_gate": {
+      "path": "docs/rules/wpa-ii-06-d-head-string-half-ball-classification-design-gate-v1.json",
+      "sha256": "32f41fa0e7dbe36b7be01a2a16c7e4eebb90932aa8b99322f99ef31585acad79",
+      "policy_pending_fields_resolved_only_by_root_selection": true,
+      "historical_source_bindings_are_not_rewritten": true
+    }
+  },
+  "implementation_contract": {
+    "row_id": "WPA-II-06-D",
+    "sample_event": "ACCEPTED_BREAK_SHOT_RELEASE",
+    "position_source": "FROZEN_COMMITTED_CUE_BALL_CENTER",
+    "world_axis": "Z",
+    "foot_side_relation": "STRICTLY_GREATER_THAN_HEAD_STRING_AFTER_QUANTIZATION",
+    "quantization_grid_world_units": 0.000001,
+    "exact_half_is_offense": false,
+    "first_offense_result": "REMINDER",
+    "subsequent_same_player_result": "FOUL",
+    "history_partition": "PER_PLAYER",
+    "history_scope": "MATCH",
+    "full_match_reset_clears_history": true,
+    "official_rerack_clears_history": false,
+    "direct_or_synthetic_adjudication_creates_release_sample": false,
+    "product_or_automation_reclassifies_geometry": false
+  },
+  "atomic_and_failure_contract": {
+    "successful_cue_application_stages_exactly_one_frozen_sample": true,
+    "history_commit_waits_for_completed_authoritative_physics_shot": true,
+    "failed_physics_commits_history": false,
+    "drag_preview_or_repeated_state_edit_commits_history": false,
+    "rejected_contact_launch_commits_history": false,
+    "balls_moving_rejected_launch_commits_history": false,
+    "other_player_history_is_independent": true,
+    "exact_shot_identity_retry_is_idempotent": true,
+    "conflicting_shot_identity_retry_is_rejected_without_mutation": true,
+    "invalid_actor_or_nonfinite_position_is_rejected_without_mutation": true,
+    "successful_history_and_adjudication_commit_share_one_authority_revision": true
+  },
+  "presentation_and_readback_contract": {
+    "automation_command": "get_rules_state",
+    "object": "break_head_string_offense",
+    "visible_only_for_reminder_or_foul": true,
+    "reminder_text_key": "rules.chinese8.reminder.break_head_string_more_than_half",
+    "foul_code": "break_cue_ball_past_head_string",
+    "foul_text_key": "rules.chinese8.foul.break_head_string_more_than_half",
+    "readback_contains_frozen_position_and_quantized_crossing": true,
+    "readback_contains_per_player_counts_and_match_scope": true,
+    "ui_draw_code_modified": false,
+    "fresh_gpu_ta_required_before_visual_claim": true
+  },
+  "source_bindings": {
+    "authority_header": {"path": "src/Billiards/rules/break_head_string_offense.h", "sha256": "8422ab43eccbf9158a6c80069fc4379b48bab1c56ddb723a7e5b9d5032ea707f"},
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "a2255a58d4f8f9af8818f2bca3fc590fe4a80d5f4a0440a12e61523e04f8ec46"},
+    "rules_cpp": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "9786b62e050ad531861474f69b11177626184b5b837252b7ab094900adcdc509"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "e18abf2b7da29ae00b063a8685f322d2dc93b377689eff3b3eabf4df2ff19b17"},
+    "runtime_cpp": {"path": "src/Billiards/game_runtime.cpp", "sha256": "0b96b3bec8d1ef8d333f307f8aba948da5380c847651406f391fbee68e547db2"},
+    "automation_cpp": {"path": "src/Billiards/automation_controller.cpp", "sha256": "765652a8c2e25e96df3b557dc0233cf4ad0a8d90174ebee79e319ca096d32fb7"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "b98da2f6c76f2706abf2ef3d7edf192974ef21289260d524d28e2436c5b98f4f"},
+    "cmake_unchanged": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "cpu_verification": {
+    "build_root": "build-integrated-final-shared-phase4-v11-phase5-v5v2-phase2-successor-v1",
+    "tests_first_red": "missing rules/break_head_string_offense.h",
+    "ctest_subset": {"passed": 8, "failed": 0},
+    "binaries": [
+      {"target": "BilliardsRulesRuntimeIntegrationTests", "sha256": "ecaa9ad0f14fbc3159fcebba8e4737e8d04e05bd8219e9030e251a0947cc5f3d", "exit_code": 0},
+      {"target": "BilliardsChineseEightBallRulesTests", "sha256": "962f2c97a16a2af30708460231fa490860c508e97a04d2ec2e47a37d644b4608", "exit_code": 0},
+      {"target": "BilliardsAutomationControllerTests", "sha256": "231dd6dd4f7891fbcaad521abf48967d567d8b39bd4e127041f3fde106fb4aaf", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionSessionIntegrationTests", "sha256": "87d54e6bf3893e15e6980d3401ec7161f9fb7c99ba64acdaf697f481e375e542", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionProductRuntimeTests", "sha256": "88ec31c25c5d19ebe5a4ab95fe3c3d12a41498406424da476e56cf89f908f6e3", "exit_code": 0},
+      {"target": "BilliardsProductHudTests", "sha256": "4f818208c467860acdacf974f3755531346da61b90e21baaab73c4e551e370db", "exit_code": 0},
+      {"target": "BilliardsAiTurnControllerTests", "sha256": "e363e29c99526824627452f24b34a4651322021992b48572e64477aecd6826af", "exit_code": 0},
+      {"target": "BilliardsGameRuntimeTests", "sha256": "231581e3a37d3a63cdbe2daa0ef203d010d46bce13839351a070403a41a9231f", "exit_code": 0}
+    ],
+    "gpu_cocoa_or_opengl_executed": false,
+    "cmake_source_modified": false
+  },
+  "evidence_invalidation": {
+    "prior_source_bound_rules_runtime_automation_evidence": "HISTORICAL_ONLY_AFTER_THIS_SOURCE_CHANGE",
+    "prior_wpa_ii_06_c_cpu_receipt_policy_result_remains_valid_but_live_source_bindings_drift": true,
+    "fresh_release_binary_bindings_required_before_future_readiness": true,
+    "visible_reminder_requires_fresh_targeted_gpu_ta_before_product_visual_claim": true,
+    "gpu_or_readiness_authorized_here": false
+  },
+  "claims": {
+    "selected_policy_cpu_implemented": true,
+    "accepted_release_sample_authoritative": true,
+    "match_scope_history_cpu_verified": true,
+    "automation_readback_cpu_verified": true,
+    "wpa_ii_06_d_row_closed": false,
+    "audit_v5_modified_or_promoted": false,
+    "profile_complete": false,
+    "m4_complete": false,
+    "product_visual_evidence_complete": false,
+    "ui_modified": false,
+    "cmake_modified": false,
+    "phase4_or_phase5_renderer_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

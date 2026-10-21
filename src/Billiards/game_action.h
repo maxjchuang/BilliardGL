@@ -15,6 +15,8 @@ enum class ActionType {
     SetShotPower,
     Shoot,
     ToggleHelp,
+    ToggleCameraAnchor,
+    ReturnToCueBall,
     OrbitCamera,
     PanCamera,
     ZoomCamera

@@ -1,0 +1,335 @@
+{
+  "schema": "wpa_ii_08_exact_continuous_crossing_telemetry_implementation_design_gate_v1",
+  "status": "DESIGN_COMPLETE_AWAITING_ROOT_IMPLEMENTATION_APPROVAL_NO_PRODUCTION_MUTATION",
+  "authority_bindings": {
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-08",
+      "decision_id": "M4-POL-08-HEAD-STRING-CROSSING",
+      "selected_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER",
+      "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE",
+      "root_selected": true
+    },
+    "feasibility_blocker": {
+      "path": "docs/rules/wpa-ii-08-selected-center-crossing-exact-continuous-order-feasibility-blocker-v1.json",
+      "sha256": "f10525b49619c2a67e6ae0530da1c0eb8b80a54a0d64e134e42158a64ea3095d",
+      "blocker_class": "NEW_PHYSICS_TELEMETRY_AND_COLLECTOR_PROVENANCE_REQUIRED",
+      "superseded_by_design_only": false,
+      "superseded_only_after_verified_implementation": true
+    }
+  },
+  "scope_and_authority_boundary": {
+    "implementation_lane": "POLICY_SELECTED_TELEMETRY_FOUNDATION_ONLY",
+    "physics_owner": "continuous cue-ball center motion and generic plane observation facts only",
+    "collector_owner": "canonical provenance, completeness, dedupe and crossing/contact order facts",
+    "rules_owner": "BehindHeadString restriction interpretation and fail-closed consumption",
+    "runtime_owner": "frozen plane context stage, accepted-shot lifecycle and rollback",
+    "product_owner": "none in this implementation gate",
+    "solver_decides_rule_legality": false,
+    "collector_or_product_infers_from_sampled_endpoints": false,
+    "all_behind_respot_or_product_action_in_scope": false,
+    "global_rules_ui_in_scope": false
+  },
+  "canonical_physics_contract": {
+    "observation_request": {
+      "type": "PhysicsPlaneObservationRequest",
+      "fields": [
+        "observation_id",
+        "ball_index",
+        "axis",
+        "plane_coordinate_cm",
+        "direction"
+      ],
+      "wpa_runtime_values": {
+        "observation_id": "wpa_ii_08_head_string_cue_center",
+        "ball_index": 0,
+        "axis": "Z",
+        "plane_coordinate_source": "FROZEN_COMMITTED_BEHIND_HEAD_STRING_OFFER",
+        "direction": "NEGATIVE_TO_POSITIVE",
+        "reference_point": "BALL_CENTER"
+      },
+      "validation": "all identifiers, indices and numeric values finite/in-range before physics mutation",
+      "rule_meaning_in_physics_layer": false
+    },
+    "surface_motion_analytic_segment": {
+      "type": "SurfaceMotionAnalyticSegment",
+      "fields": [
+        "ball_index",
+        "segment_ordinal",
+        "motion_state",
+        "whole_tick_start_offset_seconds",
+        "duration_seconds",
+        "start_position_cm",
+        "end_position_cm",
+        "start_velocity_cm_s",
+        "constant_acceleration_cm_s2",
+        "analytic_path_complete"
+      ],
+      "piecewise_split_required_at_sliding_to_rolling_or_stop_transition": true,
+      "segments_are_emitted_by_the_same_integrator_that_mutates_ball_state": true,
+      "endpoint_linear_interpolation_used_for_crossing": false
+    },
+    "crossing_candidate": {
+      "type": "ContinuousPlaneCrossingCandidate",
+      "created_from": "one complete analytic surface-motion segment plus one validated observation request",
+      "equation": "axis_position(t)=start_position+start_velocity*t+0.5*constant_acceleration*t^2",
+      "linear_fallback_only_when_axis_acceleration_is_exactly_zero": true,
+      "valid_root_interval": "0 <= local_t <= segment_duration",
+      "required_sign_change": "signed_distance_before < 0 and signed_distance_after > 0",
+      "required_derivative_direction": "axis_velocity_at_root > 0",
+      "touch_tangent_or_reverse_crossing_is_not_candidate": true,
+      "earliest_valid_root_only": true,
+      "nonfinite_or_ambiguous_root_invalidates_tick_attestation": true
+    },
+    "crossing_record": {
+      "type": "PhysicsPlaneCrossingRecord",
+      "fields": [
+        "observation_id",
+        "ball_index",
+        "axis",
+        "plane_coordinate_cm",
+        "direction",
+        "whole_tick_time_of_impact_seconds",
+        "segment_ordinal",
+        "signed_distance_before_cm",
+        "signed_distance_after_cm",
+        "axis_velocity_at_crossing_cm_s",
+        "origin",
+        "complete"
+      ],
+      "origin": "AUTHORITATIVE_CONTINUOUS_SURFACE_INTEGRATOR",
+      "stable_dedupe_key": [
+        "observation_id",
+        "ball_index",
+        "whole_tick_time_of_impact_seconds",
+        "segment_ordinal",
+        "direction"
+      ],
+      "segment_boundary_duplicate_policy": "identical adjacent-segment roots collapse to one record; conflicting roots invalidate completeness"
+    },
+    "per_tick_attestation": {
+      "type": "PhysicsPlaneObservationAttestation",
+      "exactly_one_per_valid_request_per_successful_tick": true,
+      "fields": [
+        "observation_id",
+        "ball_index",
+        "whole_tick_duration_seconds",
+        "covered_segment_count",
+        "crossing_record_count",
+        "complete"
+      ],
+      "no_crossing_with_complete_coverage_is_distinguishable_from_missing_telemetry": true,
+      "failed_step_publishes_authoritative_attestation": false
+    }
+  },
+  "whole_tick_time_contract": {
+    "internal_recursive_parameter": "whole_tick_offset_seconds",
+    "top_level_offset_seconds": 0.0,
+    "prefix_segment_start_offset": "whole_tick_offset_seconds",
+    "prefix_contact_time": "whole_tick_offset_seconds + local_toi_seconds",
+    "recursive_tail_offset": "whole_tick_offset_seconds + local_toi_seconds",
+    "tail_contact_time_is_rebased_before_telemetry_merge": true,
+    "surface_motion_segment_offsets_are_rebased_before_telemetry_merge": true,
+    "event_and_segment_ordinals_are_strictly_monotonic_across_recursion": true,
+    "all_times_must_be_finite_and_within_closed_whole_tick_interval": true,
+    "legacy_segment_relative_contact_toi_may_remain_as_separate_noncanonical_field": true,
+    "canonical_order_uses_whole_tick_time_only": true
+  },
+  "collector_and_shot_facts_contract": {
+    "begin_context": {
+      "type": "BehindHeadStringFirstContactContext",
+      "fields": [
+        "active",
+        "actor_player_id",
+        "placement_decision_id",
+        "placement_ack_revision",
+        "head_string_world_z_cm",
+        "observation_id"
+      ],
+      "only_successful_behind_head_string_placement_commit_may_arm": true
+    },
+    "first_contact_evidence": {
+      "cue_object_contact_filter": "BallBall contact containing ball 0 and object ID 1..15",
+      "canonical_key": [
+        "physics_tick",
+        "whole_tick_time_of_impact_seconds",
+        "solver_event_id",
+        "physics_contact_ordinal",
+        "object_ball_id"
+      ],
+      "first_event_object_set": "all cue/object contacts sharing the earliest physics tick, whole-tick TOI and solver event",
+      "contact_origin": "AUTHORITATIVE_CONTINUOUS_OR_DISCRETE_PHYSICS_CONTACT",
+      "contact_completeness_required": true
+    },
+    "crossing_evidence": {
+      "canonical_key": [
+        "physics_tick",
+        "whole_tick_time_of_impact_seconds",
+        "segment_ordinal",
+        "observation_id"
+      ],
+      "origin_required": "AUTHORITATIVE_CONTINUOUS_SURFACE_INTEGRATOR",
+      "every_consumed_successful_tick_requires_complete_matching_attestation_until_first_contact": true,
+      "missing_malformed_conflicting_or_nonfinite_record_marks_evidence_incomplete": true
+    },
+    "total_order": {
+      "crossing_in_earlier_physics_tick": "BEFORE",
+      "crossing_in_later_physics_tick": "AFTER",
+      "same_tick_comparator": "crossing.whole_tick_time_of_impact_seconds < first_contact.whole_tick_time_of_impact_seconds",
+      "exact_equal_time": "UNORDERED_FAIL_CLOSED",
+      "missing_or_incomplete_side": "UNORDERED_FAIL_CLOSED",
+      "epsilon_or_quantized_tie_breaker": false,
+      "solver_event_or_array_order_may_override_equal_time": false
+    },
+    "shot_facts_fields": [
+      "behindHeadStringFirstContactRestrictionActive",
+      "headStringWorldZCm",
+      "cueCenterPlaneCrossingEvents",
+      "firstCueObjectContactEvidence",
+      "cueBallCrossedHeadStringBeforeFirstContact",
+      "headStringCrossingEvidenceOrigin",
+      "headStringCrossingEvidenceComplete"
+    ],
+    "direct_or_synthetic_facts_may_claim_complete_crossing": false,
+    "legal_object_on_line_or_foot_side_direct_contact_needs_crossing": false,
+    "behind_object_direct_contact_without_complete_before_order": "FAIL_CLOSED_WRONG_FIRST_CONTACT"
+  },
+  "runtime_lifecycle_contract": {
+    "arm_point": "successful authoritative BehindHeadString placement ACK only",
+    "frozen_plane_source": "the committed placement offer headStringWorldZCm, not a later live table sample",
+    "actor": "the placement actor",
+    "accepted_launch_begins_collector_with_frozen_context": true,
+    "drag_preview_rejected_placement_or_rejected_launch_arms_or_consumes_context": false,
+    "successful_physics_ticks_only_feed_crossing_evidence": true,
+    "failed_physics_step": "restore physics state, discard tick telemetry/collector delta, abort failed shot attempt, preserve armed restriction for retry",
+    "consume_point": "next completed accepted authoritative shot adjudication",
+    "full_reset_or_ruleset_reset_clears_context": true,
+    "rack_or_rerack_without_match_reset_clears_context": false,
+    "other_player_shot_may_consume_context": false,
+    "direct_or_synthetic_adjudication_while_context_active": "reject incomplete evidence without consuming context"
+  },
+  "rollback_dedupe_idempotency_contract": {
+    "physics_update_same_state_controls_context_produces_byte_identical_records": true,
+    "collector_exact_duplicate_successful_tick_digest_is_no_op": true,
+    "collector_same_tick_conflicting_digest_is_rejected_without_partial_delta": true,
+    "duplicate_crossing_record_with_same_stable_key_and_payload_is_collapsed": true,
+    "duplicate_crossing_record_with_same_key_different_payload_marks_incomplete": true,
+    "failed_step_changes_collector_or_runtime_restriction": false,
+    "malformed_attestation_changes_authoritative_match_or_ball_state": false,
+    "adjudication_failure_consumes_restriction": false,
+    "partial_origin_completeness_or_order_commit_allowed": false
+  },
+  "implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/surface_motion.h",
+      "src/Billiards/surface_motion.cpp",
+      "src/Billiards/physics.h",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/surface_motion_tests.cpp",
+      "tests/physics_tests.cpp",
+      "tests/physics_telemetry_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "new_production_file_allowed": false,
+    "cmake_change_allowed": false,
+    "modern_product_session_or_ui_allowed": false,
+    "all_behind_respot_authority_allowed": false
+  },
+  "required_fixtures": {
+    "positive": [
+      "CROSSING_IN_EARLIER_TICK_THAN_CONTACT",
+      "SAME_TICK_CROSSING_STRICTLY_BEFORE_CONTACT",
+      "CROSSING_BEFORE_CUSHION_THEN_RETURN_CONTACT",
+      "SLIDING_QUADRATIC_CROSSING_BEFORE_CONTACT",
+      "SLIDING_TO_ROLLING_PIECEWISE_CROSSING_BEFORE_CONTACT",
+      "ON_LINE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING",
+      "FOOT_SIDE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING",
+      "EXACT_DUPLICATE_SUCCESSFUL_TICK_AND_RECORD_ZERO_DELTA"
+    ],
+    "negative": [
+      "SAME_TICK_CONTACT_BEFORE_CROSSING",
+      "SAME_TIME_CROSSING_AND_CONTACT_UNORDERED",
+      "ENDPOINTS_CROSS_BUT_INTERMEDIATE_CUSHION_ORDER_UNATTESTED",
+      "FAILED_PHYSICS_STEP_CROSSING_DISCARDED_CONTEXT_PRESERVED",
+      "MISSING_OR_INCOMPLETE_TICK_ATTESTATION_FAILS_CLOSED",
+      "NONFINITE_PLANE_OR_CROSSING_RECORD_FAILS_CLOSED",
+      "CONFLICTING_DUPLICATE_TICK_OR_RECORD_ZERO_PARTIAL_DELTA",
+      "DIRECT_OR_SYNTHETIC_FACTS_CANNOT_CLAIM_CROSSING",
+      "REJECTED_LAUNCH_WRONG_ACTOR_OR_RESET_CANNOT_LEAK_STALE_EVIDENCE"
+    ],
+    "positive_count": 8,
+    "negative_count": 9,
+    "all_fixtures_are_headless_cpu": true,
+    "mock_only_proof_sufficient": false
+  },
+  "deferred_all_behind_lineage": {
+    "blocker_all_behind_positive_fixtures_deferred": [
+      "ALL_BEHIND_UNIQUE_RESPOT_ATOMIC_CHILD_REPLACEMENT",
+      "ALL_BEHIND_TIE_CHOICE_ATOMIC_COMMIT",
+      "EXACT_PARENT_RETRY_ZERO_DELTA"
+    ],
+    "blocker_all_behind_negative_fixtures_deferred": [
+      "STALE_ALL_BEHIND_LAYOUT_HASH_ROLLS_BACK",
+      "WRONG_ACTOR_ACTION_REVISION_HASH_ROLLS_BACK",
+      "FOUNDATION_OR_GLOBAL_RULES_UI_BYPASS_REJECTED"
+    ],
+    "requires_separate_post_telemetry_implementation_gate": true,
+    "product_reachability_remains_false": true
+  },
+  "source_bindings": {
+    "surface_motion_header": {"path": "src/Billiards/surface_motion.h", "sha256": "76b282b8173acfe6ef87421232b97eeddc5f537178a5ee7b9c5d9eadf71da248"},
+    "surface_motion_cpp": {"path": "src/Billiards/surface_motion.cpp", "sha256": "66803444f1ecdcbf8c0b6ae8b37095dc61a8babf4b7b0bcd2fbe4a50098cca4e"},
+    "physics_header": {"path": "src/Billiards/physics.h", "sha256": "962c06be2ac99b93484de948b51669dbc25da1c72b3009fe38a0d9d0f8883f42"},
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "physics_cpp": {"path": "src/Billiards/physics.cpp", "sha256": "fc497d79650bf2ff9cd8570c320653c8742e4201b8a2428a7892bfcb0124de77"},
+    "shot_facts_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "a2255a58d4f8f9af8818f2bca3fc590fe4a80d5f4a0440a12e61523e04f8ec46"},
+    "adjudicator": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "9786b62e050ad531861474f69b11177626184b5b837252b7ab094900adcdc509"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "13453f30d0eeb7ce4231b1f5802eaf3317e085f4187e3e16abaff34cb171986c"},
+    "collector_cpp": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "92b205a1a0025b21a47fbd86e755beceeb4f89208b5db28945ddfcdd1f7e5f7d"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "e18abf2b7da29ae00b063a8685f322d2dc93b377689eff3b3eabf4df2ff19b17"},
+    "runtime_cpp": {"path": "src/Billiards/game_runtime.cpp", "sha256": "0b96b3bec8d1ef8d333f307f8aba948da5380c847651406f391fbee68e547db2"},
+    "surface_motion_tests": {"path": "tests/surface_motion_tests.cpp", "sha256": "c5a05e0d73bbadbe0c9b5443a6aef03df7049c1059ab17f5f2ea45da38f404ec"},
+    "physics_tests": {"path": "tests/physics_tests.cpp", "sha256": "f127de3a46b22c042c97c5a348e96b7edd55fe081f646c68f6390ad8674e20ac"},
+    "physics_telemetry_tests": {"path": "tests/physics_telemetry_tests.cpp", "sha256": "cbbb2eb4e5f1c1eb22c5525d0c1859e19aebf2a0d975b94321f6daf741ced0c8"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "28a408570a13aa50c5c10ebb594eb651d4e7f4fdbe1d42d1cbb1e5312f890eba"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "78b32d96a2ad28e647b060324e647cbf45c5f30625fd8eb547c7b0ebc085606c"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "b98da2f6c76f2706abf2ef3d7edf192974ef21289260d524d28e2436c5b98f4f"},
+    "cmake_unchanged": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "evidence_and_completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_must_revalidate_gate_before_authorizing_tests_first_patch": true,
+    "prior_source_bound_rules_physics_product_evidence": "HISTORICAL_IF_IMPLEMENTATION_LATER_CHANGES_BOUND_SOURCES",
+    "fresh_cpu_and_release_bindings_required_after_implementation": true,
+    "fresh_gpu_ta_required_only_after_later_visible_respot_product_work": true,
+    "audit_v5_modified_or_promoted_here": false,
+    "wpa_ii_08_row_closed_here": false,
+    "gpu_or_readiness_authorized_here": false
+  },
+  "claims": {
+    "selected_policy_bound": true,
+    "successor_telemetry_design_complete": true,
+    "implementation_approved": false,
+    "production_or_test_source_modified": false,
+    "continuous_crossing_telemetry_implemented": false,
+    "all_behind_respot_implemented": false,
+    "product_action_reachable": false,
+    "audit_v5_modified_or_promoted": false,
+    "wpa_ii_08_row_closed": false,
+    "cmake_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "billiardgl.phase4.v16.local_cross_track_actual_continuity_independent_ta_implementation_failure_addendum.v1",
+  "schema_version": 1,
+  "status": "FAIL_IMPLEMENTATION_GATE_PREMISE_FALSIFIED_CPU_ONLY_NO_GPU_NO_AUTH",
+  "scope": "Independent technical-art and renderer-contract audit of the frozen V16 CPU candidate and its reproducible full-frame premise failure. No production edit, GPU, readiness, authorization, machine acceptance, or visual TA pass is performed.",
+  "frozen_bindings": [
+    {
+      "role": "v16_implementation_design_gate",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-implementation-design-gate-v1.json",
+      "sha256": "f281949f298cb0e07c7f8e427f419455555709277e137f34389ffdb3789c2191"
+    },
+    {
+      "role": "v16_premise_failure_receipt",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-premise-falsification-v1/premise-failure-receipt-v1.json",
+      "sha256": "6e5c729016795a8744fddd7351ae8d9f9d584f9cde91946a33bcbd83f982fa96"
+    },
+    {
+      "role": "v16_premise_failure_validator",
+      "path": "scripts/validate_phase4_v16_local_cross_track_actual_continuity_premise_failure.py",
+      "sha256": "f404c479e0140fd3de4862e41fc88eeb9e373d790aabc801557034a1c91960f1"
+    },
+    {
+      "role": "v16_premise_failure_tests",
+      "path": "tests/test_phase4_v16_local_cross_track_actual_continuity_premise_failure.py",
+      "sha256": "f5c4c475049d214de567c5d57a8bcabb84440a16b653e1702eec5c423b4a55ab"
+    },
+    {
+      "role": "v15_product_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    }
+  ],
+  "restored_baselines": {
+    "trajectory_cpp": {"path": "src/Billiards/training/trajectory_overlay_renderer.cpp", "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"},
+    "trajectory_h": {"path": "src/Billiards/training/trajectory_overlay_renderer.h", "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"},
+    "modern_cpp": {"path": "src/Billiards/render/modern/modern_renderer.cpp", "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"},
+    "modern_h": {"path": "src/Billiards/render/modern/modern_renderer.h", "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"},
+    "cmake": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "independent_contract_audit": {
+    "allowlisted_candidate_files_only": true,
+    "production_selector_contains_capture_camera_or_acceptance_coordinate_input": false,
+    "distinct_crossing_key": "arc_segment_id + normalized_primitive_stem",
+    "same_stem_core_halo_is_cross": false,
+    "standard_cvd_topology_identical": true,
+    "ordered_source_probe_count": 81,
+    "ordered_source_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_bound_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "synthetic_zero_one_two_selector_fixture_passed": true,
+    "generic_full_frame_zero_one_two_contract_passed": false,
+    "visual_controls_executed_after_full_frame_selector": false,
+    "visual_controls_status": "NOT_REACHED_NOT_PASS"
+  },
+  "independent_failure_finding": {
+    "classification": "V16_GATE_PREMISE_FALSIFIED",
+    "single_sample_unsatisfiable_islands_standard_cvd": [27, 27],
+    "asymmetric_four_sample_unsatisfiable_islands_standard_cvd": [76, 76],
+    "selector_error": "trajectory_continuity_no_minimum_connected_subset",
+    "fail_closed_selected_count": 0,
+    "constructive_counterexample": {
+      "sample_index": 0,
+      "physical_pixel": [840, 451],
+      "prior_actual_arc_segment_id": "actual_arc_1",
+      "distinct_predicted_key_count": 2,
+      "eligible_component_size": 1,
+      "maximum_largest8_after_any_allowed_subset_of_size_at_most_2": 1,
+      "required_largest8": 2
+    },
+    "why_no_local_workaround": "Filtering by the three acceptance coordinates, repair IDs, camera name, or capture ID would violate the frozen generic input contract. Ignoring an unsatisfied island would violate the frozen global fail-closed rule.",
+    "implementation_acceptance": false,
+    "gpu_or_readiness_may_follow": false
+  },
+  "unclosed_pipeline_blocker": {
+    "code": "selected_mask_upload_gl_error_not_checked",
+    "finding": "The frozen candidate calls glTexSubImage3D and returns logical validity without checkGl or glGetError. A failed upload can therefore leave stale selected-mask texture bytes while selectedMaskReady remains true.",
+    "logical_invalid_selector_draw_abort_present": true,
+    "top_left_y_down_msaa_conversion_present": true,
+    "resource_upload_failure_is_fail_closed": false,
+    "pipeline_contract_pass": false
+  },
+  "selected_priority_one_disposition": {
+    "decision_id": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+    "selected_by_root_before_v16": true,
+    "implementation_result": "REJECTED_AFTER_REPRODUCIBLE_PREMISE_FALSIFICATION",
+    "may_be_resumed_under_v16_gate": false,
+    "automatic_relaxation_or_scope_expansion": false
+  },
+  "remaining_bounded_product_path": {
+    "decision_id": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+    "priority": 2,
+    "assessment": "ONLY_REMAINING_BOUNDED_PATH_AMONG_THE_TWO_FROZEN_MUTUALLY_EXCLUSIVE_V15_CHOICES",
+    "recommended_for_new_root_product_decision": true,
+    "selected_or_authorized_now": false,
+    "reason": "It can encode both track identities with a new source-provenanced, non-color bridge/underpass grammar instead of suppressing protected predicted ownership or weakening the largest8 contract.",
+    "mandatory_new_gate_constraints": [
+      "Derive crossing events from actual and predicted source provenance and continuous route geometry; no capture, camera, repair-ID, or coordinate whitelist.",
+      "Deduplicate raster fragments into deterministic semantic crossing events and fail closed on ambiguous provenance or excessive glyph density.",
+      "Use a non-color-redundant bridge/underpass micro-glyph readable in standard and CVD while preserving both route identities.",
+      "Do not mutate the exact ordered 81 source IDs, digest, three repair IDs, 18/12/30 dash rhythm, endpoints, ticks, cameras, layout, thresholds, offsets, authority, or product exposure.",
+      "Require CPU raster snapshots at 1x and asymmetric 4x, player/elevated/overhead/broadcast/CVD controls, then a separately authorized targeted GPU run and independent original-resolution TA/comprehension review."
+    ]
+  },
+  "authorization_boundary": {
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "successor_product_decision_selected": false,
+    "successor_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}

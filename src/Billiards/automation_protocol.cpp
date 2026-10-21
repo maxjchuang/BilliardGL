@@ -196,6 +196,7 @@ const char* contactKindName(PhysicsContactKind kind)
 {
     if (kind == PhysicsContactKind::Rail) return "rail";
     if (kind == PhysicsContactKind::Pocket) return "pocket";
+    if (kind == PhysicsContactKind::Support) return "support";
     return "ball_ball";
 }
 
@@ -347,6 +348,21 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["rigid_domain_exceeded"] = json::Value(contact.rigidDomainExceeded);
     value["position_corrected"] = json::Value(contact.positionCorrected);
     value["time_of_impact_seconds"] = json::Value(contact.timeOfImpactSeconds);
+    value["whole_tick_time_of_impact_seconds"] =
+        json::Value(contact.wholeTickTimeOfImpactSeconds);
+    value["first_position_at_contact_cm"] =
+        pointValue(contact.firstPositionAtContactCm);
+    value["second_position_at_contact_cm"] =
+        pointValue(contact.secondPositionAtContactCm);
+    value["trajectory_generation_before"] =
+        json::Value(std::to_string(contact.trajectoryGenerationBefore));
+    value["trajectory_generation_after"] =
+        json::Value(std::to_string(contact.trajectoryGenerationAfter));
+    value["administrative_reset_after_capture"] =
+        json::Value(contact.administrativeResetAfterCapture);
+    if (contact.administrativeResetAfterCapture)
+        value["administrative_reset_position_cm"] =
+            pointValue(contact.administrativeResetPositionCm);
     value["penetration_cm"] = json::Value(contact.penetrationCm);
     value["second_ball"] = json::Value(contact.secondBall);
     value["pocket_id"] = json::Value(contact.pocketId);
@@ -367,6 +383,7 @@ json::Value serializePhysicsContact(const PhysicsContactRecord& contact)
     value["pocket_capture_signed_distance_cm"] =
         json::Value(contact.pocketCaptureSignedDistanceCm);
     value["pocket_passable"] = json::Value(contact.pocketPassable);
+    value["pocket_vertical_shaft"] = json::Value(contact.pocketVerticalShaft);
     value["pocket_capture_sequence"] =
         json::Value(static_cast<double>(contact.pocketCaptureSequence));
     return value;
@@ -384,6 +401,7 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
             json::Value(sample.contactSlipSpeedCmS);
         ball["index"] = json::Value(index);
         ball["pocketed"] = json::Value(sample.pocketed);
+        if (sample.outOfPlay) ball["out_of_play"] = json::Value(true);
         ball["pocket_id"] = json::Value(sample.pocketId);
         ball["pocket_phase"] = json::Value(
             pocketInteractionPhaseName(sample.pocketPhase));
@@ -426,6 +444,22 @@ json::Value serializePhysicsFrame(const PhysicsFrame& frame)
         item["island_limit_exceeded"] =
             json::Value(event.islandLimitExceeded);
         item["failure_code"] = json::Value(event.failureCode);
+        item["whole_tick_time_of_impact_seconds"] =
+            json::Value(event.wholeTickTimeOfImpactSeconds);
+        json::Value projections = json::Value::array();
+        for (const auto& projection : event.positionProjections) {
+            json::Value receipt = json::Value::object();
+            receipt["ordinal"] = json::Value(projection.ordinal);
+            receipt["iteration"] = json::Value(projection.iteration);
+            receipt["contact_index"] = json::Value(projection.contactIndex);
+            receipt["ball_index"] = json::Value(projection.ballIndex);
+            receipt["trajectory_generation"] =
+                json::Value(std::to_string(projection.trajectoryGeneration));
+            receipt["before_cm"] = pointValue(projection.beforeCm);
+            receipt["after_cm"] = pointValue(projection.afterCm);
+            projections.asArray().push_back(std::move(receipt));
+        }
+        item["position_projections"] = std::move(projections);
         solverEvents.asArray().push_back(item);
     }
 
@@ -494,10 +528,13 @@ json::Value serializeAutomationState(const GameRuntime& runtime)
         value["index"] = json::Value(index);
         value["angular_velocity"] = pointValue(ball.angularVelocity);
         value["pocketed"] = json::Value(ball.pocketed);
+        if (ball.outOfPlay) value["out_of_play"] = json::Value(true);
         value["position"] = pointValue(ball.position);
         value["rotation_angle"] = json::Value(ball.rotationAngle);
         value["rotation_axis"] = pointValue(ball.rotationAxis);
         value["speed"] = json::Value(ball.speed);
+        value["trajectory_generation"] = json::Value(
+            canonicalTrajectoryGeneration(ball.trajectoryGeneration));
         value["velocity"] = pointValue(ball.velocity);
         balls.asArray().push_back(value);
     }

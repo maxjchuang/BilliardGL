@@ -1,0 +1,86 @@
+{
+  "schema": "wpa_ii_15_1_signed_frozen_cue_object_declaration_lifecycle_implementation_receipt_v1",
+  "status": "PARTIAL_LIFECYCLE_CPU_VERIFIED_HEADLESS_D5_AND_AUDIT_REMAIN_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {"path": "docs/rules/wpa-ii-15-1-signed-frozen-cue-object-declaration-lifecycle-implementation-design-gate-v1.json", "sha256": "7b307f3a703e53a2cb9512a26053a7d038e8321e0a518114cae4ce165183e035", "root_revalidation": "PASS_16_OF_16_EXACT_5_PRODUCTION_3_TESTS_AND_SINGLE_CMAKE_TARGET_AUTHORIZED"},
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-15-1", "selected_option_id": "SIGNED_PRE_SHOT_FROZEN_DECLARATION"},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"}
+  },
+  "tests_first_record": {
+    "red_observed": true,
+    "red_command": "clang++ -std=c++17 -O2 -Isrc/Billiards tests/frozen_ball_declaration_tests.cpp src/Billiards/rules/referee_authority_protocol.cpp src/Billiards/rules/frozen_ball_declaration.cpp -o build-wpa-ii-15-1-red-v1/frozen_ball_declaration_tests",
+    "red_exit_code": 1,
+    "red_failure": "clang++: no such file or directory: src/Billiards/rules/frozen_ball_declaration.cpp",
+    "green_after_minimal_production_patch": true
+  },
+  "implemented_contract": {
+    "states": ["INACTIVE", "PROPOSAL_OPEN", "DECLARATION_ACTIVE", "DECLARATION_CONSUMED", "CANCELLED", "INVALIDATED"],
+    "authority": "authenticated referee proposal plus same-referee final declaration only; geometry and topology never declare",
+    "snapshot": "cue ball 0, legal live object ID, rack identity, parent rules revision and state hash are frozen before accepted shot",
+    "consume_boundary": "applyCueShot ok plus contact applied plus finite strictly-positive normal impulse",
+    "zero_rejected_unsupported_or_failed_launch_consumes": false,
+    "exact_proposal_final_cancel_retry_zero_delta": true,
+    "consumed_declaration_reactivates": false,
+    "second_shot_reuses_declaration": false,
+    "authoritative_parent_drift_invalidates_before_shot": true,
+    "reset_rules_reset_and_rerack_invalidate": true,
+    "signed_payload_synthesizes_physics_shotfacts_or_foul": false,
+    "visible_or_global_rules_ui_exposed": false
+  },
+  "automation_headless": {
+    "capability": "wpa_ii_15_1_signed_frozen_declaration_v1",
+    "commands": ["rules.frozen_cue_object_propose", "rules.frozen_cue_object_final", "rules.frozen_cue_object_cancel", "get_frozen_cue_object_declaration_state"],
+    "request_exact_field_count": 17,
+    "readback_omits": ["credential_id", "authentication_proof", "payload_canonical"],
+    "headless_only": true
+  },
+  "fixture_matrix": {
+    "positive": ["REFEREE_PROPOSE_EXACT_PAIR_DOES_NOT_DECLARE", "SAME_REFEREE_FINAL_COMMITS_PRE_SHOT_DECLARATION", "LEGAL_OBJECT_OPEN_TABLE", "LEGAL_OBJECT_ASSIGNED_GROUP", "AIM_POWER_CAMERA_PREVIEW_KEEP_ACTIVE", "POSITIVE_ACCEPTED_SHOT_CONSUMES_EXACTLY_ONCE", "CONSUMED_RECORD_BINDS_SHOT_AND_DECLARATION", "SAME_REFEREE_CANCEL_BEFORE_FINAL", "EXACT_RETRY_ZERO_DELTA", "AUTOMATION_SECRET_FREE_READBACK"],
+    "negative": ["PLAYER_OR_UNAUTHENTICATED_DECLARATION_REJECTED", "GEOMETRY_ONLY_OR_FROZEN_TOPOLOGY_CANNOT_DECLARE", "WRONG_CUE_OBJECT_OR_RELATION_REJECTED", "POCKETED_OR_ILLEGAL_OBJECT_REJECTED", "WRONG_RACK_REVISION_STATE_HASH_OR_EXPIRY_REJECTED", "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_REJECTED", "FINAL_BEFORE_PROPOSAL_OR_CHANGED_REFEREE_REJECTED", "CANCEL_AFTER_FINAL_REJECTED", "PLACEMENT_BALL_MOVE_GROUP_CHANGE_OR_TURN_RESET_INVALIDATES", "REJECTED_ZERO_UNSUPPORTED_MISCUE_OR_FAILED_LAUNCH_NOT_CONSUMED", "LATER_PHYSICS_FAILURE_DOES_NOT_REACTIVATE", "SECOND_SHOT_CANNOT_REUSE", "RESET_RERACK_OR_MATCH_COMPLETE_INVALIDATES", "IDEMPOTENCY_NONCE_OR_SHOT_CONFLICT_ZERO_DELTA", "DECLARATION_CANNOT_SYNTHESIZE_DOUBLE_HIT_PUSH_SHOTFACT_OR_FOUL", "DIRECT_MOVEMENT_NOT_AUTO_LEGALIZED", "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REFEREE_SURFACE"]
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "7707f7726c00fea24f1ec467291c7298629ead741b4d3c1669976c8382629532"},
+    {"path": "src/Billiards/rules/frozen_ball_declaration.h", "sha256": "df4916f13c6cbabdefa162a91f5ead274678fd3dfe051bf182276e2dd347b436"},
+    {"path": "src/Billiards/rules/frozen_ball_declaration.cpp", "sha256": "236e0d4887407c48b11c3c94fa0d93a8a6954634005bdc1da919d48ad80d19b4"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "d54d306cb6076e83c2e17329744ccca99a85849fa6446137f575dd8126e429c0"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "0a4a36d7c67b2eaee8f82bce1eea1ac9c81040fe8c5f12c13aaa4424e6709d0a"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "65f2a6f2ff37041dfc251b3c07d98640b4f43d48e85d1df42aba8d34d700eb77"}
+  ],
+  "test_bindings": [
+    {"path": "tests/frozen_ball_declaration_tests.cpp", "sha256": "daccc44b65a71be05c30593a9eb1475d4efd0c92ee15f94acccaeffd284e9004"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "989f314e578b7e4435612060ddd3f7934103e3292df9c72588d2e56ed6cc9f9d"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "e46fd8536567d2e5a0d51e103b89442f27036ae9cf184b9d9c1d0fc9bc4df6cf"}
+  ],
+  "cpu_verification": {
+    "build_root": "build-wpa-ii-15-1-green-v1",
+    "passed_targets": ["BilliardsFrozenBallDeclarationTests", "BilliardsRulesRuntimeIntegrationTests", "BilliardsAutomationControllerTests", "BilliardsRefereeAuthorityProtocolTests", "BilliardsGroupConfusionAuthorityTests", "BilliardsStalemateAuthorityTests", "BilliardsChineseEightBallRulesTests", "BilliardsRulesTests", "BilliardsAutomationProtocolTests"],
+    "passed_count": 9,
+    "planned_count": 10,
+    "binary_bindings": [
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsFrozenBallDeclarationTests", "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsRulesRuntimeIntegrationTests", "sha256": "d3e01b4e9fa1bb508445961475f19d7423b556756b9823f441e683fffba0cf9e", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsAutomationControllerTests", "sha256": "f6c36b25aaa5b7b31d6d69233eb67aa4abf88dc368892aa0e9ecfd3eee328112", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsRefereeAuthorityProtocolTests", "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsGroupConfusionAuthorityTests", "sha256": "067058e5de66cf434a60185a1208ee3f630a46930b59a9aa1af2050936935ee9", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsStalemateAuthorityTests", "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsChineseEightBallRulesTests", "sha256": "9aa82f0c2983932e04abcd9a8d451afbe087f535fb6190d80eff4d13e12679ba", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsRulesTests", "sha256": "6178c3c1620c13be6794c7b0fde03c4ae65ffec15ee6a02ba916bcb632f086eb", "exit_code": 0},
+      {"path": "build-wpa-ii-15-1-green-v1/BilliardsAutomationProtocolTests", "sha256": "195f6d8fcff765ebc4c4c7273de06280f58b870c8607f2f53ffc6d64e44dae90", "exit_code": 0}
+    ],
+    "blocked_target": {"target": "BilliardsRulesDecisionProductRuntimeTests", "status": "NOT_RUN_LINK_BLOCKED_EXTERNAL", "failure": "undefined symbol buildTrajectoryInsetDrawPackage from existing Phase4 product UI linkage", "in_allowlist_to_fix": false},
+    "all_executed_targets_exit_code": 0,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "completion_boundary": {
+    "signed_declaration_partial_lifecycle_implemented": true,
+    "d5_frozen_contact_classification_complete": false,
+    "wpa_ii_15_1_audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "shotfacts_rules_physics_topology_or_cue_contact_modified": false,
+    "visible_product_ui_implemented": false,
+    "global_rules_ui_exposed": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

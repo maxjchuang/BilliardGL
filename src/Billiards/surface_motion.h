@@ -3,6 +3,8 @@
 #include "game_state.h"
 #include "physics_profile.h"
 
+#include <vector>
+
 namespace billiardgl {
 
 constexpr float kStandardGravityCmS2 = 980.665f;
@@ -11,6 +13,23 @@ enum class BallMotionState : int {
     Stationary,
     Sliding,
     Rolling
+};
+
+// One exact constant-acceleration segment emitted by the same surface
+// integrator that mutates the ball.  Offsets are local until physics rebases
+// them onto the containing whole tick.
+struct SurfaceMotionAnalyticSegment {
+    int ballIndex = -1;
+    std::uint64_t trajectoryGeneration = 0;
+    int segmentOrdinal = -1;
+    BallMotionState motionState = BallMotionState::Stationary;
+    double wholeTickStartOffsetSeconds = 0.0;
+    double durationSeconds = 0.0;
+    Point3 startPositionCm;
+    Point3 endPositionCm;
+    Point3 startVelocityCmS;
+    Point3 constantAccelerationCmS2;
+    bool analyticPathComplete = false;
 };
 
 struct SurfaceMotionStep {
@@ -22,6 +41,7 @@ struct SurfaceMotionStep {
     float transitionTimeSeconds = -1.0f;
     Point3 frictionAccelerationCmS2;
     Point3 angularAccelerationRadS2;
+    std::vector<SurfaceMotionAnalyticSegment> analyticSegments;
 };
 
 const char* ballMotionStateName(BallMotionState state);

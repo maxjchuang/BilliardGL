@@ -1,0 +1,172 @@
+{
+  "schema": "billiardgl.phase4.v17.explicit_crossing_grammar_independent_ta_feasibility_failure_addendum.v1",
+  "schema_version": 1,
+  "status": "INDEPENDENT_FAIL_STRICT_GRAMMAR_INFEASIBLE_CPU_ONLY_NO_PRODUCTION_NO_GPU_NO_AUTH",
+  "scope": "Independent technical-art and renderer-contract audit of the final frozen V17 V2 standalone CPU feasibility diagnostic. It determines only that the selected strict-intersection explicit non-occluding grammar has no qualifying event for the frozen broadcast repair regions. It does not implement a successor, authorize production/CMake/GPU/readiness/capture, or claim machine, visual, comprehension, golden, beta or product acceptance.",
+  "frozen_bindings": [
+    {
+      "role": "v17_v2_final_feasibility_receipt",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/feasibility-receipt-v2.json",
+      "sha256": "03caa540de8d6f297f30e97ef3f8e69d22a8400521577aac470894131778594a"
+    },
+    {
+      "role": "v17_v2_diagnostic_source",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/phase4_v17_crossing_feasibility_cpu_diagnostic.cpp",
+      "sha256": "f672feddebf477ae1c4822b787a0c977b7f0f62228d55429f0bb391ca9998cf5"
+    },
+    {
+      "role": "v17_v2_intersection_ledger",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/intersection-ledger-v2.json",
+      "sha256": "70dddabe3f760da1e80aa1779b7010441e5cbc66018ba02d6df9b390f60a1503"
+    },
+    {
+      "role": "v17_v2_raster_ledger",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/raster-ledger-v2.json",
+      "sha256": "18258250388c015969ddf0c0de54d0fec67310a781efe94a789f871d3c54ee8a"
+    },
+    {
+      "role": "v17_v2_validator",
+      "path": "scripts/validate_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility_v2.py",
+      "sha256": "c6a1b9e5ca41dd632709ae7d9094574d6669c7ffd61e416dd882ff2045c4600e"
+    },
+    {
+      "role": "v17_v2_fail_closed_tests",
+      "path": "tests/test_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility_v2.py",
+      "sha256": "231153cdbd5819344f0344d7b861899c9b120c3574a3836ab34253907a85dd89"
+    },
+    {
+      "role": "v17_semantic_provenance_correction_gate",
+      "path": "docs/art/phase4-v17-semantic-batch-provenance-cpu-feasibility-correction-gate-v1.json",
+      "sha256": "601a9322d5452178499e0922e8b423ae403d89eb7e71fd3f70198e85b1855856"
+    },
+    {
+      "role": "v17_product_decision_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-product-decision-gate-v1.json",
+      "sha256": "c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329"
+    },
+    {
+      "role": "v16_independent_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v15_two_choice_product_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    }
+  ],
+  "restored_baselines": {
+    "trajectory_cpp": {"path": "src/Billiards/training/trajectory_overlay_renderer.cpp", "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"},
+    "trajectory_h": {"path": "src/Billiards/training/trajectory_overlay_renderer.h", "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"},
+    "modern_cpp": {"path": "src/Billiards/render/modern/modern_renderer.cpp", "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"},
+    "modern_h": {"path": "src/Billiards/render/modern/modern_renderer.h", "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"},
+    "cmake": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "independent_reproduction_audit": {
+    "final_receipt_read_only_0444": true,
+    "validator_fresh_recompile_relink_byte_replay": "PASS_ERRORS_EMPTY",
+    "fail_closed_test_count": 65,
+    "fail_closed_test_pass_count": 65,
+    "production_and_cmake_baselines_exact": true,
+    "coordinate_output_only_full_frame_generation": true,
+    "probe_and_repair_audit_occurs_after_standard_and_cvd_event_generation": true,
+    "eligibility_provenance": "unique exact existing semantic batch range + uniform nonzero finalOwnershipToken + track + arcSegmentId + exact primitiveId + Core/Core role",
+    "normalized_stem_use": "event deduplication metadata only after exact primitive association",
+    "contrast_probe_or_repair_id_used_for_eligibility": false,
+    "source_token_batch_primitive_or_arc_growth": 0,
+    "ordered_contrast_probe_count": 81,
+    "ordered_contrast_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_profiles": ["center_1x", "asymmetric_2x", "asymmetric_4x"],
+    "exact_case_count": 18,
+    "standard_cvd_topology_and_raster_metrics_identical": true,
+    "one_two_four_sample_metrics_are_real_not_relabels": true
+  },
+  "independent_failure_finding": {
+    "classification": "V17_PRIORITY_TWO_STRICT_INTERSECTION_GRAMMAR_INFEASIBLE",
+    "actual_descriptor_count": 81,
+    "missing_actual_semantic_descriptor_count": 0,
+    "predicted_dash_on_descriptor_count": 68,
+    "missing_predicted_semantic_descriptor_count": 0,
+    "evaluated_pair_count": 5508,
+    "pair_count_identity": "81 * 68 = 5508",
+    "disjoint_pair_count": 5508,
+    "strict_interior_nonparallel_event_count": 0,
+    "event_inventory_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repair_case_result": "0_FEASIBLE_18_INFEASIBLE",
+    "why_this_is_not_the_v1_sparse_probe_failure": "All 149 analytic descriptors have exact semantic provenance and all 5508 pairs reach the geometric predicate; zero pairs are rejected for missing probe or semantic provenance.",
+    "why_the_selected_grammar_cannot_emit": "The selected grammar requires a unique strict interior nonparallel actual-centerline by predicted dash-on-centerline intersection. Every qualified pair is disjoint, even though finite-width raster silhouettes overlap in the repair regions.",
+    "synthetic_bracket_fixture_passed": true,
+    "synthetic_fixture_is_frozen_scene_feasibility": false,
+    "frozen_bracket_emitted": false,
+    "implementation_acceptance": false,
+    "gpu_or_readiness_may_follow": false
+  },
+  "two_choice_disposition": {
+    "v15_gate_defined_exactly_two_mutually_exclusive_bounded_choices": true,
+    "priority_one": {
+      "decision_id": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+      "disposition": "REJECTED_BY_V16_REPRODUCIBLE_FULL_FRAME_PREMISE_FALSIFICATION",
+      "may_resume_under_existing_gate": false
+    },
+    "priority_two": {
+      "decision_id": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+      "disposition": "REJECTED_BY_V17_CORRECTED_REPRODUCIBLE_STRICT_INTERSECTION_INFEASIBILITY",
+      "may_resume_under_existing_gate": false
+    },
+    "bounded_choice_remaining": false,
+    "product_implementation_path_remaining_under_current_two_choice_gate": false,
+    "automatic_fallback_or_scope_expansion_allowed": false
+  },
+  "successor_product_decision_requirement": {
+    "new_root_product_decision_required": true,
+    "candidate_decision_for_evaluation_not_selected": "PROJECTED_NEAR_OR_COAXIAL_NON_OCCLUDING_GRAMMAR",
+    "why_a_new_decision_is_required": "The observed repair failures are finite-width projected overlap/near-coaxial relationships without strict centerline intersections. Encoding them requires a new semantic relationship class beyond both frozen V15 choices.",
+    "minimum_questions_for_root": [
+      "May a source-provenanced projected-near or coaxial relationship, rather than only a strict nonparallel centerline intersection, trigger a non-occluding grammar?",
+      "What analytic distance/overlap and route-order semantics define one event without coordinate, camera, capture, repair-ID, color or prior-result input?",
+      "What deterministic density/ambiguity limit fails closed when several projected-near or coaxial candidates compete?",
+      "Must the grammar represent direction/ownership for both routes while preserving the predicted silhouette and all frozen IDs, rhythm, endpoints, ticks, thresholds, cameras and controls?"
+    ],
+    "constraints_if_root_later_selects_a_successor": [
+      "Use existing semantic batch/finalOwnershipToken + track + arcSegmentId + exact primitive provenance; normalized stems may dedupe only after exact association.",
+      "Generate the complete full-frame relationship inventory before any repair coordinate/ID matching; no coordinate whitelist or scene-specific source whitelist.",
+      "Preserve exact 81 contrast-probe IDs/digest, three repair IDs, source/token counts, 18/12/30 rhythm, endpoints, ticks, cameras, layout, thresholds, offsets, authority and product exposure.",
+      "Prove standard/CVD and 1x/2x/4x CPU topology, bounded density and negative ambiguity cases before any separately gated implementation.",
+      "Require a new implementation gate, then separately authorized GPU capture and independent original-resolution TA/human comprehension review."
+    ],
+    "candidate_selected_now": false,
+    "successor_gate_created_here": false,
+    "implementation_authorized_here": false
+  },
+  "authorization_boundary": {
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "successor_product_decision_selected": false,
+    "successor_gate_authorized": false,
+    "successor_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "human_comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}

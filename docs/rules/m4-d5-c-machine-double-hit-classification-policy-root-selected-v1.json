@@ -1,0 +1,75 @@
+{
+  "schema": "m4_d5_c_machine_double_hit_classification_policy_root_selected_v1",
+  "selection_id": "m4-d5-c-root-selected-2026-08-12-v1",
+  "status": "ROOT_SELECTED_POLICY_ONLY_IMPLEMENTATION_NOT_AUTHORIZED",
+  "selected_by": "ROOT_PM",
+  "selected_on": "2026-08-12",
+  "input_bindings": {
+    "candidate_gate": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-policy-candidate-gate-v1.json",
+      "sha256": "cf89e3491e7eac9d41704c73784e625125292bf28526c7044c303be6fd172be9"
+    },
+    "root_policy_bundle": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"
+    },
+    "d5_a_receipt": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+      "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6"
+    },
+    "d5_b_receipt": {
+      "path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json",
+      "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"
+    }
+  },
+  "root_selection_directive": {
+    "source": "explicit collaboration message from /root to /root/cpp_graphics_baselines",
+    "semantic_text": "Root正式选择D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER：gap/graze阈值null、tie tolerance=0 raw exact；仅complete canonical interval count>1自动double-hit foul，其余close/light-graze/EQUAL走现有signed referee review，不自动判。请先冻结root-selected policy artifact+validator/mutations（design-only），再据此做独立implementation design gate；未复验前不改production。",
+    "semantic_sha256": "be012b449b6c8fc302d679db09eb362ae8f8025f7f187522071e73dec78e98ea"
+  },
+  "selected_bundle": {
+    "id": "D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER",
+    "candidate_order": 1,
+    "root_selected": true,
+    "constants": {
+      "very_close_surface_gap_cm": null,
+      "light_graze_normal_impulse_ratio": null,
+      "tip_separation_tie_tolerance_seconds": 0.0
+    },
+    "automatic_predicate": "complete canonical cue-tip interval count > 1",
+    "automatic_result": "DOUBLE_HIT_FOUL",
+    "single_interval_signed_close_case_and_raw_before": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "raw_equal": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "light_graze": "SIGNED_REFEREE_REVIEW_REQUIRED",
+    "incomplete_evidence": "INCOMPLETE_NO_CLASSIFICATION",
+    "single_interval_without_signed_close_case": "NO_DOUBLE_HIT_OBSERVED"
+  },
+  "selection_semantics": {
+    "gap_or_graze_numeric_machine_branch_enabled": false,
+    "raw_exact_order_preserved": true,
+    "equal_rewritten_as_before": false,
+    "signed_referee_review_is_automatic_foul": false,
+    "review_needed_is_foul": false,
+    "selection_is_implementation": false,
+    "selection_closes_wpa_ii_12_5_6_or_15_1": false,
+    "selection_closes_d5_or_m4": false
+  },
+  "implementation_permissions": {
+    "independent_implementation_design_gate_may_be_prepared": true,
+    "production_or_cmake_change_allowed_before_gate_revalidation": false,
+    "tests_first_implementation_authorized": false,
+    "rules_or_shotfacts_consumer_authorized": false,
+    "visible_or_global_ui_allowed": false,
+    "gpu_readiness_or_authorization_allowed": false
+  },
+  "claims": {
+    "policy_selected": true,
+    "implementation_started": false,
+    "machine_double_hit_classification_implemented": false,
+    "audit_row_promoted": false,
+    "d5_complete": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "gpu_executed_or_authorized": false
+  }
+}

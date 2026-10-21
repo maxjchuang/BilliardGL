@@ -1,0 +1,29 @@
+{
+  "schema": "BGL_EXACT_RESEARCH_SOURCE_BACKUP_V1",
+  "sha256": "65473bd4a1801ff42d00d19ff3c67483511368f1304fbd508eeeb6798a10fcbf",
+  "bytes": 105909680,
+  "files": 100756,
+  "parts": [
+    {
+      "path": "evidence-source-snapshot.zip.part01",
+      "bytes": 33554432,
+      "sha256": "c03e224d253fd7b6390dec24a325eaa85b6fd71666d18a625db1bf972fb0f562"
+    },
+    {
+      "path": "evidence-source-snapshot.zip.part02",
+      "bytes": 33554432,
+      "sha256": "5aecd6b2de4ec87e0c37748fb65c3e59638f754790ba3352250b6ffe40d405d2"
+    },
+    {
+      "path": "evidence-source-snapshot.zip.part03",
+      "bytes": 33554432,
+      "sha256": "2686c469ba33f676224a5ebc57d3657afdee85bf0fac6d03ec65257d2baee4df"
+    },
+    {
+      "path": "evidence-source-snapshot.zip.part04",
+      "bytes": 5246384,
+      "sha256": "0ee597082e7123930138fecf4f06e1ffb7ebd8c33dc2ec5bdae02c984554cb1d"
+    }
+  ],
+  "excluded": "Full raw results/logs/frames/binaries/large JSON/external assets remain in original local paths, NOT uploaded. This is source backup, not M4 acceptance or full evidence backup."
+}

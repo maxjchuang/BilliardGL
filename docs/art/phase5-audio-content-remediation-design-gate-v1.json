@@ -1,0 +1,564 @@
+{
+  "schema": "phase5_audio_content_remediation_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase5_audio_content_remediation_design_gate_v1",
+  "gate_status": "DESIGN_GATE",
+  "content_acceptance_status": "NOT_CONTENT_ACCEPTANCE",
+  "evidence_boundary": {
+    "read_only_input_audit": true,
+    "source_or_wav_mutation_claimed": false,
+    "runtime_playback_claimed": false,
+    "actual_device_playback_claimed": false,
+    "listening_review_claimed": false,
+    "external_human_review_claimed": false,
+    "original_authorship_claimed": false,
+    "license_or_chain_of_title_claimed": false,
+    "beta_audio_disposition_claimed": false,
+    "product_audio_acceptance_claimed": false
+  },
+  "input_bindings": [
+    {
+      "role": "wav_current_notification_alias",
+      "path": "src/Billiards/audio/GameOver.wav",
+      "sha256": "sha256:e014e7656fbb320fa6b90009cb8e8c46e833eae125c037aeb794d8619b2b4159"
+    },
+    {
+      "role": "wav_current_music_and_ambience_alias",
+      "path": "src/Billiards/audio/background.wav",
+      "sha256": "sha256:74d48c8d956e023b0f9d1b105d5a2ee76f833669363ee4476c621e007bd8aa18"
+    },
+    {
+      "role": "wav_current_distinct_pocket_drop",
+      "path": "src/Billiards/audio/ballin.wav",
+      "sha256": "sha256:b0560e4f4432f222991bb8577440a5d9bac31e90fc92b0295c2337f308b9630e"
+    },
+    {
+      "role": "wav_current_impact_alias",
+      "path": "src/Billiards/audio/hit.wav",
+      "sha256": "sha256:7f00432c547beac07d3f4db0b7b5d4ea59ec9232eb3649926a277972463fd757"
+    },
+    {
+      "role": "audio_asset_policy_interface",
+      "path": "src/Billiards/audio/audio_asset_policy.h",
+      "sha256": "sha256:4fd8d0bdcc5255504390bfae32f317cf6e4e6a0140043ef514b853608e86e937"
+    },
+    {
+      "role": "audio_asset_policy_mapping",
+      "path": "src/Billiards/audio/audio_asset_policy.cpp",
+      "sha256": "sha256:d69a6c28f9a2d65fb23724e64c67c22ea528144972b8179f44bc4e6f7e50f8b0"
+    },
+    {
+      "role": "audio_cue_and_bus_inventory",
+      "path": "src/Billiards/audio/audio_event_mapper.h",
+      "sha256": "sha256:208f85bdf66ff0c97569ef03a320877185406e640a9266d55c9cd0edb7918af8"
+    },
+    {
+      "role": "beta_qa_audio_gate_protocol",
+      "path": "docs/art/phase5-beta-qa-protocol.md",
+      "sha256": "sha256:2c96f09054d78d12b779acdb5cd6f74604d9f25f3d56ceb905552e065698d560"
+    },
+    {
+      "role": "beta_qa_audio_contract_generator",
+      "path": "scripts/generate_phase5_beta_qa_templates.py",
+      "sha256": "sha256:6eff09621c21a9685833582c47d82a7a461725180e20fe5892e795287195f6ac"
+    },
+    {
+      "role": "beta_qa_audio_contract_validator",
+      "path": "scripts/validate_phase5_beta_qa.py",
+      "sha256": "sha256:711db64f8855093d01cbc3523271ad813d277e1a7c5d02d5404cd974dfec28c1"
+    }
+  ],
+  "measurement_method": {
+    "decoder": "Python standard-library wave reader over repository bytes",
+    "accepted_input_for_this_measurement": "RIFF/WAVE uncompressed little-endian signed PCM16 only",
+    "duration": "frame_count / sample_rate_hz",
+    "sample_peak": "maximum absolute signed PCM sample divided by 32768; dBFS = 20*log10(linear)",
+    "rms": "unweighted full-file RMS across all interleaved PCM samples divided by 32768; dBFS = 20*log10(linear)",
+    "per_channel_metrics": true,
+    "full_scale_sample_definition": "signed PCM sample equals -32768 or 32767",
+    "reliably_measured": [
+      "container",
+      "encoding",
+      "bit_depth",
+      "channels",
+      "sample_rate_hz",
+      "frame_count",
+      "duration_seconds",
+      "sample_peak_linear",
+      "sample_peak_dbfs",
+      "unweighted_full_file_rms_linear",
+      "unweighted_full_file_rms_dbfs",
+      "full_scale_sample_count",
+      "dc_offset_linear",
+      "RIFF chunk inventory"
+    ],
+    "not_measured": {
+      "true_peak_dbtp": "NOT_MEASURED",
+      "integrated_lufs": "NOT_MEASURED",
+      "loudness_range_lu": "NOT_MEASURED",
+      "frequency_weighted_or_active_region_rms": "NOT_MEASURED",
+      "perceptual_clipping_or_distortion": "NOT_MEASURED",
+      "perceptual_loop_seam": "NOT_MEASURED",
+      "semantic_identification": "NOT_MEASURED",
+      "device_playback_behavior": "NOT_MEASURED"
+    },
+    "interpretation_limit": "A full-scale sample is an objective headroom warning, not by itself proof of audible clipping. File-wide RMS is not LUFS and is not a listening judgment."
+  },
+  "wav_measurements": [
+    {
+      "path": "src/Billiards/audio/GameOver.wav",
+      "sha256": "sha256:e014e7656fbb320fa6b90009cb8e8c46e833eae125c037aeb794d8619b2b4159",
+      "byte_size": 1400044,
+      "container": "RIFF_WAVE",
+      "encoding": "PCM_SIGNED_LE",
+      "bits_per_sample": 16,
+      "channels": 2,
+      "sample_rate_hz": 22050,
+      "frame_count": 350000,
+      "duration_seconds": 15.873015873,
+      "sample_peak_linear": 1.0,
+      "sample_peak_dbfs": 0.0,
+      "unweighted_full_file_rms_linear": 0.225017817,
+      "unweighted_full_file_rms_dbfs": -12.955662,
+      "full_scale_sample_count": 111,
+      "riff_chunks": ["fmt ", "data"],
+      "embedded_smpl_loop_points": false,
+      "per_channel": [
+        {
+          "channel_index": 0,
+          "sample_peak_dbfs": 0.0,
+          "unweighted_full_file_rms_dbfs": -12.932676,
+          "full_scale_sample_count": 56,
+          "dc_offset_linear": 0.000678584
+        },
+        {
+          "channel_index": 1,
+          "sample_peak_dbfs": 0.0,
+          "unweighted_full_file_rms_dbfs": -12.97877,
+          "full_scale_sample_count": 55,
+          "dc_offset_linear": 0.000700488
+        }
+      ],
+      "machine_flags": [
+        "sample_peak_has_no_headroom",
+        "full_scale_samples_present",
+        "sample_rate_below_proposed_48000_hz_delivery_master"
+      ]
+    },
+    {
+      "path": "src/Billiards/audio/background.wav",
+      "sha256": "sha256:74d48c8d956e023b0f9d1b105d5a2ee76f833669363ee4476c621e007bd8aa18",
+      "byte_size": 25947812,
+      "container": "RIFF_WAVE",
+      "encoding": "PCM_SIGNED_LE",
+      "bits_per_sample": 16,
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "frame_count": 6486912,
+      "duration_seconds": 147.095510204,
+      "sample_peak_linear": 0.924560547,
+      "sample_peak_dbfs": -0.681293,
+      "unweighted_full_file_rms_linear": 0.062383004,
+      "unweighted_full_file_rms_dbfs": -24.098674,
+      "full_scale_sample_count": 0,
+      "riff_chunks": ["fmt ", "data", "LIST"],
+      "embedded_smpl_loop_points": false,
+      "whole_file_boundary_sample_jump": {
+        "channel_0_linear": 0.0,
+        "channel_1_linear": 0.0,
+        "interpretation": "Endpoint equality is measured, but it does not prove a perceptually seamless spectral or rhythmic loop."
+      },
+      "per_channel": [
+        {
+          "channel_index": 0,
+          "sample_peak_dbfs": -1.753112,
+          "unweighted_full_file_rms_dbfs": -24.567348,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": -0.000011887
+        },
+        {
+          "channel_index": 1,
+          "sample_peak_dbfs": -0.681293,
+          "unweighted_full_file_rms_dbfs": -23.675688,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": 0.000011032
+        }
+      ],
+      "machine_flags": [
+        "sample_peak_exceeds_proposed_minus_1_dbfs_limit",
+        "sample_rate_below_proposed_48000_hz_delivery_master",
+        "one_waveform_is_aliased_as_music_and_ambience"
+      ]
+    },
+    {
+      "path": "src/Billiards/audio/ballin.wav",
+      "sha256": "sha256:b0560e4f4432f222991bb8577440a5d9bac31e90fc92b0295c2337f308b9630e",
+      "byte_size": 13256,
+      "container": "RIFF_WAVE",
+      "encoding": "PCM_SIGNED_LE",
+      "bits_per_sample": 16,
+      "channels": 2,
+      "sample_rate_hz": 11025,
+      "frame_count": 3303,
+      "duration_seconds": 0.299591837,
+      "sample_peak_linear": 0.289398193,
+      "sample_peak_dbfs": -10.770084,
+      "unweighted_full_file_rms_linear": 0.026701247,
+      "unweighted_full_file_rms_dbfs": -31.469369,
+      "full_scale_sample_count": 0,
+      "riff_chunks": ["fmt ", "data"],
+      "embedded_smpl_loop_points": false,
+      "per_channel": [
+        {
+          "channel_index": 0,
+          "sample_peak_dbfs": -10.770084,
+          "unweighted_full_file_rms_dbfs": -31.469369,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": -0.000030832
+        },
+        {
+          "channel_index": 1,
+          "sample_peak_dbfs": -10.770084,
+          "unweighted_full_file_rms_dbfs": -31.469369,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": -0.000030832
+        }
+      ],
+      "machine_flags": [
+        "sample_rate_below_proposed_48000_hz_delivery_master",
+        "policy_marks_this_as_the_only_current_one_to_one_distinct_transient"
+      ]
+    },
+    {
+      "path": "src/Billiards/audio/hit.wav",
+      "sha256": "sha256:7f00432c547beac07d3f4db0b7b5d4ea59ec9232eb3649926a277972463fd757",
+      "byte_size": 41180,
+      "container": "RIFF_WAVE",
+      "encoding": "PCM_SIGNED_LE",
+      "bits_per_sample": 16,
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "frame_count": 10249,
+      "duration_seconds": 0.232403628,
+      "sample_peak_linear": 0.850891113,
+      "sample_peak_dbfs": -1.40252,
+      "unweighted_full_file_rms_linear": 0.044305223,
+      "unweighted_full_file_rms_dbfs": -27.070901,
+      "full_scale_sample_count": 0,
+      "riff_chunks": ["fmt ", "data", "LIST"],
+      "embedded_smpl_loop_points": false,
+      "per_channel": [
+        {
+          "channel_index": 0,
+          "sample_peak_dbfs": -1.40252,
+          "unweighted_full_file_rms_dbfs": -27.144342,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": 0.00007645
+        },
+        {
+          "channel_index": 1,
+          "sample_peak_dbfs": -1.438419,
+          "unweighted_full_file_rms_dbfs": -26.998682,
+          "full_scale_sample_count": 0,
+          "dc_offset_linear": 0.000033989
+        }
+      ],
+      "machine_flags": [
+        "sample_rate_below_proposed_48000_hz_delivery_master",
+        "one_waveform_is_aliased_across_four_impact_semantics"
+      ]
+    }
+  ],
+  "policy_snapshot": {
+    "audio_cue_kind_count": 10,
+    "physical_wav_count": 4,
+    "one_to_one_distinct_semantic_asset_count": 1,
+    "aliased_semantic_cue_count": 9,
+    "pitch_supported_for_any_binding": false,
+    "bindings": [
+      {
+        "file": "hit.wav",
+        "alias_group": "impact_hit_alias",
+        "status": "degraded_asset_alias",
+        "loop": false,
+        "pitch_supported": false,
+        "semantic_cues": ["cue_impact", "ball_ball", "rail", "pocket_jaw"]
+      },
+      {
+        "file": "ballin.wav",
+        "alias_group": "pocket_drop",
+        "status": "distinct_asset",
+        "loop": false,
+        "pitch_supported": false,
+        "semantic_cues": ["pocket_drop"]
+      },
+      {
+        "file": "GameOver.wav",
+        "alias_group": "notification_gameover_alias",
+        "status": "degraded_asset_alias",
+        "loop": false,
+        "pitch_supported": false,
+        "semantic_cues": ["ui_feedback", "foul", "match_finish"]
+      },
+      {
+        "file": "background.wav",
+        "alias_group": "background_loop_alias",
+        "status": "degraded_asset_alias",
+        "loop": true,
+        "pitch_supported": false,
+        "semantic_cues": ["music_loop", "venue_ambience"]
+      }
+    ]
+  },
+  "semantic_alias_risks": [
+    {
+      "alias_group": "impact_hit_alias",
+      "severity": "HIGH",
+      "risk": "Cue strike, ball-ball contact, rail contact, and pocket-jaw contact resolve to byte-identical content. Without supported pitch variation, the sound cannot independently identify material/contact semantics and can weaken shot-event readability during dense collisions.",
+      "affected_buses": ["effects"]
+    },
+    {
+      "alias_group": "notification_gameover_alias",
+      "severity": "HIGH",
+      "risk": "Routine UI feedback, foul notification, and match finish resolve to the same 15.873-second waveform. Shared content collapses urgency and outcome hierarchy and can cause an ordinary interaction to sound equivalent to a terminal match event.",
+      "affected_buses": ["ui"]
+    },
+    {
+      "alias_group": "background_loop_alias",
+      "severity": "HIGH",
+      "risk": "Music and venue ambience use the same decoded waveform. Separate bus gains or mute controls do not make the content semantically distinct; the two user controls may appear functionally redundant.",
+      "affected_buses": ["music", "ambience"]
+    },
+    {
+      "alias_group": "cross_asset_technical_consistency",
+      "severity": "MEDIUM",
+      "risk": "The four repository files mix 11.025, 22.05, and 44.1 kHz PCM16 sources. Runtime resampling and unequal source bandwidth can make cues inconsistent even before artistic balancing.",
+      "affected_buses": ["music", "ambience", "effects", "ui"]
+    }
+  ],
+  "phase5_degraded_audio_gates": [
+    {
+      "record_id": "audio_alias_impact",
+      "file": "hit.wav",
+      "alias_group": "impact_hit_alias",
+      "semantic_cues": ["cue_impact", "ball_ball", "rail", "pocket_jaw"],
+      "protocol_required_status": "degraded_asset_alias",
+      "protocol_required_claimed_distinct_asset": false,
+      "protocol_required_claimed_pitch_supported": false,
+      "protocol_allowed_external_content_dispositions": ["ACCEPTED_DEGRADED", "BLOCKED"],
+      "disposition_by_this_design_gate": "NOT_SET",
+      "status_by_this_design_gate": "NOT_CONTENT_ACCEPTANCE"
+    },
+    {
+      "record_id": "audio_alias_notifications",
+      "file": "GameOver.wav",
+      "alias_group": "notification_gameover_alias",
+      "semantic_cues": ["ui_feedback", "foul", "match_finish"],
+      "protocol_required_status": "degraded_asset_alias",
+      "protocol_required_claimed_distinct_asset": false,
+      "protocol_required_claimed_pitch_supported": false,
+      "protocol_allowed_external_content_dispositions": ["ACCEPTED_DEGRADED", "BLOCKED"],
+      "disposition_by_this_design_gate": "NOT_SET",
+      "status_by_this_design_gate": "NOT_CONTENT_ACCEPTANCE"
+    },
+    {
+      "record_id": "audio_alias_music",
+      "file": "background.wav",
+      "alias_group": "background_loop_alias",
+      "semantic_cues": ["music_loop"],
+      "protocol_required_status": "degraded_asset_alias",
+      "protocol_required_claimed_distinct_asset": false,
+      "protocol_required_claimed_pitch_supported": false,
+      "protocol_allowed_external_content_dispositions": ["ACCEPTED_DEGRADED", "BLOCKED"],
+      "disposition_by_this_design_gate": "NOT_SET",
+      "status_by_this_design_gate": "NOT_CONTENT_ACCEPTANCE"
+    },
+    {
+      "record_id": "audio_alias_ambience",
+      "file": "background.wav",
+      "alias_group": "background_loop_alias",
+      "semantic_cues": ["venue_ambience"],
+      "protocol_required_status": "degraded_asset_alias",
+      "protocol_required_claimed_distinct_asset": false,
+      "protocol_required_claimed_pitch_supported": false,
+      "protocol_allowed_external_content_dispositions": ["ACCEPTED_DEGRADED", "BLOCKED"],
+      "disposition_by_this_design_gate": "NOT_SET",
+      "status_by_this_design_gate": "NOT_CONTENT_ACCEPTANCE"
+    }
+  ],
+  "production_distinct_asset_minimum": {
+    "new_original_distinct_assets_required": 9,
+    "existing_one_to_one_asset_requiring_revalidation": 1,
+    "final_one_to_one_semantic_asset_count": 10,
+    "requirements": [
+      {
+        "asset_id": "cue_impact",
+        "bus": "effects",
+        "type": "one_shot_transient",
+        "source_replaces": "hit.wav alias"
+      },
+      {
+        "asset_id": "ball_ball",
+        "bus": "effects",
+        "type": "one_shot_transient",
+        "source_replaces": "hit.wav alias"
+      },
+      {
+        "asset_id": "rail",
+        "bus": "effects",
+        "type": "one_shot_transient",
+        "source_replaces": "hit.wav alias"
+      },
+      {
+        "asset_id": "pocket_jaw",
+        "bus": "effects",
+        "type": "one_shot_transient",
+        "source_replaces": "hit.wav alias"
+      },
+      {
+        "asset_id": "pocket_drop",
+        "bus": "effects",
+        "type": "one_shot_transient",
+        "source_replaces": "retain or replace ballin.wav after the same technical, provenance, and listening gates"
+      },
+      {
+        "asset_id": "ui_feedback",
+        "bus": "ui",
+        "type": "one_shot_notification",
+        "source_replaces": "GameOver.wav alias"
+      },
+      {
+        "asset_id": "foul",
+        "bus": "ui",
+        "type": "one_shot_notification",
+        "source_replaces": "GameOver.wav alias"
+      },
+      {
+        "asset_id": "match_finish",
+        "bus": "ui",
+        "type": "one_shot_notification",
+        "source_replaces": "GameOver.wav alias"
+      },
+      {
+        "asset_id": "music_loop",
+        "bus": "music",
+        "type": "stereo_loop",
+        "source_replaces": "background.wav alias"
+      },
+      {
+        "asset_id": "venue_ambience",
+        "bus": "ambience",
+        "type": "stereo_loop",
+        "source_replaces": "background.wav alias"
+      }
+    ],
+    "authorship_and_rights_gate": {
+      "required": true,
+      "requirements": [
+        "Each final master has a unique asset ID, author/source record, creation date, and signed chain-of-title or compatible production license.",
+        "Source recordings, synthesized layers, third-party libraries, and model-generated material are disclosed per layer.",
+        "No asset is marked original or licensed from filename, metadata, repository presence, or this machine audit alone."
+      ],
+      "current_status": "NOT_MEASURED"
+    }
+  },
+  "future_content_acceptance_gates": {
+    "delivery_format": {
+      "master_container": "RIFF_WAVE",
+      "master_encoding": "PCM",
+      "sample_rate_hz": 48000,
+      "bits_per_sample": 24,
+      "point_source_one_shot_channels": "mono unless intentional stereo field is documented",
+      "music_and_ambience_channels": "stereo",
+      "runtime_derivative_must_bind_master_sha": true,
+      "lossy_source_or_transcode_allowed": false
+    },
+    "loudness_and_peak": {
+      "all_assets_sample_peak_dbfs_lte": -1.0,
+      "all_assets_true_peak_dbtp_lte": -1.0,
+      "effects_and_ui_active_region_rms_dbfs_range": [-30.0, -14.0],
+      "music_integrated_lufs_target": -24.0,
+      "music_integrated_lufs_tolerance": 2.0,
+      "ambience_integrated_lufs_target": -30.0,
+      "ambience_integrated_lufs_tolerance": 3.0,
+      "active_region_definition": "Trim only leading/trailing regions continuously below -60 dBFS for at least 10 ms; report both active-region and full-file RMS.",
+      "measurement_requirement": "Use a version-recorded true-peak and ITU-R BS.1770 loudness implementation; the current audit does not supply these measurements."
+    },
+    "transient_integrity": {
+      "impact_onset_to_peak_ms_lte": 20,
+      "notification_onset_to_peak_ms_lte": 50,
+      "one_shot_active_crest_factor_db_range": [6.0, 24.0],
+      "one_shot_last_10ms_rms_dbfs_lte": -60.0,
+      "hard_trim_clicks_allowed": false,
+      "same_base_waveform_with_gain_pan_or_unsupported_pitch_only_allowed": false,
+      "semantic_envelope_requirement": "Cue impact, ball-ball, rail, pocket jaw, pocket drop, UI feedback, foul, and match finish each require a deliberately different onset, body, and decay appropriate to the named event."
+    },
+    "loop_integrity": {
+      "applies_to": ["music_loop", "venue_ambience"],
+      "minimum_duration_seconds": 30.0,
+      "embedded_loop_points_or_explicit_full_file_loop_contract_required": true,
+      "boundary_sample_jump_dbfs_lte": -60.0,
+      "head_tail_100ms_rms_delta_db_lte": 1.0,
+      "spectral_or_rhythmic_discontinuity_machine_check": "PASS_REQUIRED",
+      "three_consecutive_cycles_independent_listening": "REQUIRED_NOT_PERFORMED",
+      "music_and_ambience_decoded_pcm_must_differ": true
+    },
+    "no_clipping": {
+      "full_scale_sample_count": 0,
+      "flat_top_run_count": 0,
+      "sample_peak_dbfs_lte": -1.0,
+      "true_peak_dbtp_lte": -1.0,
+      "audible_distortion_independent_listening": "REQUIRED_NOT_PERFORMED"
+    },
+    "semantic_distinguishability": {
+      "unique_file_sha256_per_semantic_asset": true,
+      "unique_decoded_pcm_sha256_per_semantic_asset": true,
+      "gain_pan_trim_or_metadata_only_variants_allowed": false,
+      "blind_test_required": true,
+      "minimum_independent_external_reviewers": 5,
+      "randomized_repetitions_per_cue_per_reviewer": 3,
+      "minimum_overall_correct_identification_fraction": 0.8,
+      "minimum_per_cue_correct_identification_fraction": 0.7,
+      "maximum_pairwise_confusion_fraction": 0.25,
+      "required_playback_classes": ["reference_headphones", "representative_integrated_speakers"],
+      "current_status": "NOT_MEASURED"
+    },
+    "runtime_and_beta_reconciliation": {
+      "exact_semantic_id_to_unique_asset_mapping_required": true,
+      "pitch_supported_may_remain_false": true,
+      "music_and_ambience_bus_controls_must_produce_independent_content": true,
+      "current_beta_contract_accepts_only_degraded_asset_alias_for_the_four_records": true,
+      "required_after_asset_replacement": "Revise AudioAssetPolicy and the Phase 5 generator/validator/protocol together, bind new WAV and source SHAs, then run actual playback and external content review. Until that revision, claiming distinct assets in a Beta record is correctly rejected."
+    }
+  },
+  "current_machine_gap_summary": {
+    "wav_count": 4,
+    "wav_at_proposed_48000_hz_24_bit_master_format": 0,
+    "wav_meeting_proposed_minus_1_dbfs_sample_peak": 2,
+    "wav_with_zero_full_scale_samples": 3,
+    "wav_with_embedded_smpl_loop_points": 0,
+    "semantic_cue_count": 10,
+    "semantic_cues_with_one_to_one_distinct_policy_binding": 1,
+    "semantic_cues_requiring_new_distinct_content": 9,
+    "true_peak_measured_count": 0,
+    "integrated_lufs_measured_count": 0,
+    "listening_review_completed_count": 0,
+    "external_human_content_disposition_count": 0,
+    "license_or_original_authorship_verified_count": 0,
+    "blocking_findings": [
+      "GameOver.wav has 0 dBFS sample peak and 111 full-scale PCM samples; audible clipping remains NOT_MEASURED.",
+      "background.wav has -0.681293 dBFS sample peak, above the proposed -1 dBFS sample headroom limit.",
+      "All four current files are below the proposed 48 kHz/24-bit delivery-master format.",
+      "Nine semantic cue kinds remain shared aliases rather than one-to-one distinct assets.",
+      "No true-peak, LUFS, perceptual loop, listening, external-human, device-playback, authorship, or rights evidence exists in this design gate."
+    ]
+  },
+  "acceptance": {
+    "implementation_or_content_production_may_use_this_gate_as_requirements": true,
+    "existing_degraded_assets_accepted_by_this_gate": false,
+    "new_assets_accepted_by_this_gate": false,
+    "phase5_beta_audio_records_completed_by_this_gate": false,
+    "product_default_switch_authorized": false,
+    "result": "DESIGN_GATE/NOT_CONTENT_ACCEPTANCE"
+  }
+}

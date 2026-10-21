@@ -1,0 +1,125 @@
+{
+  "schema": "billiardgl.phase4.v19.cp4_d_core41_restore_ownership_allowlist_correction_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_SINGLE_OUTER_RESTORE_OWNER_DESIGN_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU_NO_AUTH",
+  "scope": "Design-only correction to the frozen CP4-D current-LDR chrome gate. It adds only the Core41 Product UI dispatch header and implementation to that gate's future candidate allowlist so begin-frame restoration ownership can be made observable and singular. This artifact performs no production edit, build, GPU run, readiness, capture, machine, TA-visual, human, product, M3, golden or beta acceptance.",
+  "frozen_bindings": [
+    {
+      "path": "docs/art/phase4-v19-cp4-d-product-ui-chrome-submission-correction-design-gate-v1.json",
+      "sha256": "dab3bd181ecff6f631249fc629b377b6e3e3a327bdc61e72358dde7467be54f7"
+    }
+  ],
+  "nonfinal_failure_binding": {
+    "classification": "DOUBLE_RESTORE_AND_UNOBSERVED_INTERNAL_RESTORE_RESULT_FAIL_OPEN",
+    "source_sha256": {
+      "src/Billiards/render/modern/product_ui_gl_core41.h": "6d81f709b48c00108233765c6835163edff381a92f1c5c1b4dff7dc46d79b8fc",
+      "src/Billiards/render/modern/product_ui_gl_core41.cpp": "2b54ae4b765d5faaccbaff4438e086d1818b3f26b5b6dfa5fd058b8d28197fd4",
+      "src/Billiards/render/ui/product_ui_gpu_renderer.h": "7efed99e830c9ddf5b33a6dd58fbb64a576ac36d02aa5bfff69291a95387ef12",
+      "src/Billiards/render/ui/product_ui_gpu_renderer.cpp": "50543bce8356d6cac8000b1f9d84bf4f6d1ea798055dadaa3e7ea9ac4c4aedeb",
+      "src/Billiards/render/modern/modern_renderer.cpp": "8ab8ba8b10a473924d5294e69b8bb008d670391fd60c6294d8cfd5549dfdb1e3",
+      "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp": "1a598373423f64876a2ab84c055f4f97a633f9985e5ad531120548431841da09"
+    },
+    "control_flow_finding": "The bound Core41 beginFrame captures caller state, configures GL, calls endFrame internally when begin_frame glStatus fails, discards that restoration result, and returns the setup result. The bound outer chrome renderer also calls restoreExactlyOnce after the failed begin result. Production therefore has two restore attempts while the bound productionStyle mock has no internal restore and cannot prove the real path.",
+    "candidate_accepted": false,
+    "compile_only_is_not_acceptance": true
+  },
+  "root_decision_binding": {
+    "statement": "请冻结最小CP4 D Core41 restore-ownership allowlist correction gate：仅新增product_ui_gl_core41.{h,cpp}到既有chrome correction allowlist；选择单一restore owner，begin failure返回typed receipt/不内部静默end，outer exact1 restore，restore fail/throw persistent poison；production-style tests必须忠实Core41。Design-only validator/mutations，未复验前prod false。",
+    "selected_owner": "PRODUCT_UI_GPU_RENDERER_OUTER_TRANSACTION",
+    "core41_internal_silent_restore_allowed": false,
+    "outer_exact_restore_attempts_after_captured_begin_failure": 1
+  },
+  "corrected_exact_allowlist_not_implementation_authority": [
+    "src/Billiards/render/modern/modern_product_ui_runtime.h",
+    "src/Billiards/render/modern/modern_product_ui_runtime.cpp",
+    "src/Billiards/render/modern/modern_renderer_product_ui.h",
+    "src/Billiards/render/modern/modern_renderer_product_ui.cpp",
+    "src/Billiards/render/ui/product_ui_gpu_renderer.h",
+    "src/Billiards/render/ui/product_ui_gpu_renderer.cpp",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.h",
+    "src/Billiards/render/modern/trajectory_inset_visible_integration.cpp",
+    "src/Billiards/render/modern/modern_renderer.h",
+    "src/Billiards/render/modern/modern_renderer.cpp",
+    "tests/phase4_v19_trajectory_inset_visible_integration_cpu_tests.cpp",
+    "src/Billiards/render/modern/product_ui_gl_core41.h",
+    "src/Billiards/render/modern/product_ui_gl_core41.cpp"
+  ],
+  "allowlist_delta_exact": [
+    "src/Billiards/render/modern/product_ui_gl_core41.h",
+    "src/Billiards/render/modern/product_ui_gl_core41.cpp"
+  ],
+  "still_forbidden": {
+    "cmake": "CMakeLists.txt",
+    "cp1_cp2_cp3_and_unlisted_production": "All paths outside corrected_exact_allowlist_not_implementation_authority remain outside this correction.",
+    "authority_rules_threshold_camera_layout_copy_palette_product_exposure": true
+  },
+  "typed_begin_receipt_contract": {
+    "required_fields": [
+      "setupOk",
+      "stateCaptured",
+      "restoreRequired",
+      "errorCode"
+    ],
+    "invalid_precondition_before_capture": "setupOk=false, stateCaptured=false, restoreRequired=false; outer performs zero restore calls.",
+    "setup_failure_after_capture": "setupOk=false, stateCaptured=true, restoreRequired=true; Core41 performs zero restore calls and returns the original setup error.",
+    "setup_success": "setupOk=true, stateCaptured=true, restoreRequired=true; the same outer transaction owns the one normal end-frame restore.",
+    "no_boolean_or_configured_claim_may_substitute_for_actual_receipt": true,
+    "no_core41_end_frame_call_on_begin_failure": true
+  },
+  "single_restore_owner_contract": {
+    "owner": "ProductUiGpuRenderer outer frame transaction",
+    "restore_attempt_rule": "After a typed begin receipt with stateCaptured=true and restoreRequired=true, the outer transaction calls endFrame exactly once on success, returned failure, or exception. It never calls endFrame for a pre-capture rejection.",
+    "core41_rule": "Core41 beginFrame only captures/configures and returns the typed result. It never silently restores, clears, or reports a fabricated restoration success from the begin failure path.",
+    "result_rule": "stateRestored=true is derived only from the actual exact-one endFrame result. A configured flag, begin error, request field, or mock expectation is not restoration evidence.",
+    "restore_failure": "A false result or exception from the exact-one restore sets restoreFailed, makes the chrome receipt fail, poisons the runtime adapter persistently, invalidates CP3/final staging, and forbids product_present.",
+    "poison_retry": "A same-context retry after restore failure or throw performs zero target queries, begins, uploads, scissors, draws, restores, final prepares, publications, presents, or fallbacks.",
+    "recovery": "Only explicit context loss plus a fresh dispatch/resource namespace and fresh session/frame/layout/package/atlas generations may attempt N+2 work."
+  },
+  "future_cpu_static_gl_mock_acceptance_not_run": {
+    "actual_core41_required": true,
+    "production_style_fixture": "Compile and execute the actual product_ui_gl_core41.cpp through the actual ProductUiGpuRenderer transaction against an injectable fake OpenGL function table or link shim; a handwritten dispatcher that merely resembles Core41 is insufficient.",
+    "required_positive_and_negative_cases": [
+      "invalid resources or viewport rejected before state capture: restore count 0",
+      "begin setup succeeds: actual Core41 capture then outer restore count 1",
+      "begin setup GL error after capture: actual Core41 internal restore count 0 and outer restore count 1",
+      "begin setup GL error plus endFrame false: exact restore count 1, receipt fails, persistent poison",
+      "begin setup GL error plus endFrame throw: exact restore count 1, receipt fails, persistent poison",
+      "upload, scissor, draw and normal end failures or throws retain exact-one owner semantics",
+      "same-context poison retry has exact zero work and no ordinary-LDR fallback",
+      "context-loss recovery requires fresh namespace and identity",
+      "ordinary Product UI render and 96 chrome cases retain state, actual-LDR target, adjacent-error, semantic, cutout and instrumentation contracts"
+    ],
+    "required_static_checks": [
+      "Core41 beginFrame contains no internal endFrame call or silent state reset on the captured failure path",
+      "the outer transaction consumes typed stateCaptured and restoreRequired fields",
+      "there is no beginFrameFailureRestoresStateInternally boolean/configuration escape hatch",
+      "all previous chrome-gate allowed files remain the only other candidate paths and CMake is not edited"
+    ],
+    "tests_must_reject": [
+      "handwritten productionStyle mock without actual Core41 control flow",
+      "internal Core41 restore plus outer restore",
+      "discarded internal restore result",
+      "fabricated stateRestored=true",
+      "restore failure without persistent poison",
+      "poison retry performing any work",
+      "allowlist growth beyond the exact two-file delta",
+      "CMake, threshold, layout, visual grammar, authority or product-exposure change"
+    ],
+    "cpu_static_pass": false,
+    "actual_core41_mock_pass": false,
+    "implementation_pass": false
+  },
+  "authorization_boundary": {
+    "design_gate_complete": true,
+    "allowlist_correction_defined": true,
+    "production_edit_authorized_by_this_gate": false,
+    "cmake_edit_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass_claimed": false,
+    "ta_visual_pass_claimed": false,
+    "product_pass_claimed": false,
+    "visible_product_inset_exposed": false
+  }
+}

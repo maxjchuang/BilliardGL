@@ -226,6 +226,35 @@ int main()
     expect(close(billiardgl::surfaceContactSlipVelocity(
         atTransition, profile.ball.radiusCm).x, 0.0f, 0.0001f),
         "contact slip is exactly zero at rolling transition");
+    expect(transitionStep.analyticSegments.size() == 1 &&
+        transitionStep.analyticSegments[0].motionState ==
+            billiardgl::BallMotionState::Sliding &&
+        close(static_cast<float>(
+            transitionStep.analyticSegments[0].durationSeconds),
+            transition, 0.00001f) &&
+        transitionStep.analyticSegments[0].analyticPathComplete,
+        "transition endpoint carries one complete analytic sliding segment");
+
+    billiardgl::BallState piecewise;
+    piecewise.velocity.z = 100.0f;
+    piecewise.speed = 100.0f;
+    piecewise.motionState = billiardgl::BallMotionState::Sliding;
+    const billiardgl::SurfaceMotionStep piecewiseStep =
+        billiardgl::advanceSurfaceMotion(
+            piecewise, transition + 0.1f, profile.ball, slidingSurface);
+    expect(piecewiseStep.analyticSegments.size() == 2 &&
+        piecewiseStep.analyticSegments[0].motionState ==
+            billiardgl::BallMotionState::Sliding &&
+        piecewiseStep.analyticSegments[1].motionState ==
+            billiardgl::BallMotionState::Rolling &&
+        close(static_cast<float>(piecewiseStep.analyticSegments[0].
+            wholeTickStartOffsetSeconds), 0.0f) &&
+        close(static_cast<float>(piecewiseStep.analyticSegments[1].
+            wholeTickStartOffsetSeconds), transition, 0.00001f) &&
+        close(static_cast<float>(piecewiseStep.analyticSegments[0].
+            durationSeconds + piecewiseStep.analyticSegments[1].
+                durationSeconds), transition + 0.1f, 0.00001f),
+        "sliding-to-rolling motion emits exact ordered piecewise coverage");
 
     billiardgl::BallState crossing;
     crossing.velocity.x = 100.0f;

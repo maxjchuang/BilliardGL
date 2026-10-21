@@ -1,0 +1,207 @@
+{
+  "schema": "wpa_ii_06_f_entitlement_timing_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_AUDIT_REMAINS_PARTIAL_NO_GPU",
+  "design_gate": {
+    "path": "docs/rules/wpa-ii-06-f-eight-on-break-choice-design-gap-gate-v1.json",
+    "sha256": "f008d99e222289ba8279518a4aa21577d238d793140ae4071598684cc3939ae9",
+    "frozen_contract_sha256": "dd55f95a16cb28e4d0185e35dd7bf80de0b7b95500b2798eb5972589327286e4"
+  },
+  "source_bindings": {
+    "production_before": {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a"
+    },
+    "production_after": {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "ea6f3754a9a08cca0447e9fed462de9961f9bb6c8c507f71b78c68ce7ce89fd5"
+    },
+    "test_before": {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55"
+    },
+    "test_after": {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "c5030b6330432e4f54437239d2589f2686ad5840c28612600197cd16eeef8d3b"
+    },
+    "runtime_header_unchanged": {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "deacceaa4ffff8b0e5080963d958f5fc49a77a197c744c2693be6f2d82b96ec3"
+    },
+    "core_f_contract_unchanged": {
+      "path": "src/Billiards/rules/eight_on_break_authority.h",
+      "sha256": "dacb83140b687b285f1dc67bcbb38d571349a60caa01a45664f0bbdcc2981b2e"
+    },
+    "core_g_contract_unchanged": {
+      "path": "src/Billiards/rules/ball_in_hand_authority.h",
+      "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"
+    },
+    "core_e_implementation_unchanged": {
+      "path": "src/Billiards/rules/rack_executor.cpp",
+      "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"
+    },
+    "adjudicator_unchanged": {
+      "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3"
+    },
+    "product_session_unchanged": {
+      "path": "src/Billiards/render/modern/modern_product_session.cpp",
+      "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174"
+    },
+    "audit_v3_unchanged": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v3.json",
+      "sha256": "d7ab2104fac9fd85fe8d7336ae658cc9baaaa6b4fa866cd4e7815c51404ad033"
+    }
+  },
+  "implementation_contract_sha256": "1ce76ae3cc72f71f2d458c107454d291a527f9f7080901b30ba07db25ea7809f",
+  "implementation_contract": {
+    "change_scope": {
+      "production_files_changed": [
+        "src/Billiards/game_runtime.cpp"
+      ],
+      "test_files_changed": [
+        "tests/rules_runtime_integration_tests.cpp"
+      ],
+      "cmake_changed": false,
+      "modern_product_session_changed": false,
+      "authority_headers_changed": false,
+      "adjudicator_or_classification_changed": false,
+      "core_e_or_core_g_changed": false
+    },
+    "predecessor_design_gate_live_validation": {
+      "status": "EXPECTED_APPROVED_SUCCESSOR_SOURCE_DRIFT",
+      "exact_errors": [
+        "source_runtime_drift",
+        "source_runtime_tests_drift"
+      ],
+      "all_other_gate_bindings_stable": true,
+      "predecessor_gate_or_validator_modified_to_hide_drift": false
+    },
+    "tests_first_red_result": {
+      "observed_before_production_fix": true,
+      "failing_assertions": [
+        "foul 8-on-break parent stages with no BIH entitlement before the exact spot choice commits",
+        "wrong actor/action/revision cannot grant early BIH",
+        "foul rerack parent begins without unchosen BIH",
+        "foul no-solution fixture stages with entitlement deferred",
+        "accepted foul spot synchronizes lastAdjudication BIH scalars with ACK and MatchState"
+      ],
+      "root_cause": "applyRulesAdjudication copied foul adjudication.ballInHand and assigned BehindHeadString scope before staging the Core F choice parent"
+    },
+    "production_correction": {
+      "location": "GameRuntime::applyRulesAdjudication",
+      "new_guard": "eightOnBreakChoiceRequired = adjudication.eightBallMustBeSpotted && facts.breakShot",
+      "foul_parent_staging": {
+        "match_state_ball_in_hand": false,
+        "last_adjudication_ball_in_hand": false,
+        "last_adjudication_ball_in_hand_behind_head_string": false,
+        "ball_in_hand_placement_scope": "None",
+        "ball_in_hand_placement_pending": false,
+        "ball_in_hand_placement_offer_exists": false
+      },
+      "spot_plus_bih_commit": {
+        "requires_exact_action": "rules.eight_on_break.spot_ball_in_hand_head_string",
+        "respot_plan_verified_before_mutation": true,
+        "match_state_ball_in_hand_after_commit": true,
+        "ball_in_hand_placement_scope_after_commit": "BehindHeadString",
+        "one_core_g_child_created": true,
+        "physical_cue_ball_placement_in_parent": false,
+        "last_adjudication_ball_in_hand_after_commit": true,
+        "last_adjudication_ball_in_hand_behind_head_string_after_commit": true,
+        "last_adjudication_next_state_matches_match_state": true,
+        "authority_revision_increment": 1,
+        "one_event_action_and_receipt": true
+      },
+      "rerack_commit": {
+        "ball_in_hand": false,
+        "ball_in_hand_placement_scope": "None",
+        "child_offer_exists": false
+      },
+      "consumer_consistency": {
+        "automation_last_adjudication_reads_scalar_ball_in_hand": true,
+        "rules_presentation_reads_match_state_ball_in_hand": true,
+        "accepted_parent_now_keeps_ack_match_state_last_adjudication_and_child_scope_consistent": true
+      },
+      "legal_branch_behavior_changed": false
+    },
+    "fail_closed_matrix": {
+      "wrong_actor": "no entitlement, child, revision, event, action, receipt, or physical mutation",
+      "wrong_action": "no entitlement, child, revision, event, action, receipt, or physical mutation",
+      "stale_revision": "no entitlement, child, revision, event, action, receipt, or physical mutation",
+      "authority_hash_drift": "no entitlement, child, revision, event, action, receipt, or additional physical mutation",
+      "respot_plan_failure": "no entitlement or child and all pre-request authority state preserved",
+      "reset": "stale request rejected with no residual entitlement or child",
+      "rerack": "both breaker assignments complete with no entitlement or child",
+      "exact_spot_retry": "returns original ACK and preserves exactly one already-authorized child",
+      "conflicting_retry_after_spot": "rejects without revoking or duplicating the committed child",
+      "exact_rerack_retry": "returns original ACK with no BIH",
+      "conflicting_retry_after_rerack": "rejects with no BIH"
+    },
+    "cpu_build": {
+      "root": "build-wpa-06f-entitlement-cpu-v1",
+      "configuration": "Release-compatible -O3 -DNDEBUG -std=c++17 -arch arm64",
+      "method": "fresh compile of changed GameRuntime and rules-runtime test objects, then CPU-only relink against the stable integrated object closure",
+      "cmake_reconfigure_used_for_acceptance": false,
+      "cmake_reconfigure_environment_note": "An attempted stale build-tree regeneration was rejected because its imported mpg123 include path no longer exists; no CMake or dependency state was changed, and acceptance uses the explicit compile/link commands above."
+    },
+    "cpu_results": [
+      {
+        "target": "BilliardsRulesRuntimeIntegrationTests",
+        "sha256": "952aa779877870ad46975e252adc3893742aa0a9b625cded5ed2a12b4cf95bac",
+        "exit_code": 0
+      },
+      {
+        "target": "BilliardsRulesDecisionSessionIntegrationTests",
+        "sha256": "44c54d235078bddce609aa61f9a645107b13b1e76ad90600d36b60e0620841c2",
+        "exit_code": 0
+      },
+      {
+        "target": "BilliardsRulesDecisionProductRuntimeTests",
+        "sha256": "4be7e994da0c44a14b380e0f8fbbc856dbad73ea3c2652db5ab50ec765912adf",
+        "exit_code": 0
+      },
+      {
+        "target": "BilliardsAutomationControllerTests",
+        "sha256": "bf7187884ff288febbde27716d5d7ad2b476b194ca05a5b0c08e94cd604d3472",
+        "exit_code": 0
+      },
+      {
+        "target": "BilliardsModernRenderFoundationTests",
+        "sha256": "6b8598a237cf8156370b15c963b6aa93bfbee556b5385e799c136ed1cb736dd6",
+        "exit_code": 0
+      },
+      {
+        "target": "BilliardsCameraShotModelTests",
+        "sha256": "82cd8468dfe195b32008293b89751ab7ec086eae5a2cd872c0e61f265d27389c",
+        "exit_code": 0
+      }
+    ],
+    "audit_and_product_boundary": {
+      "audit_path_changed": false,
+      "audit_row": "WPA-II-06-F",
+      "audit_status": "PARTIAL",
+      "complete_clause_6f_product_reachable": false,
+      "rules_decision_ui_product_exposed": false,
+      "existing_narrow_spot_seam_broadened": false,
+      "rerack_product_seam_added": false,
+      "upstream_foul_classification_status": "UPSTREAM_BREAK_FOUL_CLASSIFICATION_PENDING"
+    },
+    "forbidden_and_absent": {
+      "gpu_cocoa_or_opengl_executed": false,
+      "billiards_product_executable_started": false,
+      "readiness_generated": false,
+      "authorization_issued": false,
+      "phase4_or_phase5_renderer_changed": false,
+      "visual_or_evidence_threshold_changed": false,
+      "official_policy_invented": false
+    },
+    "claims": {
+      "wpa_06f_entitlement_timing_implemented": true,
+      "headless_cpu_verified": true,
+      "legal_branch_regression_free": true,
+      "complete_clause_6f_product_reachable": false,
+      "audit_promoted": false,
+      "classification_complete": false,
+      "gpu_executed": false
+    }
+  }
+}

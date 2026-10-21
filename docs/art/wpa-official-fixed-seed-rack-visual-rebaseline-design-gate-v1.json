@@ -1,0 +1,301 @@
+{
+  "schema": "wpa_official_fixed_seed_rack_visual_rebaseline_design_gate_v1",
+  "schema_version": 1,
+  "status": "DESIGN_GATE_APPROVED_NOT_RUN_NO_GPU_NO_AUTH_NO_READINESS",
+  "purpose": "Invalidate legacy-rack visual evidence and define the smallest fresh-build machine and original-resolution TA rebaseline for the fixed-seed WPA II section 4 product rack migration.",
+  "frozen_bindings": {
+    "migration_gate": {
+      "path": "docs/rules/wpa-ii-04-official-rack-product-migration-gate-v1.json",
+      "sha256": "bf02b866e6017278c60366718535053049738555d72a573c8afc1f675d5c5545"
+    },
+    "as_built_audit_v3": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v3.json",
+      "sha256": "d7ab2104fac9fd85fe8d7336ae658cc9baaaa6b4fa866cd4e7815c51404ad033"
+    },
+    "phase2_full_six_ta_template": {
+      "path": "docs/art/phase2-v10i-formal-full-six-ta-review-template-v1.json",
+      "sha256": "6adc89b2b9030426287f432edfa3c33a6431af545cbaedae80a446c2b9e81f49"
+    },
+    "phase4_targeted5_ta_template": {
+      "path": "docs/art/phase4-v12-targeted5-independent-ta-review-template-v1.json",
+      "sha256": "e4ef1fbfb92536d6a02b6c3287b4a453f84e7e21bfed8c594414401d937e98df"
+    },
+    "phase5_exact16_ta_template": {
+      "path": "docs/art/phase5-rules-decision-ui-v5-exact16-independent-ta-review-template-v1.json",
+      "sha256": "917ef40bdf96ccca631117363c2d7d92eadade3bc9629d3d7559067e53164e2a"
+    },
+    "phase4_isolated_two_ball_scenario": {
+      "path": "assets/training/phase4/scenarios/launch_stop_shot_center_v1.training.json",
+      "sha256": "5d93df130f888790ac8298394c28cd9aa8147b39c4ea587f8b9ffc063e25cd99"
+    },
+    "phase4_isolated_replay": {
+      "path": "docs/art/phase4-training-replay-overlay-fixtures-v3/launch_stop_shot_center_v1.overlay.replay.json",
+      "sha256": "587bef29abe6167e8efbac2630963d6924ee8984c729e586adb313a806167b0e"
+    },
+    "formal_ball_identity_atlas": {
+      "path": "assets/modern/phase2-v10i-formal/focused_practice_hall_ball_identity_atlas_v1.png",
+      "sha256": "4958d3b8443ddd3f9a3b559ca1e22b6130c169d733ec73c7b918aadcd14fd60e"
+    }
+  },
+  "post_migration_production_bindings": {
+    "legacy_initializer_reference": {
+      "path": "src/Billiards/game_state.cpp",
+      "sha256": "a91185ba5fad8c8571aa1b0efd36de967d0fc3c307fef01b2903c2f910de88c3",
+      "role": "historical current-to-official comparison only; not the product Match rack authority"
+    },
+    "official_rack_implementation": {
+      "path": "src/Billiards/rules/rack_executor.cpp",
+      "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"
+    },
+    "official_rack_contract": {
+      "path": "src/Billiards/rules/rack_executor.h",
+      "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"
+    },
+    "product_match_commit": {
+      "path": "src/Billiards/product_shell_controller.cpp",
+      "sha256": "eb1a754778808e23232ff14ab1a411be9189da876070910961ec6f4cbdf69a6c"
+    },
+    "product_match_contract": {
+      "path": "src/Billiards/product_shell_controller.h",
+      "sha256": "b90565640c7770cd1058b39cd42c03ad9bc81d6fcaf1c3a70882345d6a5a63f5"
+    },
+    "authority_runtime": {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a"
+    },
+    "authority_runtime_contract": {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "deacceaa4ffff8b0e5080963d958f5fc49a77a197c744c2693be6f2d82b96ec3"
+    },
+    "product_session": {
+      "path": "src/Billiards/render/modern/modern_product_session.cpp",
+      "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174"
+    },
+    "product_session_contract": {
+      "path": "src/Billiards/render/modern/modern_product_session.h",
+      "sha256": "f9b5ecef2223943bc8cb278b081b8f7f7fb886e7b5a0cc4db4c1fe2bac8528c4"
+    }
+  },
+  "official_contract_semantics": {
+    "ruleset_id": "wpa_heyball_2025_08_16_v1",
+    "source_clause": "WPA-II-04",
+    "algorithm_id": "wpa_heyball_2025_08_16_group_separation_seeded_v1",
+    "fixed_seed_hex": "0x48455942414c4c25",
+    "ball_count": 16,
+    "normative": [
+      "triangle geometry and foot-spot apex",
+      "8-ball in the center slot",
+      "opposite groups at the two base corners",
+      "tight non-overlapping rack"
+    ],
+    "implementation_deterministic_non_normative": [
+      "complete numbered-ball order",
+      "the fixed seed",
+      "ball 7 at the apex for this algorithm and seed",
+      "balls 5 and 10 at the two base corners for this algorithm and seed"
+    ],
+    "numbered_ball_order_is_official": false,
+    "texture_asset_change_allowed_by_migration": false,
+    "wording_guard": "Machine evidence may require the exact seeded order as an implementation contract, but no TA report may call that full numbered order WPA-mandated or official."
+  },
+  "coordinate_contract": {
+    "units": "cm",
+    "coordinate_order": ["x", "y", "z"],
+    "float_semantics": "binary32 values emitted by the bound C++ implementations",
+    "ball_radius_cm": 2.8575000762939453,
+    "ball_diameter_cm": 5.715000152587891,
+    "rack_center_y_cm": 89.34147644042969,
+    "foot_spot_z_cm": 63.5,
+    "comparison_summary": {
+      "exact_position_match_ball_ids": [0, 9],
+      "exact_position_match_count": 2,
+      "exact_position_mismatch_count": 14,
+      "current_base_corner_ball_ids": [11, 15],
+      "current_base_corners_are_opposite_groups": false,
+      "official_base_corner_ball_ids": [5, 10],
+      "official_base_corners_are_opposite_groups": true,
+      "official_apex_ball_id_for_fixed_seed": 7,
+      "official_eight_ball_slot": 4
+    }
+  },
+  "ball_id_position_comparison": [
+    {"ball_id": 0, "current_slot": null, "official_slot": null, "current_position_cm": [0.0, 89.34147644042969, -63.5], "official_position_cm": [0.0, 89.34147644042969, -63.5], "position_byte_exact": true},
+    {"ball_id": 1, "current_slot": 0, "official_slot": 7, "current_position_cm": [0.0, 89.34147644042969, 63.5], "official_position_cm": [-2.8575000762939453, 89.34147644042969, 78.34800720214844], "position_byte_exact": false},
+    {"ball_id": 2, "current_slot": 1, "official_slot": 13, "current_position_cm": [-2.8575000762939453, 89.34147644042969, 68.44933319091797], "official_position_cm": [5.715000152587891, 89.34147644042969, 83.2973403930664], "position_byte_exact": false},
+    {"ball_id": 3, "current_slot": 2, "official_slot": 3, "current_position_cm": [2.8575000762939453, 89.34147644042969, 68.44933319091797], "official_position_cm": [-5.715000152587891, 89.34147644042969, 73.39867401123047], "position_byte_exact": false},
+    {"ball_id": 4, "current_slot": 3, "official_slot": 5, "current_position_cm": [-5.715000152587891, 89.34147644042969, 73.39866638183594], "official_position_cm": [5.715000152587891, 89.34147644042969, 73.39867401123047], "position_byte_exact": false},
+    {"ball_id": 5, "current_slot": 7, "official_slot": 10, "current_position_cm": [-2.8575000762939453, 89.34147644042969, 78.34800720214844], "official_position_cm": [-11.430000305175781, 89.34147644042969, 83.2973403930664], "position_byte_exact": false},
+    {"ball_id": 6, "current_slot": 5, "official_slot": 9, "current_position_cm": [5.715000152587891, 89.34147644042969, 73.39866638183594], "official_position_cm": [8.572500228881836, 89.34147644042969, 78.34800720214844], "position_byte_exact": false},
+    {"ball_id": 7, "current_slot": 6, "official_slot": 0, "current_position_cm": [-8.572500228881836, 89.34147644042969, 78.34800720214844], "official_position_cm": [0.0, 89.34147644042969, 63.5], "position_byte_exact": false},
+    {"ball_id": 8, "current_slot": 4, "official_slot": 4, "current_position_cm": [0.0, 89.34147644042969, 73.39866638183594], "official_position_cm": [0.0, 89.34147644042969, 73.39867401123047], "position_byte_exact": false},
+    {"ball_id": 9, "current_slot": 8, "official_slot": 8, "current_position_cm": [2.8575000762939453, 89.34147644042969, 78.34800720214844], "official_position_cm": [2.8575000762939453, 89.34147644042969, 78.34800720214844], "position_byte_exact": true},
+    {"ball_id": 10, "current_slot": 9, "official_slot": 14, "current_position_cm": [8.572500228881836, 89.34147644042969, 78.34800720214844], "official_position_cm": [11.430000305175781, 89.34147644042969, 83.2973403930664], "position_byte_exact": false},
+    {"ball_id": 11, "current_slot": 10, "official_slot": 12, "current_position_cm": [-11.430000305175781, 89.34147644042969, 83.2973403930664], "official_position_cm": [0.0, 89.34147644042969, 83.2973403930664], "position_byte_exact": false},
+    {"ball_id": 12, "current_slot": 11, "official_slot": 6, "current_position_cm": [-5.715000152587891, 89.34147644042969, 83.2973403930664], "official_position_cm": [-8.572500228881836, 89.34147644042969, 78.34800720214844], "position_byte_exact": false},
+    {"ball_id": 13, "current_slot": 12, "official_slot": 2, "current_position_cm": [0.0, 89.34147644042969, 83.2973403930664], "official_position_cm": [2.8575000762939453, 89.34147644042969, 68.44933319091797], "position_byte_exact": false},
+    {"ball_id": 14, "current_slot": 13, "official_slot": 1, "current_position_cm": [5.715000152587891, 89.34147644042969, 83.2973403930664], "official_position_cm": [-2.8575000762939453, 89.34147644042969, 68.44933319091797], "position_byte_exact": false},
+    {"ball_id": 15, "current_slot": 14, "official_slot": 11, "current_position_cm": [11.430000305175781, 89.34147644042969, 83.2973403930664], "official_position_cm": [-5.715000152587891, 89.34147644042969, 83.2973403930664], "position_byte_exact": false}
+  ],
+  "evidence_inheritance": {
+    "phase2": false,
+    "phase4": false,
+    "phase5": false,
+    "classification": "HISTORICAL_ONLY_NOT_ACCEPTANCE_EVIDENCE",
+    "rule": "No prior machine PASS, TA PASS, image SHA, aggregate, binary binding, M2/M3/golden claim, or product claim may be copied into the successor rebaseline. Prior evidence may be cited only as the historical comparison side."
+  },
+  "affected_case_inventory": {
+    "phase2_full_six": {
+      "direct_rack_texture_or_composition_impact": true,
+      "case_ids_in_order": ["break", "low_aim", "ball_closeup", "pocket_closeup", "tactical_overhead", "post_shot_observe"],
+      "directly_affected_case_ids": ["break", "low_aim", "ball_closeup", "pocket_closeup", "tactical_overhead", "post_shot_observe"],
+      "reason": "All six recipes start from or evolve the common visible object-ball arrangement. The fixed physical slot geometry remains a triangle, but 14 ball IDs move, the apex texture changes from 1 to seeded ball 7, and post-shot texture trajectories inherit the new ID-to-slot mapping."
+    },
+    "phase4_targeted5": {
+      "direct_rack_texture_or_composition_impact": false,
+      "case_ids_in_order": ["camera_player_low_1080", "camera_elevated_1080", "camera_overhead_1080", "camera_broadcast_1080", "actual_retina_ui135_cvd"],
+      "directly_affected_case_ids": [],
+      "mandatory_rebaseline_control_case_ids": ["camera_player_low_1080", "camera_elevated_1080", "camera_overhead_1080", "camera_broadcast_1080", "actual_retina_ui135_cvd"],
+      "reason": "The bound launch_stop_shot_center_v1 training/replay fixture embeds only balls 0 and 1 and is not allowed to inherit the product fixed rack. These five are nevertheless mandatory fresh-binary isolation and compositing controls because the migration gate marks Phase4 evidence non-inheritable."
+    },
+    "phase5_exact16": {
+      "direct_rack_texture_or_composition_impact": true,
+      "case_ids_in_order": [
+        "group_choice_armed_confirm--p1--zh_cn", "group_choice_armed_confirm--p2--en", "group_choice_armed_confirm--p3--zh_cn", "group_choice_armed_confirm--p4--en",
+        "group_choice_open_unselected--p1--en", "group_choice_open_unselected--p2--zh_cn", "group_choice_open_unselected--p3--en", "group_choice_open_unselected--p4--zh_cn",
+        "eight_legal_open_unselected--p1--en", "break_illegal_open_unselected--p2--zh_cn", "submitting_progress--p3--en", "authority_error--p4--en",
+        "full_table_preview_valid--p1--en", "full_table_preview_invalid--p2--en", "behind_head_string_preview_valid--p3--en", "behind_head_string_preview_invalid--p4--en"
+      ],
+      "directly_affected_case_ids": [
+        "group_choice_armed_confirm--p1--zh_cn", "group_choice_armed_confirm--p2--en", "group_choice_armed_confirm--p3--zh_cn", "group_choice_armed_confirm--p4--en",
+        "group_choice_open_unselected--p1--en", "group_choice_open_unselected--p2--zh_cn", "group_choice_open_unselected--p3--en", "group_choice_open_unselected--p4--zh_cn",
+        "eight_legal_open_unselected--p1--en", "break_illegal_open_unselected--p2--zh_cn", "submitting_progress--p3--en", "authority_error--p4--en",
+        "full_table_preview_valid--p1--en", "full_table_preview_invalid--p2--en", "behind_head_string_preview_valid--p3--en", "behind_head_string_preview_invalid--p4--en"
+      ],
+      "reason": "Every exact16 image composites the Rules UI over a visible table and initial object-ball cluster. The rack is visible behind or adjacent to panels and world placement overlays, so ball-ID texture order, local color, silhouette, and UI/world occlusion must be reviewed afresh."
+    }
+  },
+  "minimum_fresh_shared_build_rebaseline": {
+    "fresh_shared_build_required": true,
+    "build_must_postdate_and_bind_all_post_migration_production_shas": true,
+    "product_match_state_attestation": "Phase2 and Phase5 capture producers must attest that the rendered Match state was initialized by the fixed official product rack commit, not by initializeBalls legacy layout or a synthetic lookalike.",
+    "cpu_static_machine_preflight": {
+      "status": "NOT_RUN",
+      "required": true,
+      "requirements": [
+        "exact 16 ball IDs and binary32 positions equal ball_id_position_comparison.official_position_cm",
+        "ball 8 occupies slot 4",
+        "base-corner slots 10 and 14 contain opposite groups",
+        "all 15 object-ball centers form the bound tight triangular geometry with no overlap",
+        "one atomic product start commit occurs before the first visible Match frame",
+        "seed, algorithm ID, and numberedBallOrderIsOfficial=false are emitted in machine evidence"
+      ]
+    },
+    "capture_sets": [
+      {"set_id": "phase2_full_six", "required_case_count": 6, "required_machine_pass_count": 6, "required_ta_case_count": 6, "expected_physical_dimensions": [1920, 1080]},
+      {"set_id": "phase4_targeted5", "required_case_count": 5, "required_machine_pass_count": 5, "required_ta_case_count": 5, "expected_physical_dimensions": [1920, 1080]},
+      {"set_id": "phase5_exact16", "required_case_count": 16, "required_machine_pass_count": 16, "required_ta_case_count": 16, "expected_dimensions_from_bound_template": true}
+    ],
+    "minimum_total_capture_count": 27,
+    "minimum_total_machine_pass_count": 27,
+    "minimum_total_ta_case_count": 27,
+    "ordering": [
+      "fresh shared build and source/binary manifest",
+      "CPU/static official rack contract preflight",
+      "future separately authorized machine capture of exact 27 cases",
+      "machine 27/27 with complete paths, SHAs, decoded physical dimensions and unchanged thresholds",
+      "independent TA original-resolution review of all 27 cases"
+    ]
+  },
+  "original_resolution_ta_contract": {
+    "canonical_rack_axes_in_order": [
+      "base_corners_opposite_groups",
+      "eight_ball_center_slot",
+      "apex_and_foot_spot_readability",
+      "rack_tightness_and_no_overlap",
+      "numbered_texture_orientation_and_readability",
+      "lighting_contact_shadow_and_highlight_regression",
+      "camera_composition_and_occlusion_regression"
+    ],
+    "axis_contracts": {
+      "base_corners_opposite_groups": "The two base corners are simultaneously visible in an authority view and visibly belong to opposite groups; seeded IDs 5 and 10 are implementation evidence, not a WPA-number-order claim.",
+      "eight_ball_center_slot": "The 8-ball is visually centered in slot 4 and not displaced, hidden by overlap, or swapped by texture indexing.",
+      "apex_and_foot_spot_readability": "The apex center is on the foot spot and its seeded ball-7 identity is readable where resolution permits; ball 7 is never described as WPA-mandated.",
+      "rack_tightness_and_no_overlap": "The cluster reads as a tight triangle with touching neighbors, no visible gaps caused by wrong spacing, and no sphere interpenetration or z-fighting.",
+      "numbered_texture_orientation_and_readability": "Visible number patches map to the correct fixed-seed ball IDs, remain upright/readable across relevant views, and show no atlas seam, mirroring, index bleed, or unexpected rotation discontinuity.",
+      "lighting_contact_shadow_and_highlight_regression": "The denser multi-color arrangement retains readable contact shadows, sphere separation, material response and highlights without crushed centers or false overlaps.",
+      "camera_composition_and_occlusion_regression": "Rack, cue ball, cue, pockets, trajectory/UI overlays and venue lighting keep their intended hierarchy; the new color/number ordering does not create new blocking occlusion or mask gameplay/UI cues."
+    },
+    "phase2": {
+      "required_original_dimensions": [1920, 1080],
+      "all_cases_reexecute_bound_phase2_canonical_7_axes": true,
+      "rack_authority_views": ["break", "tactical_overhead"],
+      "identity_readability_views": ["low_aim", "ball_closeup", "tactical_overhead"],
+      "all_six_require_lighting_and_occlusion_regression": true,
+      "completion_rule": "The six historical 7-axis conclusions are not inherited; each is re-reviewed, and the seven rack axes are explicitly PASS/FAIL wherever visible or delegated to the named authority views."
+    },
+    "phase4": {
+      "required_original_dimensions": [1920, 1080],
+      "all_cases_reexecute_bound_phase4_canonical_7_axes": true,
+      "additional_isolation_axes": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "completion_rule": "Base-corner, 8-center, apex and rack-tightness axes are NOT_APPLICABLE to this two-ball fixture and cannot be fabricated as PASS; all five cases must prove fixture isolation and visual no-regression."
+    },
+    "phase5": {
+      "dimensions_are_per_case_from_bound_exact16_template": true,
+      "all_cases_reexecute_bound_phase5_canonical_10_axes": true,
+      "all_cases_require_visible_rack_background_consistency": true,
+      "placement_cases_require_world_overlay_occlusion_recheck": [
+        "full_table_preview_valid--p1--en", "full_table_preview_invalid--p2--en", "behind_head_string_preview_valid--p3--en", "behind_head_string_preview_invalid--p4--en"
+      ],
+      "completion_rule": "All 16 images are opened at their decoded original physical dimensions. Visible rack textures/silhouettes and UI/world-overlay occlusion are assessed against the fresh Phase2 authority views; obscured rack details cannot be inferred through an opaque panel."
+    }
+  },
+  "unchanged_machine_boundaries": {
+    "roi_thresholds_may_change": false,
+    "visible_pixel_thresholds_may_change": false,
+    "performance_thresholds_may_change": false,
+    "phase4_ownership_or_contrast_thresholds_may_change": false,
+    "camera_or_layout_workaround_allowed": false,
+    "asset_or_light_change_to_hide_rack_delta_allowed": false,
+    "seed_or_number_order_semantic_promotion_allowed": false
+  },
+  "future_evidence": {
+    "fresh_shared_build_manifest": {"status": "NOT_AVAILABLE", "path": null, "sha256": null, "binary_sha256": null},
+    "cpu_static_receipt": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase2_machine_receipt": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase2_ta_review": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase4_machine_receipt": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase4_ta_review": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase5_machine_receipt": {"status": "NOT_RUN", "path": null, "sha256": null},
+    "phase5_ta_review": {"status": "NOT_RUN", "path": null, "sha256": null}
+  },
+  "forbidden_in_this_gate": [
+    "production or CMake edit",
+    "build or capture execution",
+    "GPU execution",
+    "readiness generation",
+    "authorization issuance or consumption",
+    "reuse of historical PASS/FAIL as successor acceptance",
+    "threshold, ROI, camera, layout, lighting or asset workaround",
+    "claim that the seeded complete numbered-ball order is WPA normative",
+    "M2, M3, golden, Beta or product acceptance claim"
+  ],
+  "evidence_boundary": {
+    "production_modified": false,
+    "cmake_modified": false,
+    "build_executed": false,
+    "gpu_executed": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_acceptance": false,
+    "ta_acceptance": false,
+    "m2": false,
+    "m3": false,
+    "golden": false,
+    "beta": false,
+    "product_acceptance": false
+  }
+}

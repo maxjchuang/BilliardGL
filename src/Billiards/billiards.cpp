@@ -11,6 +11,7 @@
 
 #include "game_state.h"
 #include "game_runtime.h"
+#include "ai/ai_player_controller.h"
 #include "launch_options.h"
 #include "automation_controller.h"
 #include "automation_runner.h"
@@ -31,6 +32,9 @@
 #include "render_resources.h"
 #include "screenshot.h"
 #include "shot.h"
+#ifdef __APPLE__
+#include "render/modern/modern_application_mac.h"
+#endif
 
 #include <cmath>
 #include <array>
@@ -39,7 +43,6 @@
 #include <cstring>
 #include <ctime>
 #include <string>
-#include <thread>
 #include <iostream>
 
 #define WINDOW_WIDTH 1024
@@ -69,6 +72,8 @@ static double PhysicsTimeAccumulatorSeconds = 0.0;
 static double DroppedSimulationSeconds = 0.0;
 static double PerspectiveResetAtSeconds = 0.0;
 static const int kMaxPhysicsStepsPerIdle = 12;
+static int RequestedScreenshotWidth = WINDOW_WIDTH;
+static int RequestedScreenshotHeight = WINDOW_HEIGHT;
 static const billiardgl::PhysicsProfile InteractivePhysicsProfile =
 	billiardgl::interactiveChinesePoolPhysicsProfile();
 
@@ -92,6 +97,7 @@ struct Point
 void initBall();
 void prepareScreenshotScene();
 void initWindows(void);
+void renderGameFrame(const billiardgl::PresentationSnapshot& snapshot);
 void myReshape(int w, int h);
 void myDisplay(void);
 void myIdle(void);
@@ -125,12 +131,70 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	Game.config = options.runtime;
+	RequestedScreenshotWidth = Game.config.width;
+	RequestedScreenshotHeight = Game.config.height;
 	if (options.mode == billiardgl::RunMode::AutomationHeadless)
 	{
 		billiardgl::GameRuntime runtime;
-		billiardgl::AutomationController controller(runtime, billiardgl::AutomationMode::Headless);
+		billiardgl::ai::AiPlayerController aiPlayer;
+		billiardgl::AutomationController controller(runtime,
+			billiardgl::AutomationMode::Headless, &aiPlayer);
 		billiardgl::StdioTransport transport(std::cin, std::cout);
-		return billiardgl::runAutomation(transport, controller, "headless");
+		return billiardgl::runAutomation(transport, controller, "headless", "none");
+	}
+	if (Game.config.rendererBackend == billiardgl::RendererBackendSelection::Modern)
+	{
+	#ifdef __APPLE__
+		billiardgl::render::ModernApplicationOptions modern;
+		modern.width = Game.config.width;
+		modern.height = Game.config.height;
+		modern.msaaSamples = 4;
+		modern.quality = billiardgl::render::RenderQuality::Medium;
+		modern.automation = options.mode == billiardgl::RunMode::AutomationRendered;
+		modern.productMode = options.productMode;
+		modern.aiOpponent = options.aiOpponent;
+		if (options.aiDifficulty == "rookie")
+			modern.aiDifficulty = billiardgl::ai::Difficulty::Rookie;
+		else if (options.aiDifficulty == "expert")
+			modern.aiDifficulty = billiardgl::ai::Difficulty::Expert;
+		else
+			modern.aiDifficulty = billiardgl::ai::Difficulty::Club;
+		modern.showWindow = !modern.automation && Game.config.screenshotPath.empty();
+		modern.lookdevManifestPath =
+			std::string(BILLIARDGL_SOURCE_ROOT)
+			+ "/assets/modern/lookdev/focused_practice_hall_v1.lookdev.json";
+		const char* phase2Override = std::getenv("BILLIARDGL_MODERN_PHASE2_ROOT");
+			const std::string phase2Root = phase2Override != nullptr
+				? std::string(phase2Override)
+				: std::string(BILLIARDGL_SOURCE_ROOT) + "/assets/modern/phase2";
+			modern.phase2AssetRoot = phase2Root;
+			const char* formalCapture = std::getenv("BILLIARDGL_FORMAL_CAPTURE");
+			modern.formalCapture = formalCapture != nullptr &&
+				std::strcmp(formalCapture, "1") == 0;
+		modern.pbrParametersPath = phase2Root + "/focused_practice_hall_pbr_v1.params.json";
+		modern.pbrAssetManifestPath = phase2Root + "/focused_practice_hall_modular_v1.asset.json";
+		modern.lightingRigPath = phase2Root + "/focused_practice_hall_lighting_rig_v1.json";
+		modern.gltfScenePath = phase2Root + "/focused_practice_hall_modular_v1.gltf";
+		modern.venueScenePath = phase2Root + "/focused_practice_hall_venue_v1.gltf";
+		modern.productSettingsPath = options.productSettingsPath;
+		modern.productFramePerformanceReportPath =
+			options.productFramePerformancePath;
+		modern.trainingManifestPath = std::string(BILLIARDGL_SOURCE_ROOT)
+			+ "/assets/training/phase4/training_pack_v2.json";
+		modern.screenshotPath = Game.config.screenshotPath;
+		switch (Game.config.screenshotScene)
+		{
+		case billiardgl::ScreenshotScene::Default: modern.screenshotScene = "default"; break;
+		case billiardgl::ScreenshotScene::Help: modern.screenshotScene = "help"; break;
+		case billiardgl::ScreenshotScene::Aim: modern.screenshotScene = "aim"; break;
+		case billiardgl::ScreenshotScene::AfterShot: modern.screenshotScene = "after-shot"; break;
+		}
+		return billiardgl::render::runModernApplication(
+			modern, std::cin, std::cout, std::cerr);
+	#else
+		std::fprintf(stderr, "modern backend unavailable in this build/path\n");
+		return 3;
+	#endif
 	}
 	if (options.mode == billiardgl::RunMode::AutomationRendered)
 	{
@@ -140,33 +204,37 @@ int main(int argc, char* argv[])
 		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 		initWindows();
 		billiardgl::GameRuntime runtime;
+		billiardgl::ai::AiPlayerController aiPlayer;
 		if (!runtime.replaceStateForScenario(
 			runtime.state(), InteractivePhysicsProfile).ok) return 1;
+		runtime.mutableState().config = Game.config;
 		if (!billiardgl::initializeRenderResources(Render, runtime.mutableState())) return 1;
 		billiardgl::initializeParticleEmitters(Render, runtime.mutableState());
 		billiardgl::setupLights();
-		billiardgl::AutomationController controller(runtime, billiardgl::AutomationMode::Rendered);
+		billiardgl::AutomationController controller(runtime,
+			billiardgl::AutomationMode::Rendered, &aiPlayer);
 		billiardgl::StdioTransport transport(std::cin, std::cout);
 		const auto capture = [&runtime](const std::string& path) {
 			Game = runtime.state();
-			glViewport(0, 0, Game.config.width, Game.config.height);
-			billiardgl::setupCameraFromGameState(Game);
-			Render.shotPower = Game.input.shotPower;
-			Render.showCue = Game.players.aimingAtCueBall;
-			Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim;
-			Render.viewportWidth = Game.config.width;
-			Render.viewportHeight = Game.config.height;
-			billiardgl::renderScene(Game, Render);
-			billiardgl::drawHud(Game);
-			glFinish();
-			const bool saved = billiardgl::saveFramebufferToPpm(path, Game.config.width, Game.config.height);
-			glutSwapBuffers();
-			return saved;
+			const int frameWidth = Game.config.width;
+			const int frameHeight = Game.config.height;
+			const billiardgl::PresentationSnapshot snapshot =
+				billiardgl::buildPresentationSnapshot(Game, Game, 1.0);
+			return billiardgl::captureOffscreenToPpm(
+				path, frameWidth, frameHeight,
+				[&snapshot]() {
+					renderGameFrame(snapshot);
+				});
 		};
-		return billiardgl::runAutomation(transport, controller, "rendered", capture);
+		return billiardgl::runAutomation(
+			transport, controller, "rendered",
+			billiardgl::rendererBackendSelectionName(Game.config.rendererBackend),
+			capture);
 	}
-	std::thread t(b_music);
-	t.detach();
+	// SDL_mixer queues playback asynchronously. Starting it on a detached
+	// thread races static audio/resource destruction when a screenshot exits.
+	// Complete initialization here, and keep offline captures audio-free.
+	if (Game.config.screenshotPath.empty()) b_music();
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_STENCIL);
 	initWindows();
@@ -241,7 +309,15 @@ void prepareScreenshotScene()
 
 void initWindows(void)
 {
-	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	// Screenshot dimensions belong to the offscreen framebuffer. Keep the
+	// context window modest so capture does not depend on monitor bounds.
+	const int contextWidth = Game.config.screenshotPath.empty()
+		? Game.config.width
+		: (Game.config.width < WINDOW_WIDTH ? Game.config.width : WINDOW_WIDTH);
+	const int contextHeight = Game.config.screenshotPath.empty()
+		? Game.config.height
+		: (Game.config.height < WINDOW_HEIGHT ? Game.config.height : WINDOW_HEIGHT);
+	glutInitWindowSize(contextWidth, contextHeight);
 	glutCreateWindow("Billards");
 	if (!Game.config.windowedMode)
 		glutFullScreen();
@@ -252,6 +328,13 @@ void myReshape(int w, int h)
 	width = w > 0 ? w : WINDOW_WIDTH;
 	height = h > 0 ? h : WINDOW_HEIGHT;
 	glViewport(0, 0, width, height);
+}
+
+void renderGameFrame(const billiardgl::PresentationSnapshot& snapshot)
+{
+	billiardgl::setupCameraFromSnapshot(snapshot.camera);
+	billiardgl::renderScene(snapshot, Render);
+	billiardgl::drawHud(snapshot.hud);
 }
 // 初始化球位置
 void initBall()
@@ -298,38 +381,39 @@ void myDisplay(void)
 	const double interpolationAlpha = billiardgl::frameInterpolationAlpha(
 		PhysicsTimeAccumulatorSeconds,
 		InteractivePhysicsProfile.solver.timeStepSeconds);
-	const billiardgl::GameState renderedGame =
-		billiardgl::interpolateRenderState(
-			PreviousPhysicsGame, Game, interpolationAlpha);
 	if (!Game.config.screenshotPath.empty())
 	{
 		billiardgl::updateCameraFromCueBall(Game);
 	}
-	billiardgl::setupCameraFromGameState(renderedGame);
-	Render.cameraEye[0] = renderedGame.camera.eye[0];
-	Render.cameraEye[1] = renderedGame.camera.eye[1];
-	Render.cameraEye[2] = renderedGame.camera.eye[2];
-	Render.cameraTarget[0] = renderedGame.camera.target[0];
-	Render.cameraTarget[1] = renderedGame.camera.target[1];
-	Render.cameraTarget[2] = renderedGame.camera.target[2];
-	Render.shotPower = Game.input.shotPower;
-	Render.showCue = Game.players.aimingAtCueBall == 1;
-	Render.showPowerMeter = Game.aim.mode == billiardgl::AimMode::Aim;
-	Render.viewportWidth = width;
-	Render.viewportHeight = height;
-	billiardgl::setupCameraFromGameState(renderedGame);
-	billiardgl::renderScene(renderedGame, Render);
-
 	updatePlayer();
-	Game.config.width = width;
-	Game.config.height = height;
-	billiardgl::drawHud(Game);
+	billiardgl::PresentationSnapshot snapshot;
 	if (!Game.config.screenshotPath.empty())
 	{
-		const bool saved = billiardgl::saveFramebufferToPpm(Game.config.screenshotPath, width, height);
-		glutSwapBuffers();
+		billiardgl::GameState previous = PreviousPhysicsGame;
+		billiardgl::GameState current = Game;
+		previous.config.width = RequestedScreenshotWidth;
+		previous.config.height = RequestedScreenshotHeight;
+		current.config.width = RequestedScreenshotWidth;
+		current.config.height = RequestedScreenshotHeight;
+		snapshot = billiardgl::buildPresentationSnapshot(
+			previous, current, interpolationAlpha);
+	}
+	else
+	{
+		snapshot = billiardgl::buildPresentationSnapshot(
+			PreviousPhysicsGame, Game, interpolationAlpha);
+	}
+	if (!Game.config.screenshotPath.empty())
+	{
+		const bool saved = billiardgl::captureOffscreenToPpm(
+			Game.config.screenshotPath,
+			RequestedScreenshotWidth, RequestedScreenshotHeight,
+			[&snapshot]() {
+				renderGameFrame(snapshot);
+			});
 		std::exit(saved ? 0 : 2);
 	}
+	renderGameFrame(snapshot);
 	glutSwapBuffers();
 }
 // 设置视点

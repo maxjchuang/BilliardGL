@@ -1,0 +1,224 @@
+{
+  "schema": "phase4_v8_visual_style_independent_ta_acceptance_addendum_v1",
+  "schema_version": 1,
+  "status": "TA_ACCEPTANCE_PROTOCOL_APPROVED_FUTURE_TARGETED11_NOT_RUN",
+  "scope": "Independent technical-art acceptance protocol for a future Phase4 v8 visual-style targeted11 capture. It preserves all frozen ownership, threshold, route, offset, z-order, camera, layout, scene, and evidence semantics.",
+  "frozen_bindings": [
+    {
+      "role": "v8_visual_style_correction_design_gate",
+      "path": "docs/art/phase4-final-ownership-v8-ordinal2-offline-diagnostic-v1/minimal-visual-style-correction-design-gate-v1.json",
+      "sha256": "0fe967c8ca0e855c6cb0cd29f745aefd7dfcf8a9ae387eb1522d254753196526"
+    },
+    {
+      "role": "v8_ordinal2_failure_evidence_receipt",
+      "path": "docs/art/phase4-final-ownership-v8-ordinal2-offline-diagnostic-v1/failure-evidence-receipt-v1.json",
+      "sha256": "7994824c30ef85e41bb4a80d0372e8fee8b011b832507ac18c09f09e7adb07b7"
+    },
+    {
+      "role": "v8_failure_dispatch_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/phase4-final-ownership-dispatch-failure-receipt-v1.json",
+      "sha256": "1b4cac8f1df51e8b0d04a3e06770cddbf815b8a64377326f424c58e3901cfd89"
+    },
+    {
+      "role": "v8_machine_results_prefix",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/results.jsonl",
+      "sha256": "bbe1082a330f111421e8767f88c20ac9b6dda3ba945a746b6723a199c4fd84e1"
+    },
+    {
+      "role": "v8_integrated_final_ownership_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/results.jsonl.final-ownership.jsonl",
+      "sha256": "48d34fb11a342ffb7ff00f0729396ad48544bcfec4db43470bedd3d92148bd99"
+    },
+    {
+      "role": "v8_exact_targeted11_plan",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/phase4-final-ownership-targeted11-plan.tsv",
+      "sha256": "3b969b34e52fe2e01e31e34b148c4ce7c211682db65b3c609a43274366c8717d"
+    },
+    {
+      "role": "frozen_ordinal1_player_low_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/camera_player_low_1080.ppm",
+      "sha256": "f3626f44ead6cfe4729e6ff3b76168747154b2452d0ca2afd70e1520b0e09744",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "frozen_ordinal2_elevated_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v8/camera_elevated_1080.ppm",
+      "sha256": "1761d04326782eebaef2f92043d422d32f1140297bc64515a8a114d637c51da7",
+      "physical_dimensions": [1920, 1080]
+    }
+  ],
+  "independent_frozen_evidence_review": {
+    "method": "Both frozen PPMs were decoded losslessly and inspected individually at their original 1920x1080 physical resolution; telemetry was treated as authoritative for probe ownership and final-LDR failure reasons.",
+    "ordinal1": {
+      "capture_id": "camera_player_low_1080",
+      "machine_status": "PASS",
+      "visible_source_hidden": [92, 95, 3],
+      "coverage": 0.968421052631579,
+      "ta_interpretation": "PASS_CONTROL_ONLY_NOT_INHERITABLE_TO_FUTURE_CAPTURE",
+      "regression_risk": "The larger player-low projection keeps predicted core, halo, dash rhythm, endpoint, and much of the actual track readable. A later style change must not collapse these distinctions or reduce the authoritative ordinal1 machine result."
+    },
+    "ordinal2": {
+      "capture_id": "camera_elevated_1080",
+      "machine_status": "FAILED",
+      "visible_source_hidden": [72, 83, 11],
+      "coverage": 0.8674698795180723,
+      "ta_interpretation": "FAIL_DIAGNOSTIC_ONLY_BLOCKS_FUTURE_ACCEPTANCE_UNTIL_RECAPTURE",
+      "visual_finding": "At elevated scale the predicted and actual tracks occupy the same narrow screen-space band. Predicted core/halo/dash structure becomes fragile across dark surround, teal cloth, red balls, and the ball cluster; the actual near-white segment and endpoint can merge with pale ball surfaces and the predicted dash gap.",
+      "telemetry_finding": "Seven predicted outer-halo probes fail final edge contrast, one predicted outer-halo probe and one predicted core probe fail owned area, and one actual solid-in-predicted-dash-gap probe fails final edge contrast against a pale background. Ownership, association, foreign-track, unowned, and double-assignment defects are zero."
+    }
+  },
+  "canonical_ta_axes": [
+    {
+      "axis_id": "predicted_track_visual_identity",
+      "acceptance": "The predicted track remains continuously identifiable as predicted, independently of hue, across every visible background transition."
+    },
+    {
+      "axis_id": "actual_track_visual_identity",
+      "acceptance": "The actual track remains continuously identifiable as actual and visually distinct from predicted, including near-white ball surfaces."
+    },
+    {
+      "axis_id": "core_inner_halo_separation",
+      "acceptance": "Core and inner/outer halo layers remain separately readable without merging, inversion, or one role erasing the other."
+    },
+    {
+      "axis_id": "outer_halo_background_silhouette",
+      "acceptance": "The final-LDR outer silhouette remains readable against deep dark, teal cloth, red ball, and near-white ball-surface adjacencies."
+    },
+    {
+      "axis_id": "predicted_dash_gap_rhythm",
+      "acceptance": "Predicted dash units and gaps remain rhythmically separable; actual solid pixels in a predicted gap do not read as a predicted dash or close the gap."
+    },
+    {
+      "axis_id": "endpoint_tick_terminal_readability",
+      "acceptance": "Predicted and actual endpoints/ticks remain visible, attached to the correct track, and distinguishable from balls, halos, and each other."
+    },
+    {
+      "axis_id": "coaxial_predicted_actual_disambiguation",
+      "acceptance": "Where predicted and actual are co-axial or nearly co-axial, both tracks and their core/halo/dash/endpoint roles remain independently traceable."
+    }
+  ],
+  "stress_context_contract": [
+    {
+      "context_id": "deep_dark_surround",
+      "required_roles": ["predicted", "actual", "core", "halo", "dash", "endpoint"]
+    },
+    {
+      "context_id": "teal_table_cloth",
+      "required_roles": ["predicted", "actual", "core", "halo", "dash", "endpoint"]
+    },
+    {
+      "context_id": "red_ball_adjacency",
+      "required_roles": ["predicted", "actual", "core", "halo", "dash", "endpoint"]
+    },
+    {
+      "context_id": "near_white_ball_surface",
+      "required_roles": ["predicted", "actual", "core", "halo", "dash", "endpoint"]
+    },
+    {
+      "context_id": "coaxial_track_overlap",
+      "required_roles": ["predicted", "actual", "core", "halo", "dash", "endpoint"]
+    }
+  ],
+  "ordinal2_blocking_axes": [
+    {
+      "axis_id": "O2_PREDICTED_OUTER_SILHOUETTE_MULTIBACKGROUND",
+      "frozen_basis": "Seven predicted outer-halo final-edge-contrast failures across dark, teal, and red adjacencies.",
+      "future_pass_condition": "No predicted outer silhouette is visually lost or confused across the required stress contexts, and the unchanged authoritative machine gate passes."
+    },
+    {
+      "axis_id": "O2_PREDICTED_CORE_HALO_COAXIAL_INTEGRITY",
+      "frozen_basis": "One predicted outer-halo and one predicted core owned-area failure at the tight co-axial cluster.",
+      "future_pass_condition": "Core and halo remain independently readable at the frozen co-axial projection without threshold, geometry, offset, z-order, camera, or layout changes."
+    },
+    {
+      "axis_id": "O2_ACTUAL_NEAR_WHITE_DASH_GAP_SEPARATION",
+      "frozen_basis": "One actual solid-in-predicted-dash-gap final-edge-contrast failure against near-white adjacency.",
+      "future_pass_condition": "Actual remains identifiable against the near-white surface while the predicted gap remains visibly open and semantically predicted."
+    },
+    {
+      "axis_id": "O2_COAXIAL_TRACK_DISAMBIGUATION",
+      "frozen_basis": "All 12 actual candidates lie within 12 physical pixels of predicted candidates in the valid elevated stress projection.",
+      "future_pass_condition": "A reviewer can trace predicted and actual independently through overlap without relying on spatial displacement or changed ordering."
+    },
+    {
+      "axis_id": "O2_ENDPOINT_TICK_TERMINAL_READABILITY",
+      "frozen_basis": "Endpoint/tick roles machine-pass in the frozen payload but are mandatory visual regression controls at elevated scale.",
+      "future_pass_condition": "Both endpoints and all visible ticks remain attached, role-readable, and unconfused with balls or halo intersections."
+    }
+  ],
+  "ordinal1_regression_gate": {
+    "capture_id": "camera_player_low_1080",
+    "source_probe_count_immutable": 95,
+    "future_machine_result_required": "PASS",
+    "future_manual_axes_required": 7,
+    "future_manual_failures_allowed": 0,
+    "future_review_must_not_inherit_frozen_pass": true
+  },
+  "future_targeted11_machine_prerequisite": {
+    "status": "NOT_AVAILABLE_NOT_BOUND",
+    "future_receipt_path": null,
+    "future_receipt_sha256": null,
+    "required_schema": "billiardgl.phase4.final_ownership_visual_style_targeted11_machine_pass.v1",
+    "required_evidence_manifest_schema": "billiardgl.phase4.final_ownership_visual_style_targeted11_evidence_manifest.v1",
+    "stable_evidence_aggregate_algorithm": "SHA256 over exact ordinal order of capture_id + NUL + ppm_sha256 + NUL + telemetry_sha256 + LF",
+    "required_case_count": 11,
+    "required_passed_count": 11,
+    "required_failed_count": 0,
+    "required_exact_case_order": "targeted11_case_contract",
+    "required_ppm_and_telemetry_path_sha_dimensions_per_case": true,
+    "required_fresh_process_and_single_use_authorization_evidence": true,
+    "machine_pass_does_not_equal_ta_pass": true
+  },
+  "targeted11_case_contract": [
+    {"ordinal": 1, "capture_id": "camera_player_low_1080", "physical_dimensions": [1920, 1080], "role": "ordinal1_regression_control"},
+    {"ordinal": 2, "capture_id": "camera_elevated_1080", "physical_dimensions": [1920, 1080], "role": "ordinal2_primary_blocker"},
+    {"ordinal": 3, "capture_id": "camera_overhead_1080", "physical_dimensions": [1920, 1080], "role": "camera_regression_control"},
+    {"ordinal": 4, "capture_id": "camera_broadcast_1080", "physical_dimensions": [1920, 1080], "role": "camera_regression_control"},
+    {"ordinal": 5, "capture_id": "comparison_720_ui135_cvd", "physical_dimensions": [1280, 720], "role": "small_cvd_stress_control"},
+    {"ordinal": 6, "capture_id": "actual_retina_ui135_cvd", "physical_dimensions": [1920, 1080], "role": "retina_cvd_actual_stress_control"},
+    {"ordinal": 7, "capture_id": "advanced_1080_ui100_standard", "physical_dimensions": [1920, 1080], "role": "advanced_overlay_control"},
+    {"ordinal": 8, "capture_id": "core__launch_right_english_one_rail_v1__broadcast", "physical_dimensions": [1920, 1080], "role": "core_fixture_control"},
+    {"ordinal": 9, "capture_id": "core__launch_left_english_one_rail_v1__broadcast", "physical_dimensions": [1920, 1080], "role": "core_fixture_control"},
+    {"ordinal": 10, "capture_id": "core__launch_corner_pocket_angle_v1__broadcast", "physical_dimensions": [1920, 1080], "role": "core_fixture_control"},
+    {"ordinal": 11, "capture_id": "core__launch_side_pocket_angle_v1__overhead", "physical_dimensions": [1920, 1080], "role": "core_fixture_control"}
+  ],
+  "future_independent_ta_protocol": {
+    "status_values": ["PASS", "FAIL", "NOT_RUN"],
+    "reviewer": "Independent technical-art reviewer who did not implement the visual-style correction.",
+    "method": [
+      "First validate a frozen future targeted11 machine receipt with 11/11 PASS and exact per-case PPM/telemetry bindings.",
+      "Open every PPM individually at its exact physical dimensions; thumbnails, contact sheets, machine crops, and aggregate metrics are not substitutes.",
+      "Judge all seven canonical axes on every image and record PASS or FAIL with image-specific observations and coordinates.",
+      "Across the complete set, separately judge all six roles in all five stress contexts; each context-role cell needs a bound case ID and physical coordinate evidence.",
+      "Re-review ordinal1 independently as a regression control and ordinal2 independently against all five blocking axes.",
+      "Any NOT_RUN, missing evidence, failed machine case, failed image axis, failed stress cell, failed ordinal1 regression, or remaining ordinal2 blocker makes overall TA acceptance unavailable or FAIL."
+    ],
+    "image_count": 11,
+    "canonical_axis_count": 7,
+    "image_axis_result_count": 77,
+    "stress_context_count": 5,
+    "roles_per_stress_context": 6,
+    "stress_cell_count": 30,
+    "ordinal2_blocking_axis_count": 5
+  },
+  "forbidden_workarounds": [
+    "No threshold or acceptance-metric relaxation.",
+    "No probe inventory, denominator, route, offset, or trajectory change.",
+    "No z-order, camera preset/pose, projection, viewport, UI scale, table, ball, asset, scene, or layout change.",
+    "No ownership, association, arbitration, hidden-reason, semantic track identity, or source-probe algorithm change.",
+    "No cropping, selective omission, enlarged-only review, post-process repaint, or machine-only substitution for original-resolution TA review."
+  ],
+  "proof_boundary": {
+    "implementation_authorized": false,
+    "production_modified": false,
+    "readiness_created": false,
+    "authorization_created_or_issued": false,
+    "gpu_executed": false,
+    "future_machine_pass": false,
+    "future_ta_pass": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

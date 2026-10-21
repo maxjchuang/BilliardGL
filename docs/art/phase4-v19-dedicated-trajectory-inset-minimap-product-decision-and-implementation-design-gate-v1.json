@@ -1,0 +1,435 @@
+{
+  "schema": "billiardgl.phase4.v19.dedicated_trajectory_inset_minimap_product_decision_and_implementation_design_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_D_DEDICATED_INSET_DESIGN_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU_NO_AUTH",
+  "scope": "Freeze the root product decision and implementation design contract for a dedicated trajectory inset/minimap. The inset is a new semantic and rendering plane that preserves canonical trajectory geometry without relying on the failed main-world crossing grammars. This artifact is design-only and does not authorize or perform production, CMake, GPU, readiness, capture, machine, TA, human-study or product changes.",
+  "root_product_decision_binding": {
+    "decision_id": "DEDICATED_TRAJECTORY_INSET_MINIMAP",
+    "option": "D",
+    "authority": "ROOT_PROJECT_MANAGER_PRODUCT_DECISION",
+    "statement": "ROOT PRODUCT DECISION: SELECT D DEDICATED_TRAJECTORY_INSET_MINIMAP. A/B/C are not selected. Main-world overlay becomes secondary/diagnostic and no prior machine pass transfers. Design-only; no production/CMake/GPU/readiness/authorization.",
+    "statement_sha256": "a5c627db2ee53f299135ebd361784a228d2d026269321b4117f7288f38296c70",
+    "selected_reason": "The implementation is larger, but it does not distort the true world projection, remove route information or introduce temporal flashing; among the reviewed choices it has the lowest product-semantic and accessibility risk.",
+    "selection_authorizes_design_only": true
+  },
+  "option_disposition": {
+    "D_DEDICATED_TRAJECTORY_INSET_MINIMAP": "SELECTED",
+    "A_SCREEN_SPACE_LANE_SEPARATION": "NOT_SELECTED",
+    "B_TEMPORAL_PHASE_ALTERNATION": "NOT_SELECTED",
+    "C_TRUNCATION_OR_PRIORITY_DISCLOSURE": "NOT_SELECTED",
+    "unlisted_automatic_fallback_allowed": false
+  },
+  "frozen_bindings": [
+    {
+      "role": "v18_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-independent-ta-feasibility-failure-addendum-v1.json",
+      "sha256": "ec4f929a8c212ce8e25cbd7b040c00f511a5546918597ef0a3240cec1793b310"
+    },
+    {
+      "role": "v18_final_feasibility_receipt",
+      "path": "docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/feasibility-receipt-v1.json",
+      "sha256": "664d7b10875202571ad869fc477b5fd35b27994280217ad02ebff08e0ffe0398"
+    },
+    {
+      "role": "v17_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v17-explicit-crossing-grammar-independent-ta-feasibility-failure-addendum-v1.json",
+      "sha256": "150d1d8f1cb3cf0b43935a01a795d56ceadc51a6df330d0a68e4d01f51a36b3c"
+    },
+    {
+      "role": "v16_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v12_visual_repair_gate",
+      "path": "docs/art/phase4-v12-broadcast-projected-trajectory-visual-repair-design-gate-v1.json",
+      "sha256": "0fe6d893cd8fa1130e93c975be8e297802749b6515eb4f4e65b7d9af2006b8d2"
+    },
+    {
+      "role": "v15_two_choice_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v17_product_decision_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-product-decision-gate-v1.json",
+      "sha256": "c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329"
+    }
+  ],
+  "current_source_hashes_no_edit": {
+    "trajectory_overlay_renderer_cpp": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    "trajectory_overlay_renderer_h": {
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    "trajectory_overlay_model_cpp": {
+      "path": "src/Billiards/training/trajectory_overlay_model.cpp",
+      "sha256": "9307cfd2be139d14f6df12842f31eca6a714cede506c053046b64d047411cfc3"
+    },
+    "trajectory_overlay_model_h": {
+      "path": "src/Billiards/training/trajectory_overlay_model.h",
+      "sha256": "176049fc73e2558e3ea96ed1e2cc4fe67c11c1f771b19752b2a9cf32f8d24869"
+    },
+    "modern_renderer_cpp": {
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    "modern_renderer_h": {
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    },
+    "modern_product_session_cpp": {
+      "path": "src/Billiards/render/modern/modern_product_session.cpp",
+      "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9"
+    },
+    "modern_product_session_h": {
+      "path": "src/Billiards/render/modern/modern_product_session.h",
+      "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"
+    },
+    "modern_renderer_product_ui_cpp": {
+      "path": "src/Billiards/render/modern/modern_renderer_product_ui.cpp",
+      "sha256": "0b9a5a77191488769c9a5f83674dca7a5f9fad657e5fc0ac6f0c5964c4c8bdbb"
+    },
+    "modern_renderer_product_ui_h": {
+      "path": "src/Billiards/render/modern/modern_renderer_product_ui.h",
+      "sha256": "bdbd209193535ce08f9e7503dc4f6c6e4e2224be71e169222d61e7885672a213"
+    },
+    "product_hud_cpp": {
+      "path": "src/Billiards/product_hud.cpp",
+      "sha256": "10d23219274a8c7dfbfcd96b54c4f8fd972e1a46df29fde41633c1a97d76004c"
+    },
+    "product_hud_h": {
+      "path": "src/Billiards/product_hud.h",
+      "sha256": "3e00ba459451b16141a488672285de54ffdf92eeb19f72aed12d31c5566470f5"
+    },
+    "product_shell_layout_cpp": {
+      "path": "src/Billiards/render/ui/product_shell_layout.cpp",
+      "sha256": "1cd65911f93f72f1fb4adf353c401047832b2b46b24372cf14fb1ebdbfa250fc"
+    },
+    "product_shell_layout_h": {
+      "path": "src/Billiards/render/ui/product_shell_layout.h",
+      "sha256": "5a9b8836a133baf42c788b92bcd2a3f212081995a7eb2af3c100f78667a7312e"
+    },
+    "product_shell_draw_list_cpp": {
+      "path": "src/Billiards/render/ui/product_shell_draw_list.cpp",
+      "sha256": "c0ce953eb5f8c72368540dd2128ca5f60304371812213894d947adf1f8b4f07b"
+    },
+    "product_shell_draw_list_h": {
+      "path": "src/Billiards/render/ui/product_shell_draw_list.h",
+      "sha256": "daf31b57263a81b0e041be890ead7fed1e44b95d2dc0336b7e6c9017ed79da2c"
+    },
+    "cmake": {
+      "path": "CMakeLists.txt",
+      "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"
+    }
+  },
+  "product_semantics": {
+    "canonical_name": "Trajectory inset",
+    "localized_name_zh_cn": "轨迹小窗",
+    "entitlement": "Reuse the existing training/replay trajectory-assist entitlement only; do not expose the inset in modes where trajectory assistance is currently unavailable.",
+    "default_inset_enabled": true,
+    "default_world_overlay_enabled": false,
+    "world_overlay_role": "SECONDARY_DIAGNOSTIC_OPTIONAL",
+    "world_overlay_toggle_label_en": "World guide (diagnostic)",
+    "world_overlay_toggle_label_zh_cn": "世界轨迹（诊断）",
+    "inset_toggle_label_en": "Trajectory inset",
+    "inset_toggle_label_zh_cn": "轨迹小窗",
+    "no_automatic_world_fallback_when_inset_fails": true,
+    "world_and_inset_toggles_are_independent": true,
+    "prior_world_machine_ta_or_visual_pass_inherited_by_inset": false,
+    "prior_world_machine_pass_remains_product_authority": false,
+    "rules_or_physics_authority_changed": false,
+    "camera_state_changed": false,
+    "route_information_deleted_or_temporally_hidden": false
+  },
+  "default_layout_and_ui_contract": {
+    "coordinate_system": "top-left physical pixels at 96-DPI reference before the existing 85-135 percent user-scale transform",
+    "reference_viewport_px": [
+      1920,
+      1080
+    ],
+    "default_anchor": "bottom_right_above_product_footer",
+    "reference_outer_panel_rect_px": [
+      1440,
+      680,
+      448,
+      288
+    ],
+    "reference_plot_rect_within_panel_px": [
+      16,
+      48,
+      416,
+      208
+    ],
+    "reference_header_height_px": 40,
+    "reference_legend_height_px": 24,
+    "reference_right_margin_px": 32,
+    "reference_bottom_clearance_px": 112,
+    "plot_aspect_ratio": "2:1 play-surface orientation; head rail at bottom and foot spot toward top for every camera",
+    "responsive_scale_range_percent": [
+      85,
+      135
+    ],
+    "minimum_outer_panel_px": [
+      336,
+      216
+    ],
+    "layout_exclusions": [
+      "player status HUD",
+      "shot power and tip controls",
+      "rules decision panel or modal",
+      "caption and accessibility live-region band",
+      "safe-area edges and product footer"
+    ],
+    "modal_behavior": "A blocking rules/modal state suppresses the inset with explicit inset_suppressed_by_modal telemetry; it never relocates unpredictably or enables the world overlay.",
+    "layout_collision_behavior": "If the deterministic reference layout cannot satisfy all exclusions after the existing user-scale transform, suppress the inset with inset_layout_unavailable; do not overlap, shrink below minimum, move by scene content or change camera.",
+    "legend_always_visible_when_inset_visible": true,
+    "legend_entries_in_order": [
+      "ACTUAL / 实际 — paired continuous rails",
+      "PREDICTED / 预测 — centerline dashes",
+      "END / 终点 — endpoint marker"
+    ],
+    "minimum_legend_text_px_at_reference": 16,
+    "minimum_toggle_target_px": [
+      44,
+      44
+    ]
+  },
+  "inset_visual_grammar": {
+    "projection": "Camera-independent top-down mapping from canonical table coordinates into the fixed 2:1 plot rectangle. Player/elevated/overhead/broadcast camera matrices are never inputs to inset geometry.",
+    "actual_track": "Two continuous symmetric actual-attributed rails flank the exact canonical actual centerline. Their midpoint is the unmodified route; neither rail replaces or offsets the canonical source geometry.",
+    "predicted_track": "Predicted route remains on the exact canonical centerline and uses a dashed core with independent halo and side rim.",
+    "overlap_behavior": "At coaxial overlap, predicted centerline dashes remain visually dominant while both actual rails remain continuously traceable outside the predicted complete silhouette; no source route is erased, clipped, recolored or time-sliced.",
+    "actual_endpoint": "Paired-rail capsule endpoint plus outward direction notch",
+    "predicted_endpoint": "Dashed-track diamond endpoint",
+    "standard_palette": {
+      "actual": "deep cyan with white local halo",
+      "predicted": "warm yellow with dark local halo"
+    },
+    "color_vision_safe_palette": {
+      "actual": "blue with white local halo",
+      "predicted": "orange with dark local halo"
+    },
+    "non_color_redundancy_is_primary": true,
+    "palette_color_is_not_semantic_identity": true,
+    "fixed_panel_background": "opaque low-luminance neutral panel; no scene-color sampling, adaptive polarity or main-world depth/occlusion",
+    "main_world_threshold_offset_width_cap_z_order_or_camera_workaround_allowed": false
+  },
+  "independent_semantic_plane_contract": {
+    "plane_id": "trajectory_inset_semantic_v1",
+    "token_namespace": "Dedicated nonzero insetOwnershipToken namespace; numeric tokens are never reused from or compared with main-world finalOwnershipToken values.",
+    "common_parent_source_key": "trajectory generation id + track + canonical analytic arcSegmentId + route-order ordinal + collision/event lineage",
+    "world_member_key": "common parent source key + world primitiveId + world componentRole + world visualSublayer + world finalOwnershipToken, or explicit world_not_emitted reason",
+    "inset_member_key": "common parent source key + inset primitiveId + inset componentRole + inset visualSublayer + insetOwnershipToken",
+    "mapping_ledger_row": "Exactly one common parent source key with the ordered complete world member set and ordered complete inset member set; missing, duplicate, foreign, mixed-generation or color-derived association fails closed.",
+    "world_visibility_is_not_inset_eligibility": true,
+    "camera_or_world_clip_cannot_remove_inset_denominator": true,
+    "inset_source_group_denominator": "Every canonical actual or predicted analytic route source intersecting the play surface before camera projection, including sources whose main-world member is clipped or un-emitted.",
+    "inset_semantic_member_denominator": "All required inset roles emitted from every source group: actual left/right rail cores and their halos, predicted dash core/inner halo/outer rim, and deterministic endpoint/direction markers where the canonical source contract requires them.",
+    "inset_probe_denominator": "One deterministic InsetTrajectoryProbe per inset core or marker semantic member, carrying stroke, companion/halo and fixed-panel-background sample locations plus parent source and exact inset member identity.",
+    "denominator_exclusions": [
+      "legend, border, title, toggle and focus UI",
+      "main-world contrast probes and the historical ordered-81 denominator",
+      "camera-clipped or scene-occluded state",
+      "framebuffer color, repair coordinates, prior pass/fail and product mode name"
+    ],
+    "ordered_probe_count_and_digest": "New inset-only count and digest must be frozen by the future CPU implementation receipt; neither value exists or passes in this design gate.",
+    "required_mapping_results": [
+      "100 percent of inset source-group denominator rows have one common parent source",
+      "100 percent of required inset semantic members have one nonzero uniform insetOwnershipToken batch",
+      "100 percent of inset probe denominator records resolve to one exact inset member and one fixed background sample",
+      "zero orphan, duplicate, foreign, mixed-generation or main-world-token-derived inset members"
+    ],
+    "main_world_and_inset_denominators_may_be_combined": false,
+    "historical_81_probe_pass_inherited": false
+  },
+  "render_resource_and_pass_contract": {
+    "architecture_decision": "OFFSCREEN_ATOMIC_INSET_COLOR_AND_SEMANTIC_PLANE",
+    "direct_hdr_scene_fbo_rejected_reason": "A direct draw can partially contaminate the main HDR target before a later GL failure is observed and cannot guarantee zero inset pixels/tokens on the failed frame. Reusing the main semantic attachment also collapses the independent inset plane and denominator.",
+    "required_independent_resources": [
+      "inset HDR color attachment and framebuffer",
+      "inset per-sample R32UI semantic attachment and framebuffer",
+      "inset resolved HDR color attachment",
+      "inset resolved per-sample semantic attachment preserving 1, 2 or 4 ownership tokens",
+      "inset tone-encoded sRGB-alpha texture",
+      "dedicated inset geometry buffer, vertex array and programs"
+    ],
+    "exact_pass_order": [
+      "main_hdr_opaque",
+      "optional_secondary_world_overlay",
+      "main_color_and_world_semantic_resolve",
+      "main_aces_tone_map_to_ldr",
+      "inset_hdr_and_inset_semantic_clear",
+      "inset_table_and_trajectory_draw",
+      "inset_color_and_per_sample_semantic_resolve",
+      "inset_fixed_palette_tone_encode",
+      "product_ui_base_hud_with_reserved_inset_rect",
+      "inset_panel_composite_to_main_ldr",
+      "inset_legend_toggle_and_focus_ui",
+      "present"
+    ],
+    "inset_tone_contract": "Fixed palette transfer and sRGB encode independent of main-scene exposure, ACES adaptation, scene backdrop and camera; alpha remains explicit for panel composition.",
+    "main_final_ownership_behavior": "Main-world final-ownership instrumentation receives at most one inset panel-container UI token. Trajectory source ownership remains exclusively in the independent inset semantic plane and denominator.",
+    "no_framebuffer_feedback": true,
+    "no_main_depth_or_world_semantic_attachment_reuse": true,
+    "single_sample_and_msaa_resolve_paths_are_distinct": true,
+    "sample_counts_supported_exactly": [
+      1,
+      2,
+      4
+    ]
+  },
+  "gl_fail_closed_contract": {
+    "required_checks": [
+      "program compile and link status plus complete logs",
+      "sample-count and format support query with immediate glGetError check",
+      "every inset texture/buffer allocation and upload with immediate glGetError check",
+      "every inset framebuffer completeness check after attachment or resize",
+      "semantic and color clear success before every frame",
+      "color and per-sample semantic resolve success",
+      "tone-encode and composite draw success",
+      "generation/frame serial equality before composite"
+    ],
+    "on_any_failure": "Abort both inset trajectory and inset legend composite for that frame, publish one stable inset error code, retain the user's inset toggle state as requested-but-unavailable, and never auto-enable or claim success from the main-world overlay.",
+    "stale_resource_policy": "A failed, resized, context-lost or generation-mismatched frame invalidates all inset color, semantic, mapping, probe and denominator state before the next frame.",
+    "required_consecutive_frame_negative": "valid frame N -> forced query/upload/FBO/resolve failure at N+1 -> recovered valid frame N+2; N+1 composites zero inset pixels/tokens and N+2 cannot reuse N mappings or textures.",
+    "silent_sample_count_downgrade_allowed": false,
+    "stale_texture_or_semantic_fail_open_allowed": false,
+    "world_overlay_fallback_allowed": false
+  },
+  "future_cpu_static_acceptance_not_executed": {
+    "camera_presets_in_order": [
+      "player_low",
+      "elevated",
+      "overhead",
+      "broadcast"
+    ],
+    "palettes_in_order": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "sample_profiles_in_order": [
+      "center_1x",
+      "asymmetric_2x",
+      "asymmetric_4x"
+    ],
+    "exact_semantic_case_count_per_layout_profile": 24,
+    "layout_profiles_in_order": [
+      "1920x1080_ui100",
+      "1920x1080_ui135",
+      "1280x720_ui100",
+      "1280x720_ui135"
+    ],
+    "exact_total_case_count": 96,
+    "case_order": "layout profile major, then camera, palette and sample profile",
+    "required_invariants": [
+      "inset canonical geometry, source mapping and denominator digests are camera-independent across all four camera presets",
+      "standard and CVD semantic topology, source mapping, denominator and connected-component digests are identical",
+      "1x, 2x and 4x use the exact asymmetric sample positions and preserve per-sample tokens rather than relabeling one raster",
+      "actual paired rails are continuously traceable through every predicted dash-on and dash-gap interval without altering the canonical midpoint route",
+      "predicted centerline dash rhythm, endpoint and direction remain readable and dominant",
+      "default layout, safe area, footer clearance, legend, toggles, bilingual names and modal suppression satisfy the layout contract",
+      "world overlay default-off secondary state and inset default-on state are independent and no historical world pass is inherited",
+      "all GL query, upload, FBO, resolve and consecutive-frame negatives fail closed"
+    ],
+    "required_fail_closed_fixtures": [
+      "camera matrix or camera name used by inset geometry generation",
+      "missing, zero, duplicate, mixed-generation, foreign or world-token-reused inset semantic member",
+      "world clipping or visibility removes an inset source denominator row",
+      "legend or UI element enters the inset trajectory denominator",
+      "historical 81 probe count/digest substituted for the inset probe inventory",
+      "standard/CVD topology or mapping drift",
+      "1x data relabeled as 2x or 4x",
+      "actual rail midpoint deviates from the canonical route or only one rail survives",
+      "predicted centerline, dash gap, endpoint or direction marker is removed",
+      "layout overlaps an exclusion, shrinks below minimum or relocates from scene content",
+      "modal suppression enables the world overlay",
+      "sample-query, allocation, upload, FBO, resolve, tone or composite GL failure",
+      "valid-fail-valid consecutive frames reuse stale texture, semantic, mapping, probe or denominator state",
+      "production/CMake file outside a future explicitly authorized allowlist changes"
+    ],
+    "cpu_machine_pass": false,
+    "static_scope_pass": false
+  },
+  "future_targeted_gpu_ta_and_human_gates_not_authorized": {
+    "gpu_requires_separate_readiness_and_single_use_authorization": true,
+    "minimum_future_gpu_matrix": "player/elevated/overhead/broadcast standard controls plus broadcast CVD, with 1x/2x/4x semantic receipts and original-resolution color captures",
+    "independent_ta_axes": [
+      "actual paired-rail continuity and midpoint fidelity",
+      "predicted dashed-centerline dominance and gap readability",
+      "endpoint and direction-marker readability",
+      "standard/CVD non-color topology equivalence",
+      "legend-to-route correspondence",
+      "panel contrast, table orientation and ball/route context",
+      "safe-area, HUD, footer, modal and user-scale layout",
+      "main-world overlay remains secondary and does not contaminate inset acceptance"
+    ],
+    "human_comprehension_questions": [
+      "Can participants correctly identify actual versus predicted route without relying on color?",
+      "Can participants explain that the inset is a top-down semantic view rather than a change to the world trajectory?",
+      "Can keyboard, pointer and screen-reader users find, toggle and understand inset and diagnostic world-guide controls without accidental mode changes?"
+    ],
+    "gpu_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false
+  },
+  "candidate_future_implementation_file_boundary_not_authorized": {
+    "new_files": [
+      "src/Billiards/training/trajectory_inset_model.h",
+      "src/Billiards/training/trajectory_inset_model.cpp",
+      "src/Billiards/training/trajectory_inset_renderer.h",
+      "src/Billiards/training/trajectory_inset_renderer.cpp",
+      "tests/phase4_v19_trajectory_inset_cpu_tests.cpp"
+    ],
+    "existing_file_categories": [
+      "modern renderer resource ownership, pass orchestration and telemetry only",
+      "modern product session inset/world toggle state only",
+      "product shell layout authoritative inset rectangle, minimum-size and exclusion resolution only",
+      "product shell draw-list transparent reserved cutout, panel border, title, bilingual legend, toggle and focus UI only",
+      "CMake source/test registration only after a separate implementation authorization"
+    ],
+    "explicitly_forbidden_categories": [
+      "rules, physics, AI, camera state or trajectory source simulation",
+      "existing main-world trajectory centerline, widths, caps, offsets, thresholds, source IDs or authority",
+      "existing Phase2/Phase5 assets, UI decision semantics or product exposure",
+      "capture runner, readiness, authorization, golden or beta state"
+    ]
+  },
+  "authorization_boundary": {
+    "root_product_decision_selected": true,
+    "design_gate_complete": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "cpu_machine_pass": false,
+    "static_scope_pass": false,
+    "gpu_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false,
+    "targeted_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "product_decision_and_implementation_design_gate_only": true,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "cpu_implementation_executed": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_study_run": false,
+    "product_pass": false
+  }
+}

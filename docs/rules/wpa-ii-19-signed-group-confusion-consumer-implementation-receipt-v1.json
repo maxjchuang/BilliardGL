@@ -1,0 +1,83 @@
+{
+  "schema": "wpa_ii_19_signed_group_confusion_consumer_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_HEADLESS_AUTHORITY_NO_VISIBLE_UI_NO_AUTO_M4_COMPLETION",
+  "authority_bindings": {
+    "implementation_design_gate": {"path": "docs/rules/wpa-ii-19-signed-group-confusion-consumer-implementation-design-gate-v1.json", "sha256": "40bfaf8be6c878db0b8711be22245f6f2955ac241433d024d8bdbaf41af05a91", "root_revalidation": "PASS_16_OF_16_EXACT_5_PRODUCTION_3_TESTS_AND_SINGLE_CMAKE_TARGET_AUTHORIZED"},
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-19", "selected_option_id": "SIGNED_CONFUSION_DECLARATION_ASSIGNMENT_ERROR_ONLY"},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"}
+  },
+  "tests_first_record": {
+    "red_observed": true,
+    "red_command": "clang++ -std=c++17 -O2 -Isrc/Billiards tests/group_confusion_authority_tests.cpp src/Billiards/rules/referee_authority_protocol.cpp src/Billiards/rules/group_confusion_authority.cpp -o build-wpa-ii-19-red-v1/group_confusion_authority_tests",
+    "red_exit_code": 1,
+    "red_failure": "clang++: no such file or directory: src/Billiards/rules/group_confusion_authority.cpp",
+    "green_after_minimal_production_patch": true
+  },
+  "implemented_contract": {
+    "states": ["INACTIVE", "TIMELY_WINDOW_OPEN", "REALIZATION_PROPOSED_RACK_STOPPED", "RERACK_COMMITTING", "RERACK_COMMITTED", "WINDOW_EXPIRED"],
+    "classification": "ASSIGNMENT_OR_SEQUENCE_CONFUSION_ONLY",
+    "window": "closed-table authoritative completed shot freezes rack, assignment, completed-shot and original breaker/order snapshots",
+    "deadline": "strictly-positive successfully applied cue impulse expires prior window exactly once; rejected/zero/unsupported/failed launch does not",
+    "proposal": "authenticated referee or player exact PROPOSE stages signed realization and stops further Shoot without clearing or granting Section 17 BIH",
+    "final": "same authenticated role and subject FINAL_DECLARE binds proposal/window/order; Core-E plan is built before protocol mutation and restores frozen original breaker/order",
+    "cancel_supported": false,
+    "ordinary_wrong_first_contact_auto_section_19": false,
+    "section_17_bih_preserved_on_failed_stale_or_conflicting_request": true,
+    "section_17_bih_superseded_only_by_successful_final_rerack": true,
+    "exact_retry_zero_delta": true,
+    "commit_failure_full_rollback": true,
+    "reset_and_other_official_rerack_invalidate": true,
+    "direct_core_e_command_exposed": false,
+    "signed_payload_promoted_to_physics_shotfacts_or_assignment": false,
+    "visible_or_global_rules_ui_exposed": false
+  },
+  "automation_headless": {
+    "capability": "wpa_ii_19_group_confusion_referee_consumer_v1",
+    "commands": ["rules.group_confusion_propose", "rules.group_confusion_final", "get_group_confusion_authority_state"],
+    "cancel_command_exposed": false,
+    "request_exact_field_count": 17,
+    "readback_omits": ["credential_id", "authentication_proof", "payload_canonical"],
+    "headless_only": true
+  },
+  "fixture_matrix": {
+    "positive": ["REFEREE_TIMELY_ASSIGNMENT_CONFUSION_PROPOSAL_STOPS_SHOOT", "PLAYER_ZERO_TIMELY_SIGNED_REALIZATION", "PLAYER_ONE_TIMELY_SIGNED_REALIZATION", "CLOSED_TABLE_COMPLETED_SHOT_OPENS_EXACT_WINDOW", "AIM_PREVIEW_REJECTED_ZERO_OR_FAILED_LAUNCH_KEEP_WINDOW", "ACCEPTED_POSITIVE_SHOOT_EXPIRES_PRIOR_WINDOW_ONCE", "SAME_ACTOR_FINAL_RERACKS_FROZEN_ORIGINAL_BREAKER", "ORIGINAL_SHOOTING_ORDER_AND_OFFICIAL_GEOMETRY_PRESERVED", "SECTION_17_BIH_SUPERSEDED_ONLY_AT_SUCCESSFUL_FINAL", "AUTOMATION_SECRET_FREE_STATE_ROUNDTRIP"],
+    "negative": ["WRONG_FIRST_CONTACT_ALONE_NEVER_AUTO_PROPOSES_OR_RERACKS", "OPEN_TABLE_CANNOT_OPEN_WINDOW", "UNAUTHENTICATED_UNKNOWN_OR_WRONG_ACTOR_REJECTED", "ORDINARY_WRONG_FIRST_ONLY_CLASSIFICATION_REJECTED", "WRONG_RACK_ASSIGNMENT_SHOT_OR_WINDOW_REFERENCE_REJECTED", "LATE_DECLARATION_AFTER_ACCEPTED_SHOOT_REJECTED", "STALE_REVISION_STATE_HASH_EXPIRY_OR_NONCE_REJECTED", "UNKNOWN_EXTRA_MISSING_NONCANONICAL_OR_WRONG_TYPE_PAYLOAD_REJECTED", "FINAL_BEFORE_PROPOSAL_OR_BY_CHANGED_ACTOR_REJECTED", "CANCEL_IS_UNSUPPORTED", "PROPOSAL_DOES_NOT_CLEAR_OR_GRANT_BIH", "DIRECT_CORE_E_FOUNDATION_ACTION_NOT_EXPOSED", "CURRENT_PLAYER_CANNOT_REPLACE_ORIGINAL_BREAKER", "CORE_E_PLAN_OR_PARENT_COMMIT_FAILURE_FULL_ROLLBACK", "EXACT_RETRY_ZERO_DELTA_AND_CONFLICT_FAIL_CLOSED", "RESET_OR_OTHER_RERACK_INVALIDATES_STALE_REQUESTS", "NO_PHYSICS_SHOTFACT_OR_ASSIGNMENT_SYNTHESIS_FROM_SIGNED_PAYLOAD", "NO_MODERN_PRODUCT_GLOBAL_UI_OR_VISIBLE_REALIZATION_EXPOSURE"]
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "d93638a879b99ca6fbf3e870bdbee2624afbcbb35f6902d7fbfd8c8cacd5c93b"},
+    {"path": "src/Billiards/rules/group_confusion_authority.h", "sha256": "e0ef56fcc8e98630927da9e446250d32a07cfb0927bbb16288b08275ffa97bc4"},
+    {"path": "src/Billiards/rules/group_confusion_authority.cpp", "sha256": "1aee83a68af92441c669b493ac4c2d2751dea93888ec1e6878dc5b4e961e9afa"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "0d6c2f1b895a57879455c5ea6a8eadf6a9ded0db52e90e89472429ef348520fe"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "205d1ae4d1d990b437a61f40b0bc94868bc15f6490fa37ed5f3b1a20c51290a3"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "68ae6d242ef10efe69993892ff5749c6c7cf04e034f7a2cd8380449d91817cca"}
+  ],
+  "test_bindings": [
+    {"path": "tests/group_confusion_authority_tests.cpp", "sha256": "c152c58aaeba8168df59588e67e57177d7992edc3a09aa81f317766ac1f7d36d"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "0f25639840df0e829bc0884334a37dc8b3f452c28934ea22d79783c620c5adf5"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "03e6294eff89bd0fff7192e7e3952ea9d0c27bdd3c88713a571ed9781db698c9"}
+  ],
+  "cpu_verification": {
+    "build_root": "build-wpa-ii-19-green-v1",
+    "required_binaries": [
+      {"path": "build-wpa-ii-19-green-v1/BilliardsGroupConfusionAuthorityTests", "sha256": "067058e5de66cf434a60185a1208ee3f630a46930b59a9aa1af2050936935ee9", "exit_code": 0},
+      {"path": "build-wpa-ii-19-green-v1/BilliardsRulesRuntimeIntegrationTests", "sha256": "82a6fd24b7744212ecd6cf3e6c8da553e26262a3e2a03bb4e04cd2c2c376aba6", "exit_code": 0},
+      {"path": "build-wpa-ii-19-green-v1/BilliardsAutomationControllerTests", "sha256": "2e56a79657962c8b0627752b56e4f3b5e91b8211b2e812b4ca2ad3e13fda5bcd", "exit_code": 0},
+      {"path": "build-wpa-ii-19-green-v1/BilliardsRefereeAuthorityProtocolTests", "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29", "exit_code": 0},
+      {"path": "build-wpa-ii-19-green-v1/BilliardsStalemateAuthorityTests", "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b", "exit_code": 0}
+    ],
+    "wide_passed_targets": ["BilliardsChineseEightBallRulesTests", "BilliardsRulesTests", "BilliardsAutomationProtocolTests", "BilliardsRulesDecisionProductRuntimeTests", "BilliardsRulesDecisionSessionIntegrationTests"],
+    "all_exit_code": 0,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "completion_boundary": {
+    "wpa_ii_19_internal_headless_consumer_implemented": true,
+    "visible_product_ui_implemented": false,
+    "audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "protocol_rack_executor_rules_shotfacts_or_physics_modified": false,
+    "global_rules_ui_exposed": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

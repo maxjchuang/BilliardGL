@@ -1,0 +1,99 @@
+{
+  "schema": "phase5_rules_decision_ui_v4_exact_shape_offline_root_cause_report_v1",
+  "schema_version": 1,
+  "status": "ROOT_CAUSE_CONFIRMED_NO_GPU_NO_PRODUCTION_EDIT",
+  "title": "Phase5 Rules UI v4 exact-shape pixel invisibility root cause",
+  "conclusion": "The v4 geometry contract exists and all three token families reach the product draw stream, but the focus chevron, selected diamond outline, and both confirm frames are rasterized accent-on-accent over the opaque active rows. The final pixels therefore contain no visible chevron component, no closed diamond, and no closed confirm frame; only the kText check and bent enter-arrow remain visible.",
+  "failure_receipt": {
+    "path": "docs/evidence/phase5/rules-decision-ui-v4-exact-shape-visual-failure-evidence-receipt-v1.json",
+    "sha256": "28c514cfe08e6cec2ccd94d28b593419fa9d8fa54d656362865358822cc5ba56"
+  },
+  "control_flow_trace": [
+    {
+      "stage": "draw_list_geometry",
+      "source": "src/Billiards/render/ui/rules_decision_ui_draw_list.cpp:602",
+      "finding": "The armed action row is emitted, followed by armed_diamond_v4 in its trailing slot at lines 619-625. The confirm row is emitted, followed by focus_chevron_v4 and confirm_double_frame_enter_arrow_v4 at lines 652-667.",
+      "classification": "PRESENT"
+    },
+    {
+      "stage": "row_fill_color",
+      "source": "src/Billiards/render/ui/rules_decision_product_draw.cpp:393",
+      "finding": "Enabled armed Action and Confirm panels select kAccent or kAccentCvd at lines 396-401. Constants are opaque standard [0.16,0.80,0.67,1] and CVD [0.98,0.70,0.18,1] at lines 15-16.",
+      "classification": "OPAQUE_ACCENT_BACKGROUND"
+    },
+    {
+      "stage": "focus_raster",
+      "source": "src/Billiards/render/ui/rules_decision_product_draw.cpp:454",
+      "finding": "FocusChevron emits two joined segment calls and selects the same kAccent/kAccentCvd at lines 461-466. Four nondegenerate triangles exist, but their opaque RGB equals the confirm-row fill.",
+      "classification": "EMITTED_ZERO_VISIBLE_CONTRAST"
+    },
+    {
+      "stage": "selected_raster",
+      "source": "src/Billiards/render/ui/rules_decision_product_draw.cpp:469",
+      "finding": "ArmedDiamond emits four outline segments using the same accent at lines 474 and 480-487, then two check segments using kText at lines 493-499. The outline disappears into the armed-row fill while the check remains.",
+      "classification": "OUTLINE_ZERO_VISIBLE_CONTRAST_CHECK_VISIBLE"
+    },
+    {
+      "stage": "confirm_raster",
+      "source": "src/Billiards/render/ui/rules_decision_product_draw.cpp:502",
+      "finding": "ConfirmDoubleFrame emits outer and inner frame calls using the same accent at lines 508-514, then emits the bent enter-arrow using kText at lines 516-530. Both frames disappear into the confirm-row fill while the arrow remains.",
+      "classification": "FRAMES_ZERO_VISIBLE_CONTRAST_ARROW_VISIBLE"
+    },
+    {
+      "stage": "clip_and_order",
+      "source": "src/Billiards/render/ui/product_ui_gpu_renderer.cpp:341",
+      "finding": "Shape triangles use the global safeRect from rules_decision_product_draw.cpp lines 155-159, not a row-slot clip. The GPU builder appends all primitives first and then all UiTriangle values at lines 341-380, so the shapes execute after panels and glyph primitives. No later panel overwrites them.",
+      "classification": "NOT_CLIPPED_NOT_OVERWRITTEN"
+    },
+    {
+      "stage": "current_cpp_oracle",
+      "source": "tests/rules_decision_product_runtime_tests.cpp:229",
+      "finding": "The test accepts token presence, triangle counts 4/12/24, and triangle bounding boxes at least 18x18. It does not rasterize the composited row or test foreground contrast, outline closure, or connected components.",
+      "classification": "FALSE_POSITIVE_ORACLE_GAP"
+    },
+    {
+      "stage": "current_python_oracle",
+      "source": "scripts/run_phase5_rules_decision_ui_v4_exact_shape_machine.py:58",
+      "finding": "shape_contract derives nominal size/stroke from profile math and writes selected_closed_diamond=true, confirm frame count=2, and passed=true without consuming a raster snapshot. Its validator therefore verifies a declared contract rather than visible output.",
+      "classification": "SELF_ASSERTED_GEOMETRY_NOT_PIXEL_PROOF"
+    }
+  ],
+  "causal_findings": {
+    "primary_root_cause": {
+      "id": "V4_ACCENT_ON_ACCENT_ZERO_CONTRAST",
+      "mechanism": "The final composited outline/stroke color is exactly equal to the opaque active-row background in both standard and color_vision_safe palettes.",
+      "observed_effect": "All four frozen images have zero visible selected outline closures, zero confirm frame closures, and zero independent focus chevron components.",
+      "confidence": "CONFIRMED_BY_SOURCE_AND_FROZEN_PIXELS"
+    },
+    "secondary_layout_defect": {
+      "id": "V4_FOCUS_SLOT_NOT_RESERVED_FROM_COPY",
+      "mechanism": "The focus slot starts at row leading x+8*scale while glyphLine starts the confirm text at the row's x. No leading content inset or dedicated non-overlap reservation exists.",
+      "observed_effect": "Each focus crop contains copy glyph fragments at its top edge. A future visible chevron could collide with copy unless the row reserves the slot.",
+      "confidence": "CONFIRMED_BY_COORDINATES_AND_PIXELS"
+    },
+    "verification_escape": {
+      "id": "V4_TOKEN_BBOX_WITHOUT_RASTER_TOPOLOGY",
+      "mechanism": "The accepted machine and unit checks prove logical emission and nominal geometry only.",
+      "observed_effect": "An accent-on-accent implementation passes 540 machine cases and token/bbox assertions while remaining visually failed in every repaired profile.",
+      "confidence": "CONFIRMED_BY_TEST_AND_MACHINE_SOURCE"
+    }
+  },
+  "ruled_out": [
+    {"candidate": "missing draw-list geometry", "ruled_out_by": "Exact v4 items exist in armed-confirm and current tests observe all three token IDs."},
+    {"candidate": "primitive emission skipped", "ruled_out_by": "Token triangle counts are 4 focus, 12 selected, and 24 confirm; renderer rejects degenerate triangles before submission."},
+    {"candidate": "alpha transparency", "ruled_out_by": "kAccent and kAccentCvd alpha are both 1.0."},
+    {"candidate": "row or slot clipping", "ruled_out_by": "Draw-list containment passes and triangles carry only the global safeRect, which contains all measured slots."},
+    {"candidate": "later draw overwrote the shapes", "ruled_out_by": "GPU build order emits primitives before the triangle stream; the shape triangles remain last relative to panels/glyph primitives."},
+    {"candidate": "single resolution or single palette aliasing", "ruled_out_by": "The same topology appears at 1280x720, 1920x1080, 2560x1440, density 1/2, standard and color_vision_safe."}
+  ],
+  "required_correction_direction": [
+    "Use an independent shape-outline foreground whose machine-measured contrast against the actual active-row background is at least 4.0:1 in standard and color_vision_safe after compositing; do not change inherited thresholds to obtain a pass.",
+    "Reserve a dedicated, non-overlapping leading focus slot and inset confirm copy accordingly while preserving the existing localized actor/action text and row/hit semantics.",
+    "Add deterministic CPU raster snapshots at all four repair profiles. Inspect final pixels, not only token metadata: chevron joined-component/span, diamond closure/check enclosure, two confirm frame closures/arrow separation, alpha/clip/overwrite survival, physical sizes, and CVD equivalence.",
+    "Keep token, triangle-count, and bbox assertions as supporting diagnostics only. They can never independently satisfy the v5 visual gate."
+  ],
+  "non_authorizations": [
+    "No authority, rules, action inventory/order, actor/action copy, submission, placement, inherited threshold, product exposure, Beta, Golden, M2, real-input, or screen-reader change.",
+    "No production edit, build, GPU authorization, GPU execution, capture, or technical-art pass is performed or claimed by this report."
+  ]
+}

@@ -1,0 +1,558 @@
+{
+  "acceptance": {
+    "content_accepted": false,
+    "machine_candidate": true,
+    "product_default_switch_authorized": false,
+    "result": "MACHINE_CANDIDATE_NOT_CONTENT_ACCEPTED"
+  },
+  "assets": [
+    {
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "cue_impact.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 34604,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:b547ad2e96576e53ecebe3eacec6ebd714ac5ed9e2c84cf6d132bf3af1d0aff4",
+        "duration_seconds": 0.24,
+        "file_sha256": "sha256:c3dcff3eaa703626b873500792f71242f5396bccd3e8fe99f7e11b3fb67f94ea",
+        "frame_count": 11520,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 15.268525,
+          "active_region_rms_dbfs": -18.268526,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -148.951526,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 6.708333
+        },
+        "sample_peak_dbfs": -3.000001,
+        "sample_peak_linear": 0.707945704,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -19.295021
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "cue_impact_phase5_v1"
+      },
+      "semantic_id": "cue_impact",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "ball_ball.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 28844,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:b440ce85eb6cb0ee7eb82091a9286157293e5284320a7e2c7cc733d93010ac5e",
+        "duration_seconds": 0.2,
+        "file_sha256": "sha256:47e9a9e9d545279d231d06cf0a588c0b62cc491453552e07f93f37dd6885217b",
+        "frame_count": 9600,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 15.36318,
+          "active_region_rms_dbfs": -19.363181,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -160.514998,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 2.0
+        },
+        "sample_peak_dbfs": -4.000001,
+        "sample_peak_linear": 0.630957246,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -20.694767
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "ball_ball_phase5_v1"
+      },
+      "semantic_id": "ball_ball",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "rail.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 54764,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:9aefd453f2fb30ae832ea572b45df66c16ac5a05349301fbcd0e9fe1fb6b11dc",
+        "duration_seconds": 0.38,
+        "file_sha256": "sha256:b68d9939f24ba00f07ad912354a301457cfec88e3ac1da90296881b07488462d",
+        "frame_count": 18240,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 15.009572,
+          "active_region_rms_dbfs": -20.009574,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -146.478074,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 11.333333
+        },
+        "sample_peak_dbfs": -5.000002,
+        "sample_peak_linear": 0.562341213,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -20.645635
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "rail_phase5_v1"
+      },
+      "semantic_id": "rail",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "pocket_jaw.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 63404,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:f770b863f4f4ad3402f09699a0f0350f2baa28497fe8b7c022cb7e4230f1e8ac",
+        "duration_seconds": 0.44,
+        "file_sha256": "sha256:3117670921b3aa88948f43966a9fc931002d09b0e60860d8110221f6b29a959a",
+        "frame_count": 21120,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 16.415159,
+          "active_region_rms_dbfs": -21.91516,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -148.951526,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 4.4375
+        },
+        "sample_peak_dbfs": -5.500001,
+        "sample_peak_linear": 0.530884385,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -22.467901
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "pocket_jaw_phase5_v1"
+      },
+      "semantic_id": "pocket_jaw",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_transient",
+      "bus": "effects",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "pocket_drop.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 103724,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:ac953bfb473e34521196363725570dd0fb9869432d650b722f76c95ba75fd247",
+        "duration_seconds": 0.72,
+        "file_sha256": "sha256:2eebc456895d90a7805f6211968a3f0c157438d0dae32f6d2d38ef2466b3f2fa",
+        "frame_count": 34560,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 15.230528,
+          "active_region_rms_dbfs": -21.230528,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -157.504698,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 17.979167
+        },
+        "sample_peak_dbfs": -6.0,
+        "sample_peak_linear": 0.501187205,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -21.54513
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "pocket_drop_phase5_v1"
+      },
+      "semantic_id": "pocket_drop",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "ui_feedback.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 31724,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:bf6e44c2f79b9eca7d843e8d733ff7118a85625902179f35c915f7abef940568",
+        "duration_seconds": 0.22,
+        "file_sha256": "sha256:a31c7aae67dda2330a8c071b725494a0d39f3ce1bdc31b6c269f8f5d1bb45853",
+        "frame_count": 10560,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 14.175271,
+          "active_region_rms_dbfs": -22.175271,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -141.575532,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 3.125
+        },
+        "sample_peak_dbfs": -8.0,
+        "sample_peak_linear": 0.398107171,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -23.111589
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "ui_feedback_phase5_v1"
+      },
+      "semantic_id": "ui_feedback",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "foul.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 129644,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:13ad348a568221dd7b2dda1180ff13af7927e820889c10ad8a3b48480c8a6da3",
+        "duration_seconds": 0.9,
+        "file_sha256": "sha256:e31a9b9e5da2538a0ed8f2eb492a70559d98a67d68344af282c7d86de88c4f66",
+        "frame_count": 43200,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 14.720981,
+          "active_region_rms_dbfs": -20.720981,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -139.12671,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 14.125
+        },
+        "sample_peak_dbfs": -6.0,
+        "sample_peak_linear": 0.501187205,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -20.969429
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "foul_phase5_v1"
+      },
+      "semantic_id": "foul",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "one_shot_notification",
+      "bus": "ui",
+      "channel_policy": "mono_point_source",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "match_finish.wav",
+      "loop_contract": "not_looped",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 374444,
+        "channels": 1,
+        "decoded_pcm_sha256": "sha256:6f035c18db1e5c24f8ad1d1566e13536fb06797db800627df45557c9f4c119a1",
+        "duration_seconds": 2.6,
+        "file_sha256": "sha256:56bb9aa33c9ec5ffbeee5ea3c903c36ece005d3fe449472f2b5b9e04be7a331a",
+        "frame_count": 124800,
+        "full_scale_sample_count": 0,
+        "one_shot": {
+          "active_crest_factor_db": 15.299169,
+          "active_region_rms_dbfs": -20.299171,
+          "first_sample_linear": 0.0,
+          "last_10ms_rms_dbfs": -142.189909,
+          "last_sample_linear": 0.0,
+          "onset_to_peak_ms": 10.520833
+        },
+        "sample_peak_dbfs": -5.000002,
+        "sample_peak_linear": 0.562341213,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -20.37836
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "match_finish_phase5_v1"
+      },
+      "semantic_id": "match_finish",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "stereo_loop",
+      "bus": "music",
+      "channel_policy": "stereo_bed",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "music_loop.wav",
+      "loop_contract": "explicit_full_file_loop",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 9216044,
+        "channels": 2,
+        "decoded_pcm_sha256": "sha256:ac23a6b7522d96bbe72b0b3c4aaf8006b68d841fa803436d5790b0959108e9ad",
+        "duration_seconds": 32.0,
+        "file_sha256": "sha256:c1857141d468a2f81ca8e45937732ca27d1042429404d1ce46761d3aa0092954",
+        "frame_count": 1536000,
+        "full_scale_sample_count": 0,
+        "loop": {
+          "boundary_sample_jump_dbfs_max": -300.0,
+          "head_tail_100ms_first_difference_rms_delta_db_max": 0.117181,
+          "head_tail_100ms_rms_delta_db_max": 0.233769,
+          "head_tail_100ms_zero_crossing_rate_delta_max": 0.000208377,
+          "per_channel": [
+            {
+              "boundary_sample_jump_dbfs": -300.0,
+              "channel_index": 0,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.039142,
+              "head_tail_100ms_rms_delta_db": 0.0,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.000208377
+            },
+            {
+              "boundary_sample_jump_dbfs": -300.0,
+              "channel_index": 1,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.117181,
+              "head_tail_100ms_rms_delta_db": 0.233769,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.0
+            }
+          ]
+        },
+        "sample_peak_dbfs": -8.0,
+        "sample_peak_linear": 0.398107171,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -18.316073
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "music_loop_phase5_v1"
+      },
+      "semantic_id": "music_loop",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    },
+    {
+      "asset_type": "stereo_loop",
+      "bus": "ambience",
+      "channel_policy": "stereo_bed",
+      "content_acceptance_status": "NOT_CONTENT_ACCEPTED",
+      "filename": "venue_ambience.wav",
+      "loop_contract": "explicit_full_file_loop",
+      "machine_gate_status": "PASS",
+      "measurements": {
+        "bits_per_sample": 24,
+        "byte_size": 9216044,
+        "channels": 2,
+        "decoded_pcm_sha256": "sha256:ef22fc417b6d7fd6151c91a1d176205238b5a569ec2b219dea5f9e186d6d13ac",
+        "duration_seconds": 32.0,
+        "file_sha256": "sha256:1f0527f5e7f5b357b5b5a0eeef38f994131bdd1409a880331084b0b4b0d38c55",
+        "frame_count": 1536000,
+        "full_scale_sample_count": 0,
+        "loop": {
+          "boundary_sample_jump_dbfs_max": -300.0,
+          "head_tail_100ms_first_difference_rms_delta_db_max": 0.096248,
+          "head_tail_100ms_rms_delta_db_max": 0.076197,
+          "head_tail_100ms_zero_crossing_rate_delta_max": 0.000208377,
+          "per_channel": [
+            {
+              "boundary_sample_jump_dbfs": -300.0,
+              "channel_index": 0,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.061683,
+              "head_tail_100ms_rms_delta_db": 0.0,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.000208377
+            },
+            {
+              "boundary_sample_jump_dbfs": -300.0,
+              "channel_index": 1,
+              "head_tail_100ms_first_difference_rms_delta_db": 0.096248,
+              "head_tail_100ms_rms_delta_db": 0.076197,
+              "head_tail_100ms_zero_crossing_rate_delta": 0.0
+            }
+          ]
+        },
+        "sample_peak_dbfs": -12.0,
+        "sample_peak_linear": 0.251188636,
+        "sample_rate_hz": 48000,
+        "unweighted_full_file_rms_dbfs": -23.92971
+      },
+      "origin": {
+        "external_samples_or_downloads": false,
+        "method": "repository_authored_deterministic_procedural_synthesis",
+        "parameter_set": "venue_ambience_phase5_v1"
+      },
+      "semantic_id": "venue_ambience",
+      "unmeasured": {
+        "actual_device_playback": "NOT_MEASURED",
+        "authorship_or_rights_acceptance": "NOT_MEASURED",
+        "external_human_review": "NOT_MEASURED",
+        "integrated_lufs": "NOT_MEASURED",
+        "perceptual_quality": "NOT_MEASURED",
+        "semantic_identification": "NOT_MEASURED",
+        "true_peak_dbtp": "NOT_MEASURED"
+      }
+    }
+  ],
+  "contract_bindings": [
+    {
+      "path": "docs/art/phase5-audio-content-remediation-design-gate-v1.json",
+      "role": "audio_remediation_design_gate",
+      "sha256": "sha256:c9bdbe929afa868e94e991835f3bd52972d67d5ef9aedb80605c21ec489d1e00"
+    },
+    {
+      "path": "scripts/generate_phase5_audio_content_candidate.py",
+      "role": "deterministic_generator",
+      "sha256": "sha256:7c2b7afa98cb070e4a5232342c7107f2d0216b3a020a8c4f4e2761aa959ae9ce"
+    },
+    {
+      "path": "scripts/validate_phase5_audio_content_candidate.py",
+      "role": "fail_closed_validator",
+      "sha256": "sha256:e0071d556625e02d8258830513b78e45422930e38936e34de0a892aae4ea5640"
+    }
+  ],
+  "evidence_boundary": {
+    "actual_device_playback_completed": false,
+    "authorship_or_rights_accepted": false,
+    "beta_gate_completed": false,
+    "content_accepted": false,
+    "external_human_review_completed": false,
+    "integrated_lufs_measured": false,
+    "listening_review_completed": false,
+    "procedural_repository_generation": true,
+    "third_party_samples_or_downloads_used": false,
+    "true_peak_measured": false
+  },
+  "generation_contract": {
+    "bits_per_sample": 24,
+    "deterministic": true,
+    "encoding": "uncompressed_signed_little_endian_PCM",
+    "external_audio_input_count": 0,
+    "randomness": "fixed per-cue integer state where noise is used",
+    "repository_authored_synthesis_graph_and_parameters": true,
+    "sample_rate_hz": 48000,
+    "third_party_sample_count": 0
+  },
+  "machine_summary": {
+    "asset_count": 10,
+    "machine_fail_count": 0,
+    "machine_pass_count": 10,
+    "result": "PASS_MACHINE_CANDIDATE_ONLY",
+    "unique_decoded_pcm_sha256_count": 10,
+    "unique_file_sha256_count": 10
+  },
+  "package_id": "phase5_audio_content_candidate_phase5_v1",
+  "remaining_acceptance": [
+    "version-recorded true-peak measurement",
+    "version-recorded ITU-R BS.1770 integrated loudness measurement",
+    "independent original-resolution listening and semantic blind test",
+    "actual reference-headphone and representative-speaker playback",
+    "external-human content disposition for all required cues",
+    "authorship and chain-of-title review/signature",
+    "AudioAssetPolicy and Phase-5 Beta contract migration after content acceptance"
+  ],
+  "schema": "phase5_audio_content_candidate_manifest_v1",
+  "schema_version": 1,
+  "status": "MACHINE_CANDIDATE_NOT_CONTENT_ACCEPTED"
+}

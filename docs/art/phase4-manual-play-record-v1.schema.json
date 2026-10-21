@@ -1,0 +1,100 @@
+{
+  "$id": "billiardgl://schemas/phase4-manual-play-record-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempt_seed": {
+      "type": "integer"
+    },
+    "attestations": {
+      "type": "object"
+    },
+    "automation_binding": {
+      "type": "object"
+    },
+    "category": {
+      "type": "string"
+    },
+    "description_zh_cn": {
+      "type": "string"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "executor": {
+      "type": "object"
+    },
+    "initial_scenario_sha256": {
+      "type": "string"
+    },
+    "manual_checks": {
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array"
+    },
+    "manual_open_response": {
+      "type": "string"
+    },
+    "pii_review": {
+      "type": "object"
+    },
+    "recommended_assist": {
+      "type": "string"
+    },
+    "replay_evidence": {
+      "type": "object"
+    },
+    "required_capabilities": {
+      "type": "array"
+    },
+    "scenario_file": {
+      "type": "string"
+    },
+    "scenario_file_sha256": {
+      "type": "string"
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "session": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "COMPLETE"
+      ]
+    },
+    "title_zh_cn": {
+      "type": "string"
+    },
+    "trajectory_evidence": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "category",
+    "scenario_file",
+    "scenario_file_sha256",
+    "initial_scenario_sha256",
+    "title_zh_cn",
+    "description_zh_cn",
+    "recommended_assist",
+    "required_capabilities",
+    "attempt_seed",
+    "status",
+    "executor",
+    "environment",
+    "session",
+    "manual_checks",
+    "manual_open_response",
+    "replay_evidence",
+    "trajectory_evidence",
+    "automation_binding",
+    "attestations",
+    "pii_review"
+  ],
+  "title": "Phase 4 anonymous human manual-play record",
+  "type": "object"
+}

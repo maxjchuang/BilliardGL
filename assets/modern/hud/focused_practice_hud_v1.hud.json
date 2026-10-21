@@ -1,0 +1,810 @@
+{
+  "authorship": "original_billiardgl_product_ui",
+  "capability_gated_placeholders": {
+    "chalk": {
+      "absence_behavior": "omit_node_no_disabled_control",
+      "default_visible": false,
+      "visible_if": [
+        "capability.chalk_ui",
+        "physics.chalk_model_promoted"
+      ]
+    },
+    "cue_elevation": {
+      "absence_behavior": "omit_node_no_disabled_control",
+      "default_visible": false,
+      "visible_if": [
+        "capability.cue_elevation_ui",
+        "physics.cue_elevation_promoted"
+      ]
+    }
+  },
+  "color_vision_accessibility": {
+    "foul_always_shows_icon_and_text": true,
+    "never_color_only": true,
+    "solid_group": {
+      "label": "SOLIDS",
+      "pattern": "solid",
+      "shape": "filled_circle"
+    },
+    "stripe_group": {
+      "label": "STRIPES",
+      "pattern": "equatorial_band",
+      "shape": "ring"
+    },
+    "target_always_shows_ball_number": true
+  },
+  "colors": {
+    "accent": "#31B7C8",
+    "border": "#64737D",
+    "destructive": "#F06B5D",
+    "focus": "#C7A8FF",
+    "room": "#0D1216",
+    "surface": "#10181EEB",
+    "surface_strong": "#0B1116F5",
+    "table_felt": "#126D7C",
+    "table_wood": "#49291F",
+    "text_primary": "#F4F7F8",
+    "text_secondary": "#C1CBD0",
+    "warning": "#F2BC55"
+  },
+  "contrast_pairs": [
+    {
+      "background": "surface_strong",
+      "foreground": "text_primary",
+      "minimum": 4.5
+    },
+    {
+      "background": "surface_strong",
+      "foreground": "text_secondary",
+      "minimum": 4.5
+    },
+    {
+      "background": "surface_strong",
+      "foreground": "warning",
+      "minimum": 4.5
+    },
+    {
+      "background": "surface_strong",
+      "foreground": "destructive",
+      "minimum": 4.5
+    }
+  ],
+  "debug_overlay": {
+    "default_visible": false,
+    "fields": [
+      "fps",
+      "frame_ms",
+      "draw_calls",
+      "triangles",
+      "snapshot_tick"
+    ],
+    "forbidden_in_release_capture": true,
+    "separate_overlay_id": "billiardgl_debug_telemetry_v1",
+    "shares_product_layout_nodes": false,
+    "toggle": "F3"
+  },
+  "dpi_scaling": {
+    "logical_reference_dpi": 96,
+    "os_density_scale_formula": "clamp(os_dpi / 96.0, 0.85, 1.50)",
+    "pixel_snapping": "rect_edges_and_one_pixel_strokes_after_scale",
+    "profile_selection": "compact_1024x768 when aspect_ratio < 1.55 or width < 1280",
+    "resolved_scale_formula": "os_density_scale * user_scale",
+    "user_scale_range": [
+      0.85,
+      1.35
+    ]
+  },
+  "external_assets": false,
+  "files": {
+    "flat_token_proof": {
+      "path": "assets/modern/hud/focused_practice_hud_shipping_tokens_flat_proof_v1.svg",
+      "runtime_capture": false,
+      "sha256": "sha256:8058de94319eabcb6f0d2c15599dc5854ba2924bc403fcce9cadffab7e3818ca",
+      "user_research": false
+    },
+    "mockups": {
+      "compact_1024x768": {
+        "aiming": {
+          "path": "assets/modern/hud/focused_practice_hud_compact_1024x768_aiming_v1.svg",
+          "sha256": "sha256:bb68310db3303293d5b54e738f4ace81ecb9ee747a6188b12d6d8bb8bebabf93"
+        },
+        "default": {
+          "path": "assets/modern/hud/focused_practice_hud_compact_1024x768_default_v1.svg",
+          "sha256": "sha256:aa6f027617109de1490436d173a5e59f75dc68502b358a789aedd28ad47c4ef2"
+        },
+        "help": {
+          "path": "assets/modern/hud/focused_practice_hud_compact_1024x768_help_v1.svg",
+          "sha256": "sha256:b10c2c211c4e2288d396ba7a68a68557d543778c5323d8c456804823b8515f4a"
+        },
+        "post_shot_foul": {
+          "path": "assets/modern/hud/focused_practice_hud_compact_1024x768_post_shot_foul_v1.svg",
+          "sha256": "sha256:0d3c8bdcc99d4392d7fa06a8333cddf40b7363ab2cad56b63a798e1cb3642d9d"
+        }
+      },
+      "wide_1920x1080": {
+        "aiming": {
+          "path": "assets/modern/hud/focused_practice_hud_wide_1920x1080_aiming_v1.svg",
+          "sha256": "sha256:b70e2f33f7cfcbaae80c6c49e95579f96ff35457488d4177b8ac0cdbaf2daaf8"
+        },
+        "default": {
+          "path": "assets/modern/hud/focused_practice_hud_wide_1920x1080_default_v1.svg",
+          "sha256": "sha256:cf5c11637d7d1be1eb4155512b4bc6e2e37bcbc6e9df9684af31d9724051c9be"
+        },
+        "help": {
+          "path": "assets/modern/hud/focused_practice_hud_wide_1920x1080_help_v1.svg",
+          "sha256": "sha256:a5e831a1d05ef411328b7abe6746ae599ba736496f8866b93e42dba5d2f59280"
+        },
+        "post_shot_foul": {
+          "path": "assets/modern/hud/focused_practice_hud_wide_1920x1080_post_shot_foul_v1.svg",
+          "sha256": "sha256:e0e9d4f67190be10d80a8761df9e6a2769ecad763635ce33b1c7067a6aae6ce2"
+        }
+      }
+    },
+    "shipping_tokens": {
+      "path": "assets/modern/hud/focused_practice_hud_shipping_tokens_v1.json",
+      "sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860"
+    }
+  },
+  "first_shot_automation_proxies": {
+    "aim_controls_visible_after_tab_max_ms": 100,
+    "aim_state_entered_by_ms": 11000,
+    "automatic_aim_or_shot_forbidden": true,
+    "deadline_ms": 30000,
+    "estimated_speed_label_and_mps_unit_required": true,
+    "maximum_simultaneous_prompts": 3,
+    "post_shot_state_after_release_max_ms": 250,
+    "power_percent_monotonic_during_single_hold": true,
+    "power_samples_while_holding_min": 3,
+    "required_event_order": [
+      "hud_default_visible",
+      "aim_toggled",
+      "power_hold_started",
+      "power_sampled",
+      "shot_released",
+      "hud_post_shot_visible"
+    ],
+    "scenario_id": "hud_first_shot_keyboard_mouse_v1",
+    "shot_release_command_count": 1,
+    "shot_released_by_ms": 30000,
+    "status_card_visible_by_ms": 500,
+    "tip_offset_step_optional": true
+  },
+  "first_shot_path_30s": [
+    {
+      "required_input": null,
+      "seconds": [
+        0,
+        3
+      ],
+      "step": "read_player_group_and_target"
+    },
+    {
+      "required_input": "optional_mouse",
+      "seconds": [
+        3,
+        7
+      ],
+      "step": "orbit_or_accept_default_camera"
+    },
+    {
+      "required_input": "TAB",
+      "seconds": [
+        7,
+        11
+      ],
+      "step": "enter_aim"
+    },
+    {
+      "required_input": "optional_arrows",
+      "seconds": [
+        11,
+        18
+      ],
+      "step": "confirm_aim_and_optional_tip_offset"
+    },
+    {
+      "required_input": "SPACE_hold",
+      "seconds": [
+        18,
+        27
+      ],
+      "step": "hold_power_and_read_percent_speed"
+    },
+    {
+      "required_input": "SPACE_release",
+      "seconds": [
+        27,
+        30
+      ],
+      "step": "release_first_shot"
+    }
+  ],
+  "generator": "scripts/generate_phase3_hud_package.py",
+  "input_prompts": {
+    "keyboard_mouse": {
+      "aim_toggle": "TAB",
+      "camera_orbit": "MOUSE DRAG",
+      "camera_preset": "Q / E",
+      "camera_zoom": "WHEEL",
+      "dismiss": "ESC",
+      "help": "F1",
+      "power_charge_release": "SPACE",
+      "tip_offset": "ARROW KEYS"
+    },
+    "maximum_simultaneous_prompts": 3,
+    "prompt_priority": [
+      "blocking_error",
+      "current_action",
+      "camera",
+      "help"
+    ]
+  },
+  "manifest_id": "focused_practice_hud_v1",
+  "product_elements": {
+    "context_hint": {
+      "assist_encodings": [
+        "text",
+        "icon",
+        "color"
+      ],
+      "fields": [
+        "camera_preset",
+        "assist_level",
+        "contextual_input_prompt"
+      ],
+      "maximum_visible_seconds": 3.0
+    },
+    "foul_banner": {
+      "encodings": [
+        "FOUL_text",
+        "warning_triangle",
+        "destructive_color"
+      ],
+      "fields": [
+        "foul_label",
+        "reason",
+        "resolution"
+      ]
+    },
+    "help_panel": {
+      "input_modes": [
+        "keyboard",
+        "mouse",
+        "trackpad"
+      ]
+    },
+    "player_status": {
+      "fields": [
+        "current_player",
+        "ball_group",
+        "target_ball",
+        "target_pocket"
+      ],
+      "group_encoding": [
+        "text_label",
+        "filled_or_striped_symbol",
+        "ball_number",
+        "color"
+      ]
+    },
+    "power_meter": {
+      "encodings": [
+        "segmented_bar",
+        "tick_marks",
+        "numeric_percent",
+        "numeric_speed_with_unit"
+      ],
+      "fields": [
+        "power_percent",
+        "estimated_cue_speed_mps"
+      ],
+      "speed_is_authoritative_physics": false,
+      "speed_label_prefix": "EST."
+    },
+    "shot_result": {
+      "fields": [
+        "shot_complete",
+        "cue_ball_travel_m",
+        "contact_summary",
+        "review_prompt"
+      ]
+    },
+    "tip_offset": {
+      "coordinate_unit": "ball_radius_R",
+      "encodings": [
+        "ball_outline",
+        "crosshair",
+        "position_marker",
+        "numeric_xy"
+      ],
+      "range": {
+        "x": [
+          -1.0,
+          1.0
+        ],
+        "y": [
+          -1.0,
+          1.0
+        ]
+      }
+    }
+  },
+  "profiles": {
+    "compact_1024x768": {
+      "breakpoint": "compact_4_3",
+      "element_rects_px": {
+        "context_hint": [
+          708,
+          24,
+          284,
+          92
+        ],
+        "foul_banner": [
+          252.0,
+          182,
+          520,
+          78
+        ],
+        "help_panel": [
+          132.0,
+          59.0,
+          760,
+          650
+        ],
+        "player_status": [
+          32,
+          24,
+          304,
+          142
+        ],
+        "power_meter": [
+          32,
+          610,
+          520,
+          126
+        ],
+        "shot_result": [
+          32,
+          610,
+          430,
+          126
+        ],
+        "tip_offset": [
+          820,
+          564,
+          172,
+          172
+        ]
+      },
+      "font_px": {
+        "body": 16,
+        "caption": 13,
+        "display": 24,
+        "primary": 20
+      },
+      "minimum_text_px": 13,
+      "safe_area_px": {
+        "bottom": 32,
+        "left": 32,
+        "right": 32,
+        "top": 24
+      },
+      "viewport_px": [
+        1024,
+        768
+      ]
+    },
+    "wide_1920x1080": {
+      "breakpoint": "wide_16_9",
+      "element_rects_px": {
+        "context_hint": [
+          1502,
+          36,
+          354,
+          100
+        ],
+        "foul_banner": [
+          630.0,
+          36,
+          660,
+          88
+        ],
+        "help_panel": [
+          510.0,
+          190.0,
+          900,
+          700
+        ],
+        "player_status": [
+          64,
+          36,
+          380,
+          158
+        ],
+        "power_meter": [
+          64,
+          888,
+          650,
+          138
+        ],
+        "shot_result": [
+          64,
+          888,
+          510,
+          138
+        ],
+        "tip_offset": [
+          1646,
+          816,
+          210,
+          210
+        ]
+      },
+      "font_px": {
+        "body": 18,
+        "caption": 14,
+        "display": 32,
+        "primary": 24
+      },
+      "minimum_text_px": 14,
+      "safe_area_px": {
+        "bottom": 54,
+        "left": 64,
+        "right": 64,
+        "top": 36
+      },
+      "viewport_px": [
+        1920,
+        1080
+      ]
+    }
+  },
+  "responsive_validation_cases": {
+    "high_dpi_1920x1080_144dpi": {
+      "active_state_sets": {
+        "aiming": [
+          "player_status",
+          "context_hint",
+          "power_meter",
+          "tip_offset"
+        ],
+        "default": [
+          "player_status",
+          "context_hint"
+        ],
+        "help": [
+          "help_panel"
+        ],
+        "post_shot_foul": [
+          "player_status",
+          "context_hint",
+          "foul_banner",
+          "shot_result"
+        ]
+      },
+      "element_rects_physical_px": {
+        "context_hint": [
+          1324,
+          36,
+          531,
+          150
+        ],
+        "foul_banner": [
+          465,
+          297,
+          990,
+          132
+        ],
+        "help_panel": [
+          390,
+          75,
+          1140,
+          930
+        ],
+        "player_status": [
+          64,
+          36,
+          570,
+          237
+        ],
+        "power_meter": [
+          64,
+          819,
+          975,
+          207
+        ],
+        "shot_result": [
+          64,
+          819,
+          765,
+          207
+        ],
+        "tip_offset": [
+          1540,
+          711,
+          315,
+          315
+        ]
+      },
+      "layout_variant": "wide_minimum_reflow",
+      "logical_viewport_px": [
+        1280,
+        720
+      ],
+      "minimum_text_physical_px": 21,
+      "os_dpi": 144,
+      "physical_viewport_px": [
+        1920,
+        1080
+      ],
+      "resolved_scale": 1.5,
+      "safe_area_physical_px": {
+        "bottom": 54,
+        "left": 64,
+        "right": 64,
+        "top": 36
+      },
+      "selected_profile": "wide_1920x1080",
+      "user_scale": 1.0
+    },
+    "minimum_wide_1280x720_96dpi": {
+      "active_state_sets": {
+        "aiming": [
+          "player_status",
+          "context_hint",
+          "power_meter",
+          "tip_offset"
+        ],
+        "default": [
+          "player_status",
+          "context_hint"
+        ],
+        "help": [
+          "help_panel"
+        ],
+        "post_shot_foul": [
+          "player_status",
+          "context_hint",
+          "foul_banner",
+          "shot_result"
+        ]
+      },
+      "element_rects_physical_px": {
+        "context_hint": [
+          883,
+          24,
+          354,
+          100
+        ],
+        "foul_banner": [
+          310,
+          198,
+          660,
+          88
+        ],
+        "help_panel": [
+          260,
+          50,
+          760,
+          620
+        ],
+        "player_status": [
+          43,
+          24,
+          380,
+          158
+        ],
+        "power_meter": [
+          43,
+          546,
+          650,
+          138
+        ],
+        "shot_result": [
+          43,
+          546,
+          510,
+          138
+        ],
+        "tip_offset": [
+          1027,
+          474,
+          210,
+          210
+        ]
+      },
+      "layout_variant": "wide_minimum_reflow",
+      "logical_viewport_px": [
+        1280,
+        720
+      ],
+      "minimum_text_physical_px": 14,
+      "os_dpi": 96,
+      "physical_viewport_px": [
+        1280,
+        720
+      ],
+      "resolved_scale": 1.0,
+      "safe_area_physical_px": {
+        "bottom": 36,
+        "left": 43,
+        "right": 43,
+        "top": 24
+      },
+      "selected_profile": "wide_1920x1080",
+      "user_scale": 1.0
+    },
+    "reference_1920x1080_96dpi": {
+      "active_state_sets": {
+        "aiming": [
+          "player_status",
+          "context_hint",
+          "power_meter",
+          "tip_offset"
+        ],
+        "default": [
+          "player_status",
+          "context_hint"
+        ],
+        "help": [
+          "help_panel"
+        ],
+        "post_shot_foul": [
+          "player_status",
+          "context_hint",
+          "foul_banner",
+          "shot_result"
+        ]
+      },
+      "element_rects_physical_px": {
+        "context_hint": [
+          1502,
+          36,
+          354,
+          100
+        ],
+        "foul_banner": [
+          630.0,
+          36,
+          660,
+          88
+        ],
+        "help_panel": [
+          510.0,
+          190.0,
+          900,
+          700
+        ],
+        "player_status": [
+          64,
+          36,
+          380,
+          158
+        ],
+        "power_meter": [
+          64,
+          888,
+          650,
+          138
+        ],
+        "shot_result": [
+          64,
+          888,
+          510,
+          138
+        ],
+        "tip_offset": [
+          1646,
+          816,
+          210,
+          210
+        ]
+      },
+      "layout_variant": "wide_reference",
+      "logical_viewport_px": [
+        1920,
+        1080
+      ],
+      "minimum_text_physical_px": 14,
+      "os_dpi": 96,
+      "physical_viewport_px": [
+        1920,
+        1080
+      ],
+      "resolved_scale": 1.0,
+      "safe_area_physical_px": {
+        "bottom": 54,
+        "left": 64,
+        "right": 64,
+        "top": 36
+      },
+      "selected_profile": "wide_1920x1080",
+      "user_scale": 1.0
+    }
+  },
+  "schema_version": 1,
+  "shipping_token_set": {
+    "gpu_consumption": "expand_normalized_commands_to_existing_UiPrimitive_draw_list",
+    "required_palette_modes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "required_state_coverage": [
+      "default",
+      "aiming",
+      "post_shot",
+      "foul",
+      "help"
+    ],
+    "token_set_id": "focused_practice_hud_shipping_tokens_v1"
+  },
+  "shipping_visual_audit": {
+    "flat_proof_is_gpu_capture": false,
+    "flat_proof_is_user_research": false,
+    "freetype_sdf_contract": "PASS_EXISTING",
+    "layout_state_contract": "PASS_EXISTING",
+    "opaque_icon_token_geometry_before_increment": "BLOCKING_GAP_CLOSED",
+    "responsive_safe_area_contract": "PASS_EXISTING",
+    "standard_and_color_vision_palette_runtime_tokens": "BLOCKING_GAP_CLOSED"
+  },
+  "states": {
+    "aiming": {
+      "visible_elements": [
+        "player_status",
+        "context_hint",
+        "power_meter",
+        "estimated_cue_speed",
+        "tip_offset"
+      ]
+    },
+    "default": {
+      "visible_elements": [
+        "player_status",
+        "context_hint"
+      ]
+    },
+    "foul": {
+      "visible_elements": [
+        "player_status",
+        "context_hint",
+        "foul_banner"
+      ]
+    },
+    "help": {
+      "pauses_shot_input": true,
+      "visible_elements": [
+        "help_panel"
+      ]
+    },
+    "post_shot": {
+      "visible_elements": [
+        "player_status",
+        "context_hint",
+        "shot_result"
+      ]
+    }
+  },
+  "status": "phase3_hud_product_spec_candidate",
+  "typography": {
+    "contrast_ratio_large_text_min": 3.0,
+    "contrast_ratio_text_min": 4.5,
+    "font_stack": [
+      "system-ui",
+      "-apple-system",
+      "Segoe UI",
+      "sans-serif"
+    ],
+    "hierarchy": [
+      "display",
+      "primary",
+      "body",
+      "caption"
+    ],
+    "minimum_px": 13,
+    "numeric_style": "tabular_figures",
+    "weights": [
+      400,
+      500
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "billiardgl.phase4.v19.cp1_trajectory_inset_foundation_independent_ta_acceptance_addendum.v1",
+  "status": "CP1_INDEPENDENT_TA_ACCEPTED_CPU_STATIC_ONLY_CP2_CP3_GPU_READINESS_FALSE",
+  "scope": "Independent Technical Art acceptance of V19 CP1 only: camera-independent inset geometry, source/event/interval lineage, independent semantic/probe inventories, raster topology, and endpoint grammar. It does not start or accept CP2 or CP3 and grants no GPU, readiness, capture, machine, product, M3, golden, beta, or human-comprehension authority.",
+  "frozen_bindings": [
+    {"path":"docs/evidence/phase4-v19-cp1-trajectory-inset-foundation-implementation-v1/receipt.json","sha256":"3208c819bd81ddc2143921a3b3ef2136127b275317a6ae0f5549de18188de758"},
+    {"path":"docs/evidence/phase4-v19-cp1-trajectory-inset-foundation-implementation-v1/cpu-test.stdout","sha256":"ec13f4c1d0638e75ca653ab1b36336239947317acd46cf8d546e2b96121e846b"},
+    {"path":"scripts/validate_phase4_v19_cp1_trajectory_inset_foundation.py","sha256":"e1c5e57481c3d986ad7463772e9f1c556308e8af153bb95af2cb44585635151b"},
+    {"path":"tests/test_phase4_v19_cp1_trajectory_inset_foundation.py","sha256":"de93cc48d556b3f7f1d4378c7e4d4257861ac273af5378c96377aec9d5c8c2cf"},
+    {"path":"docs/art/phase4-v19-endpoint-event-overlap-ta-acceptance-interpretation-addendum-v1.json","sha256":"5d78711e5bd7f6200727db3c60cf8e102fc462aefefc4aa329fff5e52349279c"}
+  ],
+  "independent_reproduction": {
+    "receipt_validator_fresh_compile_normal_and_inventory_replay": "PASS_ERRORS_EMPTY",
+    "receipt_fail_closed_mutation_count": 72,
+    "receipt_fail_closed_mutation_pass_count": 72,
+    "independent_o0_replay": "PASS_96",
+    "independent_o2_replay": "PASS_96",
+    "gpu_or_window_context_created": false,
+    "post_freeze_permissions": {"artifact_directory":"0555","receipt_stdout_validator_tests":"0444"}
+  },
+  "canonical_layout_inventory": [
+    {"profileId":"1920x1080_ui100","sourceGroupDenominator":8,"semanticMemberDenominator":72,"probeDenominator":29,"dashEventCount":17,"routeSpanCount":1,"orderedParentSourceDigest":"c6818f25d3da0db33e8fb39a7f0901337be0b858cd6acfba9d93f6d12d1ac186","orderedProbeDigest":"0fe2720d3e580ef5c720984011a3836b15493b019a892e6feb1458863c5efc17","orderedDashEventDigest":"ae1b95a3ca21f3986441721b8378a3d4460d45de700da1fd73fcbd2da6452254","orderedDashContributorDigest":"ab91990a175d41ce9db37a0aac24f7b3406e122f58f4a471d47ae1be751eee4b","orderedSourceRouteIntervalDigest":"4a95ae275292661a2ae4b16037cea1da20b9839e818fc2f0fd1986ace4e0f3aa"},
+    {"profileId":"1920x1080_ui135","sourceGroupDenominator":8,"semanticMemberDenominator":90,"probeDenominator":35,"dashEventCount":23,"routeSpanCount":1,"orderedParentSourceDigest":"c6818f25d3da0db33e8fb39a7f0901337be0b858cd6acfba9d93f6d12d1ac186","orderedProbeDigest":"00c2c0055e3aef5e7d85f5eddd2620abf808410b3b049792b26cfc8658d949ec","orderedDashEventDigest":"16d190923fee2896a9a68690ba1b7d94ff293c9c45b3823b251901f55213a65c","orderedDashContributorDigest":"4372f48b8cd588625e4f6a545fcbf07ba86043eb68a1b58ace21b94556a2c49e","orderedSourceRouteIntervalDigest":"26d619f7bc4f2e35884508273a8a76895cf50db1fef97d67e457d88c76a112e7"},
+    {"profileId":"1280x720_ui100","sourceGroupDenominator":8,"semanticMemberDenominator":54,"probeDenominator":23,"dashEventCount":11,"routeSpanCount":1,"orderedParentSourceDigest":"c6818f25d3da0db33e8fb39a7f0901337be0b858cd6acfba9d93f6d12d1ac186","orderedProbeDigest":"78dcf2aa7f4cf259dbbd6ce6517fb0ed50d42cf3e7060a809d3f8943a3b327b0","orderedDashEventDigest":"852636e235f01a60bdf148efe89e7eabc3ad7609af76323d4a82b982508c479c","orderedDashContributorDigest":"9e38595b53554dc12837b67f0e7cd7d201e95448c1bd4d21b437827e7fd280cf","orderedSourceRouteIntervalDigest":"610365e6deeacb0dd83d1c928d698ccf0dce50856cbe8413a54c233f588e64ce"},
+    {"profileId":"1280x720_ui135","sourceGroupDenominator":8,"semanticMemberDenominator":69,"probeDenominator":28,"dashEventCount":16,"routeSpanCount":1,"orderedParentSourceDigest":"c6818f25d3da0db33e8fb39a7f0901337be0b858cd6acfba9d93f6d12d1ac186","orderedProbeDigest":"86bbf305a7f3b170e76445443c13c117d0c65ad0125f04eb9903af99ba492707","orderedDashEventDigest":"3ba15c995c63ff46b44df044e197bdd0b194fa86c3b273d687ada1775c4f305b","orderedDashContributorDigest":"d028e45f97a9b1c888e09f750ab6e6d8dc7e9bd9fcde22448cf46d2de053ab3e","orderedSourceRouteIntervalDigest":"064302def27dbfc76ea763f10965c5defacc358d67e5cb63052af5d4bdffa70b"}
+  ],
+  "accepted_cp1_axes": {
+    "camera_independent_geometry_and_exact_96_order": true,
+    "world_to_inset_source_mapping_and_independent_denominators": true,
+    "route_wide_event_contributor_and_source_interval_lineage": true,
+    "real_standard_cvd_1x_2x_4x_topology_and_probe_parity": true,
+    "actual_twin_rail_continuity_and_canonical_midpoint": true,
+    "locked_hollow_endpoint_capsules_tail_event_and_deterministic_overlap_ownership": true,
+    "gap_only_and_discontinuity_fail_closed_contracts": true,
+    "five_ordered_digest_independent_recomputation_and_mutations": true
+  },
+  "acceptance_boundary": {
+    "cp1_accepted": true,
+    "cp2_started": false,
+    "cp2_accepted": false,
+    "cp3_started": false,
+    "cp3_accepted": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass_claimed": false,
+    "ta_visual_pass_claimed": false,
+    "human_comprehension_pass_claimed": false,
+    "product_m3_golden_beta_pass_claimed": false
+  }
+}

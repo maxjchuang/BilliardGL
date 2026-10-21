@@ -73,6 +73,16 @@ struct TableBoundaryProperties {
     std::string material = "legacy_table_boundary";
 };
 
+struct TableDepartureProperties {
+    float clothSurfaceYCm = kTableModelPlaySurfaceHeightCm;
+    float railTopSurfaceYCm = kTableModelRailTopSurfaceHeightCm;
+    float outerRailHalfWidthCm = kTableModelOuterHalfWidthCm;
+    float outerRailHalfLengthCm = kTableModelOuterHalfLengthCm;
+    float outsideLandingSurfaceYCm = kOutsideLandingSurfaceHeightCm;
+    float gravityYCmS2 = -980.665f;
+    float supportedRollingDecelerationCmS2 = 12.5f;
+};
+
 struct SolverSettings {
     float timeStepSeconds = 0.1f;
     int maximumEventsPerTick = 64;
@@ -95,6 +105,7 @@ struct PhysicsProfile {
     FrozenCueContactProperties frozenCueContact;
     CushionProperties cushion;
     TableBoundaryProperties tableBoundary;
+    TableDepartureProperties tableDeparture;
     SolverSettings solver;
 };
 

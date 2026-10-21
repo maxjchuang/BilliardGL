@@ -229,6 +229,26 @@ PhysicsProfileValidation validatePhysicsProfile(const PhysicsProfile& profile)
         boundary.sideMouthWidthCm >= boundary.playfieldLengthCm) {
         return invalid("table boundary throat and mouth widths are inconsistent");
     }
+    const TableDepartureProperties& departure = profile.tableDeparture;
+    const float noseCenter = departure.clothSurfaceYCm +
+        profile.ball.radiusCm * profile.cushion.noseHeightRatio;
+    if (!std::isfinite(departure.clothSurfaceYCm) ||
+        !std::isfinite(departure.railTopSurfaceYCm) ||
+        !std::isfinite(departure.outerRailHalfWidthCm) ||
+        !std::isfinite(departure.outerRailHalfLengthCm) ||
+        !std::isfinite(departure.outsideLandingSurfaceYCm) ||
+        !std::isfinite(departure.gravityYCmS2) ||
+        !finiteNonnegative(departure.supportedRollingDecelerationCmS2) ||
+        !(departure.gravityYCmS2 < 0.0f) ||
+        !(departure.outsideLandingSurfaceYCm < departure.clothSurfaceYCm) ||
+        !(departure.clothSurfaceYCm < departure.railTopSurfaceYCm) ||
+        !(departure.outerRailHalfWidthCm > boundary.playfieldWidthCm * 0.5f) ||
+        !(departure.outerRailHalfLengthCm > boundary.playfieldLengthCm * 0.5f) ||
+        !std::isfinite(noseCenter) ||
+        !(noseCenter >= departure.clothSurfaceYCm) ||
+        !(noseCenter < departure.railTopSurfaceYCm)) {
+        return invalid("3D table-departure geometry is invalid or inconsistent");
+    }
     if (!std::isfinite(profile.solver.timeStepSeconds) ||
         profile.solver.timeStepSeconds <= 0.0f) {
         return invalid("solver time_step_seconds must be finite and positive");
@@ -330,6 +350,20 @@ std::string canonicalPhysicsProfileText(const PhysicsProfile& profile)
         << profile.tableBoundary.geometryId << '\n'
         << "table_boundary.material="
         << profile.tableBoundary.material << '\n'
+        << "table_departure.cloth_surface_y_cm="
+        << profile.tableDeparture.clothSurfaceYCm << '\n'
+        << "table_departure.rail_top_surface_y_cm="
+        << profile.tableDeparture.railTopSurfaceYCm << '\n'
+        << "table_departure.outer_rail_half_width_cm="
+        << profile.tableDeparture.outerRailHalfWidthCm << '\n'
+        << "table_departure.outer_rail_half_length_cm="
+        << profile.tableDeparture.outerRailHalfLengthCm << '\n'
+        << "table_departure.outside_landing_surface_y_cm="
+        << profile.tableDeparture.outsideLandingSurfaceYCm << '\n'
+        << "table_departure.gravity_y_cm_s2="
+        << profile.tableDeparture.gravityYCmS2 << '\n'
+        << "table_departure.supported_rolling_deceleration_cm_s2="
+        << profile.tableDeparture.supportedRollingDecelerationCmS2 << '\n'
         << "solver.time_step_seconds=" << profile.solver.timeStepSeconds << '\n'
         << "solver.maximum_events_per_tick=" << profile.solver.maximumEventsPerTick << '\n'
         << "solver.toi_tolerance_seconds=" << profile.solver.toiToleranceSeconds << '\n'

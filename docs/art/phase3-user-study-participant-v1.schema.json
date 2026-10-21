@@ -1,0 +1,67 @@
+{
+  "$id": "billiardgl://schemas/phase3-user-study-participant-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attestations": {
+      "type": "object"
+    },
+    "device": {
+      "type": "object"
+    },
+    "eligibility": {
+      "type": "object"
+    },
+    "evidence_bindings": {
+      "type": "object"
+    },
+    "experienced_debrief": {
+      "type": "object"
+    },
+    "group": {
+      "enum": [
+        "project_new_user",
+        "billiards_experienced_user"
+      ]
+    },
+    "participant_id": {
+      "type": "string"
+    },
+    "pii_review": {
+      "type": "object"
+    },
+    "session": {
+      "type": "object"
+    },
+    "slot_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "COMPLETE"
+      ]
+    },
+    "tasks": {
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    }
+  },
+  "required": [
+    "slot_id",
+    "status",
+    "participant_id",
+    "group",
+    "eligibility",
+    "evidence_bindings",
+    "device",
+    "session",
+    "tasks",
+    "experienced_debrief",
+    "attestations",
+    "pii_review"
+  ],
+  "title": "Anonymous Phase 3 participant evidence",
+  "type": "object"
+}

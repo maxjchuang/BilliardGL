@@ -1,11 +1,11 @@
 #pragma once
 
-#include "game_state.h"
+#include "presentation_snapshot.h"
 
 namespace billiardgl {
 
-void drawHud(const GameState& state);
-void drawHelpPrompt(const GameState& state);
-void drawHelpOverlay(const GameState& state);
+void drawHud(const HudViewModel& hud);
+void drawHelpPrompt(const HudViewModel& hud);
+void drawHelpOverlay(const HudViewModel& hud);
 
 }  // namespace billiardgl

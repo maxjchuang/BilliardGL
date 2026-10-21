@@ -1,0 +1,133 @@
+{
+  "schema": "m4_d5_a_stroke_observation_canonical_tip_interval_foundation_implementation_receipt_v1",
+  "status": "POLICY_INDEPENDENT_FOUNDATION_CPU_VERIFIED_D5_CLASSIFICATION_AUDIT_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-design-gate-v1.json",
+      "sha256": "542e0bfd05759dce5497938f96d657964474ac30f96bbfbde2b9efdc0bdc3c01"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"
+    },
+    "d5_d6_feasibility": {
+      "path": "docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json",
+      "sha256": "86d4957620d9e2c9033708ef3dbd5329610cc9cc9c44a134369079cffa375f77",
+      "batch": "D5-A"
+    }
+  },
+  "tests_first": {
+    "red_observed": true,
+    "red_exit_code": 1,
+    "red_failure": "missing CanonicalCueTipStrokeObservation, CanonicalCueTipContactInterval, and validation API",
+    "green": true
+  },
+  "contract": {
+    "schema_id": "canonical_cue_tip_stroke_observation_v1",
+    "accepted_positive_launch_stages_before_first_contact": true,
+    "authoritative_motion_end_required": true,
+    "successful_physics_tick_required_before_runtime_publication": true,
+    "analytic_and_coupled_origins_recorded": true,
+    "ordered_half_open_intervals": true,
+    "contiguous_same_origin_samples_merge": true,
+    "separated_recontact_creates_interval": true,
+    "empty_complete_observation_allowed": true,
+    "origin_and_completeness_attested": true,
+    "immutable_digest_and_exact_retry": true,
+    "failed_launch_step_reset_rerack_rollback": true,
+    "double_hit_classified": false,
+    "push_classified": false,
+    "foul_classified": false,
+    "threshold_selected": false,
+    "shotfacts_rules_ui_consumer_added": false
+  },
+  "fixtures": {
+    "positive": [
+      "ACCEPTED_STROKE_STARTS_BEFORE_FIRST_CONTACT",
+      "ONE_COMPLETE_ANALYTIC_INTERVAL",
+      "ONE_COMPLETE_COUPLED_INTERVAL",
+      "SEPARATE_RECONTACT_CREATES_SECOND_ORDERED_INTERVAL",
+      "CONTIGUOUS_SAME_CONTACT_SAMPLES_MERGE",
+      "COMPLETE_NO_CONTACT_STROKE_EMPTY_INTERVALS",
+      "AUTHORITATIVE_END_AFTER_RELEASE",
+      "EXACT_RETRY_SAME_DIGEST_ZERO_DUPLICATES"
+    ],
+    "negative": [
+      "REJECTED_ZERO_UNSUPPORTED_MISCUE_LAUNCH_NO_OBSERVATION",
+      "START_AFTER_CONTACT_INCOMPLETE",
+      "END_BEFORE_RELEASE_INCOMPLETE",
+      "DROPPED_INTERVAL_INCOMPLETE",
+      "OVERLAPPING_OR_NONCANONICAL_INTERVAL_REJECTED",
+      "NONFINITE_TIME_POINT_NORMAL_VELOCITY_OR_IMPULSE_REJECTED",
+      "MIXED_OR_UNKNOWN_ORIGIN_REJECTED",
+      "MICROTRACE_ONLY_NOT_FULL_STROKE_COMPLETE",
+      "FAILED_SOLVER_STEP_ROLLS_BACK_UNCOMMITTED_EDGES",
+      "RESET_RERACK_TURN_OR_STATE_CONFLICT_INVALIDATES",
+      "DUPLICATE_INTERVAL_DEDUPED",
+      "CONFLICTING_RETRY_ZERO_DELTA",
+      "INTERVAL_COUNT_DOES_NOT_SET_DOUBLE_HIT_PUSH_OR_FOUL",
+      "NO_SHOTFACT_RULE_UI_OR_GPU_SIDE_EFFECT"
+    ]
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/cue_contact.h", "sha256": "af785c32a89148fcf4c00e266563a0ea90ea51142f2e3c3e908c7dbed4261ca9"},
+    {"path": "src/Billiards/cue_contact.cpp", "sha256": "26155e67e50bacfa60a59797c94dcff50d0ac2c3b7d6c458bb25cb5eab7af6a3"},
+    {"path": "src/Billiards/coupled_cue_contact.h", "sha256": "c4e24dbfcf3b5f3a3eb4ab4ef4d639bc31a56fb194ae046b44aea5ea2c408664"},
+    {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "72aaeee4fee964f7554bf8b29930175017cadd803a7f446841591aa078efd2a5"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "dc384250584cf5ce2760adda01560b7a95e595e70196e2092d35632cd5da1098"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "c12be575b5510a0c6465d1c89e26e77dc4691f22695b6768d16eafe63d5bf64b"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "f118ad41dd7d7249997791ff081cca0c065381e718f3f839aa13c585c2d6d919"}
+  ],
+  "test_bindings": [
+    {"path": "tests/cue_contact_tests.cpp", "sha256": "1584a3f5fe8e826a17cb34afb9a920de6d45673346f2b489cacb2648ce36143d"},
+    {"path": "tests/coupled_cue_contact_tests.cpp", "sha256": "4da8293a13949159c76df6324d08928cd299916049a887513f2de94a0a6ae0da"},
+    {"path": "tests/physics_telemetry_tests.cpp", "sha256": "6b59f99907aa84bd94bb892d9f25e9865be12b20921ad92141cc4cd5c11ff085"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "21835ee73f4f09bd20ab14371e03f43778c9f2a3d452786d789353e758ce46d9"}
+  ],
+  "build_binding": {
+    "path": "CMakeLists.txt",
+    "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801",
+    "modified_for_d5_a": false
+  },
+  "cpu": {
+    "build_root": "build-wpa-ii-17-subset-green-v1",
+    "passed_count": 17,
+    "failed_count": 0,
+    "link_blocked_external_count": 1,
+    "link_blocked_external": {
+      "target": "BilliardsShotFactCollectorTests",
+      "reason": "pre-existing target omits validateShotFacts provider; outside D5-A exact allowlist and unrelated to canonical stroke observation"
+    },
+    "binaries": [
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsCueContactTests", "sha256": "56eb2934c9a6288d425c86b219288ef2a015fdf7412f7efca9d9ee4761079ed5", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsCoupledCueContactTests", "sha256": "853274f5dcd39d1375822dd976f9f4584c99831e80690f6613bb34996657e79e", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsPhysicsTelemetryTests", "sha256": "97255c8cd2805baee284e71c56c3aeacdb846bc109880fca45747b2fae1c3480", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsRulesRuntimeIntegrationTests", "sha256": "5da8874f65c52b1e6b984ef7cf65de61c9e1f8c97aa720ddb2ef781205d7782e", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsGameRuntimeTests", "sha256": "fc2c9989f3c6e48a3b0b41f60de3dd88f674ab17d32c21e2f1bbee58383fd097", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsPhysicsTests", "sha256": "00b12494fc152badeda2c599f984634833a74627c1264d45ac0aa82d92fc4c7e", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsPhysicsInstrumentationTests", "sha256": "9931c7f1d8be31ce80ab08d348672860ab0cd6d5bcdfd3d752230b0f1cd6d52c", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsPhysicsScenarioTests", "sha256": "5234127b51e24ccae5526caeea9b90c741b3a06d2ad69864ec9b813089526f93", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsAutomationControllerTests", "sha256": "80326fdf15f71549e8d963952e086704a1a8d44f2d9e8d66ac3075806478add3", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsAutomationProtocolTests", "sha256": "07c0f390a71ca071fdf0869e678b6535b28f34c6919e2c11df96b552398fde4e", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsShotTests", "sha256": "82461c84004ca481e9230d3ba8ae2a6bae596e8ad2c767c8e747764c36144756", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsRulesTests", "sha256": "20f93e88cf290cad5972676b64008e94cbfbccf909cb154bd887673e7edfef6b", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsRefereeAuthorityProtocolTests", "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsFrozenBallDeclarationTests", "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsDoubleHitCloseCaseDeclarationTests", "sha256": "0f66d01a07bc1cb3b567fefb867af0a82bd5ef11fc8c92d60f29d79c293b9cea", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsPushReviewDeclarationTests", "sha256": "57ee63adfe5e5d411daafd2a3718a65737a59071ae45d55a7e318b856ba2dc35", "exit_code": 0},
+      {"path": "build-wpa-ii-17-subset-green-v1/BilliardsNonphysicalGeneralFoulAuthorityTests", "sha256": "f2598198f33cea9d75a6f4b76baa0c131cc9721baa32916f243b866987540934", "exit_code": 0}
+    ],
+    "gpu": false
+  },
+  "completion": {
+    "d5_a_foundation_implemented": true,
+    "unblocks_d5_b_design": true,
+    "d5_complete": false,
+    "classification_or_audit_progress": false,
+    "wpa_rows_closed": false,
+    "rules_shotfacts_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

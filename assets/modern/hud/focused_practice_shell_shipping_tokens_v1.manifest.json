@@ -1,0 +1,40 @@
+{
+  "authorship": "original_billiardgl_product_shell_ui",
+  "external_assets": [],
+  "flat_proof": {
+    "file": "focused_practice_shell_shipping_tokens_flat_proof_v1.svg",
+    "purpose": "inventory_and_palette_review_only",
+    "runtime_capture": false,
+    "sha256": "sha256:7f6b32654f1d20d3323a111024fe08dad47961933dd78ebce9e57892a1185778",
+    "user_research": false
+  },
+  "integration_contract": {
+    "consumer": "ProductShellDrawList UiPrimitiveKind::Icon",
+    "existing_hud_token_set_modified": false,
+    "gpu_capture_required_for_runtime_acceptance": true,
+    "standalone": true,
+    "unknown_token_policy": "hard_error_no_fallback"
+  },
+  "manifest_id": "focused_practice_shell_shipping_assets_v1",
+  "schema_version": 1,
+  "source_audit": {
+    "expected_exact_token_count": 43,
+    "expected_screen_count": 9,
+    "source_files": [
+      "src/Billiards/render/ui/product_shell_draw_list.cpp",
+      "src/Billiards/product_shell_controller.cpp",
+      "src/Billiards/product_shell_controller.h"
+    ]
+  },
+  "token_set": {
+    "file": "focused_practice_shell_shipping_tokens_v1.json",
+    "icon_count": 43,
+    "palette_modes": [
+      "standard",
+      "color_vision_safe"
+    ],
+    "screen_count": 9,
+    "sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3",
+    "token_set_id": "focused_practice_shell_shipping_tokens_v1"
+  }
+}

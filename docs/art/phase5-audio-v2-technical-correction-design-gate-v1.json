@@ -1,0 +1,308 @@
+{
+  "schema": "billiardgl.phase5.audio_v2_technical_correction_design_gate.v1",
+  "schema_version": 1,
+  "package_id": "phase5_audio_v2_technical_correction_design_gate_v1",
+  "status": "DESIGN_GATE_ONLY_NOT_IMPLEMENTED",
+  "scope": "offline_uniform_gain_design_for_two_failed_loop_loudness_rows_only",
+  "immutable_input_bindings": {
+    "v1_design_gate": {
+      "path": "docs/art/phase5-audio-content-remediation-design-gate-v1.json",
+      "sha256": "c9bdbe929afa868e94e991835f3bd52972d67d5ef9aedb80605c21ec489d1e00",
+      "immutable": true
+    },
+    "v1_candidate_manifest": {
+      "instructed_path": "assets/audio/phase5-v1/manifest.json",
+      "instructed_path_missing": true,
+      "resolved_exact_sha_path": "assets/audio/phase5-v1/phase5-audio-content-candidate-manifest-v1.json",
+      "sha256": "d213424dd81940a51bde8e886e640297afcb0648bf7c5d712670e405cd29a7cc",
+      "immutable": true,
+      "alias_creation_forbidden": true
+    },
+    "v1_machine_report": {
+      "path": "docs/art/phase5-audio-technical-machine-measurement-v1/report.json",
+      "sha256": "28d15d3c7cceded3cd7be5832cb439d93edbbf9a912832e1ca74d7fe6859e2bc",
+      "immutable": true,
+      "status": "TECHNICAL_MACHINE_MEASUREMENT",
+      "content_accepted": false
+    }
+  },
+  "v2_output_contract": {
+    "asset_root": "assets/audio/phase5-v2-technical-correction",
+    "asset_root_must_be_new": true,
+    "asset_root_exists_at_design_gate": false,
+    "overwrite_or_in_place_mutation_forbidden": true,
+    "candidate_manifest": "assets/audio/phase5-v2-technical-correction/phase5-audio-v2-technical-correction-candidate-manifest-v1.json",
+    "machine_report": "docs/art/phase5-audio-v2-technical-correction-machine-measurement-v1/report.json",
+    "source_root_remains": "assets/audio/phase5-v1",
+    "implementation_status": "NOT_IMPLEMENTED"
+  },
+  "allowed_transform": {
+    "operation": "constant_linear_gain_then_pcm24_requantization",
+    "target_asset_ids": [
+      "music_loop",
+      "venue_ambience"
+    ],
+    "scope": "every frame and every channel over each complete source data chunk",
+    "same_gain_for_all_frames": true,
+    "same_gain_for_all_channels_within_each_asset": true,
+    "gain_automation_allowed": false,
+    "trim_allowed": false,
+    "compression_or_limiting_allowed": false,
+    "equalization_or_filtering_allowed": false,
+    "resampling_allowed": false,
+    "channel_remap_or_pan_allowed": false,
+    "fade_or_crossfade_allowed": false,
+    "loop_point_or_duration_change_allowed": false,
+    "metadata_only_loudness_claim_allowed": false,
+    "source_wav_mutation_allowed": false,
+    "source_manifest_or_policy_mutation_allowed": false
+  },
+  "pcm24_mapping_contract": {
+    "input_encoding": "signed_little_endian_PCM24",
+    "output_encoding": "signed_little_endian_PCM24",
+    "mapping": "q = saturate_signed24(round_to_nearest_ties_away_from_zero(input_integer * selected_linear_gain))",
+    "signed_min": -8388608,
+    "signed_max": 8388607,
+    "rounding": "round_to_nearest_ties_away_from_zero",
+    "saturation_is_implemented_but_must_not_trigger": true,
+    "required_saturated_sample_count": 0,
+    "zero_maps_exactly_to_zero": true,
+    "first_and_last_stereo_frames_must_remain": [
+      0,
+      0
+    ],
+    "non_data_riff_bytes_must_remain_byte_identical": true,
+    "data_chunk_byte_count_must_remain_identical": true
+  },
+  "gain_derivation": {
+    "selection_grid_db": 0.01,
+    "selection_rule": "Compute target_center_lufs minus measured_lufs, then choose the closest 0.01 dB grid value that is less than or equal to that exact correction, i.e. uniquely round toward greater attenuation.",
+    "loudness_boundary_reserve_db_each_side": 0.05,
+    "reason": "The selected value remains essentially centered while reserving a much larger boundary margin than any expected PCM24 requantization delta. Actual v2 measurements remain authoritative.",
+    "assets": [
+      {
+        "semantic_id": "music_loop",
+        "source_path": "assets/audio/phase5-v1/music_loop.wav",
+        "source_file_sha256": "c1857141d468a2f81ca8e45937732ca27d1042429404d1ce46761d3aa0092954",
+        "source_frame_count": 1536000,
+        "source_channels": 2,
+        "source_sample_rate_hz": 48000,
+        "source_bits_per_sample": 24,
+        "source_duration_seconds": 32.0,
+        "measured_integrated_lufs": -16.648294,
+        "target_integrated_lufs": -24.0,
+        "target_tolerance_lu": 2.0,
+        "accepted_lufs_interval_inclusive": [
+          -26.0,
+          -22.0
+        ],
+        "mathematical_feasible_gain_db_interval_inclusive": [
+          -9.351706,
+          -5.351706
+        ],
+        "conservative_gain_db_interval_with_0_05db_boundary_reserve_inclusive": [
+          -9.301706,
+          -5.401706
+        ],
+        "exact_center_correction_db": -7.351706,
+        "selected_gain_db": -7.36,
+        "selected_linear_gain": 0.4285485203974395,
+        "predicted_integrated_lufs_before_requantization": -24.008294,
+        "predicted_lower_lufs_boundary_margin_db": 1.991706,
+        "predicted_upper_lufs_boundary_margin_db": 2.008294,
+        "source_sample_peak_dbfs": -8.0,
+        "predicted_sample_peak_dbfs_before_requantization": -15.36,
+        "source_true_peak_dbtp": -7.999776,
+        "predicted_true_peak_dbtp_before_requantization": -15.359776,
+        "source_maximum_absolute_pcm24_integer": 3339565,
+        "predicted_maximum_absolute_pcm24_integer_after_rounding": 1431166,
+        "predicted_sample_peak_dbfs_after_pcm24_rounding": -15.359997801195552,
+        "predicted_positive_full_scale_headroom_integer_steps": 6957441,
+        "saturation_can_trigger": false,
+        "bs1770_block_count": 317,
+        "source_minimum_block_loudness_lufs": -19.54651518330148,
+        "predicted_minimum_block_loudness_lufs": -26.90651518330148,
+        "predicted_minimum_block_margin_above_absolute_minus70_gate_lu": 43.09348481669852,
+        "source_relative_gate_lufs": -26.648294,
+        "predicted_relative_gate_lufs": -34.008294,
+        "predicted_minimum_block_margin_above_relative_gate_lu": 7.101778816698521,
+        "source_relative_gated_block_count": 317,
+        "predicted_relative_gated_block_count": 317
+      },
+      {
+        "semantic_id": "venue_ambience",
+        "source_path": "assets/audio/phase5-v1/venue_ambience.wav",
+        "source_file_sha256": "1f0527f5e7f5b357b5b5a0eeef38f994131bdd1409a880331084b0b4b0d38c55",
+        "source_frame_count": 1536000,
+        "source_channels": 2,
+        "source_sample_rate_hz": 48000,
+        "source_bits_per_sample": 24,
+        "source_duration_seconds": 32.0,
+        "measured_integrated_lufs": -25.026475,
+        "target_integrated_lufs": -30.0,
+        "target_tolerance_lu": 3.0,
+        "accepted_lufs_interval_inclusive": [
+          -33.0,
+          -27.0
+        ],
+        "mathematical_feasible_gain_db_interval_inclusive": [
+          -7.973525,
+          -1.973525
+        ],
+        "conservative_gain_db_interval_with_0_05db_boundary_reserve_inclusive": [
+          -7.923525,
+          -2.023525
+        ],
+        "exact_center_correction_db": -4.973525,
+        "selected_gain_db": -4.98,
+        "selected_linear_gain": 0.5636376558259544,
+        "predicted_integrated_lufs_before_requantization": -30.006475,
+        "predicted_lower_lufs_boundary_margin_db": 2.993525,
+        "predicted_upper_lufs_boundary_margin_db": 3.006475,
+        "source_sample_peak_dbfs": -12.0,
+        "predicted_sample_peak_dbfs_before_requantization": -16.98,
+        "source_true_peak_dbtp": -11.998948,
+        "predicted_true_peak_dbtp_before_requantization": -16.978948,
+        "source_maximum_absolute_pcm24_integer": 2107123,
+        "predicted_maximum_absolute_pcm24_integer_after_rounding": 1187654,
+        "predicted_sample_peak_dbfs_after_pcm24_rounding": -16.979999289786143,
+        "predicted_positive_full_scale_headroom_integer_steps": 7200953,
+        "saturation_can_trigger": false,
+        "bs1770_block_count": 317,
+        "source_minimum_block_loudness_lufs": -27.601197966637983,
+        "predicted_minimum_block_loudness_lufs": -32.58119796663799,
+        "predicted_minimum_block_margin_above_absolute_minus70_gate_lu": 37.41880203336201,
+        "source_relative_gate_lufs": -35.026475,
+        "predicted_relative_gate_lufs": -40.006475,
+        "predicted_minimum_block_margin_above_relative_gate_lu": 7.42527703336201,
+        "source_relative_gated_block_count": 317,
+        "predicted_relative_gated_block_count": 317
+      }
+    ]
+  },
+  "uniform_gain_invariants": {
+    "bs1770": "Before integer requantization, K-weighted block energy scales by gain squared, every block loudness and both absolute/relative program loudness shift by selected_gain_db. Relative-gate membership is invariant. The measured minimum block margins prove the absolute -70 LUFS membership remains invariant. V2 must nevertheless remeasure decoded output.",
+    "sample_peak": "Before requantization, sample peak dBFS shifts exactly by selected_gain_db. PCM24 predicted integer maxima are far below saturation; decoded output must be measured again.",
+    "true_peak": "The version-frozen 8x cubic-Hermite reconstruction is linear, so before requantization true peak shifts exactly by selected_gain_db. V2 must rerun the same true-peak implementation over quantized output.",
+    "boundary_seam": "Both stereo endpoint frames are exact zero. Uniform gain and round-to-nearest preserve exact zero, so boundary jump remains exact zero (-300 dBFS report floor).",
+    "head_tail_rms_delta": "Equal gain cancels from the head/tail RMS ratio, so the delta is invariant before requantization.",
+    "zero_crossing_rate": "Positive uniform gain preserves signs before requantization. PCM24 rounding may map extremely small values to zero, therefore the actual proxy must be recomputed rather than asserted byte-for-byte invariant.",
+    "first_difference_rms_delta": "Equal gain cancels from the head/tail first-difference RMS ratio before requantization; actual quantized output must be recomputed.",
+    "duration_format_channels": "A data-value-only mapping cannot change frame count, sample rate, bit depth, channel count, RIFF layout or full-file loop contract; validator must enforce all fields and non-data bytes."
+  },
+  "unchanged_one_shot_byte_contract": [
+    {
+      "semantic_id": "cue_impact",
+      "path": "assets/audio/phase5-v1/cue_impact.wav",
+      "sha256": "c3dcff3eaa703626b873500792f71242f5396bccd3e8fe99f7e11b3fb67f94ea"
+    },
+    {
+      "semantic_id": "ball_ball",
+      "path": "assets/audio/phase5-v1/ball_ball.wav",
+      "sha256": "47e9a9e9d545279d231d06cf0a588c0b62cc491453552e07f93f37dd6885217b"
+    },
+    {
+      "semantic_id": "rail",
+      "path": "assets/audio/phase5-v1/rail.wav",
+      "sha256": "b68d9939f24ba00f07ad912354a301457cfec88e3ac1da90296881b07488462d"
+    },
+    {
+      "semantic_id": "pocket_jaw",
+      "path": "assets/audio/phase5-v1/pocket_jaw.wav",
+      "sha256": "3117670921b3aa88948f43966a9fc931002d09b0e60860d8110221f6b29a959a"
+    },
+    {
+      "semantic_id": "pocket_drop",
+      "path": "assets/audio/phase5-v1/pocket_drop.wav",
+      "sha256": "2eebc456895d90a7805f6211968a3f0c157438d0dae32f6d2d38ef2466b3f2fa"
+    },
+    {
+      "semantic_id": "ui_feedback",
+      "path": "assets/audio/phase5-v1/ui_feedback.wav",
+      "sha256": "a31c7aae67dda2330a8c071b725494a0d39f3ce1bdc31b6c269f8f5d1bb45853"
+    },
+    {
+      "semantic_id": "foul",
+      "path": "assets/audio/phase5-v1/foul.wav",
+      "sha256": "e31a9b9e5da2538a0ed8f2eb492a70559d98a67d68344af282c7d86de88c4f66"
+    },
+    {
+      "semantic_id": "match_finish",
+      "path": "assets/audio/phase5-v1/match_finish.wav",
+      "sha256": "56bb9aa33c9ec5ffbeee5ea3c903c36ece005d3fe449472f2b5b9e04be7a331a"
+    }
+  ],
+  "planned_implementation": {
+    "generator_path": "scripts/generate_phase5_audio_v2_technical_correction.py",
+    "validator_path": "scripts/validate_phase5_audio_v2_technical_correction.py",
+    "bad_input_and_determinism_test_path": "tests/visual/test_phase5_audio_v2_technical_correction.py",
+    "generator_requirements": [
+      "Refuse unless all three immutable input SHAs and both loop WAV SHAs match this gate.",
+      "Refuse if the v2 asset root already exists or any output target would be overwritten.",
+      "Copy all eight one-shot WAVs byte-for-byte and prove their SHAs equal this gate.",
+      "For only the two loops, preserve every non-data RIFF byte and map every interleaved PCM24 sample with the frozen gain and quantizer.",
+      "Emit a new v2 candidate manifest and machine report; never modify v1 files or policy."
+    ],
+    "validator_requirements": [
+      "Recompute every output SHA and decoded measurement from output bytes.",
+      "For every loop sample and channel, prove output integer equals the frozen mapping of its v1 source integer.",
+      "Require zero saturation, zero full-scale samples, zero flat-top runs and exact zero first/last stereo frames.",
+      "Require frame count 1536000, 48 kHz, PCM24, two channels, 32.0 seconds, identical data byte count and byte-identical non-data RIFF bytes.",
+      "Require actual integrated LUFS inside the original interval and the stricter interval with the 0.05 dB reserve: music [-25.95,-22.05], ambience [-32.95,-27.05].",
+      "Require sample peak and true peak <= -1.0, boundary jump <= -60 dBFS, head/tail RMS delta <= 1.0 dB, ZCR delta <= 0.02 and first-difference RMS delta <= 1.0 dB.",
+      "Require all eight one-shot files byte-identical and all human/device/rights/content/product/Beta fields false."
+    ],
+    "bad_input_tests": [
+      "wrong v1 gate, manifest, machine-report or loop-WAV SHA",
+      "pre-existing/non-empty v2 output root or overwrite attempt",
+      "gain value, channel, frame or quantizer drift",
+      "trim, duration, format, RIFF non-data, channel or endpoint-zero drift",
+      "saturation, full-scale, flat-top or technical threshold failure",
+      "one-shot byte drift",
+      "human/device/rights/content/product/Beta promotion"
+    ],
+    "byte_determinism_test": {
+      "runs": 2,
+      "independent_new_temporary_roots": true,
+      "required_equal_outputs": [
+        "all ten WAV byte sequences",
+        "v2 candidate manifest bytes",
+        "v2 machine report bytes"
+      ],
+      "one_shot_outputs_must_also_equal_v1_bytes": true,
+      "actual_gpu_or_audio_device_required": false
+    }
+  },
+  "evidence_boundary": {
+    "design_calculation_completed": true,
+    "v2_audio_generated": false,
+    "v2_machine_measurement_completed": false,
+    "source_wav_or_manifest_mutated": false,
+    "audio_playback_completed": false,
+    "actual_device_playback_completed": false,
+    "human_listening_completed": false,
+    "loop_three_cycle_listening_completed": false,
+    "semantic_blind_test_completed": false,
+    "authorship_or_rights_verified": false,
+    "content_accepted": false,
+    "product_integration_authorized": false,
+    "beta_promotion_authorized": false
+  },
+  "remaining_gates_after_future_technical_implementation": [
+    "independent original-resolution human listening and three-cycle loop review",
+    "actual reference-headphone and representative-integrated-speaker playback",
+    "five-reviewer randomized semantic blind test",
+    "authorship/source/creation-date and chain-of-title or compatible-license review",
+    "content disposition and acceptance",
+    "AudioAssetPolicy/product integration and Beta reconciliation only after acceptance"
+  ],
+  "acceptance": {
+    "this_document_is_a_design_gate_only": true,
+    "v1_content_accepted": false,
+    "v2_content_accepted": false,
+    "v2_technical_candidate_exists": false,
+    "product_default_switch_authorized": false,
+    "beta_audio_gate_completed": false,
+    "result": "DESIGN_GATE_ONLY/NOT_IMPLEMENTED/NOT_CONTENT_ACCEPTED"
+  }
+}

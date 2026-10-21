@@ -1,0 +1,431 @@
+{
+  "schema": "phase2_v10i_formal_full_six_independent_ta_review_v1",
+  "status": "TEMPLATE_NOT_RUN_WAITING_FOR_FULL_SIX_MACHINE_PASS",
+  "overall_result": "NOT_RUN",
+  "template_version": 1,
+  "review_scope": {
+    "kind": "formal_full_six_independent_ta",
+    "scene_ids_in_order": [
+      "break",
+      "low_aim",
+      "ball_closeup",
+      "pocket_closeup",
+      "tactical_overhead",
+      "post_shot_observe"
+    ],
+    "scene_count": 6,
+    "canonical_axes_in_order": [
+      "composition",
+      "material_color",
+      "contact_shadow",
+      "geometry_alignment",
+      "ball_identity_and_rotation_seam",
+      "venue_and_background_focus",
+      "camera_composition_and_occlusion"
+    ],
+    "axis_count_per_scene": 7,
+    "total_axis_count": 42,
+    "original_resolution_required": [
+      1920,
+      1080
+    ]
+  },
+  "frozen_reentry_gate_binding": {
+    "path": "docs/art/phase2-v10i-formal-full-six-reentry-acceptance-design-gate-v1.json",
+    "sha256": "40fcca249cf1a307833a75972428bbcdae5bb642cef1f5d7637b96deb9bc3fa4"
+  },
+  "future_machine_pass_binding": {
+    "status": "NOT_AVAILABLE",
+    "receipt_path": null,
+    "receipt_sha256": null,
+    "required_schema": "phase2_v10i_formal_full_six_machine_pass_receipt_v1",
+    "required_status": "FULL_SIX_MACHINE_PASS",
+    "required_scene_count": 6,
+    "required_machine_pass_scene_count": 6,
+    "required_failed_machine_check_count": 0
+  },
+  "completion_preconditions": [
+    "A future full-six machine receipt binds this reentry gate and reports exact 6/6 machine PASS.",
+    "Each scene binds one existing immutable P6 RGB8 PPM by path and raw SHA-256.",
+    "Each bound PPM is independently verified as 1920x1080.",
+    "Only after all machine and image preconditions pass may every axis change from PENDING to PASS or FAIL.",
+    "Partial or mixed PENDING/PASS/FAIL review state is forbidden."
+  ],
+  "allowed_statuses": {
+    "template_case": [
+      "NOT_RUN"
+    ],
+    "template_axis": [
+      "PENDING"
+    ],
+    "completed_case": [
+      "PASS",
+      "FAIL"
+    ],
+    "completed_axis": [
+      "PASS",
+      "FAIL"
+    ]
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "scene_id": "break",
+      "expected_semantic_camera": {
+        "state": "observe_free",
+        "preset": "elevated",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "table",
+        "rect_normalized": [
+          0.1,
+          0.16,
+          0.8,
+          0.68
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "scene_id": "low_aim",
+      "expected_semantic_camera": {
+        "state": "aim_player",
+        "preset": "player_low",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "cue_and_ball",
+        "rect_normalized": [
+          0.18,
+          0.36,
+          0.64,
+          0.42
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "scene_id": "ball_closeup",
+      "expected_semantic_camera": {
+        "state": "observe_free",
+        "preset": "elevated",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "ball",
+        "rect_normalized": [
+          0.25,
+          0.24,
+          0.5,
+          0.55
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 4,
+      "scene_id": "pocket_closeup",
+      "expected_semantic_camera": {
+        "state": "observe_free",
+        "preset": "elevated",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "pocket",
+        "rect_normalized": [
+          0.18,
+          0.18,
+          0.64,
+          0.64
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 5,
+      "scene_id": "tactical_overhead",
+      "expected_semantic_camera": {
+        "state": "aim_overhead",
+        "preset": "overhead",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "playfield",
+        "rect_normalized": [
+          0.2,
+          0.06,
+          0.6,
+          0.88
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    },
+    {
+      "ordinal": 6,
+      "scene_id": "post_shot_observe",
+      "expected_semantic_camera": {
+        "state": "observe_free",
+        "preset": "elevated",
+        "transitioning": false
+      },
+      "interest_region": {
+        "name": "moving_balls",
+        "rect_normalized": [
+          0.12,
+          0.15,
+          0.76,
+          0.68
+        ]
+      },
+      "future_ppm_evidence": {
+        "path": null,
+        "sha256": null,
+        "dimensions": null
+      },
+      "manual_case_result": "NOT_RUN",
+      "blocking_axes": [],
+      "axis_findings": {
+        "composition": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "material_color": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "contact_shadow": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "geometry_alignment": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "ball_identity_and_rotation_seam": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "venue_and_background_focus": {
+          "status": "PENDING",
+          "observation": null
+        },
+        "camera_composition_and_occlusion": {
+          "status": "PENDING",
+          "observation": null
+        }
+      }
+    }
+  ],
+  "review_counts": {
+    "cases_total": 6,
+    "cases_not_run": 6,
+    "cases_pass": 0,
+    "cases_fail": 0,
+    "axes_total": 42,
+    "axes_pending": 42,
+    "axes_pass": 0,
+    "axes_fail": 0
+  },
+  "failed_case_ids": [],
+  "blocking_axes": [],
+  "evidence_boundary": {
+    "template_only": true,
+    "machine_receipt_bound": false,
+    "capture_ppm_bound_count": 0,
+    "human_ta_review_performed": false,
+    "full_six_ta_pass": false,
+    "full_six_formal_pass": false,
+    "authorization_prepared_by_template_work": false,
+    "authorization_issued_by_template_work": false,
+    "gpu_executed_by_template_work": false,
+    "production_modified": false,
+    "m2_promotion": false,
+    "golden_promotion": false,
+    "product_review_performed": false,
+    "product_pass": false,
+    "beta_pass": false
+  }
+}

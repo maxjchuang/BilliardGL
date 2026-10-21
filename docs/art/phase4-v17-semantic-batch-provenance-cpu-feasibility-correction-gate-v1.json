@@ -1,0 +1,209 @@
+{
+  "schema": "billiardgl.phase4.v17.semantic_batch_provenance_cpu_feasibility_correction_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_APPROVED_CORRECTED_STANDALONE_CPU_DIAGNOSTIC_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU",
+  "scope": "Correct only the V17 standalone CPU feasibility diagnostic's provenance eligibility. Existing semantic batch/finalOwnershipToken plus track, arcSegmentId and exact primitive define eligibility. Frozen contrast-probe IDs and repair IDs are post-generation regression/matcher inputs only. This gate does not determine feasibility and does not authorize implementation, production, CMake, GPU, readiness, capture or acceptance.",
+  "root_correction_binding": {
+    "decision_id": "V17_SEMANTIC_BATCH_PROVENANCE_CORRECTION",
+    "authority": "ROOT_PROJECT_MANAGER",
+    "statement": "ROOT CORRECTION DECISION: V17 intersection eligibility provenance is existing semantic batch/finalOwnershipToken + track + arcSegmentId + exact primitive; contrast probe IDs are post-generation regression only.",
+    "statement_sha256": "0ac89b218723cc2ba0dbd4fde130e3431cc8760f4d745006996a99f46fbb7f47",
+    "authorizes_corrected_standalone_cpu_diagnostic_only": true
+  },
+  "supersession": {
+    "superseded_gate_path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-cpu-feasibility-diagnostic-gate-v1.json",
+    "superseded_gate_sha256": "b6cbe5deac5d947c9c607b104f8f807fc722641b7c7bf904f273183e559d3c07",
+    "superseded_reason": "Its existing_source_probe_id descriptor field was implemented as an eligibility requirement, allowing the sparse contrast-probe inventory to reject valid semantic draw descriptors before analytic intersection testing.",
+    "still_preserved_from_superseded_gate": [
+      "root-selected V17 product direction",
+      "coordinate-output-only full-frame generation",
+      "strict unique interior nonparallel predicted dash-on predicate",
+      "exact 18 standard/CVD by 1x/2x/4x cases",
+      "exact 81 contrast-probe IDs/digest and three repair IDs as post-generation regression",
+      "no source, token, semantic batch or product geometry growth",
+      "no production, CMake, GPU, readiness, capture or acceptance authorization"
+    ]
+  },
+  "frozen_bindings": [
+    {
+      "role": "superseded_v17_cpu_feasibility_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-cpu-feasibility-diagnostic-gate-v1.json",
+      "sha256": "b6cbe5deac5d947c9c607b104f8f807fc722641b7c7bf904f273183e559d3c07"
+    },
+    {
+      "role": "v17_product_decision_gate",
+      "path": "docs/art/phase4-v17-explicit-non-occluding-crossing-grammar-product-decision-gate-v1.json",
+      "sha256": "c08b7f2c15fa9f53c0ecc76c7c44f07265500b520dfa377097568296d56d8329"
+    },
+    {
+      "role": "v16_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v16_premise_failure_receipt",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-premise-falsification-v1/premise-failure-receipt-v1.json",
+      "sha256": "6e5c729016795a8744fddd7351ae8d9f9d584f9cde91946a33bcbd83f982fa96"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    },
+    {
+      "role": "trajectory_renderer_cpp_baseline",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "0c108c506641ab4828290a1a4c7b6b5ebbd51ab4fc7c12845bde0f5deb18a840"
+    },
+    {
+      "role": "trajectory_renderer_h_baseline",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.h",
+      "sha256": "9805e6a5f56c17d7645200576505425cddf0d642970e5dc5cec186e003bd564e"
+    },
+    {
+      "role": "modern_renderer_cpp_baseline",
+      "path": "src/Billiards/render/modern/modern_renderer.cpp",
+      "sha256": "b00cc6b370122275a42f106967f935dbb34bd5d3f81f2a750ca9ba6e503af191"
+    },
+    {
+      "role": "modern_renderer_h_baseline",
+      "path": "src/Billiards/render/modern/modern_renderer.h",
+      "sha256": "936de5b77c9e3485f2e51f10e9de26c59c8ec94674865e0b50ae125725183c9d"
+    },
+    {
+      "role": "cmake_baseline",
+      "path": "CMakeLists.txt",
+      "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"
+    }
+  ],
+  "sparse_probe_failure_finding": {
+    "classification": "PRECORRECTION_INTERIM_OBSERVATION_NOT_A_REPRODUCIBLE_FORMAL_RECEIPT",
+    "observed_actual_descriptor_count": 81,
+    "missing_exact_contrast_probe_actual_descriptor_count": 72,
+    "observed_predicted_descriptor_count": 68,
+    "missing_exact_contrast_probe_predicted_descriptor_count": 0,
+    "false_invalid_pair_count": 4896,
+    "false_invalid_pair_identity": "72 * 68 = 4896",
+    "remaining_disjoint_pair_count": 612,
+    "observed_event_count": 0,
+    "ephemeral_intersection_ledger_sha256": "61ab2555e43b20ddc8ff574a5fa559e61832d2760b44e9ce4110b4180914f2e5",
+    "ephemeral_binary_sha256": "67896b612f114f213562bdf16f628ffc7cbd5299cb2fd6aa084197dc8b154fc9",
+    "ephemeral_object_sha256": "16637a58aeb46bf4884130353b8ee519bf789516f5df7f61688dbe309a5ad454",
+    "source_snapshot_retained": false,
+    "formal_reproducibility_claimed": false,
+    "valid_conclusion": "Sparse contrast probes were incorrectly promoted to descriptor eligibility, so the zero-event result cannot prove geometric infeasibility.",
+    "invalid_conclusion": "The frozen broadcast geometry contains zero strict intersections."
+  },
+  "corrected_eligibility_provenance_contract": {
+    "source_of_truth": "The exact existing semantic draw batch covering the descriptor, not the sparse contrast-probe inventory.",
+    "required_identity_fields": [
+      "existing semantic batch range",
+      "existing nonzero finalOwnershipToken identical across the batch vertices",
+      "track",
+      "arcSegmentId",
+      "exact primitiveId"
+    ],
+    "actual_role": "Exact existing ActualRouteBodyCore semantic batch and exact primitive; endpoints, ticks, markers and halos are ineligible.",
+    "predicted_role": "Exact existing predicted base core dash-on body semantic batch and exact primitive; cap extension, dash gap, halos, endpoint, tick and marker are ineligible.",
+    "normalized_stem_use": "Event deduplication only; it must never associate a descriptor to a semantic batch, finalOwnershipToken, contrast probe, primitive or arc.",
+    "event_key": "ordered(existing actual finalOwnershipToken, actual track, actual arcSegmentId, actual exact primitiveId, existing predicted finalOwnershipToken, predicted track, predicted arcSegmentId, predicted exact primitiveId, predicted normalized stem for dedupe, analytic route-order/dash ordinal)",
+    "new_semantic_batch_allowed": false,
+    "new_final_ownership_token_allowed": false,
+    "new_source_probe_allowed": false,
+    "new_primitive_or_arc_id_allowed": false,
+    "color_or_framebuffer_derived_provenance_allowed": false,
+    "missing_foreign_or_mixed_batch_fails_closed": true
+  },
+  "post_generation_regression_only_contract": {
+    "ordered_contrast_probe_count": 81,
+    "ordered_contrast_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+    "exact_repair_probe_ids_in_order": [
+      "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+      "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+      "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+    ],
+    "permitted_uses": [
+      "after the complete coordinate-free event inventory and its digest are frozen, verify exact 81 probe order and digest did not drift",
+      "after generation, match the three repair IDs/regions to events for acceptance reporting",
+      "after generation, compare standard/CVD and 1x/2x/4x regression outputs"
+    ],
+    "forbidden_uses": [
+      "descriptor eligibility",
+      "semantic batch or finalOwnershipToken lookup",
+      "primitive or arc association",
+      "intersection generation, classification, selection or deduplication",
+      "bracket topology generation"
+    ]
+  },
+  "preserved_feasibility_contract": {
+    "generation_is_full_frame_before_repair_matching": true,
+    "coordinates_are_output_only": true,
+    "repair_coordinates": [[783, 413], [892, 491], [940, 525]],
+    "palettes": ["standard", "color_vision_safe"],
+    "sample_profiles": [
+      {"id": "center_1x", "sample_count": 1, "cpu_top_left_positions": [[0.5, 0.5]]},
+      {"id": "asymmetric_2x", "sample_count": 2, "cpu_top_left_positions": [[0.25, 0.75], [0.75, 0.25]]},
+      {"id": "asymmetric_4x", "sample_count": 4, "cpu_top_left_positions": [[0.375, 0.875], [0.875, 0.625], [0.125, 0.375], [0.625, 0.125]]}
+    ],
+    "required_case_count": 18,
+    "predicate": "Exactly one strict interior, robustly nonparallel ActualRouteBodyCore segment by predicted base-core dash-on-body segment event per repair region; collinear, parallel, tangent, endpoint, ambiguous, dash-gap, cap, halo, marker or unowned cases fail closed.",
+    "diagnostic_bracket_topology_only": true,
+    "standard_cvd_topology_must_match": true,
+    "source_and_token_inventory_must_not_grow": true
+  },
+  "allowed_corrected_cpu_diagnostic_files": [
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/phase4_v17_crossing_feasibility_cpu_diagnostic.cpp",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/feasibility-receipt-v2.json",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/intersection-ledger-v2.json",
+    "docs/art/phase4-v17-explicit-crossing-grammar-feasibility-diagnostic-v2/raster-ledger-v2.json",
+    "scripts/validate_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility_v2.py",
+    "tests/test_phase4_v17_explicit_non_occluding_crossing_grammar_feasibility_v2.py"
+  ],
+  "required_fail_closed_fixtures": [
+    "contrast probe absent while exact semantic batch/token/track/arc/exact primitive exists remains eligible",
+    "contrast probe present without matching exact semantic batch identity remains ineligible",
+    "normalized-stem core/halo cannot substitute for exact primitive source association",
+    "same analytic event across samples dedupes by normalized stem only after exact source association",
+    "missing, zero, mixed or foreign finalOwnershipToken fails closed",
+    "coordinates, repair IDs, contrast probes, palette and prior result cannot alter generated full-frame inventory",
+    "strict interior nonparallel positive and collinear/parallel/tangent/endpoint/dash-gap/cap/halo negatives",
+    "zero or multiple qualifying events at any repair matcher forces infeasible",
+    "exact 18 standard/CVD by 1x/2x/4x inventory required",
+    "exact 81 contrast-probe order/digest and three repair IDs checked only after generation",
+    "production and CMake hashes remain exact baselines",
+    "no semantic batch, token, source probe, primitive or arc inventory growth"
+  ],
+  "authorization_boundary": {
+    "corrected_standalone_cpu_diagnostic_authorized": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "product_implementation_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "correction_design_gate_only": true,
+    "corrected_diagnostic_executed_by_this_gate": false,
+    "feasibility_result_exists": false,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_comprehension_pass": false,
+    "product_pass": false
+  }
+}

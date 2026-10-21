@@ -1,0 +1,3627 @@
+{
+  "aggregate_contract": {
+    "algorithm": "sha256_canonical_json_utf8_v1",
+    "batch_case_evidence_rows_in_case_order": [
+      "case_id",
+      "ppm_path",
+      "ppm_sha256",
+      "ppm_physical_dimensions",
+      "png_path",
+      "png_sha256",
+      "png_physical_dimensions"
+    ],
+    "batch_png_rows_in_case_order": [
+      "case_id",
+      "png_path",
+      "png_sha256",
+      "png_physical_dimensions"
+    ],
+    "batch_ppm_rows_in_case_order": [
+      "case_id",
+      "ppm_path",
+      "ppm_sha256",
+      "ppm_physical_dimensions"
+    ],
+    "canonical_json": {
+      "ensure_ascii": false,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "sort_keys": true
+    },
+    "combined_rows_are_the_exact_27_case_order": true
+  },
+  "allowed_status_transitions": {
+    "completed_applicable_axis": [
+      "PASS",
+      "FAIL"
+    ],
+    "completed_case": [
+      "PASS",
+      "FAIL"
+    ],
+    "completed_overall": [
+      "PASS",
+      "FAIL"
+    ],
+    "phase4_rack_axis": [
+      "NOT_APPLICABLE"
+    ],
+    "template_applicable_axis": [
+      "PENDING"
+    ],
+    "template_case": [
+      "NOT_RUN"
+    ],
+    "template_overall": [
+      "NOT_RUN"
+    ]
+  },
+  "batch_future_evidence": {
+    "phase2_full_six": {
+      "case_evidence_aggregate_sha256": null,
+      "machine_failure_count": null,
+      "machine_not_run_count": null,
+      "machine_pass_count": null,
+      "machine_receipt_path": null,
+      "machine_receipt_sha256": null,
+      "png_aggregate_sha256": null,
+      "ppm_aggregate_sha256": null,
+      "readiness_path": null,
+      "readiness_sha256": null,
+      "required_machine_pass_count": 6,
+      "stable_png_manifest_path": null,
+      "stable_png_manifest_sha256": null
+    },
+    "phase4_targeted5": {
+      "case_evidence_aggregate_sha256": null,
+      "machine_failure_count": null,
+      "machine_not_run_count": null,
+      "machine_pass_count": null,
+      "machine_receipt_path": null,
+      "machine_receipt_sha256": null,
+      "png_aggregate_sha256": null,
+      "ppm_aggregate_sha256": null,
+      "readiness_path": null,
+      "readiness_sha256": null,
+      "required_machine_pass_count": 5,
+      "stable_png_manifest_path": null,
+      "stable_png_manifest_sha256": null
+    },
+    "phase5_exact16": {
+      "case_evidence_aggregate_sha256": null,
+      "machine_failure_count": null,
+      "machine_not_run_count": null,
+      "machine_pass_count": null,
+      "machine_receipt_path": null,
+      "machine_receipt_sha256": null,
+      "png_aggregate_sha256": null,
+      "ppm_aggregate_sha256": null,
+      "readiness_path": null,
+      "readiness_sha256": null,
+      "required_machine_pass_count": 16,
+      "stable_png_manifest_path": null,
+      "stable_png_manifest_sha256": null
+    }
+  },
+  "cases": [
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 1,
+      "blocking_axes": [],
+      "case_id": "break",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 1,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 2,
+      "blocking_axes": [],
+      "case_id": "low_aim",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 2,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 3,
+      "blocking_axes": [],
+      "case_id": "ball_closeup",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 3,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 4,
+      "blocking_axes": [],
+      "case_id": "pocket_closeup",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 4,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 5,
+      "blocking_axes": [],
+      "case_id": "tactical_overhead",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 5,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_identity_and_rotation_seam": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "composition": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "contact_shadow": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "geometry_alignment": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "material_color": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "venue_and_background_focus": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase2_full_six",
+      "batch_ordinal": 6,
+      "blocking_axes": [],
+      "case_id": "post_shot_observe",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 6,
+      "prior_canonical_axes_in_order": [
+        "composition",
+        "material_color",
+        "contact_shadow",
+        "geometry_alignment",
+        "ball_identity_and_rotation_seam",
+        "venue_and_background_focus",
+        "camera_composition_and_occlusion"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "actual_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_1_texture_orientation_and_readability_unchanged": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "coaxial_predicted_actual_disambiguation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "core_inner_halo_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "endpoint_tick_terminal_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "outer_halo_background_silhouette": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_dash_gap_rhythm": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "trajectory_local_contrast_and_ball_occlusion_no_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "two_ball_fixture_did_not_inherit_product_rack": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [],
+      "batch_id": "phase4_targeted5",
+      "batch_ordinal": 1,
+      "blocking_axes": [],
+      "case_id": "camera_player_low_1080",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "base_corners_opposite_groups": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "eight_ball_center_slot": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "rack_tightness_and_no_overlap": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      "not_applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "ordinal": 7,
+      "prior_canonical_axes_in_order": [
+        "predicted_track_visual_identity",
+        "actual_track_visual_identity",
+        "core_inner_halo_separation",
+        "outer_halo_background_silhouette",
+        "predicted_dash_gap_rhythm",
+        "endpoint_tick_terminal_readability",
+        "coaxial_predicted_actual_disambiguation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "actual_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_1_texture_orientation_and_readability_unchanged": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "coaxial_predicted_actual_disambiguation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "core_inner_halo_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "endpoint_tick_terminal_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "outer_halo_background_silhouette": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_dash_gap_rhythm": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "trajectory_local_contrast_and_ball_occlusion_no_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "two_ball_fixture_did_not_inherit_product_rack": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [],
+      "batch_id": "phase4_targeted5",
+      "batch_ordinal": 2,
+      "blocking_axes": [],
+      "case_id": "camera_elevated_1080",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "base_corners_opposite_groups": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "eight_ball_center_slot": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "rack_tightness_and_no_overlap": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      "not_applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "ordinal": 8,
+      "prior_canonical_axes_in_order": [
+        "predicted_track_visual_identity",
+        "actual_track_visual_identity",
+        "core_inner_halo_separation",
+        "outer_halo_background_silhouette",
+        "predicted_dash_gap_rhythm",
+        "endpoint_tick_terminal_readability",
+        "coaxial_predicted_actual_disambiguation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "actual_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_1_texture_orientation_and_readability_unchanged": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "coaxial_predicted_actual_disambiguation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "core_inner_halo_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "endpoint_tick_terminal_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "outer_halo_background_silhouette": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_dash_gap_rhythm": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "trajectory_local_contrast_and_ball_occlusion_no_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "two_ball_fixture_did_not_inherit_product_rack": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [],
+      "batch_id": "phase4_targeted5",
+      "batch_ordinal": 3,
+      "blocking_axes": [],
+      "case_id": "camera_overhead_1080",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "base_corners_opposite_groups": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "eight_ball_center_slot": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "rack_tightness_and_no_overlap": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      "not_applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "ordinal": 9,
+      "prior_canonical_axes_in_order": [
+        "predicted_track_visual_identity",
+        "actual_track_visual_identity",
+        "core_inner_halo_separation",
+        "outer_halo_background_silhouette",
+        "predicted_dash_gap_rhythm",
+        "endpoint_tick_terminal_readability",
+        "coaxial_predicted_actual_disambiguation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "actual_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_1_texture_orientation_and_readability_unchanged": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "coaxial_predicted_actual_disambiguation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "core_inner_halo_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "endpoint_tick_terminal_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "outer_halo_background_silhouette": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_dash_gap_rhythm": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "trajectory_local_contrast_and_ball_occlusion_no_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "two_ball_fixture_did_not_inherit_product_rack": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [],
+      "batch_id": "phase4_targeted5",
+      "batch_ordinal": 4,
+      "blocking_axes": [],
+      "case_id": "camera_broadcast_1080",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "base_corners_opposite_groups": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "eight_ball_center_slot": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "rack_tightness_and_no_overlap": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      "not_applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "ordinal": 10,
+      "prior_canonical_axes_in_order": [
+        "predicted_track_visual_identity",
+        "actual_track_visual_identity",
+        "core_inner_halo_separation",
+        "outer_halo_background_silhouette",
+        "predicted_dash_gap_rhythm",
+        "endpoint_tick_terminal_readability",
+        "coaxial_predicted_actual_disambiguation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "actual_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "ball_1_texture_orientation_and_readability_unchanged": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "coaxial_predicted_actual_disambiguation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "core_inner_halo_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "endpoint_tick_terminal_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "outer_halo_background_silhouette": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_dash_gap_rhythm": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "predicted_track_visual_identity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "trajectory_local_contrast_and_ball_occlusion_no_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "two_ball_fixture_did_not_inherit_product_rack": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [],
+      "batch_id": "phase4_targeted5",
+      "batch_ordinal": 5,
+      "blocking_axes": [],
+      "case_id": "actual_retina_ui135_cvd",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [
+        "two_ball_fixture_did_not_inherit_product_rack",
+        "ball_1_texture_orientation_and_readability_unchanged",
+        "trajectory_local_contrast_and_ball_occlusion_no_regression"
+      ],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {
+        "apex_and_foot_spot_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "base_corners_opposite_groups": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "eight_ball_center_slot": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        },
+        "rack_tightness_and_no_overlap": {
+          "reason": "The bound launch_stop_shot_center_v1 fixture contains only balls 0 and 1 and must not fabricate product-rack evidence.",
+          "status": "NOT_APPLICABLE"
+        }
+      },
+      "not_applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "ordinal": 11,
+      "prior_canonical_axes_in_order": [
+        "predicted_track_visual_identity",
+        "actual_track_visual_identity",
+        "core_inner_halo_separation",
+        "outer_halo_background_silhouette",
+        "predicted_dash_gap_rhythm",
+        "endpoint_tick_terminal_readability",
+        "coaxial_predicted_actual_disambiguation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 1,
+      "blocking_axes": [],
+      "case_id": "group_choice_armed_confirm--p1--zh_cn",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 12,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 2,
+      "blocking_axes": [],
+      "case_id": "group_choice_armed_confirm--p2--en",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 13,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 3,
+      "blocking_axes": [],
+      "case_id": "group_choice_armed_confirm--p3--zh_cn",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 14,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 4,
+      "blocking_axes": [],
+      "case_id": "group_choice_armed_confirm--p4--en",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 15,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 5,
+      "blocking_axes": [],
+      "case_id": "group_choice_open_unselected--p1--en",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 16,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 6,
+      "blocking_axes": [],
+      "case_id": "group_choice_open_unselected--p2--zh_cn",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 17,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 7,
+      "blocking_axes": [],
+      "case_id": "group_choice_open_unselected--p3--en",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 18,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 8,
+      "blocking_axes": [],
+      "case_id": "group_choice_open_unselected--p4--zh_cn",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 19,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 9,
+      "blocking_axes": [],
+      "case_id": "eight_legal_open_unselected--p1--en",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 20,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 10,
+      "blocking_axes": [],
+      "case_id": "break_illegal_open_unselected--p2--zh_cn",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 21,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 11,
+      "blocking_axes": [],
+      "case_id": "submitting_progress--p3--en",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 22,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 12,
+      "blocking_axes": [],
+      "case_id": "authority_error--p4--en",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 23,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 13,
+      "blocking_axes": [],
+      "case_id": "full_table_preview_valid--p1--en",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 24,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 14,
+      "blocking_axes": [],
+      "case_id": "full_table_preview_invalid--p2--en",
+      "expected_physical_dimensions": [
+        1280,
+        720
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 25,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 15,
+      "blocking_axes": [],
+      "case_id": "behind_head_string_preview_valid--p3--en",
+      "expected_physical_dimensions": [
+        1920,
+        1080
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 26,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    },
+    {
+      "applicable_axis_findings": {
+        "action_semantics_and_branch_correctness": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "actor_revision_and_authority_status_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "apex_and_foot_spot_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "base_corners_opposite_groups": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "camera_composition_and_occlusion_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "debug_and_product_surface_separation": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "eight_ball_center_slot": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "focus_pointer_keyboard_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "foundation_and_unoffered_action_absence": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "lighting_contact_shadow_and_highlight_regression": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "no_default_selection_or_accidental_submission_affordance": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "numbered_texture_orientation_and_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "placement_scope_and_legality_readability": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "rack_tightness_and_no_overlap": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "stale_error_ai_pending_fail_closed_clarity": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "standard_cvd_non_color_redundancy": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        },
+        "text_clipping_collision_and_minimum_size": {
+          "observation": null,
+          "physical_coordinates": [],
+          "status": "PENDING"
+        }
+      },
+      "applicable_rack_axes_in_order": [
+        "base_corners_opposite_groups",
+        "eight_ball_center_slot",
+        "apex_and_foot_spot_readability",
+        "rack_tightness_and_no_overlap",
+        "numbered_texture_orientation_and_readability",
+        "lighting_contact_shadow_and_highlight_regression",
+        "camera_composition_and_occlusion_regression"
+      ],
+      "batch_id": "phase5_exact16",
+      "batch_ordinal": 16,
+      "blocking_axes": [],
+      "case_id": "behind_head_string_preview_invalid--p4--en",
+      "expected_physical_dimensions": [
+        2560,
+        1440
+      ],
+      "future_evidence": {
+        "png_path": null,
+        "png_physical_dimensions": null,
+        "png_sha256": null,
+        "ppm_path": null,
+        "ppm_physical_dimensions": null,
+        "ppm_sha256": null
+      },
+      "isolation_axes_in_order": [],
+      "manual_case_result": "NOT_RUN",
+      "not_applicable_axis_findings": {},
+      "not_applicable_rack_axes_in_order": [],
+      "ordinal": 27,
+      "prior_canonical_axes_in_order": [
+        "action_semantics_and_branch_correctness",
+        "actor_revision_and_authority_status_readability",
+        "no_default_selection_or_accidental_submission_affordance",
+        "focus_pointer_keyboard_redundancy",
+        "text_clipping_collision_and_minimum_size",
+        "standard_cvd_non_color_redundancy",
+        "placement_scope_and_legality_readability",
+        "stale_error_ai_pending_fail_closed_clarity",
+        "foundation_and_unoffered_action_absence",
+        "debug_and_product_surface_separation"
+      ]
+    }
+  ],
+  "combined_future_evidence": {
+    "fresh_shared_binary_sha256": null,
+    "fresh_shared_build_manifest_path": null,
+    "fresh_shared_build_manifest_sha256": null,
+    "ordered_27_case_evidence_aggregate_sha256": null,
+    "ordered_27_png_aggregate_sha256": null,
+    "ordered_27_ppm_aggregate_sha256": null
+  },
+  "completion_preconditions": [
+    "A fresh shared build manifest binds the official-rack gate production SHAs and one fresh binary SHA.",
+    "Phase2, Phase4, and Phase5 readiness and machine receipts are independently frozen; machine results are exactly 6/6, 5/5, and 16/16 PASS with zero failure or NOT_RUN.",
+    "Every ordered case binds repository-relative PPM and PNG path, SHA-256, and independently decoded physical dimensions equal to expected_physical_dimensions.",
+    "Each batch stable PNG manifest and ordered PPM, PNG, and case-evidence aggregate is present; combined ordered-27 aggregates are present and recomputable.",
+    "Only after every evidence precondition passes may all 406 applicable axes atomically change from PENDING to PASS or FAIL, all 35 Phase4 rack axes remain NOT_APPLICABLE, and all 27 case results change from NOT_RUN to PASS or FAIL.",
+    "Overall PASS requires every applicable axis and every case PASS. Any applicable FAIL produces overall FAIL and an exact blocking_axes list; no partial or inherited review is accepted."
+  ],
+  "evidence_boundary": {
+    "authorization_created": false,
+    "beta": false,
+    "golden": false,
+    "gpu_executed": false,
+    "m2": false,
+    "m3": false,
+    "machine_acceptance": false,
+    "product_acceptance": false,
+    "production_modified": false,
+    "readiness_created": false,
+    "review_performed": false,
+    "ta_acceptance": false
+  },
+  "frozen_bindings": {
+    "official_rack_visual_rebaseline_gate": {
+      "path": "docs/art/wpa-official-fixed-seed-rack-visual-rebaseline-design-gate-v1.json",
+      "sha256": "5c8460672bcf10d3abac12649cbf427102d764d0aacf60f0ccd9371d62a270c9"
+    },
+    "phase2_full_six_source_template": {
+      "path": "docs/art/phase2-v10i-formal-full-six-ta-review-template-v1.json",
+      "sha256": "6adc89b2b9030426287f432edfa3c33a6431af545cbaedae80a446c2b9e81f49"
+    },
+    "phase4_targeted5_source_template": {
+      "path": "docs/art/phase4-v12-targeted5-independent-ta-review-template-v1.json",
+      "sha256": "e4ef1fbfb92536d6a02b6c3287b4a453f84e7e21bfed8c594414401d937e98df"
+    },
+    "phase5_exact16_source_template": {
+      "path": "docs/art/phase5-rules-decision-ui-v5-exact16-independent-ta-review-template-v1.json",
+      "sha256": "917ef40bdf96ccca631117363c2d7d92eadade3bc9629d3d7559067e53164e2a"
+    }
+  },
+  "overall_result": "NOT_RUN",
+  "review_performed": false,
+  "schema": "wpa_official_fixed_seed_rack_combined27_independent_ta_review_v1",
+  "schema_version": 1,
+  "scope": {
+    "applicable_pending_axis_count": 406,
+    "batch_case_counts": {
+      "phase2_full_six": 6,
+      "phase4_targeted5": 5,
+      "phase5_exact16": 16
+    },
+    "batch_order": [
+      "phase2_full_six",
+      "phase4_targeted5",
+      "phase5_exact16"
+    ],
+    "case_count": 27,
+    "case_ids_in_exact_order": [
+      "break",
+      "low_aim",
+      "ball_closeup",
+      "pocket_closeup",
+      "tactical_overhead",
+      "post_shot_observe",
+      "camera_player_low_1080",
+      "camera_elevated_1080",
+      "camera_overhead_1080",
+      "camera_broadcast_1080",
+      "actual_retina_ui135_cvd",
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en",
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_invalid--p2--en",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "original_resolution_review_required": true,
+    "phase4_isolation_axes_in_order": [
+      "two_ball_fixture_did_not_inherit_product_rack",
+      "ball_1_texture_orientation_and_readability_unchanged",
+      "trajectory_local_contrast_and_ball_occlusion_no_regression"
+    ],
+    "phase4_not_applicable_rack_axis_count": 35,
+    "rack_axes_in_order": [
+      "base_corners_opposite_groups",
+      "eight_ball_center_slot",
+      "apex_and_foot_spot_readability",
+      "rack_tightness_and_no_overlap",
+      "numbered_texture_orientation_and_readability",
+      "lighting_contact_shadow_and_highlight_regression",
+      "camera_composition_and_occlusion_regression"
+    ],
+    "total_axis_record_count": 441
+  },
+  "status": "TEMPLATE_NOT_RUN_WAITING_FOR_FRESH_SHARED_BUILD_EVIDENCE"
+}

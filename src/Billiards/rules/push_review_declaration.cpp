@@ -1,0 +1,24 @@
+#include "rules/push_review_declaration.h"
+namespace billiardgl::rules {namespace{
+RefereeAuthorityConsumerPolicy policy(){RefereeAuthorityConsumerPolicy p;p.declarationKind=kPushReviewDeclarationKind;p.allowedActorRoles={RefereeAuthorityRole::Referee};p.proposalPayloadKeyTypes={{"cue_ball_id",RefereeAuthorityPayloadType::Number},{"push_review_required",RefereeAuthorityPayloadType::Bool},{"relation",RefereeAuthorityPayloadType::String}};p.finalPayloadKeyTypes=p.proposalPayloadKeyTypes;p.finalPayloadKeyTypes["proposal_decision_id"]=RefereeAuthorityPayloadType::String;p.cancelPayloadKeyTypes={{"proposal_decision_id",RefereeAuthorityPayloadType::String}};p.finalPayloadMayDifferFromProposal=true;p.cancelPayloadMayDifferFromProposal=true;p.maxPayloadBytes=1024;p.maxLifetimeTicks=100000;p.proposalRequired=true;p.sameActorCancelRequired=true;return p;}
+PushReviewResult reject(const std::string&c){PushReviewResult r;r.errorCode=c;return r;}
+std::string proposal(){return "{\"cue_ball_id\":0,\"push_review_required\":true,\"relation\":\"POTENTIAL_OBVIOUS_PUSH_REQUIRES_COMPLETE_MEASUREMENTS_AND_REFEREE_REVIEW\"}";}
+std::string final(const std::string&id){return std::string("{\"cue_ball_id\":0,\"proposal_decision_id\":\"")+id+"\",\"push_review_required\":true,\"relation\":\"POTENTIAL_OBVIOUS_PUSH_REQUIRES_COMPLETE_MEASUREMENTS_AND_REFEREE_REVIEW\"}";}
+std::string cancelPayload(const std::string&id){return std::string("{\"proposal_decision_id\":\"")+id+"\"}";}
+}
+PushReviewAuthority::PushReviewAuthority(const RefereeAuthorityAuthenticator*a,const RefereeAuthorityCommitGuard*g):protocol_({policy()},a,g){}
+void PushReviewAuthority::reset(const std::string&r){protocol_.reset(r);state_=PushReviewState{};state_.rackIdentity=r;}
+PushReviewResult PushReviewAuthority::propose(const RefereeAuthorityRequest&r,const PushReviewContext&c,std::uint64_t t){if(state_.phase!=PushReviewPhase::Inactive&&state_.phase!=PushReviewPhase::ProposalOpen)return reject("push_review_state");if(c.cueBallId!=0||c.parentStateHash.empty()||r.payloadCanonical!=proposal())return reject("push_review_context");auto v=protocol_.submit(r,t);if(!v.ok)return reject(v.errorCode);if(state_.phase==PushReviewPhase::Inactive){state_.phase=PushReviewPhase::ProposalOpen;state_.context=c;state_.proposalDecisionId=r.decisionId;state_.refereeSubjectId=r.authoritySubjectId;state_.proposalPayloadSha256=refereeAuthoritySha256Hex(r.payloadCanonical);}return {true,"",v.ack};}
+PushReviewResult PushReviewAuthority::finalDeclare(const RefereeAuthorityRequest&r,const PushReviewContext&c,std::uint64_t t){if(state_.phase!=PushReviewPhase::ProposalOpen&&state_.phase!=PushReviewPhase::Active&&state_.phase!=PushReviewPhase::Consumed)return reject("push_review_final_state");if(c.cueBallId!=state_.context.cueBallId||c.parentRevision!=state_.context.parentRevision||c.parentStateHash!=state_.context.parentStateHash||r.authoritySubjectId!=state_.refereeSubjectId||r.payloadCanonical!=final(state_.proposalDecisionId))return reject("push_review_final_context");auto before=state_.phase;auto v=protocol_.submit(r,t);if(!v.ok)return reject(v.errorCode);if(before==PushReviewPhase::ProposalOpen){state_.phase=PushReviewPhase::Active;state_.committed=true;state_.reviewNeeded=true;state_.finalPayloadSha256=refereeAuthoritySha256Hex(r.payloadCanonical);}return {true,"",v.ack};}
+PushReviewResult PushReviewAuthority::cancel(const RefereeAuthorityRequest&r,std::uint64_t t){if((state_.phase!=PushReviewPhase::ProposalOpen&&state_.phase!=PushReviewPhase::Cancelled)||r.authoritySubjectId!=state_.refereeSubjectId||r.payloadCanonical!=cancelPayload(state_.proposalDecisionId))return reject("push_review_cancel_context");auto before=state_.phase;auto v=protocol_.submit(r,t);if(!v.ok)return reject(v.errorCode);if(before==PushReviewPhase::ProposalOpen)state_.phase=PushReviewPhase::Cancelled;return {true,"",v.ack};}
+bool PushReviewAuthority::consume(const std::string&s,std::uint64_t t){if(state_.phase!=PushReviewPhase::Active||!state_.committed||s.empty())return false;state_.phase=PushReviewPhase::Consumed;state_.consumedShotIdentity=s;state_.consumedAuthorityTick=t;return true;}
+void PushReviewAuthority::invalidate(){if(state_.phase!=PushReviewPhase::Consumed&&state_.phase!=PushReviewPhase::Cancelled)state_.phase=PushReviewPhase::Invalidated;state_.committed=false;state_.reviewNeeded=false;}
+void PushReviewAuthority::restoreCommittedForReplay(const std::string&r,
+    const PushReviewContext&c,const std::string&proposalId,
+    const std::string&subject){
+    reset(r);state_.phase=PushReviewPhase::Active;state_.context=c;
+    state_.proposalDecisionId=proposalId;state_.refereeSubjectId=subject;
+    state_.proposalPayloadSha256=refereeAuthoritySha256Hex(proposal());
+    state_.finalPayloadSha256=refereeAuthoritySha256Hex(final(proposalId));
+    state_.committed=true;state_.reviewNeeded=true;}
+}

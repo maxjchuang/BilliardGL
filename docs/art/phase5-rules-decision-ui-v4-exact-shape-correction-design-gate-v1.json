@@ -1,0 +1,291 @@
+{
+  "schema": "phase5_rules_decision_ui_v4_exact_shape_correction_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase5_rules_decision_ui_v4_exact_shape_scoped_gate_v1",
+  "status": "APPROVED_FOR_SCOPED_EXACT_SHAPE_IMPLEMENTATION_ONLY",
+  "scope": "Repair only the four armed-confirm captures and their eight bound failed axis occurrences. Preserve the corrected actor/action copy and every authority, placement, control, threshold, and exposure contract.",
+  "read_only_bindings": [
+    {
+      "role": "v3_corrected_targeted28_final_manual_failure_authority",
+      "path": "docs/evidence/phase5/rules-decision-ui-v3-binding-corrected-targeted28-independent-ta-manual-review-v1.json",
+      "sha256": "f044e39c7765f3026bd53521e7cca8cf11b619ca5e6369c6e37e338da0afb954"
+    },
+    {
+      "role": "v3_visual_repair_design_gate",
+      "path": "docs/art/phase5-rules-decision-ui-v3-visual-repair-design-gate-v1.json",
+      "sha256": "6b587c67721521607d81a28beaafa59ad4a76d664399805e922ecdc969905e25"
+    },
+    {
+      "role": "binding_corrected_targeted_machine_pass_receipt",
+      "path": "docs/evidence/phase5-rules-decision-ui-v3-binding-corrected-targeted-machine-pass-receipt-v1.json",
+      "sha256": "c7be73e9759dca152da94108efd1a87893242d8d4c72b6362c66e002723e1c4c",
+      "case_evidence_aggregate_sha256": "ac9288a18896384b0f2a40ed8f000e3b7b3830e5ccd391d21b1c3c982700f7e4",
+      "output_aggregate_sha256": "741ac3a09b678ffc7b2f355e11248172195ee58752d5561418bda209c3a89284"
+    },
+    {
+      "role": "binding_corrected_targeted_actual_gpu_manifest",
+      "path": "docs/evidence/phase5/rules-decision-ui-v3-binding-corrected-targeted-gpu-run-1/rules-decision-ui-v3-targeted-evidence.json",
+      "sha256": "b7dc8fcc3ee266b8e8b30f818a8df98aade195efeb08774a217f0db1b833d612"
+    }
+  ],
+  "bound_failure_set": {
+    "manual_result": "FAIL",
+    "failed_case_count": 4,
+    "failed_axis_occurrence_count": 8,
+    "failed_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en"
+    ],
+    "failed_axes_per_case": [
+      "focus_pointer_keyboard_redundancy",
+      "standard_cvd_non_color_redundancy"
+    ],
+    "blocking_defect_id": "D06_ARMED_FOCUS_CONFIRM_EXACT_SHAPES_ABSENT",
+    "finding": "The four original-resolution captures show a bare checkmark and bare right arrow, not independently recognizable focus_chevron, selected_check_diamond, and confirm_double_frame_plus_enter_arrow shapes."
+  },
+  "repair_contract": {
+    "allowed_state_ids": [
+      "group_choice_armed_confirm"
+    ],
+    "allowed_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en"
+    ],
+    "allowed_failed_axes": [
+      "focus_pointer_keyboard_redundancy",
+      "standard_cvd_non_color_redundancy"
+    ],
+    "repair_axis_occurrence_count": 8,
+    "copy_freeze": {
+      "actor_source": "Preserve the exact actor_display derived from the current stable offer actor_player_id.",
+      "action_source": "Preserve the exact localized action result already shown by the corrected v3 armed and confirm rows.",
+      "requirements": [
+        "Both armed and confirm rows continue to name the exact actor and exact action result.",
+        "No generic confirm copy, local-player fallback, action alias, reorder, truncation, ellipsis, or stale actor/action carry-over.",
+        "No wording, localization, line-break, authority revision, or submission semantic change is authorized by this gate."
+      ]
+    },
+    "exact_shape_tokens": {
+      "focus_chevron": {
+        "token_id": "rules_ui.focus_chevron_v4",
+        "required_geometry": "A standalone leading-edge chevron formed by two joined diagonal strokes, attached only to the keyboard/pointer-focused row.",
+        "placement": "Inside the focused confirm-row hit rectangle at its leading edge; never in the Player HUD region or at the trailing selected/confirm token slot.",
+        "minimum_physical_bounding_box_px": [
+          18,
+          18
+        ],
+        "minimum_physical_stroke_px": 2,
+        "hud_diamond_confusion_forbidden": true
+      },
+      "selected_check_diamond": {
+        "token_id": "rules_ui.selected_check_diamond_v4",
+        "required_geometry": "A visible check glyph fully enclosed by a closed four-sided diamond outline; a bare checkmark is a blocking failure.",
+        "placement": "Inside the armed action-row hit rectangle at its trailing token slot and absent from unselected/open rows.",
+        "minimum_physical_bounding_box_px": [
+          18,
+          18
+        ],
+        "minimum_outline_stroke_px": 2,
+        "minimum_check_stroke_px": 2,
+        "minimum_check_to_outline_clearance_px": 2,
+        "closed_diamond_outline_required": true
+      },
+      "confirm_double_frame_plus_enter_arrow": {
+        "token_id": "rules_ui.confirm_double_frame_plus_enter_arrow_v4",
+        "required_geometry": "Two closed nested rectangular frames enclosing a bent enter-arrow glyph; a bare straight/right arrow is a blocking failure.",
+        "placement": "Inside the explicit confirm-control hit rectangle at its trailing token slot and absent from action/open/status/error rows.",
+        "minimum_physical_bounding_box_px": [
+          18,
+          18
+        ],
+        "minimum_outer_frame_stroke_px": 2,
+        "minimum_inner_frame_stroke_px": 2,
+        "minimum_frame_separation_px": 2,
+        "minimum_enter_arrow_stroke_px": 2,
+        "two_closed_rectangular_frames_required": true,
+        "bent_enter_arrow_required": true
+      }
+    },
+    "simultaneous_capture_contract": [
+      "The armed-confirm fixture pins focus to the explicit confirm control without submitting, so all three shape roles are visible in the same capture.",
+      "The focused confirm row shows the leading focus chevron and trailing double-frame enter-arrow; the armed action row simultaneously shows the trailing enclosed check-diamond.",
+      "Each token has a distinct token_id, draw-command range, physical bounding box, and semantic role; aliasing one geometry or glyph across roles is forbidden.",
+      "Standard and color_vision_safe palettes expose the same three-shape inventory and geometry. Hue may supplement, never replace, shape/text/luminance distinction."
+    ],
+    "submission_semantics_unchanged": "First activation arms only; only a separate activation of the explicit confirm control submits once. Focus, hover, open, Escape, right-click, double-click, timeout, resume, and focus loss never submit."
+  },
+  "inherited_thresholds_immutable": {
+    "source": "phase5_rules_decision_ui_v3_visual_repair_design_gate_v1",
+    "normal_text_contrast_minimum": 4.5,
+    "large_text_and_active_shape_contrast_minimum": 3.0,
+    "critical_shape_minimum_physical_px": 18,
+    "focus_stroke_minimum_physical_px": 2,
+    "action_minimum_logical_height_px": 48,
+    "action_vertical_gap_logical_px": 8,
+    "maximum_action_lines": 2,
+    "no_ellipsis_for_rule_action_or_error_copy": true,
+    "table_occlusion_limit_fraction": 0.18,
+    "modification_allowed": false
+  },
+  "allowed_modification_categories": [
+    {
+      "category": "rules_decision_scoped_shape_token_definition",
+      "boundary": "Only the three v4 Rules UI token definitions and their geometry/metrics; no shared Player HUD diamond, shell, placement, error, pending, or status token mutation."
+    },
+    {
+      "category": "rules_decision_armed_confirm_draw_list_emission",
+      "boundary": "Only focus/selected/confirm shape draw commands, role IDs, and bounded row-local placement for group_choice_armed_confirm."
+    },
+    {
+      "category": "rules_decision_product_ui_shape_rasterization",
+      "boundary": "Only generic line/frame primitives needed to rasterize the three scoped token geometries after ACES tone map; no gameplay/world/placement raster path change."
+    },
+    {
+      "category": "offline_validation_and_test_scaffolding",
+      "boundary": "CPU/static assertions, 540-case machine assertions, targeted evidence validation, and fail-closed tests only."
+    }
+  ],
+  "forbidden_changes": {
+    "authority_and_rules": [
+      "No offered action inventory/order, branch, actor, ruleset, clause, policy, foundation action, authority hash/revision, request/ACK identity, error mapping, idempotency, mutation, turn, score, rack, breaker, group, entitlement, or validation change."
+    ],
+    "copy_and_submission": [
+      "No corrected actor/action copy change and no arm/confirm/cancel/focus/submit semantic change."
+    ],
+    "thresholds": [
+      "No contrast, typography, critical-shape, stroke, hit-target, safe-area, layout, occlusion, ui-scale, viewport/density, performance, draw-call, or evidence threshold relaxation."
+    ],
+    "placement": [
+      "No ghost cue-ball, crosshair, error-cross-octagon, dashed collision ring, behind-head hatch, boundary, in-world region/scope text, coordinate, geometry, or placement-confirm change."
+    ],
+    "regression_controls": [
+      "No selected/focus/confirm token leakage into group-choice open, shared action, submitting, authority-error, pending, stale, disabled, or unoffered states.",
+      "No Player HUD diamond mutation or use as proof of the row-local selected-check-diamond."
+    ],
+    "evidence_and_exposure": [
+      "Do not overwrite any v2/v3 PPM, PNG, receipt, manifest, or manual evidence.",
+      "No GPU authorization or execution, implementation pass, manual pass, scoped gate pass, product exposure, profile complete, Golden, M2, Beta, real-input, screen-reader, localization/CVD-human, or external-QA promotion by this design gate."
+    ]
+  },
+  "cpu_and_machine_gate": {
+    "status": "NOT_RUN",
+    "required_case_count": 540,
+    "required_reproducibility": "Two clean offline runs must produce byte-identical ordered 540-case JSON and aggregate SHA.",
+    "required_checks": [
+      "All inherited 540-case authority/action/copy/layout/contrast/performance checks remain enabled and unchanged.",
+      "The four armed-confirm matrix corners emit three distinct token IDs with non-overlapping semantic roles and row-local bounding boxes.",
+      "Every emitted focus chevron, selected check-diamond, and confirm double-frame enter-arrow reports physical width/height, stroke widths, enclosure/frame closure, and standard/CVD shape inventory equality.",
+      "The current corrected actor/action strings and hit rectangles remain byte/geometry stable.",
+      "All open/unselected, placement, status, error, pending, stale, disabled, and unoffered states reject v4 token leakage.",
+      "Any token alias, bare check, bare straight/right arrow, missing chevron, open diamond/frame, undersized geometry, threshold drift, or unrelated raster change is blocking FAIL."
+    ],
+    "implementation_preflight_before_any_gpu_request": [
+      "Source and binary bindings are frozen after 540/540 reproducible machine PASS.",
+      "CPU/static inspection proves the diff belongs only to allowed modification categories.",
+      "A new readiness package records 16 NOT_RUN targeted cases and does not reuse prior authorization/evidence."
+    ]
+  },
+  "future_targeted_actual_gpu_gate": {
+    "status": "NOT_AUTHORIZED",
+    "authorization_required": true,
+    "minimum_case_count": 16,
+    "repair_case_ids": [
+      "group_choice_armed_confirm--p1--zh_cn",
+      "group_choice_armed_confirm--p2--en",
+      "group_choice_armed_confirm--p3--zh_cn",
+      "group_choice_armed_confirm--p4--en"
+    ],
+    "regression_control_case_ids": [
+      "group_choice_open_unselected--p1--en",
+      "group_choice_open_unselected--p2--zh_cn",
+      "group_choice_open_unselected--p3--en",
+      "group_choice_open_unselected--p4--zh_cn",
+      "eight_legal_open_unselected--p1--en",
+      "break_illegal_open_unselected--p2--zh_cn",
+      "submitting_progress--p3--en",
+      "authority_error--p4--en",
+      "full_table_preview_valid--p1--en",
+      "full_table_preview_invalid--p2--en",
+      "behind_head_string_preview_valid--p3--en",
+      "behind_head_string_preview_invalid--p4--en"
+    ],
+    "capture_requirements": [
+      "Use a new v4 evidence root and a fresh process under one separately issued single-use root authorization.",
+      "Capture the production Core 4.1 product_ui path after ACES tone map with shipping fonts/icons; no CPU/mock/design image substitutes for actual GPU evidence.",
+      "Record PPM and PNG path/SHA/decoded physical dimensions, stable aggregates, source/runner/binary bindings, draw-command token IDs, physical shape bounding boxes/strokes, hit rectangles, and render-pass order.",
+      "All 16 captures pass machine validation; any missing shape, token leakage, placement-overlay regression, dimension/threshold failure, or omitted-corner anomaly is blocking."
+    ],
+    "proof_boundary": "16/16 targeted actual-GPU machine pass closes only the v4 exact-shape raster and sampled regression check. It does not equal TA pass, full scoped gate pass, product exposure, Golden, M2, Beta, real-input, screen-reader, localization/CVD-human, or external-QA pass."
+  },
+  "technical_art_re_review_gate": {
+    "status": "NOT_RUN",
+    "reviewer": "Independent technical-art reviewer who did not implement the v4 correction.",
+    "method": [
+      "Open all 16 bound PNGs individually at original physical resolution.",
+      "Review every image on all ten canonical axes to detect regression; no machine PASS is inherited as manual PASS.",
+      "For the four repaired armed-confirm cases, explicitly verify the eight bound failed axis occurrences and the simultaneous visibility/independence of all three exact shapes.",
+      "Compare standard/CVD profiles and confirm the Player HUD diamond is not counted as the row-local selected-check-diamond.",
+      "Any prior failed axis remaining FAIL or any new regression makes the v4 TA result FAIL."
+    ],
+    "canonical_axes": [
+      "action_semantics_and_branch_correctness",
+      "actor_revision_and_authority_status_readability",
+      "no_default_selection_or_accidental_submission_affordance",
+      "focus_pointer_keyboard_redundancy",
+      "text_clipping_collision_and_minimum_size",
+      "standard_cvd_non_color_redundancy",
+      "placement_scope_and_legality_readability",
+      "stale_error_ai_pending_fail_closed_clarity",
+      "foundation_and_unoffered_action_absence",
+      "debug_and_product_surface_separation"
+    ],
+    "image_count": 16,
+    "axis_review_count": 160,
+    "repair_axis_occurrence_count": 8,
+    "required_result": {
+      "images_reviewed": 16,
+      "axes_reviewed": 160,
+      "axes_pending": 0,
+      "prior_failed_axis_occurrences_remaining": 0,
+      "new_axis_failures": 0,
+      "overall": "PASS_REQUIRED_FOR_V4_EXACT_SHAPE_RASTER_GATE_ONLY"
+    }
+  },
+  "acceptance": {
+    "implementation_may_start_when": [
+      "All four read-only binding hashes and both frozen v3 stable aggregates match.",
+      "The implementation diff is restricted to the four allowed modification categories and exact group_choice_armed_confirm scope.",
+      "Authority/rules, corrected copy, inherited thresholds, placement overlays, regression controls, evidence, and exposure boundaries remain unchanged."
+    ],
+    "scoped_v4_raster_may_pass_when": [
+      "540/540 offline machine cases pass twice with byte-identical aggregate SHA.",
+      "A separately authorized fresh 16/16 targeted actual-GPU set passes machine validation.",
+      "Independent TA reviews 16/16 original-resolution PNGs and 160/160 axes; all eight prior failures become PASS with zero regressions."
+    ],
+    "result": "SCOPED_EXACT_SHAPE_DESIGN_APPROVED_NOT_IMPLEMENTED_NOT_GPU_AUTHORIZED_NOT_TA_PASS_NOT_PRODUCT_PASS"
+  },
+  "evidence_boundary": {
+    "design_contract_only": true,
+    "implementation_authorized": true,
+    "implementation_performed_by_this_gate": false,
+    "production_source_modified_by_this_gate": false,
+    "shipping_asset_modified_by_this_gate": false,
+    "machine_pass_claimed_by_this_gate": false,
+    "gpu_execution_authorized": false,
+    "gpu_capture_performed_by_this_gate": false,
+    "technical_art_re_review_claimed_by_this_gate": false,
+    "scoped_visual_repair_gate_pass": false,
+    "product_exposure_authorized": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false,
+    "true_keyboard_or_pointer_session_claimed": false,
+    "screen_reader_session_claimed": false,
+    "external_human_review_claimed": false
+  }
+}

@@ -1,0 +1,939 @@
+{
+  "expected_error_code": "E_COLOR_ONLY_REASON",
+  "manifest": {
+    "accessibility": {
+      "assist_invariant": "never_auto_aim_or_auto_shot",
+      "assist_levels": [
+        {
+          "features": [],
+          "id": "off"
+        },
+        {
+          "features": [
+            "aim_line",
+            "first_contact_marker"
+          ],
+          "id": "basic"
+        },
+        {
+          "features": [
+            "aim_line",
+            "first_contact_marker",
+            "target_zone",
+            "rule_explanations"
+          ],
+          "id": "guided"
+        }
+      ],
+      "color_vision_modes": [
+        "default",
+        "deuteranopia",
+        "protanopia",
+        "tritanopia",
+        "high_contrast_patterns"
+      ],
+      "contrast": {
+        "focus_indicator_min": 3.0,
+        "large_text_min": 3.0,
+        "normal_text_min": 4.5
+      },
+      "font_scale": {
+        "default": 1.0,
+        "maximum": 1.35,
+        "minimum": 0.85,
+        "reflow_required_above": 1.15
+      },
+      "subtitles": {
+        "default": true,
+        "non_speech_captions": true,
+        "options": [
+          "off",
+          "essential",
+          "all"
+        ],
+        "speaker_labels": true
+      }
+    },
+    "ai_difficulty": [
+      {
+        "evaluation": {
+          "attempts": 600,
+          "confidence_reporting": "wilson_95_percent_interval",
+          "fixed_seed_set": "ai_acceptance_seeds_v1_0_to_199_repeated_per_scenario_class",
+          "metric": "rack_win_rate_against_reference_policy",
+          "ruleset_id": "wpa_heyball_2025_08_16_v1",
+          "scenario_strata": {
+            "break": 200,
+            "open_table": 200,
+            "runout_pressure": 200
+          },
+          "time_control": "fixed_step_no_wall_clock"
+        },
+        "id": "rookie",
+        "locale": {
+          "description_en": "Takes obvious pots but leaves exploitable chances; intended for learning the rules.",
+          "description_zh_cn": "会完成明显进球，但会留下可利用的机会，适合熟悉规则。",
+          "name_en": "Rookie",
+          "name_zh_cn": "新手"
+        },
+        "order": 1,
+        "runtime_binding": {
+          "required_capability": "single_player_ai_v1",
+          "status": "capability_gated"
+        },
+        "target_success_rate": {
+          "maximum": 0.5,
+          "minimum": 0.35
+        }
+      },
+      {
+        "evaluation": {
+          "attempts": 600,
+          "confidence_reporting": "wilson_95_percent_interval",
+          "fixed_seed_set": "ai_acceptance_seeds_v1_0_to_199_repeated_per_scenario_class",
+          "metric": "rack_win_rate_against_reference_policy",
+          "ruleset_id": "wpa_heyball_2025_08_16_v1",
+          "scenario_strata": {
+            "break": 200,
+            "open_table": 200,
+            "runout_pressure": 200
+          },
+          "time_control": "fixed_step_no_wall_clock"
+        },
+        "id": "club",
+        "locale": {
+          "description_en": "Plans two-to-three-ball routes while retaining readable positional errors.",
+          "description_zh_cn": "能规划两到三颗球的路线，仍会出现可读的走位误差。",
+          "name_en": "Club",
+          "name_zh_cn": "球房"
+        },
+        "order": 2,
+        "runtime_binding": {
+          "required_capability": "single_player_ai_v1",
+          "status": "capability_gated"
+        },
+        "target_success_rate": {
+          "maximum": 0.72,
+          "minimum": 0.58
+        }
+      },
+      {
+        "evaluation": {
+          "attempts": 600,
+          "confidence_reporting": "wilson_95_percent_interval",
+          "fixed_seed_set": "ai_acceptance_seeds_v1_0_to_199_repeated_per_scenario_class",
+          "metric": "rack_win_rate_against_reference_policy",
+          "ruleset_id": "wpa_heyball_2025_08_16_v1",
+          "scenario_strata": {
+            "break": 200,
+            "open_table": 200,
+            "runout_pressure": 200
+          },
+          "time_control": "fixed_step_no_wall_clock"
+        },
+        "id": "expert",
+        "locale": {
+          "description_en": "Prioritizes table risk and runs balls consistently without hidden-state access or cheats.",
+          "description_zh_cn": "优先处理局面风险并稳定连续进球，但不读取隐藏状态或作弊。",
+          "name_en": "Expert",
+          "name_zh_cn": "高手"
+        },
+        "order": 3,
+        "runtime_binding": {
+          "required_capability": "single_player_ai_v1",
+          "status": "capability_gated"
+        },
+        "target_success_rate": {
+          "maximum": 0.88,
+          "minimum": 0.78
+        }
+      }
+    ],
+    "authorship": "original_billiardgl_product_ux_no_third_party_assets",
+    "input_rebinding": {
+      "actions": [
+        {
+          "context": "global",
+          "defaults": [
+            {
+              "control": "H",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            }
+          ],
+          "id": "toggle_help",
+          "label": {
+            "en": "Help",
+            "zh_cn": "帮助"
+          }
+        },
+        {
+          "context": "play",
+          "defaults": [
+            {
+              "control": "Tab",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            }
+          ],
+          "id": "toggle_aim",
+          "label": {
+            "en": "Toggle aim",
+            "zh_cn": "切换瞄准"
+          }
+        },
+        {
+          "context": "aim",
+          "defaults": [
+            {
+              "control": "LeftButton",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "release"
+            }
+          ],
+          "id": "shoot",
+          "label": {
+            "en": "Shoot",
+            "zh_cn": "击球"
+          }
+        },
+        {
+          "context": "aim",
+          "defaults": [
+            {
+              "control": "MoveX",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            }
+          ],
+          "id": "adjust_aim",
+          "label": {
+            "en": "Adjust aim",
+            "zh_cn": "调整方向"
+          }
+        },
+        {
+          "context": "aim",
+          "defaults": [
+            {
+              "control": "+",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            },
+            {
+              "control": "WheelUp",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "step"
+            }
+          ],
+          "id": "power_increase",
+          "label": {
+            "en": "Increase power",
+            "zh_cn": "增加力度"
+          }
+        },
+        {
+          "context": "aim",
+          "defaults": [
+            {
+              "control": "-",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            },
+            {
+              "control": "WheelDown",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "step"
+            }
+          ],
+          "id": "power_decrease",
+          "label": {
+            "en": "Decrease power",
+            "zh_cn": "降低力度"
+          }
+        },
+        {
+          "context": "observe",
+          "defaults": [
+            {
+              "control": "ArrowKeys",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            },
+            {
+              "control": "LeftDrag",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            }
+          ],
+          "id": "camera_orbit",
+          "label": {
+            "en": "Orbit camera",
+            "zh_cn": "环绕镜头"
+          }
+        },
+        {
+          "context": "observe",
+          "defaults": [
+            {
+              "control": "A/D",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            },
+            {
+              "control": "Shift+LeftDrag",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            }
+          ],
+          "id": "camera_pan",
+          "label": {
+            "en": "Pan camera",
+            "zh_cn": "平移镜头"
+          }
+        },
+        {
+          "context": "observe",
+          "defaults": [
+            {
+              "control": "W",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            },
+            {
+              "control": "WheelUp",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "step"
+            }
+          ],
+          "id": "zoom_in",
+          "label": {
+            "en": "Zoom in",
+            "zh_cn": "镜头拉近"
+          }
+        },
+        {
+          "context": "observe",
+          "defaults": [
+            {
+              "control": "S",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "continuous"
+            },
+            {
+              "control": "WheelDown",
+              "device": "mouse",
+              "status": "runtime_existing",
+              "trigger": "step"
+            }
+          ],
+          "id": "zoom_out",
+          "label": {
+            "en": "Zoom out",
+            "zh_cn": "镜头拉远"
+          }
+        },
+        {
+          "context": "play",
+          "defaults": [
+            {
+              "control": "C",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            }
+          ],
+          "id": "toggle_camera_anchor",
+          "label": {
+            "en": "Toggle camera anchor",
+            "zh_cn": "切换镜头跟随"
+          }
+        },
+        {
+          "context": "play",
+          "defaults": [
+            {
+              "control": "Space",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            }
+          ],
+          "id": "return_to_cue_ball",
+          "label": {
+            "en": "Return to cue ball",
+            "zh_cn": "返回母球"
+          }
+        },
+        {
+          "context": "global",
+          "defaults": [
+            {
+              "control": "Escape",
+              "device": "keyboard",
+              "status": "runtime_existing",
+              "trigger": "press"
+            }
+          ],
+          "id": "quit",
+          "label": {
+            "en": "Quit",
+            "zh_cn": "退出"
+          }
+        },
+        {
+          "context": "global",
+          "defaults": [
+            {
+              "control": "F10",
+              "device": "keyboard",
+              "status": "capability_gated",
+              "trigger": "press"
+            }
+          ],
+          "id": "open_settings",
+          "label": {
+            "en": "Settings",
+            "zh_cn": "设置"
+          }
+        },
+        {
+          "context": "training",
+          "defaults": [
+            {
+              "control": "R",
+              "device": "keyboard",
+              "status": "capability_gated",
+              "trigger": "press"
+            }
+          ],
+          "id": "reset_training_attempt",
+          "label": {
+            "en": "Reset drill",
+            "zh_cn": "重置练习"
+          }
+        }
+      ],
+      "conflict_detection": {
+        "hard_conflict": "same normalized control and overlapping context",
+        "on_hard_conflict": "block_apply_and_identify_both_actions",
+        "reserved_controls": [
+          "OS_reserved_shortcuts"
+        ],
+        "same_control_disjoint_context": "allowed_with_explicit_context_labels"
+      },
+      "excluded_debug_bindings": [
+        "legacy_light_toggle_0_to_9",
+        "legacy_light_toggle_TYUIOP",
+        "debug_toggle_all_lights_F"
+      ],
+      "persistence": "atomic_write_after_validation",
+      "restore_defaults": {
+        "confirmation_required": true,
+        "scope": [
+          "current_category",
+          "all_inputs"
+        ]
+      },
+      "runtime_binding": {
+        "required_capability": "input_rebinding_v1",
+        "status": "capability_gated"
+      }
+    },
+    "mockups": [
+      {
+        "file": "phase5_settings_minimum_1280x720_96dpi.svg",
+        "profile": "minimum_1280x720_96dpi",
+        "sha256": "e3a539848b9fc2b69736112d5eb99974449ee892b54a8623794fab1b85ec0b48",
+        "state": "input_and_accessibility_settings"
+      },
+      {
+        "file": "phase5_settings_reference_1920x1080_96dpi.svg",
+        "profile": "reference_1920x1080_96dpi",
+        "sha256": "ad16941677899d8e38d658ddb901ccae610002ba6ca96c25d3db3a166ef2e55a",
+        "state": "input_and_accessibility_settings"
+      },
+      {
+        "file": "phase5_settings_high_dpi_1920x1080_144dpi.svg",
+        "profile": "high_dpi_1920x1080_144dpi",
+        "sha256": "d2cec9aed5934399ea5bf1f92c8cccdaf2618117d765b8faa1424360185566e5",
+        "state": "input_and_accessibility_settings"
+      }
+    ],
+    "reason_messages": [
+      {
+        "classification": "sentinel",
+        "code": "none",
+        "color_role": "warning",
+        "icon": {
+          "accessible_label_en": "No ruling",
+          "accessible_label_zh_cn": "无判罚",
+          "non_color_prefix": "[DECISION]",
+          "silhouette": "none",
+          "token": "none"
+        },
+        "locale": {
+          "body_en": "No ruling banner is displayed.",
+          "body_zh_cn": "不显示判罚提示。",
+          "title_en": "No ruling",
+          "title_zh_cn": "无判罚"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 0,
+            "mode": "hidden"
+          },
+          "icon_and_text_required": false,
+          "priority": 0,
+          "screen_reader_announcement": "polite"
+        },
+        "runtime_binding": {
+          "required_capability": null,
+          "status": "sentinel_no_display"
+        },
+        "text_key": "rules.chinese8.none"
+      },
+      {
+        "classification": "decision",
+        "code": "illegal_break",
+        "color_role": "warning",
+        "icon": {
+          "accessible_label_en": "Illegal break",
+          "accessible_label_zh_cn": "开球未达要求",
+          "non_color_prefix": "[DECISION]",
+          "silhouette": "diamond_plus_three_bars",
+          "token": "decision_diamond"
+        },
+        "locale": {
+          "body_en": "No ball was pocketed and fewer than four object balls reached a cushion; choose table acceptance or a re-rack.",
+          "body_zh_cn": "未进球且少于四颗目标球碰库；请选择接受台面或重新摆球。",
+          "title_en": "Illegal break",
+          "title_zh_cn": "开球未达要求"
+        },
+        "presentation": {
+          "duration": {
+            "fallback_milliseconds": 12000,
+            "mode": "until_decision"
+          },
+          "icon_and_text_required": true,
+          "priority": 60,
+          "screen_reader_announcement": "polite"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.illegal_break"
+      },
+      {
+        "classification": "foul",
+        "code": "no_object_ball_contact",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "No object-ball contact",
+          "accessible_label_zh_cn": "未碰目标球",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "broken_ring",
+          "token": "empty_contact_ring"
+        },
+        "locale": {
+          "body_en": "The cue ball did not contact an object ball first; the opponent receives ball in hand.",
+          "body_zh_cn": "母球未先碰到任何目标球，对手获得自由球。",
+          "title_en": "No object-ball contact",
+          "title_zh_cn": "未碰目标球"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 4500,
+            "mode": "timed"
+          },
+          "icon_and_text_required": false,
+          "priority": 75,
+          "screen_reader_announcement": "polite"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.no_object_contact"
+      },
+      {
+        "classification": "foul",
+        "code": "wrong_first_contact",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "Wrong first contact",
+          "accessible_label_zh_cn": "首碰球错误",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "circle_with_diagonal_bar",
+          "token": "numbered_ball_cross"
+        },
+        "locale": {
+          "body_en": "The cue ball first contacted a ball that was not a legal target.",
+          "body_zh_cn": "母球首先碰到了当前不合法的目标球。",
+          "title_en": "Wrong first contact",
+          "title_zh_cn": "首碰球错误"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 4500,
+            "mode": "timed"
+          },
+          "icon_and_text_required": true,
+          "priority": 70,
+          "screen_reader_announcement": "polite"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.wrong_first_contact"
+      },
+      {
+        "classification": "foul",
+        "code": "no_rail_after_contact",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "No cushion after contact",
+          "accessible_label_zh_cn": "碰球后未吃库",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "three_bars_with_gap",
+          "token": "rail_gap"
+        },
+        "locale": {
+          "body_en": "No ball was pocketed and no ball reached a cushion after legal contact.",
+          "body_zh_cn": "未进球，且合法接触后没有球碰库。",
+          "title_en": "No cushion after contact",
+          "title_zh_cn": "碰球后未吃库"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 4500,
+            "mode": "timed"
+          },
+          "icon_and_text_required": true,
+          "priority": 65,
+          "screen_reader_announcement": "polite"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.no_rail_after_contact"
+      },
+      {
+        "classification": "foul",
+        "code": "cue_ball_scratch",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "Cue-ball scratch",
+          "accessible_label_zh_cn": "母球落袋",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "white_circle_down_arrow",
+          "token": "cue_ball_down"
+        },
+        "locale": {
+          "body_en": "The cue ball was pocketed; the opponent receives ball in hand.",
+          "body_zh_cn": "母球落袋，对手获得自由球。",
+          "title_en": "Cue-ball scratch",
+          "title_zh_cn": "母球落袋"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 5000,
+            "mode": "timed"
+          },
+          "icon_and_text_required": true,
+          "priority": 90,
+          "screen_reader_announcement": "assertive"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.cue_ball_scratch"
+      },
+      {
+        "classification": "foul",
+        "code": "cue_ball_off_table",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "Cue ball off table",
+          "accessible_label_zh_cn": "母球离台",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "white_circle_outside_frame",
+          "token": "cue_ball_exit"
+        },
+        "locale": {
+          "body_en": "The cue ball left the table; the opponent receives ball in hand.",
+          "body_zh_cn": "母球离开台面，对手获得自由球。",
+          "title_en": "Cue ball off table",
+          "title_zh_cn": "母球离台"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 5000,
+            "mode": "timed"
+          },
+          "icon_and_text_required": true,
+          "priority": 92,
+          "screen_reader_announcement": "assertive"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.cue_ball_off_table"
+      },
+      {
+        "classification": "foul",
+        "code": "object_ball_off_table",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "Object ball off table",
+          "accessible_label_zh_cn": "目标球离台",
+          "non_color_prefix": "[FOUL]",
+          "silhouette": "numbered_circle_outside_frame",
+          "token": "object_ball_exit"
+        },
+        "locale": {
+          "body_en": "One or more object balls left the table; the shot is a foul.",
+          "body_zh_cn": "一颗或多颗目标球离开台面，本杆犯规。",
+          "title_en": "Object ball off table",
+          "title_zh_cn": "目标球离台"
+        },
+        "presentation": {
+          "duration": {
+            "milliseconds": 5000,
+            "mode": "timed"
+          },
+          "icon_and_text_required": true,
+          "priority": 85,
+          "screen_reader_announcement": "assertive"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.foul.object_ball_off_table"
+      },
+      {
+        "classification": "loss",
+        "code": "illegal_eight_ball",
+        "color_role": "destructive",
+        "icon": {
+          "accessible_label_en": "Illegal 8-ball",
+          "accessible_label_zh_cn": "黑八违规落袋",
+          "non_color_prefix": "[LOSS]",
+          "silhouette": "octagon_with_eight_and_cross",
+          "token": "eight_ball_loss"
+        },
+        "locale": {
+          "body_en": "The 8-ball was pocketed illegally; the rack is lost.",
+          "body_zh_cn": "黑八在不合法条件下落袋，本局判负。",
+          "title_en": "Illegal 8-ball",
+          "title_zh_cn": "黑八违规落袋"
+        },
+        "presentation": {
+          "duration": {
+            "minimum_milliseconds": 6000,
+            "mode": "persistent_until_acknowledged"
+          },
+          "icon_and_text_required": true,
+          "priority": 100,
+          "screen_reader_announcement": "assertive"
+        },
+        "runtime_binding": {
+          "evidence": "rules_engine_unit_tested_not_connected_to_game_runtime",
+          "required_capability": "rules_reason_hud_bridge_v1",
+          "status": "capability_gated"
+        },
+        "text_key": "rules.chinese8.loss.illegal_eight"
+      }
+    ],
+    "reason_ordering": {
+      "maximum_simultaneous_visible": 3,
+      "overflow": "plus_n_more_with_details_action",
+      "sort": [
+        "priority_desc",
+        "code_ascending"
+      ]
+    },
+    "references": {
+      "hud_manifest": "assets/modern/hud/focused_practice_hud_v1.hud.json",
+      "rules_profile": "docs/rules/wpa-heyball-2025-08-16-profile.md",
+      "ruleset_id": "wpa_heyball_2025_08_16_v1"
+    },
+    "responsive_profiles": {
+      "high_dpi_1920x1080_144dpi": {
+        "font_px": {
+          "body": 24,
+          "caption": 21,
+          "heading": 36
+        },
+        "logical_viewport_px": [
+          1280,
+          720
+        ],
+        "os_dpi": 144,
+        "physical_viewport_px": [
+          1920,
+          1080
+        ],
+        "regions_px": {
+          "content": [
+            460,
+            72,
+            1396,
+            810
+          ],
+          "footer": [
+            460,
+            906,
+            1396,
+            120
+          ],
+          "navigation": [
+            64,
+            72,
+            360,
+            900
+          ]
+        },
+        "resolved_scale": 1.5,
+        "safe_area_px": {
+          "bottom": 54,
+          "left": 64,
+          "right": 64,
+          "top": 36
+        }
+      },
+      "minimum_1280x720_96dpi": {
+        "font_px": {
+          "body": 16,
+          "caption": 14,
+          "heading": 24
+        },
+        "logical_viewport_px": [
+          1280,
+          720
+        ],
+        "os_dpi": 96,
+        "physical_viewport_px": [
+          1280,
+          720
+        ],
+        "regions_px": {
+          "content": [
+            312,
+            48,
+            925,
+            540
+          ],
+          "footer": [
+            312,
+            604,
+            925,
+            80
+          ],
+          "navigation": [
+            43,
+            48,
+            245,
+            600
+          ]
+        },
+        "resolved_scale": 1.0,
+        "safe_area_px": {
+          "bottom": 36,
+          "left": 43,
+          "right": 43,
+          "top": 24
+        }
+      },
+      "reference_1920x1080_96dpi": {
+        "font_px": {
+          "body": 18,
+          "caption": 14,
+          "heading": 32
+        },
+        "logical_viewport_px": [
+          1920,
+          1080
+        ],
+        "os_dpi": 96,
+        "physical_viewport_px": [
+          1920,
+          1080
+        ],
+        "regions_px": {
+          "content": [
+            460,
+            72,
+            1396,
+            810
+          ],
+          "footer": [
+            460,
+            906,
+            1396,
+            120
+          ],
+          "navigation": [
+            64,
+            72,
+            360,
+            900
+          ]
+        },
+        "resolved_scale": 1.0,
+        "safe_area_px": {
+          "bottom": 54,
+          "left": 64,
+          "right": 64,
+          "top": 36
+        }
+      }
+    },
+    "schema": "product_ux_acceptance_v1",
+    "schema_version": 1,
+    "settings": {
+      "apply_semantics": "preview_then_atomic_commit",
+      "cancel_semantics": "discard_unapplied_changes",
+      "categories": [
+        "gameplay",
+        "input",
+        "accessibility",
+        "audio",
+        "display"
+      ],
+      "focus_navigation": {
+        "keyboard_only_complete": true,
+        "visible_focus_required": true,
+        "wrap": false
+      }
+    }
+  }
+}

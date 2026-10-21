@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://billiardgl.local/schemas/lookdev-manifest-v1.json",
+  "title": "BilliardGL Lookdev Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "manifest_id", "status", "authorship", "color_management", "clearcoat_policy", "materials", "ball_identity_palette", "lighting", "exposure", "cameras", "ldr_interest_region_acceptance", "m1_scope"],
+  "properties": {
+    "$schema": {"const": "lookdev_manifest.schema.json"},
+    "schema_version": {"const": 1},
+    "manifest_id": {"const": "focused_practice_hall_v1"},
+    "status": {"enum": ["draft", "m1_vertical_slice", "approved"]},
+    "authorship": {
+      "type": "object",
+      "required": ["content_policy", "reference_scope"],
+      "properties": {
+        "content_policy": {"const": "original_billiardgl_design_no_competitor_assets"},
+        "reference_scope": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "color_management": {"type": "object"},
+    "clearcoat_policy": {"type": "object"},
+    "materials": {
+      "type": "object",
+      "minProperties": 12,
+      "additionalProperties": {"$ref": "#/$defs/material"}
+    },
+    "ball_identity_palette": {"type": "object"},
+    "lighting": {"type": "object"},
+    "exposure": {"type": "object"},
+    "cameras": {
+      "type": "object",
+      "required": ["player_shot", "low_aim", "tactical_overhead", "broadcast_oblique"],
+      "additionalProperties": {"type": "object"}
+    },
+    "ldr_interest_region_acceptance": {
+      "type": "object",
+      "required": ["resolution_px", "coordinate_origin", "rectangle_encoding", "output_color_space", "relative_luminance_metric", "highlight_clip_definition", "shadow_clip_definition", "edge_density_definition", "global_checks", "scenes"],
+      "properties": {
+        "resolution_px": {
+          "type": "array", "prefixItems": [{"const": 1920}, {"const": 1080}], "minItems": 2, "maxItems": 2
+        },
+        "coordinate_origin": {"const": "top_left"},
+        "rectangle_encoding": {"const": "normalized_x_y_width_height"},
+        "output_color_space": {"const": "srgb_iec61966_2_1_rgb8"},
+        "relative_luminance_metric": {"const": "linear_rec709_after_srgb_decode"},
+        "highlight_clip_definition": {"type": "string"},
+        "shadow_clip_definition": {"type": "string"},
+        "edge_density_definition": {"type": "string"},
+        "global_checks": {"type": "object"},
+        "scenes": {
+          "type": "object",
+          "required": ["break", "low_aim", "ball_closeup", "pocket_closeup", "tactical_overhead", "post_shot_observe"],
+          "additionalProperties": {"$ref": "#/$defs/scene"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "m1_scope": {
+      "type": "object",
+      "required": ["graybox_allowed", "graybox_assets", "production_high_mesh_blocked_by", "physics_profile_change_allowed", "legacy_asset_modification_allowed"],
+      "properties": {
+        "graybox_allowed": {"const": true},
+        "graybox_assets": {"type": "array", "minItems": 5, "items": {"type": "string"}, "uniqueItems": true},
+        "production_high_mesh_blocked_by": {"type": "string", "minLength": 1},
+        "physics_profile_change_allowed": {"const": false},
+        "legacy_asset_modification_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "minimum", "maximum"],
+      "properties": {
+        "target": {"type": "number"},
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"}
+      }
+    },
+    "linearRgba": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"const": 1.0}
+      ],
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "material": {
+      "type": "object",
+      "required": ["surface_role", "base_color_factor_linear_srgb", "base_color_texture_encoding", "roughness", "metallic", "normal_scale"],
+      "properties": {
+        "surface_role": {"type": "string", "minLength": 1},
+        "base_color_factor_linear_srgb": {"$ref": "#/$defs/linearRgba"},
+        "base_color_texture_encoding": {"const": "srgb_iec61966_2_1"},
+        "roughness": {"$ref": "#/$defs/range"},
+        "metallic": {"$ref": "#/$defs/range"},
+        "normal_scale": {"$ref": "#/$defs/range"},
+        "clearcoat": {"type": "object"},
+        "fibre_direction_world_axis": {"type": "string"},
+        "brushing_axis": {"type": "string"},
+        "emissive_color_linear_srgb": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number", "minimum": 0}},
+        "emissive_strength": {"$ref": "#/$defs/range"},
+        "emissive_compatibility": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mean_luma_min", "mean_luma_max", "non_black_fraction_min", "highlight_clip_fraction_max", "shadow_clip_fraction_max", "minimum_contrast_to_surround", "minimum_edge_density"],
+      "properties": {
+        "mean_luma_min": {"type": "number", "minimum": 0, "maximum": 1},
+        "mean_luma_max": {"type": "number", "minimum": 0, "maximum": 1},
+        "non_black_fraction_min": {"type": "number", "minimum": 0, "maximum": 1},
+        "highlight_clip_fraction_max": {"type": "number", "minimum": 0, "maximum": 1},
+        "shadow_clip_fraction_max": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_contrast_to_surround": {"type": "number", "minimum": 1},
+        "minimum_edge_density": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "rect_normalized", "checks"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "role": {"type": "string", "minLength": 1},
+        "rect_normalized": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number", "minimum": 0, "maximum": 1}},
+        "checks": {"$ref": "#/$defs/checks"}
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["camera_id", "regions"],
+      "properties": {
+        "camera_id": {"type": "string"},
+        "regions": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/region"}}
+      }
+    }
+  }
+}

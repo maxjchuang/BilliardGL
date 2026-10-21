@@ -1,0 +1,1 @@
+"""Training content validation tests."""

@@ -1,0 +1,194 @@
+{
+  "schema": "m4_d5_d_push_frozen_classification_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "root_selected_d5_d_policy": {"path": "docs/rules/m4-d5-d-push-frozen-classification-policy-root-selected-v1.json", "sha256": "ef93c3ae59d2a408ad3433f7a718d1634969a898f57a4e062109223d32ca611d", "selected_bundle": "D5D-A_SIGNED_REFEREE_EXACT_MEASUREMENTS_STRAIGHT_ONLY"},
+    "candidate_register": {"path": "docs/rules/m4-d5-d-push-frozen-classification-policy-candidate-register-v1.json", "sha256": "03ef6d627c3382d51635590159f1982f3d77f48a3dc72239f6aa46cfb4135b97"},
+    "d5_b_receipt": {"path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json", "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"},
+    "d5_c_receipt": {"path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-receipt-v1.json", "sha256": "07b8d9330f8d7d850101a4f16e2e365c84dec8d6c3093624e96edf91a5024a53"},
+    "push_review_receipt": {"path": "docs/rules/wpa-ii-12-7-signed-push-review-declaration-lifecycle-implementation-receipt-v1.json", "sha256": "136048a8bd5e6f26b5160d111f53d6cc5bc297fc7a2da5e6b74dd4d53e6d74eb"},
+    "frozen_cushion_receipt": {"path": "docs/rules/wpa-ii-15-2-signed-frozen-object-straight-cushion-declaration-lifecycle-implementation-receipt-v1.json", "sha256": "b21de04b86f4c988c6f32b6e87667e11dbb55dfed60eeaf55c08e4745b64e6af"}
+  },
+  "selected_policy_constants": {
+    "push_obviousness_authority": "AUTHENTICATED_REFEREE_FINAL_BOUND_TO_SAME_SHOT",
+    "duration_threshold_seconds": null,
+    "distance_threshold_cm": null,
+    "comparison_tolerance": 0.0,
+    "measurements_report_only": true,
+    "pocket_jaw_counts": false,
+    "accepted_cushion_kind": "STRAIGHT_CUSHION_WITH_VELOCITY_IMPULSE_APPLIED",
+    "prerequisite_legal_cushion_predicate": "POST_FIRST_LEGAL_OBJECT_CONTACT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_OR_COMPLETE_OBJECT_POCKET"
+  },
+  "measurement_extension_contract": {
+    "existing_duration_available": true,
+    "existing_distance_available": false,
+    "minimum_new_interval_field": "relative_tip_ball_path_length_cm",
+    "definition": "nonnegative finite line integral of cue-tip motion relative to cue-ball center while the exact canonical interval is active",
+    "analytic_interval": "derive from the same authoritative analytic contact trajectory, never from post-hoc endpoint distance",
+    "coupled_interval": "sum canonical per-microstep relative displacement while contact is active",
+    "authoritative_observer_interval": "sum authenticated ordered motion samples; missing sample or sampling attestation makes measurement incomplete",
+    "whole_stroke_duration_seconds": "sum canonical interval durations",
+    "whole_stroke_distance_cm": "sum canonical interval relative_tip_ball_path_length_cm",
+    "completeness": [
+      "d5_a_full_stroke_complete",
+      "all_interval_duration_and_path_values_finite",
+      "no_dropped_motion_samples",
+      "canonical_interval_order",
+      "same_shot_identity_and_source_digest"
+    ],
+    "duration_or_distance_never_compared_to_a_numeric_threshold": true
+  },
+  "push_classifier_contract": {
+    "schema_id": "canonical_push_classification_v1",
+    "inputs": [
+      "complete canonical cue-tip stroke observation with report-only duration and path length",
+      "signed push-review final state consumed by the same shot"
+    ],
+    "required_identity_match": ["shot_identity", "actor_player_id", "rack_identity", "rules_revision", "rules_state_hash", "push_decision_id", "source_digests"],
+    "signed_same_shot_complete_result": "PUSH_FOUL",
+    "complete_measurement_without_signed_final": "NO_PUSH_CLASSIFICATION",
+    "signed_final_without_complete_measurement": "INCOMPLETE_NO_CLASSIFICATION",
+    "numeric_machine_push_branch": false,
+    "result_fields": ["schema_id", "shot_identity", "duration_seconds", "distance_cm", "signed_push_decision_id", "source_digest", "selected_policy_sha256", "origin", "complete", "digest"]
+  },
+  "frozen_cushion_classifier_contract": {
+    "schema_id": "canonical_frozen_cushion_classification_v1",
+    "inputs": ["complete canonical frozen-cushion shot observation", "complete canonical first legal object contact order", "current signed consumed frozen-cushion declaration"],
+    "prerequisite_sample_boundary": "strictly after the canonical first legal object contact of the same shot",
+    "prerequisite_satisfied_by": ["any distinct object-ball STRAIGHT_CUSHION contact with velocityImpulseApplied=true", "any complete object-ball pocket capture"],
+    "prerequisite_excludes": ["pre-first-contact events", "pocket jaws", "position correction without velocity impulse", "cue-ball pocket", "incomplete or wrong-shot events"],
+    "when_prerequisite_satisfied": "NO_EXTRA_SECTION_15_2_OBLIGATION",
+    "when_prerequisite_unmet_legal_alternatives": [
+      "declared object departs then recontacts exact named straight cushion with velocity impulse",
+      "another object ball contacts a straight cushion with velocity impulse after first legal object contact",
+      "an object ball has a complete pocket capture after first legal object contact"
+    ],
+    "when_prerequisite_unmet_without_alternative": "FROZEN_CUSHION_FOUL",
+    "jaw_counts": false
+  },
+  "rules_consumption_contract": {
+    "classifications_occur_after_d5_a_and_d5_b_finish": true,
+    "shotfacts_may_carry_only_complete_immutable_results": true,
+    "new_foul_reasons": ["Push", "FrozenCushionObligation"],
+    "both_use_existing_general_foul_ball_in_hand": true,
+    "adjudicator_may_not_recompute_measurements_or_event_order": true,
+    "signed_frozen_cue_object_never_suppresses_push_foul": true,
+    "classification_is_bound_to_current_completed_shot": true
+  },
+  "atomicity_and_idempotency": {
+    "stage_before_shotfacts_finish": true,
+    "publish_with_same_completed_shot_transaction": true,
+    "failed_incomplete_or_gapped_telemetry_rolls_back": true,
+    "identity_revision_state_hash_decision_or_digest_conflict_zero_delta": true,
+    "exact_retry_same_digest_zero_delta": true,
+    "reset_rerack_turn_or_next_shot_invalidates_unpublished_result": true,
+    "adjudication_failure_restores_runtime_match_facts_authority_and_revision": true
+  },
+  "required_fixtures": {
+    "positive": [
+      "COMPLETE_DURATION_AND_DISTANCE_BIND_SAME_SHOT_AND_SOURCE_DIGESTS",
+      "ANALYTIC_INTERVAL_PATH_LENGTH_FROM_AUTHORITATIVE_TRAJECTORY",
+      "COUPLED_INTERVAL_PATH_LENGTH_SUMS_ACTIVE_MICROSTEPS",
+      "SIGNED_OBVIOUS_PUSH_FINAL_PLUS_COMPLETE_MEASUREMENTS_CLASSIFIES_PUSH_FOUL",
+      "PUSH_FOUL_GRANTS_OPPONENT_BALL_IN_HAND",
+      "DECLARED_FROZEN_CUE_OBJECT_DOES_NOT_SUPPRESS_SIGNED_PUSH_FOUL",
+      "FROZEN_CUSHION_PREREQUISITE_STRAIGHT_IMPULSE_AFTER_FIRST_LEGAL_CONTACT_SKIPS_EXTRA_REQUIREMENT",
+      "FROZEN_CUSHION_PREREQUISITE_COMPLETE_OBJECT_POCKET_AFTER_FIRST_LEGAL_CONTACT_SKIPS_EXTRA_REQUIREMENT",
+      "UNMET_PREREQUISITE_DECLARED_BALL_LEAVES_THEN_RECONTACTS_NAMED_STRAIGHT_CUSHION",
+      "UNMET_PREREQUISITE_OTHER_OBJECT_STRAIGHT_CUSHION_IMPULSE_ALTERNATIVE",
+      "UNMET_PREREQUISITE_COMPLETE_OBJECT_POCKET_ALTERNATIVE",
+      "EXACT_CLASSIFIER_AND_ADJUDICATION_RETRY_ZERO_DELTA"
+    ],
+    "negative": [
+      "INCOMPLETE_DURATION_OR_DISTANCE_NO_PUSH_CLASSIFICATION",
+      "UNSIGNED_PLAYER_OR_STALE_REFEREE_OBVIOUSNESS_REJECTED",
+      "MEASUREMENT_ALONE_NEVER_PUSH",
+      "SIGNED_FINAL_WRONG_SHOT_NEVER_PUSH",
+      "LOCAL_MICROTRACE_NEVER_WHOLE_STROKE_REFERENCE",
+      "NONFINITE_NEGATIVE_OR_ENDPOINT_APPROXIMATED_PATH_REJECTED",
+      "NO_DURATION_OR_DISTANCE_THRESHOLD_BRANCH",
+      "JAW_EXCLUDED",
+      "POSITION_CORRECTION_WITHOUT_STRAIGHT_CUSHION_VELOCITY_IMPULSE_EXCLUDED",
+      "CUE_BALL_POCKET_NOT_OBJECT_POCKET_ALTERNATIVE",
+      "RECONTACT_BEFORE_DECLARED_OBJECT_DEPARTURE_REJECTED",
+      "WRONG_NAMED_CUSHION_RECONTACT_REJECTED",
+      "PREREQUISITE_EVENT_BEFORE_FIRST_LEGAL_OBJECT_CONTACT_NOT_COUNTED",
+      "ILLEGAL_FIRST_OBJECT_CONTACT_DOES_NOT_OPEN_PREREQUISITE_WINDOW",
+      "INCOMPLETE_OR_WRONG_SHOT_FROZEN_OBSERVATION_NO_CLASSIFICATION",
+      "FAILED_GAPPED_OR_CONFLICTING_PHYSICS_ROLLS_BACK",
+      "RESET_RERACK_TURN_OR_NEXT_SHOT_INVALIDATES_UNPUBLISHED_RESULT",
+      "FAILED_ADJUDICATION_ZERO_RUNTIME_DELTA",
+      "PUSH_AND_FROZEN_RESULTS_DO_NOT_CHANGE_DOUBLE_HIT_CLASSIFIER",
+      "NO_VISIBLE_GLOBAL_UI_GPU_READINESS_OR_AUDIT_SIDE_EFFECT"
+    ]
+  },
+  "implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/cue_contact.cpp",
+      "src/Billiards/coupled_cue_contact.cpp",
+      "src/Billiards/rules/push_classifier.h",
+      "src/Billiards/rules/push_classifier.cpp",
+      "src/Billiards/rules/frozen_cushion_classifier.h",
+      "src/Billiards/rules/frozen_cushion_classifier.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/cue_contact_tests.cpp",
+      "tests/coupled_cue_contact_tests.cpp",
+      "tests/push_classifier_tests.cpp",
+      "tests/frozen_cushion_classifier_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "add two classifier sources to BILLIARDGL_CORE_SOURCES and at most two headless classifier targets",
+    "explicitly_forbidden_files": [
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics_telemetry.cpp",
+      "src/Billiards/rules/push_review_declaration.h",
+      "src/Billiards/rules/push_review_declaration.cpp",
+      "src/Billiards/rules/frozen_cushion_declaration.h",
+      "src/Billiards/rules/frozen_cushion_declaration.cpp",
+      "src/Billiards/automation_controller.cpp",
+      "src/Billiards/hud.cpp",
+      "src/Billiards/renderer.cpp",
+      "src/Billiards/render/modern/modern_renderer.cpp"
+    ]
+  },
+  "live_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "a8524b48d034de67d7f1b3870ab66833da9924a9543977d20e2f0fcd9bd331cf"},
+    {"path": "src/Billiards/cue_contact.h", "sha256": "af785c32a89148fcf4c00e266563a0ea90ea51142f2e3c3e908c7dbed4261ca9"},
+    {"path": "src/Billiards/cue_contact.cpp", "sha256": "26155e67e50bacfa60a59797c94dcff50d0ac2c3b7d6c458bb25cb5eab7af6a3"},
+    {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "72aaeee4fee964f7554bf8b29930175017cadd803a7f446841591aa078efd2a5"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "7d765c7fbf86082ceb919b97dcc097f1dcf9c87f2b947db6843cd3f9e43a78fa"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "8a5d85f94786e5352b9f3c70ccba365cd93c9bf43d7d74145b9359295303787b"},
+    {"path": "src/Billiards/rules/push_review_declaration.h", "sha256": "e84443156c7d8c47078f2415880efd502596521f5d10a9982ca34a5af49a5a90"},
+    {"path": "src/Billiards/rules/push_review_declaration.cpp", "sha256": "67756f797d2793f61d8ab67b4c81cbd795a738fb14dab3cdc4ddb7e5862e8150"},
+    {"path": "src/Billiards/rules/frozen_cushion_declaration.h", "sha256": "262a21799fe0c85c1956e4596e025d0aff9ee9f11af597a395702080d3bfbd13"},
+    {"path": "src/Billiards/rules/frozen_cushion_declaration.cpp", "sha256": "4e887ee5dac87ebf45133a03c4970836230e3a7de9b63623982cba87a3165eb2"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "034178962ffe30ad720cadfe6bf2aed705418ac78d56de2221d6046462fdc410"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "70f67333997445be577ea00b5027fa2ada171bd01be0799df25ff6b8611a5d3e"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "5e86e5a95ed04dee3ea6e80f3551cb081390c6f89cd7c58c4defb7c2a6cbf429"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "554d43ef44bb87e297c2ab4139dbf6bc4392abb583688e5bfb78617763546d18"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "275eb3faf8a59e77972646b3e0aa82f1de3dc4077a60eb7e473990aa552556a1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "947f869b6fc89767394fd1303c6cbd8b4f3f40e99bfffd8ac8a5269bf72cd88d"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required": true,
+    "d5_d_implemented": false,
+    "d5_complete": false,
+    "wpa_rows_promoted": false,
+    "visible_or_global_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "production_or_cmake_modified": false,
+    "m4_complete": false
+  }
+}

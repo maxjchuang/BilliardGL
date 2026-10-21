@@ -1,0 +1,189 @@
+{
+  "schema": "wpa_ii_17_general_foul_product_lifecycle_subflow_audit_successor_v1",
+  "status": "CLASSIFIED_SUBFLOW_PRODUCT_REACHABLE_FULL_SECTION_PARTIAL_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-17", "WPA-II-12-3-CONFLICT-BOUNDARY"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [9, 11],
+    "section_17": {
+      "chapter": "II",
+      "clause": "17(a)-(l)",
+      "pdf_page": 11,
+      "locator": "Fouls",
+      "controlled_paraphrase": "A general foul gives the opponent ball in hand; the listed cases cover cue-ball scratch/off-table, wrong first object, shooting while balls move, both feet off the ground, object ball off-table, illegal ball touch, double hit, push shot, bad play behind the head string, one-handed shooting, auxiliary equipment placed to shoot on the table, and mobile-device noise with escalation."
+    },
+    "section_12_3": {
+      "chapter": "II",
+      "clause": "12.3",
+      "pdf_page": 9,
+      "locator": "Playing Shots",
+      "controlled_paraphrase": "A non-8 object ball stopping outside the table is described as a legal disappearance and is not re-spotted."
+    },
+    "policy_conflict": {
+      "id": "WPA-II-12-3-VS-17-E",
+      "status": "POLICY_PENDING",
+      "machine_resolution": null,
+      "reason": "Section 12.3 describes a non-8 object ball off-table as a legal disappearance, while Section 17(e) lists an object ball resting off-table as a general foul.",
+      "current_code_classifies_non_eight_object_off_table_as_foul": true,
+      "current_code_is_not_authorized_as_the_official_conflict_resolution": true
+    }
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "rows": [
+      {"id": "WPA-II-12-3", "status": "PARTIAL", "product_reachable": true, "policy_decision_required": true},
+      {"id": "WPA-II-17", "status": "PARTIAL", "product_reachable": true, "policy_decision_required": true}
+    ],
+    "row_promotion_authorized": false,
+    "complete_section_claim_authorized": false
+  },
+  "source_bindings": {
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "86b6bf332fe5ca182580c57f82c74ddda075fda28b659019c709bc459e785793"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "b984639bdf239814e0a1e0a14a64d6b73de56841273f71d7671c20e86bf475a4"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "88dfc28370b4b56936ac88ac560623a8600d89a295b1f98efff65471de17d615"},
+    "collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "c901ba8591ebd301ccbd4a2ee4fe2ab02f390436cf80aed0596074f65e0ec4c4"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4"},
+    "physics": {"path": "src/Billiards/physics.cpp", "sha256": "fc497d79650bf2ff9cd8570c320653c8742e4201b8a2428a7892bfcb0124de77"},
+    "rules_presentation": {"path": "src/Billiards/rules/rules_presentation.cpp", "sha256": "383a4d4488f406b0e7cac336aef4ac50ae3206527e17f79f0e69df82f3100044"},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "bc7862aac74640bd9fb2aa5929eddc3601b89d5e17b5cd047c8fd8e5578f003d"},
+    "product_session": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "d7a3d4e88e3ec8723d78b7ed37808463fbfe9f0e005e71b409c82d4a3e7cb5e9"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "4c4079159e1db19545a82c1ad43b1cdfbee8ea4462b9c66c92a8be13322f3b8e"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "4a5a4fee924cf62c29551844af718a4b73e6b5917d1b1323dcac29b20d43683c"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "aab289bcb7e01d037e6022d41676145e09027d2d90317b9cf9e2e017335f0698"},
+    "product_session_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "71e7fe78f078c2287814f9b836ff9588275ee532da32fb274611f1d2fde970f2"}
+  },
+  "current_fact_authority": {
+    "represented_foul_reasons": [
+      "illegal_break",
+      "no_object_ball_contact",
+      "wrong_first_contact",
+      "no_rail_after_contact",
+      "cue_ball_scratch",
+      "cue_ball_off_table",
+      "object_ball_off_table",
+      "illegal_eight_ball"
+    ],
+    "collector_success_path_observes": [
+      "first cue-ball/object-ball contact identities from succeeded physics contact records",
+      "rail contact after first object contact",
+      "object-ball pocket transitions and their capture order",
+      "break-only object-ball cushion contacts with origin and completeness attestation"
+    ],
+    "collector_does_not_observe": [
+      "cue-ball off-table",
+      "object-ball off-table",
+      "body or clothing touch",
+      "both-feet state",
+      "double cue-tip contact or prolonged cue-tip contact",
+      "one-handed shooting",
+      "auxiliary-equipment placement",
+      "mobile-device noise or per-player repeat history"
+    ],
+    "cue_ball_scratch_gap": {
+      "shot_facts_field_exists": true,
+      "synthetic_transition_test_exists": true,
+      "production_physics_sets_cue_ball_pocket_event": true,
+      "production_physics_sets_cue_ball_pocketed_state": false,
+      "collector_detects_only_false_to_true_pocketed_state_transition": true,
+      "physical_authoritative_collection_complete": false
+    },
+    "general_foul_origin_and_completeness_attestation_exists": false,
+    "direct_or_automation_injected_shot_facts_are_not_physical_telemetry_proof": true
+  },
+  "clause_matrix": [
+    {"clause": "17(a)", "subject": "cue_ball_scratched_or_off_table", "telemetry": "SCHEMA_PRESENT_COLLECTOR_INCOMPLETE", "classification": "IMPLEMENTED_FOR_ACCEPTED_FACTS", "bih_product_subflow": "REACHABLE_AFTER_CLASSIFICATION", "pending": "PHYSICAL_ORIGIN_AND_COMPLETENESS"},
+    {"clause": "17(b)", "subject": "wrong_first_object_contact", "telemetry": "RUNTIME_COLLECTED_ON_SUCCEEDED_SHOT_WITHOUT_GENERAL_COMPLETENESS_ATTESTATION", "classification": "IMPLEMENTED", "bih_product_subflow": "REACHABLE_AFTER_CLASSIFICATION", "pending": "GENERAL_FACT_ORIGIN_AND_COMPLETENESS_ATTESTATION"},
+    {"clause": "17(c)", "subject": "shoot_while_any_ball_moving", "telemetry": "CURRENT_PRODUCT_ATTEMPT_PREVENTED", "classification": "NOT_REPRESENTED_AS_FOUL", "bih_product_subflow": "NOT_REACHED", "pending": "OFFENSE_INPUT_AND_ADJUDICATION"},
+    {"clause": "17(d)", "subject": "both_feet_leave_ground", "telemetry": "ABSENT", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "REFEREE_OR_SENSOR_INPUT"},
+    {"clause": "17(e)", "subject": "object_ball_rests_off_table", "telemetry": "SCHEMA_PRESENT_COLLECTOR_ABSENT", "classification": "CURRENT_CODE_FOUL_NOT_POLICY_AUTHORIZED", "bih_product_subflow": "REACHABLE_ONLY_FOR_INJECTED_CLASSIFICATION", "pending": "WPA-II-12-3-VS-17-E_POLICY_AND_PHYSICAL_TELEMETRY"},
+    {"clause": "17(f)", "subject": "illegal_ball_touch_by_body_clothing_or_equipment", "telemetry": "ABSENT", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "REFEREE_OR_SENSOR_INPUT"},
+    {"clause": "17(g)", "subject": "double_hit", "telemetry": "INCOMPLETE_CUE_CONTACT_MODEL", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "FULL_STROKE_TELEMETRY_AND_POLICY"},
+    {"clause": "17(h)", "subject": "push_shot", "telemetry": "INCOMPLETE_CUE_CONTACT_MODEL", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "CONTACT_DURATION_PROVENANCE_AND_POLICY_OR_REFEREE_INPUT"},
+    {"clause": "17(i)", "subject": "bad_play_behind_head_string", "telemetry": "PLACEMENT_GEOMETRY_ONLY", "classification": "ABSENT_FOR_POST_PLACEMENT_PLAY", "bih_product_subflow": "PLACEMENT_BOUNDARY_REACHABLE_BUT_FOUL_LIFECYCLE_INCOMPLETE", "pending": "FIRST_LEGAL_CONTACT_AND_HEAD_STRING_CROSSING_LIFECYCLE"},
+    {"clause": "17(j)", "subject": "shoot_with_only_one_hand", "telemetry": "ABSENT", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "REFEREE_OR_SENSOR_INPUT"},
+    {"clause": "17(k)", "subject": "auxiliary_equipment_placed_to_shoot_on_table", "telemetry": "ABSENT", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "REFEREE_OR_SENSOR_INPUT"},
+    {"clause": "17(l)", "subject": "mobile_device_noise_and_repeat_escalation", "telemetry": "ABSENT", "classification": "ABSENT", "bih_product_subflow": "NOT_REACHED", "pending": "REFEREE_INPUT_REPEAT_HISTORY_SCOPE_AND_LOSS_OF_RACK_TRANSACTION"}
+  ],
+  "classified_foul_bih_product_subflow": {
+    "scope": "already accepted non-break foul facts that yield ballInHand and are not intercepted by a parent break/eight-on-break choice",
+    "adjudication": [
+      "sets foul and canonical reason codes",
+      "transfers current player to the opponent",
+      "sets AdjudicationResult.ballInHand and nextState.ballInHand"
+    ],
+    "runtime_commit": [
+      "commits ShotFacts, AdjudicationResult and MatchState atomically before offer staging",
+      "increments one authority revision and invalidates stale decision authorities",
+      "selects FullTable for ordinary non-break foul and stages one actor-bound Core-G placement offer",
+      "binds the offer to the resulting authority state hash"
+    ],
+    "core_g": [
+      "preview validates finite table, pocket and overlap geometry without mutation",
+      "confirm validates ruleset, capability, flow, decision, revision, actor, exact offered action, state hash, coordinates and idempotency",
+      "successful commit restores and places the cue ball, clears current ballInHand and placement scope, increments one revision and emits one ACK/journal/event",
+      "exact retry returns the original ACK; conflicting retry, stale input and invalid geometry have zero authority mutation"
+    ],
+    "modern_product_session": [
+      "requires Match screen and the current local actor",
+      "exposes only the current narrow placement preview/confirm seam",
+      "requires a current read-only preview and exact position/action/state hash",
+      "verifies ACK identity and cleared entitlement effects, then refreshes decision and AI gates"
+    ],
+    "presentation_reads_current_match_state_ball_in_hand": true,
+    "last_adjudication_ball_in_hand_is_historical_verdict_not_live_entitlement": true,
+    "global_rules_decision_ui_product_exposed": false,
+    "lifecycle_gap_found_for_already_classified_subset": false,
+    "production_fix_required": false
+  },
+  "future_closure_contract": {
+    "required_telemetry": [
+      "canonical shot identity, actor, observation start/end and succeeded-step completeness",
+      "explicit cue-ball and object-ball terminal-state events with physical origin",
+      "referee or sensor inputs for body, feet, hand and equipment offenses",
+      "full-stroke cue-tip contact count and duration provenance for double-hit and push",
+      "post-placement head-string crossing and first-legal-contact lifecycle",
+      "mobile-device offense input plus actor-bound repeat history"
+    ],
+    "atomic_classification": [
+      "validate fact identity, origin, completeness, actor, rules revision and state hash",
+      "apply only an approved policy to authoritative facts",
+      "commit foul, opponent, ball-in-hand entitlement, Core-G offer, revision, journal and receipt atomically",
+      "failed or incomplete input leaves runtime, match, authority, offers, history and receipts unchanged"
+    ],
+    "required_policy_gates": [
+      "WPA-II-12-3 versus WPA-II-17(e) object-ball-off-table resolution",
+      "double-hit and push operational predicates and referee override boundary",
+      "bad-head-string measurement and first-contact lifecycle",
+      "mobile-device repeat-history scope and loss-of-rack transaction"
+    ],
+    "exact_retry": "returns the original ACK without a second entitlement, offer, revision, journal or event",
+    "conflicting_retry": "fails closed with zero mutation",
+    "partial_commit_allowed": false
+  },
+  "forbidden_scope": [
+    "promoting WPA-II-17 above PARTIAL",
+    "treating ShotFacts schema presence or automation injection as physical telemetry",
+    "treating product prevention of a shot while balls move as a committed foul",
+    "resolving WPA-II-12-3 versus WPA-II-17(e) without an approved policy ruling",
+    "enabling global rulesDecisionUiProductExposed",
+    "production or CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, OpenGL, readiness, or authorization execution"
+  ],
+  "claims": {
+    "classified_non_break_foul_bih_product_subflow_reachable": true,
+    "classified_subflow_atomic_and_idempotent": true,
+    "full_wpa_ii_17_telemetry_complete": false,
+    "full_wpa_ii_17_classification_complete": false,
+    "all_listed_fouls_product_reachable": false,
+    "cue_ball_scratch_physical_collection_complete": false,
+    "object_ball_off_table_policy_resolved": false,
+    "global_rules_decision_ui_product_exposed": false,
+    "production_source_changed": false,
+    "audit_row_promoted": false,
+    "gpu_executed": false
+  }
+}

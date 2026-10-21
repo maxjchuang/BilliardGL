@@ -1,0 +1,115 @@
+{
+  "schema": "billiardgl.phase4.v17.explicit_non_occluding_crossing_grammar_product_decision_gate.v1",
+  "schema_version": 1,
+  "status": "AWAITING_ROOT_PRODUCT_SELECTION_DESIGN_ONLY_NO_PRODUCTION_NO_GPU_NO_AUTH",
+  "scope": "Successor product-decision gate after the selected V16 priority-one strategy was reproducibly falsified. This gate recommends, but does not select or authorize, the only remaining bounded choice from the frozen V15 mutually exclusive pair.",
+  "frozen_bindings": [
+    {
+      "role": "v16_independent_ta_failure_addendum",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-independent-ta-implementation-failure-addendum-v1.json",
+      "sha256": "6ccbb8fc7a149c146b755709a41558bd98a2592cf353f7a639660f1c910ce8ef"
+    },
+    {
+      "role": "v16_premise_failure_receipt",
+      "path": "docs/art/phase4-v16-local-cross-track-actual-continuity-premise-falsification-v1/premise-failure-receipt-v1.json",
+      "sha256": "6e5c729016795a8744fddd7351ae8d9f9d584f9cde91946a33bcbd83f982fa96"
+    },
+    {
+      "role": "v15_product_decision_gate",
+      "path": "docs/art/phase4-v15-independent-ta-diagnostic-acceptance-decision-gate-v1.json",
+      "sha256": "2628104e6d219a98fb38fa599058ec3dd22f11c658d7fe3aa1ffc82850bcf23b"
+    },
+    {
+      "role": "v15_provenance_ledger",
+      "path": "docs/art/phase4-v15-broadcast-overwrite-provenance-diagnostic-v1/provenance-ledger-v1.json",
+      "sha256": "bb2c3ecafb01d42cfddb8eec89a22619bf646ddb64773846747c5c76d2f5538b"
+    }
+  ],
+  "closed_priority_one": {
+    "decision_id": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+    "root_selected_before_v16": true,
+    "disposition": "REJECTED_NOT_RESUMABLE_UNDER_V16_GATE",
+    "reason": "The compliant generic full-frame selector has 27 unsatisfiable islands per palette at 1x and 76 per palette at asymmetric 4x. Coordinate/repair filtering is forbidden and the candidate also retains an unchecked GL mask-upload failure path.",
+    "relaxing_largest8_or_fail_closed_is_allowed": false
+  },
+  "successor_candidate": {
+    "priority": 2,
+    "decision_id": "EXPLICIT_NON_OCCLUDING_CROSSING_GRAMMAR",
+    "mutually_exclusive_predecessor": "LOCAL_CROSS_TRACK_ACTUAL_CONTINUITY_PRIORITY",
+    "recommendation": "RECOMMENDED_AS_ONLY_REMAINING_BOUNDED_V15_PRODUCT_PATH",
+    "root_selection_required": true,
+    "selected": false,
+    "implementation_authorized": false,
+    "decision_question": "May the product introduce a source-provenanced, non-color bridge/underpass micro-grammar that keeps both actual and predicted routes traceable at semantic overlap events without suppressing protected predicted ownership?"
+  },
+  "bounded_design_contract_if_later_selected": {
+    "semantic_event_input": "Derive events only from the exact projected actual/predicted route geometry and existing source provenance. Capture ID, camera name, repair ID, probe coordinate, framebuffer color, and acceptance result are forbidden inputs.",
+    "event_normalization": [
+      "Collapse raster/sample fragments into deterministic continuous route-overlap events before emitting any glyph.",
+      "Represent transverse point intersections and coaxial overlap intervals explicitly; do not classify adjacent _core/_halo from one normalized stem as two routes.",
+      "Deduplicate by ordered existing source-provenance pairs and parametric route order, never by screen-coordinate whitelist.",
+      "Fail closed with no product glyph when provenance is ambiguous, foreign, double, unowned, or event density exceeds the separately frozen design capacity."
+    ],
+    "visual_grammar": [
+      "One bounded bridge/underpass micro-glyph per normalized semantic event, not one glyph per raster sample.",
+      "Both route identities remain continuously inferable using shape, interruption, casing, or bridge topology independent of hue in standard and CVD.",
+      "The glyph is renderer-only composite provenance derived from existing source pairs; it may not add, remove, reorder, or substitute authoritative source probe IDs.",
+      "No global actual-over-predicted priority, no protected predicted-body discard, no whole-route offset, and no color-only ownership cue."
+    ],
+    "frozen_regression_controls": {
+      "ordered_source_probe_count": 81,
+      "ordered_source_probe_digest": "33511aa46717a208f3db43acd278416b8fe8393e2e003484da8f44dabffe5645",
+      "exact_repair_probe_ids_in_order": [
+        "d6d850a1a10c7c7ce403e6de4afd4330e4c6e89b9100c72f4c23fbab1f6f978b",
+        "1890fd0652c8f74a8b03a35a6cee1ad2cab43062987cab73efb1f6b455da468a",
+        "1bf60bcd841a0d754c82876b55a4d3d6c29ebad582e069d4f4a608a4778c33a9"
+      ],
+      "unchanged": [
+        "predicted yellow identity and 18/12/30 dash rhythm",
+        "actual solid identity, ticks, and endpoints",
+        "centerlines, widths, cap envelopes, offsets, and two-pass actual-then-predicted order outside the new glyph",
+        "player, elevated, overhead, broadcast, and CVD controls",
+        "camera, layout, thresholds, telemetry semantics, authority, and product exposure"
+      ]
+    }
+  },
+  "required_next_gate_after_explicit_root_selection": {
+    "stage": "V17_CPU_STATIC_VISUAL_GRAMMAR_PROTOTYPE_DESIGN_GATE",
+    "must_bind_exact_root_selection_statement_and_sha": true,
+    "minimum_cpu_static_evidence": [
+      "Event inventory and deterministic digest for standard and CVD at 1x and asymmetric 4x.",
+      "Negative fixtures for same-stem core/halo, near-miss, endpoint, tick, outer rim, foreign, double, unowned, ambiguous, and excessive-density inputs.",
+      "Raster snapshots proving closed/non-color glyph topology and both-route traceability at deep dark, cyan cloth, red ball, near-white ball, same-axis, and cross-track backgrounds.",
+      "Exact 81 source order/digest, three repair IDs, dash/endpoint/tick geometry, and player/elevated/overhead controls unchanged.",
+      "Independent TA axes and a later comprehension protocol; CPU pixels alone may not claim that players understand the new grammar."
+    ],
+    "future_gpu_requires_separate_readiness_and_single_use_authorization": true,
+    "production_allowlist_defined_by_this_gate": false
+  },
+  "forbidden": [
+    "Resume priority one, ignore unsatisfied islands, or filter by acceptance coordinates, repair IDs, camera, or capture.",
+    "Relax largest8, contrast, visible-region, ownership, source-count, or pass thresholds.",
+    "Use protected predicted suppression, global actual priority, z-order-only, color-only, camera, layout, or whole-route offset workarounds.",
+    "Add or mutate authoritative source probe IDs, the ordered 81 digest, or any of the three repair IDs.",
+    "Treat this recommendation as root product selection, production implementation authorization, readiness, GPU authorization, machine pass, or TA pass."
+  ],
+  "authorization_boundary": {
+    "root_product_selection_recorded": false,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "cpu_prototype_authorized": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_visual_pass": false,
+    "comprehension_pass": false,
+    "targeted5_pass": false,
+    "targeted11_pass": false,
+    "formal68_pass": false,
+    "m3_pass": false,
+    "golden": false,
+    "beta": false,
+    "product_pass": false
+  }
+}

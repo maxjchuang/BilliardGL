@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <vector>
 
 namespace billiardgl {
@@ -175,18 +176,36 @@ SolverConstraint makeConstraint(const GameState& state,
 {
     SolverConstraint constraint;
     constraint.candidate = candidate;
-    constraint.normal = normalized(candidate.normal);
+    const bool supportPlane = candidate.kind ==
+        ContinuousContactKind::SupportPlane;
+    const bool radialBoundary = candidate.boundaryGeometry ==
+            BoundaryContactGeometry::AirborneCushionNose ||
+        candidate.boundaryGeometry == BoundaryContactGeometry::RoundedUpperRailEdge;
+    constraint.normal = supportPlane ? Point3{0.0f, 1.0f, 0.0f} :
+        normalized(candidate.normal);
     const float radiusM = profile.ball.radiusCm / 100.0f;
-    if (candidate.secondBall >= 0) {
+    if (supportPlane) {
+        constraint.firstArmM = Point3{0.0f, -radiusM, 0.0f};
+        constraint.restitution = 0.0;
+        constraint.friction = 0.0;
+        constraint.boundaryPlaneCoordinateCm =
+            candidate.supportPlaneCenterYCm;
+        constraint.candidate.penetrationCm = std::max(0.0,
+            candidate.supportPlaneCenterYCm -
+                state.balls[candidate.firstBall].position.y);
+    } else if (candidate.secondBall >= 0) {
         constraint.firstArmM = scaled(constraint.normal, radiusM);
         constraint.secondArmM = scaled(constraint.normal, -radiusM);
         constraint.restitution = profile.ball.normalRestitution;
         constraint.friction = profile.ball.frictionCoefficient;
     } else {
-        constraint.firstArmM = added(
-            scaled(constraint.normal, -radiusM),
-            Point3{0.0f,
-                radiusM * (profile.cushion.noseHeightRatio - 1.0f), 0.0f});
+        constraint.firstArmM = scaled(constraint.normal, -radiusM);
+        if (!radialBoundary) {
+            constraint.firstArmM = added(constraint.firstArmM,
+                Point3{0.0f,
+                    radiusM * (profile.cushion.noseHeightRatio - 1.0f),
+                    0.0f});
+        }
         constraint.friction = profile.cushion.frictionCoefficient;
         constraint.boundaryPlaneCoordinateCm = dot(
             state.balls[candidate.firstBall].position, constraint.normal) +
@@ -194,7 +213,7 @@ SolverConstraint makeConstraint(const GameState& state,
     }
     const Point3 relative = relativeVelocity(state, constraint);
     const double normalSpeed = dot(relative, constraint.normal);
-    if (candidate.secondBall < 0) {
+    if (candidate.secondBall < 0 && !supportPlane) {
         constraint.restitution = cushionRestitution(
             profile.cushion, std::max(0.0, -normalSpeed));
     }
@@ -204,7 +223,7 @@ SolverConstraint makeConstraint(const GameState& state,
     // the table plane.  Preserve later candidate formulas byte-for-byte while
     // preventing the v1 elevated nose velocity from becoming a vertical
     // friction impulse.
-    if (candidate.secondBall < 0 &&
+    if (candidate.secondBall < 0 && !radialBoundary &&
         profile.formulaVersion == "cushion_collision_v1") {
         constraint.tangent = normalized(cross(
             Point3{0.0f, 1.0f, 0.0f}, constraint.normal));
@@ -222,6 +241,45 @@ SolverConstraint makeConstraint(const GameState& state,
 }
 
 }  // namespace
+
+ContinuousContactCandidate supportPlaneContactCandidate(
+    int ballIndex, double centerPlaneYCm, double timeOfImpactSeconds)
+{
+    ContinuousContactCandidate candidate;
+    candidate.kind = ContinuousContactKind::SupportPlane;
+    candidate.firstBall = ballIndex;
+    candidate.secondBall = -1;
+    candidate.timeOfImpactSeconds = timeOfImpactSeconds;
+    candidate.supportPlaneCenterYCm = centerPlaneYCm;
+    candidate.normal = Point3{0.0f, 1.0f, 0.0f};
+    candidate.valid = ballIndex >= 0 && ballIndex < kBallCount &&
+        std::isfinite(centerPlaneYCm) &&
+        std::isfinite(timeOfImpactSeconds) &&
+        timeOfImpactSeconds >= 0.0;
+    return candidate;
+}
+
+ContinuousContactCandidate airborneCushionNoseContactCandidate(
+    int ballIndex, int featureId, double timeOfImpactSeconds,
+    const Point3& inwardNormal)
+{
+    ContinuousContactCandidate candidate = boundaryContactCandidate(ballIndex,
+        featureId, timeOfImpactSeconds, inwardNormal,
+        PocketBoundaryEventKind::StraightRail);
+    candidate.boundaryGeometry =
+        BoundaryContactGeometry::AirborneCushionNose;
+    return candidate;
+}
+
+ContinuousContactCandidate roundedUpperRailEdgeContactCandidate(
+    int ballIndex, int featureId, double timeOfImpactSeconds,
+    const Point3& inwardUpwardNormal)
+{
+    auto candidate = airborneCushionNoseContactCandidate(
+        ballIndex, featureId, timeOfImpactSeconds, inwardUpwardNormal);
+    candidate.boundaryGeometry = BoundaryContactGeometry::RoundedUpperRailEdge;
+    return candidate;
+}
 
 ContactSolverResult solveContactIslandIteration(GameState& state,
     const ContactIsland& island, const PhysicsProfile& profile,
@@ -244,6 +302,33 @@ ContactSolverResult solveContactIslandIteration(GameState& state,
     result.kineticEnergyBeforeJ = result.totalKineticEnergyBeforeJ;
     std::vector<SolverConstraint> constraints;
     constraints.reserve(island.contacts.size());
+    for (const ContinuousContactCandidate& candidate : island.contacts) {
+        if (candidate.kind == ContinuousContactKind::SupportPlane &&
+            (!candidate.valid || candidate.firstBall < 0 ||
+             candidate.firstBall >= kBallCount || candidate.secondBall >= 0 ||
+             !std::isfinite(candidate.supportPlaneCenterYCm))) {
+            result.status = ContactSolverStatus::NonfiniteState;
+            return result;
+        }
+        if (candidate.boundaryGeometry ==
+                BoundaryContactGeometry::AirborneCushionNose &&
+            (candidate.kind != ContinuousContactKind::StraightRail ||
+             candidate.secondBall >= 0 || !finitePoint(candidate.normal) ||
+             std::fabs(candidate.normal.y) > 0.0f)) {
+            result.status = ContactSolverStatus::NonfiniteState;
+            return result;
+        }
+        if (candidate.boundaryGeometry == BoundaryContactGeometry::RoundedUpperRailEdge &&
+            (!candidate.valid || candidate.kind != ContinuousContactKind::StraightRail ||
+             candidate.firstBall < 0 || candidate.firstBall >= kBallCount ||
+             candidate.secondBall >= 0 || !finitePoint(candidate.normal) ||
+             !(candidate.normal.y > 0.0f && candidate.normal.y < 1.0f) ||
+             (candidate.normal.x != 0.0f && candidate.normal.z != 0.0f) ||
+             std::fabs(dot(candidate.normal, candidate.normal) - 1.0) > 2e-4)) {
+            result.status = ContactSolverStatus::NonfiniteState;
+            return result;
+        }
+    }
     result.contacts.resize(island.contacts.size());
     for (std::size_t index = 0; index < island.contacts.size(); ++index) {
         constraints.push_back(makeConstraint(state, island.contacts[index], profile));
@@ -401,23 +486,120 @@ ContactSolverResult solveContactIslandIteration(GameState& state,
                 penetration = std::max(0.0,
                     constraints[index].boundaryPlaneCoordinateCm - dot(
                         state.balls[contact.firstBall].position,
-                        contact.normal));
+                        constraints[index].normal));
             }
             const double excess = std::max(
-                0.0, penetration - profile.solver.penetrationSlopCm);
+                0.0, contact.kind == ContinuousContactKind::SupportPlane
+                    ? penetration
+                    : penetration - profile.solver.penetrationSlopCm);
             if (excess <= 0.0) continue;
             const double share = contact.secondBall >= 0 ? 0.5 : 1.0;
+            const auto recordProjection = [&](int ballIndex, const Point3& before) {
+                const Point3& after = state.balls[ballIndex].position;
+                if (before.x == after.x && before.y == after.y && before.z == after.z)
+                    return;
+                SolverPositionProjection receipt;
+                receipt.ordinal = static_cast<int>(result.positionProjections.size());
+                receipt.iteration = iteration;
+                receipt.contactIndex = static_cast<int>(index);
+                receipt.ballIndex = ballIndex;
+                receipt.trajectoryGeneration =
+                    state.balls[ballIndex].trajectoryGeneration;
+                receipt.beforeCm = before;
+                receipt.afterCm = after;
+                result.positionProjections.push_back(receipt);
+            };
+            const Point3 firstBefore = state.balls[contact.firstBall].position;
             if (contact.secondBall >= 0) {
+                const Point3 secondBefore = state.balls[contact.secondBall].position;
                 addScaled(state.balls[contact.firstBall].position,
-                    contact.normal, -excess * share);
+                    constraints[index].normal, -excess * share);
                 addScaled(state.balls[contact.secondBall].position,
-                    contact.normal, excess * share);
+                    constraints[index].normal, excess * share);
+                auto& firstAfter = state.balls[contact.firstBall].position;
+                auto& secondAfter = state.balls[contact.secondBall].position;
+                // Point3 is float-backed.  Near large table coordinates a
+                // legitimate sub-ULP half projection can round both writes
+                // back to their inputs, leaving an over-slop overlap to be
+                // selected forever at the same TOI.  If (and only if) the
+                // ordinary equal-mass projection made no representable
+                // progress sufficient to reach the slop boundary, move one
+                // participant outward by the smallest representable step on
+                // the normal's dominant axis.  This is
+                // an actual position correction with an exact receipt, not a
+                // relaxed penetration threshold.
+                const double previousStoredDistance = length(subtracted(
+                    secondBefore, firstBefore));
+                const double storedDistance = length(subtracted(
+                    secondAfter, firstAfter));
+                if (!(storedDistance > previousStoredDistance)) {
+                    const Point3& normal = constraints[index].normal;
+                    int axis = 0;
+                    if (std::fabs(normal.y) > std::fabs(normal.x)) axis = 1;
+                    if (std::fabs(normal.z) > std::fabs(
+                            axis == 0 ? normal.x : normal.y)) axis = 2;
+                    const auto coordinate = [axis](Point3& point) -> float& {
+                        return axis == 0 ? point.x : (axis == 1 ? point.y : point.z);
+                    };
+                    const float normalComponent = axis == 0 ? normal.x :
+                        (axis == 1 ? normal.y : normal.z);
+                    if (std::isfinite(normalComponent) && normalComponent != 0.0f) {
+                        const float firstValue = coordinate(firstAfter);
+                        const float secondValue = coordinate(secondAfter);
+                        const float firstCandidate = std::nextafter(firstValue,
+                            normalComponent > 0.0f
+                                ? -std::numeric_limits<float>::infinity()
+                                : std::numeric_limits<float>::infinity());
+                        const float secondCandidate = std::nextafter(secondValue,
+                            normalComponent > 0.0f
+                                ? std::numeric_limits<float>::infinity()
+                                : -std::numeric_limits<float>::infinity());
+                        Point3 firstTrial = firstAfter;
+                        Point3 secondTrial = secondAfter;
+                        coordinate(firstTrial) = firstCandidate;
+                        coordinate(secondTrial) = secondCandidate;
+                        const double firstDistance = length(subtracted(
+                            secondAfter, firstTrial));
+                        const double secondDistance = length(subtracted(
+                            secondTrial, firstAfter));
+                        const bool firstProgress = std::isfinite(firstCandidate) &&
+                            std::isfinite(firstDistance) &&
+                            firstDistance > storedDistance;
+                        const bool secondProgress = std::isfinite(secondCandidate) &&
+                            std::isfinite(secondDistance) &&
+                            secondDistance > storedDistance;
+                        const double firstDelta = std::fabs(
+                            static_cast<double>(firstCandidate) - firstValue);
+                        const double secondDelta = std::fabs(
+                            static_cast<double>(secondCandidate) - secondValue);
+                        if (firstProgress && (!secondProgress ||
+                                firstDelta <= secondDelta))
+                            coordinate(firstAfter) = firstCandidate;
+                        else if (secondProgress)
+                            coordinate(secondAfter) = secondCandidate;
+                    }
+                }
+                recordProjection(contact.firstBall, firstBefore);
+                recordProjection(contact.secondBall, secondBefore);
             } else {
                 addScaled(state.balls[contact.firstBall].position,
-                    contact.normal, excess);
+                    constraints[index].normal, excess);
+                recordProjection(contact.firstBall, firstBefore);
             }
             result.contacts[index].projectionCm += excess;
         }
+    }
+
+    for (const SolverConstraint& constraint : constraints) {
+        if (constraint.candidate.kind !=
+                ContinuousContactKind::SupportPlane ||
+            !(constraint.lambdaNormalNs > 0.0))
+            continue;
+        BallState& supported =
+            state.balls[constraint.candidate.firstBall];
+        if (std::fabs(supported.velocity.y) <=
+                profile.solver.residualToleranceCmS)
+            supported.velocity.y = 0.0f;
     }
 
     for (std::size_t index = 0; index < constraints.size(); ++index) {

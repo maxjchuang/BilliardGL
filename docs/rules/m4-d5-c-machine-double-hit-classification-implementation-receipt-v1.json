@@ -1,0 +1,134 @@
+{
+  "schema": "m4_d5_c_machine_double_hit_classification_implementation_receipt_v1",
+  "status": "ROOT_SELECTED_D5_C_CPU_VERIFIED_AUDIT_ROWS_OPEN",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-implementation-design-gate-v1.json",
+      "sha256": "1a0a506ddbd7d9321f2dbc2fba2c6d7e0a6294afbc5e3dc8810a019514268c40"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-d5-c-machine-double-hit-classification-policy-root-selected-v1.json",
+      "sha256": "c3529ff92ccb1540513f9be3fbbf725832dfd5c81ce78394d53a9b8b8c994ef6",
+      "bundle": "D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER"
+    }
+  },
+  "tests_first": {
+    "red_observed": true,
+    "red_exit_code": 1,
+    "red_failure": "tests/double_hit_classifier_tests.cpp: fatal error: rules/double_hit_classifier.h file not found",
+    "green": true
+  },
+  "contract": {
+    "schema_id": "canonical_double_hit_classification_v1",
+    "very_close_surface_gap_cm": null,
+    "light_graze_normal_impulse_ratio": null,
+    "tip_separation_tie_tolerance_seconds": 0.0,
+    "automatic_predicate": "valid complete exact-identity D5-A and D5-B observations with canonical cue-tip interval count greater than one",
+    "interval_count_precedes_signed_review": true,
+    "signed_close_case_otherwise_review_only": true,
+    "raw_equal_without_signed_case_not_foul": true,
+    "incomplete_mismatch_or_digest_drift_not_classified": true,
+    "shotfacts_only_complete_immutable_result": true,
+    "adjudicator_consumes_result_without_recomputation": true,
+    "double_hit_foul_uses_existing_general_foul_ball_in_hand": true,
+    "exact_retry_zero_delta": true,
+    "failed_adjudication_zero_runtime_delta": true,
+    "reset_rerack_turn_or_next_shot_invalidates_unpublished_result": true,
+    "push_or_frozen_exception_classified": false,
+    "visible_or_global_ui_changed": false,
+    "gpu_or_readiness_used": false
+  },
+  "fixtures": {
+    "positive": [
+      "TWO_COMPLETE_CANONICAL_INTERVALS_AUTOMATIC_DOUBLE_HIT_FOUL",
+      "THREE_COMPLETE_CANONICAL_INTERVALS_SAME_RESULT",
+      "AUTOMATIC_DOUBLE_HIT_ADDS_EXACT_FOUL_REASON",
+      "AUTOMATIC_DOUBLE_HIT_GRANTS_OPPONENT_BALL_IN_HAND",
+      "SINGLE_COMPLETE_INTERVAL_UNSIGNED_NO_DOUBLE_HIT",
+      "ZERO_INTERVAL_COMPLETE_NO_DOUBLE_HIT",
+      "SIGNED_CLOSE_CASE_SINGLE_INTERVAL_RAW_BEFORE_REVIEW_ONLY",
+      "RAW_EQUAL_REVIEW_ONLY",
+      "EXACT_CLASSIFIER_AND_ADJUDICATION_RETRY_ZERO_DELTA",
+      "IMMUTABLE_RESULT_BINDS_SOURCE_AND_POLICY_DIGESTS"
+    ],
+    "negative": [
+      "INCOMPLETE_D5_A_NO_CLASSIFICATION",
+      "INCOMPLETE_D5_B_NO_CLASSIFICATION",
+      "MISMATCHED_SHOT_IDENTITY_REJECTED",
+      "MISMATCHED_ACTOR_RACK_REVISION_OR_STATE_HASH_REJECTED",
+      "MISSING_OR_CHANGED_SOURCE_DIGEST_REJECTED",
+      "FAILED_OR_GAPPED_PHYSICS_NEVER_FOUL",
+      "ONE_INTERVAL_NEVER_AUTOMATIC_FOUL",
+      "RAW_BEFORE_WITHOUT_SIGNED_CLOSE_CASE_NEVER_AUTOMATIC_FOUL",
+      "RAW_EQUAL_NEVER_REWRITTEN_AS_BEFORE",
+      "RAW_AFTER_NEVER_AUTOMATIC_FOUL",
+      "SIGNED_REVIEW_NEEDED_NEVER_FOUL",
+      "SIGNED_LIGHT_GRAZE_NEVER_MACHINE_NO_FOUL_RESULT_WITHOUT_REFEREE_FINAL",
+      "NULL_GAP_PREVENTS_MACHINE_VERY_CLOSE_BRANCH",
+      "NULL_GRAZE_PREVENTS_MACHINE_LIGHT_GRAZE_BRANCH",
+      "NO_NUMERIC_TOLERANCE_APPLIED_TO_RAW_ORDER",
+      "FROZEN_DECLARATION_DOES_NOT_OVERRIDE_MULTI_INTERVAL_FOUL",
+      "PUSH_CLASSIFICATION_REMAINS_ABSENT",
+      "STALE_WRONG_OR_UNCONSUMED_CLOSE_CASE_IGNORED",
+      "CONFLICTING_RETRY_ZERO_DELTA",
+      "FAILED_ADJUDICATION_ROLLS_BACK",
+      "RESET_RERACK_TURN_OR_NEXT_SHOT_INVALIDATES",
+      "NO_VISIBLE_GLOBAL_UI_GPU_OR_AUDIT_SIDE_EFFECT"
+    ]
+  },
+  "source_bindings": [
+    {"path": "src/Billiards/rules/double_hit_classifier.h", "sha256": "d6d511197d1a384fbbb30240f639944a5f0a46e4af593a66b38ad9f56d88299b"},
+    {"path": "src/Billiards/rules/double_hit_classifier.cpp", "sha256": "2c52e14600d5d022ec99faac096dc47a0bae24e2ec0e756c200ff1ff2991efce"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "034178962ffe30ad720cadfe6bf2aed705418ac78d56de2221d6046462fdc410"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "70f67333997445be577ea00b5027fa2ada171bd01be0799df25ff6b8611a5d3e"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "5e86e5a95ed04dee3ea6e80f3551cb081390c6f89cd7c58c4defb7c2a6cbf429"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "554d43ef44bb87e297c2ab4139dbf6bc4392abb583688e5bfb78617763546d18"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "275eb3faf8a59e77972646b3e0aa82f1de3dc4077a60eb7e473990aa552556a1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "947f869b6fc89767394fd1303c6cbd8b4f3f40e99bfffd8ac8a5269bf72cd88d"}
+  ],
+  "test_bindings": [
+    {"path": "tests/double_hit_classifier_tests.cpp", "sha256": "a50578e8b4dfc32dd5fdadf31dceebf2c47858ad20afdbaed2f6ae5fcacfa2c6"},
+    {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "d141b6c78eaca4ea7b7244499347c3ab9859d00407f0ca77d923d14c018bc1c9"},
+    {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "b62b64bfcadc58cbfc6f09fc35b13e142cbb2d9e47ed0d08dc59739f6ae63531"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "d044edb355eaf085abb32ee32102366e8117ff16d11518da149af33b690e1ab5"}
+  ],
+  "build_binding": {
+    "path": "CMakeLists.txt",
+    "sha256": "a8524b48d034de67d7f1b3870ab66833da9924a9543977d20e2f0fcd9bd331cf",
+    "scope": "double_hit_classifier.cpp in BILLIARDGL_CORE_SOURCES and one BilliardsDoubleHitClassifierTests target"
+  },
+  "cpu": {
+    "build_root": "build-m4-d5-c-cpu-v1",
+    "passed_count": 17,
+    "failed_count": 0,
+    "binaries": [
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsDoubleHitClassifierTests", "sha256": "2402571cf2f99e0e97c37e9998535579b3078000cd859b8b6ca88d57bf0f3e30", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsShotFactCollectorD5CClosureTests", "sha256": "6764c588fa82cf43f059c541f5e8f60d6ae066c8116f8c84d69fcf426c69aaf2", "exit_code": 0, "build_note": "explicit headless closure because the historical focused CMake target omits chinese_eight_ball_rules.cpp"},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsChineseEightBallRulesTests", "sha256": "af9df0149f2ba364622ae91d0624c59c2c3d5d43621c973b1dd67b4c65f1d1a0", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsRulesRuntimeIntegrationTests", "sha256": "7a9939a37c90ec380f5b93b876b38174f6c62951c5c9ec860cd0425b70d465f7", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsGameRuntimeTests", "sha256": "c72c075e02846e4e50ef8594bc88a269f88ef017fd270f098d564fab53ffb1e0", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsPhysicsTelemetryTests", "sha256": "f1608169609a5daedd85aa953f77b2e124c74698956e013a803c27560f598932", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsCueContactTests", "sha256": "f9a483ab6d0e8aa3025909080a90b1e442d58ca19383f6beb56cf6faa3a080f8", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsCoupledCueContactTests", "sha256": "274e62de79f3f2977faf77b22c6baf341bffc572c53b2c890f2531cbed3318ac", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsRulesTests", "sha256": "6b0f0946ff416f73fd5f0149e258a9076533734f69f52bef64d1008e558161c2", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsRefereeAuthorityProtocolTests", "sha256": "9e10c8299de5909e4fcc32660f5f3482a50cdda3ce77c5bf80f561a4d705bf29", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsDoubleHitCloseCaseDeclarationTests", "sha256": "0f66d01a07bc1cb3b567fefb867af0a82bd5ef11fc8c92d60f29d79c293b9cea", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsFrozenBallDeclarationTests", "sha256": "ec1b63289b844bf4f25904721375c03720ee621a9ef32a55d9b774150eec8f00", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsFrozenCushionDeclarationTests", "sha256": "0a258f6c5a08d8520c530f801f73d35dfdf78d1c5375ce9b370a3181e19a7cc7", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsPushReviewDeclarationTests", "sha256": "57ee63adfe5e5d411daafd2a3718a65737a59071ae45d55a7e318b856ba2dc35", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsNonphysicalGeneralFoulAuthorityTests", "sha256": "f2598198f33cea9d75a6f4b76baa0c131cc9721baa32916f243b866987540934", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsPhysicsTests", "sha256": "bed286460a616e227ce7c9256debe20a9c70fd71482ab7bc12dc5a5c88fd535f", "exit_code": 0},
+      {"path": "build-m4-d5-c-cpu-v1/BilliardsShotTests", "sha256": "03eeaa6b202595ec65c30d02430c89c523f355c41b96731a6e5137d8ddde33a4", "exit_code": 0}
+    ],
+    "gpu": false
+  },
+  "completion": {
+    "d5_c_machine_double_hit_classification_implemented": true,
+    "d5_complete": false,
+    "wpa_ii_12_5_6_or_15_1_promoted": false,
+    "audit_rows_changed": false,
+    "visible_or_global_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

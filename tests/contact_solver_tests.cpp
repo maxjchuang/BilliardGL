@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 
 namespace {
 void expect(bool value, const char* message)
@@ -134,6 +135,232 @@ int main()
             railSolved.totalKineticEnergyBeforeJ + 1e-10,
         "rail island impulses must obey the Coulomb cone and remain passive");
 
+    // Regression from the shipping -Z nose path: the supported-cushion arm's
+    // elevated Y offset lets x-axis spin contribute a large +Z contact speed,
+    // hiding a real -Z COM approach. The explicit airborne nose arm is radial
+    // to the queried vertical plane, so spin cannot cancel normal approach.
+    PhysicsProfile airborneNoseProfile = cushion;
+    airborneNoseProfile.cushion.frictionCoefficient = 0.0f;
+    GameState airborneNose = stateFor(1);
+    airborneNose.balls[0].physicalDomain =
+        PhysicalBallDomain::Airborne;
+    airborneNose.balls[0].velocity = Point3{-72.0f, 17.0f, -176.0f};
+    airborneNose.balls[0].angularVelocity.x = 2000.0f;
+    const BallState airborneNoseBefore = airborneNose.balls[0];
+    ContactIsland airborneNoseIsland;
+    airborneNoseIsland.ballIndices = {0};
+    airborneNoseIsland.contacts = {airborneCushionNoseContactCandidate(
+        0, 2, 0.0, Point3{0.0f, 0.0f, 1.0f})};
+    const ContactSolverResult airborneNoseSolved = solveContactIsland(
+        airborneNose, airborneNoseIsland, airborneNoseProfile);
+    expect(airborneNoseSolved.status == ContactSolverStatus::Converged &&
+            airborneNoseSolved.contacts.size() == 1 &&
+            airborneNoseSolved.contacts[0].relativeVelocityBeforeCmS.z ==
+                airborneNoseBefore.velocity.z &&
+            airborneNoseSolved.contacts[0].accumulatedNormalImpulseNs > 0.0 &&
+            airborneNoseSolved.contacts[0].firstContactArmM.x == 0.0f &&
+            airborneNoseSolved.contacts[0].firstContactArmM.y == 0.0f &&
+            airborneNoseSolved.contacts[0].firstContactArmM.z < 0.0f &&
+            airborneNose.balls[0].velocity.z > 0.0f &&
+            airborneNose.balls[0].velocity.y ==
+                airborneNoseBefore.velocity.y &&
+            airborneNose.balls[0].angularVelocity.x ==
+                airborneNoseBefore.angularVelocity.x &&
+            airborneNoseSolved.totalKineticEnergyAfterJ <=
+                airborneNoseSolved.totalKineticEnergyBeforeJ + 1e-10,
+        "airborne nose geometry must resolve COM approach at the radial sphere-plane arm without a spin-induced zero impulse");
+
+    for (const Point3 normal : {Point3{0.0f, 0.6f, 0.8f},
+            Point3{0.0f, 0.6f, -0.8f}, Point3{0.8f, 0.6f, 0.0f},
+            Point3{-0.8f, 0.6f, 0.0f}}) {
+        GameState edge = stateFor(1);
+        edge.balls[0].physicalDomain = PhysicalBallDomain::Airborne;
+        edge.balls[0].velocity = Point3{-600.0f * normal.x,
+            -600.0f * normal.y, -600.0f * normal.z};
+        edge.balls[0].angularVelocity = Point3{100.0f, -200.0f, 300.0f};
+        const GameState before = edge;
+        ContactIsland island;
+        island.ballIndices = {0};
+        island.contacts = {roundedUpperRailEdgeContactCandidate(0, 0, 0.0, normal)};
+        const auto solved = solveContactIsland(edge, island, airborneNoseProfile);
+        const double outgoing = edge.balls[0].velocity.x * normal.x +
+            edge.balls[0].velocity.y * normal.y + edge.balls[0].velocity.z * normal.z;
+        expect(solved.status == ContactSolverStatus::Converged &&
+                solved.contacts.size() == 1 && outgoing > 0.0 &&
+                solved.contacts[0].accumulatedNormalImpulseNs > 0.0 &&
+                solved.totalKineticEnergyAfterJ <= solved.totalKineticEnergyBeforeJ + 1e-10 &&
+                std::fabs(solved.contacts[0].firstContactArmM.y +
+                    normal.y * airborneNoseProfile.ball.radiusCm / 100.0f) < 1e-7,
+            "rounded upper rail edge must resolve radial 3D impact passively on all four sides");
+        GameState repeated = before;
+        const auto repeatedResult = solveContactIsland(repeated, island, airborneNoseProfile);
+        expect(repeatedResult.status == solved.status &&
+                repeated.balls[0].velocity.x == edge.balls[0].velocity.x &&
+                repeated.balls[0].velocity.y == edge.balls[0].velocity.y &&
+                repeated.balls[0].velocity.z == edge.balls[0].velocity.z,
+            "rounded edge solve must exactly repeat in the same build");
+        island.contacts[0].boundaryGeometry = BoundaryContactGeometry::AirborneCushionNose;
+        repeated = before;
+        expect(solveContactIsland(repeated, island, airborneNoseProfile).status ==
+                ContactSolverStatus::NonfiniteState,
+            "vertical nose geometry must continue to reject an oblique edge normal");
+    }
+    for (const Point3 invalidNormal : {Point3{0.0f, 0.0f, 1.0f},
+            Point3{0.0f, 1.0f, 0.0f}, Point3{0.0f, -0.6f, 0.8f},
+            Point3{0.0f, 0.6f, 0.4f}, Point3{0.48f, 0.6f, 0.64f}}) {
+        GameState edge = stateFor(1);
+        ContactIsland island;
+        island.ballIndices = {0};
+        island.contacts = {roundedUpperRailEdgeContactCandidate(0, 0, 0.0, invalidNormal)};
+        expect(solveContactIsland(edge, island, airborneNoseProfile).status ==
+                ContactSolverStatus::NonfiniteState,
+            "rounded rail edge must reject endpoints, downward, nonunit or two-axis normals");
+    }
+
+    GameState oldArmCounterexample = stateFor(1);
+    oldArmCounterexample.balls[0] = airborneNoseBefore;
+    ContactIsland supportedArmIsland;
+    supportedArmIsland.ballIndices = {0};
+    supportedArmIsland.contacts = {boundaryContactCandidate(0, 2, 0.0,
+        Point3{0.0f, 0.0f, 1.0f},
+        PocketBoundaryEventKind::StraightRail)};
+    const ContactSolverResult oldArmSolved = solveContactIsland(
+        oldArmCounterexample, supportedArmIsland, airborneNoseProfile);
+    expect(oldArmSolved.status == ContactSolverStatus::Converged &&
+            oldArmSolved.contacts[0].relativeVelocityBeforeCmS.z > 0.0f &&
+            oldArmSolved.contacts[0].accumulatedNormalImpulseNs == 0.0 &&
+            oldArmCounterexample.balls[0].velocity.z ==
+                airborneNoseBefore.velocity.z,
+        "the measured elevated supported-cushion arm must reproduce the airborne zero-impulse counterexample without changing its legacy semantics");
+
+    PhysicsProfile supportProfile = elastic;
+    supportProfile.cushion.normalRestitution = 0.95f;
+    supportProfile.cushion.restitutionIntercept = 0.95f;
+    supportProfile.cushion.minimumRestitution = 0.95f;
+    supportProfile.cushion.maximumRestitution = 0.95f;
+    supportProfile.cushion.frictionCoefficient = 0.8f;
+    GameState downward = stateFor(1);
+    downward.balls[0].trajectoryGeneration = 7;
+    downward.balls[0].position = Point3{4.0f, 9.9f, 6.0f};
+    downward.balls[0].velocity = Point3{3.0f, -50.0f, 5.0f};
+    downward.balls[0].angularVelocity = Point3{1.0f, 2.0f, 3.0f};
+    const BallState downwardBefore = downward.balls[0];
+    ContactIsland supportIsland;
+    supportIsland.ballIndices = {0};
+    supportIsland.contacts = {supportPlaneContactCandidate(0, 10.0)};
+    const ContinuousEventBatch supportBatch = buildEarliestEventBatch(
+        supportIsland.contacts, supportProfile.solver.toiToleranceSeconds,
+        supportProfile.solver.maximumIslandSize);
+    expect(supportBatch.failureCode == ContinuousBatchFailureCode::None &&
+        supportBatch.physicalIslands.size() == 1 &&
+        supportBatch.physicalIslands[0].contacts.size() == 1 &&
+        supportBatch.physicalIslands[0].contacts[0].kind ==
+            ContinuousContactKind::SupportPlane &&
+        supportBatch.topologyTransitions.empty(),
+        "typed support plane must be classified as a physical island constraint, never a topology transition");
+    const ContactSolverResult supported = solveContactIsland(
+        downward, supportIsland, supportProfile);
+    expect(supported.status == ContactSolverStatus::Converged &&
+        supported.contacts.size() == 1 &&
+        supported.contacts[0].normal.x == 0.0f &&
+        supported.contacts[0].normal.y == 1.0f &&
+        supported.contacts[0].normal.z == 0.0f &&
+        supported.contacts[0].firstContactArmM.x == 0.0f &&
+        std::fabs(supported.contacts[0].firstContactArmM.y +
+            supportProfile.ball.radiusCm / 100.0f) < 1e-7f &&
+        supported.contacts[0].firstContactArmM.z == 0.0f &&
+        supported.contacts[0].restitution == 0.0 &&
+        supported.contacts[0].frictionCoefficient == 0.0 &&
+        supported.contacts[0].accumulatedNormalImpulseNs > 0.0 &&
+        supported.contacts[0].accumulatedTangentialImpulseNs == 0.0 &&
+        downward.balls[0].velocity.y == 0.0f &&
+        downward.balls[0].velocity.x == downwardBefore.velocity.x &&
+        downward.balls[0].velocity.z == downwardBefore.velocity.z &&
+        downward.balls[0].angularVelocity.x ==
+            downwardBefore.angularVelocity.x &&
+        downward.balls[0].angularVelocity.y ==
+            downwardBefore.angularVelocity.y &&
+        downward.balls[0].angularVelocity.z ==
+            downwardBefore.angularVelocity.z &&
+        downward.balls[0].position.y == 10.0f &&
+        !supported.positionProjections.empty() &&
+        supported.positionProjections.front().ballIndex == 0 &&
+        supported.positionProjections.front().trajectoryGeneration == 7 &&
+        supported.positionProjections.front().beforeCm.y == 9.9f &&
+        supported.positionProjections.back().afterCm.y == 10.0f,
+        "typed support plane must apply a +Y inelastic frictionless unilateral impulse and actual generation-bound projection receipts");
+
+    GameState released = stateFor(1);
+    released.balls[0].position.y = 10.0f;
+    released.balls[0].velocity = Point3{2.0f, 15.0f, 4.0f};
+    const BallState releasedBefore = released.balls[0];
+    const ContactSolverResult releasedResult = solveContactIsland(
+        released, supportIsland, supportProfile);
+    expect(releasedResult.status == ContactSolverStatus::Converged &&
+        releasedResult.contacts.size() == 1 &&
+        releasedResult.contacts[0].accumulatedNormalImpulseNs == 0.0 &&
+        releasedResult.contacts[0].regime ==
+            BallBallContactRegime::Separating &&
+        releasedResult.positionProjections.empty() &&
+        released.balls[0].velocity.x == releasedBefore.velocity.x &&
+        released.balls[0].velocity.y == releasedBefore.velocity.y &&
+        released.balls[0].velocity.z == releasedBefore.velocity.z,
+        "support plane must release an upward ball without attraction, bounce or friction");
+
+    GameState unsupported = stateFor(1);
+    unsupported.balls[0].position.y = 10.0f;
+    unsupported.balls[0].velocity.y = -20.0f;
+    const BallState unsupportedBefore = unsupported.balls[0];
+    ContactIsland noSupport;
+    noSupport.ballIndices = {0};
+    const ContactSolverResult unsupportedResult = solveContactIsland(
+        unsupported, noSupport, supportProfile);
+    expect(unsupportedResult.status == ContactSolverStatus::Converged &&
+        unsupportedResult.contacts.empty() &&
+        unsupportedResult.positionProjections.empty() &&
+        unsupported.balls[0].velocity.y == unsupportedBefore.velocity.y,
+        "a ball without an explicit typed support constraint must remain unconstrained");
+
+    GameState coupledSupport = stateFor(2);
+    coupledSupport.balls[0].position = Point3{0.0f, 10.0f, 0.0f};
+    coupledSupport.balls[1].position = Point3{
+        2.0f * supportProfile.ball.radiusCm, 10.0f, 0.0f};
+    coupledSupport.balls[0].velocity = Point3{100.0f, -25.0f, 0.0f};
+    ContactIsland coupledSupportIsland;
+    coupledSupportIsland.ballIndices = {0, 1};
+    coupledSupportIsland.contacts = {pair(0, 1),
+        supportPlaneContactCandidate(0, 10.0)};
+    const ContactSolverResult coupledSupportResult = solveContactIsland(
+        coupledSupport, coupledSupportIsland, supportProfile);
+    expect(coupledSupportResult.status == ContactSolverStatus::Converged &&
+        coupledSupportResult.contacts.size() == 2 &&
+        coupledSupportResult.contacts[0].accumulatedNormalImpulseNs > 0.0 &&
+        coupledSupportResult.contacts[1].accumulatedNormalImpulseNs > 0.0 &&
+        std::fabs(coupledSupport.balls[0].velocity.y) <=
+            supportProfile.solver.residualToleranceCmS &&
+        coupledSupport.balls[1].velocity.x > 0.0f,
+        "typed support and ball-ball constraints must converge together in one island without sequential clamping");
+
+    GameState invalidSupportState = stateFor(1);
+    invalidSupportState.balls[0].position.y = 10.0f;
+    invalidSupportState.balls[0].velocity.y = -10.0f;
+    const BallState invalidSupportBefore = invalidSupportState.balls[0];
+    ContactIsland invalidSupportIsland;
+    invalidSupportIsland.ballIndices = {0};
+    ContinuousContactCandidate invalidSupport = supportPlaneContactCandidate(0,
+        std::numeric_limits<double>::quiet_NaN());
+    invalidSupportIsland.contacts = {invalidSupport};
+    const ContactSolverResult invalidSupportResult = solveContactIsland(
+        invalidSupportState, invalidSupportIsland, supportProfile);
+    expect(invalidSupportResult.status == ContactSolverStatus::NonfiniteState &&
+        invalidSupportResult.contacts.empty() &&
+        invalidSupportResult.positionProjections.empty() &&
+        invalidSupportState.balls[0].position.y ==
+            invalidSupportBefore.position.y &&
+        invalidSupportState.balls[0].velocity.y ==
+            invalidSupportBefore.velocity.y,
+        "invalid typed support input must fail before any velocity or position mutation");
+
     GameState projection = stateFor(2);
     ContactIsland overlap;
     overlap.ballIndices = {0, 1};
@@ -146,6 +373,30 @@ int main()
         projected.kineticEnergyAfterJ == 0.0 &&
         projected.positionIterations == elastic.solver.positionIterations,
         "position projection should run its fixed count without adding velocity energy");
+    expect(!projected.positionProjections.empty(),
+        "actual position mutations must expose ordered receipts");
+    int projectionOrdinal = 0;
+    for (const auto& receipt : projected.positionProjections) {
+        expect(receipt.ordinal == projectionOrdinal++ && receipt.contactIndex == 0 &&
+            (receipt.ballIndex == 0 || receipt.ballIndex == 1) &&
+            (receipt.beforeCm.x != receipt.afterCm.x ||
+             receipt.beforeCm.y != receipt.afterCm.y ||
+             receipt.beforeCm.z != receipt.afterCm.z),
+            "projection receipts bind actual changed participants and order");
+    }
+    GameState belowUlp = stateFor(1);
+    belowUlp.balls[0].position.x = 1000000.0f;
+    ContactIsland wall;
+    wall.ballIndices = {0};
+    auto wallContact = pair(0, -1);
+    wallContact.kind = ContinuousContactKind::StraightRail;
+    wallContact.penetrationCm = .01;
+    wall.contacts.push_back(wallContact);
+    const auto roundedAway = solveContactIsland(belowUlp, wall, elastic);
+    expect(roundedAway.contacts[0].projectionCm > 0.0 &&
+        belowUlp.balls[0].position.x == 1000000.0f &&
+        roundedAway.positionProjections.empty(),
+        "sub-ULP requested projection is not an actual position mutation");
 
     ContactIsland tooLarge = island;
     tooLarge.limitExceeded = true;

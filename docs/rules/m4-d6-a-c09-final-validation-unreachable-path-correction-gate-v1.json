@@ -1,0 +1,89 @@
+{
+  "schema": "m4_d6_a_c09_final_validation_unreachable_path_correction_gate_v1",
+  "schema_version": 1,
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_AUTHORIZATION",
+  "decision": "STATIC_FINAL_GATE_CONTRACT_PLUS_SOURCE_MUTATIONS_AND_GRAVITY_MECHANICAL_ENERGY_CONTROL",
+  "scope": "This is the minimal interpretation correction for C09 of the frozen same-tick composition checklist. It changes only how an unreachable final-only failure is proven; C01-C08 and C10-C12, the exact physics.cpp-only future production allowlist, rollback semantics, thresholds and public APIs remain unchanged.",
+  "frozen_bindings": [
+    {
+      "role": "parent_same_tick_checklist",
+      "path": "docs/rules/m4-d6-a-legacy-d6-same-tick-composition-tests-first-acceptance-checklist-v1.json",
+      "sha256": "4b9abbce5e010194af942996dd963dcf25cc7f32c0e32dba5625cf2bd2683fea"
+    },
+    {
+      "role": "parent_d6_a_gate",
+      "path": "docs/rules/m4-d6-a-3d-table-departure-physics-foundation-implementation-design-gate-v1.json",
+      "sha256": "676b70795fc45e4e3cc4f5c8ffa3a236c1e1e83aea9371e422ff9b54e87264d1"
+    },
+    {
+      "role": "rejected_gravity_ke_red",
+      "path": "tests/table_departure_geometry_tests.cpp",
+      "sha256": "92a7056825b959e7d8d94e24f3457a4e31db77efd35ac19006bdc03b3d04a73b"
+    },
+    {
+      "role": "production_before_correction",
+      "path": "src/Billiards/physics.cpp",
+      "sha256": "bad3d1ac32c398463ac3048b76245b4b988b4c45ff6ae05435e4a3c70148576f"
+    },
+    {
+      "role": "d6_implementation_before_correction",
+      "path": "src/Billiards/table_departure_geometry.cpp",
+      "sha256": "82a969ea2f96393634564fad72839a1546493136db8a83cdceb2c140d895008d"
+    },
+    {
+      "role": "accepted_cmake_lineage",
+      "path": "CMakeLists.txt",
+      "sha256": "a227883fb85290a9cde3fff1ab33ab17d4a6d096e1d7fe7e726de64aba5408bc"
+    }
+  ],
+  "proof_of_unreachability": {
+    "child_invariants": "A successful legacy prefix has already passed its finite-state, finite-energy and per-island energy checks; a successful D6-A tail has checked every BallState field for finiteness before returning.",
+    "merge_invariant": "The mixed composition copies at most 16 already-validated float BallState values into a staged GameState. Summing their finite kinetic terms in double cannot overflow solely because of the bounded ball count and float range.",
+    "conclusion": "A public final-only NonfiniteState or NonfiniteEnergy failure after both children succeed has no honest reachable fixture. Tests may not manufacture one through invalid input, mismatched duration or boundary mode, or a production-resident injection seam."
+  },
+  "rejected_alternatives": {
+    "production_test_hook": "Forbidden: no compile-time or runtime failure-injection hook, test macro, callback, environment variable or public/private bypass seam may be added to production.",
+    "kinetic_only_gravity_failure": "Forbidden: an airborne ball's kinetic-energy increase caused by loss of gravitational potential energy is not PassiveEnergyCreation.",
+    "mismatched_subrequest": "Forbidden: a short ProductionTable tail may not be used to claim coverage for a different long or Unbounded final-failure request.",
+    "threshold_change": "Forbidden: passive-energy, TOI, residual, penetration, gravity or event-budget thresholds and formulas may not be loosened to create or hide a failure."
+  },
+  "corrected_c09_acceptance": {
+    "runtime_failure_stages": "Before-prefix, handoff-validation, D6-tail and later-legacy failures remain real public executions with exact failure code, empty committed telemetry/private events and byte-exact pre-tick rollback.",
+    "final_gate_static_contract": "The tests extract the complete production composition function structurally, and prove exactly one final staged finite/energy validation occurs after successful prefix/tail/later-work merge and before the only state commit and telemetry publication. Its failure branch restores the snapshot and clears every canonical contact, solver, surface, analytic, crossing and attestation ledger.",
+    "source_mutations_exact": [
+      "delete final validator call",
+      "move final validator after state commit",
+      "move final validator before tail merge",
+      "delete snapshot restore",
+      "retain any canonical telemetry ledger on failure",
+      "replace gravity-aware accounting with kinetic-only comparison",
+      "multiply tolerance by a private D6 event count",
+      "add a production test hook or conditional bypass"
+    ],
+    "gravity_runtime_control": "For an isolated airborne no-contact path, independently compute K plus gravitational potential U=-m*g_y*y using SI conversion at entry and exit. Mechanical energy may not increase beyond the unchanged public passive-energy tolerance, while kinetic energy is required to increase on descent. The composed public request must succeed rather than report PassiveEnergyCreation.",
+    "same_request_success_control": "The same initial state, whole duration and ProductionTable boundary used by the composition fixture must independently demonstrate the real legacy prefix, the exact remaining D6 tail, later legacy work and a successful final validation/commit when no genuine failure exists."
+  },
+  "future_tests_first_allowlist_after_root_revalidation": {
+    "production_files_exact": [
+      "src/Billiards/physics.cpp"
+    ],
+    "test_files_exact": [
+      "tests/table_departure_geometry_tests.cpp",
+      "tests/interactive_physics_tests.cpp"
+    ],
+    "production_injection_hook_allowed": false,
+    "physics_header_or_public_api_edit_allowed": false,
+    "table_departure_geometry_edit_allowed": false,
+    "cmake_edit_allowed": false,
+    "profile_or_threshold_edit_allowed": false
+  },
+  "acceptance_boundary": {
+    "design_correction_complete": true,
+    "root_revalidation_required": true,
+    "tests_first_authorized_by_this_artifact": false,
+    "production_edit_authorized_by_this_artifact": false,
+    "d6_a_source_stable": false,
+    "release_build_authorized": false,
+    "gpu_readiness_capture_or_authorization": false
+  }
+}

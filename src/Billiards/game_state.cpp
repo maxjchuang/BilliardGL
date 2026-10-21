@@ -3,6 +3,7 @@
 #include "surface_motion.h"
 
 #include <cmath>
+#include <limits>
 
 namespace billiardgl {
 
@@ -38,8 +39,11 @@ void initializeBalls(GameState& state)
         ball.speed = 0.0f;
         ball.rotationAngle = 0.0f;
         ball.pocketed = false;
+        ball.outOfPlay = false;
         ball.motionState = BallMotionState::Stationary;
+        ball.physicalDomain = PhysicalBallDomain::ClothSupported;
         resetPocketInteraction(ball);
+        ball.trajectoryGeneration = 0;
     }
 }
 
@@ -86,7 +90,7 @@ void setBallVelocity(BallState& ball, float x, float y, float z)
 bool anyBallMoving(const GameState& state)
 {
     for (const BallState& ball : state.balls) {
-        if (!ball.pocketed && ball.speed > 0.0f) {
+        if (!ball.pocketed && !ball.outOfPlay && ball.speed > 0.0f) {
             return true;
         }
     }
@@ -116,6 +120,27 @@ void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& 
     for (int i = 0; i < kBallCount; ++i) {
         state.balls[i].texture = legacyBalls[i].texture;
     }
+}
+
+std::string canonicalTrajectoryGeneration(std::uint64_t generation)
+{
+    return std::to_string(generation);
+}
+
+bool parseCanonicalTrajectoryGeneration(const std::string& text,
+    std::uint64_t& generation)
+{
+    if (text.empty() || (text.size() > 1 && text.front() == '0')) return false;
+    std::uint64_t value = 0;
+    for (const unsigned char character : text) {
+        if (character < '0' || character > '9') return false;
+        const std::uint64_t digit = character - '0';
+        if (value > (std::numeric_limits<std::uint64_t>::max() - digit) / 10)
+            return false;
+        value = value * 10 + digit;
+    }
+    generation = value;
+    return true;
 }
 
 }  // namespace billiardgl

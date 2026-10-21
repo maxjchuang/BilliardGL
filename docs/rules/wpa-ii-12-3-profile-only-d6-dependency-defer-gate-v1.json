@@ -1,0 +1,51 @@
+{
+  "schema": "wpa_ii_12_3_profile_only_d6_dependency_defer_gate_v1",
+  "status": "FINAL_BLOCKED_DEFER_DESIGN_ONLY_NO_IMPLEMENTABLE_CONSUMER_PROGRESS",
+  "authority_bindings": {
+    "root_selected_policy": {"path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json", "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f", "row_id": "WPA-II-12-3", "selected_option_id": "SIGNED_TOURNAMENT_PROFILE_DEFAULT_17E_FOUL", "row_implementation_allowed": false},
+    "b2_foundation_receipt": {"path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json", "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"},
+    "b2_priority_register": {"path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json", "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55", "priority": 8, "state": "WAIT_D6"},
+    "off_table_gap_gate": {"path": "docs/rules/wpa-ii-17-a-e-off-table-physical-telemetry-design-gap-gate-v1.json", "sha256": "3fc468502ab09e7ba0122d84b6c20386b0646d1f0db76a3f8ab3e8a1d30a9dbe"},
+    "audit_v9": {"path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json", "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01", "row_status": "PARTIAL"}
+  },
+  "assessment": {
+    "selected_profile_semantic": "immutable signed tournament profile selects Section 17(e) foul treatment after complete authoritative object-off-table evidence",
+    "profile_declaration_alone_is_fact": false,
+    "profile_declaration_alone_is_foul": false,
+    "physical_off_table_observable_now": false,
+    "d6_required": true,
+    "consumer_without_d6_has_product_or_m4_value": false,
+    "partial_profile_consumer_recommended": false,
+    "reason": "No current production event proves departure, outside landing, terminal off-table rest, or rail-top return exclusion; storing a profile now has no lawful consuming result and would create misleading partial implementation evidence."
+  },
+  "deferred_contract": {
+    "future_order": ["independent D6 implementation design gate", "true 3D off-table physics and complete telemetry", "signed immutable profile binding", "classification consumer", "atomic BIH product lifecycle", "fresh shared CPU/GPU evidence where affected"],
+    "must_bind": ["ball identity", "departure event", "outside landing", "terminal rest", "rail-top return exclusion", "pocket exclusion", "successful-step completeness", "profile identity and digest", "rules revision and state hash"],
+    "eight_ball_sibling_unchanged": true,
+    "cue_ball_off_table_sibling_unchanged": true,
+    "section_17_nonphysical_subset_unchanged": true,
+    "coordinate_or_injected_fact_shortcut_forbidden": true
+  },
+  "required_future_fixtures": {
+    "positive": ["SIGNED_PROFILE_BINDS_COMPLETE_OBJECT_OFF_TABLE_FACT", "DEFAULT_17E_PROFILE_CLASSIFIES_FOUL", "OPPONENT_ANYWHERE_BIH_ATOMIC", "EXACT_RETRY_ZERO_DELTA"],
+    "negative": ["PROFILE_WITHOUT_D6_FACT_NO_RESULT", "DEPARTURE_WITHOUT_REST_INCOMPLETE", "RAIL_TOP_RETURN_EXCLUDED", "POCKET_CAPTURE_EXCLUDED", "COORDINATE_ONLY_NOT_EVIDENCE", "WRONG_PROFILE_REVISION_HASH_REJECTED", "FAILED_STEP_ROLLBACK", "EIGHT_BALL_SIBLING_UNCHANGED"]
+  },
+  "implementation_allowlist": {
+    "production_files": [],
+    "test_files": [],
+    "build_files": [],
+    "dormant_future_allowlist_owned_by_d6_gate": true
+  },
+  "completion_boundary": {
+    "blocked_defer_gate_complete": true,
+    "profile_consumer_implemented": false,
+    "d6_complete": false,
+    "physical_off_table_evidence_complete": false,
+    "object_off_table_classification_implemented": false,
+    "wpa_ii_12_3_promoted": false,
+    "wpa_ii_17_promoted": false,
+    "m4_complete": false,
+    "production_or_cmake_modified": false,
+    "ui_gpu_readiness_or_authorization": false
+  }
+}

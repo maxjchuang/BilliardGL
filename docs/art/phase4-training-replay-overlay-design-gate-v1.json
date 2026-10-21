@@ -1,0 +1,362 @@
+{
+  "schema": "phase4_training_replay_overlay_design_gate_v1",
+  "status": "TA_DESIGN_GATE_APPROVED_FOR_IMPLEMENTATION_NOT_GPU_OR_MANUAL_PASS",
+  "owner_role": "independent_technical_artist",
+  "scope": {
+    "design_only": true,
+    "cpp_changed_by_this_artifact": false,
+    "assets_changed_by_this_artifact": false,
+    "gpu_evidence_generated_by_this_artifact": false,
+    "manual_visual_pass_claimed": false,
+    "external_human_evidence_claimed": false,
+    "implementation_authorized": true,
+    "m3_acceptance_claimed": false,
+    "golden_creation_or_promotion_authorized": false
+  },
+  "source_bindings": {
+    "trajectory_overlay_model_header": {
+      "path": "src/Billiards/training/trajectory_overlay_model.h",
+      "sha256": "sha256:50b691df1dda03d9be32fb98addebc97914a9dbae4201a47fef6ee9c32f70aad"
+    },
+    "trajectory_overlay_model_source": {
+      "path": "src/Billiards/training/trajectory_overlay_model.cpp",
+      "sha256": "sha256:95e97fcb76ec42f5acc36b8a34bc9f927d16e14a758f46f60e0ec54a9ff976d9"
+    },
+    "training_pack": {
+      "path": "assets/training/phase4/training_pack_v1.json",
+      "sha256": "sha256:d9d0d9ff037e5edeec9f4bfe014d8a184e9084d460ef6dace719c1baffaa2630",
+      "scenario_count": 12
+    },
+    "coverage_matrix": {
+      "path": "assets/training/phase4/coverage_matrix.json",
+      "sha256": "sha256:eb700ff28ee79b12ce6da59ae944d3437e3f8864ec60864cc55daf56c361d2a9"
+    },
+    "product_ux_contract": {
+      "path": "assets/modern/product_ux/product_ux_v1.json",
+      "sha256": "sha256:6391707d5dbfd01e43fdb98596221c79596caa012dbd07a64a6b3858346119b8"
+    },
+    "shell_shipping_tokens": {
+      "path": "assets/modern/hud/focused_practice_shell_shipping_tokens_v1.json",
+      "sha256": "sha256:c144f1a25d3e7ced14e385bd6f76ca7e0f05b06597dcc8a4bacb4c570fc6bad3"
+    },
+    "hud_shipping_tokens": {
+      "path": "assets/modern/hud/focused_practice_hud_shipping_tokens_v1.json",
+      "sha256": "sha256:abf73aa283279c28677b5c97a9b02b3130b0d0125048c3124c85a9c0e72df860"
+    },
+    "manual_play_template_generator": {
+      "path": "scripts/generate_phase4_manual_play_templates.py",
+      "sha256": "sha256:37233258b09c9a72ffd8a758ffa054da80ce593afe0819f0d95478f2db3a0dd9"
+    },
+    "manual_play_validator": {
+      "path": "scripts/validate_phase4_manual_play.py",
+      "sha256": "sha256:e57d38cb20e9fa22993ff5fb635e71ee4897d9632360b10c7d6c91b0359f2e1d"
+    }
+  },
+  "scenario_contract": [
+    {"id": "launch_stop_shot_center_v1", "category": "stun_follow_draw", "sha256": "sha256:5d93df130f888790ac8298394c28cd9aa8147b39c4ea587f8b9ffc063e25cd99"},
+    {"id": "launch_follow_shot_v1", "category": "stun_follow_draw", "sha256": "sha256:a624a1ba7c3c9a05c1279af0a1c069f1e139963064fdb5e801c32a6c3189f27c"},
+    {"id": "launch_draw_shot_v1", "category": "stun_follow_draw", "sha256": "sha256:f75fa7a9f21379d7e82ee2753b3ce65080f4c00d905687882ac48d2fa9a5e330"},
+    {"id": "launch_left_english_one_rail_v1", "category": "side_spin_cushion", "sha256": "sha256:53bc72b56d443d83f701e5da8fd378fed9e2db692046c7fb930e8191ba5a3252"},
+    {"id": "launch_right_english_one_rail_v1", "category": "side_spin_cushion", "sha256": "sha256:e082ce9d167c3f3ced98f66aa3b4dde6412aee92b9ec2d16d8276b01ea4533bb"},
+    {"id": "launch_side_english_two_rail_v1", "category": "side_spin_cushion", "sha256": "sha256:a9bac300c1a0bbf04732c47177d16dca31d8f11130a5400db31766d454afda97"},
+    {"id": "launch_corner_pocket_angle_v1", "category": "pocket_angle", "sha256": "sha256:4d3e223875b2c6ba2c7212fd5e31c21b8b292369b92ca2621f15aa5cb8dc1c25"},
+    {"id": "launch_side_pocket_angle_v1", "category": "pocket_angle", "sha256": "sha256:6a02a269baa7903f4216bd27fa1ae2388046d7bc11f10020fafa61d011853b5d"},
+    {"id": "launch_two_ball_lane_route_v1", "category": "continuous_position", "sha256": "sha256:56832da2e2254f5e301a0ee0b1445c86fa695268dece3e4b2497310c7d8ad73f"},
+    {"id": "launch_three_ball_corner_route_v1", "category": "continuous_position", "sha256": "sha256:f5d188fb3615eaebd33dac4fa49a844667a55d17f2d74621b8841698ef96b0e5"},
+    {"id": "launch_head_ball_break_control_v1", "category": "break_cue_control", "sha256": "sha256:503a1599c004fcc40996bf475d0bc71975b834a9923ac62433f923e159956291"},
+    {"id": "launch_cut_break_control_v1", "category": "break_cue_control", "sha256": "sha256:ae28c493bc35db7d69b606bcaad3f86d1174fc1c0f9a6932c5c5399e1ebfbef9"}
+  ],
+  "trajectory_semantic_contract": {
+    "predicted": {
+      "model_legend_label": "training.trajectory.predicted",
+      "model_line_style": "Dashed",
+      "model_marker": "endpoint_ring",
+      "standard_linear_rgba": [0.98, 0.67, 0.16, 0.92],
+      "visual_name": "amber dashed predicted path",
+      "non_color_channels": ["continuous_screen_space_dash_pattern", "hollow_endpoint_ring", "Predicted_text_label"]
+    },
+    "actual": {
+      "model_legend_label": "training.trajectory.replay_actual",
+      "model_line_style": "SolidWithMarkers",
+      "model_marker": "tick_dot",
+      "standard_linear_rgba": [0.18, 0.82, 0.95, 0.96],
+      "visual_name": "cyan solid replay path",
+      "non_color_channels": ["unbroken_solid_line", "perpendicular_tick_marks", "filled_tick_dot_endpoint", "Replay actual_text_label"]
+    },
+    "hard_gates": [
+      "Predicted and actual may never share the same dash/marker topology, even when one track is selected or dimmed.",
+      "Legend swatches must use the exact resolved stroke, dash, tick and endpoint topology used on the table.",
+      "Track visibility and identity must remain understandable in monochrome; a grayscale structure classifier must detect dashed+ring versus solid+ticks without reading RGB.",
+      "Every visible stroke must maintain local contrast >=3.0:1 against the rendered background; use a 1 px logical dark halo where the raw color cannot meet this on felt, rail, ball or walnut.",
+      "No trajectory style may imitate the shipping aim guide; predicted and actual require their legend text whenever either track is visible."
+    ],
+    "color_vision_safe_resolution": {
+      "predicted_linear_rgba": [1.0, 0.78, 0.16, 0.96],
+      "actual_linear_rgba": [0.20, 0.86, 1.0, 0.98],
+      "non_color_topology_unchanged": true,
+      "minimum_pairwise_local_luma_delta_srgb8": 24,
+      "color_alone_never_sufficient": true
+    }
+  },
+  "world_cm_to_presentation_projection_and_clip": {
+    "source_units": "world centimeters from PreviewSample.cueBallPosition and replay::TrajectorySample.position",
+    "visual_anchor": "Use authoritative sample x/z without smoothing or physics-space edits. Render the path on y=play_surface_y_cm+0.15 cm to read as a cloth route; retain the unmodified full Point3 in evidence diagnostics.",
+    "camera_source": "The exact CameraPresentation used for the scene frame, including eye, target, fieldOfViewDegrees, projectionPan, preset, transition state and physical viewport.",
+    "matrix_contract": {
+      "view": "Renderer-shared right-handed lookAt(camera.eye,camera.target,stable_world_up)",
+      "projection": "Renderer-shared OpenGL perspective(clamp(FOV,25,75) degrees, physical_width/physical_height, near=2.0 cm, far=1800.0 cm)",
+      "clip_equation": "clip=P*V*vec4(world_cm,1); never use the legacy flat project(x,z) approximation",
+      "valid_homogeneous_segment": "Both finite, with line segment clipped against -w<=x<=w, -w<=y<=w, -w<=z<=w and w>1e-5 before perspective divide",
+      "viewport_map_top_left_px": "x=(ndc.x*0.5+0.5)*physical_width; y=(1-(ndc.y*0.5+0.5))*physical_height"
+    },
+    "clip_rules": [
+      "Clip each world segment homogeneously before perspective divide; reject NaN/Inf and non-increasing tick transitions.",
+      "After viewport mapping, clip to the intersection of the physical framebuffer, gameplay safe area and projected play-surface stencil; expand the exclusion by half the resolved stroke width.",
+      "Break the polyline when cueBallVisible is false, the replay trajectory resets, a tick decreases, or the projected segment crosses an invalid homogeneous region.",
+      "Do not clamp an offscreen endpoint to an edge and do not draw a false endpoint marker. Show Endpoint offscreen in the legend/detail row instead.",
+      "Dash phase and actual tick arc-length accumulation continue across source sample boundaries but restart after a real clipped/visibility break; dash phase may not restart every segment.",
+      "Predicted and actual screen polylines may be visually simplified only after projection, using maximum perpendicular error <=0.35 physical px; source samples and counts remain unchanged.",
+      "The shared renderer projection and overlay projection must agree within 0.5 physical px at every finite sample and all four camera presets."
+    ],
+    "endpoint_and_rail_authority": {
+      "predicted_endpoint": "PreviewResult final visible cue sample through OverlayTrack.endpoint; never inferred from drawn pixels.",
+      "actual_endpoint": "ReplayTransportSnapshot.cueEndpoint when cueEndpointVisible; never inferred from drawn pixels.",
+      "rail_count": "Use OverlayTrack.railCollisionEvents supplied by preview/replay event telemetry; never count polyline turns.",
+      "display_precision": "Endpoint X/Z in cm rounded to 0.1 cm; rail count as an exact nonnegative integer.",
+      "machine_gate": "Displayed endpoint/count strings and marker visibility must equal the bound TrajectoryOverlaySnapshot fields exactly."
+    }
+  },
+  "physical_pixel_style_ranges": {
+    "interpretation": "All ranges are inclusive physical framebuffer pixels after device density and UI scale resolution. Stroke and marker edges must be pixel-snapped; values outside the range are hard failures.",
+    "profiles": {
+      "physical_1280x720_dpr1": {
+        "ui085": {"line_width": [2.0, 3.0], "dash_on": [8, 10], "dash_off": [5, 7], "actual_tick_length": [5, 7], "actual_tick_spacing": [24, 34], "endpoint_outer_diameter": [12, 15], "endpoint_ring_stroke": [2.0, 3.0], "actual_endpoint_dot_diameter": [5, 7]},
+        "ui100": {"line_width": [2.5, 3.5], "dash_on": [10, 12], "dash_off": [6, 8], "actual_tick_length": [7, 9], "actual_tick_spacing": [28, 40], "endpoint_outer_diameter": [14, 18], "endpoint_ring_stroke": [2.5, 3.5], "actual_endpoint_dot_diameter": [6, 8]},
+        "ui135": {"line_width": [3.5, 4.5], "dash_on": [13, 16], "dash_off": [8, 11], "actual_tick_length": [9, 12], "actual_tick_spacing": [36, 52], "endpoint_outer_diameter": [18, 24], "endpoint_ring_stroke": [3.5, 4.5], "actual_endpoint_dot_diameter": [8, 11]}
+      },
+      "physical_1920x1080_dpr1": {
+        "ui085": {"line_width": [3.0, 4.0], "dash_on": [12, 15], "dash_off": [8, 10], "actual_tick_length": [8, 10], "actual_tick_spacing": [36, 50], "endpoint_outer_diameter": [18, 23], "endpoint_ring_stroke": [3.0, 4.0], "actual_endpoint_dot_diameter": [8, 10]},
+        "ui100": {"line_width": [3.5, 4.5], "dash_on": [15, 18], "dash_off": [9, 12], "actual_tick_length": [10, 13], "actual_tick_spacing": [42, 60], "endpoint_outer_diameter": [21, 27], "endpoint_ring_stroke": [3.5, 4.5], "actual_endpoint_dot_diameter": [9, 12]},
+        "ui135": {"line_width": [5.0, 6.0], "dash_on": [20, 24], "dash_off": [13, 16], "actual_tick_length": [14, 18], "actual_tick_spacing": [54, 78], "endpoint_outer_diameter": [28, 36], "endpoint_ring_stroke": [5.0, 6.0], "actual_endpoint_dot_diameter": [12, 16]}
+      },
+      "retina_logical_1280x720_physical_1920x1080_dpr1_5": {
+        "ui085": {"line_width": [3.0, 4.5], "dash_on": [12, 15], "dash_off": [8, 11], "actual_tick_length": [8, 11], "actual_tick_spacing": [36, 51], "endpoint_outer_diameter": [18, 23], "endpoint_ring_stroke": [3.0, 4.5], "actual_endpoint_dot_diameter": [8, 11]},
+        "ui100": {"line_width": [3.5, 5.0], "dash_on": [15, 18], "dash_off": [9, 12], "actual_tick_length": [10, 14], "actual_tick_spacing": [42, 60], "endpoint_outer_diameter": [21, 27], "endpoint_ring_stroke": [3.5, 5.0], "actual_endpoint_dot_diameter": [9, 12]},
+        "ui135": {"line_width": [5.0, 6.5], "dash_on": [20, 24], "dash_off": [13, 17], "actual_tick_length": [14, 18], "actual_tick_spacing": [54, 78], "endpoint_outer_diameter": [28, 36], "endpoint_ring_stroke": [5.0, 6.5], "actual_endpoint_dot_diameter": [12, 16]}
+      }
+    },
+    "pattern_sampling_rules": {
+      "dash_space": "screen-space arc length after projection and clipping",
+      "tick_orientation": "perpendicular to the central-difference screen-space tangent; endpoint uses one-sided tangent",
+      "tick_spacing_tolerance_fraction": 0.12,
+      "minimum_visible_dash_cycles_per_track": 3,
+      "short_track_rule": "If a predicted track is shorter than three full dash cycles, resolve to exactly three equal dash/gap pairs while retaining the endpoint ring; never silently render it solid."
+    }
+  },
+  "legend_hierarchy_and_controls": {
+    "safe_area_contract": {
+      "minimum_1280x720_logical_px": {"left": 43, "right": 43, "top": 24, "bottom": 36},
+      "wide_or_retina_physical_px": {"left": 64, "right": 64, "top": 36, "bottom": 54},
+      "no_overlap_with": ["cue_ball_and_first_contact_corridor", "pocket_target", "score_result_heading", "footer_controls"],
+      "machine_gate": "All panel, text, icon and focus bounds lie inside the resolved safe area; overlap_pairs and truncated_text_runs equal zero."
+    },
+    "hierarchy_order": [
+      "scenario title plus terminal score or Attempt active",
+      "success/failure reason plus explicit Replay ready/Replay unavailable status",
+      "Predicted and Replay actual legend rows with endpoint X/Z and rail count",
+      "Preview trajectory, Retry shot, Save replay and playback controls",
+      "collapsed Advanced details disclosure"
+    ],
+    "text_size_contract": {
+      "minimum_logical_text_px": 14,
+      "minimum_retina_physical_text_px": 21,
+      "formula": "minimum rendered physical px = max(14*device_scale, base_logical_px*ui_scale*device_scale)",
+      "base_logical_px": {"heading": 24, "body": 16, "caption": 14},
+      "normal_text_contrast_min": 4.5,
+      "large_text_contrast_min": 3.0,
+      "focus_indicator_contrast_min": 3.0
+    },
+    "legend": {
+      "maximum_width_fraction_of_safe_gameplay_rect": 0.30,
+      "row_order": ["Predicted", "Replay actual"],
+      "each_row_requires": ["style swatch", "localized text label", "endpoint state or X/Z cm", "Rails N"],
+      "panel_background_alpha_range": [0.72, 0.88],
+      "hidden_track_behavior": "Keep its row visible with Hidden text and unchanged style swatch; do not erase identity or recolor it as disabled-only gray."
+    },
+    "result_and_replay_state": {
+      "success": "Show Succeeded, numeric Score 0..100 and Replay ready when the controller reports replayReady.",
+      "failure": "Show Failed plus the exact non-empty evaluation.reason; color and icon may reinforce but text is mandatory.",
+      "active": "Show Attempt active plus exact shot count; score is not shown as final.",
+      "replay_unavailable": "Show Replay unavailable and reason Available after terminal success or failure; Save replay is visibly disabled using text+icon+shape, not alpha alone."
+    },
+    "controls": {
+      "preview_training": {"label": "Preview trajectory", "priority": "primary_when_attempt_active", "state_detail": "Predicted or N isolated samples", "must_be_pointer_and_keyboard_reachable": true},
+      "retry_training": {"label": "Retry shot", "priority": "secondary", "state_detail": "Pre-shot state / Fresh recorder and attempt facts", "must_be_pointer_and_keyboard_reachable": true},
+      "save_training_replay": {"label": "Save replay", "priority": "primary_when_replay_ready", "state_detail": "Replay v1 / Choose a local destination", "must_be_pointer_and_keyboard_reachable": true},
+      "replay_controls": {"required": ["play_pause", "fixed_step", "seek_shot", "playback_rate", "camera_mode"], "fixed_step_semantics_visible": true},
+      "minimum_focus_chevron_logical_px": 10,
+      "minimum_item_icon_logical_px": 24,
+      "focus_and_enabled_state_must_not_be_color_only": true
+    }
+  },
+  "advanced_details_contract": {
+    "model_default_advanced_expanded": false,
+    "default_state": "COLLAPSED",
+    "collapsed_behavior": {
+      "visible": ["Advanced details label", "closed chevron"],
+      "not_emitted_to_draw_list": ["sample counts", "tick ranges", "preview budgets", "authority hashes", "trace hashes", "raw endpoint triples"],
+      "reserved_blank_height_px": 0
+    },
+    "expanded_behavior": {
+      "activation": "explicit pointer or keyboard action only",
+      "visible_fields": ["predicted sample count", "actual sample count", "first/last tick", "preview budget outcome", "authority unchanged status", "trace/content hashes abbreviated with full accessible value"],
+      "layout": "Reflow below the legend; at 1280x720 ui135 use a one-column bounded detail drawer and preserve the footer rather than clipping or hiding controls.",
+      "close_action_required": true
+    },
+    "machine_gates": [
+      "A fresh TrajectoryOverlayModel snapshot has advancedExpanded=false.",
+      "Collapsed captures contain zero advanced field text runs and zero advanced field geometry.",
+      "Expanded captures require one focusable close/toggle action and no safe-area, overlap or truncation failures."
+    ]
+  },
+  "actual_gpu_evidence_matrix": {
+    "core_minimum": {
+      "formula": "12 scenarios x 4 camera presets",
+      "capture_count": 48,
+      "scenarios": "exact scenario_contract IDs",
+      "camera_presets": ["player_low", "elevated", "overhead", "broadcast"],
+      "common_state": "comparison_ready: hash-bound predicted preview plus hash-bound ReplayTransport actual, both endpoints/counts visible where in-frame, terminal result/replay-ready controls visible, advanced collapsed",
+      "common_profile": {"physical_viewport_px": [1920, 1080], "device_scale": 1.0, "palette": "standard", "ui_scale": 1.0, "actual_gpu": true},
+      "fixture_rule": "Predicted must come from PreviewResult and actual from a validated Replay v1 loaded by ReplayTransportModel. Placeholder, hand-authored or copied screen paths are forbidden."
+    },
+    "representative_extension": {
+      "category_representatives": [
+        "launch_stop_shot_center_v1",
+        "launch_left_english_one_rail_v1",
+        "launch_corner_pocket_angle_v1",
+        "launch_two_ball_lane_route_v1",
+        "launch_head_ball_break_control_v1"
+      ],
+      "profiles_per_representative": [
+        {"id": "predicted_720_ui085_standard", "physical_viewport_px": [1280, 720], "device_scale": 1.0, "palette": "standard", "ui_scale": 0.85, "camera": "player_low", "overlay_state": "predicted_only_active_collapsed"},
+        {"id": "comparison_720_ui135_cvd", "physical_viewport_px": [1280, 720], "device_scale": 1.0, "palette": "color_vision_safe", "ui_scale": 1.35, "camera": "overhead", "overlay_state": "comparison_terminal_collapsed"},
+        {"id": "actual_retina_ui135_cvd", "logical_viewport_px": [1280, 720], "physical_viewport_px": [1920, 1080], "device_scale": 1.5, "palette": "color_vision_safe", "ui_scale": 1.35, "camera": "broadcast", "overlay_state": "actual_replay_paused_collapsed"},
+        {"id": "advanced_1080_ui100_standard", "physical_viewport_px": [1920, 1080], "device_scale": 1.0, "palette": "standard", "ui_scale": 1.0, "camera": "elevated", "overlay_state": "comparison_terminal_explicit_advanced_expanded"}
+      ],
+      "additional_capture_count": 20,
+      "minimum_total_capture_count": 68,
+      "outcome_coverage": "Across the five representatives, bind at least two terminal success and two terminal failure fixtures; every failure has non-empty reason text and every terminal fixture exposes replay-ready/save state."
+    },
+    "capture_binding": [
+      "Each capture ID uniquely binds scenario ID+SHA, state, camera preset, viewport, device scale, palette, UI scale, build/executable/asset/profile hashes and PNG SHA.",
+      "All captures use GPU framebuffer readback from the production renderer; desktop screenshots and flat proofs are inadmissible.",
+      "Missing, duplicate, selector-drifted or non-hash-bound captures fail the complete matrix."
+    ]
+  },
+  "machine_acceptance_gates": {
+    "visual_and_layout": [
+      "Predicted semantic color plus dashed line plus endpoint ring exactly match this contract.",
+      "Actual semantic color plus solid line plus perpendicular ticks/tick-dot exactly match this contract.",
+      "All resolved physical sizes are inside the profile/UI-scale ranges.",
+      "Projection agreement maximum error <=0.5 physical px and every segment passes homogeneous/safe/playfield clipping.",
+      "Endpoint marker visibility, endpoint X/Z strings and rail counts exactly equal TrajectoryOverlaySnapshot.",
+      "Legend, result, reason, replay-ready and controls satisfy hierarchy, minimum text, contrast and safe-area contracts.",
+      "safe_area_violations=0, truncated_text_runs=0, overlap_pairs=0, debug_node_count=0, opaque_icon_count=0 and unexpanded_icon_count=0.",
+      "Advanced defaults collapsed; explicit expanded extension obeys reflow and close-action gates."
+    ],
+    "performance": {
+      "warmup_frames_min": 120,
+      "sample_frames_min": 300,
+      "p95_total_frame_ms_max": 16.7,
+      "p95_ui_plus_overlay_gpu_ms_max": 1.0,
+      "p95_overlay_cpu_build_ms_max": 0.5,
+      "complete_scene_draw_calls_max": 100,
+      "trajectory_overlay_additional_draw_calls_max": 8,
+      "texture_resident_mib_max": 256,
+      "trajectory_overlay_new_texture_count_max": 0,
+      "trajectory_overlay_texture_residency_delta_bytes_max": 0,
+      "trajectory_vertex_count_per_track_max": 8192,
+      "report_required": ["P50", "P95", "P99", "per-pass CPU", "per-pass GPU", "draw calls", "vertices", "texture residency"]
+    },
+    "fail_closed": "Any machine gate failure blocks TA review and no evidence PASS or M3 claim may be emitted."
+  },
+  "independent_ta_axes": [
+    "predicted_actual_distinguishable_without_color",
+    "world_path_alignment_and_camera_projection",
+    "dash_tick_endpoint_readability",
+    "legend_endpoint_and_rail_count_hierarchy",
+    "score_reason_replay_ready_and_control_clarity",
+    "safe_composition_and_gameplay_occlusion",
+    "ui085_ui100_ui135_and_retina_text_readability",
+    "standard_and_color_vision_safe_palette_readability",
+    "advanced_default_collapse_and_expanded_reflow",
+    "debug_and_shipping_separation"
+  ],
+  "authority_and_simulation_immutability": {
+    "preview_before_equals_after": {
+      "required_equal_fields": [
+        "game_state_sha256",
+        "runtime_tick",
+        "event_journal_generation_and_events_sha256",
+        "applied_semantic_actions_sha256",
+        "recent_physics_steps_sha256",
+        "rules_state_sha256",
+        "rng_or_seed_state_sha256"
+      ],
+      "existing_minimum": "TrainingProductController already compares game-state hash, tick and event count; implementation evidence must extend the attestation to all fields above.",
+      "preview_result_may_not_emit_authority_events": true
+    },
+    "overlay_render_before_equals_after": {
+      "required": true,
+      "rule": "Building, projecting, clipping, drawing, toggling track visibility or expanding Advanced details may mutate only UI/overlay presentation state. It may not call GameRuntime step/action APIs or change replay fixed-step state.",
+      "same_authority_fields_as_preview": true,
+      "replay_transport_exception": "Only an explicit replay transport control may change isolated ReplayTransportModel tick/paused/rate/camera state; it still may not change authoritative GameRuntime."
+    },
+    "evidence_gate": "Record canonical before/after hashes around both preview generation and at least 300 overlay-render frames for every core capture fixture; any mismatch is a hard FAIL."
+  },
+  "external_real_human_12_record_boundary": {
+    "required_records": 12,
+    "exact_scenario_coverage": "One complete record for every scenario_contract ID on one frozen build/assets/executable/physics profile.",
+    "executor": {"real_external_human": true, "project_member": false, "agent_or_robot": false, "anonymous_executor_code_required": true},
+    "independent_observer": {"required": true, "must_differ_from_executor": true, "signed_attestation_required": true, "pii_review_clear_required": true},
+    "manual_checks_exact_order": [
+      "product_entry_reachable",
+      "instructions_clear",
+      "objective_clear",
+      "recommended_assist_clear",
+      "scenario_loaded",
+      "legal_operation_completed",
+      "success_state_observed",
+      "failure_state_observed",
+      "score_observed",
+      "reset_observed",
+      "retry_observed",
+      "replay_v1_saved"
+    ],
+    "trajectory_checks": [
+      "predicted_legend_readable",
+      "actual_legend_readable",
+      "tracks_distinguishable_without_color",
+      "predicted_endpoint_readable",
+      "actual_endpoint_readable",
+      "authority_before_sha256_equals_authority_after_preview_sha256"
+    ],
+    "replay_checks": [
+      "same Replay v1 file replays twice to the declared final-state hash",
+      "wrong content hash rejected",
+      "wrong physics profile ID rejected",
+      "wrong physics profile hash rejected"
+    ],
+    "automation_boundary": "Automation artifacts must be attached but cannot substitute for real manual play, open response, executor/observer attestations or PII review.",
+    "design_and_gpu_boundary": "This design gate, machine matrix and TA visual review cannot populate or imply any of the 12 external-human records. Until all 12 validator-complete records PASS, external-human acceptance remains NOT_RUN."
+  },
+  "promotion_state_machine": [
+    {"condition": "This design JSON is valid", "status": "IMPLEMENTATION_ALLOWED", "gpu_or_manual_pass": false},
+    {"condition": "Implementation exists but any machine gate or matrix binding fails", "status": "GPU_EVIDENCE_REJECTED", "ta_review_allowed": false},
+    {"condition": "All >=68 actual-GPU captures and machine gates pass", "status": "GPU_MACHINE_PASS_PENDING_TA", "ta_review_allowed": true},
+    {"condition": "Independent TA reviews all bound PNGs and any axis fails", "status": "TA_FAIL", "m3_pass": false},
+    {"condition": "Machine and TA pass but external real-human records are incomplete", "status": "VISUAL_PASS_HUMAN_NOT_RUN", "m3_pass": false},
+    {"condition": "Machine, TA and all 12 external-human validator records pass on one frozen candidate", "status": "ELIGIBLE_FOR_PROJECT_MANAGER_M3_AUDIT", "automatic_m3_or_golden_promotion": false}
+  ],
+  "design_conclusion": "The overlay implementation must preserve the existing TrajectoryOverlayModel semantics while adding a shared-camera, homogeneous-clipped GPU renderer and a shipping hierarchy that remains readable without color. This artifact authorizes implementation only; no GPU capture, TA approval, external-human result, M3 acceptance or golden status is claimed."
+}

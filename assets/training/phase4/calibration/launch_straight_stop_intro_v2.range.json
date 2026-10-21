@@ -1,0 +1,924 @@
+{
+  "all_candidates_succeeded": true,
+  "attempt_count": 15,
+  "attempts": [
+    {
+      "actions": {
+        "power": 45.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.288143157958984,
+          89.34147644042969,
+          -0.1907624900341034
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 36.73849868774414,
+        "y": 89.34147644042969,
+        "z": -0.5508655905723572
+      },
+      "final_tick": 222,
+      "ordinal": 1,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 222,
+        "tick": 222
+      }
+    },
+    {
+      "actions": {
+        "power": 45.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28575897216797,
+          89.34147644042969,
+          -0.09537048637866974
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 36.704158782958984,
+        "y": 89.34147644042969,
+        "z": -0.2739385664463043
+      },
+      "final_tick": 222,
+      "ordinal": 2,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 222,
+        "tick": 222
+      }
+    },
+    {
+      "actions": {
+        "power": 45.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.0
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28496170043945,
+          89.34147644042969,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 36.69269943237305,
+        "y": 89.34147644042969,
+        "z": 0
+      },
+      "final_tick": 222,
+      "ordinal": 3,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 222,
+        "tick": 222
+      }
+    },
+    {
+      "actions": {
+        "power": 45.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28575897216797,
+          89.34147644042969,
+          0.09537048637866974
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 36.704158782958984,
+        "y": 89.34147644042969,
+        "z": 0.2739385664463043
+      },
+      "final_tick": 222,
+      "ordinal": 4,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 222,
+        "tick": 222
+      }
+    },
+    {
+      "actions": {
+        "power": 45.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.288143157958984,
+          89.34147644042969,
+          0.1907624900341034
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 36.73849868774414,
+        "y": 89.34147644042969,
+        "z": 0.5508655905723572
+      },
+      "final_tick": 222,
+      "ordinal": 5,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 98,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 222,
+        "tick": 222
+      }
+    },
+    {
+      "actions": {
+        "power": 50.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28794860839844,
+          89.34147644042969,
+          -0.19076088070869446
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 37.628692626953125,
+        "y": 89.34147644042969,
+        "z": -0.6817165613174438
+      },
+      "final_tick": 170,
+      "ordinal": 6,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 170,
+        "tick": 170
+      }
+    },
+    {
+      "actions": {
+        "power": 50.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28556442260742,
+          89.34147644042969,
+          -0.09536974132061005
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 37.58266830444336,
+        "y": 89.34147644042969,
+        "z": -0.3388217091560364
+      },
+      "final_tick": 170,
+      "ordinal": 7,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 170,
+        "tick": 170
+      }
+    },
+    {
+      "actions": {
+        "power": 50.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.0
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28477096557617,
+          89.34147644042969,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 37.567344665527344,
+        "y": 89.34147644042969,
+        "z": 0
+      },
+      "final_tick": 170,
+      "ordinal": 8,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 170,
+        "tick": 170
+      }
+    },
+    {
+      "actions": {
+        "power": 50.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28556442260742,
+          89.34147644042969,
+          0.09536974132061005
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 37.58266830444336,
+        "y": 89.34147644042969,
+        "z": 0.3388217091560364
+      },
+      "final_tick": 170,
+      "ordinal": 9,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 170,
+        "tick": 170
+      }
+    },
+    {
+      "actions": {
+        "power": 50.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28794860839844,
+          89.34147644042969,
+          0.19076088070869446
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 37.628692626953125,
+        "y": 89.34147644042969,
+        "z": 0.6817165613174438
+      },
+      "final_tick": 170,
+      "ordinal": 10,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 97,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 170,
+        "tick": 170
+      }
+    },
+    {
+      "actions": {
+        "power": 55.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28813934326172,
+          89.34147644042969,
+          -0.1907624453306198
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 38.61298370361328,
+        "y": 89.34147644042969,
+        "z": -0.826341450214386
+      },
+      "final_tick": 164,
+      "ordinal": 11,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 164,
+        "tick": 164
+      }
+    },
+    {
+      "actions": {
+        "power": 55.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": -0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28575134277344,
+          89.34147644042969,
+          -0.09537046402692795
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 38.5540771484375,
+        "y": 89.34147644042969,
+        "z": -0.4105324447154999
+      },
+      "final_tick": 164,
+      "ordinal": 12,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 164,
+        "tick": 164
+      }
+    },
+    {
+      "actions": {
+        "power": 55.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.0
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28495788574219,
+          89.34147644042969,
+          0
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 38.53441619873047,
+        "y": 89.34147644042969,
+        "z": 0
+      },
+      "final_tick": 162,
+      "ordinal": 13,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 162,
+        "tick": 162
+      }
+    },
+    {
+      "actions": {
+        "power": 55.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.003926990816987242
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28575134277344,
+          89.34147644042969,
+          0.09537046402692795
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 38.5540771484375,
+        "y": 89.34147644042969,
+        "z": 0.4105324447154999
+      },
+      "final_tick": 164,
+      "ordinal": 14,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 164,
+        "tick": 164
+      }
+    },
+    {
+      "actions": {
+        "power": 55.0,
+        "tip_x": 0.0,
+        "tip_y": 0.0,
+        "yaw": 0.007853981633974483
+      },
+      "facts": {
+        "cue_ball_position_at_first_contact_cm": [
+          34.28813934326172,
+          89.34147644042969,
+          0.1907624453306198
+        ],
+        "distinct_object_balls_with_rail_contact": 0,
+        "first_contact_ball": 1,
+        "pocket_order": [
+          1
+        ],
+        "rail_contacts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "final_cue_position": {
+        "x": 38.61298370361328,
+        "y": 89.34147644042969,
+        "z": 0.826341450214386
+      },
+      "final_tick": 164,
+      "ordinal": 15,
+      "score": {
+        "failed": false,
+        "reason": "success",
+        "score": 96,
+        "score_eligible": true,
+        "succeeded": true
+      },
+      "settled": {
+        "balls_moving": false,
+        "steps": 164,
+        "tick": 164
+      }
+    }
+  ],
+  "binary_sha256": "fe153445b5e3a6a7f2b494341992361fe72622da831a667a28493db6d1b8f9c9",
+  "candidate_limit": 1000,
+  "mode": "verify_teaching_range",
+  "scenario_id": "launch_straight_stop_intro_v2",
+  "scenario_sha256": "9adcd4e45bf292e6b88d61bea12f144903acc109c0f6f8ac6c128df8ee9a311b",
+  "schema": "billiardgl.phase4.reference_calibration.v1",
+  "winner": {
+    "actions": {
+      "power": 50.0,
+      "tip_x": 0.0,
+      "tip_y": 0.0,
+      "yaw": 0.0
+    },
+    "facts": {
+      "cue_ball_position_at_first_contact_cm": [
+        34.28477096557617,
+        89.34147644042969,
+        0
+      ],
+      "distinct_object_balls_with_rail_contact": 0,
+      "first_contact_ball": 1,
+      "pocket_order": [
+        1
+      ],
+      "rail_contacts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "final_cue_position": {
+      "x": 37.567344665527344,
+      "y": 89.34147644042969,
+      "z": 0
+    },
+    "final_tick": 170,
+    "ordinal": 8,
+    "score": {
+      "failed": false,
+      "reason": "success",
+      "score": 97,
+      "score_eligible": true,
+      "succeeded": true
+    },
+    "settled": {
+      "balls_moving": false,
+      "steps": 170,
+      "tick": 170
+    }
+  }
+}

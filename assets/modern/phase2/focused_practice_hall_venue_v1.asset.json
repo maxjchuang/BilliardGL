@@ -1,0 +1,276 @@
+{
+  "asset_id": "focused_practice_hall_venue_v1",
+  "authorship": "original_procedural_billiardgl",
+  "budgets": {
+    "draw_calls_unbatched_by_lod": {
+      "0": 34,
+      "1": 34,
+      "2": 14
+    },
+    "geometry_buffer_bytes": 46056,
+    "incremental_texture_gpu_bytes_when_core_pbr_loaded": 0,
+    "materials": 6,
+    "rendered_triangles_by_lod": {
+      "0": 2376,
+      "1": 408,
+      "2": 168
+    },
+    "standalone_shared_texture_gpu_bytes_full_mips": 6291444,
+    "texture_references": 9,
+    "unique_triangles_all_lods": 636
+  },
+  "cameras": {
+    "broadcast_oblique": {
+      "background_relative_ev_target": [
+        -3.0,
+        -2.0
+      ],
+      "eye_m": [
+        2.65,
+        3.11483976,
+        2.25
+      ],
+      "nodes": {
+        "position": 91,
+        "target": 92
+      },
+      "projection": "perspective",
+      "target_m": [
+        0.0,
+        0.82,
+        0.0
+      ],
+      "vertical_fov_degrees": 42.0
+    },
+    "low_aim": {
+      "background_relative_ev_target": [
+        -3.0,
+        -2.0
+      ],
+      "eye_m": [
+        0.1,
+        0.98483976,
+        1.17
+      ],
+      "nodes": {
+        "position": 87,
+        "target": 88
+      },
+      "projection": "perspective",
+      "target_m": [
+        0.0,
+        0.91,
+        -0.05
+      ],
+      "vertical_fov_degrees": 42.0
+    },
+    "player_shot": {
+      "background_relative_ev_target": [
+        -3.0,
+        -2.0
+      ],
+      "eye_m": [
+        0.3,
+        1.12483976,
+        1.62
+      ],
+      "nodes": {
+        "position": 85,
+        "target": 86
+      },
+      "projection": "perspective",
+      "target_m": [
+        0.0,
+        0.91,
+        0.28
+      ],
+      "vertical_fov_degrees": 50.0
+    },
+    "tactical_overhead": {
+      "background_relative_ev_target": [
+        -3.0,
+        -2.0
+      ],
+      "eye_m": [
+        0.0,
+        3.92,
+        0.02
+      ],
+      "nodes": {
+        "position": 89,
+        "target": 90
+      },
+      "orthographic_vertical_span_m": 3.15,
+      "projection": "orthographic",
+      "target_m": [
+        0.0,
+        0.86483976,
+        0.0
+      ]
+    }
+  },
+  "constraints": {
+    "background_relative_to_table_ev_range": [
+      -3.0,
+      -2.0
+    ],
+    "brand_or_competitor_content_present": false,
+    "four_camera_occlusion_check_required": true,
+    "new_texture_assets": 0,
+    "remote_furniture_present": false,
+    "shared_original_pbr_only": true
+  },
+  "files": {
+    "four_camera_preview": {
+      "panel_layout": {
+        "bottom_left": "tactical_overhead",
+        "bottom_right": "broadcast_oblique",
+        "top_left": "player_shot",
+        "top_right": "low_aim"
+      },
+      "path": "assets/modern/phase2/focused_practice_hall_venue_four_camera_v1.png",
+      "runtime": false,
+      "sha256": "sha256:56a023d4dc3a4a786ac1aecf4c8bd45935575b1308a98ed733e4af8934dc8e92"
+    },
+    "gltf": {
+      "path": "assets/modern/phase2/focused_practice_hall_venue_v1.gltf",
+      "sha256": "sha256:d3d8abf883c578b44f5495923fd01804e0c5afe14a96d104d8f9f0aadf2336c5"
+    },
+    "shared_pbr_textures": {
+      "gunmetal": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_basecolor_srgb_v1.png",
+          "sha256": "sha256:2282373701043b83804c767a00d37d195735e19117c3f2e3abd2653e90437893"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_normal_gl_v1.png",
+          "sha256": "sha256:4b5d34071da96d8843f73ed88169d483e64aee913e47a3b654851e055d66eed3"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_gunmetal_orm_linear_v1.png",
+          "sha256": "sha256:5ca5721dc7216421359f89d08649789114e3af6a972e3721be36948cde25623d"
+        }
+      },
+      "rubber": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_basecolor_srgb_v1.png",
+          "sha256": "sha256:e2cc513e8973ed4f5bfa97dbff09f48211b2052c4d76c6e02396d15d008b793f"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_normal_gl_v1.png",
+          "sha256": "sha256:332a374acd9d9bd823d926675468630d194088a853ae996c2b25cf621246cd84"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_rubber_orm_linear_v1.png",
+          "sha256": "sha256:dd10b944bc43298aa82aa38f32aa60ef6d30615278df22d2a1e6abb14979980b"
+        }
+      },
+      "walnut": {
+        "basecolor": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_basecolor_srgb_v1.png",
+          "sha256": "sha256:f8f6a6381bb57cd1d9827c58675adba08d5dc4dbdfb7fa16e257cd62ec81a62e"
+        },
+        "normal": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_normal_gl_v1.png",
+          "sha256": "sha256:40226ee02c39682ffd7c312434aa74d5f6ce93b52accf0372c2f94984aba265c"
+        },
+        "orm": {
+          "path": "assets/modern/phase2/focused_practice_hall_walnut_orm_linear_v1.png",
+          "sha256": "sha256:7115b0779f07884ac0584acdd9a095f8de6f45ae98e363e69ed73326dd0dc421"
+        }
+      }
+    }
+  },
+  "generator": "scripts/generate_phase2_venue_gltf.py",
+  "lod_set": {
+    "draw_calls_unbatched": {
+      "0": 34,
+      "1": 34,
+      "2": 14
+    },
+    "rendered_triangles": {
+      "0": 2376,
+      "1": 408,
+      "2": 168
+    },
+    "roots": {
+      "0": 34,
+      "1": 69,
+      "2": 84
+    }
+  },
+  "protected_visibility_anchors_m": {
+    "cue": [
+      [
+        0.18,
+        0.92,
+        0.08
+      ],
+      [
+        0.18,
+        0.92,
+        1.58
+      ]
+    ],
+    "lamp": [
+      [
+        0,
+        2.21483976,
+        0
+      ],
+      [
+        -0.3,
+        2.21483976,
+        -0.9
+      ],
+      [
+        0.3,
+        2.21483976,
+        0.9
+      ]
+    ],
+    "table": [
+      [
+        0,
+        0.86483976,
+        0
+      ],
+      [
+        -0.635,
+        0.86483976,
+        -1.27
+      ],
+      [
+        0.635,
+        0.86483976,
+        1.27
+      ]
+    ]
+  },
+  "room": {
+    "brand_text": false,
+    "clearance_around_table_m": 3.2,
+    "dimensions_m": [
+      8.0,
+      4.0,
+      10.0
+    ],
+    "modules": [
+      "floor",
+      "walls",
+      "ceiling",
+      "lamp_rack_and_cables",
+      "acoustic_panels",
+      "wall_trim"
+    ],
+    "remote_furniture": false
+  },
+  "schema_version": 1,
+  "status": "phase2_venue_production_candidate_not_final_high_mesh",
+  "visibility_overrides": {
+    "reason": "keep the approved orthographic playfield unobstructed while retaining light emission",
+    "tactical_overhead": [
+      "hide_tactical_overhead"
+    ]
+  }
+}

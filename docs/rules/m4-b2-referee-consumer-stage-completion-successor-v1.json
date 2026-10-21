@@ -1,0 +1,154 @@
+{
+  "schema": "m4_b2_referee_consumer_stage_completion_successor_v1",
+  "status": "FINAL_B2_STAGE_EXECUTION_COMPLETE_REMAINING_D5_D6_NOT_M4_COMPLETE",
+  "predecessor_bindings": {
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"
+    },
+    "priority_register": {
+      "path": "docs/rules/m4-b2-per-consumer-priority-register-v1.json",
+      "sha256": "8a778fc249a2ba952ff6acca60c5d24cad6ca2135f606bb54e3e0b887d092f55"
+    },
+    "audit_v9": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json",
+      "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"
+    },
+    "c8_defer_gate": {
+      "path": "docs/rules/wpa-ii-12-3-profile-only-d6-dependency-defer-gate-v1.json",
+      "sha256": "f217958cf035024150b622421b68d80bdcf5e8dd4f7281bfeecf447fee87043a"
+    }
+  },
+  "stage_rows": [
+    {
+      "order": 0,
+      "id": "B2-FOUNDATION",
+      "receipt_path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json",
+      "receipt_sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b",
+      "stage_state": "IMPLEMENTED",
+      "audit_effect": "NONE"
+    },
+    {
+      "order": 1,
+      "id": "WPA-II-21",
+      "receipt_path": "docs/rules/wpa-ii-21-stalemate-referee-consumer-implementation-receipt-v1.json",
+      "receipt_sha256": "0829217fd580d0302ee96d6b4068535f03632420d53f0ae6ca1bb4f2b86644e2",
+      "stage_state": "IMPLEMENTED",
+      "audit_effect": "IMPLEMENTED_IN_AUDIT_V8_AND_V9"
+    },
+    {
+      "order": 2,
+      "id": "WPA-II-19",
+      "receipt_path": "docs/rules/wpa-ii-19-signed-group-confusion-consumer-implementation-receipt-v1.json",
+      "receipt_sha256": "162478839f14fb121738b98f6688f690d1e4683b9132ccd67ee3a3f12e07ab18",
+      "stage_state": "IMPLEMENTED",
+      "audit_effect": "IMPLEMENTED_IN_AUDIT_V9"
+    },
+    {
+      "order": 3,
+      "id": "WPA-II-15-1",
+      "receipt_path": "docs/rules/wpa-ii-15-1-signed-frozen-cue-object-declaration-lifecycle-implementation-receipt-v1.json",
+      "receipt_sha256": "97c9e2f279bd398ff62955c31e4ace3132a15e303972d917fe1105d6048518a4",
+      "stage_state": "PARTIAL_SIGNED_LIFECYCLE",
+      "remaining": [
+        "D5",
+        "classification",
+        "audit"
+      ]
+    },
+    {
+      "order": 4,
+      "id": "WPA-II-15-2",
+      "receipt_path": "docs/rules/wpa-ii-15-2-signed-frozen-object-straight-cushion-declaration-lifecycle-implementation-receipt-v1.json",
+      "receipt_sha256": "b21de04b86f4c988c6f32b6e87667e11dbb55dfed60eeaf55c08e4745b64e6af",
+      "stage_state": "PARTIAL_SIGNED_LIFECYCLE",
+      "remaining": [
+        "D5",
+        "classification",
+        "audit"
+      ]
+    },
+    {
+      "order": 5,
+      "id": "WPA-II-12-5-6",
+      "receipt_path": "docs/rules/wpa-ii-12-5-6-signed-close-case-declaration-lifecycle-implementation-receipt-v1.json",
+      "receipt_sha256": "eb0ac7392ca9bfb9f84c768c22cc90bf120da32d8edb8a7d32674b2383fa51f1",
+      "stage_state": "PARTIAL_REVIEW_LIFECYCLE",
+      "remaining": [
+        "D5",
+        "classification",
+        "audit"
+      ]
+    },
+    {
+      "order": 6,
+      "id": "WPA-II-12-7",
+      "receipt_path": "docs/rules/wpa-ii-12-7-signed-push-review-declaration-lifecycle-implementation-receipt-v1.json",
+      "receipt_sha256": "136048a8bd5e6f26b5160d111f53d6cc5bc297fc7a2da5e6b74dd4d53e6d74eb",
+      "stage_state": "PARTIAL_REVIEW_LIFECYCLE",
+      "remaining": [
+        "D5",
+        "classification",
+        "audit"
+      ]
+    },
+    {
+      "order": 7,
+      "id": "WPA-II-17",
+      "receipt_path": "docs/rules/wpa-ii-17-exact-nonphysical-referee-foul-subset-implementation-receipt-v1.json",
+      "receipt_sha256": "a87ff883cb543317dcaa6b35a1ae6c82e180bf30d067a1a5897f0736c89bb19d",
+      "stage_state": "PARTIAL_EXACT_NONPHYSICAL_SUBSET",
+      "remaining": [
+        "D5",
+        "D6",
+        "full foul inventory",
+        "audit"
+      ]
+    },
+    {
+      "order": 8,
+      "id": "WPA-II-12-3",
+      "receipt_path": null,
+      "receipt_sha256": null,
+      "stage_state": "BLOCKED_DEFER_D6_NO_PARTIAL_IMPLEMENTATION",
+      "remaining": [
+        "D6",
+        "profile consumer",
+        "classification",
+        "audit"
+      ]
+    }
+  ],
+  "dependency_successor": {
+    "D2_REFEREE_PROTOCOL": "SATISFIED_FOUNDATION_AND_SEVEN_CONSUMER_SCOPES",
+    "D5_CUE_CONTACT": "NOT_SATISFIED_BLOCKS_15_1_15_2_12_5_6_12_7_AND_17_FULL",
+    "D6_OFF_TABLE_PHYSICS": "NOT_SATISFIED_BLOCKS_12_3_AND_17_FULL",
+    "B2_STAGE_EXECUTION": "COMPLETE_WITH_EXPLICIT_PARTIAL_AND_DEFER_BOUNDARIES",
+    "M4": "NOT_COMPLETE"
+  },
+  "claims": {
+    "foundation_implemented": true,
+    "implemented_full_consumers": [
+      "WPA-II-21",
+      "WPA-II-19"
+    ],
+    "implemented_partial_consumers": [
+      "WPA-II-15-1",
+      "WPA-II-15-2",
+      "WPA-II-12-5-6",
+      "WPA-II-12-7",
+      "WPA-II-17"
+    ],
+    "deferred_without_implementation": [
+      "WPA-II-12-3"
+    ],
+    "b2_stage_completed": true,
+    "all_rows_complete": false,
+    "d5_complete": false,
+    "d6_complete": false,
+    "audit_v9_modified": false,
+    "m4_complete": false,
+    "production_or_cmake_modified_by_successor": false,
+    "ui_gpu_readiness_or_authorization": false
+  }
+}

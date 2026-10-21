@@ -1,0 +1,163 @@
+{
+  "schema": "billiardgl.phase4.v19.route_wide_dash_event_semantic_interpretation_correction_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_ROUTE_WIDE_DASH_EVENT_SEMANTICS_DESIGN_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU_NO_AUTH",
+  "scope": "Fail-closed semantic interpretation correction for predicted inset dash events only. It replaces per-analytic-segment predicted dash member identity with route-wide dash-on event identity while retaining exact ordered source contributor intervals and the complete source-group denominator. Actual rails, endpoints, layout, rendering architecture, GL lifecycle and all authorization boundaries remain unchanged. This artifact is design-only.",
+  "frozen_bindings": [
+    {
+      "role": "v19_original_product_and_implementation_design_gate",
+      "path": "docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json",
+      "sha256": "c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"
+    },
+    {
+      "role": "v19_landscape_orientation_correction_gate",
+      "path": "docs/art/phase4-v19-landscape-orientation-layout-interpretation-correction-gate-v1.json",
+      "sha256": "cffc93f29bb24f7f9378dee3c17fffd1da1c139745eec17bdb380cf6bda04d13"
+    }
+  ],
+  "nonfinal_unsatisfiable_example_binding": {
+    "evidence_kind": "NONFINAL_CP1_FAIL_CLOSED_REPRODUCIBLE_FINDING_NO_FROZEN_RECEIPT_NO_PASS",
+    "statement": "NONFINAL CP1 fail-closed finding: in 1920x1080_ui135, the first 63 cm canonical z interval projects to approximately 123.222 physical pixels. With route-wide 14-on/8-off cadence, its phase is approximately 13.222, leaving an approximately 0.778-pixel dash-on residual in predicted_arc_1. That per-parent core member has no common final-ownership probe pixel across the required 1x/2x/4x profiles; moving or capping it across the boundary falsifies single-parent lineage, while omitting its probe violates the frozen per-member probe contract.",
+    "statement_sha256": "bd5ebb32071fb351407995650ed40b2010e343d6d46703a96e20c3a210e735f5",
+    "layout_profile": "1920x1080_ui135",
+    "canonical_interval_cm": 63.0,
+    "uniform_scale_px_per_cm": 1.9559055118110236,
+    "projected_interval_px": 123.22204724409448,
+    "dash_on_px": 14.0,
+    "dash_off_px": 8.0,
+    "phase_px": 13.222047244094483,
+    "next_arc_residual_dash_on_px": 0.7779527559055168,
+    "failed_member_prefix": "predicted_arc_1_dash_0_core",
+    "source_or_binary_frozen": false,
+    "checkpoint_pass_inferred": false
+  },
+  "root_semantic_correction_decision_binding": {
+    "statement": "请立即冻结V19 route-wide dash-event semantic correction gate+validator/mutations，绑定当前不可满足例1920_ui135 arc0~123.2px/0.8px spill与原gate/orientation gate；锁ordered contributors+interval lineage、source-group denominator保留、gap-only non-rendered、event probe denominator，actual/endpoint不变。design-only，不改prod/CMake/GPU/readiness。",
+    "statement_sha256": "97257421080faa7332ef97c39d7a787f73327036306cf9466f32d57c9cd3c133",
+    "selected": true,
+    "design_only": true
+  },
+  "supersession_contract": {
+    "superseded_original_text": "One deterministic InsetTrajectoryProbe per inset core or marker semantic member",
+    "replacement": "One deterministic InsetTrajectoryProbe per route-wide predicted dash-event core or endpoint/marker semantic member. Analytic source contributors retain exact interval lineage but do not create subpixel presentation members or probes solely because an event crosses a source boundary.",
+    "predicted_per_parent_dash_fragment_member_identity_allowed": false,
+    "silent_probe_omission_for_emitted_event_member_allowed": false,
+    "all_actual_rail_endpoint_orientation_layout_offscreen_gl_and_future_acceptance_contracts_unchanged": true,
+    "original_gate_may_be_used_without_both_v19_corrections": false
+  },
+  "route_wide_dash_event_contract": {
+    "generation_order": "Clip and order the complete canonical predicted route first; accumulate one continuous route-distance coordinate without reset at analytic source boundaries; classify the global 14-on/8-off cadence; then create one presentation event for every maximal connected dash-on interval.",
+    "event_key": "generationId + predicted + routeWideDashEventOrdinal + canonicalRouteDistanceStart + canonicalRouteDistanceEnd",
+    "event_roles_in_order": [
+      "predicted_outer_rim",
+      "predicted_inner_halo",
+      "predicted_dash_core"
+    ],
+    "one_uniform_nonzero_inset_token_per_event_role": true,
+    "event_geometry": "Each role may contain ordered triangles from multiple analytic source segments, but uses one event identity and one uniform role token across the complete dash-on event.",
+    "centerline_and_cadence_unchanged": true,
+    "dash_event_may_reset_at_analytic_source_boundary": false,
+    "event_may_be_split_only_for_source_identity_or_probe_convenience": false,
+    "subpixel_cap_or_extension_across_event_bounds_allowed": false,
+    "coordinate_probe_or_case_id_may_affect_event_generation": false
+  },
+  "ordered_contributor_interval_lineage_contract": {
+    "contributor_key": "parentSourceKey + analytic arcSegmentId + route-order ordinal",
+    "contributor_record_fields_in_order": [
+      "parentSourceKey",
+      "arcSegmentId",
+      "routeOrderOrdinal",
+      "sourceLocalTStart",
+      "sourceLocalTEnd",
+      "eventRouteDistanceStartPx",
+      "eventRouteDistanceEndPx"
+    ],
+    "event_contributors_are_ordered_by_route_then_interval": true,
+    "intervals_are_finite_half_open_and_nonoverlapping": true,
+    "event_interval_union_exactly_equals_dash_on_event": true,
+    "every_event_contributor_back_references_one_existing_source_group": true,
+    "every_source_mapping_row_lists_all_ordered_event_references_and_local_intervals": true,
+    "foreign_duplicate_missing_reordered_overlapping_or_mixed_generation_contributor_fails_closed": true,
+    "world_to_source_group_mapping_remains_exact": true,
+    "world_visibility_or_camera_projection_may_change_event_eligibility": false
+  },
+  "source_group_and_gap_denominator_contract": {
+    "source_group_denominator_unchanged": true,
+    "source_parent_keys_count_and_digest_unchanged_by_this_correction": true,
+    "every_source_group_has_complete_route_interval_partition": true,
+    "dash_on_interval_reference": "ordered route-wide event key + contributor interval",
+    "dash_gap_interval_record": "parentSourceKey + local half-open interval + predicted_dash_gap_by_route_wide_cadence",
+    "gap_only_source_group_remains_in_source_denominator": true,
+    "gap_only_source_group_may_have_zero_rendered_event_members": true,
+    "gap_only_is_not_missing_or_clipped": true,
+    "gap_records_have_no_token_and_no_probe": true,
+    "source_rows_may_be_deleted_or_merged": false,
+    "historical_world_81_denominator_or_pass_inherited": false
+  },
+  "event_semantic_and_probe_denominator_contract": {
+    "semantic_member_denominator": "All route-wide predicted event role members plus unchanged actual rail and endpoint/marker members.",
+    "probe_denominator": "Exactly one probe for every route-wide predicted dash-event core and every unchanged actual core or endpoint/marker member required by the original V19 gate.",
+    "predicted_event_probe_fields": [
+      "eventKey",
+      "predictedCoreMemberKey",
+      "predictedInnerHaloCompanionMemberKey",
+      "corePhysicalPixel",
+      "haloPhysicalPixel",
+      "fixedPanelBackgroundPhysicalPixel"
+    ],
+    "probe_resolution": "After full final draw order, select a deterministic lexicographically first physical pixel that carries the exact event core token in each 1x/2x/4x profile, and likewise one exact same-event halo pixel; background is zero in every sample.",
+    "one_common_candidate_must_pass_all_required_sample_profiles": true,
+    "no_candidate_behavior": "Fail the package with trajectory_inset_probe_unresolved:eventKey; do not split the event, move a probe into another event, omit the probe, change cadence or reduce a denominator.",
+    "standard_cvd_event_topology_lineage_and_probe_ids_identical": true,
+    "ordered_event_count_digest_contributor_digest_semantic_member_count_and_probe_digest_must_be_frozen_by_future_cp1_receipt": true
+  },
+  "cp1_acceptance_delta_not_executed": {
+    "existing_exact_96_case_order_and_count_unchanged": true,
+    "required_positive_fixtures": [
+      "1920x1080_ui135 reproduces the approximately 0.778-pixel cross-boundary residual as one contributor interval inside a full route-wide dash event, not a standalone member",
+      "the event has one core, one inner halo, one outer rim, one ordered contributor list and one core probe across 1x/2x/4x",
+      "all contributor interval unions and all source route interval partitions are exact with zero missing, overlap, reorder or foreign lineage",
+      "gap-only source groups remain in the source denominator with explicit non-rendered gap intervals and no token or probe",
+      "event and source mapping digests are camera-independent and standard/CVD identical across all 96 cases",
+      "unchanged actual rail, endpoint, layout and orientation tests still pass without inherited world-machine authority"
+    ],
+    "required_fail_closed_fixtures": [
+      "reset cadence at an analytic source boundary",
+      "split one dash-on event into per-parent presentation members",
+      "drop, duplicate, reorder, overlap or mix-generation one contributor interval",
+      "delete a gap-only source group or classify a gap as missing/clipped",
+      "assign a token or probe to a gap interval",
+      "omit the probe for an emitted route-wide event core",
+      "resolve an event probe from another event or only one sample profile",
+      "change actual rail, endpoint, world source mapping, layout, orientation, offscreen architecture or GL lifecycle"
+    ],
+    "cpu_checkpoint_pass": false,
+    "implementation_pass": false
+  },
+  "authorization_boundary": {
+    "root_semantic_correction_selected": true,
+    "semantic_correction_gate_complete": true,
+    "production_edit_authorized_by_this_gate": false,
+    "cmake_edit_authorized": false,
+    "implementation_authorized_by_this_gate": false,
+    "cpu_checkpoint_pass": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_pass": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "design_semantic_interpretation_only": true,
+    "nonfinal_example_is_not_a_frozen_receipt": true,
+    "production_modified_by_this_gate": false,
+    "cmake_modified_by_this_gate": false,
+    "cpu_test_executed_by_this_gate": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "implementation_pass": false
+  }
+}

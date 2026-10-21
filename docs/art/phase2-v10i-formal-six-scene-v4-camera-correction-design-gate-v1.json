@@ -1,0 +1,210 @@
+{
+  "schema": "phase2_v10i_formal_six_scene_v4_camera_correction_design_gate_v1",
+  "status": "PASS_DESIGN_ONLY_NO_GPU_NO_PRODUCTION_EDIT",
+  "purpose": "Fail-closed technical-art gate for correcting the frozen v3 low_aim camera/composition failure without changing visual acceptance or claiming new evidence.",
+  "frozen_v3_failure": {
+    "receipt_path": "docs/evidence/phase2-v10i-formal-six-scene-v3-failure-receipt-v1.json",
+    "receipt_sha256": "818ceb4be65f4ac192676a383ca2892585b4d1fee94bbb3e7471b3fd2da9291d",
+    "status": "FORMAL_SIX_SCENE_FAIL_FROZEN_NO_RERUN",
+    "failed_scene_id": "low_aim",
+    "break_ppm": {
+      "path": "docs/evidence/phase2-v10i-formal-six-scene-v3-run-1/break.ppm",
+      "sha256": "92f3435b7aa917e349016188cc88c2434b9cc7663e1cd69d2571108216e0840b",
+      "dimensions": [1920, 1080],
+      "reviewed_at_original_resolution": true,
+      "technical_art_observation": "Table, balls, rails, venue and authored light response are visible under the same frozen formal asset package."
+    },
+    "low_aim_ppm": {
+      "path": "docs/evidence/phase2-v10i-formal-six-scene-v3-run-1/low_aim.ppm",
+      "sha256": "ea9f886ac578b667a7663b048995b6ba5c2c09c87d684d429712c8d18366aa36",
+      "dimensions": [1920, 1080],
+      "reviewed_at_original_resolution": true,
+      "overall_visible_pixels": 3450,
+      "overall_visible_pixel_bbox": [240, 1029, 469, 1043],
+      "interest_region_visible_pixels": 0,
+      "interest_region_max_channel": 2,
+      "technical_art_observation": "The world frame is effectively black; only the bottom-left HUD bar and a few bottom-edge pixels remain visible."
+    },
+    "authorization_consumed": true,
+    "additional_v3_capture_allowed": false
+  },
+  "independent_technical_art_attribution": {
+    "classification": "REAL_CAMERA_COMPOSITION_STATE_FAILURE",
+    "primary_cause": "The v3 low_aim recipe applies relative orbit and zoom to the default Elevated camera before toggle_aim. The resulting transition start is above the authored table lamp. toggle_aim starts, but does not complete, the transition to AimPlayer/PlayerLow before the immediate screenshot, so the formal frame is captured from the occluded high start pose.",
+    "causal_chain": [
+      "Fresh process starts in ObserveFree/Elevated.",
+      "orbit_camera pitch_delta=+0.40 and zoom_camera delta=-38 produce about 64.918 degrees and 182 cm at the transition start.",
+      "The computed v3 low_aim start eye is 241.322 cm high, above the lamp reference plane at 221.484 cm while its view ray crosses the lamp footprint.",
+      "toggle_aim begins an AimPlayer/PlayerLow transition with transition alpha zero.",
+      "No camera-time step or immediate semantic snap occurs before get_state and screenshot.",
+      "The world is occluded while the screen-space HUD remains visible."
+    ],
+    "static_geometry_cm": {
+      "play_surface_y": 86.483976,
+      "lamp_reference_y": 221.483976,
+      "lamp_bottom_y": 220.883976,
+      "v3_break_eye_y": 206.635328,
+      "v3_low_aim_transition_start_eye_y": 241.322164,
+      "v4_low_aim_player_low_eye_y": 138.934397,
+      "v4_low_aim_clearance_below_lamp_bottom": 81.949579
+    },
+    "asset_or_lighting_failure_primary": false,
+    "interest_region_misconfiguration": false,
+    "reasons_excluded": {
+      "asset_or_lighting": "break renders the same frozen asset package and lighting, and low_aim still renders its HUD, so assets, lighting and renderer execution are not the primary failure.",
+      "interest_region": "low_aim is globally absent outside the ROI as well; moving or weakening the ROI would hide a black-world failure rather than repair composition."
+    }
+  },
+  "v4_minimum_correction_contract": {
+    "strategy": "AUTOMATION_ONLY_INSTANT_SEMANTIC_CAMERA_AND_EXPLICIT_FORMAL_REGISTRY_V2",
+    "formal_modern_registry_version": 2,
+    "required_scene_ids_in_order": [
+      "break",
+      "low_aim",
+      "ball_closeup",
+      "pocket_closeup",
+      "tactical_overhead",
+      "post_shot_observe"
+    ],
+    "every_scene_camera_rule": {
+      "required_explicit_camera_anchor": "set_camera_preset",
+      "required_parameter": {"instant": true},
+      "relative_delta_requires_preceding_semantic_anchor": true,
+      "later_semantic_transition_requires_explicit_settlement_and_final_query": true,
+      "low_aim_anchor_must_follow_toggle_aim": true,
+      "reason": "Every scene has a named semantic pose; low_aim snaps after toggle_aim, while a later intentional shot/replay transition in another scene must settle and be verified before capture.",
+      "legacy_relative_delta_may_be_sole_final_camera_contract": false,
+      "pre_capture_transitioning_must_equal": false
+    },
+    "semantic_preset_map": {
+      "break": {"preset": "elevated", "state": "observe_free"},
+      "low_aim": {"preset": "player_low", "state": "aim_player"},
+      "ball_closeup": {"preset": "elevated", "state": "observe_free"},
+      "pocket_closeup": {"preset": "elevated", "state": "observe_free"},
+      "tactical_overhead": {"preset": "overhead", "state": "aim_overhead"},
+      "post_shot_observe": {"preset": "elevated", "state": "observe_free"}
+    },
+    "low_aim_required_recipe": [
+      {"command": "toggle_aim", "params": {}},
+      {"command": "set_camera_preset", "params": {"preset": "player_low", "instant": true}},
+      {"command": "set_aim_yaw", "params": {"yaw": 1.5707963267948966}},
+      {"command": "set_shot_power", "params": {"power": 80.0}}
+    ],
+    "low_aim_forbidden_commands": ["orbit_camera", "pan_camera", "zoom_camera"],
+    "low_aim_pre_capture_presentation_state": {
+      "state": "aim_player",
+      "preset": "player_low",
+      "transitioning": false,
+      "finite_eye_target_distance_fov": true,
+      "cue_ball_target_binding": true
+    },
+    "instant_semantics": {
+      "automation_only": true,
+      "must_resolve_to_exact_named_preset_pose": true,
+      "must_not_advance_physics_tick": true,
+      "must_not_change_ball_or_rules_state": true,
+      "must_return_presentation_state_or_be_immediately_queryable": true,
+      "interactive_product_transition_behavior_unchanged": true
+    }
+  },
+  "allowed_implementation_layers": [
+    "formal-modern visual scene registry v2 and its CPU tests",
+    "automation command schema/controller parsing solely for set_camera_preset instant=true",
+    "runtime/camera state-machine immediate preset snap seam reachable only from rendered automation",
+    "formal capture runner pre-capture get_presentation_state assertion",
+    "offline camera projection, occluder-clearance and frozen-evidence validators/tests",
+    "new v4 readiness, source-freeze, authorization and evidence metadata under new roots"
+  ],
+  "forbidden_changes": [
+    "modern or legacy renderer implementation, shaders, exposure, tonemap, MSAA or quality",
+    "shipping glTF, textures, PBR parameters, materials, venue, table, balls, cue, lamp geometry or lighting rig",
+    "interactive product camera presets, timings, interpolation, input behavior or player-facing camera UX",
+    "rules, physics, ball state, shot semantics, authority or gameplay behavior",
+    "scene IDs, scene purposes, scene order or interest-region names/rectangles",
+    "visible-pixel channel threshold, required region-visible count or black-frame rejection",
+    "mutation or rerun of the consumed v3 evidence root",
+    "formal/GPU/golden/M2/product/TA pass claims before new evidence exists"
+  ],
+  "immutable_visual_acceptance": {
+    "resolution": [1920, 1080],
+    "renderer": "modern",
+    "quality": "medium",
+    "msaa_samples": 4,
+    "fresh_process_per_scene": true,
+    "visible_pixel_channel_rule": "max_rgb_channel_gt_8",
+    "minimum_whole_frame_visible_pixels": 1,
+    "minimum_interest_region_visible_pixels": 1,
+    "break_interest_region": {"name": "table", "rect_normalized": [0.10, 0.16, 0.80, 0.68]},
+    "low_aim_interest_region": {"name": "cue_and_ball", "rect_normalized": [0.18, 0.36, 0.64, 0.42]},
+    "threshold_or_region_relaxation_allowed": false
+  },
+  "cpu_static_preflight_gate": {
+    "status": "REQUIRED_NOT_RUN_BY_THIS_DESIGN_GATE",
+    "gpu_or_graphics_context_allowed": false,
+    "required_cases": ["break", "low_aim"],
+    "shared_assertions": [
+      "Registry v2 scene IDs/order/purposes and all interest regions equal frozen v3.",
+      "Each scene has the expected semantic preset with instant=true; low_aim applies it after toggle_aim, and any later intentional transition must explicitly settle.",
+      "Final presentation camera eye/target/distance/FOV are finite and projection matrix is valid at 1920x1080.",
+      "Pre-capture transitioning is false and the physics tick is unchanged by the instant preset.",
+      "Projected required world anchors have positive clip w, on-screen area and intersection with the unchanged scene ROI.",
+      "No camera ray from eye to required anchors crosses the lamp housing/diffuser occluder volume."
+    ],
+    "break_assertions": [
+      "Break remains the regression control and projects playfield corners, cue ball and rack into the unchanged table ROI.",
+      "Break semantic state/preset are observe_free/elevated and transitioning=false.",
+      "The v3 break PPM remains a read-only positive visual anchor."
+    ],
+    "low_aim_assertions": [
+      "Low_aim resolves to AimPlayer/PlayerLow with the camera target bound to the cue ball.",
+      "PlayerLow eye height is below the lamp bottom with at least 50 cm vertical clearance.",
+      "Cue-ball center, cue silhouette anchors and aim-guide anchors intersect the unchanged cue_and_ball ROI.",
+      "No orbit_camera, pan_camera or zoom_camera command exists in the low_aim recipe."
+    ],
+    "report_must_fail_closed_if_any_assertion_missing_or_false": true
+  },
+  "future_targeted_actual_gpu_gate": {
+    "status": "NOT_RUN_NOT_AUTHORIZED",
+    "required_scene_ids_in_order": ["break", "low_aim"],
+    "minimum_capture_count": 2,
+    "new_output_root_required": true,
+    "fresh_process_per_scene": true,
+    "same_frozen_v10i_formal_asset_package_required": true,
+    "preconditions": [
+      "v4 implementation and offline CPU/static preflight pass",
+      "immutable source freeze and readiness manifest pass",
+      "new one-shot root authorization explicitly issued",
+      "pre-capture presentation state assertions pass for both scenes"
+    ],
+    "machine_checks": [
+      "unchanged dimensions, renderer, quality, MSAA and asset attestation",
+      "unchanged whole-frame and ROI visible-pixel rules",
+      "break regression control passes",
+      "low_aim world scene and cue_and_ball ROI pass",
+      "no all-black or HUD-only frame",
+      "state/preset/transitioning values match registry v2"
+    ],
+    "technical_art_review": {
+      "required": true,
+      "original_resolution_required": true,
+      "break_review": "No regression in table/ball/light composition.",
+      "low_aim_review": "Player-height cue-ball, cue and guide composition is visible, unoccluded and intentional."
+    },
+    "full_six_scene_formal_rerun_authorized_by_this_gate": false,
+    "capture_authorized_by_this_gate": false
+  },
+  "evidence_boundary": {
+    "design_only": true,
+    "production_files_modified_by_this_gate": false,
+    "gpu_executed": false,
+    "capture_authorized": false,
+    "capture_performed": false,
+    "formal_pass": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "product_review_performed": false,
+    "technical_art_review_performed": false,
+    "product_exposed": false,
+    "beta_pass": false
+  }
+}

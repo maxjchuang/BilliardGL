@@ -1,0 +1,61 @@
+{
+  "schema": "billiardgl.phase4.v19.cp4_d_visible_integration_independent_ta_acceptance_addendum.v1",
+  "schema_version": 1,
+  "status": "CP4_D_INDEPENDENT_TA_ACCEPTED_CPU_STATIC_ONLY_CP1_CP2_CP3_CP4_TRUE_GPU_PRODUCT_FALSE",
+  "scope": "Independent Technical Art acceptance of the frozen Phase4 V19 CP4-D CPU/static visible-integration implementation only. It accepts the source-bound current-LDR Product UI chrome submission, actual Core41 typed begin receipt and single outer restore owner, atomic final staging integration, and fail-closed CPU/link-shim evidence. It does not claim a real window/GPU run, readiness, capture, machine visual pass, independent original-resolution visual review, human comprehension, product exposure, M3, golden or beta acceptance.",
+  "frozen_bindings": [
+    {"path": "docs/art/phase4-v19-cp1-trajectory-inset-foundation-independent-ta-acceptance-addendum-v1.json", "sha256": "e89e7febf1266efbea751ff0d50ac1d4a6bf358317974f701202d02a5396d02e"},
+    {"path": "docs/art/phase4-v19-cp2-layout-draw-list-independent-ta-acceptance-addendum-v1.json", "sha256": "6e7724df1a977af914b427538728f476d865db54c6cf95a3ae112e9de6172dd6"},
+    {"path": "docs/art/phase4-v19-cp3-offscreen-atomic-independent-ta-acceptance-addendum-v1.json", "sha256": "46dd31775ce501969a8079171d8ff106c8de4bf9698b04ba0c09cfed21f6007d"},
+    {"path": "docs/art/phase4-v19-cp4-visible-integration-implementation-acceptance-checklist-v1.json", "sha256": "f43bf8dba7b99673fb9a2db4a4cc9ddb686816c92de60ddc203721de80d5bc69"},
+    {"path": "docs/art/phase4-v19-cp4-d-product-ui-chrome-submission-correction-design-gate-v1.json", "sha256": "dab3bd181ecff6f631249fc629b377b6e3e3a327bdc61e72358dde7467be54f7"},
+    {"path": "docs/art/phase4-v19-cp4-d-core41-restore-ownership-allowlist-correction-gate-v1.json", "sha256": "9dc0516153fe16439699c80a47436971435e8f72c9ea7ac88a6ef9df29fe0c6c"},
+    {"path": "docs/evidence/phase4-v19-cp4-d-visible-integration-implementation-v1/receipt.json", "sha256": "fe341d320050e5cba3d67655631e0dfb314b4ccb39d880300ef3278a49dbc9c0"},
+    {"path": "scripts/validate_phase4_v19_cp4_d_visible_integration_implementation.py", "sha256": "690bd7786f5e562cf9ec9d09c498d07998c323acb9b0c02df53bbaae7f586fe0"},
+    {"path": "tests/test_phase4_v19_cp4_d_visible_integration_implementation.py", "sha256": "785dcffcb3baf45950094ed5f8c302d08bc9a8d8a8a9afd8146c2ee59f2b2aec"}
+  ],
+  "independent_reproduction": {
+    "post_freeze_receipt_validator": "PASS_ERRORS_EMPTY_FRESH_O2_ACTUAL_CORE41_CHAIN",
+    "post_freeze_mutation_unittest": "PASS_CANONICAL_AND_MINIMUM_70_MUTATIONS",
+    "independent_fresh_o2_actual_core41_runtime_gpu_transaction": "PASS_EXIT_0",
+    "o0_o2_stdout_byte_identical": true,
+    "source_and_self_bindings_unique_exact": "PASS_28_OF_28",
+    "static_contract": "PASS_ERRORS_EMPTY",
+    "evidence_permissions": {"directory": "0555", "files_validator_tests": "0444"},
+    "gpu_or_window_context_created": false,
+    "billiards_executed": false,
+    "readiness_or_capture_created": false
+  },
+  "accepted_cp4_d_axes": {
+    "explicit_current_request_and_exact_one_render_frame_submission": true,
+    "actual_current_ldr_framebuffer_and_color_attachment_query": true,
+    "exact_16_or_17_cp2_chrome_primitive_semantic_mapping": true,
+    "actual_solid_and_sdf_vertex_batch_draw_receipt_not_request_echo": true,
+    "fractional_cutout_uses_exact_1x_2x_4x_asymmetric_sample_centers": true,
+    "full_current_ldr_copy_then_cp3_color_and_independent_semantic_cutout": true,
+    "world_overlay_calls_and_main_world_trajectory_tokens_zero": true,
+    "typed_core41_begin_receipt_pre_capture_zero_and_captured_restore_required": true,
+    "core41_internal_restore_zero_and_outer_restore_exact_one": true,
+    "restore_false_or_throw_persistent_poison_same_context_zero_retry": true,
+    "context_loss_fresh_core41_runtime_resource_namespace_recovery": true,
+    "accepted_failure_forbids_ordinary_ldr_fallback_and_product_present": true,
+    "standard_cvd_1x_2x_4x_focus_and_layout_cpu_matrix": 96
+  },
+  "acceptance_boundary": {
+    "cp1_cpu_static_accepted": true,
+    "cp2_cpu_static_accepted": true,
+    "cp3_cpu_static_accepted": true,
+    "cp4_cpu_static_accepted": true,
+    "combined_cp1_through_cp4_cpu_static_accepted": true,
+    "fresh_shared_release_build_executed": false,
+    "gpu_authorized": false,
+    "gpu_executed": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_visual_pass_claimed": false,
+    "ta_original_resolution_visual_pass_claimed": false,
+    "human_comprehension_or_real_input_pass_claimed": false,
+    "visible_product_inset_exposed": false,
+    "product_m3_golden_beta_pass_claimed": false
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "authorization": {
+    "authorization_path": "docs/art/phase4-training-replay-overlay-v4-ready-v3/root-targeted11-authorization.json",
+    "authorization_sha256": "829c83b75800698f8cf1e4dc783abe7386de53b07febd4748955dbe8fffc1d46",
+    "consumed": true,
+    "consumed_marker_path": "docs/art/phase4-training-replay-overlay-v4-ready-v3/root-targeted11-authorization.json.consumed",
+    "consumed_marker_sha256": "5a2e7dcd5fa971fdaede534d514fb883d6cd423ce278aba9b7bfa5d555bc0d84"
+  },
+  "counts": {
+    "actual_gpu_frames_written_before_failure": 1,
+    "machine_passed_cases": 0,
+    "machine_triggered_failures": 1,
+    "planned_targeted_cases": 11,
+    "ta_reviewed_cases": 0,
+    "unrun_cases": 10
+  },
+  "decision": "FREEZE_FAILURE; NO_RESUME_OR_RERUN; NEW_ROOT_CAUSE_GATE_REQUIRED",
+  "failure": {
+    "capture_id": "camera_player_low_1080",
+    "compound_hidden_probe_count": 49,
+    "compound_source_probe_count": 95,
+    "compound_visible_probe_count": 46,
+    "compound_visible_probe_coverage": 0.484211,
+    "error_code": "compound_visible_coverage_below_0_90",
+    "machine_gate_error": "phase4_overlay_machine_gate_failed:camera_player_low_1080",
+    "minimum_required_coverage": 0.9,
+    "plan_ordinal_one_based": 1
+  },
+  "frozen_bindings": {
+    "billiards_executable_sha256": "a900a03e3920a197537f5f5c6f501cd2960cd0b40363dc89bccd20597355cdd3",
+    "correction_design_gate_sha256": "1901a825b092c08ce79425ec936ec150fada9ff4e3b4f9817e818d481013a39f",
+    "failed_ppm_path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/camera_player_low_1080.ppm",
+    "failed_ppm_sha256": "f3626f44ead6cfe4729e6ff3b76168747154b2452d0ca2afd70e1520b0e09744",
+    "fixture_manifest_sha256": "ab9c7806828cc084a2f7d52f47d95a213e3c281bad711a44d565c3ed26ee20c3",
+    "plan_path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/phase4-overlay-v4-plan.tsv",
+    "plan_sha256": "3b969b34e52fe2e01e31e34b148c4ce7c211682db65b3c609a43274366c8717d",
+    "ready_manifest_sha256": "e413e8c17e1489124af0aafdf5c18140a1509e3ba5f22f04272ec84c401b3e91",
+    "results_path": "docs/art/phase4-training-replay-overlay-v4-targeted-gpu-v1/phase4-overlay-v4-results.jsonl",
+    "results_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runner_sha256": "258a37b17e24d9beaf9249a1d085312413270da99cb2db93d3d079cbc2fc1ac7",
+    "runner_source_sha256": "35fa98ad44e438f11a6a5b50a80c06de00adb518de4d345d51e741283b195d43",
+    "source_aggregate_sha256": "1f96d521c696410656ae08134b9f493a28ad38dc35342101d161d963f7c43973",
+    "source_bindings_sha256": "7e2d69c3ac5c556cf055c859fa18d4205e967885b9d70d521eeaeb92fe65e6f6"
+  },
+  "root_observation": {
+    "image_reviewed": true,
+    "note": "The actual frame was inspected. The trajectory is present, but the machine compound ownership audit loses more than half of its source probes after final composition. Offline 159/159 self-test is therefore not representative of this product frame.",
+    "root_cause_status": "NOT_YET_ISOLATED"
+  },
+  "schema": "billiardgl.phase4.overlay_v4_targeted_failure_receipt.v1",
+  "status": "TARGETED_ACTUAL_GPU_FAIL_FROZEN_AT_ORDINAL_1",
+  "unclaimed": {
+    "formal68": false,
+    "golden": false,
+    "m3": false,
+    "machine_preflight_pass": false,
+    "technical_art_pass": false
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "schema": "wpa_ii_06_f_eight_on_break_choice_design_gap_gate_v1",
+  "status": "CORE_F_PRECOMMIT_BIH_DEFECT_AND_FULL_PRODUCT_CHOICE_GATE_CLOSED_UPSTREAM_FOUL_CLASSIFICATION_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": [
+    "WPA-II-06-F"
+  ],
+  "source_bindings": {
+    "official_pdf": {
+      "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+      "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24"
+    },
+    "frozen_audit_v3": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v3.json",
+      "sha256": "d7ab2104fac9fd85fe8d7336ae658cc9baaaa6b4fa866cd4e7815c51404ad033"
+    },
+    "rule_core": {
+      "path": "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "sha256": "5a298f2bd492dfd6f57b8bb478cabd1a3041716e4411c93642e1aeb85b8727b3"
+    },
+    "rule_model": {
+      "path": "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "sha256": "5ab7a045dbae177697a72aed97326d56ee14ae31c0434191066f011a8f52145b"
+    },
+    "core_f_parent": {
+      "path": "src/Billiards/rules/eight_on_break_authority.h",
+      "sha256": "dacb83140b687b285f1dc67bcbb38d571349a60caa01a45664f0bbdcc2981b2e"
+    },
+    "core_g_child": {
+      "path": "src/Billiards/rules/ball_in_hand_authority.h",
+      "sha256": "026fd6196263b1c6dab180fa7f94d29baf277ff56bdff450ca189e7d8ba795d6"
+    },
+    "core_e_foundation": {
+      "path": "src/Billiards/rules/rack_executor.cpp",
+      "sha256": "d1805c8e197f6b1a8f712f80ba8be807217e875d56def3c7d00186293cd9fb17"
+    },
+    "core_e_contract": {
+      "path": "src/Billiards/rules/rack_executor.h",
+      "sha256": "d42dc8ae486ad9df8911e4f82cb3d657c0e51e76b35082edb3fd909ee37ef242"
+    },
+    "core_h_sibling": {
+      "path": "src/Billiards/rules/break_foul_authority.h",
+      "sha256": "5b4bf09f9950fd61d3d4add4fd70a9304d5c82ab05254f5878c208a6dd92ad9e"
+    },
+    "runtime": {
+      "path": "src/Billiards/game_runtime.cpp",
+      "sha256": "3292df4f4546d9fd1639de8d5db33b7dab526f13b129f496d1420a489253fb9a"
+    },
+    "runtime_header": {
+      "path": "src/Billiards/game_runtime.h",
+      "sha256": "deacceaa4ffff8b0e5080963d958f5fc49a77a197c744c2693be6f2d82b96ec3"
+    },
+    "internal_ui": {
+      "path": "src/Billiards/rules/rules_decision_ui_model.cpp",
+      "sha256": "5d4942db12f43069069d68e00e8aecf7f38106bac4f1330f9d41f2c51e830cb8"
+    },
+    "product_session": {
+      "path": "src/Billiards/render/modern/modern_product_session.cpp",
+      "sha256": "8e962dfc76149a4461e011941231e5e72860aed9f8cb6f006169e269455cd174"
+    },
+    "product_session_header": {
+      "path": "src/Billiards/render/modern/modern_product_session.h",
+      "sha256": "f9b5ecef2223943bc8cb278b081b8f7f7fb886e7b5a0cc4db4c1fe2bac8528c4"
+    },
+    "core_tests": {
+      "path": "tests/chinese_eight_ball_rules_tests.cpp",
+      "sha256": "e587bb2bbc20f7dc682e0ea07e4e30df4484d3ae2ac9622a3d029c286c997a6c"
+    },
+    "runtime_tests": {
+      "path": "tests/rules_runtime_integration_tests.cpp",
+      "sha256": "2abb5a981251e05b179c03fb82adc2bd3da1076f291a4c8e0a174743baef8a55"
+    },
+    "ui_tests": {
+      "path": "tests/rules_decision_ui_tests.cpp",
+      "sha256": "4bde82aa9bb233ca542c6d4c4ebc440b341c29478aab473ec60f95b3b9208834"
+    },
+    "product_tests": {
+      "path": "tests/rules_decision_session_integration_tests.cpp",
+      "sha256": "6082e1d44054a1adc8b3743c2eb31698472a3842626bf25da17db82dadd3220d"
+    }
+  },
+  "frozen_contract_sha256": "dd55f95a16cb28e4d0185e35dd7bf80de0b7b95500b2798eb5972589327286e4",
+  "frozen_contract": {
+    "official_interpretation": {
+      "primary_clause": {
+        "chapter": "II",
+        "clause": "6(f)",
+        "pdf_page": 8,
+        "locator": "8-ball pocketed on the break",
+        "controlled_paraphrase": "When the 8-ball is pocketed on the break without a foul, the original breaker chooses spot-and-continue or rerack-and-break-again. When a foul also occurs, the original breaker's opponent chooses spot-plus-BehindHeadString ball in hand, rerack with that opponent breaking, or rerack with the original breaker breaking."
+      },
+      "dependent_clauses": [
+        {
+          "clause": "6(e)",
+          "pdf_page": 7,
+          "role": "ordinary break-shot foul is a distinct Core H parent when the 8-ball was not pocketed"
+        },
+        {
+          "clause": "6(g)",
+          "pdf_page": 8,
+          "role": "unintentional no-rack-contact miscue is a two-rerack-only exception and cannot be inferred from generic no-contact facts"
+        },
+        {
+          "clause": "7",
+          "pdf_page": 8,
+          "role": "defines collision-safe execution when the 8-ball cannot be placed at the nominal foot spot"
+        },
+        {
+          "clause": "8",
+          "pdf_page": 8,
+          "role": "defines the separate BehindHeadString placement entitlement after the foul-branch spot parent commits"
+        }
+      ],
+      "resolved_actor_and_action_semantics": {
+        "legal_branch_actor": "the frozen original breaker",
+        "legal_spot_choice": "re-spot the 8-ball and let the original breaker continue the same turn",
+        "legal_rerack_choice": "rerack and set the original breaker to break again",
+        "foul_branch_actor": "the player opposing the frozen original breaker",
+        "foul_spot_choice": "re-spot the 8-ball, then grant that opposing actor one BehindHeadString placement entitlement",
+        "foul_rerack_self_choice": "rerack and set the opposing decision actor as breaker",
+        "foul_rerack_opponent_choice": "rerack and set the original breaker as breaker",
+        "legal_choice_count": 2,
+        "foul_choice_count": 3,
+        "actor_policy_ambiguous": false,
+        "breaker_assignment_policy_ambiguous": false
+      }
+    },
+    "frozen_audit_row": {
+      "row_id": "WPA-II-06-F",
+      "row_status": "PARTIAL",
+      "product_action_required": true,
+      "product_reachable": false,
+      "assessment": "Core F implements spot-or-rerack authority and Core E commits effects, but the choice is not product exposed.",
+      "audit_may_be_rewritten_or_promoted_by_this_gate": false
+    },
+    "as_built_parent_routing": {
+      "capability": "eight_on_break_spot_or_rerack",
+      "flow": "eight_on_break_spot_or_rerack",
+      "ruleset": "wpa_heyball_2025_08_16_v1",
+      "trigger": "breakShot=true and canonical pocketedBallsInOrder contains ball 8 after ShotFacts validation",
+      "legal_branch": {
+        "branch": "LegalBreak",
+        "actor_player_id": "original_breaker_player_id",
+        "frozen_next_player": "original_breaker_player_id",
+        "offered_actions": [
+          "rules.eight_on_break.spot_continue",
+          "rules.eight_on_break.rerack_original_breaker"
+        ]
+      },
+      "foul_branch": {
+        "branch": "FoulBreak",
+        "actor_player_id": "1 - original_breaker_player_id",
+        "frozen_next_player": "the opposing decision actor",
+        "offered_actions": [
+          "rules.eight_on_break.spot_ball_in_hand_head_string",
+          "rules.eight_on_break.rerack_opponent_breaks",
+          "rules.eight_on_break.rerack_original_breaker"
+        ]
+      },
+      "simultaneous_core_h_break_foul_offer_created": false,
+      "pending_parent_blocks_shot_cue_adjudication_and_foundation_bypass": true,
+      "dedicated_capability_identifies_clause_6f_but_offer_has_no_explicit_source_clause_or_page_fields": true
+    },
+    "exact_action_semantics": {
+      "rules.eight_on_break.spot_continue": {
+        "allowed_branch": "LegalBreak",
+        "parent_actor": "original breaker",
+        "foundation": "one verified Core E 8-ball respot using clause 7 fallback",
+        "current_player_after_commit": "frozen original breaker",
+        "turn_continues": true,
+        "ball_in_hand": false,
+        "child_decision_created": false
+      },
+      "rules.eight_on_break.rerack_original_breaker": {
+        "allowed_branches": [
+          "LegalBreak",
+          "FoulBreak"
+        ],
+        "selected_breaker": "frozen original breaker",
+        "foundation": "one verified Core E official rerack",
+        "ball_in_hand": false,
+        "child_decision_created": false
+      },
+      "rules.eight_on_break.spot_ball_in_hand_head_string": {
+        "allowed_branch": "FoulBreak",
+        "parent_actor": "opponent of original breaker",
+        "parent_effect": "atomically re-spot the 8-ball and grant the parent actor a BehindHeadString entitlement",
+        "physical_cue_ball_placement_occurs_in_parent": false,
+        "child_flow": "ball_in_hand_behind_head_string",
+        "child_action": "rules.ball_in_hand.confirm_behind_head_string",
+        "child_actor": "same opposing actor",
+        "parent_revision_increment": 1,
+        "child_requires_separate_exact_authority_commit": true
+      },
+      "rules.eight_on_break.rerack_opponent_breaks": {
+        "allowed_branch": "FoulBreak",
+        "name_reference": "opponent of the original breaker",
+        "selected_breaker": "the opposing decision actor",
+        "foundation": "one verified Core E official rerack",
+        "ball_in_hand": false,
+        "child_decision_created": false
+      }
+    },
+    "observed_authority_gap": {
+      "id": "CORE_F_FOUL_BRANCH_PRECOMMIT_BIH_STATE",
+      "certainty": "CONFIRMED_BY_STATIC_SOURCE",
+      "current_sequence": [
+        "adjudicator marks ballInHand=true and BehindHeadString for a foul with 8-ball pocketed",
+        "GameRuntime copies adjudication.nextState before creating the Core F parent",
+        "GameRuntime sets ballInHandPlacementScope=BehindHeadString before the parent choice",
+        "no BallInHandPlacementOffer exists until the spot-plus-BIH parent action commits"
+      ],
+      "current_precommit_state": {
+        "match_state_ball_in_hand": true,
+        "ball_in_hand_placement_scope": "BehindHeadString",
+        "ball_in_hand_placement_pending_accessor": true,
+        "ball_in_hand_placement_offer_exists": false,
+        "physical_cue_ball_placement_possible": false,
+        "shot_and_foundation_inputs_blocked_by_core_f_parent": true
+      },
+      "required_corrected_precommit_state": {
+        "match_state_ball_in_hand": false,
+        "ball_in_hand_placement_scope": "None",
+        "ball_in_hand_placement_pending_accessor": false,
+        "ball_in_hand_placement_offer_exists": false
+      },
+      "entitlement_may_be_granted_only_by": "accepted rules.eight_on_break.spot_ball_in_hand_head_string parent commit",
+      "rerack_choices_must_never_grant_or_preserve_bih": true,
+      "audit_or_product_promotion_blocked_until_corrected_and_tested": true
+    },
+    "classification_and_sibling_boundary": {
+      "eight_ball_pocket_detection": {
+        "status": "RESOLVED_FROM_CANONICAL_SHOT_FACTS",
+        "predicate": "breakShot=true and ball 8 appears in validated pocketedBallsInOrder"
+      },
+      "legal_vs_foul_branch": {
+        "status": "UPSTREAM_BREAK_FOUL_CLASSIFICATION_PENDING",
+        "reason": "Clause 6(f) consumes whether any foul occurred but does not itself enumerate the complete foul taxonomy; current ShotFacts and adjudicator represent only a subset of the full rules profile.",
+        "product_may_reclassify_raw_facts": false,
+        "product_may_consume_only_runtime_frozen_core_f_offer": true
+      },
+      "ordinary_break_foul_without_eight": "route only to WPA-II-06-E Core H",
+      "illegal_break_without_foul_and_without_eight": "route only to WPA-II-06-C Core H",
+      "unintentional_no_rack_contact_miscue": "WPA-II-06-G remains classification-pending and fail-closed with no Core F or Core H offer",
+      "nonbreak_eight_ball": "never route to Core F",
+      "simultaneous_core_f_and_core_h_parent_allowed": false,
+      "new_actor_or_breaker_policy_decision_required": false
+    },
+    "authority_integrity_contract": {
+      "request_requires": [
+        "ruleset_id",
+        "capability_id",
+        "flow_id",
+        "decision_id",
+        "expected_authority_state_revision",
+        "idempotency_key",
+        "actor_player_id",
+        "branch_offered_action_id",
+        "canonical_empty_object_payload",
+        "unchanged_authority_state_hash",
+        "balls_stationary_and_no_active_shot_collector"
+      ],
+      "foundation_plan_built_and_validated_before_first_parent_mutation": true,
+      "successful_parent_commit": "exactly one authority revision, one event, one authority action, and one receipt",
+      "exact_retry": "return the original ACK with no duplicate respot, rerack, entitlement, child, revision, event, or action",
+      "conflicting_retry": "fail with rules_decision_idempotency_conflict and no mutation",
+      "stale_or_drifted_request": "fail closed and preserve the exact parent offer and all authoritative state",
+      "foundation_action_direct_submission_allowed": false
+    },
+    "transaction_and_full_rollback_contract": {
+      "precommit": "All product, offer, branch, actor, request, revision, hash, physical-state, idempotency, and Core E plan checks complete before the first authoritative mutation.",
+      "legal_spot_commit": "Apply exactly one verified 8-ball respot, preserve the original breaker's turn, close the parent, then record one revision/event/action/receipt.",
+      "foul_spot_commit": "Apply exactly one verified 8-ball respot, grant BehindHeadString to the opposing actor, atomically stage one Core G child, close the parent, then record one revision/event/action/receipt.",
+      "rerack_commit": "Apply exactly one verified official rerack with the action-selected breaker, clear any precommit BIH residue, close all superseded offers, then record one revision/event/action/receipt.",
+      "child_commit": "Physical cue-ball placement is a separate exact Core G transaction; preview and rejected child submissions never mutate authority.",
+      "pre_ack_failure": "Any failure before a verified parent ACK leaves runtime physics, rack, cue ball, match, all offers, authority hash/revision, events/actions/receipts, ProductShell, UI, and AI gate byte-for-byte unchanged.",
+      "post_ack_refresh_boundary": "A committed GameRuntime ACK is never reversed by product code; UI and AI refresh are non-authoritative and recover through deterministic resync.",
+      "idempotent_parent_retry": "Return the original ACK without recreating any effect.",
+      "partial_authority_commit_allowed": false
+    },
+    "as_built_product_reachability": {
+      "internal_ui_understands_both_exact_branch_action_vectors": true,
+      "internal_adapter_builds_exact_core_f_request": true,
+      "rules_decision_ui_implementation_enabled_by_default": false,
+      "rules_decision_ui_product_exposed": false,
+      "existing_narrow_product_spot_parent_seam": "submitProductAuthorizedEightOnBreakRespot accepts only the two Core F spot action IDs when actually offered",
+      "legal_spot_action_narrowly_product_reachable": true,
+      "foul_spot_action_narrowly_product_reachable": true,
+      "either_rerack_action_product_reachable": false,
+      "complete_clause_6f_choice_set_product_reachable": false,
+      "foundation_action_ids_product_reachable": false,
+      "global_rules_ui_enablement_allowed": false
+    },
+    "future_minimal_closure": {
+      "authority_correction": "Defer foul-branch ballInHand and BehindHeadString scope until the accepted spot-plus-BIH parent commit; all precommit and rerack states must expose no BIH entitlement.",
+      "product_entry_point": "submitProductAuthorizedEightOnBreakChoice(action_id, idempotency_key)",
+      "preconditions": [
+        "ProductShell is on Match",
+        "a live EightOnBreakDecisionOffer exists",
+        "offer ruleset/capability/flow identify only Core F",
+        "offer branch and exact ordered action vector match either the legal or foul contract",
+        "offer actor equals the local product player and the branch-defined actor",
+        "request binds exact decision/revision/actor/action/idempotency and canonical {} payload",
+        "runtime, not product, already classified and froze the branch",
+        "precommit authority hash and physical state remain unchanged"
+      ],
+      "call_only": "GameRuntime::submitEightOnBreakDecision",
+      "sync_rules_and_ai_only_after_verified_ack": true,
+      "pre_ack_rejection_has_zero_product_or_runtime_mutation": true,
+      "global_rules_decision_ui_product_exposed_remains_false": true,
+      "foundation_actions_remain_product_unreachable": true,
+      "core_h_or_6g_route_rejected": true
+    },
+    "required_future_fixtures": {
+      "positive": [
+        "LEGAL_EIGHT_ON_BREAK_STAGES_EXACT_BREAKER_TWO_ACTION_PARENT",
+        "LEGAL_SPOT_RESPOTS_ONCE_AND_ORIGINAL_BREAKER_CONTINUES",
+        "LEGAL_RERACK_SETS_ORIGINAL_BREAKER",
+        "FOUL_EIGHT_ON_BREAK_STAGES_EXACT_OPPONENT_THREE_ACTION_PARENT",
+        "FOUL_SPOT_PARENT_RESPOTS_ONCE_AND_CREATES_ONE_BEHIND_HEAD_STRING_CHILD",
+        "FOUL_SPOT_CHILD_ACTOR_EQUALS_OPPOSING_PARENT_ACTOR",
+        "FOUL_RERACK_OPPONENT_ACTION_SETS_OPPOSING_DECISION_ACTOR_AS_BREAKER",
+        "FOUL_RERACK_ORIGINAL_ACTION_SETS_FROZEN_ORIGINAL_BREAKER",
+        "EACH_PARENT_SUCCESS_COMMITS_ONE_REVISION_EVENT_ACTION_RECEIPT",
+        "EXACT_PARENT_RETRY_RETURNS_BYTE_IDENTICAL_ACK"
+      ],
+      "negative": [
+        "FOUL_PARENT_PRECOMMIT_HAS_NO_BIH_SCOPE_PENDING_ACCESSOR_OR_CHILD",
+        "LEGAL_PARENT_NEVER_HAS_BIH",
+        "RERACK_NEVER_GRANTS_OR_PRESERVES_BIH",
+        "PHYSICAL_CUE_PLACEMENT_NEVER_OCCURS_IN_PARENT",
+        "LEGAL_BRANCH_REJECTS_FOUL_SPOT_AND_RERACK_OPPONENT_ACTIONS",
+        "FOUL_BRANCH_REJECTS_LEGAL_SPOT_CONTINUE",
+        "CORE_H_6E_OFFER_REJECTED_BY_CORE_F_PRODUCT_SEAM",
+        "CORE_H_6C_OFFER_REJECTED_BY_CORE_F_PRODUCT_SEAM",
+        "NO_RACK_CONTACT_6G_NEVER_CREATES_CORE_F_PARENT",
+        "NONBREAK_EIGHT_NEVER_CREATES_CORE_F_PARENT",
+        "CORE_F_AND_CORE_H_PARENTS_NEVER_COEXIST",
+        "RAW_PRODUCT_FACTS_CANNOT_CREATE_OR_RECLASSIFY_PARENT",
+        "OUTSIDE_MATCH_REJECTED_WITHOUT_MUTATION",
+        "WRONG_LOCAL_ACTOR_REJECTED_WITHOUT_MUTATION",
+        "WRONG_BRANCH_ACTION_VECTOR_REJECTED_WITHOUT_MUTATION",
+        "WRONG_RULESET_CAPABILITY_OR_FLOW_REJECTED_WITHOUT_MUTATION",
+        "STALE_DECISION_OR_REVISION_REJECTED_WITHOUT_MUTATION",
+        "AUTHORITY_HASH_DRIFT_REJECTED_WITHOUT_MUTATION",
+        "INVALID_OR_CONFLICTING_IDEMPOTENCY_KEY_REJECTED_WITHOUT_MUTATION",
+        "NONEMPTY_PAYLOAD_REJECTED_WITHOUT_MUTATION",
+        "MOVING_BALLS_OR_ACTIVE_COLLECTOR_REJECTED_WITHOUT_MUTATION",
+        "RESPOT_NO_SOLUTION_ROLLS_BACK_ALL_PREACK_STATE",
+        "RERACK_PLAN_FAILURE_ROLLS_BACK_ALL_PREACK_STATE",
+        "CHILD_PREVIEW_OR_REJECTED_CONFIRM_NEVER_MUTATES",
+        "EXACT_RETRY_NEVER_RESPOTS_RERACKS_REGRANTS_OR_RECREATES_CHILD",
+        "POST_ACK_REFRESH_NEVER_REVERSES_COMMITTED_AUTHORITY",
+        "FOUNDATION_ACTION_IDS_REMAIN_PRODUCT_UNREACHABLE",
+        "GLOBAL_RULES_UI_REMAINS_UNEXPOSED"
+      ]
+    },
+    "future_implementation_allowlist": {
+      "production_files": [
+        "src/Billiards/game_runtime.cpp",
+        "src/Billiards/render/modern/modern_product_session.h",
+        "src/Billiards/render/modern/modern_product_session.cpp"
+      ],
+      "test_files": [
+        "tests/rules_runtime_integration_tests.cpp",
+        "tests/rules_decision_session_integration_tests.cpp"
+      ],
+      "core_f_header_or_core_e_changes_allowed": false,
+      "adjudicator_or_physics_changes_allowed": false,
+      "allowlist_is_dormant_until_separate_implementation_approval": true,
+      "cmake_change_requires_separate_coordination": true
+    },
+    "forbidden_scope": [
+      "production source edits in this design-gap task",
+      "CMake changes",
+      "product-side legal-or-foul classification",
+      "ball-in-hand entitlement before accepted foul spot parent commit",
+      "physical cue placement in the parent transaction",
+      "simultaneous Core F and Core H parents",
+      "global rulesDecisionUiProductExposed enablement",
+      "direct product exposure of Core E foundation actions",
+      "changes to Phase4 or Phase5",
+      "visual or evidence threshold changes",
+      "GPU, Cocoa, or OpenGL execution",
+      "readiness generation",
+      "authorization issuance",
+      "promotion of WPA-II-06-F above PARTIAL"
+    ],
+    "claims": {
+      "design_gap_gate_complete": true,
+      "official_actor_and_action_semantics_resolved": true,
+      "eight_ball_pocket_detection_mapped": true,
+      "upstream_complete_foul_classification_available": false,
+      "core_f_precommit_bih_semantics_correct": false,
+      "core_e_respot_and_rerack_mapped": true,
+      "core_g_child_mapped": true,
+      "core_h_and_6g_siblings_separated": true,
+      "partial_spot_parent_product_seam_exists": true,
+      "complete_clause_6f_product_reachable": false,
+      "implementation_complete": false,
+      "audit_promoted": false,
+      "product_behavior_changed": false,
+      "gpu_executed": false
+    }
+  }
+}

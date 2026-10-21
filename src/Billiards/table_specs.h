@@ -10,6 +10,10 @@ constexpr float kChinesePlayfieldLengthCm = 254.0f;
 constexpr float kChinesePlayfieldWidthCm = 127.0f;
 constexpr float kChineseTableHeightCm = 85.0f;
 constexpr float kTableModelPlaySurfaceHeightCm = 86.483976f;
+constexpr float kTableModelRailTopSurfaceHeightCm = 92.104021f;
+constexpr float kTableModelOuterHalfWidthCm = 83.4336812635f;
+constexpr float kTableModelOuterHalfLengthCm = 146.0679224206f;
+constexpr float kOutsideLandingSurfaceHeightCm = 0.0f;
 constexpr float kChineseCornerPocketMouthWidthCm = 13.2f;
 constexpr float kChineseSidePocketMouthWidthCm = 8.6f;
 constexpr float kChinesePocketDropZoneDepthCm = 6.0f;
@@ -38,6 +42,11 @@ struct TableSpec {
     float playfieldWidthCm;
     float playfieldLengthCm;
     float heightCm;
+    float clothSurfaceYCm;
+    float railTopSurfaceYCm;
+    float outerHalfWidthCm;
+    float outerHalfLengthCm;
+    float outsideLandingSurfaceYCm;
 };
 
 struct PocketSpec {

@@ -1,0 +1,234 @@
+{
+  "schema": "m4_d5_c_machine_double_hit_classification_policy_candidate_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_POLICY_SELECTION_REQUIRED_NO_PRODUCTION_AUTHORITY",
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "pdf_page": 9,
+    "clauses": ["12.5", "12.6"],
+    "visually_reviewed": true,
+    "officially_determined": [
+      "more than one cue-tip contact in one stroke is a foul",
+      "for a very-close cue/object arrangement, object contact before tip separation is within the double-hit rule",
+      "a stroke that only lightly grazes the object ball receives the stated contrary presumption",
+      "the foul must be called before the next shot"
+    ],
+    "not_numerically_determined": [
+      "very-close surface-gap threshold",
+      "light-graze trajectory, angle, speed, impulse, or duration threshold",
+      "tip-separation ordering tie tolerance"
+    ]
+  },
+  "authority_bindings": {
+    "d5_a_receipt": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+      "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6"
+    },
+    "d5_b_receipt": {
+      "path": "docs/rules/m4-d5-b-cue-object-frozen-cushion-policy-independent-telemetry-implementation-receipt-v1.json",
+      "sha256": "5d690f3bfbdbee149cae833eec0221e0543216dd963f6e0a634cc3b5b743f8fe"
+    },
+    "d5_d6_feasibility": {
+      "path": "docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json",
+      "sha256": "86d4957620d9e2c9033708ef3dbd5329610cc9cc9c44a134369079cffa375f77",
+      "batch": "D5-C"
+    },
+    "root_selected_policy_bundle": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "existing_selected_option": "AUTO_ONLY_COMPLETE_MULTI_INTERVAL_REFEREE_CLOSE_CASES",
+      "does_not_select_d5_c_numeric_inputs": true
+    },
+    "policy_register": {
+      "path": "docs/rules/m4-wpa-policy-referee-input-decision-register-v1.json",
+      "sha256": "66e105e968fc49f46cfe7fd117e42b545c6789a87d401f1d657ee263103a31ce"
+    },
+    "cue_contact_gap_gate": {
+      "path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json",
+      "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"
+    },
+    "signed_close_case_receipt": {
+      "path": "docs/rules/wpa-ii-12-5-6-signed-close-case-declaration-lifecycle-implementation-receipt-v1.json",
+      "sha256": "eb0ac7392ca9bfb9f84c768c22cc90bf120da32d8edb8a7d32674b2383fa51f1"
+    },
+    "audit_v9": {
+      "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v9.json",
+      "sha256": "eefd6121b7df2b41e45b66f3c87e2732bbccdb3808d866a89d44e8a324b9cf01"
+    }
+  },
+  "current_capability": {
+    "complete_canonical_tip_intervals": true,
+    "cue_object_contact_vs_tip_separation_raw_total_order": true,
+    "raw_equal_preserved_without_classification": true,
+    "signed_close_case_review_lifecycle": true,
+    "accepted_launch_initial_surface_gap_in_d5_b_observation": false,
+    "calibrated_light_graze_metric": false,
+    "machine_double_hit_classifier": false,
+    "shotfacts_or_rules_consumer": false
+  },
+  "shared_machine_contract": {
+    "automatic_unambiguous_predicate": "complete canonical cue-tip interval count > 1 is DOUBLE_HIT_FOUL",
+    "incomplete_evidence": "INCOMPLETE_NO_CLASSIFICATION",
+    "frozen_declaration_exception": "D5-C may not infer the WPA 15.1 frozen-ball exception; D5-D remains independent",
+    "push_independence": "D5-C may not classify or legalize push shots",
+    "time_delta_seconds": "first canonical cue-object contact stroke time minus last canonical cue-tip interval end time",
+    "tie_rule": "a value inside the selected symmetric tie band is REVIEW_REQUIRED, never silently BEFORE or AFTER",
+    "very_close_measurement_if_machine_enabled": "finite nonnegative cue/object surface gap frozen at accepted positive launch before motion",
+    "light_graze_measurement_if_machine_enabled": "sum of canonical normal impulses for the close object divided by total canonical cue-tip normal impulse, both complete and strictly positive",
+    "outputs": [
+      "DOUBLE_HIT_FOUL",
+      "CLOSE_CASE_PRESUMED_FOUL",
+      "CLOSE_CASE_LIGHT_GRAZE_PRESUMED_NO_DOUBLE_HIT",
+      "REVIEW_REQUIRED",
+      "NO_DOUBLE_HIT_OBSERVED",
+      "INCOMPLETE_NO_CLASSIFICATION"
+    ]
+  },
+  "bounded_policy_space": {
+    "very_close_surface_gap_cm": {"minimum": 0.0, "maximum": 0.5, "null_means": "machine close-case branch disabled"},
+    "light_graze_normal_impulse_ratio": {"minimum_exclusive": 0.0, "maximum": 0.25, "null_means": "machine light-graze exception disabled"},
+    "tip_separation_tie_tolerance_seconds": {"minimum": 0.0, "maximum": 0.00001},
+    "values_are_product_policy_not_official_constants": true
+  },
+  "recommended_bundle_id": "D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER",
+  "recommendation_is_not_selection": true,
+  "policy_bundles": [
+    {
+      "order": 1,
+      "id": "D5C-A_REFEREE_CLOSE_CASES_EXACT_ORDER",
+      "label": "Referee-routed close cases, exact order",
+      "selection_status": "UNSELECTED",
+      "recommended": true,
+      "constants": {
+        "very_close_surface_gap_cm": null,
+        "light_graze_normal_impulse_ratio": null,
+        "tip_separation_tie_tolerance_seconds": 0.0
+      },
+      "predicate": {
+        "complete_tip_interval_count_greater_than_one": "DOUBLE_HIT_FOUL",
+        "single_interval_signed_close_case_and_raw_before": "REVIEW_REQUIRED",
+        "raw_equal": "REVIEW_REQUIRED",
+        "single_interval_without_signed_close_case": "NO_DOUBLE_HIT_OBSERVED",
+        "light_graze": "SIGNED_REFEREE_INPUT_ONLY"
+      },
+      "rationale": "Recommended because it matches the already root-selected shipping policy, implements only the unambiguous multi-interval rule, and does not invent numerical meanings for official qualitative terms.",
+      "evidence_impact": {
+        "reuses_d5_a_and_d5_b_without_schema_extension": true,
+        "requires_new_calibration_corpus": false,
+        "wpa_ii_12_5_6_full_row_closable": false,
+        "remaining_gap": "close-case referee review must produce a separately authenticated result before the qualitative presumption can close",
+        "invalidates_existing_visual_gpu_evidence": false
+      }
+    },
+    {
+      "order": 2,
+      "id": "D5C-B_CONSERVATIVE_MACHINE_CLOSE_GRAZE",
+      "label": "Conservative machine close/graze",
+      "selection_status": "UNSELECTED",
+      "recommended": false,
+      "constants": {
+        "very_close_surface_gap_cm": 0.05,
+        "light_graze_normal_impulse_ratio": 0.05,
+        "tip_separation_tie_tolerance_seconds": 0.0000001
+      },
+      "predicate": {
+        "complete_tip_interval_count_greater_than_one": "DOUBLE_HIT_FOUL",
+        "surface_gap_at_or_below_threshold_and_time_delta_below_negative_tolerance": "CLOSE_CASE_PRESUMED_FOUL_UNLESS_LIGHT_GRAZE",
+        "total_close_object_impulse_ratio_at_or_below_threshold": "CLOSE_CASE_LIGHT_GRAZE_PRESUMED_NO_DOUBLE_HIT",
+        "absolute_time_delta_at_or_below_tolerance": "REVIEW_REQUIRED",
+        "all_other_complete_single_interval_cases": "NO_DOUBLE_HIT_OBSERVED"
+      },
+      "rationale": "Narrow proposed machine band: 0.5 mm surface gap, 5% impulse ratio, and the current solver-scale 0.1 microsecond order band. These are product candidates, not official values.",
+      "evidence_impact": {
+        "requires_initial_surface_gap_schema_extension": true,
+        "requires_signed_profile_constants_and_calibration_corpus": true,
+        "requires_standard_and_edge_fixture_rebaseline": true,
+        "classifier_results_and_future_replays_depend_on_bundle_sha": true,
+        "invalidates_existing_visual_gpu_evidence": false
+      }
+    },
+    {
+      "order": 3,
+      "id": "D5C-C_BALANCED_MACHINE_CLOSE_GRAZE",
+      "label": "Balanced machine close/graze",
+      "selection_status": "UNSELECTED",
+      "recommended": false,
+      "constants": {
+        "very_close_surface_gap_cm": 0.15,
+        "light_graze_normal_impulse_ratio": 0.1,
+        "tip_separation_tie_tolerance_seconds": 0.000001
+      },
+      "predicate": {
+        "complete_tip_interval_count_greater_than_one": "DOUBLE_HIT_FOUL",
+        "surface_gap_at_or_below_threshold_and_time_delta_below_negative_tolerance": "CLOSE_CASE_PRESUMED_FOUL_UNLESS_LIGHT_GRAZE",
+        "total_close_object_impulse_ratio_at_or_below_threshold": "CLOSE_CASE_LIGHT_GRAZE_PRESUMED_NO_DOUBLE_HIT",
+        "absolute_time_delta_at_or_below_tolerance": "REVIEW_REQUIRED",
+        "all_other_complete_single_interval_cases": "NO_DOUBLE_HIT_OBSERVED"
+      },
+      "rationale": "Broader proposed product band: 1.5 mm surface gap, 10% impulse ratio, and 1 microsecond review band. It reduces sensitivity to measurement noise but increases policy-owned outcomes and calibration burden.",
+      "evidence_impact": {
+        "requires_initial_surface_gap_schema_extension": true,
+        "requires_signed_profile_constants_and_calibration_corpus": true,
+        "requires_standard_and_edge_fixture_rebaseline": true,
+        "classifier_results_and_future_replays_depend_on_bundle_sha": true,
+        "invalidates_existing_visual_gpu_evidence": false
+      }
+    }
+  ],
+  "mutual_exclusion": {
+    "exactly_one_bundle_may_be_root_selected_later": true,
+    "bundle_constants_may_not_be_mixed": true,
+    "selection_must_create_a_new_versioned_root_selected_artifact": true,
+    "this_gate_selects_none": true
+  },
+  "future_implementation_boundary": {
+    "dormant_until_root_selection": true,
+    "tests_first_required": true,
+    "candidate_production_allowlist": [
+      "src/Billiards/rules/double_hit_classifier.h",
+      "src/Billiards/rules/double_hit_classifier.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "candidate_test_allowlist": [
+      "tests/double_hit_classifier_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "cmake": "one new headless classifier target only if required after coordination",
+    "bundle_b_or_c_additional_design_gate_required": true,
+    "forbidden": [
+      "physics or telemetry encoding an unselected policy constant",
+      "geometry-only or incomplete observations becoming a foul",
+      "EQUAL silently classified as BEFORE",
+      "D5-C implementing frozen-ball or push exceptions",
+      "visible or global Rules UI exposure",
+      "GPU readiness or authorization"
+    ]
+  },
+  "live_no_change_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "7d765c7fbf86082ceb919b97dcc097f1dcf9c87f2b947db6843cd3f9e43a78fa"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "8a5d85f94786e5352b9f3c70ccba365cd93c9bf43d7d74145b9359295303787b"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "82ed617905a8718189aed1b41a37672160af2e690a7bfe2bb71fa75bb9cc71f7"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "060175a664ceaedd016509506bf84cd104fe34e8bbebce431eb2f0df1bde4059"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "f6a25445ff772aeac90c4e84128fb3ad32201f53aa194d1f875bcdbb41a0fbcf"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "9270b02a101c0b7770d977fdf5e3ebafe5350bba49cb917234939efc3d1060b4"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "275eb3faf8a59e77972646b3e0aa82f1de3dc4077a60eb7e473990aa552556a1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "d64407121d4a7456b01c47af15008813ae35fce82638e805240d6098288f92da"}
+  ],
+  "claims": {
+    "policy_selected": false,
+    "production_or_cmake_modified": false,
+    "d5_c_implementation_authorized": false,
+    "machine_double_hit_classification_implemented": false,
+    "wpa_ii_12_5_6_or_15_1_promoted": false,
+    "audit_or_m4_progress": false,
+    "gpu_readiness_or_authorization": false
+  }
+}

@@ -12,14 +12,26 @@ class AutomationError(RuntimeError):
 
 
 class AutomationClient:
-    def __init__(self, executable, mode="headless"):
+    def __init__(self, executable, mode="headless", extra_args=None,
+                 child_env=None):
         self.transcript = []
         self.stderr_text = ""
         self.return_code = None
+        arguments = [executable, "--automation", "--transport", "stdio", "--" + mode]
+        arguments.extend(extra_args or [])
+        if child_env is not None:
+            if not isinstance(child_env, dict) or any(
+                    not isinstance(key, str) or not isinstance(value, str)
+                    for key, value in child_env.items()):
+                raise ValueError("child_env must be an explicit string-to-string mapping")
+            process_environment = dict(child_env)
+        else:
+            process_environment = None
+        self.child_environment = process_environment
         self.process = subprocess.Popen(
-            [executable, "--automation", "--transport", "stdio", "--" + mode],
+            arguments,
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            text=True, bufsize=1)
+            text=True, bufsize=1, env=process_environment)
         self.next_id = 1
         self.ready = self._read(10)
 
@@ -92,6 +104,12 @@ class AutomationClient:
     def pan_camera(self, x_delta, z_delta): return self.command("pan_camera", {"x_delta": x_delta, "z_delta": z_delta})
     def zoom_camera(self, delta): return self.command("zoom_camera", {"delta": delta})
     def screenshot(self, path): return self.command("screenshot", {"path": path}, timeout=10)
+    def collect_render_performance(self, warmup_frames=120, sample_frames=300,
+                                   timeout=120):
+        return self.command("collect_render_performance_v1", {
+            "warmup_frames": warmup_frames,
+            "sample_frames": sample_frames,
+        }, timeout=timeout)
 
     def close(self):
         if self.process.poll() is None:

@@ -1,0 +1,114 @@
+{
+  "$id": "billiardgl://schemas/phase3-gpu-capture-manifest-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "asset_bindings": {
+      "type": "object"
+    },
+    "captures": {
+      "items": {
+        "required": [
+          "capture_id",
+          "surface",
+          "viewport",
+          "palette",
+          "ui_scale",
+          "artifact",
+          "machine_status",
+          "machine_metrics",
+          "performance"
+        ],
+        "type": "object"
+      },
+      "maxItems": 594,
+      "minItems": 594,
+      "type": "array"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "evidence_class": {
+      "const": "actual_gpu_framebuffer_capture_required"
+    },
+    "machine_thresholds": {
+      "type": "object"
+    },
+    "matrix_contract": {
+      "properties": {
+        "pre_capture_contract_corrections": {
+          "items": {
+            "properties": {
+              "capture_count_delta": {
+                "const": 0
+              },
+              "classification": {
+                "enum": [
+                  "pre_capture_stale_contract_correction",
+                  "pre_capture_reachability_correction"
+                ]
+              },
+              "evidence_status_advanced": {
+                "const": false
+              },
+              "machine_thresholds_changed": {
+                "const": false
+              }
+            },
+            "required": [
+              "id",
+              "classification",
+              "removed_scenario",
+              "replacement_scenario",
+              "capture_count_delta",
+              "machine_thresholds_changed",
+              "evidence_status_advanced"
+            ],
+            "type": "object"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "hud_states",
+        "camera_presets",
+        "viewports",
+        "palettes",
+        "ui_scales",
+        "shell_scenarios",
+        "hud_capture_count",
+        "shell_capture_count",
+        "total_capture_count",
+        "pre_capture_contract_corrections"
+      ],
+      "type": "object"
+    },
+    "runtime_attestation": {
+      "type": "object"
+    },
+    "schema": {
+      "const": "phase3_gpu_capture_manifest_v1"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "PASS"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "status",
+    "evidence_class",
+    "asset_bindings",
+    "runtime_attestation",
+    "matrix_contract",
+    "machine_thresholds",
+    "evidence_boundary",
+    "captures"
+  ],
+  "title": "BilliardGL Phase 3 GPU Capture Manifest",
+  "type": "object"
+}

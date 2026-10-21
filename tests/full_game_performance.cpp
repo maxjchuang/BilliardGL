@@ -48,6 +48,8 @@ Metrics measure()
         const auto end = std::chrono::steady_clock::now();
         if (!result.ok) {
             metrics.failureCode = result.errorCode;
+            if (runtime.hasRecentPhysicsStep())
+                metrics.failureCode += ":" + runtime.latestPhysicsStep().telemetry.failureDetail;
             metrics.failureTick = runtime.tick() + 1;
             break;
         }

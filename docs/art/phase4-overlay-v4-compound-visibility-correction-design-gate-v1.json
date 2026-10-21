@@ -1,0 +1,366 @@
+{
+  "schema": "billiardgl.phase4.overlay_v4_compound_visibility_correction_design_gate.v1",
+  "schema_version": 1,
+  "package_id": "phase4_overlay_v4_compound_visibility_correction_v1",
+  "status": "APPROVED_FOR_V4_IMPLEMENTATION",
+  "scope": "Create a new v4 telemetry definition that measures final-composite visibility of each trajectory as a compound glyph without weakening any v3 visual, layout, content, contrast or coverage gate.",
+  "GPU_CAPTURE_AUTHORIZED": false,
+  "formal68_capture_authorized": false,
+  "technical_art_review_authorized": false,
+  "m3_authorized_or_claimed": false,
+  "external_real_human_authorized_or_claimed": false,
+  "evidence_boundary": {
+    "v3_formal_attempt_is_frozen_terminal_failure": true,
+    "v3_formal_resume_retry_or_overwrite_allowed": false,
+    "v3_source_evidence_or_raw_frame_modified_by_this_gate": false,
+    "v4_source_modified_by_this_gate": false,
+    "v4_gpu_capture_performed_by_this_gate": false,
+    "v4_machine_pass_claimed": false,
+    "v4_ta_pass_claimed": false,
+    "formal68_run_claimed": false,
+    "implementation_authorized": true
+  },
+  "input_bindings": [
+    {
+      "role": "v3_correction_design_gate",
+      "path": "docs/art/phase4-overlay-v3-correction-design-gate-v1.json",
+      "sha256": "sha256:9cba251af89c6a0b6724966f983be8ad68b5c94ad0d3d902c840e2275bcf28bb"
+    },
+    {
+      "role": "v3_machine_preflight_manifest",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-preflight-v3/manifest.json",
+      "sha256": "sha256:2a2f8f1c51cb8aa458679922d75a75c491ef01a4f2fd28d920274a2f93e8da0e"
+    },
+    {
+      "role": "v3_independent_ta_preflight_manual_pass",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-preflight-v3/phase4-overlay-preflight-manual-review-v2.json",
+      "sha256": "sha256:6f7ef32a4c4bf1a53e148846be7a85ee7a15ae861757126dca0c38cccb11b037"
+    },
+    {
+      "role": "v3_formal68_ready_manifest",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-manifest-v3.ready.json",
+      "sha256": "sha256:8fd4ae970035fd9ce6083e1e9112f108a571cd7a10d8053df9377da985e496e7"
+    },
+    {
+      "role": "v3_frozen_formal_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-v3/failure-receipt.json",
+      "sha256": "sha256:a6c900f7e96e523a4f45bfd153430857b3114997648a31dd8c8aa145bf6615ed"
+    },
+    {
+      "role": "v3_frozen_failure_raw_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-v3/core__launch_right_english_one_rail_v1__broadcast.ppm",
+      "sha256": "sha256:57db015d5bc501c992c3843be5b6b912165ec682a85865e82c9f919713d7f7f7"
+    },
+    {
+      "role": "v3_frozen_formal_raw_pass_results",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-v3/phase4-overlay-formal-results.jsonl",
+      "sha256": "sha256:da6d2fe40b316f8aac648c1fb710930bfc054d51fd228c58dcd0ff18a39b7e51"
+    },
+    {
+      "role": "v3_frozen_formal_plan",
+      "path": "docs/art/phase4-training-replay-overlay-gpu-capture-v3/phase4-overlay-formal-plan.tsv",
+      "sha256": "sha256:050aecea1256423d644b9f80fe4938a2e5439eef6a99d18624238e4b17678037"
+    },
+    {
+      "role": "v3_runner_binary",
+      "path": "build-phase4-overlay-v3/BilliardsPhase4OverlayGpuCaptureRunner",
+      "sha256": "sha256:caf3545f04e6eb0891623869cbfb9065f069b2bbef32e673451c720cf2809c20"
+    },
+    {
+      "role": "v3_billiards_executable",
+      "path": "build-phase4-overlay-v3/Billiards",
+      "sha256": "sha256:e2446bf8e01eda7c3ce18bf59845d7d812b9f88b5495aac7e22fb8afb6eab56b"
+    },
+    {
+      "role": "v3_composite_source_digest",
+      "kind": "digest_value",
+      "sha256": "sha256:9854b1605733c042e158ce51fc9bf9113684a738b8fc253960e9398736b5a397"
+    },
+    {
+      "role": "v3_capture_runner_source",
+      "path": "spikes/render_core_profile/phase4_overlay_gpu_capture_runner.mm",
+      "sha256": "sha256:0816d9102ffb3042aec6e9f9c36eabfe1508c1d590a573350fccf744aeb93bf7"
+    },
+    {
+      "role": "v3_capture_orchestrator_source",
+      "path": "scripts/run_phase4_training_replay_overlay_gpu_capture.py",
+      "sha256": "sha256:40e1cfa16f8c31d78f280749579b042252aab971411a82e2cc35e3e98bbbf589"
+    },
+    {
+      "role": "v3_trajectory_renderer_source",
+      "path": "src/Billiards/training/trajectory_overlay_renderer.cpp",
+      "sha256": "sha256:6f41499561d2d80a426f49b380bf1398c79b5aa3bfb30d9b3bb2462b69f7ae7f"
+    },
+    {
+      "role": "v3_fixture_manifest",
+      "path": "docs/art/phase4-training-replay-overlay-fixtures-v3/fixtures.json",
+      "sha256": "sha256:4dfa8faa2d3de2ef5830ddeecd71d2cd08c374f765a6f5b19e75cc9a5702c0be"
+    },
+    {
+      "role": "v3_right_english_failure_replay",
+      "path": "docs/art/phase4-training-replay-overlay-fixtures-v3/launch_right_english_one_rail_v1.overlay.replay.json",
+      "sha256": "sha256:daeab32a8282ce72edca721889d2faa91a79162937b01b98f5d2e264c828d250"
+    },
+    {
+      "role": "v3_mirrored_left_english_replay",
+      "path": "docs/art/phase4-training-replay-overlay-fixtures-v3/launch_left_english_one_rail_v1.overlay.replay.json",
+      "sha256": "sha256:3f1db417ab27487e4e8d4f2b106e51872b13e8f0ffdf565b56908106b275d0be"
+    }
+  ],
+  "frozen_v3_outcome": {
+    "status": "FORMAL_ACTUAL_GPU_CAPTURE_FAILED_FROZEN",
+    "selector_count": 68,
+    "selector_pass_count": 19,
+    "selector_fail_count": 1,
+    "selector_not_run_count": 48,
+    "actual_framebuffer_attempt_count": 20,
+    "raw_result_row_count": 19,
+    "formal_manifest_exists": false,
+    "formal68_machine_pass": false,
+    "formal68_ta_review_run": false,
+    "failure": {
+      "ordinal": 20,
+      "capture_id": "core__launch_right_english_one_rail_v1__broadcast",
+      "machine_error_code": "trajectory_visible_probe_coverage_below_90_percent",
+      "raw_ppm_physical_px": [1920, 1080],
+      "source_probe_count": 159,
+      "visible_probe_count": 128,
+      "hidden_probe_count": 31,
+      "visible_probe_coverage": 0.805031,
+      "required_visible_probe_coverage": 0.9,
+      "minimum_local_contrast_ratio": 4.54229,
+      "p01_local_contrast_ratio": 4.61885,
+      "contrast_4_5_target_coverage": 1.0,
+      "predicted_actual_luma_delta_srgb8": 225.562,
+      "contrast_failure_coordinate_count": 0,
+      "all_other_recorded_machine_gates_passed": true
+    },
+    "independent_visual_observation": "At original 1920x1080 encoded size, the predicted yellow dashed route and actual pale-cyan/white solid route overlap for a substantial segment. The actual core is covered in places, but its light halo edges, solid exposure in predicted dash gaps, perpendicular ticks and endpoint remain visible as a compound actual glyph. This observation motivates corrected attribution telemetry; it is not a v3 PASS or a v4 TA review."
+  },
+  "root_cause_classification": {
+    "primary": "SOURCE_PROBE_VISIBILITY_TELEMETRY_UNDERCOUNTS_COMPOUND_GLYPH_WHEN_TRACK_CORES_OVERLAP",
+    "current_v3_behavior": "A source probe is visible only when both a near-target core pixel and near-target halo pixel are found around fixed coordinates. When the other semantic track covers the core, the probe is hidden even if a same-track halo edge, solid segment in the other track's dash gap, tick or endpoint remains visibly and uniquely attributable nearby.",
+    "not_supported_by_evidence": [
+      "lowering the 90 percent coverage requirement",
+      "removing or thinning the source probe inventory",
+      "weakening local contrast or 4.5 target coverage",
+      "removing non-color trajectory topology",
+      "changing route truth or endpoints"
+    ]
+  },
+  "v4_authorized_change_scope": {
+    "telemetry_correction_only": true,
+    "allowed": [
+      "capture-only semantic component ownership or coverage instrumentation that follows the exact final trajectory draw order, clip, viewport, profile and MSAA resolve",
+      "stable source-probe IDs and per-track/component attribution records",
+      "compound-visible classification and its negative-fixture tests",
+      "new v4 runner, orchestrator, preflight package, ready manifest and immutable evidence roots"
+    ],
+    "forbidden": [
+      "deleting, skipping, merging or reducing source probes",
+      "changing the >=0.90 visible coverage threshold",
+      "changing local contrast >=4.0 or >=99 percent coverage at 4.5",
+      "counting the background, panel, ball, rail, the other trajectory, or an unowned color match as evidence for a source track",
+      "changing predicted or actual world-space samples, projection, physics, endpoint, rail event, replay content or route truth",
+      "changing trajectory colors, dash pattern, tick topology, endpoint topology, stroke widths, halo widths, z-order, inspector layout, content, camera or tone map",
+      "resuming, retrying, appending to, rewriting or promoting the v3 formal attempt"
+    ],
+    "production_visual_delta_required": false,
+    "screen_space_separation": {
+      "authorized": false,
+      "predicted_offset_px": 0.0,
+      "actual_offset_px": 0.0,
+      "maximum_allowed_by_this_gate_px": 0.0,
+      "reason": "The frozen failure frame retains an actual compound glyph; the evidenced defect is attribution telemetry, not an established visual-legibility failure.",
+      "future_rule": "If v4 telemetry-correct preflight or independent TA still finds either route untraceable, stop and require a new design gate. Any later offset proposal must preserve the unshifted world-space path as truth, be symmetric about the true centerline, return to exactly zero at both endpoints and contacts, never move an endpoint or rail contact, and be separately bounded and reviewed."
+    }
+  },
+  "compound_glyph_visibility_machine_semantics": {
+    "unit_of_evaluation": "One immutable source probe for one semantic track at one projected arc-location and component role.",
+    "tracks": ["predicted", "actual"],
+    "eligible_same_track_components": [
+      "track_core",
+      "exclusive_outer_halo_edge",
+      "solid_core_exposed_inside_the_other_track_dash_off_interval",
+      "perpendicular_tick",
+      "endpoint_hollow_ring_or_filled_dot_as_owned_by_that_track"
+    ],
+    "stable_probe_identity": "source_probe_id=sha256(capture_id|track|primitive_id|component_role|arc_segment_id|probe_ordinal|physical_profile). The ordered source-probe ID list and its digest are emitted before visibility classification.",
+    "denominator_contract": {
+      "definition": "All source probes emitted by the unchanged v3 sampling cadence before bounds, occlusion or visibility classification.",
+      "no_probe_deletion_or_threshold_gaming": true,
+      "exact_failure_case_source_probe_count_min": 159,
+      "exact_failure_case_source_probe_id_digest_must_be_reported": true,
+      "per_track_source_counts_required": true,
+      "out_of_bounds_or_clipped_probe_result": "HIDDEN, never removed from denominator",
+      "probe_inventory_regression": "Any lower count, duplicate ID, missing component class or unexplained digest drift is MACHINE_FAIL."
+    },
+    "final_composite_ownership_proof": {
+      "method": "In the capture-only audit path, replay the exact trajectory primitives with identical transforms, clipping, widths, antialiasing, MSAA sample positions and production compositing order into a semantic coverage attachment. Each covered sample carries track_id, component_id, primitive_id and alpha/coverage; resolve it with the same visibility order as the color framebuffer.",
+      "must_correspond_to_actual_final_color_frame": true,
+      "production_color_frame_may_not_be_replaced_by_analytic_geometry": true,
+      "required_record_per_evidence_pixel": [
+        "physical pixel and resolved sample coverage",
+        "final owning track and component",
+        "primitive ID and source-probe assignment",
+        "final framebuffer RGB",
+        "adjacent non-self comparison RGB and contrast ratio"
+      ],
+      "minimum_owned_coverage_per_counted_probe": "At least two 4-connected physical pixels and at least 1.5 resolved physical-pixel equivalents assigned to the probe from its own track.",
+      "edge_visibility": "At least one owned same-track pixel must border a non-self pixel and form >=4.0:1 local contrast in the final color framebuffer; counted evidence also participates in the unchanged 4.5 target-coverage calculation.",
+      "analytic_only_or_pre_composite_coverage_allowed": false
+    },
+    "bounded_neighborhood_and_assignment": {
+      "coordinate_frame": "Probe-local tangent and normal derived from the unshifted projected world path.",
+      "normal_bound": "No farther than the profile's outer halo radius plus 2 physical pixels; a tick probe may extend only to its contracted tick half-length plus 2 pixels.",
+      "longitudinal_bound": "No farther than half the local source-probe spacing, capped at 12 physical pixels. Endpoint evidence is eligible only for endpoint probes.",
+      "dash_gap_rule": "An actual-track probe may use actual solid-core pixels exposed in a predicted dash-off interval only when those pixels carry final actual track ownership and lie inside the same probe interval.",
+      "tick_rule": "A tick component is assigned only to the nearest same-track probe whose arc interval contains the tick center.",
+      "endpoint_rule": "A hollow ring or filled dot is assigned only to its track's endpoint probe; it may not make neighboring centerline probes visible.",
+      "exclusive_assignment": "Each final ownership sample is assigned to at most one source_probe_id by same-track distance, then primitive ID, then probe ordinal. One pixel or marker may not raise multiple probe numerators.",
+      "component_precedence_for_reason_code": ["track_core", "solid_dash_gap", "halo_edge", "tick", "endpoint"],
+      "compound_visible_definition": "A probe is COMPOUND_VISIBLE when one eligible same-track component satisfies ownership, bounded-neighborhood, exclusive-assignment, coverage and final-frame contrast requirements. Otherwise it is HIDDEN with a reason code.",
+      "hidden_reason_codes": [
+        "out_of_bounds_or_clipped",
+        "no_same_track_final_owner",
+        "only_other_track_visible",
+        "only_background_or_scene_visible",
+        "insufficient_owned_pixel_area",
+        "outside_bounded_neighborhood",
+        "pixel_already_assigned",
+        "final_edge_contrast_below_4",
+        "component_not_eligible"
+      ]
+    },
+    "anti_false_positive_rules": [
+      "A predicted core, halo, dash, ring or color match can never satisfy an actual probe, and vice versa.",
+      "A background, table, ball, rail, panel or coincident scene color has track_id=none and can never satisfy either track.",
+      "Color proximity without same-track final ownership is insufficient.",
+      "Pre-composite geometry covered by a later draw is not visible evidence.",
+      "A same-track halo hidden under the other track is not visible evidence; only its finally owned exposed edge may count.",
+      "A single tick, endpoint or ownership pixel cannot be double-attributed to multiple source probes.",
+      "Predicted and actual coverage are calculated separately before aggregate coverage, so one track cannot compensate for the other."
+    ],
+    "required_telemetry": {
+      "source_probe_count": true,
+      "visible_probe_count": true,
+      "hidden_probe_count": true,
+      "aggregate_visible_probe_coverage": true,
+      "per_track_source_visible_hidden_and_coverage": true,
+      "per_component_visibility_reason_counts": true,
+      "source_probe_id_digest": true,
+      "visible_probe_id_digest": true,
+      "hidden_probe_records_with_reason_and_coordinates": true,
+      "ownership_collision_or_double_assignment_count_must_equal_zero": true,
+      "unowned_or_foreign_evidence_count_must_equal_zero": true
+    }
+  },
+  "machine_gates_unchanged_or_strengthened": {
+    "aggregate_visible_probe_coverage_min": 0.9,
+    "predicted_visible_probe_coverage_min": 0.9,
+    "actual_visible_probe_coverage_min": 0.9,
+    "minimum_local_contrast_ratio": 4.0,
+    "contrast_4_5_target_coverage_min": 0.99,
+    "predicted_actual_luma_delta_srgb8_standard_min": 32.0,
+    "predicted_actual_luma_delta_srgb8_cvd_min": 36.0,
+    "non_color_topology_separation_required": true,
+    "predicted_topology": "screen-space dashed stroke plus hollow endpoint ring plus Predicted label",
+    "actual_topology": "solid stroke plus perpendicular ticks plus filled endpoint plus Replay actual label",
+    "all_v3_layout_content_text_safe_area_shipping_performance_and_authority_gates_inherited": true,
+    "specific_inherited_gates": [
+      "bounded inspector, zero full-frame scrim and zero protected-corridor intersection",
+      "minimum no-panel gameplay corridor and inspector area/span limits",
+      "720 UI1.35 CVD single-column content and Rails N",
+      "Retina actual-only Replay actual legend, transport truth and Play footer",
+      "Advanced eight visible fields and accessible full hashes",
+      "safe_area_violations=0, overlap_pairs=0 and truncated_text_runs=0",
+      "debug_node_count=0, opaque_icon_count=0 and unexpanded_icon_count=0",
+      "unchanged draw-call, texture-residency, vertex-budget and frame-time gates",
+      "authority_before_equals_after"
+    ],
+    "failure_rule": "Any missing telemetry, threshold failure, source-inventory drift, foreign attribution, double assignment, visual gate regression or authorization mismatch is V4_PREFLIGHT_MACHINE_FAIL_FORMAL68_NOT_AUTHORIZED."
+  },
+  "required_negative_fixtures": [
+    "Reject when another track covers the source core and no same-track final-owned halo, solid gap, tick or endpoint remains.",
+    "Reject a background or scene pixel that matches the target RGB but has no trajectory ownership.",
+    "Reject using the other track's core, halo, tick, dash or endpoint for the source probe.",
+    "Reject pre-composite same-track pixels that are fully covered in the final composition.",
+    "Reject one same-track tick, endpoint or pixel being assigned to two probes.",
+    "Reject evidence outside the tangent/normal neighborhood bounds.",
+    "Reject reducing the exact failure-case source inventory below 159 or changing probe IDs merely to improve coverage.",
+    "Reject aggregate >=0.90 when either predicted or actual per-track coverage is below 0.90.",
+    "Reject counted compound evidence with final-frame edge contrast below 4.0 or when 4.5 target coverage drops below 0.99.",
+    "Reject any screen-space route offset, endpoint displacement, changed world sample or changed z-order under this gate."
+  ],
+  "v4_minimum_preflight": {
+    "status_before_execution": "NOT_RUN",
+    "minimum_capture_count": 11,
+    "capture_groups": {
+      "original_v3_seven": [
+        "camera_player_low_1080",
+        "camera_elevated_1080",
+        "camera_overhead_1080",
+        "camera_broadcast_1080",
+        "comparison_720_ui135_cvd",
+        "actual_retina_ui135_cvd",
+        "advanced_1080_ui100_standard"
+      ],
+      "exact_frozen_failure_case": [
+        "core__launch_right_english_one_rail_v1__broadcast"
+      ],
+      "mirrored_case": [
+        "core__launch_left_english_one_rail_v1__broadcast"
+      ],
+      "non_overlap_controls": {
+        "minimum_count": 2,
+        "selection": "Choose two distinct fixture/camera cases using a deterministic pre-render topology audit where predicted-versus-actual core overlap area divided by the smaller core area is <=0.10 and both tracks have source probes.",
+        "recommended_candidates_subject_to_measured_qualification": [
+          "core__launch_corner_pocket_angle_v1__broadcast",
+          "core__launch_side_pocket_angle_v1__overhead"
+        ],
+        "required_record": "Capture IDs, overlap fractions, source-probe inventories and selection digest must be emitted; a candidate above 0.10 must be replaced deterministically and may not be mislabeled non-overlap."
+      }
+    },
+    "machine_sequence": [
+      "Run unit and negative fixtures for compound attribution.",
+      "Capture all minimum cases on actual GPU into a new v4 preflight root.",
+      "Require every inherited v3 gate and every v4 compound-visibility gate to pass for every case.",
+      "Freeze the v4 machine manifest, raw frames, ownership audit artifacts, source-probe digests and hashes.",
+      "Only after complete machine PASS, request a fresh independent TA review of every original-size image and its compound-visibility audit overlay."
+    ],
+    "independent_ta_requirements": [
+      "Trace predicted and actual end-to-end independently at original encoded size, including their overlapped segment.",
+      "Confirm the telemetry's same-track halo/gap/tick/endpoint claims correspond to visibly present compound glyph evidence.",
+      "Reject if machine attribution passes but a track is intermittent, muddy, mistaken for the other track or not end-to-end traceable.",
+      "Re-run all applicable v3 ten-axis checks for the original seven and layout/content checks for every added case.",
+      "Machine PASS does not imply TA PASS."
+    ],
+    "success_status": "V4_PREFLIGHT_MACHINE_AND_INDEPENDENT_TA_PASS_FORMAL68_NOT_YET_AUTHORIZED",
+    "failure_status": "V4_PREFLIGHT_FAIL_FORMAL68_NOT_AUTHORIZED"
+  },
+  "formal68_reauthorization_contract": {
+    "currently_authorized": false,
+    "v3_ready_manifest_reuse_allowed": false,
+    "v3_source_digest_reuse_as_v4_identity_allowed": false,
+    "v3_runner_reuse_allowed": false,
+    "requirements": [
+      "complete v4 minimum preflight machine PASS",
+      "fresh independent TA PASS with no FAIL or PENDING",
+      "new immutable v4 source digest",
+      "new v4 runner binary and runner SHA",
+      "new v4 Billiards executable SHA",
+      "new 68-selector v4 ready manifest bound to those hashes and the v4 fixture set",
+      "separate root authorization naming the exact v4 ready manifest, source, runner and executable hashes"
+    ],
+    "future_formal_rule": "A separately authorized v4 formal68 must start at selector 1 in a new output root, fail closed on the first error, and may not append to or rewrite v3. All 68 machine results and a subsequent independent TA review are required before any milestone claim.",
+    "m3_or_external_human_claim_from_preflight_or_formal_machine_pass": false
+  },
+  "authorization_after_gate": {
+    "allowed_next_action": "Implement the telemetry-only v4 compound visibility contract and its offline/unit validation.",
+    "actual_gpu_v4_preflight": "NOT_AUTHORIZED_BY_THIS_GATE",
+    "formal68": "NOT_AUTHORIZED",
+    "technical_art_review": "NOT_AUTHORIZED_UNTIL_COMPLETE_V4_MACHINE_PREFLIGHT",
+    "m3": "NOT_AUTHORIZED",
+    "external_real_human": "NOT_AUTHORIZED"
+  }
+}

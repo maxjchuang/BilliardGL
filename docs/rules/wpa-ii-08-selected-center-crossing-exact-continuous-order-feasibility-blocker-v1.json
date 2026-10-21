@@ -1,0 +1,181 @@
+{
+  "schema": "wpa_ii_08_selected_center_crossing_exact_continuous_order_feasibility_blocker_v1",
+  "status": "BLOCKED_NO_CANONICAL_CONTINUOUS_CROSSING_EVENT_OR_TOTAL_ORDER_NO_PRODUCTION_MUTATION",
+  "selection_binding": {
+    "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+    "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+    "row_id": "WPA-II-08",
+    "decision_id": "M4-POL-08-HEAD-STRING-CROSSING",
+    "selected_option_id": "CENTER_CROSSING_EXACT_CONTINUOUS_ORDER",
+    "authorized_stage": "B1_TESTS_FIRST_CPU_DIRECT_CODE",
+    "root_selected": true,
+    "selection_resolves_geometry_but_does_not_create_missing_telemetry": true,
+    "selection_alone_closes_row": false
+  },
+  "predecessor_bindings": {
+    "candidate": {
+      "path": "docs/rules/m4-wpa-policy-bundle-candidate-v1.json",
+      "sha256": "0cc6a5f319eaed7f7b46fb6c5579982592c504e89d57b04183bd749be82f7da9"
+    },
+    "design_gap_gate": {
+      "path": "docs/rules/wpa-ii-08-all-behind-respot-first-contact-design-gap-gate-v1.json",
+      "sha256": "2219bab50689979b77e6ba92630c4afae3276396993a73ac81b12e9e968acefe",
+      "historical_source_bindings_are_not_rewritten": true,
+      "previous_policy_pending_is_resolved_only_by_root_selection": true,
+      "previous_telemetry_pending_remains_open": true
+    }
+  },
+  "selected_policy_contract": {
+    "crossing_reference_point": "CUE_BALL_CENTER",
+    "crossing_relation": "CENTER_STRICTLY_CROSSES_HEAD_STRING",
+    "required_order": "CONTINUOUS_CROSSING_EVENT_STRICTLY_BEFORE_FIRST_OBJECT_CONTACT",
+    "same_time_or_unordered_result": "FAIL_CLOSED",
+    "incomplete_evidence_result": "FAIL_CLOSED",
+    "legal_object_on_head_string_direct_contact_legal": true,
+    "legal_object_foot_side_direct_contact_legal": true,
+    "leading_edge_inference_forbidden": true,
+    "sampled_endpoint_approximation_forbidden": true,
+    "product_reclassification_forbidden": true
+  },
+  "feasibility_findings": {
+    "continuous_solver": {
+      "ball_ball_and_boundary_contact_toi_available": true,
+      "head_string_plane_crossing_candidate_exists": false,
+      "head_string_plane_crossing_telemetry_record_exists": false,
+      "cue_center_crossing_origin_or_completeness_attestation_exists": false,
+      "recursive_event_segments_exist": true,
+      "tail_contact_toi_rebased_to_whole_tick_absolute_time": false,
+      "solver_event_id_orders_contact_batches_but_cannot_order_an_absent_crossing": true
+    },
+    "physics_step_telemetry": {
+      "contact_records_have_time_of_impact": true,
+      "surface_motion_steps_have_segment_start_end_positions": false,
+      "surface_motion_steps_have_segment_duration_and_absolute_offset": false,
+      "before_after_cue_center_endpoints_are_sufficient_for_strict_same_step_order": false
+    },
+    "shot_fact_collector": {
+      "begin_receives_behind_head_string_scope_or_plane": false,
+      "consume_records_first_contact_tick_object_set": true,
+      "consume_preserves_first_contact_within_tick_toi": false,
+      "consume_records_crossing_event": false,
+      "finish_attests_crossing_origin_completeness_and_order": false
+    },
+    "shot_facts": {
+      "behind_head_string_first_contact_restriction_active_field": false,
+      "head_string_world_z_cm_field": false,
+      "cue_center_crossing_event_field": false,
+      "crossing_before_first_contact_field": false,
+      "crossing_origin_and_completeness_fields": false
+    },
+    "same_step_exact_order_provable_from_current_contract": false,
+    "implementation_may_infer_from_endpoints_or_contact_tick": false,
+    "blocker_class": "NEW_PHYSICS_TELEMETRY_AND_COLLECTOR_PROVENANCE_REQUIRED"
+  },
+  "all_behind_respot_boundary": {
+    "official_candidate_actor_and_sample_time_logic_already_resolved": true,
+    "dedicated_parent_authority_exists": false,
+    "request_and_commit_schema_exists": false,
+    "frozen_state_hash_revalidation_exists": false,
+    "tie_choice_authority_exists": false,
+    "replacement_core_g_child_transaction_exists": false,
+    "narrow_product_action_exists": false,
+    "partial_product_exposure_before_complete_facts_allowed": false,
+    "production_work_stopped_at_selected_crossing_feasibility_gate": true
+  },
+  "required_successor_design_gate": {
+    "gate_id": "WPA-II-08-EXACT-CONTINUOUS-CROSSING-TELEMETRY-IMPLEMENTATION-GATE",
+    "root_approval_required_before_production": true,
+    "must_define": [
+      "generic non-rule-owning continuous plane-crossing event schema",
+      "cue-ball center and frozen head-string plane inputs",
+      "whole-tick absolute time and solver-event ordering across recursive segments",
+      "strict crossing-before-contact comparator including exact-equality fail-closed",
+      "successful-step-only origin/completeness and failed-step rollback",
+      "shot lifecycle stage/consume/reset identity",
+      "all-behind parent request/commit frozen-hash and child replacement atomicity",
+      "narrow current-offer product consumer with no foundation/global UI exposure"
+    ],
+    "potential_production_allowlist": [
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics.cpp",
+      "src/Billiards/continuous_collision.h",
+      "src/Billiards/continuous_collision.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/rules/behind_head_string_respot_authority.h",
+      "src/Billiards/rules/behind_head_string_respot_authority.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/render/modern/modern_product_session.h",
+      "src/Billiards/render/modern/modern_product_session.cpp"
+    ],
+    "required_positive_fixtures": [
+      "CROSSING_IN_EARLIER_TICK_THAN_CONTACT",
+      "SAME_TICK_CROSSING_STRICTLY_BEFORE_CONTACT",
+      "CROSSING_BEFORE_CUSHION_THEN_RETURN_CONTACT",
+      "ON_LINE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING",
+      "FOOT_SIDE_OBJECT_DIRECT_CONTACT_WITHOUT_CROSSING",
+      "ALL_BEHIND_UNIQUE_RESPOT_ATOMIC_CHILD_REPLACEMENT",
+      "ALL_BEHIND_TIE_CHOICE_ATOMIC_COMMIT",
+      "EXACT_PARENT_RETRY_ZERO_DELTA"
+    ],
+    "required_negative_fixtures": [
+      "SAME_TICK_CONTACT_BEFORE_CROSSING",
+      "SAME_TIME_CROSSING_AND_CONTACT_UNORDERED",
+      "ENDPOINTS_CROSS_BUT_INTERMEDIATE_CUSHION_ORDER_UNATTESTED",
+      "FAILED_PHYSICS_STEP_CROSSING_DISCARDED",
+      "INCOMPLETE_OR_NONFINITE_CROSSING_FAILS_CLOSED",
+      "DIRECT_BEHIND_OBJECT_CONTACT_WITHOUT_CROSSING",
+      "STALE_ALL_BEHIND_LAYOUT_HASH_ROLLS_BACK",
+      "WRONG_ACTOR_ACTION_REVISION_HASH_ROLLS_BACK",
+      "FOUNDATION_OR_GLOBAL_RULES_UI_BYPASS_REJECTED"
+    ]
+  },
+  "source_bindings": {
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "physics": {"path": "src/Billiards/physics.cpp", "sha256": "fc497d79650bf2ff9cd8570c320653c8742e4201b8a2428a7892bfcb0124de77"},
+    "surface_motion_contract": {"path": "src/Billiards/surface_motion.h", "sha256": "76b282b8173acfe6ef87421232b97eeddc5f537178a5ee7b9c5d9eadf71da248"},
+    "continuous_collision_header": {"path": "src/Billiards/continuous_collision.h", "sha256": "53465297f0dcdb821cc9adce3db9dd7cc714ee3f15c7d5474d4f4d800e3cb792"},
+    "continuous_collision_cpp": {"path": "src/Billiards/continuous_collision.cpp", "sha256": "2ff6ef3f37a963f795a38c8182a6aaad1cda7003971df5ccb57380d206c9bbf5"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "13453f30d0eeb7ce4231b1f5802eaf3317e085f4187e3e16abaff34cb171986c"},
+    "collector_cpp": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "92b205a1a0025b21a47fbd86e755beceeb4f89208b5db28945ddfcdd1f7e5f7d"},
+    "shot_facts_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "a2255a58d4f8f9af8818f2bca3fc590fe4a80d5f4a0440a12e61523e04f8ec46"},
+    "adjudicator": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "9786b62e050ad531861474f69b11177626184b5b837252b7ab094900adcdc509"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "e18abf2b7da29ae00b063a8685f322d2dc93b377689eff3b3eabf4df2ff19b17"},
+    "runtime_cpp": {"path": "src/Billiards/game_runtime.cpp", "sha256": "0b96b3bec8d1ef8d333f307f8aba948da5380c847651406f391fbee68e547db2"},
+    "product_session_header": {"path": "src/Billiards/render/modern/modern_product_session.h", "sha256": "4a5fcf9cfd60e0907944fa05f1a1febec61238820e6b461ee4adfbc3bc552a3c"},
+    "product_session_cpp": {"path": "src/Billiards/render/modern/modern_product_session.cpp", "sha256": "cdef883d0d77c84839c8c3b5d6c52d2e881dfffcbf4f5dc28c613f3eef095b93"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "28a408570a13aa50c5c10ebb594eb651d4e7f4fdbe1d42d1cbb1e5312f890eba"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "b98da2f6c76f2706abf2ef3d7edf192974ef21289260d524d28e2436c5b98f4f"},
+    "product_tests": {"path": "tests/rules_decision_session_integration_tests.cpp", "sha256": "3dd1468aedc40a0d686128490a6d6c65336d1df30d7cdf501814546d2a1f4ef0"},
+    "cmake_unchanged": {"path": "CMakeLists.txt", "sha256": "f41563c35224dd809f64acedba6455355e70082697c41305c2d1b05426f71d41"}
+  },
+  "cpu_read_only_verification": {
+    "build_root": "build-product-session",
+    "ctest_subset": {"passed": 3, "failed": 0},
+    "binaries": [
+      {"target": "BilliardsShotFactCollectorTests", "sha256": "227174156d861e5452e84524a4bcf6cb0dd2156141523f0a3138b9433c32cae2", "exit_code": 0},
+      {"target": "BilliardsRulesRuntimeIntegrationTests", "sha256": "ecaa9ad0f14fbc3159fcebba8e4737e8d04e05bd8219e9030e251a0947cc5f3d", "exit_code": 0},
+      {"target": "BilliardsRulesDecisionSessionIntegrationTests", "sha256": "1dc769a4e4d90e3bcd894e436569c2ff942c595bf257f69018d78cb1b5186f76", "exit_code": 0}
+    ],
+    "production_or_cmake_source_modified_in_task": false,
+    "gpu_cocoa_or_opengl_executed": false
+  },
+  "claims": {
+    "root_selected_policy_bound": true,
+    "same_step_exact_order_currently_provable": false,
+    "crossing_telemetry_implemented": false,
+    "all_behind_respot_authority_implemented": false,
+    "all_behind_product_action_reachable": false,
+    "wpa_ii_08_row_closed": false,
+    "audit_v5_modified_or_promoted": false,
+    "global_rules_decision_ui_exposed": false,
+    "product_behavior_changed": false,
+    "production_source_modified": false,
+    "cmake_modified": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "wpa_ii_21_stalemate_referee_consumer_implementation_receipt_v1",
+  "status": "IMPLEMENTED_CPU_VERIFIED_HEADLESS_AUTHORITY_NO_VISIBLE_UI_NO_AUTO_M4_COMPLETION",
+  "authority_bindings": {
+    "implementation_design_gate": {
+      "path": "docs/rules/wpa-ii-21-stalemate-referee-consumer-implementation-design-gate-v1.json",
+      "sha256": "f4820aa0a63fde6857a60208cc1e190f572bb57c6a5bc02a516e5d034b28b1f0",
+      "root_revalidation": "PASS_15_OF_15_EXACT_ALLOWLIST_TESTS_FIRST_AUTHORIZED"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f",
+      "row_id": "WPA-II-21",
+      "selected_option_id": "SIGNED_REFEREE_DIRECTIVE_DEFAULT_THREE_EACH"
+    },
+    "b2_foundation_receipt": {
+      "path": "docs/rules/m4-b2-authenticated-referee-authority-protocol-foundation-implementation-receipt-v1.json",
+      "sha256": "1f654b7e407d34b362430fb83b53f00dfd3598742c5553c815231517727f914b"
+    }
+  },
+  "tests_first_record": {
+    "red_observed": true,
+    "red_failure": "tests/stalemate_authority_tests.cpp compile failed because rules/stalemate_authority.h did not exist",
+    "green_after_minimal_production_patch": true,
+    "wide_link_gap_observed_and_closed_without_extra_link_dependency": "initial consumer parsing depended on automation_json/deterministic_hash and caused BilliardsGameRuntimeTests unresolved symbols; implementation now uses protocol-owned canonical payload validation and SHA primitive"
+  },
+  "implemented_contract": {
+    "states": [
+      "INACTIVE",
+      "PROPOSAL_OPEN",
+      "CONTINUATION_ACTIVE",
+      "AWAITING_REFEREE_FINAL",
+      "RERACK_COMMITTED",
+      "CANCELLED"
+    ],
+    "proposal": "authenticated referee PROPOSE freezes rack identity, original breaker/order, exact default-three or finite-alternative directive and immutable proposal digest",
+    "refusal": "detached authenticated player envelope exact actor/payload match; first accepted refusal starts counters and retains proposal/refusal digest history",
+    "counter": "successful authoritative finishRulesShot completion in frozen rack counts exact shot identity once; threshold only enters AWAITING_REFEREE_FINAL",
+    "final": "fresh same-referee FINAL_DECLARE binds live proposal and exact counter snapshot; Core-E plan is built before protocol mutation and verified plan restores frozen original breaker/order",
+    "cancel": "same referee closes proposal without rerack and retains audit receipt",
+    "exact_retry_zero_delta": true,
+    "idempotency_nonce_conflict_fail_closed": true,
+    "commit_failure_full_rollback": true,
+    "reset_and_other_official_rerack_invalidate": true,
+    "direct_core_e_command_exposed": false,
+    "referee_payload_promoted_to_physics_or_shotfacts": false,
+    "visible_or_global_rules_ui_exposed": false
+  },
+  "automation_headless": {
+    "capability": "wpa_ii_21_stalemate_referee_consumer_v1",
+    "commands": [
+      "rules.stalemate_referee_propose",
+      "rules.stalemate_player_refuse",
+      "rules.stalemate_referee_final",
+      "rules.stalemate_referee_cancel",
+      "get_stalemate_authority_state"
+    ],
+    "request_exact_field_count": 17,
+    "readback_omits": [
+      "credential_id",
+      "authentication_proof",
+      "payload_canonical"
+    ],
+    "headless_only": true
+  },
+  "fixture_matrix": {
+    "positive": [
+      "REFEREE_DEFAULT_THREE_PROPOSAL_FREEZES_RACK_ORDER",
+      "REFEREE_EXPLICIT_FINITE_ALTERNATIVE_PROPOSAL",
+      "PLAYER_ZERO_SIGNED_REFUSAL_STARTS_WINDOW",
+      "PLAYER_ONE_SIGNED_REFUSAL_STARTS_WINDOW",
+      "PROPOSAL_AND_REFUSAL_HISTORY_RETAINED",
+      "EACH_PLAYER_COMPLETED_SHOTS_COUNT_IN_FROZEN_RACK",
+      "THRESHOLD_REACHES_AWAITING_FINAL_WITHOUT_AUTO_RERACK",
+      "REFEREE_FINAL_BINDS_COUNTER_SNAPSHOT_AND_RERACKS_ORIGINAL_BREAKER",
+      "ORIGINAL_SHOOTING_ORDER_PRESERVED",
+      "SAME_REFEREE_CANCEL_WITHOUT_RERACK",
+      "AUTOMATION_SECRET_FREE_STATE_ROUNDTRIP"
+    ],
+    "negative": [
+      "UNAUTHENTICATED_WRONG_ROLE_OR_CHANGED_SUBJECT",
+      "WRONG_PROPOSAL_RACK_REVISION_OR_STATE_HASH",
+      "DEFAULT_ALLOWANCE_NOT_THREE_OR_ALTERNATIVE_OUT_OF_RANGE",
+      "WRONG_PLAYER_REFUSAL_ACTOR_OR_UNSIGNED_REFUSAL",
+      "REFUSAL_BEFORE_PROPOSAL_OR_AFTER_CANCEL_FINAL",
+      "PREVIEW_REJECTED_FAILED_OR_PRE_WINDOW_SHOT_NOT_COUNTED",
+      "DUPLICATE_COMPLETION_NOT_COUNTED",
+      "REPLAY_OR_OTHER_RACK_COUNT_REJECTED",
+      "COUNTER_THRESHOLD_CANNOT_AUTO_FINAL_OR_RERACK",
+      "FINAL_BEFORE_REFUSAL_OR_WITH_STALE_COUNTER_DIGEST",
+      "FINAL_BY_PLAYER_OR_DIFFERENT_REFEREE",
+      "CURRENT_PLAYER_CANNOT_REPLACE_ORIGINAL_BREAKER",
+      "DIRECT_CORE_E_FOUNDATION_ACTION_NOT_EXPOSED",
+      "CORE_E_PLAN_OR_PARENT_COMMIT_FAILURE_FULL_ROLLBACK",
+      "EXACT_RETRY_ZERO_DELTA_AND_CONFLICT_FAIL_CLOSED",
+      "RESET_OR_OTHER_RERACK_INVALIDATES_STALE_REQUESTS",
+      "NO_WPA_RULE_PHYSICS_OR_SHOTFACT_SYNTHESIS_FROM_REFEREE_PAYLOAD"
+    ]
+  },
+  "source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "5f396126815f2e536cc3ba52a16edf03353648890bbf36b576f22bd3f5424b93"},
+    {"path": "src/Billiards/rules/stalemate_authority.h", "sha256": "7ae7475425e0b8eead4860063221b34d6c437179d3e75594f3fa9bdf2d06b659"},
+    {"path": "src/Billiards/rules/stalemate_authority.cpp", "sha256": "fb1bdef637a4b838cdc523f23741438b395c97fad0b1f03c8bc888526975a541"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.h", "sha256": "c6b1c362054fac7e10d5254824685c9a4fa43e4c85e2560a5036567aad9aae69"},
+    {"path": "src/Billiards/rules/referee_authority_protocol.cpp", "sha256": "cccebcee03b82bd42fdefea35b2838e3e5a4de3894b2e2be36594fde8919c1b0"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "c55593406f699ba96f462bfc234d4b8cae24e74dffb9c57836ef98101f4fbcb1"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "434da9bd2c34161ab83b21a0261d9d10a5b437a7326728635885d58b502b1672"},
+    {"path": "src/Billiards/automation_controller.cpp", "sha256": "959e79903a6b7b6688ba406a331fdce2e888be38c9d082fa623c244ecd919519"}
+  ],
+  "implementation_aggregate_sha256": "28115ffca27743d3552861f42184817621c5947babb50d9f86771d77d6035805",
+  "test_bindings": [
+    {"path": "tests/stalemate_authority_tests.cpp", "sha256": "9f2b182caff59cba83dd3aa26e3c5ca0545863015d190caf2e6c0df1d37e8882"},
+    {"path": "tests/referee_authority_protocol_tests.cpp", "sha256": "bd52b6757a9eb87ac3bdc231c15913ed9d51287bcef7d33afa9fc77a77887767"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "33cc85f7d4190afae07af61463a5828cf2b417eae0343708ab98f97e7220739e"},
+    {"path": "tests/automation_controller_tests.cpp", "sha256": "1f34b2bbb5bf41cf2448d58185cb80f4cc0984e7d6b7dcca9aa4b91b5508d303"}
+  ],
+  "test_aggregate_sha256": "b969dccebb63bd66aa6a3d9b4a41f1b7c6146f1966ba0aef1c0d980e2ff05ef7",
+  "cpu_verification": {
+    "build_root": "build-wpa-21-stalemate-cpu-v1",
+    "required_binaries": [
+      {"path": "build-wpa-21-stalemate-cpu-v1/BilliardsStalemateAuthorityTests", "sha256": "fe9457013a5d3e49a7da2efd83278daea6f974c53c10f038784e2499d234be3b", "exit_code": 0},
+      {"path": "build-wpa-21-stalemate-cpu-v1/BilliardsRefereeAuthorityProtocolTests", "sha256": "7800ab4f5e9a5fe68100b122a5dc6ea407b2b7b40e81cedd02af6e331b167147", "exit_code": 0},
+      {"path": "build-wpa-21-stalemate-cpu-v1/BilliardsRulesRuntimeIntegrationTests", "sha256": "5cc2626e7980cc792b000a6704f1abea75b3c635eb4da139480d7b77daf91d27", "exit_code": 0},
+      {"path": "build-wpa-21-stalemate-cpu-v1/BilliardsAutomationControllerTests", "sha256": "eae5575f1726e65666158e3cb7bc46cc7fe82d99a2e8f7a8c1bb6d2e10fec1fd", "exit_code": 0},
+      {"path": "build-wpa-21-stalemate-cpu-v1/BilliardsGameRuntimeTests", "sha256": "9a34bf4b964d225626b8967b0baefbc2238516a5c50d8c121d213db37613c039", "exit_code": 0}
+    ],
+    "wide_passed_targets": [
+      "BilliardsRulesTests",
+      "BilliardsChineseEightBallRulesTests",
+      "BilliardsAutomationProtocolTests",
+      "BilliardsRulesDecisionProductRuntimeTests",
+      "BilliardsRulesDecisionSessionIntegrationTests",
+      "BilliardsModernProductUiRuntimeTests",
+      "BilliardsProductInputControllerTests"
+    ],
+    "all_exit_code": 0,
+    "gpu_cocoa_opengl_executed": false
+  },
+  "completion_boundary": {
+    "wpa_ii_21_internal_headless_consumer_implemented": true,
+    "visible_product_ui_implemented": false,
+    "audit_row_promoted": false,
+    "b2_complete": false,
+    "m4_complete": false,
+    "physics_or_shotfacts_modified": false,
+    "global_rules_ui_exposed": false,
+    "gpu_executed": false,
+    "readiness_or_authorization_created": false
+  }
+}

@@ -1,0 +1,3203 @@
+{
+  "accessibility_contract": {
+    "disabled_state_preserves_shape_and_text": true,
+    "error_state_uses_octagon_cross_plus_error_text": true,
+    "focus_state_uses_outline_plus_chevron_plus_text": true,
+    "minimum_essential_graphic_contrast_ratio": 3.0,
+    "minimum_text_contrast_ratio": 4.5,
+    "never_color_only": true,
+    "required_redundant_channels": [
+      "shape",
+      "adjacent_text_label",
+      "state_or_value_text"
+    ],
+    "selected_state_uses_diamond_check_plus_text": true
+  },
+  "aliases": {},
+  "authorship": "original_billiardgl_vector_tokens",
+  "debug_isolation": {
+    "debug_allowed_in_release_capture": false,
+    "debug_default_visible": false,
+    "debug_namespace": "debug_overlay",
+    "shares_runtime_icon_nodes": false,
+    "shipping_namespace": "product_shell"
+  },
+  "external_assets": [],
+  "global_state_icon_usage": {
+    "disabled": [
+      "ai_diamond",
+      "aim_crosshair",
+      "assist_rings",
+      "back_arrow",
+      "camera_frame",
+      "camera_motion",
+      "caption_box",
+      "catalog_grid",
+      "cue_ball",
+      "distance_arrow",
+      "empty_box",
+      "exit_door",
+      "focus_brackets",
+      "glow_circle",
+      "help_circle",
+      "impact_burst",
+      "keyboard_outline",
+      "mouse_axis",
+      "music_note",
+      "pattern_circle",
+      "pause_bars",
+      "play_triangle",
+      "power_bars",
+      "replay_file",
+      "replay_triangle",
+      "reset_arrow",
+      "rules_shield",
+      "seek_next",
+      "seek_previous",
+      "settings_sliders",
+      "shake_lines",
+      "single_player_badge",
+      "speed_down",
+      "speed_up",
+      "text_scale",
+      "training_target",
+      "ui_click",
+      "venue_waves",
+      "vertical_arrows"
+    ],
+    "error": [
+      "error_cross_octagon"
+    ],
+    "fallback_item": [
+      "empty_box",
+      "item_square"
+    ],
+    "focus": [
+      "focus_chevron"
+    ],
+    "normal": [
+      "ai_diamond",
+      "aim_crosshair",
+      "assist_rings",
+      "back_arrow",
+      "camera_frame",
+      "camera_motion",
+      "caption_box",
+      "catalog_grid",
+      "cue_ball",
+      "distance_arrow",
+      "empty_box",
+      "exit_door",
+      "focus_brackets",
+      "glow_circle",
+      "help_circle",
+      "impact_burst",
+      "keyboard_outline",
+      "mouse_axis",
+      "music_note",
+      "pattern_circle",
+      "pause_bars",
+      "play_triangle",
+      "power_bars",
+      "replay_file",
+      "replay_triangle",
+      "reset_arrow",
+      "rules_shield",
+      "seek_next",
+      "seek_previous",
+      "settings_sliders",
+      "shake_lines",
+      "single_player_badge",
+      "speed_down",
+      "speed_up",
+      "text_scale",
+      "training_target",
+      "ui_click",
+      "venue_waves",
+      "vertical_arrows"
+    ],
+    "selected": [
+      "selected_check_diamond"
+    ]
+  },
+  "gpu_contract": {
+    "allowed_primitives": [
+      "rect",
+      "circle",
+      "polyline",
+      "polygon"
+    ],
+    "color_input": "srgb8_unpremultiplied_role_token",
+    "coordinate_space": "normalized_24x24_top_left_y_down",
+    "curve_policy": "straight_segments_and_analytic_circles_only",
+    "font_backend": "existing_freetype_sdf_atlas",
+    "icon_expansion": "cpu_expand_to_solid_and_line_triangles_before_gpu_submit",
+    "registry_policy": "standalone_product_shell_set_no_runtime_merge_required",
+    "stroke_units": "logical_px_scaled_then_pixel_snapped",
+    "svg_runtime_dependency": false,
+    "unknown_token_policy": "hard_error_no_fallback"
+  },
+  "icon_tokens": {
+    "ai_diamond": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              2
+            ],
+            [
+              22,
+              12
+            ],
+            [
+              12,
+              22
+            ],
+            [
+              2,
+              12
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 9,
+          "cy": 11,
+          "fill_role": "icon_primary",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "icon_primary",
+          "stroke_width": 1
+        },
+        {
+          "cx": 15,
+          "cy": 11,
+          "fill_role": "icon_primary",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "icon_primary",
+          "stroke_width": 1
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              16
+            ],
+            [
+              12,
+              18
+            ],
+            [
+              15,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "single_player_setup"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "aim_crosshair": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 7,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              2,
+              12
+            ],
+            [
+              7,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              17,
+              12
+            ],
+            [
+              22,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              2
+            ],
+            [
+              12,
+              7
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              17
+            ],
+            [
+              12,
+              22
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "assist_rings": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 6,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "back_arrow": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              11,
+              5
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              11,
+              19
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              12
+            ],
+            [
+              21,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "camera_frame": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              4
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              16,
+              4
+            ],
+            [
+              20,
+              4
+            ],
+            [
+              20,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              16
+            ],
+            [
+              4,
+              20
+            ],
+            [
+              8,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              20,
+              16
+            ],
+            [
+              20,
+              20
+            ],
+            [
+              16,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 4,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help",
+          "replay_playback",
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "camera_motion": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 10,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 12,
+          "x": 5,
+          "y": 7
+        },
+        {
+          "cx": 11,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 3,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              4
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              11,
+              4
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              15,
+              20
+            ],
+            [
+              19,
+              22
+            ],
+            [
+              22,
+              19
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "caption_box": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 14,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 18,
+          "x": 3,
+          "y": 5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              10
+            ],
+            [
+              11,
+              10
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              13,
+              10
+            ],
+            [
+              18,
+              10
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              14
+            ],
+            [
+              10,
+              14
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              14
+            ],
+            [
+              18,
+              14
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "catalog_grid": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "height": 7,
+          "primitive": "rect",
+          "stroke_role": "accent",
+          "stroke_width": 1,
+          "width": 7,
+          "x": 3,
+          "y": 3
+        },
+        {
+          "fill_role": "none",
+          "height": 7,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 7,
+          "x": 14,
+          "y": 3
+        },
+        {
+          "fill_role": "none",
+          "height": 7,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 7,
+          "x": 3,
+          "y": 14
+        },
+        {
+          "fill_role": "none",
+          "height": 7,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 7,
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "usage": {
+        "screens": [
+          "training_session"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "cue_ball": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 9,
+          "cy": 8,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "distance_arrow": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              12
+            ],
+            [
+              20,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              8
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              8,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              16,
+              8
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              16,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "empty_box": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 16,
+          "primitive": "rect",
+          "stroke_role": "disabled",
+          "stroke_width": 2,
+          "width": 18,
+          "x": 3,
+          "y": 4
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              7,
+              12
+            ],
+            [
+              17,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "disabled",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_browser",
+          "training_catalog"
+        ],
+        "states": [
+          "disabled",
+          "fallback_item",
+          "normal"
+        ]
+      }
+    },
+    "error_cross_octagon": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              2
+            ],
+            [
+              16,
+              2
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              22,
+              16
+            ],
+            [
+              16,
+              22
+            ],
+            [
+              8,
+              22
+            ],
+            [
+              2,
+              16
+            ],
+            [
+              2,
+              8
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "error",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              8
+            ],
+            [
+              16,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "error",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              16,
+              8
+            ],
+            [
+              8,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "error",
+          "stroke_width": 2.5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "all_screens"
+        ],
+        "states": [
+          "error"
+        ]
+      }
+    },
+    "exit_door": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 18,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 11,
+          "x": 4,
+          "y": 3
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              13,
+              12
+            ],
+            [
+              22,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              18,
+              8
+            ],
+            [
+              22,
+              12
+            ],
+            [
+              18,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "focus_brackets": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              16,
+              3
+            ],
+            [
+              21,
+              3
+            ],
+            [
+              21,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              16
+            ],
+            [
+              3,
+              21
+            ],
+            [
+              8,
+              21
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              21,
+              16
+            ],
+            [
+              21,
+              21
+            ],
+            [
+              16,
+              21
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "focus_chevron": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              7,
+              4
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              7,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 3
+        }
+      ],
+      "usage": {
+        "screens": [
+          "all_screens"
+        ],
+        "states": [
+          "focus"
+        ]
+      }
+    },
+    "glow_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 6,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "help_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              9
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              14,
+              7
+            ],
+            [
+              16,
+              9
+            ],
+            [
+              16,
+              11
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              12,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 19,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu",
+          "match"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "impact_burst": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              2
+            ],
+            [
+              14,
+              8
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              17,
+              11
+            ],
+            [
+              22,
+              14
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              16,
+              22
+            ],
+            [
+              11,
+              17
+            ],
+            [
+              6,
+              21
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              2,
+              12
+            ],
+            [
+              8,
+              9
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "item_square": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 16,
+          "primitive": "rect",
+          "stroke_role": "accent",
+          "stroke_width": 2,
+          "width": 16,
+          "x": 4,
+          "y": 4
+        }
+      ],
+      "usage": {
+        "screens": [
+          "all_screens"
+        ],
+        "states": [
+          "fallback_item"
+        ]
+      }
+    },
+    "keyboard_outline": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 14,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 20,
+          "x": 2,
+          "y": 5
+        },
+        {
+          "fill_role": "accent",
+          "height": 2,
+          "primitive": "rect",
+          "width": 2,
+          "x": 5,
+          "y": 8
+        },
+        {
+          "fill_role": "accent",
+          "height": 2,
+          "primitive": "rect",
+          "width": 2,
+          "x": 9,
+          "y": 8
+        },
+        {
+          "fill_role": "accent",
+          "height": 2,
+          "primitive": "rect",
+          "width": 2,
+          "x": 13,
+          "y": 8
+        },
+        {
+          "fill_role": "accent",
+          "height": 2,
+          "primitive": "rect",
+          "width": 2,
+          "x": 17,
+          "y": 8
+        },
+        {
+          "fill_role": "none",
+          "height": 3,
+          "primitive": "rect",
+          "stroke_role": "accent",
+          "stroke_width": 1,
+          "width": 12,
+          "x": 6,
+          "y": 13
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "mouse_axis": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 18,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 10,
+          "x": 7,
+          "y": 3
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              10
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 7,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 1,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              12
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              3,
+              12
+            ],
+            [
+              6,
+              15
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              21,
+              12
+            ],
+            [
+              18,
+              9
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              18,
+              15
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "music_note": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              14,
+              4
+            ],
+            [
+              14,
+              16
+            ],
+            [
+              19,
+              14
+            ],
+            [
+              19,
+              3
+            ],
+            [
+              14,
+              4
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 10,
+          "cy": 18,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 3,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        },
+        {
+          "cx": 16,
+          "cy": 16,
+          "fill_role": "accent",
+          "primitive": "circle",
+          "radius": 3,
+          "stroke_role": "accent",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "pattern_circle": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              8
+            ],
+            [
+              19,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              12
+            ],
+            [
+              21,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              16
+            ],
+            [
+              19,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "pause_bars": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "height": 16,
+          "primitive": "rect",
+          "width": 4,
+          "x": 6,
+          "y": 4
+        },
+        {
+          "fill_role": "accent",
+          "height": 16,
+          "primitive": "rect",
+          "width": 4,
+          "x": 14,
+          "y": 4
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "play_triangle": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              3
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              6,
+              21
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback",
+          "single_player_setup"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "power_bars": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "height": 6,
+          "primitive": "rect",
+          "width": 3,
+          "x": 3,
+          "y": 15
+        },
+        {
+          "fill_role": "accent",
+          "height": 10,
+          "primitive": "rect",
+          "width": 3,
+          "x": 8,
+          "y": 11
+        },
+        {
+          "fill_role": "focus",
+          "height": 14,
+          "primitive": "rect",
+          "width": 3,
+          "x": 13,
+          "y": 7
+        },
+        {
+          "fill_role": "focus",
+          "height": 18,
+          "primitive": "rect",
+          "width": 3,
+          "x": 18,
+          "y": 3
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "replay_file": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 20,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 14,
+          "x": 4,
+          "y": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              14,
+              2
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              14,
+              8
+            ],
+            [
+              14,
+              2
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "accent",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              10
+            ],
+            [
+              16,
+              14
+            ],
+            [
+              9,
+              18
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_browser",
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "replay_triangle": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              6
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              8,
+              18
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              5
+            ],
+            [
+              3,
+              8
+            ],
+            [
+              3,
+              16
+            ],
+            [
+              5,
+              19
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "reset_arrow": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              18,
+              7
+            ],
+            [
+              18,
+              3
+            ],
+            [
+              22,
+              3
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              18,
+              4
+            ],
+            [
+              14,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              3,
+              13
+            ],
+            [
+              6,
+              18
+            ],
+            [
+              11,
+              21
+            ],
+            [
+              17,
+              19
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "training_session"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "rules_shield": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              2
+            ],
+            [
+              20,
+              5
+            ],
+            [
+              19,
+              14
+            ],
+            [
+              12,
+              22
+            ],
+            [
+              5,
+              14
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              8,
+              12
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              16,
+              9
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "help",
+          "match",
+          "single_player_setup"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "seek_next": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              5
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              5,
+              19
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "focus",
+          "height": 14,
+          "primitive": "rect",
+          "width": 2,
+          "x": 18,
+          "y": 5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "seek_previous": {
+      "commands": [
+        {
+          "fill_role": "accent",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              19,
+              5
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              19,
+              19
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "focus",
+          "height": 14,
+          "primitive": "rect",
+          "width": 2,
+          "x": 4,
+          "y": 5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "selected_check_diamond": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              2
+            ],
+            [
+              22,
+              12
+            ],
+            [
+              12,
+              22
+            ],
+            [
+              2,
+              12
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              7,
+              12
+            ],
+            [
+              10,
+              15
+            ],
+            [
+              17,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2.5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "all_screens"
+        ],
+        "states": [
+          "selected"
+        ]
+      }
+    },
+    "settings_sliders": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              6
+            ],
+            [
+              20,
+              6
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              12
+            ],
+            [
+              20,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              18
+            ],
+            [
+              20,
+              18
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 9,
+          "cy": 6,
+          "fill_role": "surface",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "cx": 15,
+          "cy": 12,
+          "fill_role": "surface",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "cx": 7,
+          "cy": 18,
+          "fill_role": "surface",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu",
+          "match"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "shake_lines": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              8
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              15,
+              9
+            ],
+            [
+              18,
+              5
+            ],
+            [
+              21,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              16
+            ],
+            [
+              6,
+              13
+            ],
+            [
+              9,
+              17
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              15,
+              17
+            ],
+            [
+              18,
+              13
+            ],
+            [
+              21,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "single_player_badge": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 9,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 3,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              19
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              16,
+              15
+            ],
+            [
+              18,
+              19
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "speed_down": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              8
+            ],
+            [
+              12,
+              16
+            ],
+            [
+              20,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              20
+            ],
+            [
+              18,
+              20
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "speed_up": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              4,
+              16
+            ],
+            [
+              12,
+              8
+            ],
+            [
+              20,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              7
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              5
+            ],
+            [
+              15,
+              5
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "replay_playback"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "text_scale": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "height": 16,
+          "primitive": "rect",
+          "stroke_role": "icon_primary",
+          "stroke_width": 2,
+          "width": 18,
+          "x": 3,
+          "y": 4
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              6,
+              8
+            ],
+            [
+              18,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              9,
+              8
+            ],
+            [
+              9,
+              17
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              15,
+              8
+            ],
+            [
+              15,
+              14
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "training_target": {
+      "commands": [
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 9,
+          "stroke_role": "icon_primary",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "none",
+          "primitive": "circle",
+          "radius": 5,
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "cx": 12,
+          "cy": 12,
+          "fill_role": "focus",
+          "primitive": "circle",
+          "radius": 2,
+          "stroke_role": "focus",
+          "stroke_width": 1
+        }
+      ],
+      "usage": {
+        "screens": [
+          "main_menu",
+          "training_catalog",
+          "training_session"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "ui_click": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              5,
+              3
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              13,
+              14
+            ],
+            [
+              16,
+              21
+            ],
+            [
+              12,
+              22
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              5,
+              18
+            ]
+          ],
+          "primitive": "polygon",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              18,
+              3
+            ],
+            [
+              18,
+              7
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              20,
+              9
+            ],
+            [
+              23,
+              9
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "venue_waves": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              7
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              11,
+              7
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              21,
+              7
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              12
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              21,
+              12
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              3,
+              17
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              11,
+              17
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              21,
+              17
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "focus",
+          "stroke_width": 2
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    },
+    "vertical_arrows": {
+      "commands": [
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              12,
+              3
+            ],
+            [
+              17,
+              8
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              21
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        },
+        {
+          "fill_role": "none",
+          "line_cap": "round",
+          "line_join": "round",
+          "points": [
+            [
+              7,
+              16
+            ],
+            [
+              12,
+              21
+            ],
+            [
+              17,
+              16
+            ]
+          ],
+          "primitive": "polyline",
+          "stroke_role": "accent",
+          "stroke_width": 2.5
+        }
+      ],
+      "usage": {
+        "screens": [
+          "settings"
+        ],
+        "states": [
+          "disabled",
+          "normal"
+        ]
+      }
+    }
+  },
+  "namespace": "product_shell",
+  "palette_modes": {
+    "color_vision_safe": {
+      "accent": "#5DD9C1",
+      "disabled": "#AAB2B6",
+      "error": "#FF9F80",
+      "focus": "#FFD166",
+      "icon_primary": "#F4F7F8",
+      "surface": "#10181E",
+      "text_primary": "#F4F7F8",
+      "text_secondary": "#C1CBD0"
+    },
+    "standard": {
+      "accent": "#31B7C8",
+      "disabled": "#9AA5AA",
+      "error": "#FF8C69",
+      "focus": "#FFD166",
+      "icon_primary": "#F4F7F8",
+      "surface": "#10181E",
+      "text_primary": "#F4F7F8",
+      "text_secondary": "#C1CBD0"
+    }
+  },
+  "schema_version": 1,
+  "screen_icon_usage": {
+    "help": [
+      "aim_crosshair",
+      "power_bars",
+      "cue_ball",
+      "camera_frame",
+      "rules_shield",
+      "back_arrow"
+    ],
+    "main_menu": [
+      "single_player_badge",
+      "training_target",
+      "replay_triangle",
+      "settings_sliders",
+      "help_circle",
+      "exit_door"
+    ],
+    "match": [
+      "rules_shield",
+      "settings_sliders",
+      "help_circle"
+    ],
+    "replay_browser": [
+      "replay_file",
+      "empty_box"
+    ],
+    "replay_playback": [
+      "play_triangle",
+      "pause_bars",
+      "speed_down",
+      "speed_up",
+      "camera_frame",
+      "seek_previous",
+      "seek_next",
+      "replay_file"
+    ],
+    "settings": [
+      "assist_rings",
+      "mouse_axis",
+      "vertical_arrows",
+      "keyboard_outline",
+      "text_scale",
+      "pattern_circle",
+      "caption_box",
+      "music_note",
+      "venue_waves",
+      "impact_burst",
+      "ui_click",
+      "camera_frame",
+      "distance_arrow",
+      "glow_circle",
+      "focus_brackets",
+      "camera_motion",
+      "shake_lines"
+    ],
+    "single_player_setup": [
+      "rules_shield",
+      "ai_diamond",
+      "play_triangle"
+    ],
+    "training_catalog": [
+      "training_target",
+      "empty_box"
+    ],
+    "training_session": [
+      "training_target",
+      "reset_arrow",
+      "catalog_grid"
+    ]
+  },
+  "source_audit": {
+    "exact_emitted_icon_tokens": [
+      "ai_diamond",
+      "aim_crosshair",
+      "assist_rings",
+      "back_arrow",
+      "camera_frame",
+      "camera_motion",
+      "caption_box",
+      "catalog_grid",
+      "cue_ball",
+      "distance_arrow",
+      "empty_box",
+      "error_cross_octagon",
+      "exit_door",
+      "focus_brackets",
+      "focus_chevron",
+      "glow_circle",
+      "help_circle",
+      "impact_burst",
+      "item_square",
+      "keyboard_outline",
+      "mouse_axis",
+      "music_note",
+      "pattern_circle",
+      "pause_bars",
+      "play_triangle",
+      "power_bars",
+      "replay_file",
+      "replay_triangle",
+      "reset_arrow",
+      "rules_shield",
+      "seek_next",
+      "seek_previous",
+      "selected_check_diamond",
+      "settings_sliders",
+      "shake_lines",
+      "single_player_badge",
+      "speed_down",
+      "speed_up",
+      "text_scale",
+      "training_target",
+      "ui_click",
+      "venue_waves",
+      "vertical_arrows"
+    ],
+    "screen_count": 9,
+    "screen_enum": [
+      "MainMenu",
+      "SinglePlayerSetup",
+      "Match",
+      "TrainingCatalog",
+      "TrainingSession",
+      "ReplayBrowser",
+      "ReplayPlayback",
+      "Settings",
+      "Help"
+    ],
+    "source_files": [
+      "src/Billiards/render/ui/product_shell_draw_list.cpp",
+      "src/Billiards/product_shell_controller.cpp",
+      "src/Billiards/product_shell_controller.h"
+    ]
+  },
+  "token_set_id": "focused_practice_shell_shipping_tokens_v1",
+  "typography_and_scale": {
+    "error_icon_minimum_logical_px": 22,
+    "focus_chevron_minimum_logical_px": 10,
+    "font_backend": "existing_freetype_sdf_atlas",
+    "item_icon_recommended_logical_px": 24,
+    "minimum_text_logical_px": 14,
+    "minimum_text_retina_physical_px": 21,
+    "selected_icon_minimum_logical_px": 14,
+    "supported_viewports": [
+      {
+        "dpi": 96,
+        "logical": [
+          1280,
+          720
+        ],
+        "physical": [
+          1280,
+          720
+        ]
+      },
+      {
+        "dpi": 96,
+        "logical": [
+          1920,
+          1080
+        ],
+        "physical": [
+          1920,
+          1080
+        ]
+      },
+      {
+        "dpi": 144,
+        "logical": [
+          1280,
+          720
+        ],
+        "physical": [
+          1920,
+          1080
+        ]
+      }
+    ]
+  }
+}

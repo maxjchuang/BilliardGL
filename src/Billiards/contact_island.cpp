@@ -19,6 +19,7 @@ StableKey stableKey(const ContinuousContactCandidate& candidate)
 bool isPhysicalConstraint(ContinuousContactKind kind)
 {
     return kind == ContinuousContactKind::BallBall ||
+        kind == ContinuousContactKind::SupportPlane ||
         kind == ContinuousContactKind::StraightRail ||
         kind == ContinuousContactKind::Jaw;
 }

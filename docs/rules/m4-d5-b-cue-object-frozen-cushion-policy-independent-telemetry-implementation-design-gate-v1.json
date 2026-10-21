@@ -1,0 +1,247 @@
+{
+  "schema": "m4_d5_b_cue_object_frozen_cushion_policy_independent_telemetry_implementation_design_gate_v1",
+  "status": "FINAL_DESIGN_ONLY_ROOT_REVALIDATION_REQUIRED_NO_PRODUCTION_CHANGE",
+  "authority_bindings": {
+    "d5_a_receipt": {
+      "path": "docs/rules/m4-d5-a-stroke-observation-canonical-tip-interval-foundation-implementation-receipt-v1.json",
+      "sha256": "7a6f7c3c798654d846d6a645451ddfa559a156a32ec869a3d4df4d5a7b2b0bd6",
+      "required_complete_boundary": "D5-A policy-independent full-stroke observation foundation only"
+    },
+    "d5_d6_feasibility": {
+      "path": "docs/rules/m4-d5-d6-exact-dependency-implementation-feasibility-register-v1.json",
+      "sha256": "86d4957620d9e2c9033708ef3dbd5329610cc9cc9c44a134369079cffa375f77",
+      "batch": "D5-B"
+    },
+    "root_selected_policy": {
+      "path": "docs/rules/m4-wpa-policy-bundle-root-selected-v1.json",
+      "sha256": "fff40b72776b4381eae82044421432c139606d300f7214fb87e63e36eeaa770f"
+    },
+    "cue_contact_gap_gate": {
+      "path": "docs/rules/wpa-cue-contact-cluster-design-gap-gate-v1.json",
+      "sha256": "1442e4204c4acb0718ca0b87c858c8222e03ac634f5b5b7def3d9a6bdae64033"
+    },
+    "frozen_cushion_declaration_receipt": {
+      "path": "docs/rules/wpa-ii-15-2-signed-frozen-object-straight-cushion-declaration-lifecycle-implementation-receipt-v1.json",
+      "sha256": "b21de04b86f4c988c6f32b6e87667e11dbb55dfed60eeaf55c08e4745b64e6af"
+    }
+  },
+  "current_mapping": {
+    "d5_a_complete_stroke_time_is_local_to_cue_observer": true,
+    "physics_contacts_have_whole_tick_toi_solver_event_and_impulse_provenance": true,
+    "physics_tick_order_is_authoritative_only_for_successful_steps": true,
+    "ball_ball_contact_positions_available": true,
+    "straight_rail_impulse_and_pocket_capture_available": true,
+    "pocket_jaw_is_distinguishable_from_straight_rail": true,
+    "signed_frozen_object_and_named_straight_cushion_available": true,
+    "cue_object_contact_before_tip_separation_fact_available": false,
+    "declared_object_departure_recontact_lifecycle_available": false,
+    "whole_shot_alternative_attestation_available": false,
+    "policy_or_foul_classification_available": false
+  },
+  "canonical_time_and_identity_contract": {
+    "schema_ids": [
+      "canonical_cue_object_tip_separation_order_v1",
+      "canonical_frozen_cushion_shot_observation_v1"
+    ],
+    "identity": [
+      "shot_identity",
+      "actor_player_id",
+      "rack_identity",
+      "rules_revision",
+      "rules_state_hash",
+      "declaration_decision_id_if_applicable",
+      "physics_tick_start",
+      "physics_tick_end"
+    ],
+    "time_domain": "stroke-relative seconds from accepted positive launch; physics event time = successful physics tick ordinal offset plus whole_tick_toi; D5-A interval time uses the same zero",
+    "required_order_values": [
+      "CUE_OBJECT_CONTACT_BEFORE_TIP_SEPARATION",
+      "CUE_OBJECT_CONTACT_EQUAL_TIP_SEPARATION",
+      "CUE_OBJECT_CONTACT_AFTER_TIP_SEPARATION",
+      "NO_CUE_OBJECT_CONTACT",
+      "UNORDERED_INCOMPLETE"
+    ],
+    "tip_separation_boundary": "end of the last canonical D5-A cue-tip interval; empty complete stroke has no separation comparison and yields NO_CUE_OBJECT_CONTACT only if object-contact observation is complete and empty",
+    "strict_order_only": true,
+    "equal_is_measurement_not_foul": true,
+    "tie_tolerance_selected": false,
+    "origin_values": [
+      "CANONICAL_CUE_TIP_STROKE_OBSERVER_V1",
+      "AUTHORITATIVE_CONTINUOUS_PHYSICS_SOLVER_V1",
+      "SIGNED_FROZEN_CUSHION_DECLARATION_V1"
+    ],
+    "completeness": [
+      "d5_a_full_stroke_complete",
+      "all_successful_physics_ticks_contiguous",
+      "whole_tick_toi_finite_and_bounded",
+      "solver_event_and_contact_identity_complete",
+      "no_dropped_conflicting_or_failed_tick",
+      "shot_end_observed",
+      "canonical_order",
+      "all_values_finite"
+    ]
+  },
+  "cue_object_order_observation": {
+    "object_ball_id": "1..15 from authoritative ball-ball contact involving cue ball 0",
+    "event_fields": [
+      "object_ball_id",
+      "stroke_relative_time_seconds",
+      "physics_tick",
+      "whole_tick_time_of_impact_seconds",
+      "solver_event_id",
+      "solver_island_id",
+      "physics_contact_ordinal",
+      "cue_ball_position_at_contact",
+      "object_ball_position_at_contact",
+      "velocity_impulse_applied",
+      "normal_impulse_ns",
+      "origin",
+      "complete"
+    ],
+    "canonical_first_contact": "minimum tuple (stroke_relative_time, solver_event_id, physics_contact_ordinal, object_ball_id)",
+    "simultaneous_distinct_objects_preserved": true,
+    "contact_before_tip_separation_is_raw_order_fact_only": true,
+    "does_not_select_very_close_or_light_graze_policy": true
+  },
+  "frozen_cushion_lifecycle_observation": {
+    "prerequisite": "exact active signed frozen-cushion declaration consumed by this shot; geometry alone never starts observation",
+    "declared_identity": [
+      "declaration_decision_id",
+      "declared_object_ball_id",
+      "declared_straight_cushion_id",
+      "declaration_parent_revision",
+      "declaration_parent_state_hash",
+      "consumed_shot_identity"
+    ],
+    "initial_relation": "signed declaration is authority for relation identity, not a synthesized physics contact",
+    "departure": "first continuous successful-step segment showing declared ball center strictly leaves the named straight-cushion contact plane on the playfield side, with analytic crossing TOI and complete plane attestation",
+    "recontact": "first later authoritative Rail contact for the declared ball and exact named straight-cushion feature with velocityImpulseApplied=true",
+    "same_named_cushion_recontact_preserved_separately": true,
+    "other_object_straight_cushion_alternative": "each distinct live object ball other than the declared ball with authoritative straight Rail contact and velocityImpulseApplied=true",
+    "pocket_alternative": "each ball 1..15 with authoritative Pocket Capture transition and nonzero capture sequence",
+    "jaw_counts_as_straight_cushion": false,
+    "cue_ball_pocket_is_not_object_pocket_alternative": true,
+    "events_are_canonical_sorted_and_exact_deduped": true,
+    "no_departure_means_recontact_requirement_not_observed": true,
+    "alternatives_are_facts_not_legal_result": true
+  },
+  "atomicity_dedupe_and_rollback": {
+    "staging": "stage per-shot order and frozen lifecycle events outside published ShotFacts",
+    "successful_tick_commit": "append only after PhysicsStepStatus::Succeeded and exact tick digest validation",
+    "failed_step": "discard the failed tick candidate and mark the whole-shot observation incomplete; never publish it as complete",
+    "shot_finish": "publish immutable observation only when D5-A completion, contiguous physics coverage, exact declaration binding if applicable, and shot-end are all valid",
+    "exact_retry": "same tick or final observation digest returns the original result with zero duplicate events",
+    "conflicting_retry": "reject with zero collector/runtime/telemetry delta",
+    "reset_rerack_turn_or_state_conflict": "invalidate staged observation without a complete fact",
+    "dedupe_keys": {
+      "cue_object": ["shot_identity", "physics_tick", "solver_event_id", "physics_contact_ordinal", "object_ball_id"],
+      "rail": ["shot_identity", "physics_tick", "solver_event_id", "physics_contact_ordinal", "ball_id", "straight_cushion_id"],
+      "pocket": ["shot_identity", "physics_tick", "ball_id", "pocket_id", "capture_sequence"],
+      "departure": ["shot_identity", "declared_object_ball_id", "physics_tick", "whole_tick_toi", "named_cushion_id"]
+    }
+  },
+  "classification_boundary": {
+    "double_hit_classified": false,
+    "close_ball_presumption_selected": false,
+    "light_graze_selected": false,
+    "push_classified": false,
+    "frozen_cushion_legal_or_foul_classified": false,
+    "prerequisite_legal_cushion_predicate_selected": false,
+    "jaw_policy_changed": false,
+    "shotfacts_or_rules_consumer_added": false,
+    "audit_row_promoted": false
+  },
+  "required_fixtures": {
+    "positive": [
+      "CONTACT_STRICTLY_BEFORE_LAST_TIP_SEPARATION",
+      "CONTACT_STRICTLY_AFTER_LAST_TIP_SEPARATION",
+      "SIMULTANEOUS_CUE_OBJECT_CONTACTS_CANONICAL_ORDER",
+      "SIGNED_DECLARED_OBJECT_DEPARTS_NAMED_CUSHION",
+      "DEPARTURE_THEN_SAME_NAMED_CUSHION_RECONTACT",
+      "OTHER_DISTINCT_OBJECT_STRAIGHT_CUSHION_ALTERNATIVE",
+      "OBJECT_POCKET_CAPTURE_ALTERNATIVE",
+      "ALL_EVENTS_COMPLETE_ORIGIN_ATTESTED",
+      "EXACT_TICK_AND_FINAL_RETRY_SAME_DIGEST_ZERO_DUPLICATE"
+    ],
+    "negative": [
+      "EQUAL_CONTACT_AND_TIP_SEPARATION_RECORDED_NOT_CLASSIFIED",
+      "MISSING_OR_INCOMPLETE_D5_A_STROKE_UNORDERED",
+      "FAILED_OR_GAPPED_PHYSICS_TICK_INCOMPLETE_ROLLBACK",
+      "NONFINITE_OR_OUT_OF_RANGE_TOI_REJECTED",
+      "MISSING_SOLVER_EVENT_OR_CONTACT_IDENTITY_REJECTED",
+      "GEOMETRY_ONLY_FROZEN_RELATION_CANNOT_START_LIFECYCLE",
+      "STALE_WRONG_OR_UNCONSUMED_DECLARATION_REJECTED",
+      "DECLARED_OBJECT_NEVER_LEAVES",
+      "RECONTACT_BEFORE_DEPARTURE_NOT_SATISFY_LIFECYCLE",
+      "WRONG_NAMED_CUSHION_RECONTACT_PRESERVED_AS_OTHER_EVENT_ONLY",
+      "JAW_CONTACT_NOT_STRAIGHT_CUSHION_ALTERNATIVE",
+      "CUE_BALL_POCKET_NOT_OBJECT_POCKET_ALTERNATIVE",
+      "POSITION_CORRECTION_WITHOUT_VELOCITY_IMPULSE_NOT_CUSHION_CONTACT",
+      "DUPLICATE_EVENT_DEDUPED",
+      "CONFLICTING_RETRY_ZERO_DELTA",
+      "RESET_RERACK_TURN_OR_STATE_CONFLICT_INVALIDATES",
+      "FACTS_DO_NOT_SET_DOUBLE_HIT_PUSH_FROZEN_FOUL_OR_LEGAL",
+      "NO_RULES_SHOTFACT_UI_GPU_OR_AUDIT_SIDE_EFFECT"
+    ]
+  },
+  "implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics_telemetry.cpp",
+      "src/Billiards/physics.h",
+      "src/Billiards/physics.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp",
+      "src/Billiards/rules/frozen_cushion_declaration.h"
+    ],
+    "test_files": [
+      "tests/cue_contact_tests.cpp",
+      "tests/physics_tests.cpp",
+      "tests/physics_telemetry_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "build_files": ["CMakeLists.txt"],
+    "cmake_scope": "no change expected; one headless telemetry target only if existing targets cannot express the contract and only after coordination",
+    "explicitly_forbidden_files": [
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/automation_controller.cpp",
+      "src/Billiards/hud.cpp",
+      "src/Billiards/renderer.cpp",
+      "src/Billiards/render/modern/modern_renderer.cpp"
+    ]
+  },
+  "live_source_bindings": [
+    {"path": "CMakeLists.txt", "sha256": "c54bbd13cb2550fe4d4355c3b662339e0be23823363abc23ee6810f53404a801"},
+    {"path": "src/Billiards/cue_contact.h", "sha256": "af785c32a89148fcf4c00e266563a0ea90ea51142f2e3c3e908c7dbed4261ca9"},
+    {"path": "src/Billiards/physics_telemetry.h", "sha256": "dc384250584cf5ce2760adda01560b7a95e595e70196e2092d35632cd5da1098"},
+    {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    {"path": "src/Billiards/physics.h", "sha256": "e8e56b66eb4f9e8d30a2ef6a5b9a711fca4560a71a067258dd6745732412a7fe"},
+    {"path": "src/Billiards/physics.cpp", "sha256": "7371c54513bd748e1a25d3c1985a427891de29cefd820b1d281774cf0c69c2b6"},
+    {"path": "src/Billiards/game_runtime.h", "sha256": "c12be575b5510a0c6465d1c89e26e77dc4691f22695b6768d16eafe63d5bf64b"},
+    {"path": "src/Billiards/game_runtime.cpp", "sha256": "f118ad41dd7d7249997791ff081cca0c065381e718f3f839aa13c585c2d6d919"},
+    {"path": "src/Billiards/rules/frozen_cushion_declaration.h", "sha256": "262a21799fe0c85c1956e4596e025d0aff9ee9f11af597a395702080d3bfbd13"},
+    {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "82ed617905a8718189aed1b41a37672160af2e690a7bfe2bb71fa75bb9cc71f7"},
+    {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "f6a25445ff772aeac90c4e84128fb3ad32201f53aa194d1f875bcdbb41a0fbcf"},
+    {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "9270b02a101c0b7770d977fdf5e3ebafe5350bba49cb917234939efc3d1060b4"},
+    {"path": "tests/cue_contact_tests.cpp", "sha256": "1584a3f5fe8e826a17cb34afb9a920de6d45673346f2b489cacb2648ce36143d"},
+    {"path": "tests/physics_tests.cpp", "sha256": "2b76f2deabaa27baecb74a521d36b33326ea872bc3084abc787da7cb84a75a82"},
+    {"path": "tests/physics_telemetry_tests.cpp", "sha256": "6b59f99907aa84bd94bb892d9f25e9865be12b20921ad92141cc4cd5c11ff085"},
+    {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "21835ee73f4f09bd20ab14371e03f43778c9f2a3d452786d789353e758ce46d9"}
+  ],
+  "completion_boundary": {
+    "implementation_authorized_by_this_gate": false,
+    "root_revalidation_required": true,
+    "d5_b_implemented": false,
+    "d5_complete": false,
+    "d5_c_or_d5_d_authorized": false,
+    "classification_or_audit_progress": false,
+    "production_or_cmake_modified": false,
+    "rules_shotfacts_ui_modified": false,
+    "gpu_readiness_or_authorization": false,
+    "m4_complete": false
+  }
+}

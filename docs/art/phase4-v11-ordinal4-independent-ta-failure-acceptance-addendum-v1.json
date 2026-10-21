@@ -1,0 +1,273 @@
+{
+  "schema": "phase4_v11_ordinal4_independent_ta_failure_acceptance_addendum_v1",
+  "schema_version": 1,
+  "status": "BROADCAST_PROJECTED_TRAJECTORY_FAIL_CAPTURE_TA_FORMAL_FALSE",
+  "scope": "Independent, read-only, original-resolution technical-art inspection of the four frozen Phase4 v11 PPMs produced before dispatch stopped at ordinal4. The first three machine-PASS images are comparison controls only; the broadcast machine-FAILED image is the blocking subject. This addendum neither infers a targeted11 machine pass nor authorizes capture, technical-art acceptance, or formal68.",
+  "read_only_bindings": [
+    {
+      "role": "v11_readiness",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-ready-v11/targeted11-readiness-v11.json",
+      "sha256": "0e2e112f889aa5fc6fd5713a2d454945b1fe69678f9fd34bb873338ce3bbbc06"
+    },
+    {
+      "role": "v11_single_use_authorization",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-ready-v11/root-one-shot-gpu-authorization-v11-run1.json",
+      "sha256": "bc8e0ec237db21dec3ae71c150f92a1f29d8c7953872a273cecbdd86aa08e8d7"
+    },
+    {
+      "role": "v11_consumed_authorization",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-ready-v11/root-one-shot-gpu-authorization-v11-run1.json.consumed",
+      "sha256": "04a15b76a677f60e1721b19cf0564338f87c9147c8976de12905dddce9d052d0"
+    },
+    {
+      "role": "v11_dispatch_failure_receipt",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/phase4-final-ownership-dispatch-failure-receipt-v1.json",
+      "sha256": "282056928154ce78ad79b8cee0062d460d03f76c9d130f1c9f268f0dfa009a39"
+    },
+    {
+      "role": "v11_machine_results_prefix",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl",
+      "sha256": "0fd67fe71d6115e7fe7bebe874ec7f4280a6a48dacd4432e2a15e1fe1ec57e69"
+    },
+    {
+      "role": "v11_authoritative_final_ownership_telemetry",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/results.jsonl.final-ownership.jsonl",
+      "sha256": "4e7e884569eec1197ef11d39d256e2e43eef11c49ee7c84ff150b93c3c6d61ef"
+    },
+    {
+      "role": "ordinal1_player_low_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_player_low_1080.ppm",
+      "sha256": "82d6f9e5aba1821b3b27c00f2b76977fff035cf8541c768bd5361c1ee4ee744a",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "ordinal2_elevated_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_elevated_1080.ppm",
+      "sha256": "e6eca69d865f87f8b0d49960567520d81dcd2b5c8f83d217e0cde8c919e2fa46",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "ordinal3_overhead_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_overhead_1080.ppm",
+      "sha256": "a03a84d5de933106980406d9ddcfdeb2cc2e8a36984eab39db1cfaff79fbba8e",
+      "physical_dimensions": [1920, 1080]
+    },
+    {
+      "role": "ordinal4_broadcast_ppm",
+      "path": "docs/art/phase4-training-replay-overlay-v4-final-ownership-targeted11-output-v11/camera_broadcast_1080.ppm",
+      "sha256": "0b6c87cb415a2e80ad1f6e061a972be57c683b8104e28d0065ba52b6a0045878",
+      "physical_dimensions": [1920, 1080]
+    }
+  ],
+  "review_method": {
+    "reviewer_role": "independent_technical_artist",
+    "original_resolution_reviewed": true,
+    "source_format": "P6 RGB PPM",
+    "physical_dimensions_per_image": [1920, 1080],
+    "image_count_reviewed": 4,
+    "resampling_used_for_decision": false,
+    "lossless_view_note": "Temporary byte-faithful PNG views and unscaled crops were used only because the review UI does not decode P6 PPM directly; all bindings, coordinates, measurements, and decisions refer to the original PPM bytes.",
+    "broadcast_trajectory_roi_xyxy_inclusive": [680, 340, 1000, 570],
+    "comparison_method": "Inspect each full frame first, then the projected-trajectory pixels at 1:1. Compare actual solid-core unique area, predicted dash/gap and actual-in-gap evidence, endpoint/ticks, local silhouette contrast, and same-axis/cross-track behavior.",
+    "machine_telemetry_is_authoritative": true
+  },
+  "authoritative_dispatch_result": {
+    "status": "CAPTURE_FAILED_TELEMETRY_PRESERVED",
+    "authorization_consumed_once": true,
+    "capture_count": 11,
+    "completed_count": 3,
+    "failed_count": 1,
+    "unrun_count": 7,
+    "failed_capture_id": "camera_broadcast_1080",
+    "runner_exit_code": 1,
+    "technical_art_review_authorized": false,
+    "formal68_authorized": false,
+    "validation_errors": []
+  },
+  "ordinal_comparison": [
+    {
+      "ordinal": 1,
+      "capture_id": "camera_player_low_1080",
+      "camera": "player_low",
+      "machine_status": "PASS",
+      "source_visible_hidden": [95, 89, 6],
+      "aggregate_coverage": 0.9368421052631579,
+      "predicted_source_visible_hidden_coverage": [76, 70, 6, 0.9210526315789473],
+      "actual_source_visible_hidden_coverage": [19, 19, 0, 1.0],
+      "visual_control_result": "PASS_COMPARISON_CONTROL_ONLY",
+      "finding": "At player-low scale the yellow predicted core, narrow dark rim, actual solid/ticks, and terminal marks remain traceable along the long co-axial route. This visual control does not constitute targeted11 or formal acceptance."
+    },
+    {
+      "ordinal": 2,
+      "capture_id": "camera_elevated_1080",
+      "camera": "elevated",
+      "machine_status": "PASS",
+      "source_visible_hidden": [83, 80, 3],
+      "aggregate_coverage": 0.963855421686747,
+      "predicted_source_visible_hidden_coverage": [71, 68, 3, 0.9577464788732394],
+      "actual_source_visible_hidden_coverage": [12, 12, 0, 1.0],
+      "visual_control_result": "PASS_COMPARISON_CONTROL_ONLY",
+      "finding": "At elevated scale the projected yellow route stays dominant while actual solid/tick evidence remains independently legible through the overlap. This is a comparison control, not inherited TA acceptance."
+    },
+    {
+      "ordinal": 3,
+      "capture_id": "camera_overhead_1080",
+      "camera": "overhead",
+      "machine_status": "PASS",
+      "source_visible_hidden": [87, 84, 3],
+      "aggregate_coverage": 0.9655172413793104,
+      "predicted_source_visible_hidden_coverage": [72, 69, 3, 0.9583333333333334],
+      "actual_source_visible_hidden_coverage": [15, 15, 0, 1.0],
+      "visual_control_result": "PASS_COMPARISON_CONTROL_ONLY",
+      "finding": "The overhead view preserves the yellow predicted identity, repeated gap/tick rhythm, and actual-track anchors on the co-axial vertical route. This is a comparison control only."
+    },
+    {
+      "ordinal": 4,
+      "capture_id": "camera_broadcast_1080",
+      "camera": "broadcast",
+      "machine_status": "FAILED",
+      "failed_machine_predicates": ["ownership_ok"],
+      "source_visible_hidden": [81, 68, 13],
+      "aggregate_coverage": 0.8395061728395061,
+      "predicted_source_visible_hidden_coverage": [69, 62, 7, 0.8985507246376812],
+      "actual_source_visible_hidden_coverage": [12, 6, 6, 0.5],
+      "visual_control_result": "FAIL_BLOCKING_SUBJECT",
+      "finding": "The oblique yellow predicted route remains the dominant readable path and the actual endpoint/two ticks remain visible, but only half of actual-source probes survive. The remaining actual pixels read as isolated white/dark fragments beside or inside the predicted compound rather than a continuously traceable actual trajectory."
+    }
+  ],
+  "broadcast_failure_evidence": {
+    "component_source_counts": {
+      "core": 37,
+      "endpoint": 2,
+      "outer_halo_edge": 37,
+      "solid_in_predicted_dash_gap": 3,
+      "tick": 2
+    },
+    "component_visible_counts": {
+      "core": 31,
+      "endpoint": 2,
+      "outer_halo_edge": 33,
+      "tick": 2
+    },
+    "component_hidden_reason_counts": {
+      "core|insufficient_owned_pixel_area": 6,
+      "outer_halo_edge|final_edge_contrast_below_4": 2,
+      "outer_halo_edge|insufficient_owned_pixel_area": 2,
+      "solid_in_predicted_dash_gap|insufficient_owned_pixel_area": 3
+    },
+    "actual_unique_area_failures": [
+      {"component_role": "core", "coordinate": [814, 435], "resolved_pixel_equivalent_area": 11},
+      {"component_role": "solid_in_predicted_dash_gap", "coordinate": [892, 491], "resolved_pixel_equivalent_area": 3},
+      {"component_role": "core", "coordinate": [970, 546], "resolved_pixel_equivalent_area": 4},
+      {"component_role": "solid_in_predicted_dash_gap", "coordinate": [940, 525], "resolved_pixel_equivalent_area": 4},
+      {"component_role": "core", "coordinate": [862, 469], "resolved_pixel_equivalent_area": 6},
+      {"component_role": "solid_in_predicted_dash_gap", "coordinate": [783, 413], "resolved_pixel_equivalent_area": 7}
+    ],
+    "predicted_local_contrast_failures": [
+      {"component_role": "outer_halo_edge", "coordinate": [855, 469], "contrast_ratio": 3.9028463506845466, "owner_rgb": [0, 0, 0], "adjacent_rgb": [25, 117, 129]},
+      {"component_role": "outer_halo_edge", "coordinate": [879, 486], "contrast_ratio": 3.9970607697890235, "owner_rgb": [0, 0, 0], "adjacent_rgb": [25, 119, 129]}
+    ],
+    "actual_surviving_anchor_facts": {
+      "actual_visible_over_source": [6, 12],
+      "actual_hidden_core_count": 3,
+      "actual_hidden_solid_in_predicted_dash_gap_count": 3,
+      "actual_visible_tick_count": 2,
+      "actual_visible_endpoint_count": 1,
+      "interpretation": "The endpoint and two ticks are readable anchors but cannot substitute for the missing unique actual core and all three actual solid-in-predicted-gap samples."
+    },
+    "ownership_integrity_controls": {
+      "foreign_track_evidence_count": 0,
+      "double_assignment_count": 0,
+      "unowned_evidence_count": 0,
+      "interpretation": "No cross-track ownership swap, double assignment, or unowned evidence is present. The failure is visual same-axis survival/readability, not a cross-track association defect."
+    }
+  },
+  "canonical_axis_decisions": [
+    {
+      "axis_id": "predicted_track_visual_identity",
+      "result": "PASS",
+      "finding": "The broadcast route retains a continuous, dominant yellow predicted identity comparable to the three controls."
+    },
+    {
+      "axis_id": "actual_track_visual_identity",
+      "result": "FAIL",
+      "finding": "Actual coverage falls from 100% in all three controls to 6/12 in broadcast; three core samples disappear and the residual actual pixels do not form an independently traceable trajectory."
+    },
+    {
+      "axis_id": "core_inner_halo_separation",
+      "result": "FAIL",
+      "finding": "Predicted yellow and its narrow rim remain separable, but actual core survival collapses at three sampled positions, so both tracks' core/halo roles are not independently readable through the oblique compound."
+    },
+    {
+      "axis_id": "outer_halo_background_silhouette",
+      "result": "FAIL",
+      "finding": "Two predicted outer-silhouette samples on teal cloth measure 3.9028463506845466 and 3.9970607697890235, below the unchanged 4.0 local-contrast boundary, with two additional outer-halo owned-area failures."
+    },
+    {
+      "axis_id": "predicted_dash_gap_rhythm",
+      "result": "FAIL",
+      "finding": "The yellow predicted dash rhythm itself remains visible, but all three actual solid-in-predicted-dash-gap samples fail unique owned area; the gaps no longer reliably expose actual-versus-predicted role separation."
+    },
+    {
+      "axis_id": "endpoint_tick_terminal_readability",
+      "result": "PASS",
+      "finding": "The actual endpoint and both actual ticks remain attached and legible, as do the predicted terminal and center marker; these anchors do not repair the missing intervening actual trajectory."
+    },
+    {
+      "axis_id": "coaxial_predicted_actual_disambiguation",
+      "result": "FAIL",
+      "finding": "Along the oblique same-axis overlap, predicted remains traceable but actual becomes intermittent. Zero foreign-track, double-assignment, and unowned counts show cross-track integrity is preserved while visual co-axial disambiguation fails."
+    }
+  ],
+  "focused_visual_decisions": {
+    "broadcast_predicted_primary_color_dominance": "PASS",
+    "broadcast_actual_solid_core_unique_area": "FAIL",
+    "broadcast_actual_in_predicted_dash_gap_readability": "FAIL",
+    "broadcast_endpoint_and_tick_readability": "PASS",
+    "broadcast_local_silhouette_contrast": "FAIL",
+    "broadcast_same_axis_independent_traceability": "FAIL",
+    "broadcast_cross_track_ownership_integrity": "PASS_CONTROL_ONLY",
+    "ordinal4_independent_visual_result": "FAIL"
+  },
+  "future_visual_constraints_only": [
+    "A future broadcast capture must make the actual solid core independently traceable through the full projected overlap at original 1920x1080, not merely preserve isolated endpoint or tick anchors.",
+    "Actual solid evidence inside predicted dash gaps must remain visibly actual while each predicted gap remains perceptually open.",
+    "The predicted yellow primary identity and the readable endpoint/tick anchors seen in v11 must not regress.",
+    "The final outer silhouette must meet the unchanged local-contrast requirement on teal and every other frozen stress adjacency.",
+    "Same-axis visual disambiguation must improve without introducing foreign-track, double-assignment, unowned, detached, or cross-swapped evidence.",
+    "This addendum does not prescribe implementation, relax thresholds, change route/offset/z-order/camera/layout, or authorize a recapture."
+  ],
+  "acceptance": {
+    "ordinal4_visual_acceptance": false,
+    "blocking_axes": [
+      "actual_track_visual_identity",
+      "core_inner_halo_separation",
+      "outer_halo_background_silhouette",
+      "predicted_dash_gap_rhythm",
+      "coaxial_predicted_actual_disambiguation"
+    ],
+    "targeted11_machine_pass": false,
+    "targeted11_capture_acceptance": false,
+    "targeted11_technical_art_acceptance": false,
+    "formal68_acceptance": false,
+    "reentry_note": "Only a separately authorized future run with a complete fresh 11/11 machine pass and subsequent independent full-set TA review could change these acceptance fields."
+  },
+  "proof_boundary": {
+    "informational_original_resolution_review_performed": true,
+    "machine_pass_inferred": false,
+    "targeted11_machine_pass": false,
+    "capture_acceptance": false,
+    "technical_art_review_authorized": false,
+    "technical_art_acceptance": false,
+    "formal68_acceptance": false,
+    "production_source_modified": false,
+    "gpu_authorized_or_executed_by_this_addendum": false,
+    "capture_retry_authorized": false,
+    "readiness_or_authorization_created": false,
+    "threshold_changed": false,
+    "product_exposed": false,
+    "golden_promotion": false,
+    "m2_promotion": false,
+    "beta_pass": false
+  }
+}

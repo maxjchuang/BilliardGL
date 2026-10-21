@@ -1,0 +1,297 @@
+{
+  "schema": "wpa_ii_16_jump_shot_legality_design_gap_gate_v1",
+  "status": "POLICY_AND_TELEMETRY_PENDING_NO_PRODUCTION_MUTATION",
+  "scope": ["WPA-II-16"],
+  "official_source": {
+    "path": "tmp/pdfs/250816-Rules-of-Heyball.pdf",
+    "sha256": "2b92dd5088ea630337326e26b7a2a7a4499a9801f2c5da7e5cc40421d5424a24",
+    "visually_reviewed_pdf_pages": [10, 11],
+    "section": {
+      "chapter": "II",
+      "clause": "16.1-16.3",
+      "pdf_pages": [10, 11],
+      "locator": "Jump Shot",
+      "controlled_paraphrase": "A player may jump the cue ball over object balls and legally hit a ball from the player's group. A jump shot must strike the upper half of the cue ball with the cue tip. A lower-half strike, miscue, or other cause that makes the cue ball jump over an obstacle ball is illegal; if the cue ball does not pass over an obstacle and legally hits the player's object ball, the shot is legal."
+    },
+    "uniquely_determined_rules": [
+      "a jump intended to pass over an obstacle must use cue-tip contact on the upper half of the cue ball",
+      "a lower-half strike that causes the cue ball to pass over an obstacle ball is illegal",
+      "a miscue or other cause that makes the cue ball pass over an obstacle ball is illegal",
+      "a lower-half strike, miscue, or other cause is not automatically an illegal jump when the cue ball does not pass over an obstacle and the shot otherwise legally hits the player's object ball",
+      "an illegal jump-shot violation awards the opponent ball in hand"
+    ],
+    "text_does_not_operationally_define": [
+      "whether a contact point exactly on the equator belongs to the upper or lower half",
+      "the contact-point sampling time, deformation model, or numerical hemisphere tolerance",
+      "the minimum airborne height or duration that constitutes a jump",
+      "the swept-volume clearance and tolerance that constitutes passing over an obstacle ball",
+      "whether any grazing contact disqualifies passing over or requires a referee classification",
+      "a standalone scoop predicate distinct from lower-half impact, miscue, and other reasons",
+      "how intent is established when classifying an attempted jump",
+      "the exhaustive machine classification for other reasons"
+    ]
+  },
+  "frozen_audit": {
+    "path": "docs/rules/phase5-wpa-heyball-as-built-reconciliation-audit-v5.json",
+    "sha256": "2811958f1205d9998b40060b83c577f91359d2164e1ac0eaa9ccc4cac2ad787a",
+    "row": {"id": "WPA-II-16", "status": "MISSING", "product_reachable": true},
+    "promotion_authorized": false
+  },
+  "source_bindings": {
+    "shot_control_header": {"path": "src/Billiards/shot_control_model.h", "sha256": "4afd2b710a8ab7e74dc9d35bf418f00bc3cfc39a999bac8022317e4a9a12ed1f"},
+    "shot_control": {"path": "src/Billiards/shot_control_model.cpp", "sha256": "9aab55bddf904c9d8caebb7d5c1107ce28729c40392cfc52ac34b767264b0d57"},
+    "cue_impact": {"path": "src/Billiards/cue_impact.h", "sha256": "b8d34ee8204596366eb55ade70bb2db1177212adeff6d5aa25ba77b1b52c0000"},
+    "cue_contact_header": {"path": "src/Billiards/cue_contact.h", "sha256": "8a04660ae3927f76544a46a2676fe30e17c88856f4b2f9f53c274dd849be9a9c"},
+    "cue_contact": {"path": "src/Billiards/cue_contact.cpp", "sha256": "371eeea9353fe2759c0edf25101cdaa2a1298d6688b537690a65957c47565d27"},
+    "coupled_contact_header": {"path": "src/Billiards/coupled_cue_contact.h", "sha256": "c4e24dbfcf3b5f3a3eb4ab4ef4d639bc31a56fb194ae046b44aea5ea2c408664"},
+    "coupled_contact": {"path": "src/Billiards/coupled_cue_contact.cpp", "sha256": "e5034d0697ba86e3ed2341d2555d9da6fefbd6f084b0fb74bdf45b386b75d278"},
+    "surface_motion_header": {"path": "src/Billiards/surface_motion.h", "sha256": "76b282b8173acfe6ef87421232b97eeddc5f537178a5ee7b9c5d9eadf71da248"},
+    "surface_motion": {"path": "src/Billiards/surface_motion.cpp", "sha256": "66803444f1ecdcbf8c0b6ae8b37095dc61a8babf4b7b0bcd2fbe4a50098cca4e"},
+    "physics_header": {"path": "src/Billiards/physics.h", "sha256": "962c06be2ac99b93484de948b51669dbc25da1c72b3009fe38a0d9d0f8883f42"},
+    "physics": {"path": "src/Billiards/physics.cpp", "sha256": "fc497d79650bf2ff9cd8570c320653c8742e4201b8a2428a7892bfcb0124de77"},
+    "physics_telemetry_header": {"path": "src/Billiards/physics_telemetry.h", "sha256": "d1fa08cb8d1c2878d7a662dd267959ffb8b505fb6afcc22351b1056a5a941178"},
+    "physics_telemetry": {"path": "src/Billiards/physics_telemetry.cpp", "sha256": "b2e781bbc461e28688d8bb9eeca9b2bfb067317099adf0d431c3fe2761592612"},
+    "continuous_collision_header": {"path": "src/Billiards/continuous_collision.h", "sha256": "53465297f0dcdb821cc9adce3db9dd7cc714ee3f15c7d5474d4f4d800e3cb792"},
+    "continuous_collision": {"path": "src/Billiards/continuous_collision.cpp", "sha256": "2ff6ef3f37a963f795a38c8182a6aaad1cda7003971df5ccb57380d206c9bbf5"},
+    "ball_contact_header": {"path": "src/Billiards/ball_ball_contact.h", "sha256": "6b9c1dfd56056e24fe98226b2f8364ab29304e0042203a5744e3c7b13468fb2e"},
+    "ball_contact": {"path": "src/Billiards/ball_ball_contact.cpp", "sha256": "604470b189f170e998e4ad775ee170c7961c4d5c5f9d14689f11eedb322722e3"},
+    "rules_header": {"path": "src/Billiards/rules/chinese_eight_ball_rules.h", "sha256": "86b6bf332fe5ca182580c57f82c74ddda075fda28b659019c709bc459e785793"},
+    "rules": {"path": "src/Billiards/rules/chinese_eight_ball_rules.cpp", "sha256": "b984639bdf239814e0a1e0a14a64d6b73de56841273f71d7671c20e86bf475a4"},
+    "collector_header": {"path": "src/Billiards/rules/shot_fact_collector.h", "sha256": "88dfc28370b4b56936ac88ac560623a8600d89a295b1f98efff65471de17d615"},
+    "collector": {"path": "src/Billiards/rules/shot_fact_collector.cpp", "sha256": "c901ba8591ebd301ccbd4a2ee4fe2ab02f390436cf80aed0596074f65e0ec4c4"},
+    "runtime_header": {"path": "src/Billiards/game_runtime.h", "sha256": "61453e15d88d5581fa439fa77eb6b834fc0a22a5366b470b182b17b8d4d9f725"},
+    "runtime": {"path": "src/Billiards/game_runtime.cpp", "sha256": "fca6d4f8ffc54b5d68f3aa24928f71416b003ac8ae37ef7ab4d376aa78684ca4"},
+    "cue_contact_tests": {"path": "tests/cue_contact_tests.cpp", "sha256": "93a6d368f985d6c990537d12eef5ea89ea9166e0029b6836b425a0328139755d"},
+    "coupled_contact_tests": {"path": "tests/coupled_cue_contact_tests.cpp", "sha256": "b439f5a698ac7ee665f16cc1ab0c35df96fe577882d8c57fbb17adc1ffbfd777"},
+    "physics_tests": {"path": "tests/physics_tests.cpp", "sha256": "f127de3a46b22c042c97c5a348e96b7edd55fe081f646c68f6390ad8674e20ac"},
+    "physics_telemetry_tests": {"path": "tests/physics_telemetry_tests.cpp", "sha256": "cbbb2eb4e5f1c1eb22c5525d0c1859e19aebf2a0d975b94321f6daf741ced0c8"},
+    "collector_tests": {"path": "tests/shot_fact_collector_tests.cpp", "sha256": "4a5a4fee924cf62c29551844af718a4b73e6b5917d1b1323dcac29b20d43683c"},
+    "rules_tests": {"path": "tests/chinese_eight_ball_rules_tests.cpp", "sha256": "4c4079159e1db19545a82c1ad43b1cdfbee8ea4462b9c66c92a8be13322f3b8e"},
+    "runtime_tests": {"path": "tests/rules_runtime_integration_tests.cpp", "sha256": "aab289bcb7e01d037e6022d41676145e09027d2d90317b9cf9e2e017335f0698"}
+  },
+  "current_system_mapping": {
+    "shot_control_has_requested_cue_elevation_field": true,
+    "runtime_cue_elevation_capability_enabled": false,
+    "nonzero_elevation_rejected_by_control_conversion_without_capability": true,
+    "regular_cue_contact_accepts_nonzero_elevation": false,
+    "coupled_cue_contact_accepts_nonzero_elevation": false,
+    "tip_offset_y_is_requested_input_not_complete_actual_impact_provenance": true,
+    "regular_contact_result_has_contact_arm_and_normal": true,
+    "miscue_result_applies_ball_impulse": false,
+    "miscue_induced_jump_observable": false,
+    "surface_motion_integrates_vertical_position_or_velocity": false,
+    "surface_motion_applies_airborne_gravity": false,
+    "table_plane_departure_and_landing_events_exist": false,
+    "physics_frame_stores_xyz_samples": true,
+    "xyz_storage_is_authoritative_ballistic_trajectory": false,
+    "obstacle_overflight_or_clearance_fact_exists": false,
+    "shot_facts_has_jump_tip_trajectory_obstacle_or_miscue_fields": false,
+    "rules_model_has_illegal_jump_foul_reason": false,
+    "global_rules_decision_ui_product_exposed": false
+  },
+  "policy_independent_fact_boundary": {
+    "safe_existing_observations": [
+      "requested cue elevation and requested normalized vertical tip offset at conversion time",
+      "accepted or rejected cue-contact result with contact arm, contact normal, regime and applied impulse for the supported planar model",
+      "per-frame XYZ position, velocity and acceleration storage",
+      "ball-ball contact identities, contact normal, impulse and continuous-solver provenance",
+      "first legal object contact and shot pocket/rail facts already collected for ordinary rules"
+    ],
+    "forbidden_inferences": [
+      "requested vertical tip offset proves the actual impact hemisphere",
+      "an XYZ field proves that vertical ballistic motion was simulated",
+      "positive Y data injected by a scenario proves a product-reachable jump",
+      "absence of a ball-ball contact proves obstacle clearance",
+      "one discrete sample above table height proves a complete airborne interval",
+      "miscue classification without an applied trajectory proves a miscue-induced jump",
+      "a visible arc or renderer trajectory proves rules telemetry",
+      "lower-half impact alone proves an illegal shot when no obstacle was passed"
+    ],
+    "production_extension_safe_now": false,
+    "reason": "The product rejects elevated cue contact and the motion model has no vertical integration, gravity, table departure, landing or swept obstacle-overflight lifecycle. Adding ShotFacts now would encode requested inputs or inert XYZ storage as if they were complete authoritative jump evidence."
+  },
+  "required_future_telemetry_contract": {
+    "status": "TELEMETRY_PENDING",
+    "impact": [
+      "shot_id_and_actor",
+      "actual_tip_contact_point_in_cue_ball_local_frame",
+      "cue_ball_center_and_radius_at_contact",
+      "actual_tip_contact_normal",
+      "cue_direction_and_elevation",
+      "contact_regime_and_miscue_origin",
+      "impact_impulse",
+      "sample_time_and_solver_or_sensor_provenance",
+      "impact_measurement_complete"
+    ],
+    "airborne_interval": [
+      "canonical_interval_ordinal",
+      "table_plane_and_ball_rest_height",
+      "takeoff_time_position_and_velocity",
+      "apex_time_position_and_velocity",
+      "landing_time_position_and_velocity",
+      "gravity_and_ballistic_model_id",
+      "continuous_or_sampled_origin",
+      "no_dropped_samples",
+      "interval_complete"
+    ],
+    "obstacle_overflight": [
+      "candidate_object_ball_ids",
+      "cue_ball_and_object_swept_spheres",
+      "minimum_surface_clearance_and_time",
+      "horizontal_overlap_interval",
+      "any_contact_identity_and_time",
+      "object_motion_during_overlap",
+      "solver_tolerances",
+      "origin_and_completeness"
+    ],
+    "shot_lifecycle": [
+      "observation_starts_before_tip_contact",
+      "observation_ends_after_all_balls_stop",
+      "first_airborne_interval_identity",
+      "first_legal_object_contact_identity",
+      "pocket_and_foul_events",
+      "failed_step_marks_incomplete"
+    ],
+    "facts_are_measurements_not_legality_decisions": true
+  },
+  "pending_classification_contract": {
+    "status": "POLICY_AND_TELEMETRY_PENDING",
+    "impact_hemisphere": {
+      "upper_and_lower_rule_text_exists": true,
+      "equator_and_numeric_tolerance": "POLICY_PENDING",
+      "requested_offset_may_not_substitute_for_actual_contact": true,
+      "forbidden_guess": true
+    },
+    "jump_interval": {
+      "machine_predicate": null,
+      "required_dimensions": ["rest_height", "takeoff", "airborne_height", "airborne_duration", "landing", "continuous_completeness"],
+      "status": "POLICY_AND_TELEMETRY_PENDING",
+      "forbidden_guess": true
+    },
+    "passes_over_obstacle": {
+      "machine_predicate": null,
+      "required_dimensions": ["swept_volume", "clearance", "horizontal_overlap", "grazing_contact", "moving_obstacle", "tolerance"],
+      "status": "POLICY_AND_TELEMETRY_PENDING",
+      "forbidden_guess": true
+    },
+    "miscue_and_other_reason": {
+      "current_miscue_has_no_jump_trajectory": true,
+      "intent_or_referee_input_may_be_required": true,
+      "scoop_is_not_independently_defined_by_clause_16": true,
+      "status": "POLICY_OR_REFEREE_INPUT_PENDING",
+      "forbidden_guess": true
+    }
+  },
+  "future_atomic_contract": {
+    "launch_commit": [
+      "validate actor, rules revision, state hash, capability, actual impact telemetry schema and idempotency",
+      "apply one supported three-dimensional cue contact and start one shot observation transaction atomically",
+      "reject or roll back without creating partial jump facts when contact or trajectory initialization fails"
+    ],
+    "trajectory_commit": [
+      "append canonical airborne and obstacle-overflight observations only from succeeded physics steps",
+      "preserve exact contact identities and continuous-solver provenance",
+      "mark the whole jump evidence incomplete on a failed step, dropped sample or missing launch/landing boundary",
+      "finish only after the authoritative shot-end boundary"
+    ],
+    "adjudication_commit": [
+      "validate impact, trajectory and overflight evidence identity, finiteness, ordering, provenance and completeness",
+      "apply the selected hemisphere, jump and overflight policy without solver-side rule interpretation",
+      "combine with the existing legal-object first-contact rule",
+      "commit foul, ball in hand, turn, revision, journal and receipt atomically"
+    ],
+    "failure_rollback": "runtime state, balls, actor, turn, facts, rules revision, journals and receipts remain byte-equivalent to the pre-call state",
+    "exact_retry": "returns the original ACK without a second launch, interval, adjudication or revision",
+    "conflicting_retry": "fails closed with zero mutation",
+    "partial_commit_allowed": false
+  },
+  "required_future_fixtures": {
+    "telemetry_positive": [
+      "UPPER_HEMISPHERE_ACTUAL_CONTACT",
+      "LOWER_HEMISPHERE_ACTUAL_CONTACT",
+      "ONE_COMPLETE_AIRBORNE_INTERVAL",
+      "CLEAR_OVERFLIGHT_OF_STATIONARY_OBSTACLE",
+      "GRAZING_OR_DIRECT_OBSTACLE_CONTACT_RECORDED",
+      "MISCUE_WITH_AND_WITHOUT_APPLIED_TRAJECTORY",
+      "NO_OVERFLIGHT_THEN_LEGAL_FIRST_OBJECT_CONTACT"
+    ],
+    "telemetry_negative": [
+      "REQUESTED_OFFSET_WITHOUT_ACTUAL_CONTACT_PROVENANCE",
+      "EQUATOR_POLICY_BOUNDARY",
+      "MISSING_TAKEOFF_APEX_OR_LANDING",
+      "DROPPED_OR_NONCANONICAL_TRAJECTORY_SAMPLE",
+      "NONFINITE_HEIGHT_TIME_CLEARANCE_OR_IMPULSE",
+      "ABSENCE_OF_CONTACT_WITHOUT_CLEARANCE_PROOF",
+      "MOVING_OBSTACLE_WITHOUT_SWEPT_VOLUME",
+      "FAILED_PHYSICS_STEP_MARKS_INCOMPLETE",
+      "WRONG_ACTOR_REVISION_HASH_OR_SHOT_ID",
+      "RETRY_AND_CONFLICT_ZERO_DELTA"
+    ],
+    "classification_after_policy": [
+      "UPPER_HALF_OVERFLIGHT_LEGAL_IF_FIRST_CONTACT_LEGAL",
+      "LOWER_HALF_OVERFLIGHT_ILLEGAL",
+      "MISCUE_OVERFLIGHT_ILLEGAL",
+      "OTHER_REASON_OVERFLIGHT_POLICY_CASE",
+      "NO_OVERFLIGHT_LOWER_HALF_WITH_LEGAL_FIRST_CONTACT_NOT_AUTO_FOUL",
+      "EQUATOR_BOUNDARY_CASE",
+      "GRAZING_CLEARANCE_POLICY_CASE"
+    ]
+  },
+  "future_implementation_allowlist": {
+    "production_files": [
+      "src/Billiards/shot_control_model.h",
+      "src/Billiards/shot_control_model.cpp",
+      "src/Billiards/cue_impact.h",
+      "src/Billiards/cue_contact.h",
+      "src/Billiards/cue_contact.cpp",
+      "src/Billiards/physics_profile.h",
+      "src/Billiards/surface_motion.h",
+      "src/Billiards/surface_motion.cpp",
+      "src/Billiards/physics_telemetry.h",
+      "src/Billiards/physics.cpp",
+      "src/Billiards/rules/chinese_eight_ball_rules.h",
+      "src/Billiards/rules/chinese_eight_ball_rules.cpp",
+      "src/Billiards/rules/shot_fact_collector.h",
+      "src/Billiards/rules/shot_fact_collector.cpp",
+      "src/Billiards/game_runtime.h",
+      "src/Billiards/game_runtime.cpp"
+    ],
+    "test_files": [
+      "tests/cue_contact_tests.cpp",
+      "tests/physics_tests.cpp",
+      "tests/physics_telemetry_tests.cpp",
+      "tests/shot_fact_collector_tests.cpp",
+      "tests/chinese_eight_ball_rules_tests.cpp",
+      "tests/rules_runtime_integration_tests.cpp"
+    ],
+    "allowlist_is_dormant_until_3d_physics_and_policy_gate_is_approved": true,
+    "cmake_change_requires_separate_coordination": true
+  },
+  "forbidden_scope": [
+    "production source edits in this design-gate task",
+    "enabling cue elevation before a supported three-dimensional contact and trajectory model exists",
+    "treating requested tip offset as actual impact hemisphere",
+    "treating inert XYZ storage or renderer arcs as authoritative jump telemetry",
+    "guessing equator, airborne, clearance, grazing, scoop, intent or other-reason predicates",
+    "adjudicating from incomplete impact, trajectory or obstacle evidence",
+    "promoting WPA-II-16 above MISSING",
+    "enabling global rulesDecisionUiProductExposed",
+    "CMake changes",
+    "Phase4 or Phase5 renderer changes",
+    "GPU, Cocoa, or OpenGL execution",
+    "readiness generation or authorization issuance"
+  ],
+  "claims": {
+    "design_gap_gate_complete": true,
+    "official_pages_visually_reviewed": true,
+    "current_contact_and_trajectory_mapped": true,
+    "product_reachable_jump_shot_available": false,
+    "actual_impact_hemisphere_telemetry_complete": false,
+    "airborne_trajectory_telemetry_complete": false,
+    "obstacle_overflight_telemetry_complete": false,
+    "jump_legality_implemented": false,
+    "production_implementation_complete": false,
+    "audit_row_promoted": false,
+    "gpu_executed": false
+  }
+}

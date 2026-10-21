@@ -1,0 +1,112 @@
+{
+  "schema": "billiardgl.phase4.v19.landscape_orientation_layout_interpretation_correction_gate.v1",
+  "schema_version": 1,
+  "status": "ROOT_SELECTED_LANDSCAPE_HEAD_LEFT_FOOT_RIGHT_DESIGN_CORRECTION_ONLY_NO_PRODUCTION_NO_CMAKE_NO_GPU_NO_AUTH",
+  "scope": "Fail-closed interpretation correction for the V19 inset plot orientation and visual gutter only. It resolves a contradiction found before CP1 testing and supersedes the original gate's head-rail-at-bottom wording. It does not implement, authorize or pass production, CMake, CPU checkpoint, GPU, readiness, capture, TA or human work.",
+  "frozen_original_gate": {
+    "path": "docs/art/phase4-v19-dedicated-trajectory-inset-minimap-product-decision-and-implementation-design-gate-v1.json",
+    "sha256": "c7d86d9dcdd4891fac9dd9cbfffe3931561b5098db1df5a4aaec9b50e79af4c7"
+  },
+  "nonfinal_contradiction_binding": {
+    "evidence_kind": "NONFINAL_CP1_FAIL_CLOSED_STATIC_FINDING_NO_RECEIPT_NO_PASS",
+    "statement": "CP1 fail-closed gate contradiction: 416×208 landscape + canonical 127×254 x/z aspect cannot also put z head rail at bottom/foot toward top without portrait letterboxing; current NONFINAL mapping would anisotropically distort 4×. Visual gutter makes policy more necessary. I stopped before test/PASS/production. Need correction specifying landscape rotation/head-left-right vs portrait letterbox/head-bottom vs authorized distortion. No existing production/CMake touched.",
+    "statement_sha256": "3f8b41f9d7fa8d24bca45d68b21b328a2552b7029e35c4bf3ae909dc768b48e0",
+    "source_or_binary_frozen": false,
+    "implementation_result_inferred": false
+  },
+  "root_orientation_decision_binding": {
+    "option": "A_LANDSCAPE_CANONICAL_TWO_TO_ONE",
+    "statement": "Root裁定选 A：landscape canonical 2:1 table，z长轴水平，head rail=LEFT、foot=RIGHT；禁止anisotropic distortion。416×208 plot按canonical aspect并预留对称视觉gutter，双语HEAD/开球端与FOOT/底端标签消除方向歧义。请冻结V19 orientation/layout interpretation correction gate+validator/mutations，绑定原gate与NONFINAL contradiction；不改production/CMake/GPU/readiness。",
+    "statement_sha256": "0472f50e9c4b4c8e39b2a83f79204dab9f615415eaa48281a273b800edb94337",
+    "selected": true,
+    "portrait_letterbox_not_selected": true,
+    "anisotropic_distortion_forbidden": true
+  },
+  "supersession_contract": {
+    "superseded_original_field": "default_layout_and_ui_contract.plot_aspect_ratio",
+    "superseded_text": "2:1 play-surface orientation; head rail at bottom and foot spot toward top for every camera",
+    "replacement": "Landscape canonical 2:1 play-surface orientation; z long axis is horizontal, head rail is LEFT and foot rail is RIGHT for every camera.",
+    "all_other_v19_product_semantic_render_resource_gl_cpu_gpu_ta_human_and_authorization_contracts_unchanged": true,
+    "original_gate_may_be_used_without_this_correction": false
+  },
+  "corrected_orientation_contract": {
+    "canonical_table_dimensions_cm": [254.0, 127.0],
+    "canonical_axes": "screen horizontal is canonical z long axis; screen vertical is canonical x short axis",
+    "head_rail_canonical_z_cm": -127.0,
+    "head_rail_screen_side": "LEFT",
+    "foot_rail_canonical_z_cm": 127.0,
+    "foot_rail_screen_side": "RIGHT",
+    "canonical_x_negative_screen_side": "TOP",
+    "canonical_x_positive_screen_side": "BOTTOM",
+    "mapping_formula": "screen_x = table_rect_left + ((z + 127) / 254) * table_rect_width; screen_y = table_rect_top + ((x + 63.5) / 127) * table_rect_height",
+    "uniform_scale_required": "table_rect_width / 254 == table_rect_height / 127 within absolute epsilon 1e-6",
+    "camera_matrix_name_or_scene_content_may_affect_orientation": false,
+    "mirror_rotate_or_auto_flip_by_player_side_allowed": false,
+    "anisotropic_stretch_allowed": false
+  },
+  "reference_gutter_contract": {
+    "plot_rect_within_panel_px": [16, 48, 416, 208],
+    "minimum_silhouette_clearance_px_at_reference": 12,
+    "reference_canonical_table_rect_within_plot_px": [24, 12, 368, 184],
+    "reference_plot_margins_left_top_right_bottom_px": [24, 12, 24, 12],
+    "reference_table_aspect_ratio": "368:184 == 2:1",
+    "responsive_algorithm": "Reserve at least 12 reference pixels after the existing UI-scale transform on all four plot sides, then center the largest exact 2:1 canonical table rectangle inside the remaining plot area. Extra unused space is split equally across the corresponding opposite sides.",
+    "complete_silhouette_must_remain_inside_plot": "Actual rail halos, paired endpoint capsules, direction notch, predicted outer rim and diamond endpoint must remain inside the plot rectangle and outside header, legend, border and toggle regions.",
+    "shrinking_below_original_minimum_outer_panel_allowed": false,
+    "scene_content_driven_relocation_allowed": false
+  },
+  "orientation_labels_contract": {
+    "left_label": "HEAD / 开球端",
+    "right_label": "FOOT / 底端",
+    "labels_visible_when_inset_visible": true,
+    "labels_are_outside_trajectory_denominator": true,
+    "labels_do_not_cover_canonical_table_rect": true,
+    "standard_and_cvd_geometry_identical": true,
+    "screen_reader_names_in_order": ["Head rail, 开球端", "Foot rail, 底端"]
+  },
+  "cp1_cpu_acceptance_delta_not_executed": {
+    "existing_exact_96_case_matrix_unchanged": true,
+    "required_new_positive_fixtures": [
+      "all 96 cases use exact uniform canonical scale and byte-identical orientation/source mapping across camera presets",
+      "reference mapping sends z=-127 to left, z=+127 to right, x=-63.5 to top and x=+63.5 to bottom",
+      "reference table rect is exactly [plot+24, plot+12, 368, 184]",
+      "rail-edge, corner and endpoint silhouettes remain within the plot after the complete visual gutter",
+      "HEAD / 开球端 and FOOT / 底端 remain ordered, visible and outside the trajectory denominator"
+    ],
+    "required_new_fail_closed_fixtures": [
+      "head-bottom or foot-top orientation",
+      "head-right or camera/player-side auto flip",
+      "x and z use different physical scale",
+      "uniform 12-pixel inset stretched to 392x184 instead of refitting exact 2:1",
+      "gutter below 12 reference pixels or silhouette clipped at a rail/corner/endpoint",
+      "orientation labels omitted, monolingual, reversed or included in trajectory denominator"
+    ],
+    "cpu_checkpoint_pass": false,
+    "implementation_pass": false
+  },
+  "authorization_boundary": {
+    "orientation_product_decision_selected": true,
+    "interpretation_correction_gate_complete": true,
+    "production_edit_authorized": false,
+    "cmake_edit_authorized": false,
+    "implementation_authorized_by_this_correction": false,
+    "cpu_checkpoint_pass": false,
+    "gpu_authorized": false,
+    "readiness_authorized": false,
+    "capture_authorized": false,
+    "machine_pass": false,
+    "ta_pass": false,
+    "human_pass": false,
+    "product_pass": false
+  },
+  "proof_boundary": {
+    "design_interpretation_only": true,
+    "production_modified": false,
+    "cmake_modified": false,
+    "cpu_test_executed": false,
+    "gpu_run": false,
+    "readiness_created": false,
+    "authorization_created": false,
+    "implementation_pass": false
+  }
+}

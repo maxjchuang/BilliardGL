@@ -1,0 +1,483 @@
+{
+  "schema": "phase2_pocket_v10i_offline_correction_design_gate_v1",
+  "schema_version": 1,
+  "package_id": "phase2_pocket_v10i_offline_correction_design_gate_v1",
+  "status": "APPROVED_FOR_OFFLINE_IMPLEMENTATION",
+  "GPU_CAPTURE_AUTHORIZED": false,
+  "ta_review_authorized": false,
+  "formal_six_scene_evidence_authorized": false,
+  "formal_pass_claimed": false,
+  "golden_promotion_authorized_or_claimed": false,
+  "purpose": "Design-only authorization for a v10i offline search that corrects the independently failed v10h lower sidewall band using the frozen v10g and v10h actual-GPU anchors.",
+  "evidence_boundary": {
+    "design_gate_only": true,
+    "v10i_asset_implemented": false,
+    "v10i_offline_search_executed": false,
+    "v10i_offline_freeze_created": false,
+    "v10i_actual_gpu_used": false,
+    "v10i_visual_review_run": false,
+    "no_image_generated_by_this_gate": true,
+    "allowed_next_work": "Offline implementation, exhaustive 35-candidate evaluation, validation and immutable source freeze only.",
+    "forbidden_now": [
+      "any v10h rerun",
+      "any v10i renderer or GPU capture",
+      "technical-art review",
+      "six-scene evidence",
+      "formal PASS",
+      "golden promotion"
+    ]
+  },
+  "input_bindings": {
+    "v10h_rejected_actual_gpu": {
+      "manifest": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-preflight-v1/phase2-pocket-v10h-gpu-preflight-manifest-v1.json",
+        "sha256": "sha256:47bcf3df0c2b7344fc1cd31ad33e123e33258e0a244258f63ce2d81005138a29"
+      },
+      "capture_png": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-preflight-v1/pocket_closeup.png",
+        "sha256": "sha256:cc5001989d1638514acb3d55232171638abb22e7cd3fa15fd2f7ce418f447b6f"
+      },
+      "metrics": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-preflight-v1/pocket_gpu_metrics.json",
+        "sha256": "sha256:954b9b6ee3ae2b520388d2b1af047d7a191a6afd2aa4e5e234827819ed3bc7fd"
+      },
+      "authorization_consumed": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-preflight-v1/gpu_capture_authorization_consumed.json",
+        "sha256": "sha256:3b4b681d2578ae6d89c6259c7e2cf79044a50408445180c773dc616f1ca44206"
+      },
+      "gpu_source_freeze": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-source-freeze-v1/receipt.json",
+        "sha256": "sha256:293ae8979508dd21061a0391f49232ad3b8f744954ac1b53a63e35ee176902e0"
+      }
+    },
+    "v10h_offline_and_readiness": {
+      "design_gate": {
+        "path": "docs/art/phase2-pocket-v10h-offline-correction-design-gate-v1.json",
+        "sha256": "sha256:fd6c2d501a54dce74c2ceb1117b2364099465010e880781c8049f9cd6a269d08"
+      },
+      "offline_report": {
+        "path": "docs/art/phase2-pocket-v10h-offline-preflight-v1/phase2-pocket-v10h-offline-report-v1.json",
+        "sha256": "sha256:54ed555358b4664b5817b25576d3bb8d664467e6093fa7a45ddadda0da56bc78"
+      },
+      "offline_freeze": {
+        "path": "docs/art/phase2-pocket-v10h-offline-source-freeze-v1/receipt.json",
+        "sha256": "sha256:3121c61fd2e60961e11fc1fe5d5d113c04fec594c80317c7aff993b33efd53d9"
+      },
+      "readiness_manifest": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-ready-v1/phase2-pocket-v10h-gpu-readiness-manifest-v1.json",
+        "sha256": "sha256:0e10bc7e3a17dd00115c928392de2ce94ca6043978cb18dec6539c5826c4606c"
+      },
+      "readiness_receipt": {
+        "path": "docs/art/phase2-pocket-v10h-gpu-ready-v1/authorization-ready-receipt-v1.json",
+        "sha256": "sha256:188c7c89d098cc8514363705374c0a11226cae7c1f4264fb667329e23275e852"
+      },
+      "production_gltf": {
+        "path": "assets/modern/phase2-v10h/focused_practice_hall_modular_v1.gltf",
+        "sha256": "sha256:99ddceb6771dc1a05e1a21b469940f457f229aa871368c10cd2bc40970c0e136"
+      },
+      "production_asset_manifest": {
+        "path": "assets/modern/phase2-v10h/focused_practice_hall_modular_v1.asset.json",
+        "sha256": "sha256:4534acc249d1cf505e0ee6303ea237123536226eb272f2a347d4703049ccc98a"
+      }
+    },
+    "v10g_frozen_actual_anchor": {
+      "manifest": {
+        "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/phase2-pocket-v10g-gpu-preflight-manifest-v1.json",
+        "sha256": "sha256:6dbc9c8c259add304eb5b039a5321f38e80764dfcc0eb01fd657bcff66d27a02"
+      },
+      "capture_png": {
+        "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/pocket_closeup.png",
+        "sha256": "sha256:8743545ba4ca2f803396b237afe38bafe3e6b6cc858e59e4aba6e3e67977bd64"
+      },
+      "metrics": {
+        "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/pocket_gpu_metrics.json",
+        "sha256": "sha256:a700726d55080d06bdceeb10447568b64285c1080b6e0c6b715ba48b79f18061"
+      },
+      "authorization_consumed": {
+        "path": "docs/art/phase2-pocket-v10g-gpu-preflight-v1/gpu_capture_authorization_consumed.json",
+        "sha256": "sha256:e5e3b7d71581d21f5fe2b73216628e8b459c54ceff59bd806fe251d9a5338f08"
+      },
+      "gpu_source_freeze": {
+        "path": "docs/art/phase2-pocket-v10g-gpu-source-freeze-v1/receipt.json",
+        "sha256": "sha256:301af66efbdb2f77ce71a666093c024dbbf58365e372f81347406f37f695eed7"
+      },
+      "offline_gate": {
+        "path": "docs/art/phase2-pocket-v10g-offline-correction-design-gate-v2.json",
+        "sha256": "sha256:eea60f8a01bf185f052ce278fc9d26f911dce57a736f29c3c27eb9a649245ae4"
+      },
+      "offline_report": {
+        "path": "docs/art/phase2-pocket-v10g-offline-preflight-v2/phase2-pocket-v10g-offline-report-v2.json",
+        "sha256": "sha256:0830044860a94ac157c3953b995531ac695460370271d2feaaeeabbf1b3a39e1"
+      },
+      "offline_freeze": {
+        "path": "docs/art/phase2-pocket-v10g-offline-source-freeze-v2/receipt.json",
+        "sha256": "sha256:dcd148cba07deaa47cd112d48a9e228126ed264ffd0b7192b00354b2cbad1284"
+      },
+      "production_gltf": {
+        "path": "assets/modern/phase2-v10g/focused_practice_hall_modular_v1.gltf",
+        "sha256": "sha256:a72c5ab4dd477fe3a6d85e2ced1421af93bb768ff613a411dabb0a02def6226f"
+      },
+      "production_asset_manifest": {
+        "path": "assets/modern/phase2-v10g/focused_practice_hall_modular_v1.asset.json",
+        "sha256": "sha256:27387e5c06606ab90cb91e8620868b02cc8f8417c5ce6db7618512b290f11e4b"
+      }
+    },
+    "shared_frozen_render_inputs": {
+      "pbr_parameters": {
+        "path": "assets/modern/phase2-v10f/focused_practice_hall_pbr_v1.params.json",
+        "sha256": "sha256:252bd726263a51bb85ab02ad171f260253df92d27c5d0aa165ecf72e2ff1b2f5"
+      },
+      "lighting_rig": {
+        "path": "assets/modern/phase2-v10f/focused_practice_hall_lighting_rig_v1.json",
+        "sha256": "sha256:37122c98dfbf97582c726253d16fa803fe651ce64304758b070b473ffef724ea"
+      }
+    }
+  },
+  "v10h_actual_gpu_disposition": {
+    "status": "REJECTED_MACHINE_NO_RERUN",
+    "actual_gpu_capture_count": 1,
+    "additional_v10h_capture_authorized": false,
+    "immutable_failure_freeze_status": "BYTE_IDENTICAL_REJECTED_MACHINE_NO_RERUN",
+    "actual_luma": {
+      "rim": 42.941,
+      "sidewall_upper": 28.294,
+      "sidewall_lower": 6.8596,
+      "void_median": 2.0,
+      "void_p95": 2.0
+    },
+    "failed_machine_checks_exact": [
+      "luma_sidewall_lower_8_to_11",
+      "lower_minus_void_at_least_5"
+    ],
+    "lower_minus_void_actual": 4.8596,
+    "passed_scope": [
+      "upper band 27..31",
+      "rim and void ranges",
+      "strict luma ordering",
+      "upper-minus-lower delta",
+      "rim-minus-upper gap",
+      "geometry and marker binding",
+      "ownership, visibility and object-ID sampling",
+      "UI isolation and full-frame delta",
+      "performance budget"
+    ],
+    "decision": "The v10h authorization was consumed. v10h cannot be rerun; correction requires a new v10i offline package and a future new root authorization."
+  },
+  "two_actual_anchor_model": {
+    "luma_domain": "encoded sRGB8 post-tonemap Y'=0.2126R+0.7152G+0.0722B under the frozen actual-GPU ROI, one-pixel erosion and geometric band labels",
+    "effective_reflectance_variable": "x_band=B*S_band",
+    "band_scalar_formula": "S_band=(1-f_band)*L+f_band*U",
+    "frozen_band_fractions": {
+      "upper_toward_upper_endpoint": 0.5199589362511269,
+      "lower_toward_upper_endpoint": 0.10358596765078035
+    },
+    "common_void_floor_luma": 2.0,
+    "anchors": {
+      "v10g": {
+        "parameters": {
+          "base_neutral_scalar": 0.055,
+          "upper_endpoint_scalar": 0.95,
+          "lower_endpoint_scalar": 0.3,
+          "roughness": 0.84
+        },
+        "band_scalars": {
+          "upper": 0.6379733085632324,
+          "lower": 0.3673308789730072
+        },
+        "effective_reflectance": {
+          "upper": 0.035088531970977783,
+          "lower": 0.020203198343515395
+        },
+        "actual_gpu_luma": {
+          "upper": 32.294,
+          "lower": 19.4344,
+          "void": 2.0
+        }
+      },
+      "v10h": {
+        "parameters": {
+          "base_neutral_scalar": 0.05625,
+          "upper_endpoint_scalar": 0.99,
+          "lower_endpoint_scalar": 0.055,
+          "roughness": 0.84
+        },
+        "band_scalars": {
+          "upper": 0.5411616053948036,
+          "lower": 0.1518528797534796
+        },
+        "effective_reflectance": {
+          "upper": 0.030440340303457703,
+          "lower": 0.008541724486133228
+        },
+        "actual_gpu_luma": {
+          "upper": 28.294,
+          "lower": 6.8596,
+          "void": 2.0
+        }
+      }
+    },
+    "model_a_secant_linear": {
+      "formula": "t=(x-x_h)/(x_g-x_h); G_A=G_h+t*(G_g-G_h)",
+      "upper": {
+        "slope": 860.5497118267696,
+        "intercept": 2.098573923950674
+      },
+      "lower": {
+        "slope": 1078.3199579905297,
+        "intercept": -2.3511119890538605
+      },
+      "audit_property": "Both band-specific secants reproduce both actual anchors exactly."
+    },
+    "model_b_log_linear_above_void": {
+      "formula": "t=(x-x_h)/(x_g-x_h); G_B=V+exp(ln(G_h-V)+t*(ln(G_g-V)-ln(G_h-V))), V=2",
+      "upper_log_slope_per_effective_reflectance": 30.465373839881455,
+      "lower_log_slope_per_effective_reflectance": 109.54782831265483,
+      "audit_property": "The positive above-void response reproduces both actual anchors exactly and supplies a curvature-sensitive model independent of the linear secant."
+    },
+    "locality_and_error_envelope": {
+      "interpolation_only": true,
+      "required_t_range_each_band": [0.0, 1.0],
+      "model_spread_caps": {
+        "upper": 0.25,
+        "lower": 1.5
+      },
+      "fixed_encoded_luma_reserve_each_side": 0.5,
+      "reserve_reason": "One half encoded-luma code conservatively covers RGB8 rounding; the full linear/log model hull separately covers the observed local response-shape ambiguity.",
+      "interval_formula": "I_band=[max(0,min(G_A,G_B)-0.5),max(G_A,G_B)+0.5]",
+      "requirements": [
+        "Both models must be evaluated independently for every candidate.",
+        "The full model hull plus reserve, not a nominal or midpoint, must pass every target and hierarchy gate.",
+        "Lower must be computed from its own effective-reflectance anchors and may not be inferred from upper-minus-delta.",
+        "Candidates outside either anchor interval are rejected; extrapolation is forbidden."
+      ],
+      "limitation": "Two actual points bound a local interpolation, not a global renderer transfer function. A future v10i capture remains required and is not authorized by this gate."
+    }
+  },
+  "offline_material_and_vertex_color_search_domain": {
+    "allowed_change_scope": [
+      "new v10i offline asset root, calibration, validation, metadata and immutable freeze",
+      "sidewall COLOR_0 values on the two existing endpoint rings",
+      "sidewall material metadata renamed for v10i; its numeric material factors remain frozen at v10h values"
+    ],
+    "sidewall_material": {
+      "name": "MAT_pocket_liner_sidewall_v10i",
+      "base_neutral_scalar_fixed": 0.05625,
+      "rgb_multiplier_frozen": [
+        0.84,
+        0.94,
+        1.0
+      ],
+      "baseColorFactor_linear_rgba_fixed": [
+        0.04725,
+        0.052875,
+        0.05625,
+        1.0
+      ],
+      "roughness_frozen": 0.84,
+      "metallic_frozen": 0.0,
+      "emissiveFactor_frozen": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "texture_change_allowed": false
+    },
+    "two_ring_color_contract": {
+      "upper_endpoint_scalar_values": [
+        0.97,
+        0.975,
+        0.98,
+        0.985,
+        0.99
+      ],
+      "lower_endpoint_scalar_values": [
+        0.105,
+        0.1075,
+        0.11,
+        0.1125,
+        0.115,
+        0.1175,
+        0.12
+      ],
+      "upper_grid_step": 0.005,
+      "lower_grid_step": 0.0025,
+      "endpoint_difference_range": [
+        0.85,
+        0.885
+      ],
+      "same_scalar_written_to_rgb": true,
+      "alpha": 1.0,
+      "monotonic_non_increasing_upper_to_lower": true,
+      "all_vertices_on_each_ring_identical": true,
+      "all_six_pockets_and_all_three_lods_identical": true,
+      "new_ring_or_vertex_allowed": false
+    },
+    "deterministic_search": {
+      "complete_cartesian_grid_required": true,
+      "expected_candidate_count": 35,
+      "candidate_count_derivation": "1 base value * 5 upper values * 7 lower values",
+      "expected_feasible_count_by_gate_arithmetic": 5,
+      "report_every_candidate": [
+        "parameters and effective-reflectance x for both bands",
+        "band-specific interpolation coordinates t",
+        "both models, spreads and conservative intervals",
+        "every hard and safety check",
+        "explicit rejection reasons"
+      ],
+      "selection": "Among candidates passing every hard and safety gate, choose minimum raw squared displacement (B-.05625)^2+(U-.99)^2+(L-.055)^2 from v10h. Assign lower-range or lower-void violations infinite cost. Break ties by lower interval upper bound, base, lower, then upper.",
+      "single_cherry_picked_candidate_allowed": false
+    }
+  },
+  "mathematical_feasibility_witness": {
+    "not_an_implemented_asset_or_gpu_result": true,
+    "parameters": {
+      "base_neutral_scalar": 0.05625,
+      "upper_endpoint_scalar": 0.99,
+      "lower_endpoint_scalar": 0.115,
+      "roughness": 0.84
+    },
+    "direct_change_from_v10h": {
+      "base_neutral_delta": 0.0,
+      "upper_endpoint_delta": 0.0,
+      "lower_endpoint_delta": 0.06,
+      "intent": "Raise the independently failed lower endpoint without directly raising the material scalar or upper endpoint."
+    },
+    "upper": {
+      "band_scalar": 0.569964069219736,
+      "effective_reflectance": 0.03206047889361015,
+      "anchor_interpolation_t": 0.348552449218779,
+      "model_a_luma": 29.688209796875114,
+      "model_b_luma": 29.624385191966248,
+      "model_spread": 0.06382460490886643,
+      "conservative_interval": [
+        29.124385191966248,
+        30.188209796875114
+      ]
+    },
+    "lower": {
+      "band_scalar": 0.2056377216944328,
+      "effective_reflectance": 0.011567121845311846,
+      "anchor_interpolation_t": 0.2594352477378684,
+      "model_a_luma": 10.121946353254149,
+      "model_b_luma": 8.769192749700018,
+      "model_spread": 1.352753603554131,
+      "conservative_interval": [
+        8.269192749700018,
+        10.621946353254149
+      ]
+    },
+    "conservative_proofs": {
+      "upper_full_interval_inside_27_to_31": true,
+      "lower_full_interval_inside_8_to_11": true,
+      "strict_ordering_with_rim_42_941_and_void_upper_3": true,
+      "rim_minus_upper_interval_high": 12.752790203124889,
+      "upper_interval_low_minus_lower_interval_high": 18.5024388387121,
+      "lower_interval_low_minus_void_upper_3": 5.269192749700018,
+      "hard_upper_lower_edge_margin": 2.1243851919662475,
+      "hard_upper_upper_edge_margin": 0.811790203124886,
+      "hard_lower_lower_edge_margin": 0.26919274970001794,
+      "hard_lower_upper_edge_margin": 0.37805364674585107,
+      "squared_displacement_from_v10h": 0.0036000000000000008
+    },
+    "proof_note": "This witness proves the declared local grid is not empty. Offline implementation must recompute all 35 candidates and may select it only if every independent validator and inherited freeze check passes."
+  },
+  "offline_machine_gate": {
+    "required_success_status": "OFFLINE_PREFLIGHT_PASS_GPU_NOT_AUTHORIZED",
+    "hard_actual_gpu_interval_gates": {
+      "upper_interval_lower_bound_min": 27.0,
+      "upper_interval_upper_bound_max": 31.0,
+      "lower_interval_lower_bound_min": 8.0,
+      "lower_interval_upper_bound_max": 11.0,
+      "rim_minus_upper_interval_high_min": 10.0,
+      "upper_interval_low_minus_lower_interval_high_min": 12.0,
+      "lower_interval_low_minus_void_upper_3_min": 5.0,
+      "strict_ordering_required": true
+    },
+    "safety_targets": {
+      "upper_interval_lower_bound_min": 27.25,
+      "upper_interval_upper_bound_max": 30.5,
+      "lower_interval_lower_bound_min": 8.25,
+      "lower_interval_upper_bound_max": 10.75,
+      "conservative_upper_minus_lower_min": 16.0,
+      "lower_interval_low_minus_void_upper_3_min": 5.25,
+      "anti_upper_push_rule": "Base scalar remains .05625 and no candidate may pass by raising upper outside the declared <=.99 grid or by changing lighting/rendering.",
+      "anti_lower_overbright_rule": "Lower full interval upper bound must remain <=10.75 even when hierarchy and delta pass."
+    },
+    "required_outputs_after_future_offline_implementation": [
+      "new v10i asset root and fresh hashes without modifying v10h",
+      "decoded accessor and raw-byte diff proving only existing sidewall COLOR_0 plus permitted v10i material metadata changed",
+      "complete 35-candidate model table with rejection reasons",
+      "selected-candidate proof for anchor locality, model spread, upper, lower, hierarchy and bilateral margins",
+      "two-ring barycentric continuity, seam, derivative, fragment-step and posterization results",
+      "all inherited geometry, indices, non-COLOR accessors, ownership, ROI, visibility, walnut, UI, performance and physics checks",
+      "fresh v10i metadata with visual_review_status=NOT_RUN and no copied v10h failure or review status",
+      "byte-identical image-free immutable offline source-freeze receipt binding this gate, report, generator, validator, tests and output assets"
+    ],
+    "failure_rule": "Any missing, failed, PENDING, unbound, extrapolated, model-divergent, lower-out-of-range, upper-pushed, geometry-drifted or authorization check is OFFLINE_PREFLIGHT_FAIL_GPU_NOT_AUTHORIZED. Freeze failure evidence and stop."
+  },
+  "frozen_geometry_renderer_and_evidence_contract": {
+    "geometry_and_indices_frozen": true,
+    "non_COLOR_0_accessors_frozen": true,
+    "allowed_accessor_byte_delta": "existing sidewall COLOR_0 only",
+    "sidewall_topology_frozen": {
+      "vertical_layers_y_m": [
+        0.83597976,
+        0.85883975
+      ],
+      "vertical_layer_count": 2,
+      "cross_layer_unique_edges_by_lod": {
+        "0": 432,
+        "1": 288,
+        "2": 180
+      },
+      "arc_segments_per_half_by_lod": {
+        "0": 24,
+        "1": 16,
+        "2": 10
+      }
+    },
+    "unchanged": [
+      "all POSITION, NORMAL, TANGENT, TEXCOORD_0 and index decoded values and counts",
+      "rim, void and all non-sidewall geometry, COLOR_0 and materials",
+      "node transforms, roles, LOD membership, local ranges and marker references",
+      "rim width, pocket opening, sidewall drop, void span, ownership and physics binding",
+      "camera, viewport 1920x1080, ROI, component selection, erosion and geometric band labeling",
+      "lighting rig, renderer, shaders, exposure, tone map, MSAA and quality",
+      "felt, cushion, facing, walnut, balls, cue, room, UI and all rules/simulation data",
+      "all v10h-passed geometry, visibility, walnut, UI and performance thresholds"
+    ],
+    "forbidden_workarounds": [
+      "v10h rerun or reuse of its consumed authorization",
+      "raising void or darkening rim to fake lower hierarchy",
+      "changing ROI, erosion, band quantile or brightness-based labels",
+      "changing camera, light, exposure, tone map, shader or renderer",
+      "adding emissive, texture, render pass, light, runtime toggle, geometry ring or vertex",
+      "raising material base or upper endpoint outside the grid to compensate for lower"
+    ]
+  },
+  "post_offline_freeze_single_gpu_contract": {
+    "gpu_capture_authorized_now": false,
+    "v10h_rerun_allowed": false,
+    "prerequisites_before_root_may_authorize_v10i": [
+      "complete v10i offline machine PASS with every declared hard and safety gate",
+      "byte-identical image-free immutable v10i offline source freeze",
+      "root inspection of all 35 candidates, dual-model hulls, selected candidate and decoded diff",
+      "fresh v10i runner, executable and authorization-readiness hashes bound to the frozen source",
+      "new explicit root authorization naming v10i, exactly one scene/profile and exact hashes"
+    ],
+    "future_authorized_capture_count_max": 1,
+    "future_capture_scope": "Exactly one v10i actual-GPU pocket_closeup at 1920x1080, medium quality and 4x MSAA under the frozen camera, lighting and ROI contract.",
+    "retry_or_second_capture_without_new_root_authorization_allowed": false,
+    "on_machine_failure": "Freeze the failure and stop; no rerun, TA, six-scene, formal or golden action.",
+    "on_machine_pass": "Machine PASS permits only root review. TA remains separately unauthorized."
+  },
+  "authorization_after_gate": {
+    "allowed_next_action": "Offline v10i implementation, complete deterministic search, validation and immutable source freeze only.",
+    "v10h_gpu_capture": "CONSUMED_AND_NOT_AUTHORIZED_FOR_RERUN",
+    "v10i_gpu_capture": "NOT_AUTHORIZED",
+    "technical_art_review": "NOT_AUTHORIZED",
+    "formal_six_scene_evidence": "NOT_AUTHORIZED",
+    "formal_pass": "NOT_AUTHORIZED",
+    "golden_promotion": "NOT_AUTHORIZED"
+  }
+}

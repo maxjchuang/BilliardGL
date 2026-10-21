@@ -1,0 +1,72 @@
+{
+  "reviewer_role": "independent_technical_artist",
+  "schema": "phase2_ta_manual_review_v1",
+  "scenes": {
+    "ball_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "The 8, 11 and 15 glyphs remain visibly broken/aliased, stripe boundaries stair-step, and no clean rotation-seam proof is visible.", "status": "FAIL"},
+        "composition": {"evidence": "The four-ball lineup is centered at review scale but still replaces the approved hero-ball/contact-shadow composition.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "All four balls remain ungrounded with no compact contact shadows.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "No pocket or rail alignment is relevant in this scene.", "status": "N/A"},
+        "material_color": {"evidence": "Ball response remains plastic-like and the cyan high-frequency felt competes with identity markings.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Venue is not a required close-up subject.", "status": "N/A"}
+      },
+      "screenshot_sha256": "sha256:6daa0d1bac2b1c4dc2c086fa22dc2852e353445aa5ad61980f1674f02c96c25c"
+    },
+    "break": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Rack numbers remain unreadable and no rotation-seam evidence is present.", "status": "FAIL"},
+        "composition": {"evidence": "The table is better isolated from the floor but the lamp remains cropped and the manifest records cue_visible=false.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "Cue ball and rack still read as floating above the felt.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Dark cushion noses and pocket mouths prevent confident proportion review; cloth teeth remain visible at near pockets.", "status": "FAIL"},
+        "material_color": {"evidence": "Felt remains too cyan and walnut remains red/high-frequency; the lamp does not create the approved warm-neutral hierarchy.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Floor improves room presence, but the cropped lamp and empty wall corner still dominate without a complete venue layer.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:02f2efc3fe1a74bfb6f473c893e265765540fa92d9e32ac952d67e3b7ab11661"
+    },
+    "low_aim": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Rack group colors are visible, but numbers remain too small and aliased for reliable identity or seam review.", "status": "FAIL"},
+        "composition": {"evidence": "Dynamic cue and guide now point toward the rack, but the cue appears to enter the ball low-left and the guide begins inside the sphere rather than at a clean contact anchor.", "status": "FAIL"},
+        "contact_shadow": {"evidence": "The enlarged cue ball still floats without a readable contact shadow.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Target pocket and dark rail structure remain weak from the aim line.", "status": "FAIL"},
+        "material_color": {"evidence": "Cyan felt fills the frame and cue wood retains an exaggerated orange high-frequency figure.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Wall panels exist, but the blank wall occupies excessive area and does not support shot focus.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:03c4b4726355b641f4b6c1827b72240c495aea1c16cbf8cd16d62d00793e4615"
+    },
+    "pocket_closeup": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "No ball is required in this geometry close-up.", "status": "N/A"},
+        "composition": {"evidence": "The target pocket is now visible and centered sufficiently for geometry review.", "status": "PASS"},
+        "contact_shadow": {"evidence": "No ball/contact-shadow subject is present.", "status": "N/A"},
+        "geometry_alignment": {"evidence": "The cloth terminates in three conspicuous triangular teeth and the mouth/leather/void transition remains visibly broken.", "status": "FAIL"},
+        "material_color": {"evidence": "Cushions remain near black, felt remains cyan, and red walnut dominates the foreground.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Venue is outside this close-up evidence scope.", "status": "N/A"}
+      },
+      "screenshot_sha256": "sha256:739eb39e3bb5710a18ba7b861343a89fe964d21dce16dac9b8eb5b8142f2bfa6"
+    },
+    "post_shot_observe": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Ball groups are visible but numbers and rotation seams are not readable at this distance.", "status": "FAIL"},
+        "composition": {"evidence": "The shot spread and cue ball remain visible in a coherent oblique table view.", "status": "PASS"},
+        "contact_shadow": {"evidence": "Balls still lack grounding shadows.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Near pocket cloth teeth and crushed-dark pocket/cushion geometry remain visible.", "status": "FAIL"},
+        "material_color": {"evidence": "Felt and walnut remain too cyan/red and too high-frequency for the approved hierarchy.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "Floor improves venue presence, but the cropped lamp and empty corner still weaken focus.", "status": "FAIL"}
+      },
+      "screenshot_sha256": "sha256:a3957a7d8f9efa959af0806109c80c95ab1377c61fb6b14e3512aa9eb18cda37"
+    },
+    "tactical_overhead": {
+      "axes": {
+        "ball_identity_and_rotation_seam": {"evidence": "Group colors are visible, but numbers and seam behavior remain unreadable at tactical scale.", "status": "FAIL"},
+        "composition": {"evidence": "The top-down camera is corrected and the complete playfield, rack and cue ball are visible.", "status": "PASS"},
+        "contact_shadow": {"evidence": "The rack and cue ball lack readable compact shadows even from overhead.", "status": "FAIL"},
+        "geometry_alignment": {"evidence": "Six pockets and rail layout are visible, but cloth teeth and near-black pocket transitions remain.", "status": "FAIL"},
+        "material_color": {"evidence": "The playfield remains over-cyan and surrounding wood/rails lack approved separation.", "status": "FAIL"},
+        "venue_and_background_focus": {"evidence": "The surrounding floor is present and subdued enough for tactical focus.", "status": "PASS"}
+      },
+      "screenshot_sha256": "sha256:63d758a408409146e91f58d2856c169adbbda3fc250fe0befc17d863a6ba9dc8"
+    }
+  }
+}

@@ -1,8 +1,10 @@
 #pragma once
 
+#include "renderer_selection.h"
 #include "table_specs.h"
 
 #include <array>
+#include <cstdint>
 #include <string>
 
 namespace billiardgl {
@@ -30,6 +32,14 @@ struct Point3 {
 
 enum class BallMotionState : int;
 
+enum class PhysicalBallDomain {
+    ClothSupported,
+    Airborne,
+    RailTopSupported,
+    OutsideLandingSupported,
+    PocketChannel
+};
+
 enum class PocketInteractionPhase {
     Outside,
     Approaching,
@@ -53,9 +63,14 @@ struct BallState {
     float speed = 0.0f;
     float rotationAngle = 0.0f;
     bool pocketed = false;
+    // A rules-adjudicated off-table ball is removed without inventing a
+    // pocket capture. Its physical departure position remains available.
+    bool outOfPlay = false;
     unsigned int texture = 0;
     BallMotionState motionState = static_cast<BallMotionState>(0);
+    PhysicalBallDomain physicalDomain = PhysicalBallDomain::ClothSupported;
     PocketInteractionState pocketInteraction;
+    std::uint64_t trajectoryGeneration = 0;
 };
 
 enum class CameraAnchorMode {
@@ -133,6 +148,7 @@ struct RuntimeConfig {
     int height = 768;
     std::string screenshotPath;
     ScreenshotScene screenshotScene = ScreenshotScene::Default;
+    RendererBackendSelection rendererBackend = RendererBackendSelection::Legacy;
 };
 
 struct GameplayEvents {
@@ -181,5 +197,8 @@ bool anyBallMoving(const GameState& state);
 void clearGameplayEvents(GameState& state);
 void copyBallStateToLegacy(const GameState& state, std::array<LegacyBallAdapter, kBallCount>& legacyBalls);
 void copyLegacyTexturesToState(const std::array<LegacyBallAdapter, kBallCount>& legacyBalls, GameState& state);
+std::string canonicalTrajectoryGeneration(std::uint64_t generation);
+bool parseCanonicalTrajectoryGeneration(const std::string& text,
+    std::uint64_t& generation);
 
 }  // namespace billiardgl

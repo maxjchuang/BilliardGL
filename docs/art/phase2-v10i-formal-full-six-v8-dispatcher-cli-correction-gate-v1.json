@@ -1,0 +1,40 @@
+{
+  "schema": "phase2_v10i_formal_full_six_v8_dispatcher_cli_correction_gate_v1",
+  "status": "APPROVED_MINIMAL_DISPATCHER_ONLY_CORRECTION_NO_GPU",
+  "frozen_v7_failure_receipt": {
+    "path": "docs/evidence/phase2-v10i-formal-full-six-v7-preprocess-dispatch-failure-receipt-v1.json",
+    "sha256": "a50e19521543162b15e7871b39526dbaa38afae2a36b8e2cf906a3fbf53ad129"
+  },
+  "root_cause": {
+    "delegated_v6_dispatcher_emitted": "--formal-asset-package",
+    "capture_driver_parser_accepts": "--asset-package",
+    "failure_stage": "capture_driver_argparse_before_output_or_candidate_process"
+  },
+  "allowed_changes": [
+    "add a versioned v8 dispatcher wrapper",
+    "replace exactly --formal-asset-package with --asset-package in v8 capture_command",
+    "add offline parser-contract tests and v8 readiness artifacts"
+  ],
+  "forbidden_changes": [
+    "scripts/capture_visual_baselines.py",
+    "Billiards binary or production source",
+    "formal registry recipes, ROI, visibility, performance, draw or texture thresholds",
+    "asset package bytes",
+    "v7 authorization or consumed marker",
+    "GPU execution or authorization issuance"
+  ],
+  "required_test": {
+    "kind": "real_argparse_contract_without_capture_execution",
+    "command_source": "v8 capture_command",
+    "parser_source": "scripts/capture_visual_baselines.py::_parse_arguments",
+    "expected_asset_package_option": "--asset-package",
+    "forbidden_option": "--formal-asset-package"
+  },
+  "required_v8_boundary": {
+    "scene_count": 6,
+    "all_scenes_not_run": true,
+    "authorization_issued": false,
+    "output_root_absent": true,
+    "gpu_executed": false
+  }
+}
