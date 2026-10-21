@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21 Asia/Shanghai",
+  "code_checkpoint": "96a64646b3a285ac7526981dfe922725ea150461",
+  "remote_branch": "origin/codex/realistic-break-physics",
+  "initial_project_du_rounded": "52 GiB",
+  "final_allocated_bytes": {
+    ".git": 4891787264,
+    "docs/evidence": 20241047552,
+    "docs/art": 1107152896,
+    ".": 33467330560
+  },
+  "volume_free_bytes": 38493220864,
+  "git_connectivity_check": {
+    "exit": 0,
+    "seconds": 0.28701191721484065,
+    "stdout": "",
+    "stderr": ""
+  },
+  "full_fsck_error_output_bytes": 0,
+  "full_fsck_note": "Full fsck completed with no output. Its exit status was not captured separately from subsequent storage measurements; connectivity-only check captured separately above.",
+  "protected_binary_sha256": "44374e01d2b4eecadef773aa8775324047f4ceda42822cbbf4004aa50a6169eb",
+  "git_local_safety_config": {
+    "gc.auto": "0",
+    "gc.pruneExpire": "never"
+  },
+  "retained": "All original raw evidence paths, frozen build dependencies, worktrees, assets, profiles, replays and failed diagnostics retained. Readonly directories untouched.",
+  "m4_status": "OPEN; maintenance does not imply game acceptance"
+}

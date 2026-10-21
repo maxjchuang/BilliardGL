@@ -1,0 +1,16 @@
+{
+  "planned_files": 2000,
+  "accounted_once": 2000,
+  "statuses": {
+    "COMPRESSED_SAME_BYTES": 1902,
+    "UNCHANGED_NO_SAVING": 90,
+    "SKIPPED_READONLY_DIRECTORY": 8
+  },
+  "saved_allocated_bytes": 21201375232,
+  "saved_allocated_GiB": 19.745319366455078,
+  "content_policy": "Every compressed replacement had exact SHA equality with original before replace; paths and readable bytes retained. No game evidence deleted.",
+  "first_attempt": "Stopped on readonly directory; original stderr retained. Resume skips completed files and readonly sealed directories; exit0.",
+  "raw_evidence_remote_backup": false,
+  "source_backup_remote_commit": "96a64646b3a285ac7526981dfe922725ea150461",
+  "protected_binary_sha256": "44374e01d2b4eecadef773aa8775324047f4ceda42822cbbf4004aa50a6169eb"
+}

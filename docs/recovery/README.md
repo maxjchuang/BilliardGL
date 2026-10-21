@@ -25,3 +25,7 @@ python3 scripts/restore_evidence_sources.py --destination "$PWD" --prefix docs/e
 压缩后的文件可直接被现有构建、分析和图片工具读取，无需恢复步骤。复制到不支持压缩的文件系统时可能重新占用完整空间。不要把逻辑文件大小误当作实际已分配磁盘空间。
 
 本次维护不代表新增游戏验收通过；没有替换默认资产、物理或音频。
+
+本机 Git 维护时设置了 `gc.auto=0`、`gc.pruneExpire=never`，避免后续验证期间自动打包抢占资源，也避免自动过期本地恢复对象。需要时由主 Agent 单独安排 Git 整理；不要用强制清理不可达对象代替空间盘点。
+
+本次实际结果见 `20261021-maintenance/RESULT.md`。

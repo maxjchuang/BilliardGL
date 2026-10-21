@@ -21,8 +21,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", action="append", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--prior-report", action="append", type=Path, default=[])
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
+    completed = set()
+    for prior in args.prior_report:
+        for line in prior.read_text().splitlines():
+            row = json.loads(line)
+            if row.get("status") in {"COMPRESSED_SAME_BYTES", "UNCHANGED_NO_SAVING"}:
+                completed.add(row["path"])
     suffixes = {".jsonl", ".ndjson", ".json", ".bmp", ".raw", ".bgll", ".bgll13", ".bgll15", ".wav", ".stderr"}
     count = saved = 0
     args.report.parent.mkdir(parents=True, exist_ok=True)
@@ -32,13 +39,15 @@ def main():
                 dirs[:] = [name for name in dirs if name not in {".git", "__pycache__"}]
                 for name in files:
                     path = Path(parent) / name
-                    if path.is_symlink() or path.suffix not in suffixes:
+                    if str(path.resolve()) in completed or path.is_symlink() or path.suffix not in suffixes:
                         continue
                     before = path.stat()
                     if before.st_size < 1024 * 1024 or before.st_nlink != 1 or getattr(before, "st_flags", 0) & 0x20:
                         continue
                     row = {"path": str(path.resolve()), "bytes": before.st_size, "allocated_before": before.st_blocks * 512}
-                    if not args.apply:
+                    if args.apply and not os.access(parent, os.W_OK):
+                        row["status"] = "SKIPPED_READONLY_DIRECTORY"
+                    elif not args.apply:
                         row["status"] = "PLANNED"
                     else:
                         original_sha = digest(path)

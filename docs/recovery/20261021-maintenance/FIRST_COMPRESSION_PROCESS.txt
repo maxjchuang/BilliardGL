@@ -1,0 +1,31 @@
+{"processed": 100, "saved_bytes": 1587429376}
+{"processed": 200, "saved_bytes": 2955497472}
+{"processed": 300, "saved_bytes": 3549347840}
+{"processed": 400, "saved_bytes": 3942453248}
+{"processed": 500, "saved_bytes": 4333391872}
+{"processed": 600, "saved_bytes": 4721889280}
+{"processed": 700, "saved_bytes": 6160056320}
+{"processed": 800, "saved_bytes": 8036208640}
+{"processed": 900, "saved_bytes": 9592438784}
+{"processed": 1000, "saved_bytes": 10420604928}
+{"processed": 1100, "saved_bytes": 11373592576}
+{"processed": 1200, "saved_bytes": 13038624768}
+{"processed": 1300, "saved_bytes": 14171115520}
+{"processed": 1400, "saved_bytes": 16425873408}
+{"processed": 1500, "saved_bytes": 19221651456}
+{"processed": 1600, "saved_bytes": 19697393664}
+{"processed": 1700, "saved_bytes": 20082356224}
+{"processed": 1800, "saved_bytes": 20468166656}
+{"processed": 1900, "saved_bytes": 20849631232}
+Traceback (most recent call last):
+  File "/Users/bytedance/Projects/github/BilliardGL/scripts/compact_local_evidence.py", line 77, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bytedance/Projects/github/BilliardGL/scripts/compact_local_evidence.py", line 45, in main
+    fd, temporary = tempfile.mkstemp(prefix=".bgl-compact-", dir=parent)
+                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/tempfile.py", line 357, in mkstemp
+    return _mkstemp_inner(dir, prefix, suffix, flags, output_type)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.0_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/tempfile.py", line 256, in _mkstemp_inner
+    fd = _os.open(file, flags, 0o600)
+PermissionError: [Errno 13] Permission denied: '/Users/bytedance/Projects/github/BilliardGL/docs/art/phase4-v18-projected-near-coaxial-grammar-feasibility-diagnostic-v1/.bgl-compact-8u2g55ou'
